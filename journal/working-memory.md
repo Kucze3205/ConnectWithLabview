@@ -1,13 +1,14 @@
 # Execution working memory
 
 ## Considered
-- Iteration 0158 / #716: startup documents read once. State no_progress=0 (0157 accepted, improved=true). No open requests/outboxes; goal gate unaccepted.
-- Read .session/history/records/0157.json and #714 snapshot .session/history/sessions/714/d77ffeac97104787d1e4a11e3e07c032bc4ae6e560e103667cb1a02bd3183fe6.md. #713 benchmark done, merged 12528c90, 23 turns. #714 reviewer done, 8 turns, NOT-CLEAR at HEAD 07dc83f0.
-- Did not read the contract files; the F-N1 pointer comes from the #714 report and is re-checked by the fix and the re-check.
+- Iteration 0159 / #721: startup documents read once. State no_progress=0 (0158 accepted, improved=true). No open requests/outboxes; goal gate unaccepted.
+- Read .session/history/records/0158.json, #717 snapshot .session/history/sessions/717/764193416472b08c13441be523b5f2d004cb79c4c3e2fa15a64179af0bdfca60.md and #718 snapshot .session/history/sessions/718/1511408e4b1ca068b568771cafef828c6c52aaa6a03e6915db0654e8d9f8af53.md.
+- #717 benchmark done, merged 37a2a815, 10 turns: json /validation_rules/M09 now matches md M09 line 46 word for word; json sha 82016b83...ec85 (per report, not checked by me). #718 reviewer blocked at 6 turns: Read/Grep/Bash returned "No such tool available"; no check done.
 - Final .session/tasks.json validated by the direct Python JSON/heading check, exit 0. No task/product/benchmark/evaluator/native execution ran in the shaper.
 
 ## State
-- OPEN matched comparison contract (evaluation.md row `baseline`): benchmark/baseline/matched-comparison-0155.md (sha 15d6be1e...0933) and .json (04543bda...193b) at 07dc83f0 after #713 correction. #714 NOT-CLEAR: F-M1 and F-M3 resolved; F-M2 resolved except F-N1 (medium): json /rules/M09 still conflates an unavailable arm with answer_class unsupported; md M09 is correct. Fix round 2 of 2 (limits.fix_rounds=2) plus narrow re-check ordered in 0158.
+- OPEN matched comparison contract (evaluation.md row `baseline`): benchmark/baseline/matched-comparison-0155.md (sha 15d6be1e...0933) and .json (82016b83...ec85 after #717). Fix rounds 2/2 used. Only the narrow F-N1 re-check is outstanding; reordered in 0159 because #718 had a tool failure (not a finding).
+- Possible stale pin: #717 noted benchmark/preparation.json may pin the old json sha 04543bda...193b; 0159 re-check reports it read-only. If found, order a separate narrow benchmark task to update the pin (a pin update, not a third correction of the contract).
 - CLOSED attempt-ledger integration seam: #703 CLEAR at HEAD 48f2715e; ledger md 8b2b30e6...3436, json 74c9a47a...0e6f. F-A1 (V20 redundant with V17) and F-A2 (slot-level NONE) remain open for owner decision.
 - CLOSED prospective attempt policy: #685 CLEAR on attempt-policy-0148 at cf0c84e5. Design scope only.
 - Real-envelope authority is a separate unresolved contract; do not broaden.
@@ -19,22 +20,22 @@
 - Owner #618 declined human C1; #532 approved metadata only; #430 declined.
 - #533 constant-rules-0106.md source-blocked. Pair originals 26.1.1f1 32-bit. W1-W8 closed d3c697c3; AF declarations 371c631c.
 - WP1 #544 frozen checker invalidated: never refresh/run. WP1 key/c1 chains closed; general key/full trial blocked.
-- Policymaker work (#672-675, #680, #687, #694, #708) belongs to Policymaker.
+- Policymaker work (#672-675, #680, #687, #694, #708, #720) belongs to Policymaker.
 
 ## This iteration
-- fix-m09-parity-0158: benchmark/default/low, 30 min/20 turns, exports #714. One targeted Edit of json /rules/M09 to md M09 meaning; md byte-unchanged. Verification: json parse, 'dispatch' in M09, md SHA256 pinned.
-- recheck-m09-parity-0158: reviewer/default/low, 30 min/20 turns, blocked_by fix, exports #714. Only M09 parity + git diff 07dc83f0 shows only json M09. Verdict in report only.
-- Next cold session: read 0158 record and both reports. CLEAR -> close matched comparison thread and pick the next gap from the remaining list (name gap and gain here). NOT-CLEAR -> fix rounds exhausted: do not order a third correction blindly; record the residual finding as carried, and either submit a suggestion to the Policymaker or choose a next gap while carrying it explicitly.
+- recheck-m09-parity-0159: reviewer/default/low, 30 min/20 turns, exports #714 and #717. First-turn tool probe (stop blocked on tool error); pin HEAD + both shas; md M09 vs json /validation_rules/M09; git diff 07dc83f0 shows only json M09; read-only check of benchmark/preparation.json for old sha. Verification: json parse, 'dispatch' in validation_rules, md sha pinned.
+- Next cold session: read 0159 record and report. CLEAR -> close matched comparison thread; if a stale pin was reported, order one narrow pin-update task; then pick the next gap from the remaining list (name gap and gain here). NOT-CLEAR -> fix rounds exhausted: record the residual finding as carried and submit a suggestion to the Policymaker or move on carrying it. Blocked again by tools -> submit a suggestion (tool availability for reviewer) rather than a third identical rerun.
 
 ## Tried, do not repeat
 - #465/#468 framing/mutations do not establish semantics; negative POC 0092/0093 delivered. No fabricated changed VI, corpus restart, duplicate delivery or owner wait.
 - Closed scopes #581/#587/#594/#612/#626/#633/#639/#656/#678/#685/#703 stay closed. No global gap map, redundant readiness batch, duplicate version-effort or strongest model by default.
-- 0150 #689 and 0151 #692 combined files+artifacts task partial input_budget; 0153 files-only split worked; 0154 and 0157 fix+review in one graph worked (#713 23 turns, #714 8 turns). Do not reissue combined tasks.
-- #699/#703 ledger reviews done; #710 hash/parity/repetition checks and #714 F-M1/F-M3 checks done; do not redo outside changed scope. Do not redraft matched-comparison-0155.
-- #713 lesson: a correction touching md and json must list every rule pointer in both files (M09 missed in json). Name both pointers in acceptance.
+- 0150 #689 and 0151 #692 combined files+artifacts task partial input_budget; 0153 files-only split worked; 0154, 0157, 0158 fix+review in one graph worked. Do not reissue combined tasks.
+- #699/#703 ledger reviews done; #710 hash/parity/repetition checks and #714 F-M1/F-M3 checks done; #717 F-N1 fix done. Do not redo outside changed scope. Do not redraft matched-comparison-0155.
+- #713 lesson: a correction touching md and json must list every rule pointer in both files. #717 lesson: the json key is `validation_rules`, not `rules`; verify JSON pointers before naming them.
+- #718: reviewer session lost Read/Grep/Bash (tool failure, not finding); require a first-turn tool probe in review tasks.
 - Broad Budget at high effort exhausts input budget; name extraction methods and an early write deadline.
 - #643 prohibited evaluator call earns no credit. No evaluator, old builders or frozen #544/0125 checker. Parent commits.
-- Missing/no-match establishes availability only; Grep on docs/perpetua/evaluation.md with English terms returned nothing (file is Polish); #706 grep for arm/repetition/budget in runner-contract.md returned nothing. Glob: full pattern in `pattern`. Inputs stage flat; derive counts from bytes (#518). Explicit exports required for reports. Path errors (#710 F-S1): verify paths before naming them in tasks.
+- Missing/no-match establishes availability only; evaluation.md is Polish (English greps miss). Glob: full pattern in `pattern`. Inputs stage flat; derive counts from bytes (#518). Explicit exports required for reports. Verify paths before naming them in tasks (#710 F-S1).
 - Expectations before author applications (#567/#656/#663/#678/#685/#699/#710). Reviewers write report/artifacts only.
 - Engine verification lacks session inputs/artifacts/report: repository-only checks. No shell expansion/native tools.
 - #617 invalid quoting: final graph read-back plus direct Python validation. Empty Write erases files. Read final report before Finish.
