@@ -1,174 +1,204 @@
-"""Summarize staged recovery metadata; never execute historical workloads.
-Run from repository root: python3 -I audit/metrics/session_recovery_0147.py
-Runtime blobs are hashed in memory; only allowlisted fields leave the process.
+"""Offline, read-only measurement of the explicitly selected recovery evidence.
+Run: python3 -I audit/metrics/session_recovery_0147.py
+Requires this session's staged exports and the named runtime git objects.
+Writes only audit reports; never executes historical commands or imports engine code.
 """
 import datetime as dt
 import hashlib
 import json
-import pathlib
+from pathlib import Path
 import subprocess
 
-ROOT = pathlib.Path('.')
-EXPORT = ROOT / '.session/exports'
 PIN = '510fc5af213cbe9f66dde42a27e3467bc225afcd'
-SPECS = {
-    '643': ('0138', '2026-11-14T23:34:33Z', '2026-11-15T00:33:13Z'),
-    '653': ('0141', '2026-11-15T01:42:29Z', '2026-11-15T07:02:51Z'),
-    '663': ('0144', '2026-11-15T08:39:14Z', '2026-11-15T14:35:51Z'),
-    '669': ('0146', None, None),
+SOURCE = 'fe3bedc18e276a6cc718dbd4f50dc4a4f0e2523a'
+CONFIG = {
+    '643': (138, '898877dd115aa8267a010119d1f09ef481d83f31', '3b16ea14e0cc9a66af9e916a15470f289b356119', [43652564966, 43658484769]),
+    '653': (141, '9f8a23ad1b1b4a4d90fe9aa8739558b766606bc5', 'd9511a814bf67e4e075e02ffa5c2fe608d838f00', [43663290752, 43687899425]),
+    '663': (144, '13817283b1c0e4670fb8e5da236c27521b8be969', '9ba5a679ca67a783661f43245f13480bccde3baa', [43694128074, 43724956130]),
+    '669': (146, PIN, PIN, [43728358074]),
 }
-POLICY = 'policy/observations/0147-policy-check.md'
+SOURCES = {}
 
-def read(path):
-    return json.loads(pathlib.Path(path).read_text())
-
-def stamp(value):
-    return dt.datetime.fromisoformat(value.replace('Z', '+00:00'))
-
-def duration(name, start, end, evidence):
-    seconds = (stamp(end) - stamp(start)).total_seconds()
-    assert seconds >= 0, (name, start, end)
-    return dict(name=name, start=start, end=end, seconds=seconds, evidence=evidence)
-
-def sha(raw):
+def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
-manifest = read(EXPORT / 'manifest.json')
-paths = [str(EXPORT / 'manifest.json'), '.session/startup.json', '.session/issue.md', '.session/role/SKILL.md', POLICY,
-         'docs/perpetua/operating-parameters.md', 'docs/perpetua/engine.md', '.github/workflows/session.yml', '.github/loop/loop.py']
-paths += [str(ROOT / '.session' / x['path']) for x in manifest['results'] if x.get('path')]
-sources = {p: dict(availability='available', bytes=len(pathlib.Path(p).read_bytes()), sha256=sha(pathlib.Path(p).read_bytes())) for p in paths}
-checkout = subprocess.run(['git', 'rev-parse', 'HEAD'], check=True, capture_output=True, text=True).stdout.strip()
-doc = dict(schema_version=1,
-    method='Reuse policy-check 0147 checkpoint measurements; join staged Actions run/job/step metadata to report headers and iteration outcome.sessions by issue. Preserve exact JSON pointers and SHA256 bytes. Timestamp differences are wall intervals only, not agent-active time. Read only allowlisted runtime fields at a fixed git pin; no historical command, probe, evaluator, transport or native replay. cause_status describes root cause, not whether the failed step is located.',
-    checkout=checkout, runtime_pin=PIN, sources=sources,
-    availability=manifest['results'],
-    source_interpretation='Manifest report/record snapshot identifiers and actual staged-file SHA256 values are retained separately; they need not match because the staged JSON is a wrapper. Stream absence has multiple possible causes. Source-code hashes describe the audit checkout, not a proven checkout of every historical run.',
-    source_sections=['docs/perpetua/engine.md:301-307', '.github/workflows/session.yml:247-307', '.github/loop/loop.py:903-947', '.github/loop/loop.py:1449-1465'],
-    sessions={})
+def load(path):
+    raw = Path(path).read_bytes()
+    SOURCES[path] = {'sha256': digest(raw), 'bytes': len(raw), 'availability': 'present'}
+    return json.loads(raw)
+
+def git(*args):
+    return subprocess.check_output(['git', *args])
+
+def runtime(ref, n):
+    locator = ref + ':sessions/' + n + '.json'
+    raw = git('show', locator)
+    SOURCES[locator] = {'sha256': digest(raw), 'bytes': len(raw), 'availability': 'present git object', 'disclosure': 'hash and selected non-sensitive fields only'}
+    return json.loads(raw)
+
+def timestamp(ref):
+    return git('show', '-s', '--format=%cI', ref).decode().strip().replace('+00:00', 'Z')
+
+def seconds(start, end):
+    return int((dt.datetime.fromisoformat(end.replace('Z', '+00:00')) - dt.datetime.fromisoformat(start.replace('Z', '+00:00'))).total_seconds())
+
+manifest = load('.session/exports/manifest.json')
+assert len(manifest['results']) == 19
+for path in ['.session/issue.md', '.session/role/SKILL.md', '.session/startup.json', '.session/history/manifest.json', 'policy/observations/0147-policy-check.md', 'docs/perpetua/operating-parameters.md', 'docs/perpetua/accepted-limits.md', 'docs/perpetua/engine.md', '.github/workflows/session.yml', '.github/loop/loop.py', 'audit/metrics/session_recovery_0147.py']:
+    raw = Path(path).read_bytes()
+    SOURCES[path] = {'sha256': digest(raw), 'bytes': len(raw), 'availability': 'present'}
+
+result = {
+    'schema_version': 1,
+    'method': 'Reuse saved record timings; join explicit Actions exports by run/job identity to pinned runtime checkpoints and trusted report snapshots. All JSON pointers are zero-based. Hash exact input bytes; hash report bodies separately. Subtract cumulative per-model usage only after verifying an unchanged history prefix and the exact three-action continuation. Derive elapsed durations only from stored timestamp pairs. Commit timestamps date publication of checkpoints, not the Finish operation. No historical commands, probes, evaluators, model trials or native execution are replayed.',
+    'source_checkout': SOURCE,
+    'runtime_pin': PIN,
+    'availability': manifest['results'],
+    'sources': SOURCES,
+    'sessions': {},
+    'limits': [
+        'All four diagnostic streams are unavailable; the catalogue cannot distinguish pruning, expiration or never-uploaded streams. A successful upload step with if-no-files-found=ignore does not prove a nonempty payload.',
+        'Actions exports contain metadata, not step logs, exceptions, result archive bytes or publication inventories. Success does not prove archive content or complete admission.',
+        'Current source explains possible boundaries; the exact source revision executed by each historical job is not staged. It cannot establish a historical exception.',
+        'Runtime outputs_asset is null in all four cases, including the successful control; it cannot diagnose loss.',
+        'Checkpoint gaps are elapsed time, not agent-active time or exact file-loss times. No watchdog invocation/decision history is staged.',
+        'Usage deltas are provider-reported token counters, not normalized subscription quota or monetary cost; cache counters are kept separate from in/out.',
+        'This recovery audit establishes no benchmark readiness or product quality. Real admissions, native/model/reader trials, semantic coverage and controlled comparisons remain unmeasured here; independent whole-method review, owner acceptance and other policy-listed readiness prerequisites remain missing.'
+    ],
+    'next_action': {
+        'owner': 'Policymaker through trusted export/preparation',
+        'action': 'Request only retained, redacted stderr/exception and phase diagnostics for Epilogue step jobs 132628109954, 132660262717 and 132754986114 in runs 43652564966, 43663290752 and 43694128074; do not rerun those jobs or hold this iteration open. If those logs are unavailable, close the historical root-cause question at the Epilogue-step boundary. Any future diagnostic engine-change proposal should be limited to non-sensitive phase outcomes and file counts/digests across pack, receive and final publication.',
+        'expected_gain': 'Distinguish an archive/admission/finalization exception from other Epilogue step failures, or establish that historical root-cause attribution cannot be recovered.',
+        'verification': 'Pin and hash any retained excerpt; match run, job, attempt and failing command timestamp. Attribute only the exception and phase actually shown. A future diagnostic change must demonstrate phase linkage and final inventory in an isolated synthetic success and interrupted-publication test before deployment; no benchmark rerun is needed.'
+    }
+}
 rows = []
-for number, (iteration, first, later) in SPECS.items():
-    evidence = [POLICY + '#recovery-discovery-and-audit-evidence']
-    missing = ['All selected stream exports unavailable; absence does not distinguish retention, expiry or upload failure.',
-               'Original result bundle contents, pack inventory, tree admission diagnostics and epilogue exception logs are not staged.',
-               'Exact publication time and per-transition artifact inventory are unavailable.',
-               'Continuation-only tokens are unmeasured: available usage is cumulative and no checkpoint usage delta is reused here. Tokens do not measure subscription quota or money.']
-    if first:
-        missing += ['Exact report/artifact disappearance time and causal link between epilogue failure and missing recovery files are undetermined.',
-                    'Watchdog decisions and other concurrent commitments are not staged; recovery delay cause is undetermined.']
-    record_path = f'.session/exports/records/{iteration}.json'
-    record = read(record_path)
-    idx, saved = next((i, s) for i, s in enumerate(record['outcome']['sessions']) if str(s['issue']) == number)
-    record_pointer = record_path + f'#/outcome/sessions/{idx}'
-    evidence.append(record_pointer)
-    report_path = f'.session/exports/reports/{number}.json'
-    report = read(report_path)
-    header = report['body'].split('```yaml\n', 1)[1].split('```', 1)[0]
-    header_fields = dict(line.split(': ', 1) for line in header.splitlines() if ': ' in line)
-    evidence += [report_path + '#/body', report['source']]
-    assert int(header_fields.get('artifacts', '0')) == saved['artifacts']
-    runs = []
-    durations = []
-    for item in manifest['results']:
-        if item['source'] != 'actions' or str(item.get('issue')) != number or item['status'] != 'downloaded':
-            continue
-        path = '.session/' + item['path']
-        raw = read(path)
-        pointer = path + '#'
-        evidence.append(pointer)
-        run = {k: raw[k] for k in ('id', 'name', 'status', 'conclusion', 'created_at', 'run_started_at', 'updated_at', 'run_attempt', 'html_url')}
-        run['source'] = pointer
-        run['jobs'] = []
-        durations.append(duration(f"run {raw['id']} created-to-updated (metadata interval)", raw['created_at'], raw['updated_at'], pointer))
-        for ji, job in enumerate(raw['jobs']):
-            jp = path + f'#/jobs/{ji}'
-            entry = {k: job[k] for k in ('id', 'name', 'status', 'conclusion', 'started_at', 'completed_at', 'html_url')}
-            entry['source'] = jp
-            entry['steps'] = []
-            if job['name'] in ('session', 'epilogue'):
-                for si, step in enumerate(job['steps']):
-                    if step['name'] not in ('Routed session', 'Session', 'Pack the results', 'Epilogue', 'Run actions/upload-artifact@v4', 'Run actions/download-artifact@v4'):
-                        continue
-                    sp = jp + f'/steps/{si}'
-                    entry['steps'].append(dict(step, source=sp))
-                    durations.append(duration(f"run {raw['id']} job {job['id']} step {si}: {step['name']}", step['started_at'], step['completed_at'], sp))
-            run['jobs'].append(entry)
-        runs.append(run)
-    runs.sort(key=lambda r: r['created_at'])
-    runtime_source = f'git:{PIN}:sessions/{number}.json'
-    blob = subprocess.run(['git', 'show', f'{PIN}:sessions/{number}.json'], check=True, capture_output=True).stdout
-    runtime = json.loads(blob)
-    sources[runtime_source] = dict(availability='available', bytes=len(blob), sha256=sha(blob))
-    actions = []
-    for hi, h in enumerate(runtime['history']):
-        action = h.get('action', {})
-        if action.get('tool') == 'Finish' or (hi >= len(runtime['history']) - 3 and action.get('tool') == 'Write'):
-            projected = {k: action[k] for k in ('tool', 'path', 'status') if k in action}
-            projected['source'] = runtime_source + f'#/history/{hi}'
-            outcome = h.get('outcome', {})
-            projected['outcome_status'] = outcome.get('status')
-            projected['rejected_missing_report'] = 'Use Write to create .session/report.md before Finish' in outcome.get('detail', '')
-            actions.append(projected)
-    evidence.append(runtime_source + '#/history')
-    timeline = []
-    if first:
-        assert len(runs) == 2 and runs[0]['conclusion'] == 'failure' and runs[1]['conclusion'] == 'success'
-        for r in runs:
-            sj = next(j for j in r['jobs'] if j['name'] == 'session')
-            assert sj['conclusion'] == 'success'
-            assert all(s['conclusion'] == 'success' for s in sj['steps'] if s['name'] in ('Pack the results', 'Run actions/upload-artifact@v4'))
-        first_epi = next(j for j in runs[0]['jobs'] if j['name'] == 'epilogue')
-        failed = next(s for s in first_epi['steps'] if s['name'] == 'Epilogue')
-        assert failed['conclusion'] == 'failure'
-        assert stamp(failed['started_at']) <= stamp(first) <= stamp(failed['completed_at'])
-        kick = header_fields['kicked']
-        timeline += [dict(event='First checkpoint already contains accepted Finish and final result; timestamp reused from policy measurement (not tool execution time)', at=first, source=evidence[0]),
-                     dict(event='Original workflow fails in Epilogue after successful results upload and both downloads', at=failed['completed_at'], source=failed['source']),
-                     dict(event='Report records one kick', at=kick, source=report_path + '#/body'),
-                     dict(event='Later checkpoint contains report recreation and accepted Finish', at=later, source=evidence[0])]
-        durations += [duration('first-to-later checkpoint gap; not agent-active time', first, later, evidence[0]),
-                      duration('original run updated to recorded kick; not proven watchdog wait', runs[0]['updated_at'], kick, [runs[0]['source'], report_path + '#/body'])]
-        location = 'Supported failed step: original Epilogue; exception/root cause and artifact-loss mechanism undetermined.'
-        gap = int((stamp(later) - stamp(first)).total_seconds())
+usage_rows = []
+for n, (iteration, first_ref, last_ref, runs) in CONFIG.items():
+    first = runtime(first_ref, n)
+    last = runtime(PIN, n)
+    assert runtime(last_ref, n) == last
+    assert first['history'] == last['history'][:len(first['history'])]
+    prefix = first_ref + ':sessions/' + n + '.json'
+    final_prefix = PIN + ':sessions/' + n + '.json'
+    assert first['result']['status'] in ['done', 'partial']
+    finish_index = len(first['history']) - 1
+    assert first['history'][finish_index]['action']['tool'] == 'Finish'
+    assert first['history'][finish_index]['outcome']['status'] == first['result']['status']
+    record_path = '.session/exports/records/' + str(iteration).zfill(4) + '.json'
+    record = load(record_path)
+    si, saved = next((i, s) for i, s in enumerate(record['outcome']['sessions']) if str(s['issue']) == n)
+    report_path = '.session/exports/reports/' + n + '.json'
+    report = load(report_path)
+    assert digest(report['body'].encode()) == report['snapshot']
+    SOURCES[report_path]['report_body_sha256'] = report['snapshot']
+    fields = {}
+    for line in report['body'].split('```')[1].splitlines():
+        if ': ' in line:
+            key, value = line.split(': ', 1)
+            fields[key] = value
+    session = {
+        'cause_status': 'undetermined',
+        'finding': 'Observed initial failure is localized to the Epilogue step after metadata-successful result transfer; file-loss and recovery-delay causes are undetermined.' if len(runs) == 2 else 'Successful control: no failure cause to attribute; one checkpoint, successful Epilogue and 12 recorded published artifacts.',
+        'evidence': [prefix + '#/history/' + str(finish_index), prefix + '#/result/status', final_prefix + '#/history', final_prefix + '#/usage', record_path + '#/outcome/sessions/' + str(si), report_path + '#/body', report['source']],
+        'missing': ['Exact Finish operation timestamp (only checkpoint commit time is available)', 'Original result archive contents and admission/publication inventory', 'Historical job stderr/traceback and exact executed source revision', 'Exact final artifact publication timestamp and watchdog decisions'],
+        'durations': [],
+        'timeline': [],
+        'runtime': {'first_checkpoint': first_ref, 'later_checkpoint': last_ref, 'first_saved_at': timestamp(first_ref), 'last_saved_at': timestamp(last_ref), 'first_turns': first['turns'], 'last_turns': last['turns'], 'history_prefix_unchanged': True, 'outputs_asset': last['outputs_asset'], 'first_finish_status': first['result']['status'], 'first_finish_pointer': prefix + '#/history/' + str(finish_index)},
+        'saved_record': {k: saved.get(k) for k in ['status', 'verdict', 'merged', 'commit', 'agent_s', 'gate_s', 'total_s', 'parked_s', 'artifacts', 'tokens', 'models', 'report_snapshots']},
+        'report': {'source': report['source'], 'body_sha256': report['snapshot'], 'kicks': int(fields.get('kicks', '0')), 'kicked': fields.get('kicked')},
+        'runs': [],
+    }
+    def duration(name, start, end, evidence):
+        value = seconds(start, end)
+        assert value >= 0
+        session['durations'].append({'name': name, 'start': start, 'end': end, 'seconds': value, 'evidence': evidence})
+    for ri, run_id in enumerate(runs):
+        path = '.session/exports/actions/' + str(run_id) + '.json'
+        run = load(path)
+        assert run['id'] == run_id and '#' + n in run['name']
+        session['evidence'].append(path + '#/jobs')
+        session['runs'].append({k: run[k] for k in ['id', 'html_url', 'run_attempt', 'status', 'conclusion', 'created_at', 'run_started_at', 'updated_at']})
+        phase = 'initial' if ri == 0 else 'recovery'
+        duration(phase + ' workflow created to last update (not agent time)', run['created_at'], run['updated_at'], [path + '#/created_at', path + '#/updated_at'])
+        for ji, job in enumerate(run['jobs']):
+            jp = path + '#/jobs/' + str(ji)
+            session['timeline'].append({'phase': phase, 'kind': 'job', 'name': job['name'], 'run_id': run_id, 'job_id': job['id'], 'conclusion': job['conclusion'], 'start': job.get('started_at'), 'end': job.get('completed_at'), 'source': jp})
+            if job['name'] not in ['session', 'epilogue']:
+                continue
+            for sti, step in enumerate(job['steps']):
+                if step['name'] not in ['Routed session', 'Pack the results', 'Epilogue', 'Run actions/upload-artifact@v4', 'Run actions/download-artifact@v4']:
+                    continue
+                sp = jp + '/steps/' + str(sti)
+                session['timeline'].append({'phase': phase, 'kind': 'step', 'name': step['name'], 'run_id': run_id, 'job_id': job['id'], 'conclusion': step['conclusion'], 'start': step.get('started_at'), 'end': step.get('completed_at'), 'source': sp})
+                if step.get('started_at') and step.get('completed_at'):
+                    duration(phase + ' ' + job['name'] + ' step ' + str(sti) + ': ' + step['name'], step['started_at'], step['completed_at'], [sp + '/started_at', sp + '/completed_at'])
+    for label, ref in [('first accepted Finish checkpoint publication', first_ref)] + ([('later accepted Finish checkpoint publication', last_ref)] if len(runs) == 2 else []):
+        session['timeline'].append({'kind': 'checkpoint', 'name': label, 'at': timestamp(ref), 'source': ref + ':sessions/' + n + '.json', 'note': 'Commit timestamp is not the operation timestamp.'})
+    session['timeline'].append({'kind': 'publication observation', 'name': 'Final record reports published session artifacts', 'artifacts': saved['artifacts'], 'at': None, 'source': record_path + '#/outcome/sessions/' + str(si) + '/artifacts'})
+    if len(runs) == 2:
+        extension = last['history'][len(first['history']):]
+        assert [x['action']['tool'] for x in extension] == ['Finish', 'Write', 'Finish']
+        assert extension[0]['outcome']['error'] == 'role tool rejected'
+        assert 'Use Write to create .session/report.md before Finish' in extension[0]['outcome']['detail']
+        assert extension[1]['action']['path'] == '.session/report.md'
+        assert extension[2]['outcome']['status'] == first['result']['status']
+        session['runtime']['extension'] = [{'index': len(first['history']) + i, 'tool': x['action']['tool'], 'path': x['action'].get('path', ''), 'status': x['action'].get('status', ''), 'source': final_prefix + '#/history/' + str(len(first['history']) + i)} for i, x in enumerate(extension)]
+        session['runtime']['rejection'] = 'Use Write to create .session/report.md before Finish'
+        delta = {}
+        for model, counters in last['usage'].items():
+            delta[model] = {key: value - first['usage'].get(model, {}).get(key, 0) for key, value in counters.items()}
+            assert all(value >= 0 for value in delta[model].values())
+        session['continuation_usage'] = {'status': 'measured cumulative counter delta over the verified three-action extension', 'by_model': delta, 'evidence': [prefix + '#/usage', final_prefix + '#/usage', final_prefix + '#/history']}
+        duration('first to later checkpoint publication gap (not agent-active time)', timestamp(first_ref), timestamp(last_ref), [first_ref, last_ref])
+        duration('first checkpoint publication to recorded kick (elapsed only)', timestamp(first_ref), fields['kicked'], [first_ref, report_path + '#/body'])
+        session['timeline'].append({'kind': 'kick', 'at': fields['kicked'], 'source': report_path + '#/body'})
+        session['missing'].extend(['Time and mechanism by which the report or artifact files became unavailable', 'Original session artifact bytes; do not reconstruct them from continuation text'])
+        totals = {k: sum(v.get(k, 0) for v in delta.values()) for k in ['in', 'out', 'cache_read', 'cache_write']}
+        usage_rows.append('| #' + n + ' | ' + ' | '.join(str(totals[k]) for k in ['in', 'out', 'cache_read', 'cache_write']) + ' |')
+        gap = seconds(timestamp(first_ref), timestamp(last_ref))
     else:
-        assert len(runs) == 1 and runs[0]['conclusion'] == 'success' and saved['artifacts'] == 12
-        timeline.append(dict(event='Single final checkpoint and accepted Finish; exact checkpoint timestamp not reused', at=None, source=evidence[0]))
-        location = 'Successful publication control; no failed step or failure cause observed.'
+        session['continuation_usage'] = {'status': 'not applicable: no later continuation observed', 'by_model': None}
         gap = None
-    timeline.append(dict(event='Published report and final artifact count confirmed by staged report/record; exact publication time unavailable', at=None, source=[record_pointer, report_path + '#/body']))
-    runtime_projection = dict(source=runtime_source, outputs_asset=runtime['outputs_asset'], final_status=runtime['result']['status'], history_actions=actions,
-                              usage_scope='Cumulative session usage only; no continuation attribution.')
-    assert runtime_projection['outputs_asset'] is None
-    doc['sessions'][number] = dict(cause_status='undetermined', failure_location=location, evidence=evidence, missing=missing, durations=durations,
-        runs=runs, timeline=timeline, runtime=runtime_projection,
-        checkpoint_timestamp_interpretation='Policy-saved checkpoint/commit timestamps, not exact Finish action timestamps; full first checkpoint records not reread.',
-        saved_metrics={k: saved[k] for k in ('agent_s', 'gate_s', 'total_s', 'parked_s', 'artifacts', 'turns', 'tokens', 'models', 'status', 'commit')},
-        metrics_interpretation='Reuse recorded values without summing checkpoint gaps or treating short final-run measurements as lifetime agent time.',
-        report=dict(source=report['source'], snapshot=report['snapshot'], kicks=int(header_fields.get('kicks', '0')), kicked=header_fields.get('kicked'),
-                    artifact_entries=[line for line in report['body'].splitlines() if line.startswith('- artifact:')]))
-    rows.append(f"| #{number} | {', '.join(str(r['id']) + ' ' + r['conclusion'] for r in runs)} | {gap if gap is not None else 'single checkpoint'} | {saved['artifacts']} | {saved['agent_s']}/{saved['gate_s']}/{saved['total_s']}/{saved['parked_s']} |")
-doc['next_action'] = dict(action='Policymaker should request only the existing failed Epilogue step log/exception for job 132628109954 (run 43652564966) first, if retained; compare its terminal boundary with the pinned receive_status/receive_tree/receive_commits/publish_runtime_state/finalize sequence. Do not replay the session.',
-    expected_gain='Identify one exception and last completed publication boundary before deciding whether an engine-change request is supported.',
-    verification='Pin returned log bytes by SHA256 and run/job/step identity; confirm exception location and whether report/artifact inventory was received. If unavailable, close historical root-cause attribution at Epilogue; a future narrowly scoped diagnostic proposal must capture inventory and terminal boundary, not reconstruct old artifacts.')
-(ROOT / 'audit').mkdir(exist_ok=True)
-(ROOT / 'audit/session-recovery-0147.json').write_text(json.dumps(doc, indent=2) + '\n')
-text = '''# Recovery and publication audit 0147
+    rows.append('| #' + n + ' | ' + ', '.join(str(r) for r in runs) + ' | ' + timestamp(first_ref) + ' | ' + (timestamp(last_ref) if len(runs) == 2 else 'none') + ' | ' + (str(gap) if gap is not None else '—') + ' | ' + str(saved['artifacts']) + ' | ' + '/'.join(str(saved.get(k)) for k in ['agent_s', 'gate_s', 'total_s', 'parked_s']) + ' |')
+    for item in session['runtime'].get('extension', []):
+        session['timeline'].append({'kind': 'recovery action', 'name': item['tool'], 'at': None, 'source': item['source'], 'note': 'Exact operation time unavailable; ordered by history index ' + str(item['index'])})
+    session['timeline'].sort(key=lambda event: (event.get('start') or event.get('at') or '9999', event.get('kind', '')))
+    result['sessions'][n] = session
 
-3/3 original workflows failed in **Epilogue**, after successful routed-session, result packing, results upload and both epilogue downloads; 3/3 recovery workflows succeeded. #669 passed the same chain and published 12 artifacts.
+# Preserve advertised record snapshots separately from hashes of staged envelope bytes.
+for entry in manifest['results']:
+    if entry.get('path') and '.session/' + entry['path'] in SOURCES and entry.get('snapshot'):
+        SOURCES['.session/' + entry['path']]['manifest_snapshot'] = entry['snapshot']
+Path('audit/session-recovery-0147.json').write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
+md = '''# Recovery and output publication audit 0147
 
-| Session | Run identity / workflow outcome (attempt 1 each) | Checkpoint gap s | Published artifacts | Saved agent/gate/total/parked s |
-| --- | --- | ---: | ---: | --- |
+Three of three affected initial runs failed in the **Epilogue step** after successful routed-session, packing, result-upload and both epilogue-download steps; all three recovery runs and control #669 succeeded. Root cause of missing files remains **undetermined**. Metadata does not expose the failed exception or archive contents.
+
+| Session | Actions runs (initial, recovery) | First accepted Finish checkpoint UTC | Later checkpoint UTC | Gap s | Published artifacts | Saved agent/gate/total/parked s |
+| --- | --- | --- | --- | ---: | ---: | --- |
 ''' + '\n'.join(rows) + '''
 
-Checkpoint gaps reuse [policy measurements](../policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence), not agent-active time. Their first checkpoint timestamps fall inside the failed Epilogue steps; they are not exact Finish execution times. Short saved runtimes are preserved as recorded, not lifetime work measurements.
-The [detailed timelines, exact run/job/step pointers, source SHA256 values and runtime projections](session-recovery-0147.json) retain all seven runs. Runtime pin: `510fc5af213cbe9f66dde42a27e3467bc225afcd`; source-code inspection describes the audit checkout, without asserting every historical run used those bytes.
-Each affected session already had an accepted Finish, then later received “Use Write to create .session/report.md before Finish”, wrote the report and finished again. Reports record one kick each at 00:30:08, 06:59:29 and 14:32:53 UTC on November 15. Recovery published reports but zero artifacts; #663's saved 21-artifact command result is not recovered bytes.
-**Root causes remain undetermined.** Metadata locates failure at the Epilogue step, not a Python function or the point files disappeared. Successful upload/download steps establish workflow outcomes, not complete bundle contents or successful admission. Missing logs/bundles prevent distinguishing admission, finalization and other exceptions.
-All four streams are unavailable (retention, expiry and never-uploaded remain alternatives). `outputs_asset=null` occurs in all four runtime records, including #669; neither null nor zero artifacts alone diagnoses failure. Watchdog commitments are a possible delay mechanism, without historical decision evidence.
-Continuation-only tokens are **unmeasured**; saved usage is cumulative. Tokens measure neither subscription quota nor money. No evaluator, historical command, benchmark probe, model/reader/native execution or artifact reconstruction was run.
-**Smallest next action:** Policymaker should obtain only failed job `132628109954`'s Epilogue exception/log, if retained. Expected gain: locate one exception before considering an engine change. Verify its run/job identity, byte hash and last completed receive/finalize boundary; if unavailable, close historical attribution at the step-level limit and capture that boundary plus inventory on a future occurrence.
-Benchmark_ready=false; missing benchmark coverage, whole-method review and owner acceptance remain unchanged. Product quality is unmeasured. This audit measures recovery only.
+Checkpoint times are commit/publication times, not exact Finish times. The 3,520/19,222/21,397-second gaps are elapsed time, never agent-active time. Saved record timings are reused unchanged and largely describe recovery; they do not measure the original invocation or full recovery gap. Full per-run job/step timestamps, zero-based source pointers and paired durations are in [the evidence JSON](session-recovery-0147.json) under `sessions.N.timeline`, `runs` and `durations`.
+
+Each affected first checkpoint already contains an accepted Finish and final result. The later history preserves that complete prefix and adds exactly: Finish rejected with `Use Write to create .session/report.md before Finish`; Write report; accepted Finish. Reports record one kick at 00:30:08 / 06:59:29 / 14:32:53 UTC. Exact file-loss, publication and watchdog transitions are unavailable. #669 has one checkpoint, no kick, successful Epilogue and 12 recorded artifacts. All four `outputs_asset` values are null: null and zero artifacts alone cannot diagnose failure. Workflow transfer artifacts and published session artifacts are different inventories.
+
+| Continuation | Input counter delta | Output counter delta | Cache-read delta | Cache-write delta |
+| --- | ---: | ---: | ---: | ---: |
+''' + '\n'.join(usage_rows) + '''
+
+These are cumulative runtime-counter differences across the verified three-action extensions, all attributed to `claude/claude-sonnet-5-5`; Codex counters did not increase. They are not subscription-quota or monetary-cost measurements. No continuation is observed for #669. Recovery Routed-session steps lasted 20/17/18 s; control lasted 576 s. Different saved `agent_s` boundaries are retained, not substituted.
+
+Availability: 7 Actions metadata exports, 4 report snapshots and 4 iteration records downloaded; all 4 streams unavailable. Each report-body hash matches its advertised snapshot. Exact byte hashes, record snapshot identifiers and runtime pins are in [sources](session-recovery-0147.json) (`sources`, `availability`, `runtime_pin`). [Measurement script](metrics/session_recovery_0147.py) selects only non-sensitive fields; staged inputs and named git objects are required to rerun it. No historical artifacts were reconstructed and no historical commands, evaluator, probes, reader, model or native executions were replayed.
+
+Current-source boundary: [session.yml](../.github/workflows/session.yml) lines 247–307 separates diagnostic-stream upload, packing/results upload, downloads and the Epilogue step. Stream/results uploads ignore missing files, so metadata-success is not proof of payload contents. [loop.py](../.github/loop/loop.py) lines 903–947 receives results, publishes runtime state, then finalizes; lines 831–840 fetch the candidate and publish session artifacts. The observed checkpoint commits fall inside their respective Epilogue step intervals. This supports a durable continuation despite failed epilogue step, not a specific failing function. Exact historical source revisions and stderr are absent. The staged evidence establishes neither runner death, artifact-quota exhaustion, a receive/admission exception, provider limits nor watchdog deferral. Policy preserves #663's saved command result claiming 21 verified indexed artifacts; their bytes are unavailable, so that count is not a recovered inventory. [Policy measurements](../policy/observations/0147-policy-check.md) and [engine recovery contract](../docs/perpetua/engine.md) lines 301–307 are context, not proof of those explanations.
+
+## What next
+
+Policymaker: seek only retained, redacted Epilogue exception/phase logs for jobs **132628109954 / 132660262717 / 132754986114** in initial runs **43652564966 / 43663290752 / 43694128074**. Expected gain: identify the failed command phase/exception; verify run, job, attempt, timestamps and excerpt hashes before proposing a fix. If absent, close historical root-cause attribution at this precise step boundary; do not keep the iteration open for another general audit. Any future engine proposal should capture non-sensitive phase outcomes and file counts/digests at pack/receive/final-publication boundaries and verify them on isolated synthetic success/interruption cases. No engine change is made here. Resume from this JSON and pinned measurements; do not reconstruct lost artifacts or replay completed benchmark work.
+
+This audit does not establish benchmark readiness or product quality. Missing real coverage, controlled comparisons, independent whole-method review and owner method acceptance remain explicit in policy evidence; product quality is unmeasured here.
 '''
-(ROOT / 'audit/0147.md').write_text(text)
-(ROOT / 'audit/latest.md').write_text(text)
-print(json.dumps(dict(sessions=list(doc['sessions']), sources=len(sources), checkpoint_gaps={n: next((d['seconds'] for d in s['durations'] if d['name'].startswith('first-to-later')), None) for n, s in doc['sessions'].items()}), sort_keys=True))
+Path('audit/0147.md').write_text(md)
+Path('audit/latest.md').write_text(md)
+print(json.dumps({'sessions': list(result['sessions']), 'sources': len(SOURCES), 'outputs': {p: {'bytes': Path(p).stat().st_size, 'sha256': digest(Path(p).read_bytes())} for p in ['audit/0147.md', 'audit/latest.md', 'audit/session-recovery-0147.json']}}))
