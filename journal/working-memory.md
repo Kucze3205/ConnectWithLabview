@@ -1,20 +1,19 @@
 # Execution working memory
 
 ## Considered
-- Iteration 0184 / #802: startup documents read once. no_progress=1 (0183 not improved: its only task #800 paused). Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
-- Record 0183 (.session/history/records/0183.json): one task keyed-literal-probe-0183 = #800.
-- #800 snapshot .session/history/sessions/800/e00391fc15d6524c0d5694f382b811c9c693dd0646942a3bc82693ec0226f681.md: status paused, cause providers:unavailable, 12 turns, checkpoint commit 2dd3b3fd on task/800. Content of the checkpoint not inspected (no git in shaper).
-- benchmark/challenges/keyed-literal-probe-0183.md absent on main (Glob, 0184).
+- Iteration 0185 / #804: startup documents read once. no_progress=2 (0183 #800 paused; 0184 failed: no valid graph). Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
+- Record 0184 (.session/history/records/0184.json): failed, "the shaper produced no valid task graph". Shaper #802 report (.github/loop/data/session-reports/802/897750b5...json) ends with the engine error: start_branch `task/800` is on origin neither as a branch nor as an `iter/*` tag.
+- Record 0183 (.session/history/records/0183.json): one task keyed-literal-probe-0183 = #800, paused (providers unavailable); no iter tag exists for it.
 - Final .session/tasks.json validated by the direct Python JSON/heading check, exit 0.
 
 ## State
 - OPEN challenges row (evaluation.md, row `challenges`). gap-0160 (#725): all five kinds `partial`, author-written synthetic fixtures only; results/challenges.json self-comparison (quality_measured false).
-- Constant/empty-export detection: CLOSED for empty (DETECTED score.py:203-204), non-keyed constant (DETECTED score.py:207-208), vi-actor-core-native-gap NOT-APPLICABLE (score.py:199-200); merged by #797. Open: keyed-literal constant (probe #800 paused, resumed 0184) and whether `constant` controls / `regression_self_test` exist.
+- Constant/empty-export detection: CLOSED for empty (DETECTED score.py:203-204), non-keyed constant (DETECTED score.py:207-208), vi-actor-core-native-gap NOT-APPLICABLE (score.py:199-200); merged by #797. Open: keyed-literal constant (fresh probe ordered 0185) and whether `constant` controls / `regression_self_test` exist.
 - Next after the probe lands: if SAFE, order the `constant-keyed-literal-export` control addition (fixtures + regression assertion, all pins updated) and its changed-scope review in one graph; if UNSAFE, order the scorer correction plus review in one graph.
 - Zero-execution scorer scope: CLOSED (#779 CLEAR; #785 mutation check CLEAR, merge refused for .pyc only). Do not re-run.
 - #763 finding 4 (minor, no `correct`-path/citation-grounding control) and finding 6 (minor, null native_run cases do not assert extras_ledger): carried.
 - Bytecode trap: any task importing benchmark/scripts/*.py must use `python3 -B` and `sys.dont_write_bytecode = True` and check `git status --porcelain` (#785).
-- Sessions with 0 turns (#794), runtime interruption (#788) or provider unavailability pause (#800) recur; if the resume of #800 also pauses/gets 0 turns, file a suggestion to the Policymaker instead of re-ordering a third time.
+- Sessions with 0 turns (#794), runtime interruption (#788) or provider unavailability pause (#800) recur; if the 0185 probe also pauses, file a suggestion to the Policymaker instead of re-ordering.
 - Tool loss mid-session recurs: #718/#722/#754/#758/#779/#788/#791. Short limits, save files first.
 - CLOSED: matched comparison #722 CLEAR 81d309e5; attempt-ledger seam #703 CLEAR 48f2715e (F-A1, F-A2 open for owner); attempt policy #685 CLEAR cf0c84e5.
 - Real-envelope authority, legacy multiple-attempt selection: unresolved; no retrospective selection.
@@ -23,16 +22,17 @@
 - Owner #618 declined human C1; #532 approved metadata only; #430 declined. #533 source-blocked.
 
 ## This iteration
-- keyed-literal-probe-resume-0184 (benchmark/default/medium, start_branch task/800, 45 min/25 turns): finish #800's probe; report what the branch held first. Report, do not fix. Check: Glob benchmark/challenges/keyed-literal-probe-0183.md on main; read its SAFE/UNSAFE verdicts and `## Existing controls`.
+- keyed-literal-probe-0185 (benchmark/default/medium, fresh, no start_branch, 45 min/30 turns): measure keyed-literal constant export via score.compute in memory; report, do not fix. Check: Glob benchmark/challenges/keyed-literal-probe-0185.md on main; read its SAFE/UNSAFE verdicts and `## Existing controls`.
 
 ## Tried, do not repeat
-- Keyed-literal probe: ordered 0183 (#800 paused, providers unavailable), resumed 0184 from task/800. Do not order a fresh full probe; resume from the saved branch at most once more.
+- Paused task branches are NOT resumable: #800 (paused) left no `task/800` branch or `iter/*` tag; 0184 failed on start_branch task/800. Only use start_branch for an `iter/NNNN/N` tag or branch confirmed in a record/report; a paused session without such a tag gets a fresh task.
+- Keyed-literal probe: 0183 #800 paused; 0184 resume refused; 0185 fresh. Do not order it a fourth time; suggest to Policymaker instead.
 - Constant-export probe (empty, non-keyed): done by #791, merged by #797. Do not re-probe.
 - Mutation check of the positive guard: done by #785 (CLEAR). Do not order again.
 - #779 derived the independent expectation and checked all pins; do not repeat.
 - #766/#778 fix and re-pin done and merged; do not redo fix, main() or pins.
-- Write the graph by ~10th call (0177 at 11, 0178 at 9, 0179 at 11, 0180 at 12, 0181 at 13, 0182 at 10, 0183 at 11, 0184 at 10).
-- Before calling a task "no report", Glob .session/history/sessions/<issue>/ for a snapshot other than task.md and read it (0181 shaper missed #791's; brace Glob patterns returned nothing in 0184, use `sessions/80*/**`-style patterns).
+- Write the graph by ~10th call (0177 at 11 ... 0184 at 10, 0185 at 11).
+- Before calling a task "no report", Glob .session/history/sessions/<issue>/ for a snapshot other than task.md and read it; brace Glob patterns return nothing, use `sessions/80*/**`-style patterns.
 - Session report snapshots: .session/history/sessions/<issue>/<sha>.md and .github/loop/data/session-reports/<issue>/.
 - #763 findings 1-3 closed; do not re-review logic, old pins or the 558 fixture leaves.
 - #758: real change is d46236b6 / iter/0165/739. #762 finished checks; do not rerun.
