@@ -230,6 +230,7 @@ def check():
     else:
         raise ValueError('reason comparison self-test: mismatch accepted')
 
+    completed = 1  # The reason comparison self-test completed above.
     mutations = []
 
     def mutation(name, reason, change):
@@ -279,13 +280,17 @@ def check():
                                        'scale beyond 10 pre-adjudicated connected groups',
                                        'private input adapter and independent lineage review']}, indent=2))
 
+    return completed + len(mutations)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', required=True)
     parser.parse_args()
     try:
-        check()
+        completed = check()
+        require(completed == 8,
+                f"rejecting controls did not complete: expected 8, got {completed!r}")
     except (ValueError, TypeError, KeyError, AttributeError, OSError) as exc:
         print('split allocation check failed: ' + str(exc), file=sys.stderr)
         return 1
