@@ -30,6 +30,12 @@ Python's standard library and local Git metadata are sufficient; there is no dow
 
 Selection is explicit: all tracked files with the extensions listed in `sources.json` under `selection.tracked_artifact_extensions`. Untracked files are excluded. Archive/package files are inventoried as original containers; their members are not independently selected or inspected. This selection defines this prepared inventory, not the product's required scope.
 
+## Dependency evidence and limits
+
+Each repository record in [`sources.json`](sources.json) now contains a `dependencies` object with `declared`, `unknown`, and `method` fields. The generator reads declarations from pinned `.lvproj` XML and VIPB package specifications: project `LVVersion` values, project `Dependencies` items (including their URLs when present), package LabVIEW requirements, library versions, and explicit package conflicts. Each declaration retains its identity, version constraint, kind, and repository-relative source path. Project items without a stated constraint use the explicit value `unknown`; no version is inferred.
+
+VIPC files that are not readable XML/text are recorded as unknown with their source path. Binary VI linkage, package-member resolution, installed modules, and native LabVIEW execution are not attempted; each repository therefore also carries an explicit repository-wide unknown explaining those limits. These dependency records are separate from artifact `save_version` metadata and from the `reading_environment` record: save versions describe original file headers, reading-environment versions describe the preparation tooling, and dependency constraints describe declarations in project/package text. None establishes runtime compatibility.
+
 ## Save-version evidence and limits
 
 The observable is the save-version declaration in the original file, independently of any future product reader. The script reads the original RSRC resource table and the first UInt32 of `LVSR`, falling back to `vers`; it records the exact raw hexadecimal value and byte offset. For XML artifacts it records the root `LVVersion` attribute. Packed BCD decoding follows the version representation visible in the pinned pylavi `pylavi/data_types.py`, but no pylavi code is imported. This is container metadata inspection, not an independent semantic oracle or a claim about diagram contents.
