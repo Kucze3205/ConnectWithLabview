@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "verification": {
+    "argv": [
+      "/usr/bin/python3",
+      "docs/research/poc/pair/check_constant_rules_0106.py"
+    ],
+    "environment": "empty; no LABVIEW_ENVIRONMENT or session access",
+    "exit_code": 0,
+    "stdout": "{\"native_validity_established\": false, \"prepared_source_pins\": 8, \"probes\": 10, \"repository_inputs\": 38, \"status\": \"passed\", \"verdict\": \"source-blocked\"}",
+    "stderr": ""
+  },
+  "negative_controls": [
+    {
+      "name": "missing_required_input_hash",
+      "result": "rejected",
+      "reason": "Missing required input hash"
+    },
+    {
+      "name": "missing_evidence_file",
+      "result": "rejected",
+      "reason": "Missing evidence: docs/research/poc/pair/absent-0106.vi"
+    },
+    {
+      "name": "wrong_repository_hash",
+      "result": "rejected",
+      "reason": "Input SHA256 mismatch: docs/research/poc/pair/fixtures/constant-1-separate.vi"
+    },
+    {
+      "name": "malformed_prepared_revision",
+      "result": "rejected",
+      "reason": "Malformed prepared source revision/hash"
+    },
+    {
+      "name": "missing_prepared_pin",
+      "result": "rejected",
+      "reason": "Missing prepared source pins"
+    },
+    {
+      "name": "contradictory_conclusion",
+      "result": "rejected",
+      "reason": "Contradictory probe conclusion: P6"
+    },
+    {
+      "name": "contradictory_observed_node",
+      "result": "rejected",
+      "reason": "Recorded node context differs from committed fixture: constant-2-separate.vi"
+    },
+    {
+      "name": "positive_verdict_with_missing_rules",
+      "result": "rejected",
+      "reason": "Verdict contradicts unavailable source results"
+    },
+    {
+      "name": "native_validity_claim",
+      "result": "rejected",
+      "reason": "Evidence must not claim native validity"
+    },
+    {
+      "name": "missing_probe_observation",
+      "result": "rejected",
+      "reason": "Malformed P9 observations"
+    }
+  ],
+  "markdown_lines": 32,
+  "output_hashes": {
+    "docs/research/poc/pair/check_constant_rules_0106.py": "7a84e0813691ce7d92f3ff9d4eeb4cf5c0836c591fc096f6d18527815c8d01e6",
+    "docs/research/poc/pair/constant-rules-0106.md": "9d21062704888760ada3c1df46478e115a30a505798e8df31e64a5dbf1e2ae44",
+    "docs/research/poc/pair/constant-rules-0106.json": "9fc7194a21c91856cca1aad521c9db44a7c1c020b54ef7c1e60eafb5dd39d381",
+    "docs/research/poc/pair/probe_constant_rules_0106.py": "dd1f7e61cd59277ce7b2c71018148f3ebc1be51aada1542e28c791566bd140c5"
+  },
+  "limitations": [
+    "Offline evidence verification only; no native LabVIEW validity.",
+    "Malformed-record controls operate on in-memory copies; no VI or committed input is changed."
+  ]
+}

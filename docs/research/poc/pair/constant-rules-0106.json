@@ -1,0 +1,1512 @@
+{
+  "schema_version": 1,
+  "verdict": "source-blocked",
+  "input_hashes": {
+    "docs/perpetua/environment.md": "649d7e318d3617a042e151f27900384ed3a8954b3318f81e4f17603cb9836b35",
+    "docs/research/poc/LVheap-source.txt": "379d6645839ade727257387be4529c47dcd6481cb7cf177ae11e782ec996a7f0",
+    "docs/research/poc/LVmisc-source.txt": "738773b3356f0902bb83e94ba28f1da0d8b060cafc178b7c1eb046273cb9219a",
+    "docs/research/poc/LVparts-source.txt": "56399996b3bb1f8ec94a56887d4cba6bf9b70fb377acdc9aa0f1825fc9273bb0",
+    "docs/research/poc/edit-readiness.md": "b4400c6964553a4bbb2914395c9312dd89f9db7c59d46447d245cbc59a1971ea",
+    "docs/research/poc/heap-format-source.md": "90b83b2f08757fe96bf2b4f161c5138893d9a6f52c456f4567607c3edd033f96",
+    "docs/research/poc/heap-labels.json": "ca585c5bd975c4a3398c33d1ca5111625852b422072f6713b8c99584672279cf",
+    "docs/research/poc/inspect_vi.py": "867698cb6b9dcef3319ab5c645a5be5e0501fa90d3fc05cacd988d56c3d0c28f",
+    "docs/research/poc/pair/add-normal--add-separate.json": "8b588997da12295ebacbf487ccaa9895828afdc30abb369287961e7fb22dbe71",
+    "docs/research/poc/pair/add-normal--subtract-normal.json": "b448884b87a4c665de3da386953b993db0b502a05635f805ef14b5df02830925",
+    "docs/research/poc/pair/add-separate--subtract-separate.json": "86b3d8db49fea48fa706fbff0107617122332b3862f941d1ab2e5f0eef964836",
+    "docs/research/poc/pair/candidates-0105.json": "cf52dfa29a482aab06b3f260715774422222dc40b54ec4d45eb725980b50ba84",
+    "docs/research/poc/pair/constant-1-normal--constant-1-separate.json": "757417316390d8ca7206fc4f82e2e2517ef03443c52d1aba9a885661896f40fd",
+    "docs/research/poc/pair/constant-1-normal--constant-2-normal.json": "16fd8ed26f84896d5c28df3cd8d470953435d8b333a60e908be5dd6476bf71df",
+    "docs/research/poc/pair/constant-1-separate--constant-2-separate.json": "7a3c747f181208800bfe6920702da1e536545960841a4229db2c2d7655e81d62",
+    "docs/research/poc/pair/constant-2-normal--constant-2-separate.json": "4efa1e2a8ad9fabdc7bf35faa9b7982f3b80c09542b01596912baeeb99189928",
+    "docs/research/poc/pair/findings-0105.md": "9c83fadeacb4094ae37de2b309c16d4543f95f533cd1f65508d298e1bec80b45",
+    "docs/research/poc/pair/fixtures/add-normal.vi": "b928beb485b0cd8a7a54453a610e515d6e591ffee31a8ed17c89f23c4a8c7698",
+    "docs/research/poc/pair/fixtures/add-separate.vi": "ae30143dae74c4665d5286cc2183d9cbbbf2ec9c01365f36aab724d4fe5ed15e",
+    "docs/research/poc/pair/fixtures/authoring.md": "78fa8be7a97869a346f56fad4627a58c8132fa9788e6f1f7da539987f0b011ee",
+    "docs/research/poc/pair/fixtures/constant-1-normal.vi": "92797565c124a75557a6d6d6a4e97a32185a5481a4daa4bd5dca4b4f86d708ab",
+    "docs/research/poc/pair/fixtures/constant-1-separate.vi": "5fb16358439de9b2b49ae3eb829bba227565ec6e86993f7b7a1a8fcdc352e6d8",
+    "docs/research/poc/pair/fixtures/constant-2-normal.vi": "b75bd8645b1878a9eeea9456e185f87af24c7c8526f14fc118e411bd2d53ba3e",
+    "docs/research/poc/pair/fixtures/constant-2-separate.vi": "e5844746b85654e4a4c77acb0f4b282fe75ace925e276bcb2db3edbb0227b2d7",
+    "docs/research/poc/pair/fixtures/pins.json": "44bd3e1e00ce87c16d1eecaccba0b32ca8533d213323f3f30c14024d922779e0",
+    "docs/research/poc/pair/fixtures/subtract-normal.vi": "5edd0ebd79313b982b38b80616d5e58984e405f791245a1369fc94179ccc82c4",
+    "docs/research/poc/pair/fixtures/subtract-separate.vi": "97c2a34a894fd5c263128397b38647a19baf8449ab1519dea49c00033de2077f",
+    "docs/research/poc/pair/owner-instructions.md": "55c1ed5ec72fe37b817afedeecb7abefad5b7577349683d9cbcbc69dcf78242b",
+    "docs/research/poc/pair/pair_diff.py": "47d27dee98f1642dc401195482fbf43c536cef8a160aa399444d2e3a2d3578cb",
+    "docs/research/poc/pair/probe_constant_rules_0106.py": "dd1f7e61cd59277ce7b2c71018148f3ebc1be51aada1542e28c791566bd140c5",
+    "docs/research/poc/pair/protocol.md": "49255283f2814891ad7e0040e1f2ba4f54f6837bb8754769d7627ef84c374409",
+    "docs/research/poc/pair/replay-0105-status.json": "2e1bec337bf1344eb68d475b430a845cb2da5be3e7722938d2112db581dca2ed",
+    "docs/research/poc/pair/review-0102.json": "562467370d558b15eb9a7faf8cb1bc283365f99ef3c8cada9c6f54f1ead8249f",
+    "docs/research/poc/pair/selfcheck.json": "9b76ed047caf417db5f87f7ea66f682354c84b91f231492d6603ef33ff57f79c",
+    "docs/research/poc/pair/subtract-normal--subtract-separate.json": "359893960145ff1bc665b2fa5d3d90d6ba65e34520030ceb1778ca7c110d89f0",
+    "docs/research/poc/source-provenance.json": "a5489a95717d9accf876cb6d3335fe98c92855e259e60ebb6fc40315be333c0c",
+    "docs/research/poc/step3/source-provenance.json": "a0211dd3dd9dc905d7473b984b890d2b67e333fcd391190fd5d5d50b0c20571c",
+    "docs/research/poc/step3/source-search.json": "6f63c24889f0f2146fd2cf9add561f264937ca0bdcc29ff795a427759084a35d"
+  },
+  "repository_revision": "94fab83605240608b36f63d28129506fce9b78e6",
+  "repository_input_basis": "Existing evidence at repository_revision; new probe script pinned as working-tree research output.",
+  "source_pins": [
+    {
+      "path": "@environment/pylavi/pylavi/__init__.py",
+      "original_path": "pylavi/__init__.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "6f498f015d836ca66ec5efd3e9f335c74267a12bf5de26b960653e999bc2e0fe",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            1,
+            3
+          ],
+          "symbol": "package imports"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/pylavi/assembler.py",
+      "original_path": "pylavi/assembler.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "97be44f11bd9fce2e75a65205bab8cce1c7cfdb932133b2f58330c596ea127d6",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            1,
+            53
+          ],
+          "symbol": "assembler; unchanged prior search"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/pylavi/data_types.py",
+      "original_path": "pylavi/data_types.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            383,
+            450
+          ],
+          "symbol": "Array; unchanged prior search"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/pylavi/file.py",
+      "original_path": "pylavi/file.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            421,
+            465
+          ],
+          "symbol": "Resources resource access; unchanged prior search"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/pylavi/resource_types.py",
+      "original_path": "pylavi/resource_types.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            54,
+            93
+          ],
+          "symbol": "TypeBDPW"
+        },
+        {
+          "lines": [
+            97,
+            121
+          ],
+          "symbol": "TypeLVSR flags"
+        },
+        {
+          "lines": [
+            205,
+            215
+          ],
+          "symbol": "TypeLVSR.separate_code/from_bytes"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/pylavi/validate.py",
+      "original_path": "pylavi/validate.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "5d6e24ec184bda171189aca504a753aef36a436ced3126e5c68974f757042132",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            418,
+            431
+          ],
+          "symbol": "validate_locked_password"
+        }
+      ]
+    },
+    {
+      "path": "@environment/pylavi/tests/test_resource_type_BDPW.py",
+      "original_path": "tests/test_resource_type_BDPW.py",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "47d1c3e3d4b03d725e07311a46ba5d2f2998cd2a74e29663adfe87566ce885e3",
+      "kind": "source",
+      "citations": [
+        {
+          "lines": [
+            7,
+            23
+          ],
+          "symbol": "test_basics"
+        }
+      ]
+    },
+    {
+      "path": "@environment/readiness.json",
+      "original_path": "readiness.json",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+      "sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413",
+      "kind": "prepared-metadata",
+      "citations": [
+        {
+          "symbol": "sources[ name=pylavi ].commit"
+        }
+      ]
+    }
+  ],
+  "repository_source_pins": [
+    {
+      "path": "docs/research/poc/LVheap-source.txt",
+      "sha256": "379d6645839ade727257387be4529c47dcd6481cb7cf177ae11e782ec996a7f0",
+      "revision": "5f20e23de6a386021eb955c825cc43d221f09ff1",
+      "url": "https://raw.githubusercontent.com/mefistotelis/pylabview/5f20e23de6a386021eb955c825cc43d221f09ff1/pylabview/LVheap.py",
+      "symbol": "HeapNode.parseRSRCData; createObjectNode; OBJ_TEXT_HAIR_TAGS; OF__ConstValue"
+    },
+    {
+      "path": "docs/research/poc/heap-format-source.md",
+      "sha256": "90b83b2f08757fe96bf2b4f161c5138893d9a6f52c456f4567607c3edd033f96",
+      "revision": "5f20e23de6a386021eb955c825cc43d221f09ff1",
+      "url": "https://raw.githubusercontent.com/mefistotelis/pylabview/5f20e23de6a386021eb955c825cc43d221f09ff1/wiki/Block-Diagram-Heap-Format.md",
+      "symbol": "BDHb/BDHc; BDPW"
+    },
+    {
+      "path": "docs/research/poc/LVmisc-source.txt",
+      "sha256": "738773b3356f0902bb83e94ba28f1da0d8b060cafc178b7c1eb046273cb9219a",
+      "revision": "5f20e23de6a386021eb955c825cc43d221f09ff1",
+      "url": "https://raw.githubusercontent.com/mefistotelis/pylabview/5f20e23de6a386021eb955c825cc43d221f09ff1/pylabview/LVmisc.py",
+      "symbol": "readVariableSizeFieldU124; readVariableSizeFieldS124; readVariableSizeFieldS24"
+    },
+    {
+      "path": "docs/research/poc/LVparts-source.txt",
+      "sha256": "56399996b3bb1f8ec94a56887d4cba6bf9b70fb377acdc9aa0f1825fc9273bb0",
+      "revision": "5f20e23de6a386021eb955c825cc43d221f09ff1",
+      "url": "https://raw.githubusercontent.com/mefistotelis/pylabview/5f20e23de6a386021eb955c825cc43d221f09ff1/pylabview/LVparts.py",
+      "symbol": "PARTID; OBJ_FLAGS; DSINIT; DCO (prior unchanged search)"
+    }
+  ],
+  "probes": [
+    {
+      "id": "P0",
+      "hypothesis": "Original constant VIs match saved pins before any heap/password probes.",
+      "provenance": [
+        "docs/research/poc/pair/fixtures/pins.json#files",
+        "docs/research/poc/pair/replay-0105-status.json#input_hashes",
+        "docs/research/poc/pair/constant-1-separate--constant-2-separate.json#inputs",
+        "docs/research/poc/pair/constant-1-normal--constant-2-normal.json#inputs"
+      ],
+      "observed": {
+        "checks": [
+          {
+            "path": "docs/research/poc/pair/fixtures/constant-1-separate.vi",
+            "actual_sha256": "5fb16358439de9b2b49ae3eb829bba227565ec6e86993f7b7a1a8fcdc352e6d8",
+            "comparison_sha256": "5fb16358439de9b2b49ae3eb829bba227565ec6e86993f7b7a1a8fcdc352e6d8",
+            "manifest_sha256": "5fb16358439de9b2b49ae3eb829bba227565ec6e86993f7b7a1a8fcdc352e6d8",
+            "replay_sha256": "5fb16358439de9b2b49ae3eb829bba227565ec6e86993f7b7a1a8fcdc352e6d8",
+            "match": true
+          },
+          {
+            "path": "docs/research/poc/pair/fixtures/constant-2-separate.vi",
+            "actual_sha256": "e5844746b85654e4a4c77acb0f4b282fe75ace925e276bcb2db3edbb0227b2d7",
+            "comparison_sha256": "e5844746b85654e4a4c77acb0f4b282fe75ace925e276bcb2db3edbb0227b2d7",
+            "manifest_sha256": "e5844746b85654e4a4c77acb0f4b282fe75ace925e276bcb2db3edbb0227b2d7",
+            "replay_sha256": "e5844746b85654e4a4c77acb0f4b282fe75ace925e276bcb2db3edbb0227b2d7",
+            "match": true
+          },
+          {
+            "path": "docs/research/poc/pair/fixtures/constant-1-normal.vi",
+            "actual_sha256": "92797565c124a75557a6d6d6a4e97a32185a5481a4daa4bd5dca4b4f86d708ab",
+            "comparison_sha256": "92797565c124a75557a6d6d6a4e97a32185a5481a4daa4bd5dca4b4f86d708ab",
+            "manifest_sha256": "92797565c124a75557a6d6d6a4e97a32185a5481a4daa4bd5dca4b4f86d708ab",
+            "replay_sha256": "92797565c124a75557a6d6d6a4e97a32185a5481a4daa4bd5dca4b4f86d708ab",
+            "match": true
+          },
+          {
+            "path": "docs/research/poc/pair/fixtures/constant-2-normal.vi",
+            "actual_sha256": "b75bd8645b1878a9eeea9456e185f87af24c7c8526f14fc118e411bd2d53ba3e",
+            "comparison_sha256": "b75bd8645b1878a9eeea9456e185f87af24c7c8526f14fc118e411bd2d53ba3e",
+            "manifest_sha256": "b75bd8645b1878a9eeea9456e185f87af24c7c8526f14fc118e411bd2d53ba3e",
+            "replay_sha256": "b75bd8645b1878a9eeea9456e185f87af24c7c8526f14fc118e411bd2d53ba3e",
+            "match": true
+          }
+        ],
+        "protected_replay_inputs": {
+          "docs/research/poc/pair/fixtures/add-normal.vi": true,
+          "docs/research/poc/pair/fixtures/subtract-normal.vi": true,
+          "docs/research/poc/pair/fixtures/add-separate.vi": true,
+          "docs/research/poc/pair/fixtures/subtract-separate.vi": true,
+          "docs/research/poc/pair/fixtures/constant-1-normal.vi": true,
+          "docs/research/poc/pair/fixtures/constant-2-normal.vi": true,
+          "docs/research/poc/pair/fixtures/constant-1-separate.vi": true,
+          "docs/research/poc/pair/fixtures/constant-2-separate.vi": true,
+          "docs/research/poc/pair/fixtures/authoring.md": true,
+          "docs/research/poc/pair/pair_diff.py": true,
+          "docs/research/poc/pair/protocol.md": true,
+          "docs/research/poc/pair/owner-instructions.md": true,
+          "docs/research/poc/pair/selfcheck.json": true,
+          "docs/research/poc/pair/fixtures/pins.json": true,
+          "docs/research/poc/pair/review-0102.json": true
+        }
+      },
+      "conclusion": "supported",
+      "reason": "Saved expected pins were compared, never refreshed."
+    },
+    {
+      "id": "P4",
+      "hypothesis": "Prepared sources add a heap/type or BDPW integrity implementation beyond the prior POC search.",
+      "provenance": [
+        "docs/research/poc/step3/source-search.json#files",
+        "docs/research/poc/edit-readiness.md#source-derived-limitation"
+      ],
+      "observed": {
+        "pylavi_revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+        "tracked_status": "",
+        "prior_source_checks": [
+          {
+            "path": "@environment/pylavi/pylavi/__init__.py",
+            "sha256": "6f498f015d836ca66ec5efd3e9f335c74267a12bf5de26b960653e999bc2e0fe",
+            "prior_sha256": "6f498f015d836ca66ec5efd3e9f335c74267a12bf5de26b960653e999bc2e0fe",
+            "unchanged": true
+          },
+          {
+            "path": "@environment/pylavi/pylavi/assembler.py",
+            "sha256": "97be44f11bd9fce2e75a65205bab8cce1c7cfdb932133b2f58330c596ea127d6",
+            "prior_sha256": "97be44f11bd9fce2e75a65205bab8cce1c7cfdb932133b2f58330c596ea127d6",
+            "unchanged": true
+          },
+          {
+            "path": "@environment/pylavi/pylavi/data_types.py",
+            "sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+            "prior_sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+            "unchanged": true
+          },
+          {
+            "path": "@environment/pylavi/pylavi/file.py",
+            "sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+            "prior_sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+            "unchanged": true
+          },
+          {
+            "path": "@environment/pylavi/pylavi/resource_types.py",
+            "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+            "prior_sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+            "unchanged": true
+          },
+          {
+            "path": "@environment/pylavi/pylavi/validate.py",
+            "sha256": "5d6e24ec184bda171189aca504a753aef36a436ced3126e5c68974f757042132",
+            "prior_sha256": "5d6e24ec184bda171189aca504a753aef36a436ced3126e5c68974f757042132",
+            "unchanged": true
+          }
+        ],
+        "inventory_roots": [
+          "actor-framework",
+          "pylavi",
+          "readiness.json"
+        ],
+        "missing_module_globs": {
+          "LVblock*": [],
+          "LVdatatype*": [],
+          "LVrsrc*": []
+        },
+        "prior_terms": [
+          "BDPW",
+          "ConstValue",
+          "DTHP",
+          "VCTP",
+          "integrity_cache",
+          "constant_encoding"
+        ],
+        "stop": "Six production source hashes match the previous search: reuse its absence; no repeated broad search.",
+        "available_dependency": "TypeBDPW chunk-0 ASCII-password MD5 only; test_basics tests serialization/password checks."
+      },
+      "conclusion": "refuted",
+      "reason": "No additional prepared implementation was found in this bounded inventory; no LVblock/LVdatatype/LVrsrc is staged."
+    },
+    {
+      "id": "P1",
+      "hypothesis": "The aligned four-byte insertion is a complete textRec flags leaf, separate from the constant value.",
+      "provenance": [
+        "docs/research/poc/inspect_vi.py:80-123#parse_heap",
+        "docs/research/poc/LVheap-source.txt:1489-1530#HeapNode.parseRSRCData",
+        "docs/research/poc/LVheap-source.txt:1113-1130#OBJ_TEXT_HAIR_TAGS",
+        "docs/research/poc/pair/candidates-0105.json#bdhb_alignments[2:4]"
+      ],
+      "observed": {
+        "contexts": {
+          "constant-1-separate.vi": {
+            "heap_bytes": 674,
+            "heap_length": 670,
+            "heap_sha256": "87b927c23b82755f91789476d27eb0abe229c84664dc02db36fa9843a570643a",
+            "parse_status": "complete",
+            "consumed": 674,
+            "nodes": [
+              {
+                "heap_offset": 210,
+                "end": 213,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 212,
+                "data_length": 1,
+                "content_hex": "03",
+                "attributes": []
+              },
+              {
+                "heap_offset": 306,
+                "end": 312,
+                "header": 4397,
+                "scope": "open",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 312,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": [
+                  {
+                    "id": -2,
+                    "value": 1,
+                    "heap_offset": 309,
+                    "value_offset": 310,
+                    "end": 312
+                  }
+                ]
+              },
+              {
+                "heap_offset": 312,
+                "end": 318,
+                "header": 33825,
+                "scope": "leaf",
+                "tag": 2,
+                "name": "OF__mode",
+                "size_spec": 4,
+                "data_offset": 314,
+                "data_length": 4,
+                "content_hex": "00884402",
+                "attributes": []
+              },
+              {
+                "heap_offset": 318,
+                "end": 324,
+                "header": 33828,
+                "scope": "leaf",
+                "tag": 5,
+                "name": "OF__bgColor",
+                "size_spec": 4,
+                "data_offset": 320,
+                "data_length": 4,
+                "content_hex": "00ffffff",
+                "attributes": []
+              },
+              {
+                "heap_offset": 324,
+                "end": 326,
+                "header": 2349,
+                "scope": "close",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 326,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": []
+              },
+              {
+                "heap_offset": 326,
+                "end": 332,
+                "header": 33908,
+                "scope": "leaf",
+                "tag": 85,
+                "name": "OF__format",
+                "size_spec": 4,
+                "data_offset": 328,
+                "data_length": 4,
+                "content_hex": "252e3066",
+                "attributes": []
+              },
+              {
+                "heap_offset": 532,
+                "end": 535,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 534,
+                "data_length": 1,
+                "content_hex": "04",
+                "attributes": []
+              },
+              {
+                "heap_offset": 540,
+                "end": 546,
+                "header": 34412,
+                "scope": "leaf",
+                "tag": 589,
+                "name": "OF__ConstValue",
+                "size_spec": 4,
+                "data_offset": 542,
+                "data_length": 4,
+                "content_hex": "00000001",
+                "attributes": []
+              }
+            ],
+            "constant_parent": {
+              "heap_offset": 201,
+              "end": 210,
+              "header": 4175,
+              "scope": "open",
+              "tag": 48,
+              "name": "OF__dco",
+              "size_spec": 0,
+              "data_offset": 210,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 19,
+                  "heap_offset": 204,
+                  "value_offset": 205,
+                  "end": 207
+                },
+                {
+                  "id": -3,
+                  "value": 118,
+                  "heap_offset": 207,
+                  "value_offset": 208,
+                  "end": 210
+                }
+              ]
+            },
+            "numeric_display": {
+              "heap_offset": 217,
+              "end": 226,
+              "header": 4179,
+              "scope": "open",
+              "tag": 52,
+              "name": "OF__ddo",
+              "size_spec": 0,
+              "data_offset": 226,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 80,
+                  "heap_offset": 220,
+                  "value_offset": 221,
+                  "end": 223
+                },
+                {
+                  "id": -3,
+                  "value": 125,
+                  "heap_offset": 223,
+                  "value_offset": 224,
+                  "end": 226
+                }
+              ]
+            }
+          },
+          "constant-2-separate.vi": {
+            "heap_bytes": 678,
+            "heap_length": 674,
+            "heap_sha256": "b8e21c53d8562fdac2eec9ee62780230059d74356f793947c270dcfc587b39f1",
+            "parse_status": "complete",
+            "consumed": 678,
+            "nodes": [
+              {
+                "heap_offset": 210,
+                "end": 213,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 212,
+                "data_length": 1,
+                "content_hex": "03",
+                "attributes": []
+              },
+              {
+                "heap_offset": 306,
+                "end": 312,
+                "header": 4397,
+                "scope": "open",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 312,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": [
+                  {
+                    "id": -2,
+                    "value": 1,
+                    "heap_offset": 309,
+                    "value_offset": 310,
+                    "end": 312
+                  }
+                ]
+              },
+              {
+                "heap_offset": 312,
+                "end": 316,
+                "header": 17440,
+                "scope": "leaf",
+                "tag": 1,
+                "name": "OF__flags",
+                "size_spec": 2,
+                "data_offset": 314,
+                "data_length": 2,
+                "content_hex": "0200",
+                "attributes": []
+              },
+              {
+                "heap_offset": 316,
+                "end": 322,
+                "header": 33825,
+                "scope": "leaf",
+                "tag": 2,
+                "name": "OF__mode",
+                "size_spec": 4,
+                "data_offset": 318,
+                "data_length": 4,
+                "content_hex": "00884402",
+                "attributes": []
+              },
+              {
+                "heap_offset": 322,
+                "end": 328,
+                "header": 33828,
+                "scope": "leaf",
+                "tag": 5,
+                "name": "OF__bgColor",
+                "size_spec": 4,
+                "data_offset": 324,
+                "data_length": 4,
+                "content_hex": "00ffffff",
+                "attributes": []
+              },
+              {
+                "heap_offset": 328,
+                "end": 330,
+                "header": 2349,
+                "scope": "close",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 330,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": []
+              },
+              {
+                "heap_offset": 330,
+                "end": 336,
+                "header": 33908,
+                "scope": "leaf",
+                "tag": 85,
+                "name": "OF__format",
+                "size_spec": 4,
+                "data_offset": 332,
+                "data_length": 4,
+                "content_hex": "252e3066",
+                "attributes": []
+              },
+              {
+                "heap_offset": 536,
+                "end": 539,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 538,
+                "data_length": 1,
+                "content_hex": "04",
+                "attributes": []
+              },
+              {
+                "heap_offset": 544,
+                "end": 550,
+                "header": 34412,
+                "scope": "leaf",
+                "tag": 589,
+                "name": "OF__ConstValue",
+                "size_spec": 4,
+                "data_offset": 546,
+                "data_length": 4,
+                "content_hex": "00000002",
+                "attributes": []
+              }
+            ],
+            "constant_parent": {
+              "heap_offset": 201,
+              "end": 210,
+              "header": 4175,
+              "scope": "open",
+              "tag": 48,
+              "name": "OF__dco",
+              "size_spec": 0,
+              "data_offset": 210,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 19,
+                  "heap_offset": 204,
+                  "value_offset": 205,
+                  "end": 207
+                },
+                {
+                  "id": -3,
+                  "value": 118,
+                  "heap_offset": 207,
+                  "value_offset": 208,
+                  "end": 210
+                }
+              ]
+            },
+            "numeric_display": {
+              "heap_offset": 217,
+              "end": 226,
+              "header": 4179,
+              "scope": "open",
+              "tag": 52,
+              "name": "OF__ddo",
+              "size_spec": 0,
+              "data_offset": 226,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 80,
+                  "heap_offset": 220,
+                  "value_offset": 221,
+                  "end": 223
+                },
+                {
+                  "id": -3,
+                  "value": 125,
+                  "heap_offset": 223,
+                  "value_offset": 224,
+                  "end": 226
+                }
+              ]
+            }
+          },
+          "constant-1-normal.vi": {
+            "heap_bytes": 674,
+            "heap_length": 670,
+            "heap_sha256": "87b927c23b82755f91789476d27eb0abe229c84664dc02db36fa9843a570643a",
+            "parse_status": "complete",
+            "consumed": 674,
+            "nodes": [
+              {
+                "heap_offset": 210,
+                "end": 213,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 212,
+                "data_length": 1,
+                "content_hex": "03",
+                "attributes": []
+              },
+              {
+                "heap_offset": 306,
+                "end": 312,
+                "header": 4397,
+                "scope": "open",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 312,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": [
+                  {
+                    "id": -2,
+                    "value": 1,
+                    "heap_offset": 309,
+                    "value_offset": 310,
+                    "end": 312
+                  }
+                ]
+              },
+              {
+                "heap_offset": 312,
+                "end": 318,
+                "header": 33825,
+                "scope": "leaf",
+                "tag": 2,
+                "name": "OF__mode",
+                "size_spec": 4,
+                "data_offset": 314,
+                "data_length": 4,
+                "content_hex": "00884402",
+                "attributes": []
+              },
+              {
+                "heap_offset": 318,
+                "end": 324,
+                "header": 33828,
+                "scope": "leaf",
+                "tag": 5,
+                "name": "OF__bgColor",
+                "size_spec": 4,
+                "data_offset": 320,
+                "data_length": 4,
+                "content_hex": "00ffffff",
+                "attributes": []
+              },
+              {
+                "heap_offset": 324,
+                "end": 326,
+                "header": 2349,
+                "scope": "close",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 326,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": []
+              },
+              {
+                "heap_offset": 326,
+                "end": 332,
+                "header": 33908,
+                "scope": "leaf",
+                "tag": 85,
+                "name": "OF__format",
+                "size_spec": 4,
+                "data_offset": 328,
+                "data_length": 4,
+                "content_hex": "252e3066",
+                "attributes": []
+              },
+              {
+                "heap_offset": 532,
+                "end": 535,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 534,
+                "data_length": 1,
+                "content_hex": "04",
+                "attributes": []
+              },
+              {
+                "heap_offset": 540,
+                "end": 546,
+                "header": 34412,
+                "scope": "leaf",
+                "tag": 589,
+                "name": "OF__ConstValue",
+                "size_spec": 4,
+                "data_offset": 542,
+                "data_length": 4,
+                "content_hex": "00000001",
+                "attributes": []
+              }
+            ],
+            "constant_parent": {
+              "heap_offset": 201,
+              "end": 210,
+              "header": 4175,
+              "scope": "open",
+              "tag": 48,
+              "name": "OF__dco",
+              "size_spec": 0,
+              "data_offset": 210,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 19,
+                  "heap_offset": 204,
+                  "value_offset": 205,
+                  "end": 207
+                },
+                {
+                  "id": -3,
+                  "value": 118,
+                  "heap_offset": 207,
+                  "value_offset": 208,
+                  "end": 210
+                }
+              ]
+            },
+            "numeric_display": {
+              "heap_offset": 217,
+              "end": 226,
+              "header": 4179,
+              "scope": "open",
+              "tag": 52,
+              "name": "OF__ddo",
+              "size_spec": 0,
+              "data_offset": 226,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 80,
+                  "heap_offset": 220,
+                  "value_offset": 221,
+                  "end": 223
+                },
+                {
+                  "id": -3,
+                  "value": 125,
+                  "heap_offset": 223,
+                  "value_offset": 224,
+                  "end": 226
+                }
+              ]
+            }
+          },
+          "constant-2-normal.vi": {
+            "heap_bytes": 678,
+            "heap_length": 674,
+            "heap_sha256": "b8e21c53d8562fdac2eec9ee62780230059d74356f793947c270dcfc587b39f1",
+            "parse_status": "complete",
+            "consumed": 678,
+            "nodes": [
+              {
+                "heap_offset": 210,
+                "end": 213,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 212,
+                "data_length": 1,
+                "content_hex": "03",
+                "attributes": []
+              },
+              {
+                "heap_offset": 306,
+                "end": 312,
+                "header": 4397,
+                "scope": "open",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 312,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": [
+                  {
+                    "id": -2,
+                    "value": 1,
+                    "heap_offset": 309,
+                    "value_offset": 310,
+                    "end": 312
+                  }
+                ]
+              },
+              {
+                "heap_offset": 312,
+                "end": 316,
+                "header": 17440,
+                "scope": "leaf",
+                "tag": 1,
+                "name": "OF__flags",
+                "size_spec": 2,
+                "data_offset": 314,
+                "data_length": 2,
+                "content_hex": "0200",
+                "attributes": []
+              },
+              {
+                "heap_offset": 316,
+                "end": 322,
+                "header": 33825,
+                "scope": "leaf",
+                "tag": 2,
+                "name": "OF__mode",
+                "size_spec": 4,
+                "data_offset": 318,
+                "data_length": 4,
+                "content_hex": "00884402",
+                "attributes": []
+              },
+              {
+                "heap_offset": 322,
+                "end": 328,
+                "header": 33828,
+                "scope": "leaf",
+                "tag": 5,
+                "name": "OF__bgColor",
+                "size_spec": 4,
+                "data_offset": 324,
+                "data_length": 4,
+                "content_hex": "00ffffff",
+                "attributes": []
+              },
+              {
+                "heap_offset": 328,
+                "end": 330,
+                "header": 2349,
+                "scope": "close",
+                "tag": 270,
+                "name": "OF__textRec",
+                "size_spec": 0,
+                "data_offset": 330,
+                "data_length": 0,
+                "content_hex": "",
+                "attributes": []
+              },
+              {
+                "heap_offset": 330,
+                "end": 336,
+                "header": 33908,
+                "scope": "leaf",
+                "tag": 85,
+                "name": "OF__format",
+                "size_spec": 4,
+                "data_offset": 332,
+                "data_length": 4,
+                "content_hex": "252e3066",
+                "attributes": []
+              },
+              {
+                "heap_offset": 536,
+                "end": 539,
+                "header": 9530,
+                "scope": "leaf",
+                "tag": 283,
+                "name": "OF__typeDesc",
+                "size_spec": 1,
+                "data_offset": 538,
+                "data_length": 1,
+                "content_hex": "04",
+                "attributes": []
+              },
+              {
+                "heap_offset": 544,
+                "end": 550,
+                "header": 34412,
+                "scope": "leaf",
+                "tag": 589,
+                "name": "OF__ConstValue",
+                "size_spec": 4,
+                "data_offset": 546,
+                "data_length": 4,
+                "content_hex": "00000002",
+                "attributes": []
+              }
+            ],
+            "constant_parent": {
+              "heap_offset": 201,
+              "end": 210,
+              "header": 4175,
+              "scope": "open",
+              "tag": 48,
+              "name": "OF__dco",
+              "size_spec": 0,
+              "data_offset": 210,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 19,
+                  "heap_offset": 204,
+                  "value_offset": 205,
+                  "end": 207
+                },
+                {
+                  "id": -3,
+                  "value": 118,
+                  "heap_offset": 207,
+                  "value_offset": 208,
+                  "end": 210
+                }
+              ]
+            },
+            "numeric_display": {
+              "heap_offset": 217,
+              "end": 226,
+              "header": 4179,
+              "scope": "open",
+              "tag": 52,
+              "name": "OF__ddo",
+              "size_spec": 0,
+              "data_offset": 226,
+              "data_length": 0,
+              "content_hex": "",
+              "attributes": [
+                {
+                  "id": -2,
+                  "value": 80,
+                  "heap_offset": 220,
+                  "value_offset": 221,
+                  "end": 223
+                },
+                {
+                  "id": -3,
+                  "value": 125,
+                  "heap_offset": 223,
+                  "value_offset": 224,
+                  "end": 226
+                }
+              ]
+            }
+          }
+        },
+        "inserted_hex": "44200200",
+        "inserted_span": [
+          312,
+          316
+        ],
+        "header_hex": "4420",
+        "header_decode": {
+          "size_spec": 2,
+          "scope": 1,
+          "raw_tag": 32,
+          "tag": 1
+        },
+        "body_hex": "0200",
+        "body_span": [
+          314,
+          316
+        ],
+        "parent_class": 1,
+        "parent_tag": 270,
+        "parent_offset": 306,
+        "prior_child": "OF__mode",
+        "meaning": "Source labels flags in textHair; no bit-0x0200 meaning or mandatory insertion rule is supplied."
+      },
+      "conclusion": "supported",
+      "reason": "The parser resolves boundaries; SequenceMatcher alone did not. The cause and general requirement remain unknown."
+    },
+    {
+      "id": "P2",
+      "hypothesis": "The candidate value byte lies inside a four-byte ConstValue body of constant DCO UID 118.",
+      "provenance": [
+        "docs/research/poc/LVheap-source.txt:693#OF__ConstValue",
+        "docs/research/poc/LVheap-source.txt:750#SL__bDConstDCO",
+        "docs/research/poc/inspect_vi.py:80-123#parse_heap"
+      ],
+      "observed": {
+        "left_node_span": [
+          540,
+          546
+        ],
+        "right_node_span": [
+          544,
+          550
+        ],
+        "left_body_span": [
+          542,
+          546
+        ],
+        "right_body_span": [
+          546,
+          550
+        ],
+        "left_hex": "00000001",
+        "right_hex": "00000002",
+        "header_hex": "866c",
+        "changed_offsets": [
+          545,
+          549
+        ],
+        "parent_class": 19,
+        "parent_uid": 118,
+        "type_references": {
+          "dco": "03",
+          "display": "04"
+        },
+        "note": "Type references are heap IDs, not decoded I32 descriptors. Body length is in sizeSpec=4, not a separate length byte."
+      },
+      "conclusion": "supported",
+      "reason": "Observed bodies agree with the author-reported I32 1-to-2 edit in these fixtures only."
+    },
+    {
+      "id": "P3",
+      "hypothesis": "The available source proves a general typed I32 ConstValue encoding/edit rule.",
+      "provenance": [
+        "docs/research/poc/LVheap-source.txt:1951-1979#HeapNodeTDDataFill.findAndStoreTD",
+        "docs/research/poc/LVheap-source.txt:2555-2561#NODE_TYPEID_TAGS_LIST",
+        "docs/research/poc/LVheap-source.txt:2590-2594#NODE_DATAFILL_TAGS_LIST",
+        "docs/research/poc/LVheap-source.txt:2796-2840#createObjectNode",
+        "docs/research/poc/edit-readiness.md"
+      ],
+      "observed": {
+        "typed_constvalue": false,
+        "heap_type_resolution": "getHeapTD implementation not staged",
+        "generic_factory": "ConstValue is not in typed datafill tags; generic HeapNode fallback",
+        "body_interpretation": "big-endian 32-bit 1/2 is consistent with author claims, not independently resolved signed type",
+        "flags_insertion_requirement": "unknown"
+      },
+      "conclusion": "unknown",
+      "reason": "No DTHP/VCTP resolver or typed ConstValue dispatch for this case is available; prior absence unchanged."
+    },
+    {
+      "id": "P5",
+      "hypothesis": "The source-defined chunk-0 MD5 dependency predicts an empty password in all four constants.",
+      "provenance": [
+        "@environment/pylavi/pylavi/resource_types.py:54-90#TypeBDPW",
+        "@environment/pylavi/tests/test_resource_type_BDPW.py:7-23#test_basics"
+      ],
+      "observed": {
+        "md5_empty_ascii": "d41d8cd98f00b204e9800998ecf8427e",
+        "results": [
+          {
+            "fixture": "constant-1-normal.vi",
+            "chunks": [
+              "d41d8cd98f00b204e9800998ecf8427e",
+              "a85464e2079b5411ecb4bf131547ea39",
+              "1d70ee023074d74cf7ff726443f8cbac"
+            ],
+            "has_password": false,
+            "empty_ascii_password_matches": true,
+            "lvsr_locked": false
+          },
+          {
+            "fixture": "constant-1-separate.vi",
+            "chunks": [
+              "d41d8cd98f00b204e9800998ecf8427e",
+              "93f014ffbf5b012afc5ff7421f27937f",
+              "0e88aab470930b85605c0b8ef091164f"
+            ],
+            "has_password": false,
+            "empty_ascii_password_matches": true,
+            "lvsr_locked": false
+          },
+          {
+            "fixture": "constant-2-normal.vi",
+            "chunks": [
+              "d41d8cd98f00b204e9800998ecf8427e",
+              "20e302e000dbebbf4a5c875c841fb364",
+              "ebdfcde566e15d3bab2d83c292da86a3"
+            ],
+            "has_password": false,
+            "empty_ascii_password_matches": true,
+            "lvsr_locked": false
+          },
+          {
+            "fixture": "constant-2-separate.vi",
+            "chunks": [
+              "d41d8cd98f00b204e9800998ecf8427e",
+              "61f7929ca5c6401dea54d60ac6812ea4",
+              "4321fe1e1970349f01598973a7a2ea16"
+            ],
+            "has_password": false,
+            "empty_ascii_password_matches": true,
+            "lvsr_locked": false
+          }
+        ],
+        "checks_only": "chunk 0 / password classification; no integrity derivation for chunks 1/2"
+      },
+      "conclusion": "supported",
+      "reason": "All four records match empty ASCII MD5 and has_password=false. No passwords were changed or bypassed."
+    },
+    {
+      "id": "P6",
+      "hypothesis": "Prepared source supplies testable BDPW chunk-1/2 dependencies on RTSG/LVSR/BDHb.",
+      "provenance": [
+        "@environment/pylavi/pylavi/resource_types.py:54-93#TypeBDPW",
+        "docs/research/poc/step3/source-search.json#files",
+        "docs/research/poc/heap-format-source.md#BDPW"
+      ],
+      "observed": {
+        "recipe_available": false,
+        "tested_recipes": [],
+        "missing": "No digest input order, version gates, salts or excluded ranges are specified.",
+        "opaque_resources": [
+          "BDPW[16:48]",
+          "RTSG",
+          "LVSR[52:68]",
+          "LVSR[80:96]",
+          "LVSR[120:136]"
+        ]
+      },
+      "conclusion": "unknown",
+      "reason": "The only explicit hash recipe is chunk 0; unavailable recipes cannot be tested, and no guessed recipes were tried."
+    },
+    {
+      "id": "P7",
+      "hypothesis": "BDPW chunks 1/2 are a function of BDHb alone across these save modes.",
+      "provenance": [
+        "docs/research/poc/pair/constant-1-normal--constant-1-separate.json#resources",
+        "docs/research/poc/pair/constant-2-normal--constant-2-separate.json#resources"
+      ],
+      "observed": {
+        "save_mode_controls": [
+          {
+            "value": 1,
+            "raw_BDHb_equal": true,
+            "BDPW_equal": false,
+            "chunks_1_2_equal": false,
+            "RTSG_equal": true
+          },
+          {
+            "value": 2,
+            "raw_BDHb_equal": true,
+            "BDPW_equal": false,
+            "chunks_1_2_equal": false,
+            "RTSG_equal": true
+          }
+        ]
+      },
+      "conclusion": "refuted",
+      "reason": "Identical BDHb inputs have different BDPW tails. This does not identify which other input caused the change."
+    },
+    {
+      "id": "P8",
+      "hypothesis": "Both save modes reproduce BDHb changes; normal DFDS changes while type tables and normal VICD remain equal.",
+      "provenance": [
+        "docs/research/poc/pair/constant-1-separate--constant-2-separate.json#resources",
+        "docs/research/poc/pair/constant-1-normal--constant-2-normal.json#resources"
+      ],
+      "observed": {
+        "resource_summary": {
+          "separate": {
+            "BDHb": {
+              "raw_different": true,
+              "left_length": 489,
+              "right_length": 493,
+              "decompressed": {
+                "left_length": 674,
+                "right_length": 678,
+                "left_sha256": "87b927c23b82755f91789476d27eb0abe229c84664dc02db36fa9843a570643a",
+                "right_sha256": "b8e21c53d8562fdac2eec9ee62780230059d74356f793947c270dcfc587b39f1",
+                "different": true
+              }
+            },
+            "BDPW": {
+              "raw_different": true,
+              "left_length": 48,
+              "right_length": 48
+            },
+            "CPC2": {
+              "raw_different": false,
+              "left_length": 2,
+              "right_length": 2
+            },
+            "DTHP": {
+              "raw_different": false,
+              "left_length": 4,
+              "right_length": 4
+            },
+            "LVSR": {
+              "raw_different": true,
+              "left_length": 160,
+              "right_length": 160
+            },
+            "RTSG": {
+              "raw_different": true,
+              "left_length": 16,
+              "right_length": 16
+            },
+            "VCTP": {
+              "raw_different": false,
+              "left_length": 70,
+              "right_length": 70,
+              "decompressed": {
+                "left_length": 208,
+                "right_length": 208,
+                "left_sha256": "828dec79ce1fed4043c8e06590beac6c8bf3de6044a433e49f4637d466554930",
+                "right_sha256": "828dec79ce1fed4043c8e06590beac6c8bf3de6044a433e49f4637d466554930",
+                "different": false
+              }
+            }
+          },
+          "normal": {
+            "BDHb": {
+              "raw_different": true,
+              "left_length": 489,
+              "right_length": 493,
+              "decompressed": {
+                "left_length": 674,
+                "right_length": 678,
+                "left_sha256": "87b927c23b82755f91789476d27eb0abe229c84664dc02db36fa9843a570643a",
+                "right_sha256": "b8e21c53d8562fdac2eec9ee62780230059d74356f793947c270dcfc587b39f1",
+                "different": true
+              }
+            },
+            "BDPW": {
+              "raw_different": true,
+              "left_length": 48,
+              "right_length": 48
+            },
+            "CPC2": {
+              "raw_different": false,
+              "left_length": 2,
+              "right_length": 2
+            },
+            "DFDS": {
+              "raw_different": true,
+              "left_length": 108,
+              "right_length": 108,
+              "decompressed": {
+                "left_length": 300,
+                "right_length": 300,
+                "left_sha256": "44d036aa148138b53bbbe6e9cc255455a8310d5f60871c3d77bf683f2fb37d26",
+                "right_sha256": "9b1f5fe08ffe25a0efc8f7f06dc2199a28b6ec8bae668de6d95ea55fe36f86f3",
+                "different": true
+              },
+              "ranges": [
+                {
+                  "offset": 223,
+                  "length": 1,
+                  "left_hex": "01",
+                  "right_hex": "02"
+                }
+              ]
+            },
+            "DTHP": {
+              "raw_different": false,
+              "left_length": 4,
+              "right_length": 4
+            },
+            "LVSR": {
+              "raw_different": true,
+              "left_length": 160,
+              "right_length": 160
+            },
+            "RTSG": {
+              "raw_different": true,
+              "left_length": 16,
+              "right_length": 16
+            },
+            "VCTP": {
+              "raw_different": false,
+              "left_length": 258,
+              "right_length": 258,
+              "decompressed": {
+                "left_length": 591,
+                "right_length": 591,
+                "left_sha256": "c60f5b7b6d0ee08229449b8d0582d97dbba5502d34550cc7c73dc99e58366224",
+                "right_sha256": "c60f5b7b6d0ee08229449b8d0582d97dbba5502d34550cc7c73dc99e58366224",
+                "different": false
+              }
+            },
+            "VICD": {
+              "raw_different": false,
+              "left_length": 798,
+              "right_length": 798,
+              "decompressed": {
+                "left_length": 1592,
+                "right_length": 1592,
+                "left_sha256": "8abba55334ef177287fc05b1e1d3f6a58561f74a017af76e9b605c866f746011",
+                "right_sha256": "8abba55334ef177287fc05b1e1d3f6a58561f74a017af76e9b605c866f746011",
+                "different": false
+              }
+            }
+          }
+        },
+        "cross_modes": [
+          {
+            "value": 1,
+            "raw_BDHb_equal": true,
+            "BDPW_equal": false,
+            "chunks_1_2_equal": false,
+            "RTSG_equal": true
+          },
+          {
+            "value": 2,
+            "raw_BDHb_equal": true,
+            "BDPW_equal": false,
+            "chunks_1_2_equal": false,
+            "RTSG_equal": true
+          }
+        ],
+        "DFDS_separate_present": false,
+        "normal_DFDS_offset": 223,
+        "equality_scope": "Within each constant logic pair; VCTP/DTHP differ across save modes."
+      },
+      "conclusion": "supported",
+      "reason": "These correlations repeat in both modes but do not give a general editing, cache retention or type-binding rule."
+    },
+    {
+      "id": "P9",
+      "hypothesis": "The pair/source evidence establishes a safe dependency update or cache invalidation rule.",
+      "provenance": [
+        "docs/research/poc/pair/findings-0105.md#not-established",
+        "@environment/pylavi/pylavi/resource_types.py:97-121#TypeLVSR",
+        "@environment/pylavi/pylavi/resource_types.py:205-215#TypeLVSR.separate_code"
+      ],
+      "observed": {
+        "lvsr_flags_word_offset": 8,
+        "normal_flags_word": "20000200",
+        "separate_flags_word": "20000600",
+        "unknowns": [
+          "RTSG derivation/role",
+          "LVSR identifier-like regions",
+          "BDPW integrity tails",
+          "code/data/type rebuild dependency",
+          "effect of textRec flags"
+        ],
+        "unchanged_save_control_present": false,
+        "native_validation": false
+      },
+      "conclusion": "unknown",
+      "reason": "The source names the separate-code bit only; no rebuild/integrity rule or unchanged-save control is available."
+    }
+  ],
+  "unresolved": [
+    "Typed ConstValue and heap type resolution",
+    "textHair flags 0x0200 meaning/cause",
+    "BDPW chunk-1/2 derivation",
+    "RTSG and LVSR integrity roles",
+    "DFDS and code/type dependency handling",
+    "Unchanged Save As/re-save control"
+  ],
+  "limitations": [
+    "No LabVIEW ran; no native validity, behavior, unbroken arrow, save-version preservation, 2024 or all-version evidence.",
+    "Parser labels/boundaries are source-derived observations, not native semantics.",
+    "No VI, reviewed tool, replay output or saved pin was changed; no cache removal, transplant or product code.",
+    "Only the four owner constant fixtures were probed; authoring reports 2026 26.1.1f1 32-bit Windows 11.",
+    "Source absence is limited to this pinned prepared inventory and saved snapshots.",
+    "rules-supported would describe evidence support only, never native validity."
+  ],
+  "invocation": "python3 -B docs/research/poc/pair/probe_constant_rules_0106.py",
+  "offset_basis": "Half-open decompressed BDHb offsets include the inner 4-byte length prefix.",
+  "native_validity_established": false
+}
