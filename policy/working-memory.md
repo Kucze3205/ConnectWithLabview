@@ -31,7 +31,15 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 ## Iteration 0024 orders (#205, wake true)
 - `land-challenges-script` (benchmark, low, 20 min/12 turns, from main): run the script once, verify pinned hashes
   of the 5 files, challenges --check, evaluator missing==[baseline], lineage unchanged, no __pycache__; commit.
-- Expected gain: challenges pinned on main; independent review can start.
+- Result #206 (codex gpt-6.1-sol only, 148k input, 11 turns): script ran, Verification exit 0, diff exactly 5 challenge
+  files + 2 preparation JSON; own `git commit` failed (Author identity unknown), then session_budget -> partial.
+  Parent saved staged work as a231d9e, tag `iter/0024/206`. Lesson: never ask tasks to `git commit`; the parent commits.
+- Pass 2 orders (wake true), both start_branch task/206 (resolves to the tag), no dependency between them:
+  - `finish-landing-206` (benchmark, low, 15 min/10 turns): no rerun if README present, no commit, run Verification,
+    report done so a231d9e can merge. Expected gain: main evaluator missing == [baseline].
+  - `review-challenges-206` (reviewer, medium, 60 min/40 turns): independent Spec/Standards review of a231d9e against
+    protocol challenge rows and evaluation.md; check every evidence pointer by script; accept/revise verdict.
+    Author #195 was mostly codex; check the reviewer's actual `models` block for family diversity.
 
 ## Next Policymaker
 - Wake: read the landing report, actual `models` block, Verification and `git diff --stat origin/main`.
