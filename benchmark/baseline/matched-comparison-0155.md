@@ -13,15 +13,16 @@ Status: design over SYNTHETIC data. No model, reader, evaluator or native run, n
 Provider; model id and snapshot; effort and generation settings (temperature, max output, seeds where supported); prompt template hash; tool-free context (question, original artifacts as text, documentation, presentation order); token budget (total, output, context); wall-time budget; call budget (same ceiling value, the without-tool arm having zero available calls); environment pins (reader commit/config, tool schema, runner, scorer, split, key revisions, claim mapping). Tool output is not tool-free context and is recorded per attempt. All values are frozen in the manifest and plan hash before the first dispatch; later change is settings drift.
 
 ## Repetitions
-Slots reuse the full tuple `record_id, case_id, pair_id, repetition_id, arm` joined by `slot_ref`, with the explicit 0138 per-arm repetition maps authoritative even when arms use different labels. This contract mints no repetition ids. Four paired development repetitions per case is a pilot allocation from 0148; the evaluation count is null (O04). One eligible attempt per slot.
+Slots reuse the full tuple `record_id, case_id, pair_id, repetition_id, arm` joined by `slot_ref`, with the explicit 0138 per-arm repetition maps authoritative even when arms use different labels. 0138 supplies the mechanism only: one synthetic comparison, null independent repetitions per case/arm, no with-images slot (O06). This contract mints no repetition ids. Four paired development repetitions per case is a pilot allocation from 0148; the evaluation count is null (O04). One eligible attempt per slot.
 
 ## Stopping, mapped onto the ledger
 | Condition | Ledger event | Terminal | answer_class |
 |---|---|---|---|
 | budget does not fit before dispatch | stop_recorded budget | stopped_budget | none (unstarted) |
 | budget exhausted in attempt | usage_reconciled exhausted, stop_recorded budget | stopped_budget | exhausted / truncated, ineligible |
-| external interruption | delivery_interpreted | finished_incomplete or stopped_hard_failure | interrupted |
-| unsupported case or arm | delivery_interpreted | finished_incomplete | unsupported, ineligible |
+| external interruption | delivery_interpreted | `interrupted` alone never stops a plan (ledger R08). stopped_hard_failure only when a separate stop_recorded hard_evidence_failure exists; otherwise derived by the ledger order (hard_evidence_failure > settings_drift > budget, else finished_incomplete) | interrupted |
+| (a) arm unavailable before dispatch (no native images, model rejects images) | none: unstarted slot, no dispatch, no delivery_interpreted | none by itself; pair stays incomplete and visible, terminal derived only at plan end | none (unstarted) |
+| (b) dispatched attempt classed unsupported (e.g. tool cannot read the artifact family) | delivery_interpreted after dispatch and delivery_retained | finished_incomplete only as the plan-end derivation by the ledger order | unsupported, ineligible |
 | settings drift | stop_recorded settings_drift | stopped_settings_drift | n/a |
 | preflight blocked | preflight_result blocked | blocked_preflight | n/a |
 
@@ -37,12 +38,12 @@ Fixed: model snapshot, prompt, settings and seeds where supported, budgets, case
 - M01 Each run belongs to exactly one declared arm bound to the runner sha256 arm order; unknown arms or ordering ties reject the plan.
 - M02 Any mismatch of a matched field between arms rejects the comparison for the affected cases; no after-the-fact normalisation.
 - M03 Only reader access and its minimal arm instruction may differ; any other difference is an M02 mismatch.
-- M04 Repetitions reuse the 0138 per-arm maps; new, missing or duplicated repetition ids reject the plan.
+- M04 Repetitions reuse the 0138 per-arm repetition mechanism only (one synthetic comparison, independent_repetitions_per_case_arm null, no with-images slot; no real repetition map exists and none is invented); new, missing or duplicated repetition ids reject the plan.
 - M05 Exactly one attempt per slot counts; selection among multiple attempts after the fact (best, last, first successful, majority) is rejected and extra attempts make the slot unresolved.
 - M06 Stopping uses only the ledger phases and terminals; the first stop prevents later dispatch; nothing resumes.
 - M07 Budget exhaustion maps to stop_recorded budget and stopped_budget; an exhausted or truncated attempt is ineligible.
 - M08 Interruption is answer_class interrupted, stays ineligible and is never replaced by a rerun.
-- M09 Unsupported cases or arms are answer_class unsupported, stay visible, and are neither dropped nor scored as wrong.
+- M09 (a) An arm unavailable before dispatch is an unstarted slot (no dispatch, no delivery_interpreted, no answer_class); (b) a dispatched attempt classed answer_class unsupported is ineligible; both stay visible and are neither dropped nor scored as wrong. `unsupported -> finished_incomplete` is only the plan-end derivation.
 - M10 An incomplete pair (missing or ineligible slot in any required arm) prevents a completed comparison for that case.
 - M11 Cost and time come only from usage_reconciled; cost is null without a verified price; budget overrun is reported.
 - M12 The uncertainty procedure and the fixed-versus-interval split are frozen before any comparison; later change rejects the report.

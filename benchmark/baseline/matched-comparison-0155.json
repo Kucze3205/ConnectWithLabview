@@ -17,7 +17,7 @@
   "runner_names": {"without-tool": "no-tool", "with-tool": "tool", "with-images": "no runner arm yet"},
   "required": ["without-tool", "with-tool"],
   "optional": ["with-images"],
-  "with_images_rule": "Present only if native images exist for the case and the pinned model supports image input; otherwise the arm is recorded as unavailable for that case, never silently dropped or text-substituted.",
+  "with_images_rule": "Present only if native images exist for the case and the pinned model supports image input. Otherwise the arm is unavailable before dispatch: an unstarted slot with no dispatch, no delivery_interpreted and no answer_class, recorded as visible and never silently dropped or text-substituted. This is distinct from a dispatched attempt classed answer_class unsupported (stopping mapping (b)).",
   "order_rule": "Per (case, repetition) pair, arm order is ascending sha256(seed:pair_id:arm) with the seed from paired_arm_randomization, exactly as in runner-contract.md. Ties are rejected before dispatch. with-images, if enabled, joins the same hash ordering; that extension is not yet in the runner (O05).",
   "differs_between_arms_only": ["reader access (tool availability or images)", "the minimal arm instruction naming that access"]
  },
@@ -38,7 +38,7 @@
  },
  "repetitions": {
   "source": "0138 explicit comparison and per-arm repetition maps, as consumed by attempt-policy-0148",
-  "rules": ["Each slot is the existing full tuple record_id, case_id, pair_id, repetition_id, arm joined by slot_ref.", "Explicit maps are authoritative even when arms use different repetition labels.", "No new repetition ids are minted by this contract.", "Pilot design allocation is four paired development repetitions per case (0148); evaluation count is null and remains an owner decision (O04)."],
+  "rules": ["Each slot is the existing full tuple record_id, case_id, pair_id, repetition_id, arm joined by slot_ref.", "0138 supplies the per-arm repetition mechanism only (review #710 F-M3): one synthetic comparison synthetic:project-declarations-D1-D4 with one no-tool slot and one tool slot, independent_repetitions_per_case_arm null, and no with-images slot or mapping. There is no real repetition map to reuse and none is invented here; the images-arm mapping is undecided (O06).", "Explicit maps are authoritative even when arms use different repetition labels.", "No new repetition ids are minted by this contract.", "Pilot design allocation is four paired development repetitions per case (0148); evaluation count is null and remains an owner decision (O04)."],
   "one_eligible_attempt_per_slot": true
  },
  "stopping": {
@@ -46,8 +46,9 @@
   "mapping": [
    {"condition": "budget exhaustion before dispatch (reservation does not fit remaining ceiling)", "event": "stop_recorded cause budget", "phase_after": "stopped", "terminal": "stopped_budget", "slot_answer_class": "none (unstarted with cause)"},
    {"condition": "budget exhausted inside an attempt", "event": "delivery_interpreted then usage_reconciled exhausted true then stop_recorded budget", "phase_after": "stopped", "terminal": "stopped_budget", "slot_answer_class": "exhausted or truncated", "slot_classification": "attempted_ineligible"},
-   {"condition": "external interruption", "event": "delivery_interpreted", "phase_after": "open then stopped if evidence is hard failure", "terminal": "finished_incomplete or stopped_hard_failure", "slot_answer_class": "interrupted", "slot_classification": "attempted_ineligible or unresolved"},
-   {"condition": "unsupported case or arm (for example no native images, tool cannot read the artifact family)", "event": "delivery_interpreted", "phase_after": "open", "terminal": "finished_incomplete", "slot_answer_class": "unsupported", "slot_classification": "attempted_ineligible"},
+   {"condition": "external interruption", "event": "delivery_interpreted", "phase_after": "open then stopped only if a separate stop_recorded hard_evidence_failure exists", "terminal": "selector: interrupted alone never stops a plan (ledger R08). stopped_hard_failure only when a separate stop_recorded cause hard_evidence_failure exists; otherwise the terminal is derived by the ledger order (hard_evidence_failure > settings_drift > budget, else finished_incomplete)", "slot_answer_class": "interrupted", "slot_classification": "attempted_ineligible or unresolved"},
+   {"condition": "(a) arm unavailable before dispatch (for example no native images or the pinned model does not accept images): unstarted slot, nothing dispatched, no delivery_interpreted, no answer_class", "event": "none for the slot; unavailability is recorded as a plan fact before dispatch", "phase_after": "open", "terminal": "none by itself; the pair stays incomplete and visible, the terminal is derived only at plan end", "slot_answer_class": "none (unstarted, arm unavailable)", "slot_classification": "unstarted"},
+   {"condition": "(b) dispatched attempt classed unsupported (for example the tool cannot read the artifact family)", "event": "delivery_interpreted (after dispatch and delivery_retained)", "phase_after": "open", "terminal": "finished_incomplete only as the plan-end derivation by the ledger order", "slot_answer_class": "unsupported", "slot_classification": "attempted_ineligible"},
    {"condition": "settings drift", "event": "stop_recorded cause settings_drift", "phase_after": "stopped", "terminal": "stopped_settings_drift"},
    {"condition": "preflight blocked", "event": "preflight_result blocked", "phase_after": "blocked", "terminal": "blocked_preflight"}
   ],
@@ -73,7 +74,7 @@
   "M01": "Arm identity: each run belongs to exactly one declared arm (without-tool, with-tool, optional with-images) bound to the runner sha256 arm order; unknown arms or ordering ties reject the plan.",
   "M02": "Any mismatch of a matched field between arms rejects the comparison for the affected cases; no partial credit and no after-the-fact normalisation.",
   "M03": "Only reader access and its minimal arm instruction may differ between arms; any other difference is an M02 mismatch.",
-  "M04": "Repetitions reuse the 0138 per-arm repetition maps; new, missing or duplicated repetition ids reject the plan.",
+  "M04": "Repetitions reuse the 0138 per-arm repetition mechanism only (one synthetic comparison, independent_repetitions_per_case_arm null, no with-images slot; no real repetition map exists and none is invented); new, missing or duplicated repetition ids reject the plan.",
   "M05": "Exactly one attempt per slot counts; selection among multiple attempts after the fact (best, last, first successful, majority) is rejected and extra attempts make the slot unresolved.",
   "M06": "Stopping uses only the ledger phases and terminals above; the first detected stop prevents all later dispatch and nothing resumes.",
   "M07": "Budget exhaustion maps to stop_recorded budget and terminal stopped_budget; an exhausted or truncated attempt is ineligible.",
@@ -93,7 +94,7 @@
   {"id": "O03", "item": "F-A2 from attempt-ledger-0150 stays open (owner decision on the ledger author finding)."},
   {"id": "O04", "item": "Evaluation repetition count, affordable run ceiling and precision targets are null and owner decisions."},
   {"id": "O05", "item": "Provider-independence limits: matched model and settings do not make arms equal if the provider changes behaviour, silently updates snapshots or does not support seeds; the with-images arm is not yet in the runner and image support differs by provider."},
-  {"id": "O06", "item": "The 0138 repetition maps were reused by reference through the 0148 policy and were not reopened in this session; the reviewer should check them directly."}
+  {"id": "O06", "item": "Review #710 checked 0138 directly: it supplies the per-arm repetition mechanism only (one synthetic comparison, independent_repetitions_per_case_arm null, no with-images slot or mapping), not a real repetition map. Stays open until the images-arm mapping is decided; no real repetition count is invented."}
  ],
  "handoff": {
   "next": "Independent review returning CLEAR or NOT-CLEAR on M01 to M16 and O01 to O06; the next shaper reads the rules and the open items.",
