@@ -369,6 +369,28 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   milestones). If the checker fix ends partial, verify its tag and land via script (max_turns >= 25). Then prepare the
   owner presentation of docs/research/0002-delivery.md and, when only resource items remain, the method-acceptance request.
 
+## Iteration 0044 (#285, wake false)
+- Results of 0043: #281 split-checker fix DONE, merged 4332127 (codex 293k input, 16 turns); status now pins
+  split_boundary_sha256 dc3e76b6…, but the limitations sentence still says "two non-blocking checker findings open"
+  (stale; fix in the next pin script). #282 gap map DONE (codex 457k, report only, nothing merged): full table in
+  `.session/history/sessions/282/82f3d038….md`. Key blockers: oracle/split/resources blocked on #169/#268; tasks/
+  sources/coverage/challenges prepared-not-reviewed; baseline design-only; no owner method acceptance.
+  Now-doable per #282: substantive reviews (sources, coverage, 1,053 XML slots), #212 gap-row re-review, public
+  lineage adjudication, readiness-case/vector prep for #169, runner/manifest validation contract.
+  Stale text: sources.md:57, lineage.md:21, baseline/README.md:3,27.
+- Measured by Policymaker: sources.md, sources.json, coverage.md unchanged since d588fa9 (git diff --stat shows only
+  baseline/dev/lineage README additions) -> reviews #140/#133 may still apply.
+- Orders written FIRST and parse-checked (parallel, both from main):
+  - `native-readiness-case` (benchmark, medium, 75/45): pick a public VI whose behaviour is stated outside the VI,
+    write benchmark/native/readiness-case.json (vectors + independent pointers), extend native_jobs.py --check if
+    needed. Check: --check 0, every expected output cites a non-VI source. Unblocks #169 readiness.
+  - `review-currency-sources-coverage` (reviewer, medium, 60/40): byte identity vs reviewed commits, 10-row seeded
+    spot check vs originals, verdict relabel-reviewed/revise per milestone.
+- Next: if reviewer says relabel-reviewed -> one pin script: sources/coverage `reviewed`, fix stale split limitation
+  sentence, re-pin status (max_turns >= 25). If readiness case exists -> order a review (non-author family if possible),
+  then tell the owner #169 now has a concrete readiness VI. Then the 1,053-slot XML review (split into batches by case to
+  stay under the input ceiling) and #212 gap-row re-review. Do not re-run the gap map.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
