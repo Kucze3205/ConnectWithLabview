@@ -1,55 +1,60 @@
 # Policy working memory
 
-Considered: iteration records 0000–0012; review reports #146/#147 (iteration 0012); benchmark/protocol.md as
-reviewed at a595009. Updated by Policymaker #149, iteration 0013.
-Historical inputs: `.session/history/manifest.json`; iteration 0012: `.session/history/records/0012.json`;
-reports: `.github/loop/data/session-reports/<issue>/*.json`.
+Considered: iteration records 0000–0014; reviews #146/#147; #150 report and acceptance #151; #157 report and
+acceptance #161; engine code `run_policy_script` (.github/loop/iteration.py:511-548), tokenless-job.yml, commit
+a9a3a30. Updated by Policymaker #164, iteration 0015 (restores #153's memory, which rollback d546ab6 discarded).
+Historical inputs: `.session/history/manifest.json`; records `.session/history/records/<n>.json`;
+reports `.github/loop/data/session-reports/<issue>/*.json`.
 
 ## Current organization and state
 - `shaper: null`: always write `.session/orders.json`; it supplies the iteration's work.
-- Iteration 0012: one order (`order-145-review-protocol1`) became two sessions #146 and #147 (same id, both
-  reviewer, both done). Both ran on codex/gpt-6.1-sol after Claude fallback despite Claude-first `reviewer`
-  routing, ~400k codex input each (796k total). Cause of the duplicate unknown; watch whether it recurs.
-- Both reviews: Recommendation **revise** at a595009 (protocol unchanged since cf38154). Shared finding
-  F1/S1: no frozen required-claim accounting / dimension outcome rules / denominators (tasks 26–30, baseline
-  72–76, challenges 85–92). #147 adds F2: no reader-observation contract (fixed probes, raw outputs, native
-  alignment, missing/unsupported/error outcomes). Rest of the method judged consistent with evaluation.md.
-- Resources table (lines 103–109): neither review found any of the 7 rows concrete enough for a `capability`
-  request; each needs named resources, recipient providers, access/publication/revocation and readiness terms.
-  Ordinary public review needs no new access.
-- Caveat: both reviews are codex, same family as the protocol author (#141). The re-review of the revision
-  should be Claude if the revision is done by codex, and vice versa (check the record's `models`).
-- Evaluator --check: exit 0, 8 evidence refs, tasks/oracle/split/baseline/challenges missing; not readiness.
+- Iteration 0014 FAILED: `policy/session-state.py returned no output from the tokenless job`. Sessions #154-#157
+  were marked crashed; policy/ was rolled back to 830b7b73 (d546ab6). The script itself is fine: the same facts run
+  locally exit 0 in 0.04 s and print 494 kB of valid JSON (limit 8 MB, 4 kB is only for other scripts). #157 later
+  re-ran through the tokenless job and finished `done`. Cause: the engine treats a missing stdout.txt/exit-code
+  as a policy fault (iteration.py:536-537), though the job's redirect makes stdout.txt before the script starts.
+- Filed `engine-change` (iteration 0015, .session/requests.json): missing stdout.txt -> TokenlessUnavailable (no
+  rollback). `git apply --check` passed on d7ba8a0. Does not cover missing exit-code with stdout present (timeout).
+- benchmark/resources-proposal.md is on main (#157 done, owner-accepted #161): 7 rows plus a filing checklist;
+  rows 1 (restricted store) and 2 (native job runner) most developed; rows 1, 4, 5 need non-public access;
+  row 7 needs no new access. Not yet turned into `capability` requests.
+- Protocol F1/F2 revision 2669ec4 (vs cf38154) is still unreviewed: #154/#156 never ran.
+- Evaluator --check (as of #150): exit 0, 8 evidence refs, benchmark_ready=false; tasks/oracle/split/baseline/
+  challenges missing. Not readiness. Coverage incomplete; quality unmeasured.
 
-## Orders for iteration 0013
-- `revise-protocol-f1f2` (benchmark, Claude-first, high, 60 min/30 turns, exports reports 146/147): focused
-  F1+F2 edit of benchmark/protocol.md; verification evaluator --check.
-- No parallel re-review: the revision reaches main only after owner merge-acceptance, so a blocked review
-  in the same iteration would read the old text.
-- Next Policymaker: if the revision is accepted/merged, order an independent re-review (family other than the
-  revision's author) focused on F1/F2 plus a regression look. If it failed or stayed partial, read its report
-  and narrow the task. Then: concrete resource proposals (native-job runner, restricted store) as a separate
-  benchmark/research task before any `capability` request. Ask the owner how a commit-bound review
-  recommendation becomes milestone `reviewed` status if still undecided.
+## Orders for iteration 0015
+- `order-164-rereview-protocol-f1f2` (reviewer, high, 60 min/30 turns, exports reports 146/147/150): same task as
+  0014's crashed one. Reviewer routing is Claude-first (author #150 finished on codex); actual family must be reported.
+- No wake. Resource-capability drafting deferred: needs a Policymaker check of the proposal against
+  docs/perpetua/accepted-limits.md first; do it next session (read only the proposal + limits, ~13 kB + 6 kB).
+
+## Next Policymaker
+- Read the re-review report. accept -> ask the owner (question request) to accept the pinned protocol and evidence
+  through the change gate; revise -> order only the evidenced correction, author family other than reviewer.
+- Check the engine-change request outcome. If 0015 fails the same way again, the request is the fix; do not edit
+  session-state.py for it (its output is valid).
+- Draft `capability` requests for rows 1 and 2 of resources-proposal.md if they satisfy the filing checklist;
+  unknowns become owner questions. Open requests must not block other ready work.
 
 ## Milestone evidence
-- sources: review #134 revise → fix #139 → re-review #140 accept at d588fa9. Coverage review #133 accept at
-  6933e17 as limited inventory. Both stay prepared-not-reviewed in benchmark/preparation-status.json; do not
-  mark reviewed from reviews alone (owner change gate).
+- sources: review #134 revise -> fix #139 -> re-review #140 accept at d588fa9. Coverage review #133 accept at
+  6933e17 as limited inventory. Both stay prepared-not-reviewed in preparation-status.json; owner gate decides.
 
 ## Mechanisms to preserve
-- Input ceiling is 800k unique input; codex counts all non-cached input. Never read large sources.json/
-  coverage.json directly; bounded Python summaries. Keep codex sessions short or route Claude-first.
-- Task Verification runs in-session and again offline; keep it over committed files. Report-only reviews use
-  no command and write report findings from the start.
-- After rebase the engine runs evaluator --check; changed pinned files require preparation.json re-pinning.
-- Missing git identity: leave changes staged; parent engine commits. Partial predecessors block dependants.
-- Requests: `.session/requests.json`, format in `.github/loop/session-protocol.md` ("Three additional kinds").
-- Exports contract: `docs/perpetua/session-exports.md`; explicit selectors only. Order format: `.github/loop/task-graph.md`.
+- Input ceiling 800k unique input; codex counts all non-cached input. Never read sources.json/coverage.json
+  directly; bounded Python summaries. Keep sessions short.
+- Task Verification runs in-session and again offline over committed files.
+- Rebase runs evaluator --check; changed pinned files need preparation.json re-pinning.
+- Missing git identity: leave changes staged; parent engine commits.
+- Requests: `.session/requests.json`, format `.github/loop/session-protocol.md` ("Three additional kinds").
+  Orders: `.github/loop/task-graph.md`; order ids must not repeat ids used in the same iteration.
+- Read docs/perpetua/evaluation.md before product planning; accepted-limits.md before private data or spending.
 
 ## Open questions
-- Notices #92/#100 remain pending for the owner. Do not reinstate the crashed script shaper without contract review.
-- Fallback variant (LabVIEW 2024) needs an all-version effort estimate before any choice; not yet started.
-- Duplicate session per order in 0012 (#146/#147): engine behaviour or retry? If it recurs, raise an
-  `engine-change` with evidence; it doubles quota use.
-- Claude routing fell back to codex for all sessions in 0011 and 0012; Claude availability unmeasured.
+- Notice #92 pending for the owner. Do not reinstate the crashed script shaper without contract review.
+- Duplicate sessions per order: 0012 (#146/#147) and 0014 (#154/#156, #155/#157), same ids, different issues.
+  Recurring; doubles quota when both run. Collect engine evidence (task_graph.create_tasks / policy_pass settle
+  called twice?) before an engine-change.
+- Claude availability unmeasured; 0011-0013 sessions mostly finished on codex.
+- All-version effort estimate needed before any LabVIEW 2024 fallback choice; not started.
+- How a commit-bound review recommendation becomes milestone `reviewed` status: unresolved; owner gate decides.
