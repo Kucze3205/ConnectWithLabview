@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #887, iteration 0207 (trigger: every 3 iterations)
+## Latest: Policymaker #900, iteration 0210 (trigger: every 3 iterations)
+
+- Considers records 0207/0208/0209 and session reports #889, #896, #898 (.session/history/sessions/<issue>/), plus record outcome fields of #890/#892-#894/#897. All three closed; 0208 and 0209 accepted/improved; 0207 verdict none; no_progress=0; rollback streak still 1 (2026-11-17).
+- Citation thread closed: #889 implemented citation_resolves in score.py, partial at its 60-turn cap (cause session_budget, branch task/889 7d62165a). Finish task #893 (start_branch task/889, 20 turns, medium) done/merged 38a3e203 in 18 turns; review #894 CLEAR. Contract shape (design Limit 4) fixed by #897 merged 7f9dde12; review #898 CLEAR (62/62 input-pins, 80/80 preparation.json, no stale old hash). The #694 finish-on-branch rule and the #863 whole-map pin rule both worked again. Keep both.
+- Cost data point (token counters, not quota): #889 used 14.13M cache_read in 60 turns at high effort, about 235k per turn and about 4.7x all of iteration 0209 (3.02M). #897 used 2.36M in 34 turns for a one-hunk fixture change plus re-pins. One large implementation task, one data point: no rule change. If another single benchmark/implementation task passes about 5M cache_read, read its report for whole-file reads of large files and add an orchestrator scoping rule (split by file, or bounded reads).
+- 0208 wall 10,607 s against critical path 331 s: #893 had attempts 5 and parked_s 9,415 (limit_hits 5). This is provider waiting, not task work. No routing evidence beyond that; no change.
+- Reviewers #894/#898 again ran claude-sonnet-5-5 (same family as authors). Cause still not established (see #720, #863). Same-family review stays a stated limitation.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change. Next gap choice (library-icon-tests citations or next-gap-0202.md) is shaper-owned.
+
+## Previous: Policymaker #887, iteration 0207 (trigger: every 3 iterations)
 
 - Considers records 0204/0205/0206 and session reports #876-#878, #880-#882, #884/#885 (.session/history/sessions/<issue>/). All three closed; every worker done; 0206 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
 - XML key thread closed: cold key #877 + check #878 (icon-tests 10/10), record+re-pin #881 merged abd491f9, review #882 CLEAR (62/62 input-pins, 80/80 preparation.json entries match disk). The #863 whole-map pin rule worked again: one review round, no stale-pin finding. Keep it.
