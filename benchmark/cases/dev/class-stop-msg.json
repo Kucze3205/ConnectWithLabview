@@ -1,0 +1,2649 @@
+{
+  "acceptable_alternatives": [
+    "Equivalent presentation with atomic IDs, exact literal values and resolvable original citations; no substitutions for missing required items."
+  ],
+  "adjudication": {
+    "assessment": "Apply protocol F1/F2 precedence independently per dimension; pending/unavailable references are unverified and cannot earn correct credit.",
+    "extras": "Retain separate ledger for every unmatched factual assertion, including prose/limitations. Independently check true/false/unverified extras; extras never replace omissions.",
+    "mapping": "Freeze these IDs before exposure; split compound assertions into atomic statements. Preserve submitted text and mappings; equivalent duplicates count once, contradictions make affected items incorrect.",
+    "outcome_categories": [
+      "correct",
+      "partial",
+      "incorrect",
+      "missing",
+      "unsupported",
+      "unverified",
+      "error"
+    ],
+    "protocol": "benchmark/protocol.md#tasks",
+    "reporting": "Report every outcome count over each fixed denominator, separate extra outcomes/contradictions/duplicates and planned/attempted/executed/scored counts. No combined score or quality threshold."
+  },
+  "answer_record_contract": {
+    "case_id": "class-stop-msg",
+    "claims": [
+      {
+        "answer": "<atomic assertion>",
+        "citations": [
+          "original hash/path/member chain and exact original locator"
+        ],
+        "claim_id": "<required ID>",
+        "conditions": []
+      }
+    ],
+    "limitations": "Map every limitation to affected IDs; preserve all factual assertions.",
+    "status": "required"
+  },
+  "artifact": {
+    "archive_member_chain": [],
+    "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "identity_manifest": "benchmark/sources.json",
+    "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+    "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+    "repository": "actor-framework",
+    "repository_url": "https://github.com/ni/actor-framework",
+    "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+  },
+  "case_id": "class-stop-msg",
+  "case_revision": 1,
+  "conditions": [
+    "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+    "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+    "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+  ],
+  "denominators": {
+    "answer_correctness": {
+      "count": 50,
+      "required_ids": [
+        "A0001",
+        "A0002",
+        "A0003",
+        "A0004",
+        "A0005",
+        "A0006",
+        "A0007",
+        "A0008",
+        "A0009",
+        "A0010",
+        "A0011",
+        "A0012",
+        "A0013",
+        "A0014",
+        "A0015",
+        "A0016",
+        "A0017",
+        "A0018",
+        "A0019",
+        "A0020",
+        "A0021",
+        "A0022",
+        "A0023",
+        "A0024",
+        "A0025",
+        "A0026",
+        "A0027",
+        "A0028",
+        "A0029",
+        "A0030",
+        "A0031",
+        "A0032",
+        "A0033",
+        "A0034",
+        "A0035",
+        "A0036",
+        "A0037",
+        "A0038",
+        "A0039",
+        "A0040",
+        "A0041",
+        "A0042",
+        "A0043",
+        "A0044",
+        "A0045",
+        "A0046",
+        "A0047",
+        "A0048",
+        "N0001",
+        "N0002"
+      ]
+    },
+    "reading_fidelity": {
+      "count": 50,
+      "required_ids": [
+        "R0001",
+        "R0002",
+        "R0003",
+        "R0004",
+        "R0005",
+        "R0006",
+        "R0007",
+        "R0008",
+        "R0009",
+        "R0010",
+        "R0011",
+        "R0012",
+        "R0013",
+        "R0014",
+        "R0015",
+        "R0016",
+        "R0017",
+        "R0018",
+        "R0019",
+        "R0020",
+        "R0021",
+        "R0022",
+        "R0023",
+        "R0024",
+        "R0025",
+        "R0026",
+        "R0027",
+        "R0028",
+        "R0029",
+        "R0030",
+        "R0031",
+        "R0032",
+        "R0033",
+        "R0034",
+        "R0035",
+        "R0036",
+        "R0037",
+        "R0038",
+        "R0039",
+        "R0040",
+        "R0041",
+        "R0042",
+        "R0043",
+        "R0044",
+        "R0045",
+        "R0046",
+        "R0047",
+        "R0048",
+        "RN0001",
+        "RN0002"
+      ]
+    },
+    "source_grounding": {
+      "count": 50,
+      "required_ids": [
+        "A0001",
+        "A0002",
+        "A0003",
+        "A0004",
+        "A0005",
+        "A0006",
+        "A0007",
+        "A0008",
+        "A0009",
+        "A0010",
+        "A0011",
+        "A0012",
+        "A0013",
+        "A0014",
+        "A0015",
+        "A0016",
+        "A0017",
+        "A0018",
+        "A0019",
+        "A0020",
+        "A0021",
+        "A0022",
+        "A0023",
+        "A0024",
+        "A0025",
+        "A0026",
+        "A0027",
+        "A0028",
+        "A0029",
+        "A0030",
+        "A0031",
+        "A0032",
+        "A0033",
+        "A0034",
+        "A0035",
+        "A0036",
+        "A0037",
+        "A0038",
+        "A0039",
+        "A0040",
+        "A0041",
+        "A0042",
+        "A0043",
+        "A0044",
+        "A0045",
+        "A0046",
+        "A0047",
+        "A0048",
+        "N0001",
+        "N0002"
+      ]
+    },
+    "submitted_extras_change_denominator": false,
+    "unavailable_items_retained": true
+  },
+  "dependencies_and_environment": {
+    "dependency_resolution": "unverified-native-required",
+    "modules_licenses_targets": "unverified",
+    "native_labview": "unavailable-for-this-case; not executed",
+    "native_version_build_os": null,
+    "preparation": "Python standard library, local Git HEAD, prepared read-only sources via LABVIEW_ENVIRONMENT; no prepared code executed."
+  },
+  "disallowed_inferences": [
+    "Declared URL implies resolved file or successful load.",
+    "Build settings imply successful build or effective inclusion.",
+    "Numeric scope code implies public/private/protected semantics without independently pinned interpretation.",
+    "Genealogy fingerprint or missing ParentClassLinkInfo identifies a direct parent or proves no inheritance.",
+    "XML names, descriptions, membership or method flags establish VI behavior, diagram content or dispatch execution.",
+    "Save-version declaration proves compatibility with a reading environment.",
+    "Public development cases or their copies can become withheld/unseen.",
+    "Unavailable references or honest limitations earn full-read/correct credit."
+  ],
+  "execution": {
+    "attempted": false,
+    "executed": false,
+    "planned": true,
+    "scored": false
+  },
+  "expected_observable": "Literal XML declaration inventory and explicit native gaps.",
+  "family": ".lvclass",
+  "inventory_revision": 1,
+  "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+  "lineage_rule": "Keep all NI Actor Framework projects, archive copies and variants together in any later split; public history remains exposed.",
+  "oracle": {
+    "independent_checker": {
+      "claim_agreements": [],
+      "identity": null,
+      "session": null,
+      "status": "pending"
+    },
+    "method": "Direct stdlib ElementTree inspection of hash-verified original XML; no evaluated reader used.",
+    "native_status": "unavailable",
+    "required_followup": "Resolve every ID against original evidence in a separate reviewer session; native claims require bounded native inspection/experiment and hashed captures/object maps. Disagreement blocks key establishment.",
+    "status": "provisional-xml-only-native-unavailable"
+  },
+  "question": "Inventory every declared Item attribute, containing-library and literal scope/method properties, and fingerprint encoded genealogy/parent-link fields. Identify the native evidence still needed to establish inheritance, effective scope and dispatch.",
+  "reader_probe_contract": {
+    "adaptive_branches": [],
+    "arguments": {
+      "artifact": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+      },
+      "observation_ids": [
+        "R0001",
+        "R0002",
+        "R0003",
+        "R0004",
+        "R0005",
+        "R0006",
+        "R0007",
+        "R0008",
+        "R0009",
+        "R0010",
+        "R0011",
+        "R0012",
+        "R0013",
+        "R0014",
+        "R0015",
+        "R0016",
+        "R0017",
+        "R0018",
+        "R0019",
+        "R0020",
+        "R0021",
+        "R0022",
+        "R0023",
+        "R0024",
+        "R0025",
+        "R0026",
+        "R0027",
+        "R0028",
+        "R0029",
+        "R0030",
+        "R0031",
+        "R0032",
+        "R0033",
+        "R0034",
+        "R0035",
+        "R0036",
+        "R0037",
+        "R0038",
+        "R0039",
+        "R0040",
+        "R0041",
+        "R0042",
+        "R0043",
+        "R0044",
+        "R0045",
+        "R0046",
+        "R0047",
+        "R0048",
+        "RN0001",
+        "RN0002"
+      ],
+      "scope": "all-required-observation-ids-in-order"
+    },
+    "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+    "execution_evidence_required": [
+      "exact request",
+      "reader/configuration revision",
+      "environment",
+      "timestamps",
+      "raw response bytes/files and SHA256",
+      "exit/error and truncation records",
+      "independent alignment ledger retaining extras, omissions, duplicates and contradictions"
+    ],
+    "limit": "No truncation permitted; every required ID remains in denominator.",
+    "ordering": [
+      "R0001",
+      "R0002",
+      "R0003",
+      "R0004",
+      "R0005",
+      "R0006",
+      "R0007",
+      "R0008",
+      "R0009",
+      "R0010",
+      "R0011",
+      "R0012",
+      "R0013",
+      "R0014",
+      "R0015",
+      "R0016",
+      "R0017",
+      "R0018",
+      "R0019",
+      "R0020",
+      "R0021",
+      "R0022",
+      "R0023",
+      "R0024",
+      "R0025",
+      "R0026",
+      "R0027",
+      "R0028",
+      "R0029",
+      "R0030",
+      "R0031",
+      "R0032",
+      "R0033",
+      "R0034",
+      "R0035",
+      "R0036",
+      "R0037",
+      "R0038",
+      "R0039",
+      "R0040",
+      "R0041",
+      "R0042",
+      "R0043",
+      "R0044",
+      "R0045",
+      "R0046",
+      "R0047",
+      "R0048",
+      "RN0001",
+      "RN0002"
+    ],
+    "probe_id": "class-stop-msg-probe-1",
+    "status": "specification-only-not-executed",
+    "unprobed_scope": "All content outside listed locators, binary private data, diagrams, runtime semantics and native resolution."
+  },
+  "reader_reference_inventory": [
+    {
+      "aligned_claim_id": "A0001",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "20008000",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0001",
+      "scope": "/LVClass/@LVVersion",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0002",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.Lib.ContainingLib",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0002",
+      "scope": "/LVClass/Property[2]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0003",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Str",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0003",
+      "scope": "/LVClass/Property[2]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0004",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Actor Framework.lvlib",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0004",
+      "scope": "/LVClass/Property[2]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0005",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.Lib.ContainingLibPath",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0005",
+      "scope": "/LVClass/Property[3]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0006",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Str",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0006",
+      "scope": "/LVClass/Property[3]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0007",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../../Actor Framework.lvlib",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0007",
+      "scope": "/LVClass/Property[3]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0008",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.LV.All.SourceOnly",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0008",
+      "scope": "/LVClass/Property[9]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0009",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Bool",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0009",
+      "scope": "/LVClass/Property[9]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0010",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "true",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0010",
+      "scope": "/LVClass/Property[9]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0011",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.LVClass.Geneology",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0011",
+      "scope": "/LVClass/Property[13]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0012",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Xml",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0012",
+      "scope": "/LVClass/Property[13]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0013",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "bf25450a39dca0195c711851ffdebf03801c7a4dade3d1a28f93e642c5be9f1f",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0013",
+      "scope": "/LVClass/Property[13]/String[1]/Val[1]/text()/utf8-sha256",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0014",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Parent Libraries",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0014",
+      "scope": "/LVClass/Item[1]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0015",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Parent Libraries",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0015",
+      "scope": "/LVClass/Item[1]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0016",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Actor Framework.lvlib:Message.lvclass",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0016",
+      "scope": "/LVClass/Item[1]/Item[1]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0017",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Parent",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0017",
+      "scope": "/LVClass/Item[1]/Item[1]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0018",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../../Message/Message.lvclass",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0018",
+      "scope": "/LVClass/Item[1]/Item[1]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0019",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Stop Msg.ctl",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0019",
+      "scope": "/LVClass/Item[2]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0020",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Class Private Data",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0020",
+      "scope": "/LVClass/Item[2]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0021",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Stop Msg.ctl",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0021",
+      "scope": "/LVClass/Item[2]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0022",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.LibItem.Scope",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0022",
+      "scope": "/LVClass/Item[2]/Property[1]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0023",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Int",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0023",
+      "scope": "/LVClass/Item[2]/Property[1]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0024",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "2",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0024",
+      "scope": "/LVClass/Item[2]/Property[1]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0025",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Send Normal Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0025",
+      "scope": "/LVClass/Item[3]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0026",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "VI",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0026",
+      "scope": "/LVClass/Item[3]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0027",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../Send Normal Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0027",
+      "scope": "/LVClass/Item[3]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0028",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.ClassItem.MethodScope",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0028",
+      "scope": "/LVClass/Item[3]/Property[5]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0029",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "UInt",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0029",
+      "scope": "/LVClass/Item[3]/Property[5]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0030",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "1",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0030",
+      "scope": "/LVClass/Item[3]/Property[5]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0031",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Send Emergency Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0031",
+      "scope": "/LVClass/Item[4]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0032",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "VI",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0032",
+      "scope": "/LVClass/Item[4]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0033",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../Send Emergency Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0033",
+      "scope": "/LVClass/Item[4]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0034",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.ClassItem.MethodScope",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0034",
+      "scope": "/LVClass/Item[4]/Property[5]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0035",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "UInt",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0035",
+      "scope": "/LVClass/Item[4]/Property[5]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0036",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "1",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0036",
+      "scope": "/LVClass/Item[4]/Property[5]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0037",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Send Normal or Emergency Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0037",
+      "scope": "/LVClass/Item[5]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0038",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "VI",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0038",
+      "scope": "/LVClass/Item[5]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0039",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../Send Normal or Emergency Stop.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0039",
+      "scope": "/LVClass/Item[5]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0040",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.ClassItem.MethodScope",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0040",
+      "scope": "/LVClass/Item[5]/Property[5]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0041",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "UInt",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0041",
+      "scope": "/LVClass/Item[5]/Property[5]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0042",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "1",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0042",
+      "scope": "/LVClass/Item[5]/Property[5]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0043",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "Do.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0043",
+      "scope": "/LVClass/Item[6]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0044",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "VI",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0044",
+      "scope": "/LVClass/Item[6]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0045",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "../Do.vi",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0045",
+      "scope": "/LVClass/Item[6]/@URL",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0046",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "NI.ClassItem.MethodScope",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0046",
+      "scope": "/LVClass/Item[6]/Property[5]/@Name",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0047",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "UInt",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0047",
+      "scope": "/LVClass/Item[6]/Property[5]/@Type",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "A0048",
+      "alignment_rule": "Map the preserved raw output location to this exact locator and value; no reconstruction of absent content.",
+      "expected": "1",
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "R0048",
+      "scope": "/LVClass/Item[6]/Property[5]/text()",
+      "xml_reference_status": "provisional-author-extraction"
+    },
+    {
+      "aligned_claim_id": "N0001",
+      "alignment_rule": "Unverified until a separately reviewed revision supplies native original-object locators and expected values; retain this slot.",
+      "expected": null,
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "RN0001",
+      "scope": "resolved-direct-parent-and-inheritance"
+    },
+    {
+      "aligned_claim_id": "N0002",
+      "alignment_rule": "Unverified until a separately reviewed revision supplies native original-object locators and expected values; retain this slot.",
+      "expected": null,
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "RN0002",
+      "scope": "effective-scope-and-dispatch"
+    }
+  ],
+  "reference_inventory": [
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "original-save-version-declaration",
+        "relation": "literal-value-at-location",
+        "value": "20008000"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/@LVVersion",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0001",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.Lib.ContainingLib"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[2]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0002",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "Str"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[2]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0003",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "Actor Framework.lvlib"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[2]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0004",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.Lib.ContainingLibPath"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[3]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0005",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "Str"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[3]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0006",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "../../Actor Framework.lvlib"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[3]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0007",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.LV.All.SourceOnly"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[9]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0008",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "Bool"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[9]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0009",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "true"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[9]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0010",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "opaque-lineage-property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.LVClass.Geneology"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[13]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0011",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "opaque-lineage-property-type",
+        "relation": "literal-value-at-location",
+        "value": "Xml"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[13]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0012",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "opaque-lineage-payload-fingerprint",
+        "relation": "literal-value-at-location",
+        "value": "bf25450a39dca0195c711851ffdebf03801c7a4dade3d1a28f93e642c5be9f1f"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Property[13]/String[1]/Val[1]/text()/utf8-sha256",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0013",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Parent Libraries"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[1]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0014",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Parent Libraries"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[1]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0015",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Actor Framework.lvlib:Message.lvclass"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[1]/Item[1]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0016",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Parent"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[1]/Item[1]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0017",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "../../Message/Message.lvclass"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[1]/Item[1]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0018",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Stop Msg.ctl"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0019",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Class Private Data"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0020",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Stop Msg.ctl"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0021",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.LibItem.Scope"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/Property[1]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0022",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "Int"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/Property[1]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0023",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "2"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[2]/Property[1]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0024",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Send Normal Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0025",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "VI"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0026",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "../Send Normal Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0027",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.ClassItem.MethodScope"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/Property[5]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0028",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "UInt"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/Property[5]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0029",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "1"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[3]/Property[5]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0030",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Send Emergency Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0031",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "VI"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0032",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "../Send Emergency Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0033",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.ClassItem.MethodScope"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/Property[5]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0034",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "UInt"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/Property[5]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0035",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "1"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[4]/Property[5]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0036",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Send Normal or Emergency Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0037",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "VI"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0038",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "../Send Normal or Emergency Stop.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0039",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.ClassItem.MethodScope"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/Property[5]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0040",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "UInt"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/Property[5]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0041",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "1"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[5]/Property[5]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0042",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "Do.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0043",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "VI"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0044",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "declared-item",
+        "relation": "literal-value-at-location",
+        "value": "../Do.vi"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/@URL",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0045",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-name",
+        "relation": "literal-value-at-location",
+        "value": "NI.ClassItem.MethodScope"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/Property[5]/@Name",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0046",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "property-type",
+        "relation": "literal-value-at-location",
+        "value": "UInt"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/Property[5]/@Type",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0047",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [
+        "Equivalent wording preserving the exact literal value, original locator and conditions."
+      ],
+      "atomic_fact": {
+        "kind": "literal-property-value",
+        "relation": "literal-value-at-location",
+        "value": "1"
+      },
+      "citations": [
+        {
+          "archive_member_chain": [],
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "locator": {
+            "expression": "/LVClass/Item[6]/Property[5]/text()",
+            "scheme": "xml-positional-path"
+          },
+          "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+          "repository": "actor-framework",
+          "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+        }
+      ],
+      "claim_id": "A0048",
+      "comparison": "Exact Unicode XML-parsed string equality; payload hashes are lowercase SHA256 of XML-parsed text encoded UTF-8.",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "provisional-xml-derived-unverified-independent-check",
+      "xml_evidence": "available"
+    },
+    {
+      "acceptable_alternatives": [],
+      "atomic_fact": {
+        "relation": "resolved-direct-parent-and-inheritance",
+        "value": null
+      },
+      "citations": [],
+      "claim_id": "N0001",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "unverified-native-required",
+      "required_reference": {
+        "archive_member_chain": [],
+        "native_locator": null,
+        "original_path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+        "original_sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339",
+        "required_view": "resolved-direct-parent-and-inheritance"
+      },
+      "uncertainty": "Native property/diagram/capture or controlled experiment and independent check not available. A limitation declaration earns no correct credit for this slot."
+    },
+    {
+      "acceptable_alternatives": [],
+      "atomic_fact": {
+        "relation": "effective-scope-and-dispatch",
+        "value": null
+      },
+      "citations": [],
+      "claim_id": "N0002",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "unverified-native-required",
+      "required_reference": {
+        "archive_member_chain": [],
+        "native_locator": null,
+        "original_path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+        "original_sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339",
+        "required_view": "effective-scope-and-dispatch"
+      },
+      "uncertainty": "Native property/diagram/capture or controlled experiment and independent check not available. A limitation declaration earns no correct credit for this slot."
+    }
+  ],
+  "required_answer_claim_ids": [
+    "A0001",
+    "A0002",
+    "A0003",
+    "A0004",
+    "A0005",
+    "A0006",
+    "A0007",
+    "A0008",
+    "A0009",
+    "A0010",
+    "A0011",
+    "A0012",
+    "A0013",
+    "A0014",
+    "A0015",
+    "A0016",
+    "A0017",
+    "A0018",
+    "A0019",
+    "A0020",
+    "A0021",
+    "A0022",
+    "A0023",
+    "A0024",
+    "A0025",
+    "A0026",
+    "A0027",
+    "A0028",
+    "A0029",
+    "A0030",
+    "A0031",
+    "A0032",
+    "A0033",
+    "A0034",
+    "A0035",
+    "A0036",
+    "A0037",
+    "A0038",
+    "A0039",
+    "A0040",
+    "A0041",
+    "A0042",
+    "A0043",
+    "A0044",
+    "A0045",
+    "A0046",
+    "A0047",
+    "A0048",
+    "N0001",
+    "N0002"
+  ],
+  "required_reader_observation_ids": [
+    "R0001",
+    "R0002",
+    "R0003",
+    "R0004",
+    "R0005",
+    "R0006",
+    "R0007",
+    "R0008",
+    "R0009",
+    "R0010",
+    "R0011",
+    "R0012",
+    "R0013",
+    "R0014",
+    "R0015",
+    "R0016",
+    "R0017",
+    "R0018",
+    "R0019",
+    "R0020",
+    "R0021",
+    "R0022",
+    "R0023",
+    "R0024",
+    "R0025",
+    "R0026",
+    "R0027",
+    "R0028",
+    "R0029",
+    "R0030",
+    "R0031",
+    "R0032",
+    "R0033",
+    "R0034",
+    "R0035",
+    "R0036",
+    "R0037",
+    "R0038",
+    "R0039",
+    "R0040",
+    "R0041",
+    "R0042",
+    "R0043",
+    "R0044",
+    "R0045",
+    "R0046",
+    "R0047",
+    "R0048",
+    "RN0001",
+    "RN0002"
+  ],
+  "save_version": {
+    "decoded": "20.0.0f0",
+    "method": "XML root @LVVersion",
+    "raw_hex": "20008000",
+    "status": "recorded"
+  },
+  "schema_version": 1,
+  "uncertainties": [
+    "All native references unavailable; inheritance payloads remain encoded.",
+    "XML expectations await independent original-source checking.",
+    "Concrete reader adapter and native object/capture maps unavailable; no reader runs or scoring performed.",
+    "No native version, module, license, hardware or dependency-resolution coverage established."
+  ],
+  "visibility": "public-development-cannot-be-withheld"
+}

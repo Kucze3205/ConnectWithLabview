@@ -1,0 +1,290 @@
+{
+  "acceptable_alternatives": [
+    "Equivalent presentation with atomic IDs, exact literal values and resolvable original citations; no substitutions for missing required items."
+  ],
+  "adjudication": {
+    "assessment": "Apply protocol F1/F2 precedence independently per dimension; pending/unavailable references are unverified and cannot earn correct credit.",
+    "extras": "Retain separate ledger for every unmatched factual assertion, including prose/limitations. Independently check true/false/unverified extras; extras never replace omissions.",
+    "mapping": "Freeze these IDs before exposure; split compound assertions into atomic statements. Preserve submitted text and mappings; equivalent duplicates count once, contradictions make affected items incorrect.",
+    "outcome_categories": [
+      "correct",
+      "partial",
+      "incorrect",
+      "missing",
+      "unsupported",
+      "unverified",
+      "error"
+    ],
+    "protocol": "benchmark/protocol.md#tasks",
+    "reporting": "Report every outcome count over each fixed denominator, separate extra outcomes/contradictions/duplicates and planned/attempted/executed/scored counts. No combined score or quality threshold."
+  },
+  "answer_record_contract": {
+    "case_id": "vi-actor-core-native-gap",
+    "claims": [
+      {
+        "answer": "<atomic assertion>",
+        "citations": [
+          "original hash/path/member chain and exact original locator"
+        ],
+        "claim_id": "<required ID>",
+        "conditions": []
+      }
+    ],
+    "limitations": "Map every limitation to affected IDs; preserve all factual assertions.",
+    "status": "required"
+  },
+  "artifact": {
+    "archive_member_chain": [],
+    "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "identity_manifest": "benchmark/sources.json",
+    "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+    "path": "Core/ActorFramework/Actor/Actor Core.vi",
+    "repository": "actor-framework",
+    "repository_url": "https://github.com/ni/actor-framework",
+    "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+  },
+  "case_id": "vi-actor-core-native-gap",
+  "case_revision": 1,
+  "conditions": [
+    "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+    "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+    "Controlled input/state/target fixture is not yet established; semantic expectations remain null."
+  ],
+  "denominators": {
+    "answer_correctness": {
+      "count": 3,
+      "required_ids": [
+        "N0001",
+        "N0002",
+        "N0003"
+      ]
+    },
+    "reading_fidelity": {
+      "count": 3,
+      "required_ids": [
+        "RN0001",
+        "RN0002",
+        "RN0003"
+      ]
+    },
+    "source_grounding": {
+      "count": 3,
+      "required_ids": [
+        "N0001",
+        "N0002",
+        "N0003"
+      ]
+    },
+    "submitted_extras_change_denominator": false,
+    "unavailable_items_retained": true
+  },
+  "dependencies_and_environment": {
+    "dependency_resolution": "unverified-native-required",
+    "modules_licenses_targets": "unverified",
+    "native_labview": "unavailable-for-this-case; not executed",
+    "native_version_build_os": null,
+    "preparation": "Python standard library, local Git HEAD, prepared read-only sources via LABVIEW_ENVIRONMENT; no prepared code executed."
+  },
+  "disallowed_inferences": [
+    "Declared URL implies resolved file or successful load.",
+    "Build settings imply successful build or effective inclusion.",
+    "Numeric scope code implies public/private/protected semantics without independently pinned interpretation.",
+    "Genealogy fingerprint or missing ParentClassLinkInfo identifies a direct parent or proves no inheritance.",
+    "XML names, descriptions, membership or method flags establish VI behavior, diagram content or dispatch execution.",
+    "Save-version declaration proves compatibility with a reading environment.",
+    "Public development cases or their copies can become withheld/unseen.",
+    "Unavailable references or honest limitations earn full-read/correct credit."
+  ],
+  "execution": {
+    "attempted": false,
+    "executed": false,
+    "planned": true,
+    "scored": false
+  },
+  "expected_observable": "Native diagram, properties and controlled I/O; currently unavailable.",
+  "family": ".vi",
+  "inventory_revision": 1,
+  "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+  "lineage_rule": "Keep all NI Actor Framework projects, archive copies and variants together in any later split; public history remains exposed.",
+  "oracle": {
+    "independent_checker": {
+      "claim_agreements": [],
+      "identity": null,
+      "session": null,
+      "status": "pending"
+    },
+    "method": "No semantic extraction attempted from binary VI.",
+    "native_status": "unavailable",
+    "required_followup": "Resolve every ID against original evidence in a separate reviewer session; native claims require bounded native inspection/experiment and hashed captures/object maps. Disagreement blocks key establishment.",
+    "status": "unavailable"
+  },
+  "question": "Explain Actor Core computation, connector/types, diagram dataflow and execution dependencies under a declared input/state/target fixture. Identify native evidence missing before any semantic answer can be established.",
+  "reader_probe_contract": {
+    "adaptive_branches": [],
+    "arguments": {
+      "artifact": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Actor/Actor Core.vi",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+      },
+      "observation_ids": [
+        "RN0001",
+        "RN0002",
+        "RN0003"
+      ],
+      "scope": "all-required-observation-ids-in-order"
+    },
+    "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+    "execution_evidence_required": [
+      "exact request",
+      "reader/configuration revision",
+      "environment",
+      "timestamps",
+      "raw response bytes/files and SHA256",
+      "exit/error and truncation records",
+      "independent alignment ledger retaining extras, omissions, duplicates and contradictions"
+    ],
+    "limit": "No truncation permitted; every required ID remains in denominator.",
+    "ordering": [
+      "RN0001",
+      "RN0002",
+      "RN0003"
+    ],
+    "probe_id": "vi-actor-core-native-gap-probe-1",
+    "status": "specification-only-not-executed",
+    "unprobed_scope": "All content outside listed locators, binary private data, diagrams, runtime semantics and native resolution."
+  },
+  "reader_reference_inventory": [
+    {
+      "aligned_claim_id": "N0001",
+      "alignment_rule": "Unverified until a separately reviewed revision supplies native original-object locators and expected values; retain this slot.",
+      "expected": null,
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "RN0001",
+      "scope": "connector-terminals-and-types"
+    },
+    {
+      "aligned_claim_id": "N0002",
+      "alignment_rule": "Unverified until a separately reviewed revision supplies native original-object locators and expected values; retain this slot.",
+      "expected": null,
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "RN0002",
+      "scope": "diagram-nodes-wires-and-execution-dependencies"
+    },
+    {
+      "aligned_claim_id": "N0003",
+      "alignment_rule": "Unverified until a separately reviewed revision supplies native original-object locators and expected values; retain this slot.",
+      "expected": null,
+      "native_reference_status": "unverified-native-required",
+      "observation_id": "RN0003",
+      "scope": "controlled-input-output-behavior"
+    }
+  ],
+  "reference_inventory": [
+    {
+      "acceptable_alternatives": [],
+      "atomic_fact": {
+        "relation": "connector-terminals-and-types",
+        "value": null
+      },
+      "citations": [],
+      "claim_id": "N0001",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "Controlled input/state/target fixture is not yet established; semantic expectations remain null."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "unverified-native-required",
+      "required_reference": {
+        "archive_member_chain": [],
+        "native_locator": null,
+        "original_path": "Core/ActorFramework/Actor/Actor Core.vi",
+        "original_sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c",
+        "required_view": "connector-terminals-and-types"
+      },
+      "uncertainty": "Native property/diagram/capture or controlled experiment and independent check not available. A limitation declaration earns no correct credit for this slot."
+    },
+    {
+      "acceptable_alternatives": [],
+      "atomic_fact": {
+        "relation": "diagram-nodes-wires-and-execution-dependencies",
+        "value": null
+      },
+      "citations": [],
+      "claim_id": "N0002",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "Controlled input/state/target fixture is not yet established; semantic expectations remain null."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "unverified-native-required",
+      "required_reference": {
+        "archive_member_chain": [],
+        "native_locator": null,
+        "original_path": "Core/ActorFramework/Actor/Actor Core.vi",
+        "original_sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c",
+        "required_view": "diagram-nodes-wires-and-execution-dependencies"
+      },
+      "uncertainty": "Native property/diagram/capture or controlled experiment and independent check not available. A limitation declaration earns no correct credit for this slot."
+    },
+    {
+      "acceptable_alternatives": [],
+      "atomic_fact": {
+        "relation": "controlled-input-output-behavior",
+        "value": null
+      },
+      "citations": [],
+      "claim_id": "N0003",
+      "conditions": [
+        "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+        "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+        "Controlled input/state/target fixture is not yet established; semantic expectations remain null."
+      ],
+      "native_reference": "unavailable",
+      "numerical_tolerance": null,
+      "reference_status": "unverified-native-required",
+      "required_reference": {
+        "archive_member_chain": [],
+        "native_locator": null,
+        "original_path": "Core/ActorFramework/Actor/Actor Core.vi",
+        "original_sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c",
+        "required_view": "controlled-input-output-behavior"
+      },
+      "uncertainty": "Native property/diagram/capture or controlled experiment and independent check not available. A limitation declaration earns no correct credit for this slot."
+    }
+  ],
+  "required_answer_claim_ids": [
+    "N0001",
+    "N0002",
+    "N0003"
+  ],
+  "required_reader_observation_ids": [
+    "RN0001",
+    "RN0002",
+    "RN0003"
+  ],
+  "save_version": {
+    "byte_offset": 80,
+    "decoded": "20.0.0f0",
+    "method": "RSRC/LVSR first UInt32",
+    "raw_hex": "20008000",
+    "status": "recorded"
+  },
+  "schema_version": 1,
+  "uncertainties": [
+    "All native references unavailable; inheritance payloads remain encoded.",
+    "XML expectations await independent original-source checking.",
+    "Concrete reader adapter and native object/capture maps unavailable; no reader runs or scoring performed.",
+    "No native version, module, license, hardware or dependency-resolution coverage established."
+  ],
+  "visibility": "public-development-cannot-be-withheld"
+}
