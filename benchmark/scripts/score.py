@@ -145,6 +145,7 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             problems.append(d + ': invalid frozen denominator')
     evidence_record = submitted.get('evidence_record', {})
     key_absent = 'independent_key' in evidence_record and evidence_record['independent_key'] is None
+    execution = probe['actual_execution']
     per_id = {d: {} for d in DIMS}
     extras, duplicates, contradictions = [], [], []
     condition_ledger = []
@@ -208,6 +209,10 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             elif channel == 'reader' and any(r.get('scope') != key['reference_scope'] for r, _ in records):
                 common = 'incorrect'
             elif channel == 'reader' and native == 'unavailable':
+                common = 'unverified'
+            elif (execution.get('executed', 0) <= 0 or execution.get('scored', 0) <= 0 or
+                  ('native_run' in evidence_record and evidence_record['native_run'] is None)):
+                # Zero executed or scored work, or a missing native run, earns no credit.
                 common = 'unverified'
             else:
                 common = 'correct'
@@ -279,11 +284,14 @@ def regression_self_test(fixture, inventory, extra_claim=False):
     # Mutate only in memory; keep preserved raw JSON and its hash consistent.
     control_name = "extra-true-answer" if extra_claim else "positive-control"
     control = next(c for c in fixture["controls"] if c["name"] == control_name)
-    def score(submitted):
+    ran = {'attempted': 1, 'executed': 1, 'planned': 1, 'scored': 1}
+    def score(submitted, execution=ran):
         return compute(fixture['source'], fixture['denominators'], inventory,
-                       submitted, control['probe'], control['alignment'])
+                       submitted, dict(control['probe'], actual_execution=execution), control['alignment'])
     baseline = score(control['submitted'])
-    if baseline['cannot_evaluate_reasons'] or compare(baseline, control['expected']):
+    # The control's authored expectation reflects its own (zero) execution; the baseline
+    # here runs with positive execution, so check its outcomes instead.
+    if baseline['cannot_evaluate_reasons']:
         raise ValueError('regression self-test: positive control does not match')
     results = []
     mutations = (("extra-claim-condition",) if extra_claim else
@@ -298,6 +306,19 @@ def regression_self_test(fixture, inventory, extra_claim=False):
     baseline_outcomes = outcomes_for(baseline)
     if extra_claim and any(v != "correct" for v in baseline_outcomes.values()):
         raise ValueError("regression self-test: extra baseline is not correct")
+    # Same key-matching answer: zero execution earns no credit, positive execution keeps it.
+    for name, execution in (('zero-executed', dict(ran, executed=0)), ('zero-scored', dict(ran, scored=0))):
+        withheld = score(control['submitted'], execution)
+        if any(v == 'correct' for ids in withheld['per_id'].values() for v in ids.values()):
+            raise ValueError('regression self-test failed: ' + name + ' earned credit')
+    if baseline_outcomes != outcomes_for(score(control['submitted'], dict(ran))):
+        raise ValueError('regression self-test failed: positive execution changed outcome')
+    # native_run null in isolation: executed and scored stay positive.
+    null_run = deepcopy(control['submitted'])
+    null_run.setdefault('evidence_record', {})['native_run'] = None
+    withheld = score(null_run, dict(ran))
+    if any(v == 'correct' for ids in withheld['per_id'].values() for v in ids.values()):
+        raise ValueError('regression self-test failed: null native_run earned credit')
     for mutation in mutations:
         submitted = deepcopy(control['submitted'])
         claims = submitted['answer_record']['claims']
