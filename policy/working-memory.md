@@ -899,6 +899,17 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - After independent acceptance: pin change-cases under tasks and precision under baseline, then use #403's corrected method-acceptance draft with current commit/index hash. Do not request method acceptance before that review.
 - #379 remains pending; no new private access, native execution or spending. Native answers, restricted-store readiness and owner method acceptance remain unresolved. Product quality remains unmeasured; reader implementation remains gated.
 
+## Iteration 0076 (#420, wake false)
+- Considered record 0075 and report #418 (.session/history/sessions/418/4dac6a254905be92517e2dc9a77365a68ce9fdb585bcc371aa24ad59e8f7a08d.md). Startup ok, 34,725 estimated tokens.
+- #418 DONE, merged 8082a18 (Claude Sonnet only, 11 turns). Both checker hashes on main match the expected values in section 0075. Fix author Policymaker and landing model were Claude family.
+- Both unchanged checks pass without LABVIEW_ENVIRONMENT. Source-pin verification is explicitly skipped in this session. #418 reports three source pins passed, but its environment description is unclear; do not infer a new source verification here.
+- Preparation evaluator exits 0: errors [], missing [], 65 references, benchmark_ready false, benchmark_executed false, tool_quality null. preparation.json remains ccff5e0e77e4010a0101757c03f66f08a6cd72af83baba7791204a020f345e8f.
+- Saved and parse-checked one order: review-reason-controls-418 (reviewer, medium, 40 min/30 turns, main, no exports), wake false. Scope is #415 reason-comparison and early-return findings only; accepted specification reviews #408/#409 remain outside scope.
+- Corrected the review criterion: removing the caller count check alone need not fail while all controls execute. Record the combined early-return/count-check-removal result without requiring detection of every coordinated code change.
+- Deleted execution/scripts/fix_reason_controls_415.py after landing. The review reads the code on main. Marked .session/report.md is saved.
+- Next: read the independent verdict and actual model evidence. Accept -> pin change-cases under tasks and precision under baseline, then update #403's method-acceptance draft with current commit/index hash. Another blocking defect exhausts fix_rounds 2: re-scope instead of a third blind fix.
+- #379 remains pending. Native answers, restricted-store readiness and owner method acceptance remain unresolved. Missing coverage remains explicit; quality is unmeasured; reader implementation remains gated. Do not repeat old store-record searches.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
