@@ -4668,6 +4668,257 @@
         }
       ],
       "evidence": [],
+      "expected_positive": {
+        "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+        "contradictions_ledger": [],
+        "counts": {
+          "correctness": {
+            "correct": 10,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 2
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 12
+          },
+          "grounding": {
+            "correct": 10,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 2
+          }
+        },
+        "current_evidence_dimensions": {
+          "correctness": "unverified",
+          "fidelity": "unverified",
+          "grounding": "unverified"
+        },
+        "current_evidence_per_id": {
+          "correctness": {
+            "A0001": "unverified",
+            "A0002": "unverified",
+            "A0003": "unverified",
+            "A0004": "unverified",
+            "A0005": "unverified",
+            "A0006": "unverified",
+            "A0007": "unverified",
+            "A0008": "unverified",
+            "A0009": "unverified",
+            "A0010": "unverified",
+            "N0001": "unverified",
+            "N0002": "unverified"
+          },
+          "fidelity": {
+            "R0001": "unverified",
+            "R0002": "unverified",
+            "R0003": "unverified",
+            "R0004": "unverified",
+            "R0005": "unverified",
+            "R0006": "unverified",
+            "R0007": "unverified",
+            "R0008": "unverified",
+            "R0009": "unverified",
+            "R0010": "unverified",
+            "RN0001": "unverified",
+            "RN0002": "unverified"
+          },
+          "grounding": {
+            "A0001": "unverified",
+            "A0002": "unverified",
+            "A0003": "unverified",
+            "A0004": "unverified",
+            "A0005": "unverified",
+            "A0006": "unverified",
+            "A0007": "unverified",
+            "A0008": "unverified",
+            "A0009": "unverified",
+            "A0010": "unverified",
+            "N0001": "unverified",
+            "N0002": "unverified"
+          }
+        },
+        "dimensions": {
+          "correctness": "unverified",
+          "fidelity": "unverified",
+          "grounding": "unverified"
+        },
+        "duplicates_ledger": [],
+        "extra_counts": {
+          "correctness": {
+            "correct": 1,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 1,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          }
+        },
+        "extras_ledger": [
+          {
+            "assertion": "The XML-parsed literal at /Library/Item[1]/@Name has UTF-8 byte length 14.",
+            "assertion_id": "X-true",
+            "channel": "answer",
+            "derivation": {
+              "actual_byte_length": 14,
+              "utf8_literal": "Test Caller.vi"
+            },
+            "inventory_evidence": {
+              "citations": [
+                {
+                  "archive_member_chain": [],
+                  "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+                  "locator": {
+                    "expression": "/Library/Item[1]/@Name",
+                    "scheme": "xml-positional-path"
+                  },
+                  "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+                  "repository": "actor-framework",
+                  "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+                }
+              ],
+              "inventory": "benchmark/cases/dev/library-icon-tests.json",
+              "json_pointer": "/reference_inventory/4",
+              "literal": {
+                "kind": "declared-item",
+                "relation": "literal-value-at-location",
+                "value": "Test Caller.vi"
+              },
+              "status": "provisional XML author extraction; independent review pending"
+            },
+            "outcomes": {
+              "correctness": "correct",
+              "grounding": "correct"
+            },
+            "raw_json_pointer": "/claims/12",
+            "reason": "Literal byte length is outside the required atomic inventory; native resolved membership has no key. False answer cites the real save-version location, which does not support the length assertion.",
+            "required_credit": 0
+          }
+        ],
+        "fixed_denominators": {
+          "correctness": 12,
+          "fidelity": 12,
+          "grounding": 12
+        },
+        "per_id": {
+          "correctness": {
+            "A0001": "correct",
+            "A0002": "correct",
+            "A0003": "correct",
+            "A0004": "correct",
+            "A0005": "correct",
+            "A0006": "correct",
+            "A0007": "correct",
+            "A0008": "correct",
+            "A0009": "correct",
+            "A0010": "correct",
+            "N0001": "unverified",
+            "N0002": "unverified"
+          },
+          "fidelity": {
+            "R0001": "unverified",
+            "R0002": "unverified",
+            "R0003": "unverified",
+            "R0004": "unverified",
+            "R0005": "unverified",
+            "R0006": "unverified",
+            "R0007": "unverified",
+            "R0008": "unverified",
+            "R0009": "unverified",
+            "R0010": "unverified",
+            "RN0001": "unverified",
+            "RN0002": "unverified"
+          },
+          "grounding": {
+            "A0001": "correct",
+            "A0002": "correct",
+            "A0003": "correct",
+            "A0004": "correct",
+            "A0005": "correct",
+            "A0006": "correct",
+            "A0007": "correct",
+            "A0008": "correct",
+            "A0009": "correct",
+            "A0010": "correct",
+            "N0001": "unverified",
+            "N0002": "unverified"
+          }
+        },
+        "required_ids": {
+          "correctness": [
+            "A0001",
+            "A0002",
+            "A0003",
+            "A0004",
+            "A0005",
+            "A0006",
+            "A0007",
+            "A0008",
+            "A0009",
+            "A0010",
+            "N0001",
+            "N0002"
+          ],
+          "fidelity": [
+            "R0001",
+            "R0002",
+            "R0003",
+            "R0004",
+            "R0005",
+            "R0006",
+            "R0007",
+            "R0008",
+            "R0009",
+            "R0010",
+            "RN0001",
+            "RN0002"
+          ],
+          "grounding": [
+            "A0001",
+            "A0002",
+            "A0003",
+            "A0004",
+            "A0005",
+            "A0006",
+            "A0007",
+            "A0008",
+            "A0009",
+            "A0010",
+            "N0001",
+            "N0002"
+          ]
+        }
+      },
       "expected": {
         "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
         "contradictions_ledger": [],

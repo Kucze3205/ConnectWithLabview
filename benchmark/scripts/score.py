@@ -289,9 +289,10 @@ def regression_self_test(fixture, inventory, extra_claim=False):
         return compute(fixture['source'], fixture['denominators'], inventory,
                        submitted, dict(control['probe'], actual_execution=execution), control['alignment'])
     baseline = score(control['submitted'])
-    # The control's authored expectation reflects its own (zero) execution; the baseline
-    # here runs with positive execution, so check its outcomes instead.
-    if baseline['cannot_evaluate_reasons']:
+    # The control's `expected` reflects its own (zero) execution; the baseline here runs with
+    # positive execution, so it is checked against the authored `expected_positive`.
+    positive = control['expected_positive']
+    if baseline['cannot_evaluate_reasons'] or compare(baseline, positive):
         raise ValueError('regression self-test: positive control does not match')
     results = []
     mutations = (("extra-claim-condition",) if extra_claim else
@@ -311,8 +312,6 @@ def regression_self_test(fixture, inventory, extra_claim=False):
         withheld = score(control['submitted'], execution)
         if any(v == 'correct' for ids in withheld['per_id'].values() for v in ids.values()):
             raise ValueError('regression self-test failed: ' + name + ' earned credit')
-    if baseline_outcomes != outcomes_for(score(control['submitted'], dict(ran))):
-        raise ValueError('regression self-test failed: positive execution changed outcome')
     # native_run null in isolation: executed and scored stay positive.
     null_run = deepcopy(control['submitted'])
     null_run.setdefault('evidence_record', {})['native_run'] = None
@@ -342,7 +341,7 @@ def regression_self_test(fixture, inventory, extra_claim=False):
         if extra_claim and (any(v != "incorrect" for v in outcomes.values()) or
                             not computed["condition_ledger"]):
             raise ValueError("regression self-test failed: extra-claim-condition policy")
-        mismatches = compare(computed, control['expected'])
+        mismatches = compare(computed, positive)
         if not changed or not mismatches or computed['cannot_evaluate_reasons']:
             raise ValueError('regression self-test failed: ' + mutation)
         results.append({'mutation': mutation, 'outcomes': outcomes,
