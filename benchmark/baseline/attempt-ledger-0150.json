@@ -36,7 +36,7 @@
    {"path": ".session/inputs/685-attempt-policy-independent-comparison-0149.json", "bytes": 17184, "sha256": "8e3b1fbe1302dc6c90dd107fbcd4a8aaaa1e750c057a8752b1ac9a7b7f92f860", "use": "hash and size identity verified; CLEAR verdict metadata only"},
    {"path": ".session/inputs/685-attempt-policy-measured-checks-0149.json", "bytes": 10275, "sha256": "a55bf35f05965e00914de193c65323ab114af86b73c9addbbb00567b55100b75", "use": "hash and size identity verified"}
   ],
-  "seam_expectations_saved_before_this_file": {"path": ".session/artifacts/attempt-ledger-expectations-0150.json", "bytes": 9777, "sha256": "f6737c6a244c2acec012ff4cbb8e950863d9ac3939afa71505c2875ba4655aec", "independence": "author-saved before authoring this contract; not blind, not independent review"}
+  "seam_expectations_chronology": {"status": "corrected in task #692", "statement": "The #689 expectations and application artifacts were never uploaded; the earlier cited hash f6737c6a... and the earlier 35-trace/631-event counts are withdrawn as unverifiable. This contract (commit deceebc1, tree 049027e76b787f0c460f5422f794f9a9d85a0126) existed before any #692 expectations were written, so the #692 re-derived seam expectations are author-made, not blind, and not prior to authorship; they preceded only the #692 application run. The #692 session artifacts also did not persist in the working tree after the run; the figures are reported in the session report only and cannot be re-read from the repository.", "independence": "none; not independent review"}
  },
  "finding_before_proposal": {
   "existing_bytes_define": [
