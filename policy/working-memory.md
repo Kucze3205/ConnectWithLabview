@@ -511,6 +511,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - LESSON (#316): Finish rejects .session/report.md unless it begins with `<!-- session-report -->` and a ```yaml block
   whose `status` equals Finish.status. Write the report in that format from the start.
 
+## Iteration 0053 (#321, wake false)
+- Considered record 0052, report #318. #317 landing DONE, merged (sonnet only, 10 turns, ~66k tokens, owner #319):
+  main has run-record.template.json aa928031… and run_record.py bf57224f… (verified), not pinned; README unchanged
+  (0adac3b9…). #318 review DONE (codex 461k, 17 turns): ACCEPT, findings 1-5 non-blocking; finding 4: manifest-content
+  binding unresolved (run_record.py:134) -> needs actual binding + negative test before runner integration. Same family
+  as author #312 (codex). Evidence: .github/loop/data/session-reports/318/11203643….json.
+- Wrote execution/scripts/pin_run_record_318.py (hash-gated, idempotent): README = tag #312 bytes with the last
+  "Request independent review…" sentence replaced by a #318 sentence; adds the 2 files to baseline pins; appends a
+  #318 limitation sentence; re-pins README + status refs. Dry run twice on a worktree of origin/main without env:
+  run_record/baseline/evaluator --check 0, 62 refs, README 24c2018f…, status fbdb65ce…, preparation 54c5c701….
+- Order `pin-run-record-318` (benchmark, low, 20/25, main, <=8 calls). Orders written and parse-checked before memory.
+- Next: verify main 62 refs + status fbdb65ce…, then delete pin_run_record_318.py. Then: owner presentation of
+  docs/research/0002-delivery.md (information, no fallback choice), tell owner #169 has a cited readiness case, and
+  check whether only resource-dependent items (#169, #268/#308) remain before a method-acceptance request.
+  Product implementation stays gated. #308 still pending; do not wait on it.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
