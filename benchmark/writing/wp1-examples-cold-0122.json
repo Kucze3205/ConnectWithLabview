@@ -1,0 +1,47 @@
+{
+  "review": "review-wp1-examples-0122 / issue 587",
+  "phase": "cold expectation saved before any Later reads",
+  "provenance": {
+    "blind_to_package": true,
+    "opened_files": [".session/issue.md", ".session/role/SKILL.md", "benchmark/real-project-0107/LICENSE.txt", "benchmark/real-project-0107/original.lvproj", "benchmark/protocol.md", ".session/startup.json", "benchmark/writing/method.json"],
+    "method_scope": ["/common/answer_rule", "/tasks/4"],
+    "deviations": ["Inherited continuation read protocol.md whole rather than only lines 26-41 and 60; no Later-read package files opened.", "HEAD/tree were first recorded after original/license/protocol reads; reobserved with clean git status before saving this cold record."],
+    "startup_model": "claude-sonnet-5-5",
+    "continuation_candidate": "codex / gpt-6.1-sol"
+  },
+  "observed": {"head": "650c282024d073a59710cdb0b2cfe5463f9b4a9d", "tree": "752cb3a6b4010e6af388a1445402679aa564830d", "git_status_porcelain": "", "package_author_start_head": "94374c7a708f32b9d466614aa4c566184ac9165b", "package_merge": "4a0d8b3", "note": "Current HEAD is later; scoped bytes, not HEAD equality, establish identity."},
+  "source_measurements": [
+    {"path":"benchmark/real-project-0107/original.lvproj","bytes":5806,"sha256":"1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"},
+    {"path":"benchmark/real-project-0107/LICENSE.txt","bytes":1060,"sha256":"529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"},
+    {"path":"benchmark/writing/method.json","bytes":45705,"sha256":"276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"},
+    {"path":"benchmark/protocol.md","bytes":38342,"sha256":"1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"}
+  ],
+  "change": {"locator":"./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']", "match_count":1,"precondition":{"root":"Project","Type":"Project","LVVersion":"20008000","property_type":"Int","children":0,"text":"2"},"offset_zero_based":3347,"line_one_based":42,"old_byte_hex":"32","new_byte_hex":"33","allowed_changed_bytes":1,"derivation":"Parsed original XML independently, found unique literal property, located its text byte, substituted only that byte; did not use a package output or its hash."},
+  "expected_output": {"path":"Core/AF PPL Build.lvproj","bytes":5806,"sha256":"8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42"},
+  "semantic_ids":["WP1-property-text"],
+  "preservation_ids":["WP1-other-project-bytes","WP1-file-set-and-unrelated-files","WP1-root-version-declaration","WP1-original-and-license"],
+  "answer_ids":["WP1-describe-text-delta","WP1-original-output-grounding","WP1-honest-limits"],
+  "declared_url_references":[
+    {"line":16,"url":"/<vilib>/ActorFramework/Actor Framework.lvlib"},
+    {"line":19,"url":"/<vilib>/Utility/error.llb/Error Cluster From Error Code.vi"},
+    {"line":20,"url":"/<vilib>/Utility/LVClass/Get LV Class Default Value.vi"},
+    {"line":21,"url":"/<vilib>/Utility/LVClass/Get LV Class Name.vi"},
+    {"line":22,"url":"/<vilib>/Utility/High Resolution Relative Seconds.vi"},
+    {"line":24,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read Boolean.vi"},
+    {"line":25,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read Color.vi"},
+    {"line":26,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read Numeric (I32).vi"},
+    {"line":27,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read Pathlist.vi"},
+    {"line":28,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read String.vi"},
+    {"line":29,"url":"/<resource>/dialog/lvconfig.llb/LV Config Read.vi"}
+  ],
+  "reference_count":11,
+  "inventory_expectation": {
+    "authority":["benchmark/writing/method.json#/tasks/4/preservation", "benchmark/writing/method.json#/tasks/4/output_manifest_rule", "benchmark/writing/method.json#/tasks/4/trial_artifacts", "benchmark/protocol.md:26-41", "benchmark/protocol.md:60"],
+    "source_does_not_prescribe_literal_column_names":true,
+    "required_content":["Freeze full pre-exposure workspace file set and dependencies, not just the edited file", "Pre/post path, size, SHA256 and presence for every workspace file and dependency; explicitly retain missing/unexpected paths and absent dependency references", "Only Core/AF PPL Build.lvproj changes, exactly one byte; every other file and metadata unchanged, including BOM, LF, tabs, entities, final newline and XML ordering", "Immutable originals/license outside writable roots with pre/post hashes and retained MIT notice", "Root LVVersion declaration 20008000 preserved, native save version separately unavailable", "Complete original and edited bytes; patches/manifests do not substitute", "Independent approval and isolation cannot be inferred from a stipulated two-file example workspace"],
+    "trial_artifact_categories":["complete-original-bytes","complete-edited-bytes","license-notice","workspace-dependency-manifest","output-path-size-sha256-manifest","original-output-source-map","missing-unexpected-paths","failed-invalid-empty-raw-outputs","errors-truncation-retries","request-response-tool-records","time-cost-budget-records","per-file-save-version-evidence","native-logs-or-explicit-missing-status"]
+  },
+  "map_expectation": {
+    "content":["Account for every semantic, preservation and answer ID under independently frozen conditions", "Each writing claim cites original SHA256/path/exact locator and corresponding output SHA256/path/exact locator", "Map whole original/output project bytes, edited property, unchanged root declaration, immutable original/license and all workspace/unrelated-file preservation relations", "Retain exact submitted answer text, required-ID mapping, omissions, extras, contradictions and duplicates; a true extra cannot replace an omission", "Separate correctness and grounding per assertion and aggregate by protocol precedence: incorrect before unverified before correct before partial and unavailable outcomes", "Without native evidence no native validity, behavior, build, dependency resolution or save-version claim and no overall writing pass", "A declared absent dependency is not resolved; conditional text-only mapping credit must not become complete full-trial inventory/key approval", "Unsupported assertion needs independent evidence; correct artifact cannot compensate for unsupported prose"]
+  }
+}

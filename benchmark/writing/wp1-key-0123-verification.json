@@ -1,0 +1,304 @@
+{
+  "attempts": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "benchmark/writing/check_wp1_key_0123.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"benchmark_ready\": false, \"conditional_F4\": \"proposed only; separate review pending\", \"controls\": [{\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"READINESS\"], \"expected_error\": \"READINESS\", \"name\": \"promote-readiness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"release-conditional-F4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"skip-separate-review\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-general-key\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-full-trial\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"unblock-historical\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"promote-historical-map\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PROVENANCE\"], \"expected_error\": \"REVIEW_PROVENANCE\", \"name\": \"erase-review-deviations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"AUTHOR_PROVENANCE\"], \"expected_error\": \"AUTHOR_PROVENANCE\", \"name\": \"claim-independent\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NATIVE_DEPENDENCY_LIMITS\"], \"expected_error\": \"NATIVE_DEPENDENCY_LIMITS\", \"name\": \"native-version-authority\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_READINESS\"], \"expected_error\": \"TRIAL_READINESS\", \"name\": \"trial-evidence-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"UNAVAILABLE_CATEGORIES\"], \"expected_error\": \"UNAVAILABLE_CATEGORIES\", \"name\": \"remove-unavailable-category\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"LIMITS\"], \"expected_error\": \"LIMITS\", \"name\": \"native-validity-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"EXTRAS\", \"name\": \"remove-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"credit-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"support-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"ASSESSMENT_CORRECTNESS\", \"name\": \"promote-extra-correctness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"ASSESSMENT_GROUNDING\", \"name\": \"promote-extra-grounding\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DENOMINATORS\"], \"expected_error\": \"DENOMINATORS\", \"name\": \"change-denominator\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"SOURCE_REQUIREMENTS\"], \"expected_error\": \"SOURCE_REQUIREMENTS\", \"name\": \"remove-source-requirements\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"F3_REFERENCE\"], \"expected_error\": \"F3_REFERENCE\", \"name\": \"change-F3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"INHERITANCE\"], \"expected_error\": \"INHERITANCE\", \"name\": \"omit-base-obligations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PIN\"], \"expected_error\": \"REVIEW_PIN\", \"name\": \"forge-review-pin\", \"rejected_as_expected\": true}], \"errors\": [], \"failed_controls\": [], \"historical_map_slots\": \"partial/partial; blocked-F4\", \"independent_semantic_approval\": false, \"new_examples\": [\"WP1-0121-positive-map-v1\", \"WP1-0121-unverified-extra-map-v1\"], \"pinned_files_checked\": 35, \"rejecting_controls_passed\": 55, \"rejecting_controls_total\": 55, \"source_requirement_records\": 171, \"status\": \"proposed-key-integrity-with-historical-F4-block-intact\"}\n",
+      "stderr": "",
+      "checker_sha256": "962fa5a9d769f44c8b2302e8d81e78893724c88d98526a14fcec557550a6ab31"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "benchmark/writing/check_wp1_key_0123.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"benchmark_ready\": false, \"conditional_F4\": \"proposed only; separate review pending\", \"controls\": [{\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXTENSION_SCHEMA\"], \"expected_error\": \"EXTENSION_SCHEMA\", \"name\": \"inject-historical-override\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"READINESS\"], \"expected_error\": \"READINESS\", \"name\": \"promote-readiness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"release-conditional-F4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"skip-separate-review\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-general-key\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-full-trial\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"unblock-historical\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"promote-historical-map\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PROVENANCE\"], \"expected_error\": \"REVIEW_PROVENANCE\", \"name\": \"erase-review-deviations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"AUTHOR_PROVENANCE\"], \"expected_error\": \"AUTHOR_PROVENANCE\", \"name\": \"claim-independent\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NATIVE_DEPENDENCY_LIMITS\"], \"expected_error\": \"NATIVE_DEPENDENCY_LIMITS\", \"name\": \"native-version-authority\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_READINESS\"], \"expected_error\": \"TRIAL_READINESS\", \"name\": \"trial-evidence-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"UNAVAILABLE_CATEGORIES\"], \"expected_error\": \"UNAVAILABLE_CATEGORIES\", \"name\": \"remove-unavailable-category\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"LIMITS\"], \"expected_error\": \"LIMITS\", \"name\": \"native-validity-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"EXTRAS\", \"name\": \"remove-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"credit-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"support-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"ASSESSMENT_CORRECTNESS\", \"name\": \"promote-extra-correctness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"ASSESSMENT_GROUNDING\", \"name\": \"promote-extra-grounding\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DENOMINATORS\"], \"expected_error\": \"DENOMINATORS\", \"name\": \"change-denominator\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"SOURCE_REQUIREMENTS\"], \"expected_error\": \"SOURCE_REQUIREMENTS\", \"name\": \"remove-source-requirements\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"F3_REFERENCE\"], \"expected_error\": \"F3_REFERENCE\", \"name\": \"change-F3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"INHERITANCE\"], \"expected_error\": \"INHERITANCE\", \"name\": \"omit-base-obligations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PIN\"], \"expected_error\": \"REVIEW_PIN\", \"name\": \"forge-review-pin\", \"rejected_as_expected\": true}], \"errors\": [], \"failed_controls\": [], \"historical_map_slots\": \"partial/partial; blocked-F4\", \"independent_semantic_approval\": false, \"new_examples\": [\"WP1-0121-positive-map-v1\", \"WP1-0121-unverified-extra-map-v1\"], \"pinned_files_checked\": 35, \"rejecting_controls_passed\": 56, \"rejecting_controls_total\": 56, \"source_requirement_records\": 171, \"status\": \"proposed-key-integrity-with-historical-F4-block-intact\"}\n",
+      "stderr": "",
+      "checker_sha256": "306480ec500e70a4d5f868578bf0f3b29565a223401f164aeba6b3c05baaa4b2",
+      "change_since_prior": "ID-inventory name clarified and top-level extension schema protected against historical overrides"
+    }
+  ],
+  "meaning": "Observed author integrity check only, never independent semantic approval",
+  "command": [
+    "python3",
+    "-I",
+    "benchmark/writing/check_wp1_key_0123.py"
+  ],
+  "exit_code": 0,
+  "summary": {
+    "benchmark_ready": false,
+    "conditional_F4": "proposed only; separate review pending",
+    "errors": [],
+    "failed_controls": [],
+    "historical_map_slots": "partial/partial; blocked-F4",
+    "independent_semantic_approval": false,
+    "new_examples": [
+      "WP1-0121-positive-map-v1",
+      "WP1-0121-unverified-extra-map-v1"
+    ],
+    "pinned_files_checked": 35,
+    "rejecting_controls_passed": 56,
+    "rejecting_controls_total": 56,
+    "source_requirement_records": 171,
+    "status": "proposed-key-integrity-with-historical-F4-block-intact"
+  },
+  "preparation_index_check": {
+    "command": [
+      "python3",
+      "policy/evaluator/evaluate.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"benchmark_executed\": false, \"benchmark_ready\": false, \"errors\": [], \"evidence_references\": 80, \"manifest\": \"indexed\", \"missing\": [], \"tool_quality\": null}\n",
+    "stderr": ""
+  },
+  "observed_checkout": {
+    "head": "8027115c731d98746d587d8106b49d5836da997b",
+    "head_tree": "9237eb18711d5cd0f933bcc8dcb97247fcd9e4d1",
+    "status": "",
+    "note": "Identity captured at final checker execution. Parent commits accepted actions incrementally; this is a checkpoint, not an assertion that new files were uncommitted. Later metadata-only checkpoints must be distinguished by scoped hashes."
+  },
+  "new_files_except_this_verification": [
+    {
+      "path": "benchmark/writing/check_wp1_key_0123.py",
+      "bytes": 26925,
+      "sha256": "306480ec500e70a4d5f868578bf0f3b29565a223401f164aeba6b3c05baaa4b2"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-cold-0122.json",
+      "bytes": 6414,
+      "sha256": "e1676c54e3e980f488bbb4dcc9ec8bc981890a22ae5dbcce26a62b02cf8f51e7"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-review-0122.json",
+      "bytes": 30049,
+      "sha256": "6c7735d2c53e924075c14d68c83ba2b9c844e708778cfe563943f1c55e0b960b"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0123-pre-edit.md",
+      "bytes": 49199,
+      "sha256": "0e5fad25ce60e23d79024f899ce59cd0f7a88caadecf6d26a37eb1336cdb67e1"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0123.json",
+      "bytes": 114751,
+      "sha256": "5a76028d90204da48828557797878160fa37504d23348b782e723c2eb70aec7d"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0123.md",
+      "bytes": 11593,
+      "sha256": "75e3ec793d00140e5c75ea782c58cdcdfd5253dfa4254651e6f18cf19192e333"
+    }
+  ],
+  "unchanged_file_pins": [
+    {
+      "path": "benchmark/preparation.json",
+      "bytes": 12895,
+      "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+    },
+    {
+      "path": "benchmark/protocol.md",
+      "bytes": 38342,
+      "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+    },
+    {
+      "path": "benchmark/real-project-0107/LICENSE.txt",
+      "bytes": 1060,
+      "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+    },
+    {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "bytes": 5806,
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    {
+      "path": "benchmark/writing/README.md",
+      "bytes": 15838,
+      "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_examples_0121.py",
+      "bytes": 40139,
+      "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_key_0115.py",
+      "bytes": 19779,
+      "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_key_0117.py",
+      "bytes": 37193,
+      "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_key_0119.py",
+      "bytes": 37052,
+      "sha256": "28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99"
+    },
+    {
+      "path": "benchmark/writing/method.json",
+      "bytes": 45705,
+      "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+    },
+    {
+      "path": "benchmark/writing/wp1-cold-expectation-0118.json",
+      "bytes": 5036,
+      "sha256": "7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c"
+    },
+    {
+      "path": "benchmark/writing/wp1-disposition-review-0120.json",
+      "bytes": 38470,
+      "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+      "bytes": 130487,
+      "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121-verification.json",
+      "bytes": 31841,
+      "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "bytes": 204095,
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.md",
+      "bytes": 7934,
+      "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0115-verification.json",
+      "bytes": 17358,
+      "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0115.json",
+      "bytes": 262592,
+      "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0115.md",
+      "bytes": 9337,
+      "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0117-verification.json",
+      "bytes": 57834,
+      "sha256": "e3e7b3da3d354b61a978d6458f7e5e523ba425dcec7ecc5699a7a513e25ea27a"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0117.json",
+      "bytes": 306601,
+      "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0117.md",
+      "bytes": 11253,
+      "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119-pre-edit-findings.md",
+      "bytes": 3688,
+      "sha256": "c393b7bbfaf7ecb593688b1bbaf1827ce70a720ae7bc5d676430800b1785b3db"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119-verification.json",
+      "bytes": 102981,
+      "sha256": "bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119.json",
+      "bytes": 327961,
+      "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119.md",
+      "bytes": 13447,
+      "sha256": "5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-review-0116.json",
+      "bytes": 135476,
+      "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-review-0118.json",
+      "bytes": 569049,
+      "sha256": "410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55"
+    },
+    {
+      "path": "benchmark/writing/wp1-review-audit-0118.py",
+      "bytes": 31314,
+      "sha256": "8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833"
+    },
+    {
+      "path": "benchmark/writing/wp1-source-interpretation-0118.json",
+      "bytes": 2257,
+      "sha256": "b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b"
+    },
+    {
+      "path": "docs/perpetua/evaluation.md",
+      "bytes": 7552,
+      "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+    },
+    {
+      "path": "goal/goal.md",
+      "bytes": 4161,
+      "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+    }
+  ],
+  "scope_validation_correction": {
+    "initial_attempt_exit": 1,
+    "initial_failure": "AssertionError: git ls-files --others --exclude-standard returned [] instead of the seven expected untracked paths",
+    "cause": "The parent commits accepted actions incrementally. HEAD advanced and the seven files were already tracked; untracked-file status was an incorrect author assumption, not a key/checker failure.",
+    "replacement_check": "git diff --name-status 2835358a82775c58aa8860885df8ebb2958ca86f HEAD compared with exactly seven A records",
+    "replacement_check_passed": true
+  },
+  "scope_check": {
+    "baseline_head": "2835358a82775c58aa8860885df8ebb2958ca86f",
+    "name_status": "A\tbenchmark/writing/check_wp1_key_0123.py\nA\tbenchmark/writing/wp1-examples-cold-0122.json\nA\tbenchmark/writing/wp1-examples-review-0122.json\nA\tbenchmark/writing/wp1-key-0123-pre-edit.md\nA\tbenchmark/writing/wp1-key-0123-verification.json\nA\tbenchmark/writing/wp1-key-0123.json\nA\tbenchmark/writing/wp1-key-0123.md\n",
+    "new_files": [
+      "benchmark/writing/check_wp1_key_0123.py",
+      "benchmark/writing/wp1-examples-cold-0122.json",
+      "benchmark/writing/wp1-examples-review-0122.json",
+      "benchmark/writing/wp1-key-0123-pre-edit.md",
+      "benchmark/writing/wp1-key-0123-verification.json",
+      "benchmark/writing/wp1-key-0123.json",
+      "benchmark/writing/wp1-key-0123.md"
+    ],
+    "preexisting_files_changed": [],
+    "protected_pin_mismatches": [],
+    "markdown_source_pin_rows_verified": 11,
+    "all_files_under_2_MB": true
+  },
+  "handoff_checkpoint": {
+    "head": "127776453c4b38341d5049dd781b334de8a93c56",
+    "tree": "46c261f9d740fdf9d1dda93c22a3857781e03f14",
+    "status": "",
+    "note": "This checkpoint contains the final key, Markdown, checker, pre-edit record and preserved artifacts; this verification metadata is updated immediately afterward. Final report records the subsequent candidate HEAD/tree."
+  },
+  "final_content_summary": {
+    "historical_map_status": "partial/partial; blocked-F4",
+    "positive": {
+      "answer_correctness": "correct",
+      "source_grounding": "correct"
+    },
+    "extra": {
+      "answer_correctness": "unverified",
+      "source_grounding": "partial"
+    },
+    "conditional_released": false,
+    "F3": "unchanged by pinned reference"
+  }
+}
