@@ -771,6 +771,18 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   near the input ceiling -> verify tag, land by script (max_turns >= 25). #379 (store workflow rev 4) pending; when the
   record arrives order one cross-family record review. Memory file is ~76 KB: compress sections 0024-0050 next session.
 
+## Iteration 0067 (#390, wake false)
+- Considered record 0066, report #388 (.github/loop/data/session-reports/388/dcd87a90….json).
+- #388 DONE, merged 24a97d2 (routine accept, no owner): new draft files benchmark/native/job/ native_job.py,
+  native_job.sh, workflow.proposal.yml, README.md. Author mainly codex gpt-6.1-sol (513k input, 20 turns). Self-test 0,
+  5 rejecting mutations. No Docker/LabVIEW run. Gaps per #388: native properties, substantive diagram capture, safe
+  loading, controlled I/O; upload of record/manifest/logs only leaves HTML on the runner (comparison clause at risk).
+- Order `review-native-job-388` (reviewer, medium, 50/35, main, exports []): clause map vs 169.json readiness,
+  workflow safety, revert-proof probes of 5 self-test checks, HTML-upload gap assessment, `unverified` marking.
+- Next: accept -> one Owner `question` with install steps (copy workflow.proposal.yml to .github/workflows/, dispatch,
+  commit record); do not claim #169 ready. Revise -> fix by Policymaker script (hash-gated), no blind re-review.
+  #379 pending; when the record arrives order one cross-family record review. Memory is large: compress 0024-0050.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
