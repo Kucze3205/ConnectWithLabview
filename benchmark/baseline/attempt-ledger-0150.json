@@ -91,9 +91,9 @@
    {"name": "reservation_rule", "content": "whole-slot worst case before each dispatch", "authority_required": "declared"},
    {"name": "ledger_id and ledger_storage", "content": "identity and location of the ledger plus an immutability or retention receipt reference", "authority_required": "independent_verification"},
    {"name": "producer", "content": "id, version", "authority_required": "declared"},
-   {"name": "freeze_utc", "content": "UTC before the first request", "authority_required": "independent_verification (trusted clock)"},
-   {"name": "verification_receipt_ref", "content": "verifier id, registry entry, scope, method, utc and the receipt_sha256 it verified", "authority_required": "independent_verification"}
+   {"name": "freeze_utc", "content": "UTC before the first request", "authority_required": "independent_verification (trusted clock)"}
   ],
+  "verification_receipt_note": "The independent verification receipt (verifier id, registry entry, scope, method, utc, the receipt_sha256 it verified) is a separate external document held outside the freeze receipt. It is not a receipt field; only ledger events cite it (binding step 8).",
   "acyclic_binding_order": [
    "1 reviewed policy bytes; hash recorded externally; policy contains no hash of later artifacts",
    "2 manifest instance referencing policy_id and policy hash (existing stopping_rule, sampling_order and precision_cost_plan_revision fields)",
@@ -145,7 +145,7 @@
   "dispatch_recorded": {"phases": ["open"], "payload": ["request_sha256", "request_size"], "preconditions": ["no other slot open (V08)", "slot is next in frozen order (V07)", "reservation_made for this slot (V09)", "persistence acknowledged before the request is sent (write-ahead)", "request bytes retained before send"], "note": "carries attempt_id and attempt_order; one dispatch per slot"},
   "delivery_retained": {"phases": ["open", "stopped", "terminal"], "payload": ["kind dispatched|redelivery|unsolicited", "response {presence present|absent, hex, size, sha256}", "evidence_missing[] kinds from the 24 required kinds"], "preconditions": ["kind dispatched only while that slot is open (V23)", "after plan_terminal only kinds unsolicited or redelivery (V17)", "bytes retained before any interpretation"]},
   "delivery_interpreted": {"phases": ["open", "stopped", "terminal"], "payload": ["delivery_id of an earlier delivery_retained (V11)", "answer_class", "legacy_valid declared", "proof none|stipulated_synthetic|independently_verified", "decision (must equal decision_table result, V25)", "postdispatch {settings_match, model_ok, evidence_ok}"]},
-  "usage_reconciled": {"phases": ["open", "stopped", "terminal"], "payload": ["usage_known bool", "tokens_in|null", "tokens_out|null", "exhausted bool", "cost null always unless a verified price exists"], "note": "one charge per distinct attempt_id; deliveries and proven redeliveries never charge again"},
+  "usage_reconciled": {"phases": ["open", "stopped", "terminal"], "payload": ["usage_known bool", "actual {tokens_in|null, tokens_out|null, time_s|null, calls|null}", "reserved_ref seq of the reservation_made event", "delta {tokens, time_s, calls} = actual minus reserved, null if actual unknown", "overrun bool (any delta component above zero)", "remaining_after {tokens, time_s, calls} remaining ceiling after the actual usage", "exhausted bool", "cost null always unless a verified price exists"], "note": "one charge per distinct attempt_id; deliveries and proven redeliveries never charge again; overrun is checked by V29"},
   "slot_closed": {"phases": ["open", "stopped"], "payload": ["classification attempted_eligible|attempted_ineligible|unresolved (V15 checked against closure rule)"]},
   "stop_recorded": {"phases": ["open"], "payload": ["gate predispatch|postdispatch|final", "causes[] in detection order from hard_evidence_failure|settings_drift|budget", "primary by precedence (V27)"], "note": "at most one per plan; first detected stop prevents all later reservation and dispatch"},
   "plan_terminal": {"phases": ["blocked", "open", "stopped"], "payload": ["state, must equal terminal_derivation (V14)"], "preconditions": ["exactly once", "no open slot in main segment (V16); a recovery terminal may leave open slots as unresolved gaps"]},
@@ -156,7 +156,17 @@
   "recovery_opened": {"phases": ["any"], "segment": "recovery", "payload": ["last_verified_seq", "suspect_tail_seqs[]", "reason"]}
  },
  "plan_states": {
-  "nonterminal": ["pre", "ready/open", "running"],
+  "nonterminal": ["pre", "open", "stopped", "blocked"],
+  "phase_mapping": {
+   "note": "Policy plan states ready/running map onto ledger phases; ledger phases are the only state the validator uses (V34). Terminal states are shared by name.",
+   "ready": "phase pre after a verified receipt and before preflight_result ready, then phase open with no slot open and no dispatch yet",
+   "running": "phase open with a slot reserved, dispatched or delivered but not closed, or open between slots after at least one dispatch",
+   "pre": "no event yet; only preflight_result is legal (V31)",
+   "blocked": "after preflight_result blocked; only plan_terminal blocked_preflight, submission_quarantined and evidence_gap_recorded are legal",
+   "open": "after preflight_result ready and before any stop_recorded or plan_terminal",
+   "stopped": "after stop_recorded and before plan_terminal; an in-flight slot may still retain, interpret, reconcile and close",
+   "terminal": "after plan_terminal; V17 applies"
+  },
   "terminal": ["blocked_preflight", "finished_complete", "finished_incomplete", "stopped_hard_failure", "stopped_settings_drift", "stopped_budget"],
   "transitions": [
    "pre -> open via preflight_result ready",
@@ -167,6 +177,12 @@
    "terminal accepts only retention and audit events; no reopen, restart or resume"
   ],
   "terminal_derivation": "blocked preflight -> blocked_preflight; else stop causes present -> state of the primary cause (hard_evidence_failure > settings_drift > budget); else all slots closed and every comparison structurally complete and no unresolved/indeterminate slot -> finished_complete; else finished_incomplete. A stop on the last slot keeps the stop state."
+ },
+ "answer_class_values": {
+  "note": "Closed vocabulary for delivery_interpreted.answer_class (V33). Ledger-only terms; no envelope enum is added. Values for policy cases I03 and I04 follow the review #699 list; the literal I03/I04 text was not found in the 0148 files by grep, so the mapping to those cases is not independently confirmed.",
+  "values": ["ok", "interrupted", "unsupported", "absent", "empty", "invalid_utf8", "malformed", "legacy_invalid", "truncated", "exhausted", "error", "failed_tool_call"],
+  "only_ok_can_close_eligible": "ok with legacy_valid true; every other value gives attempted_ineligible or unresolved per slot_closure_rule and never stops the plan by itself (R08)",
+  "absent_versus_interrupted": "absent is a retained delivery with presence absent; interrupted is an observed external interruption; neither is invented for a missing delivery (C3)"
  },
  "slot_states": ["planned", "reserved", "dispatched", "delivered", "closed", "unstarted (derived at terminal)", "indeterminate (derived from unverified events)"],
  "gate_inputs": {
@@ -233,7 +249,13 @@
   "V25": "delivery_interpreted.decision equals the decision_table result",
   "V26": "stop_recorded at most once",
   "V27": "stop_recorded.primary equals the highest-precedence cause listed",
-  "V28": "usage_known false when usage is needed for a ceiling requires stop_recorded with hard_evidence_failure before the next reservation"
+  "V28": "usage_known false when usage is needed for a ceiling requires stop_recorded with hard_evidence_failure before the next reservation",
+  "V29": "usage_reconciled.reserved_ref names an earlier reservation_made of the same slot; delta equals actual minus reserved per component; overrun is true exactly when any delta component is above zero; remaining_after equals the previous remaining ceiling minus actual; an overrun requires stop_recorded with hard_evidence_failure before the next reservation and never authorizes further spending",
+  "V30": "the receipt freeze_utc is strictly earlier than the first event_utc and than the event_utc of every dispatch_recorded; a missing or later freeze_utc makes every dispatch_recorded illegal",
+  "V31": "preflight_result is the event at seq 1 and appears exactly once; any event at seq 1 of another type, or a second preflight_result, is illegal",
+  "V32": "within each recovery segment event_utc is non-decreasing with seq, and the first event of a recovery segment is not earlier than the last verified main event_utc; a regression in a recovery segment ends that segment's verified prefix as V05 does for main",
+  "V33": "delivery_interpreted.answer_class is one of the values enumerated in /answer_class_values; any other value is illegal and the slot is unresolved",
+  "V34": "the plan state at each event follows /plan_states/phase_mapping; an event whose type is not listed for the current phase is illegal"
  },
  "slot_closure_rule": "attempted_eligible only if the single dispatched attempt has decision ROW, answer_class ok (complete success, no truncation, interruption, exhaustion, error or failed tool call), legacy_valid true, postdispatch checks pass and no extra attempt, conflicting or unproved delivery exists at closure time; unresolved for multiple attempts, unproved/conflicting deliveries, BUNDLE_NO_ROW or an evidence gap; otherwise attempted_ineligible. Later evidence never edits the closure; it is applied by audit_revision.",
  "inventories": {
@@ -315,5 +337,5 @@
   {"id": "F-A1", "subject": "V20 versus V17", "observation": "In the author application a second plan_terminal is reported as V17 (not a legal post-terminal event) and never as V20. V20 is therefore subsumed by V17 for any second terminal, in either segment; a reviewer should decide whether to keep V20 as a redundant statement or delete it. The saved negative that expected V20 was retained as a mismatch, not edited."},
   {"id": "F-A2", "subject": "slot-level NONE versus saved seam expectation S-X23", "observation": "Saved expectation S-X23 lists decisions [ROW, ROW] while this contract's decision_table.slot_level also yields NONE for the slot referenced only by unverified events. The application output shows [ROW, ROW, NONE]. The inventory expectation (B-N indeterminate) agrees; only the decision list differs. Retained as a mismatch; a reviewer should decide whether NONE is a decision or only an inventory state."}
  ],
- "review_handoff": "A later separate reviewer should judge these two files against the pinned sources, .session/artifacts/attempt-ledger-expectations-0150.json (saved before this file) and the application/check artifact; this author does not approve its own contract."
+ "review_handoff": "A later separate reviewer should judge these two files against the pinned sources and the saved #685 expectations as regression inputs; no author expectations or application artifact is available to inspect (withdrawn, see /pins/seam_expectations_chronology). Corrected for review #699 findings 1-5 in task #702 (new rules V29-V34); F-A1 and F-A2 remain open for an owner decision. This author does not approve its own contract."
 }
