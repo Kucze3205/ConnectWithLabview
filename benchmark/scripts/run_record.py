@@ -202,6 +202,16 @@ def validate(record, manifest):
     return converted
 
 
+BINDING_REASON = 'manifest_sha256 does not match supplied manifest bytes'
+
+
+def bind_manifest(record, manifest_bytes):
+    """Accept a record only when manifest_sha256 is sha256 of the exact supplied bytes."""
+    require(isinstance(manifest_bytes, bytes), 'manifest bytes required')
+    require(record['fields']['manifest_sha256']['value'] == hashlib.sha256(manifest_bytes).hexdigest(),
+            BINDING_REASON)
+
+
 def check():
     record, manifest = parse(TEMPLATE.read_text()), parse(MANIFEST.read_text())
     converted = validate(record, manifest)
@@ -243,10 +253,30 @@ def check():
                        'reader_fidelity': 'not_applicable'}.items():
         no_tool['fields'][key]['value'] = value
     validate(no_tool, manifest)
+    # Manifest-content binding (review #318 finding 4): synthetic bytes only, no populated manifest.
+    manifest_bytes = b'SYNTHETIC run manifest bytes\n'
+    bound = deepcopy(record)
+    bound['fields']['manifest_sha256']['value'] = hashlib.sha256(manifest_bytes).hexdigest()
+    validate(bound, manifest)
+    bind_manifest(bound, manifest_bytes)
+    binding = [{'control': 'matching bytes', 'result': 'accepted'}]
+    wrong = deepcopy(bound)
+    wrong['fields']['manifest_sha256']['value'] = sha('SYNTHETIC other manifest')
+    changed = manifest_bytes[:-2] + b'X' + manifest_bytes[-1:]
+    for name, candidate, data in (('wrong content with well-formed hash', wrong, manifest_bytes),
+                                  ('one changed manifest byte', bound, changed)):
+        validate(candidate, manifest)
+        try:
+            bind_manifest(candidate, data)
+        except ValueError as exc:
+            require(str(exc) == BINDING_REASON, name + ': failed for unexpected reason: ' + str(exc))
+            binding.append({'control': name, 'result': 'rejected', 'reason': str(exc)})
+        else:
+            raise ValueError(name + ': mismatched manifest accepted')
     print(json.dumps({'status': 'pass', 'design_only': True, 'runs': 0,
                       'benchmark_ready': False, 'tool_quality': None,
                       'conversion': converted['answer_record'],
-                      'no_tool_variant': 'pass', 'mutations': results,
+                      'no_tool_variant': 'pass', 'mutations': results, 'manifest_binding': binding,
                       'undecided': {k: record['fields'][k]['reason'] for k in sorted(UNDECIDED)}},
                      indent=2))
 
