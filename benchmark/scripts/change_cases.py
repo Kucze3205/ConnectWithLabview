@@ -125,7 +125,7 @@ def rejecting_mutations(specs):
     case, mutate, actual_reason = tests[0]
     changed = copy.deepcopy(specs[case])
     mutate(changed)
-    wrong_reason = "deliberately wrong expected reason"
+    wrong_reason = actual_reason + " [deliberately wrong suffix]"
     try:
         expect_reject(case, changed, wrong_reason)
     except AssertionError as exc:
@@ -134,7 +134,7 @@ def rejecting_mutations(specs):
     else:
         raise ValueError("reason comparison self-test: mismatch accepted")
     print("PASS: reason comparison self-test rejects a deliberately wrong expected reason")
-    print(f"PASS: {len(tests)} in-memory rejecting mutations with asserted reasons")
+    return (len(tests), 1)
 
 
 def check_sources(specs):
@@ -167,7 +167,9 @@ def main():
         validate(spec, case)
         specs[case] = spec
     print("PASS: two design specifications; frozen claims, unavailable native answers and grant flags")
-    rejecting_mutations(specs)
+    completed = rejecting_mutations(specs)
+    require(completed == (10, 1), "rejecting controls did not complete: expected (10, 1)")
+    print(f"PASS: {completed[0]} in-memory rejecting mutations with asserted reasons")
     check_sources(specs)
     print("Design validation only: zero native executions; no semantic key established.")
     return 0

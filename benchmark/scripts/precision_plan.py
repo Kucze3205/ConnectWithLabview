@@ -181,7 +181,7 @@ def rejection_controls(plan, template):
     for part in path[:-1]:
         node = node[part]
     node[path[-1]] = value
-    wrong_reason = 'deliberately wrong expected reason'
+    wrong_reason = actual_reason + ' [deliberately wrong suffix]'
     try:
         expect_reject(path, mutated, wrong_reason)
     except AssertionError as error:
@@ -199,7 +199,7 @@ def rejection_controls(plan, template):
             raise AssertionError('wrong manifest-field rejection reason') from error
     else:
         raise AssertionError('removed template field accepted')
-    return len(controls) + 1
+    return (len(controls) + 1, 1)
 
 
 def main():
@@ -210,7 +210,9 @@ def main():
         plan = json.loads(PLAN.read_text(encoding='utf-8'))
         template = json.loads(MANIFEST.read_text(encoding='utf-8'))
         validate(plan, template)
-        count = rejection_controls(plan, template)
+        completed = rejection_controls(plan, template)
+        require(completed == (8, 1), 'rejecting controls did not complete: expected (8, 1)')
+        count = completed[0]
     except (OSError, ValueError, KeyError, TypeError, AssertionError) as error:
         print(f'FAIL precision plan: {error}', file=sys.stderr)
         return 1
