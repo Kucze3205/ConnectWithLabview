@@ -1,17 +1,23 @@
-# Method-acceptance owner request draft (Policymaker #426, iteration 0078)
+# Method-acceptance owner request draft (Policymaker #429, iteration 0079)
 
 Source: corrected draft of review #403 at main dacb5fba604f3686d85f548a787b3a6aa9f5912f
 (snapshot .github/loop/data/session-reports/403/f2f9617058d208b792b09030f37e745cbc161705de5cc442eb61470642fb805a.json).
 Changes vs #403: new commit and index hash; step 3 records the pinned change-case specifications
-(reviews #408, #415, #421); step 4 records the pinned precision plan (reviews #409, #415, #421).
-Status: unfiled. Independent fact-check ordered as review-method-request-draft-426.
+(reviews #408, #421); step 4 records the pinned precision plan (reviews #409, #421).
+Fact-check #427 (Claude Sonnet, verdict revise; snapshot
+.github/loop/data/session-reports/427/b2ed49e9c8d70b1b91ba53114d3ab1411cf9439e46194393d63c7b1ec2055799.json):
+corrections 1-4 applied as exact text. Commit updated to 39f03859 because owner request #379 replaced
+benchmark/split/store-readiness-268.redacted.json (unpinned; index hash unchanged). Step 2 store sentence
+updated: #379 is completed; the replacement record awaits independent review (order review-store-record-379).
+"Lineage level" checked by Policymaker: benchmark/precision/plan.json:40,44.
+Status: filed as a `question` by Policymaker #429.
 
 ---
 
 **title:** Assess the verification method and its documented design limits
 
 **what:** Please assess the verification method and its preparation evidence. Accept the documented design scope, or identify the changes you require.
-Use main commit `0222240d1bd71d88c2bcec8c9084d739b3023aad`.
+Use main commit `39f03859d114bd82b352bb388dffcc5e286c3a2f`.
 Use preparation index SHA256 `25cf0059164b7ec7d3be88f0bca00dbb16ccac85a82c0f8b28d5b6a7a31c1d35`.
 Read `benchmark/protocol.md` at that commit and the evidence files that the index identifies.
 The commit identifies the protocol because the index does not include it.
@@ -26,13 +32,13 @@ It selects no fallback and reduces no goal scope.
 
 **unblocks:** Your decision can settle acceptance of the documented design scope through the existing owner gate.
 The loop then completes the remaining preparation and evidence requirements before implementation acceptance.
-Each work change still requires the applicable owner decision.
+Each edit or build still requires your explicit grant.
 
 1. Check the commit and the index hash above. Read the protocol and the limitations in `benchmark/preparation-status.json`. Keep the substantive evidence requirements of the protocol open.
-2. Keep every execution gap. Native executions remain zero. All 23 native slots remain unresolved. No split allocation exists. Store readiness evidence remains pending #379 under capability #268. Native capability #169 remains not ready. No native key, native challenge result or matched model comparison exists.
+2. Keep every execution gap. Native executions remain zero. All 23 native slots remain unresolved. No split allocation exists. The replacement store-readiness record from #379 awaits independent review under capability #268. Native capability #169 remains not ready. No native key, native challenge result or matched model comparison exists.
 3. Assess the two change-case specifications in `benchmark/change-cases/`: typedef-impact and diagram-difference. They are public specifications only. Their native answers are unavailable until #169 is ready. No edit or build grant exists. Edits and builds need your explicit grant before the loop does them.
 4. Assess the precision plan in `benchmark/precision/`. It predeclares a 95% paired bootstrap at lineage level with seed 40502 and 10,000 resamples. The model and provider quota remains your decision. No paired run exists.
 5. Keep the remaining oracle and comparison requirements. Semantic documentation is not pinned by version, location and content hash. Disputed expected claims need resolution before key use. The scorer keeps `independently_reviewed: false`.
-6. Assess the recorded review limits. GPT-family authors and reviewers did the split, baseline-template, native-design and synthetic-scorer reviews. Review #347 used the same Anthropic family as its author. Reviews #369 and #421 checked fixes across model families. Review #421 found that a coordinated edit of two checker lines can bypass the reason controls. These reviews establish their recorded scopes only.
-7. Read `docs/research/0002-delivery.md:105–109,123,143,153–163`. That report estimates 89–264 engineer-days for all versions and 33–99 for the 2024-only core. The difference of the corresponding endpoints is 56–165 engineer-days. These figures are uncertain planning estimates. The strict 2024 option of that report excludes 413 of its 415 versioned RSRC files. This information selects no fallback.
+6. Assess the recorded review limits. GPT-family authors and reviewers did the split, baseline-template, native-design and synthetic-scorer reviews. Review #347 used the same Anthropic family as its author. Review #369 checked a fix across model families. Review #421 checked the #418 fix across model families. Review #421 checked the #412 fix within one family. Review #421 found that a coordinated removal of the rejecting-control count check is not detected. These reviews establish their recorded scopes only.
+7. Read `docs/research/0002-delivery.md:105–109,123,153`. That report estimates 89–264 engineer-days for all versions and 33–99 for the 2024-only core. The difference of the corresponding endpoints is 56–165 engineer-days. These figures are uncertain planning estimates. The strict 2024 option of that report excludes 413 of its 415 versioned RSRC files. This information selects no fallback.
 8. Record an explicit decision through the existing owner change gate. Identify the commit, the index hash, the accepted design scope and the remaining requirements. Accept that scope, or reject it and state the required changes. This decision approves no benchmark readiness, quality threshold, goal gate, product claim or fallback.

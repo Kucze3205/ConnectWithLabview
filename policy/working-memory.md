@@ -936,6 +936,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - #379 remains pending. No new private access or spending. Missing coverage and native answers remain explicit; product quality is unmeasured; reader implementation remains gated.
 - Sources: .session/history/records/0077.json; .github/loop/data/session-reports/403/f2f9617058d208b792b09030f37e745cbc161705de5cc442eb61470642fb805a.json (report.body); benchmark/preparation-status.json.
 
+## Iteration 0079 (#429, wake false)
+- Considered record 0078, fact-check #427 (.github/loop/data/session-reports/427/b2ed49e9….json), git log origin/main.
+- #427 (Claude Sonnet only, 17 turns; draft author Policymaker Claude -> same family) verdict REVISE: 4 exact corrections
+  (step 6 #421 cross-family wording, "coordinated removal of the rejecting-control count check", step 7 lines :105-109,123,153,
+  "Each edit or build still requires your explicit grant."). All applied in policy/proposals/method-acceptance-draft.md.
+  Policymaker checked "lineage level" (plan.json:40,44). Do not repeat #427.
+- Owner request #379 COMPLETED: cbcb70c installs workflow rev 4 (sha 27b365ec… = proposal), 8204f60 + a5eb91e replace the
+  record (sha 019a3e48…, sidecar matches; record NOT pinned in preparation.json). Only that record changed in benchmark/ and
+  docs/ since 0222240; index sha stays 25cf0059…; main 39f03859d114bd82b352bb388dffcc5e286c3a2f.
+- FILED Owner `question`: "Assess the verification method and its documented design limits" (method only; commit 39f03859,
+  index 25cf0059…; all gaps visible; store step says the #379 record awaits independent review). Max sentence 17 words.
+- Order `review-store-record-379` (reviewer, medium, 45/35, main, no exports): sha checks, steps a-e vs #268 clause,
+  #366 F1/F2 closed, redaction scan, verdict.
+- INCIDENT again: .session/orders.json vanished mid-session (provider switch); rewritten and re-checked before Finish.
+- Next: store-record accept -> pin record + review under split by hash-gated script (max_turns >= 25), then design of
+  synthetic split allocation that uses the store. Revise -> Owner request with the exact owner action. Read the owner's
+  method decision; product implementation stays gated until acceptance. #169 not ready; quality unmeasured.
+  Memory ~95 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
