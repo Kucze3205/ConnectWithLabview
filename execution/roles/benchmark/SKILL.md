@@ -11,6 +11,9 @@ assertion-critique method; provenance is in `docs/perpetua/roles.md`.
 It follows `docs/perpetua/evaluation.md`; read that contract and
 `goal/goal.md` before designing cases. Protocol and report: the engine contract in your system instructions.
 The existing evaluator verifier supplies the independent readiness checks, in another session.
+The report starts with `<!-- session-report -->`, then a fenced `yaml` block with `status: wip` while you work.
+Finish takes the same one word as that status: `done`, `partial`, `blocked` or `rejected` (#584 lost two Finish
+calls: status `complete`, then a report without the marker).
 
 Write only `benchmark/`: protocol, provenance and coverage records, development cases,
 repeatable preparation scripts and the optional preparation evidence index. Keep large

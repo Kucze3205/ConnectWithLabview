@@ -125,6 +125,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
   the key files in `## Budget` as later reads (#567: the budget listed the key's Markdown to read whole, the session
   read it at turn 6 and had to report its derivation as not blind, P1). A model fallback inside a session carries
   the earlier reads with it.
+- **Close a review chain.** A CLEAR review closes its pinned scope. Do not repeat it without changed evidence or a
+  concrete unresolved finding. After NOT-CLEAR, correct the named findings and review the changed scope. The WP1
+  key thread used iterations 0115-0122 (four packages, four reviews). After the key revision that follows #587 and
+  its review, reassess the next task against the remaining method gaps in `docs/perpetua/evaluation.md`. Name the
+  gap and expected gain in working memory. Carry unresolved findings explicitly; never lift a block to end a chain.
 - **Resume saved work, do not redo it.** A `blocked` or `partial` task keeps its unmerged work at the tag `iter/NNNN/N`.
   Order a task with `start_branch: task/N` that corrects only the failing check or the missing piece, and name what is
   already done so the session does not repeat it (#518: both files were written; only the check was wrong).
