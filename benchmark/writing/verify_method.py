@@ -288,6 +288,31 @@ PROJECT_REASONS = {
     'project-method-overall-pass': 'project-task-planned_results',
     'project-method-missing-task': 'task-inventory',
 }
+# Re-pins of live inputs changed after the #547/#554 integration (issue #934,
+# measured in benchmark/writing/pin-drift-0218.md, Drift table). Both files are
+# indexes of non-writing pins; the changes re-pin challenge fixtures and
+# scripts/score.py, not writing files. `old` must equal the historical pin
+# carried by the proposal; the historical pin itself stays frozen and is still
+# compared against the provenance addendum below.
+HISTORICAL_REPINS = {
+    # changed by 8cb25137 (#758), f786bc80, 1b61287b (#766), b4011c5b (#778),
+    # 14cbd047 (#808), 86408131 (#812), 83a4c7a8 (#856), abd491f9 (#881),
+    # 05dadc58 (#889), 7f9dde12 (#897), 4eef3934 (#905); first old blob fc02ca67
+    'benchmark/preparation.json': {
+        'old': 'b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25',
+        'new': '1422bb85a3e801e62274f5552d59aada7a302d73c50e25ae014b488134804880',
+        'size': 12895},
+    # same chain plus bcdf8f8c (#762), 6386cd43 (#860), f8670d52 (#865); old blob 2033c33f
+    'benchmark/writing/input-pins.json': {
+        'old': 'd6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44',
+        'new': '972eb49d11044bbac9e152ddd841c7b06d28b30100006a37ec03f6f0810ca6f2',
+        'size': 7207},
+}
+# The provenance addendum pins this file's own pre-#934 bytes. A file cannot
+# contain its own current hash, so that single output pin is compared with the
+# recorded old value only; its current hash is printed as checker_sha256.
+SELF_PATH = 'benchmark/writing/verify_method.py'
+SELF_PRE_REPIN_SHA256 = 'da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d'
 READ_INPUTS = {}
 PROPOSAL = None
 
@@ -338,6 +363,14 @@ def check_integration_inputs():
         need(actual['sha256'] == sha256, 'historical-pin-drift:' + path)
         historical[path] = actual
     for path, expected in historical.items():
+        if path in HISTORICAL_REPINS:
+            # Issue #934: the historical pin stays frozen (compared with the
+            # provenance addendum below); the live file must match the re-pin.
+            repin = HISTORICAL_REPINS[path]
+            need(expected['sha256'] == repin['old'], 'historical-pin-drift:' + path)
+            need(same(file_pin(path), {'size': repin['size'], 'sha256': repin['new']}),
+                 'historical-pin-drift:' + path)
+            continue
         need(same(file_pin(path), expected), 'historical-pin-drift:' + path)
     envelope = json.loads(read_repository(ENVELOPE))
     need(envelope['report']['issue'] == 547 and envelope['report']['snapshot'] ==
@@ -379,6 +412,11 @@ def check_integration_inputs():
     need(same(provenance['mapping'], PROPOSAL['requirements']), 'integration-mapping')
     need(set(provenance['outputs']) == INTEGRATION_OUTPUTS, 'integration-output-inventory')
     for path, expected in provenance['outputs'].items():
+        if path == SELF_PATH:
+            # Issue #934: this file cannot contain its own current hash; the
+            # addendum must still record the pre-#934 bytes it was written for.
+            need(expected['sha256'] == SELF_PRE_REPIN_SHA256, 'integration-output-pin-drift:' + path)
+            continue
         need(same(file_pin(path), expected), 'integration-output-pin-drift:' + path)
     return {'status': 'integration-pins-consistent', 'historical_unchanged_count': len(historical),
             'current_output_pins': len(INTEGRATION_OUTPUTS), 'review_sha256': REVIEW_SHA256,
