@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "issue": 557,
+  "role": "reviewer",
+  "review_kind": "independent Standards and Spec review of #554 WP1 integration preparation",
+  "overall_recommendation": "CLEAR",
+  "recommendation_scope": "Only the seven-file WP1 writing-method integration preparation at candidate 0e371f84162004146990cb1262b044dd4bf0dd79, tree 557a725623d04d1df5415751c4079bca056034f3. No trial, native certification, benchmark readiness, evaluator verification, owner method acceptance, product approval or goal completion.",
+  "identities": {
+    "starting_baseline": {
+      "commit": "575d59ef8fcaf1f81a81d2eb605f52eb94053839",
+      "tree": "bd09e3a07e772337a3f045f69611b9f51dd3e227"
+    },
+    "accepted_candidate": {
+      "commit": "0e371f84162004146990cb1262b044dd4bf0dd79",
+      "tree": "557a725623d04d1df5415751c4079bca056034f3",
+      "actual_parent": "575d59ef8fcaf1f81a81d2eb605f52eb94053839"
+    },
+    "review_checkout": {
+      "commit": "6bfd01ae29ef2091309a46082749bd5dac07d8e9",
+      "tree": "65c467d134e6c5ac6afddb4855bf20a6ead04962"
+    },
+    "git_resolution": "All three commit/tree pairs resolve. Raw commit and tree content addresses were independently recomputed with Git object headers and matched. Candidate is the direct child of the specified baseline. No pin drift or silent repinning.",
+    "parent_author_distinction": "The exported iteration 112 outcome records accepted/merged #554 at 0e371f8. Git identifies that commit as parent-admitted session output. Author evidence is the integration provenance and actual verification record, explicitly awaiting independent review; acceptance/merge is not independent technical approval. Later parent commits add #554/#556 report envelopes, iteration records/tasks and journal changes only. All seven reviewed checkout files match candidate Git bytes exactly. Earlier method baseline 486030b4 and proposal/review identities are historical, not substitutes for this integration baseline/candidate."
+  },
+  "specification": {
+    "source": ".session/exports/records/0112.json#/tasks/0/body",
+    "manifest": ".session/exports/manifest.json",
+    "task": "#554 integrate-wp1-method",
+    "outcome": "done, accepted, merged, commit 0e371f8",
+    "original_proposal": "benchmark/project-text-writing-0109.json",
+    "preserved_review": "benchmark/project-text-writing-0109/review-0110.json",
+    "preserved_review_size": 74366,
+    "preserved_review_sha256": "2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf",
+    "historical_review_provenance": "benchmark/project-text-writing-0109/review-0110-provenance.md:7",
+    "provenance_confirmation": "Exact review bytes, four review Git commit/tree identities, five scoped review pins at accepted candidate/full task/reviewed checkout, and #547 repository report envelope hash, issue 547 and snapshot d6eb2085115b86ba4e78c52b2307ddf0d700826dc74a4d31043d5e6f9d7303ef match. Historical unavailable Markdown was not reconstructed. Historical CLEAR is used only as input to this new separate changed-tree review."
+  },
+  "scoped_files": {
+    "benchmark/writing/README.md": {"status": "M", "size": 15838, "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"},
+    "benchmark/writing/controls.json": {"status": "M", "size": 40943, "sha256": "f477bcd1fbb836d0d9d65835cdccbdc53d499e4c675da6465618778229f7f82f"},
+    "benchmark/writing/integration-0112-provenance.json": {"status": "A", "size": 11092, "sha256": "8c33e52ea10885dbe6eb2b052443ae128c9e87407f839f0ae6f47a6fa1c1fff2"},
+    "benchmark/writing/integration-0112-provenance.md": {"status": "A", "size": 6577, "sha256": "1f48715ec049c8de8707676031a1758a49ad9340a9f40034eb78f6e5d2a256b7"},
+    "benchmark/writing/method.json": {"status": "M", "size": 45705, "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"},
+    "benchmark/writing/verification.json": {"status": "M", "size": 22389, "sha256": "9fe138ff62587d2e372f7b66e2e485d07d155ff230aecbe638518075377533a6"},
+    "benchmark/writing/verify_method.py": {"status": "M", "size": 33981, "sha256": "da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d"}
+  },
+  "Standards": {
+    "assessment": "CLEAR",
+    "blocking_findings": [],
+    "new_nonblocking_findings": [],
+    "severity": "None",
+    "evidence": [
+      {"path": "docs/perpetua/roles.md", "line": 18, "assessment": "Review findings are confined to session outputs; no repository edits."},
+      {"path": "docs/perpetua/roles.md", "line": 27, "assessment": "Separate reviewer session with original evidence and pinned trees; parent acceptance is distinguished from review."},
+      {"path": "docs/perpetua/evaluation.md", "line": 88, "assessment": "No policy evaluator or evaluator-verifier files changed; bounded design consistency checks confer no protected evaluator approval."},
+      {"path": "benchmark/writing/verify_method.py", "line": 234, "assessment": "Local WP1 helpers and explicit constants extend the existing method verifier. Naming and placement follow the writing preparation structure. Intentional proposal copies are equality-checked; no unrelated abstraction or scattered repository change."},
+      {"path": "benchmark/writing/integration-0112-provenance.md", "line": 9, "assessment": "Exact five modified files and two additions match Git. Historical files, originals/license and preparation index remain unchanged; git diff --check passes."}
+    ],
+    "synthetic_implementation_preservation": {
+      "AST_unchanged_functions": ["need", "canonical", "same", "check_example", "check_pair", "mutate"],
+      "AST_unchanged_constants": ["CONTROL_REASONS", "REQUIRED_PAIR_SETTINGS"],
+      "observation": "Compared baseline git-show source with candidate checkout via ast.dump, without location attributes: all eight comparisons true. Four synthetic task objects and every old control field/record/reason also match canonical baseline data. No historical adversarial probes were replayed."
+    }
+  },
+  "Spec": {
+    "assessment": "CLEAR for integration preparation only",
+    "blocking_findings": [],
+    "new_nonblocking_findings": [],
+    "retained_limitations": ["C1"],
+    "acceptance_checks": [
+      {"criterion": "Pinned identities and candidate bytes", "result": "PASS", "evidence": "probe artifact /identities, /candidate_files and /checks; git rev-parse, git cat-file, git show, git diff --name-status. No mismatched objects or scoped bytes."},
+      {"criterion": "Permitted delta and historical preservation", "result": "PASS", "evidence": "Exactly seven permitted paths. All 27 addendum historical entries match both baseline Git bytes and current bytes; all five baseline pins and five current output pins match. This covers input-pins.json, review-corrections.json, proposal, frozen checkers/results/reviews, original, MIT license and preparation.json. Full repository diff establishes preservation of every other tracked path."},
+      {"criterion": "Review provenance and acyclic actual verification", "result": "PASS", "evidence": "verify_method.py:317 and integration-0112-provenance.md:17. New addendum pins only four current design/checker outputs plus Markdown; stdout pins addendum/inputs; verification records stdout and is never read or pinned by the verifier. Whole-tree identity is external Git. Recorded stdout, result, checker/input hashes and repeat reproduce exactly."},
+      {"criterion": "Original WP1 locator, precondition and one-byte change", "result": "PASS", "evidence": "original.lvproj:2, :33, :42; method.json:508; verify_method.py:453. Independently resolved unique XML property, Type=Int, no children, exact original text 2, byte 3347/line 42; only 0x32 to 0x33 is allowed, size 5806. Full output equality to original with that substitution protects every other XML/serialization byte."},
+      {"criterion": "File-set preservation and decisive rejections", "result": "PASS", "evidence": "verify_method.py:472 and :490. Independently assembled positive and 44 rejecting integration probes all matched expected outcomes. Missing project/sentinel, extra output, changed unrelated file, overwritten original, wrong locator/precondition/allowance/value, unrelated bytes, root/ancestor changes, serialization/version drift, unsupported passes and malformed XML reject. This is a bounded in-memory two-file fixture, not a future general workspace evaluator."},
+      {"criterion": "Explicit task and control inventories/reasons", "result": "PASS", "evidence": "verify_method.py:112, :259, :421, :497, :514, :525 and :571; controls.json:1205. Existing 44 synthetic reasons and four task definitions preserved. New one-positive/30-rejection stratum has independent inventory/reason constants. Rehashed in-memory integration inputs still reject removed/duplicate controls, changed reasons, wrong actual failure cause, removed WP1, missing historical pin and circular self pin."},
+      {"criterion": "W1-W8, coverage, native and trial boundaries", "result": "PASS", "evidence": "method.json:87, :140, :530, :593, :641, :671, :707, :773; README.md:54. WC1/WM1/WM2/WB1, matched comparison and uncovered-family inventory preserved. Only W2 gains a text-preparation qualification; native/full-trial prerequisites stay intact. Root LVVersion declaration cannot replace unavailable native save-version authority. One familiar-possible public Actor Framework lineage remains development only."},
+      {"criterion": "Semantic and authority claims", "result": "PASS with retained C1 limit", "evidence": "Independent prose review of actual README, WP1 method, control boundaries and provenance finds no unsupported native, trial, readiness or acceptance claim. README.md:60 and integration-0112-provenance.md:21 explicitly retain semantic/extra-claim/contradiction/citation adjudication. Structured checks establish bounded fixture consistency and integrity, not arbitrary narrative truth, future answer correctness, native validity or real isolation."}
+    ]
+  },
+  "source_request_observation": {
+    "original_path": "benchmark/real-project-0107/original.lvproj",
+    "upstream_path": "Core/AF PPL Build.lvproj",
+    "upstream_identity_authority": "Preserved #541/#547 evidence; no upstream/source-discovery probe replay",
+    "size": 5806,
+    "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+    "locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+    "match_count": 1,
+    "property_attributes": {"Name": "Bld_version.build", "Type": "Int"},
+    "property_children": 0,
+    "before": "2",
+    "after": "3",
+    "after_basis": "Exact request-derived text, not a native observation or candidate-derived answer",
+    "offset_zero_based": 3347,
+    "line_one_based": 42,
+    "changed_offsets": [3347],
+    "allowed_output_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+    "adjacent_auto_increment": "true, unchanged",
+    "root_LVVersion": "20008000, declaration only",
+    "native_save_version": "unavailable/unverified",
+    "license_path": "benchmark/real-project-0107/LICENSE.txt",
+    "license_sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+  },
+  "W1_W8_assessment": {
+    "W1": "PASS: exact project output/request and complete bytes required; explanation alone cannot satisfy the artifact contract.",
+    "W2": "PASS: pinned full original, unique XML path and exact byte/text precondition apply only to public text preparation. Native locators, full-trial prerequisites and independent pre-exposure keys are still required.",
+    "W3": "PASS: fixed text/preservation/answer IDs, exactly one byte, unchanged full file set and no metadata/resave exception.",
+    "W4": "PASS: root LVVersion=20008000 is a separate declaration; original save_version remains unavailable, native save-version result unverified. Conversion/drift rejects.",
+    "W5": "PASS: artifact/text, answer, grounding, reader fidelity, load/dependency/build/behavior and native save version are distinct. No overall pass with absent native evidence.",
+    "W6": "PASS: no binary patch, compiled output or rebuild requested. Text substitution supplies none of WB1's source/toolchain/build evidence; WB1 stays unchanged.",
+    "W7": "PASS as unexecuted design: actual common inputs/prompts/models/settings, symmetric budgets/retries/output accounting, isolated arms, keys and allocations remain prerequisites. Four pilots are conditional design, one lineage gives no interval.",
+    "W8": "PASS as preparation: distinct pinned-original XML/byte controls and exact inventories/reasons; inherited graph controls remain fictional. Native behavior and future answer adjudication remain unavailable."
+  },
+  "findings": [
+    {
+      "id": "C1",
+      "category": "Spec limitation retained from historical review",
+      "severity": "Low",
+      "blocking_for_integration_preparation": false,
+      "new_defect_in_candidate": false,
+      "title": "Integrity and structured consistency do not establish arbitrary narrative or future-answer truth",
+      "locations": [
+        {"path": "benchmark/writing/README.md", "line": 60},
+        {"path": "benchmark/writing/controls.json", "line": 1793},
+        {"path": "benchmark/writing/integration-0112-provenance.md", "line": 21},
+        {"path": "benchmark/writing/verify_method.py", "line": 492},
+        {"path": "benchmark/project-text-writing-0109/review-0110-provenance.md", "line": 42}
+      ],
+      "standard_sources": [
+        {"path": "docs/perpetua/evaluation.md", "line": 27},
+        {"path": "docs/perpetua/evaluation.md", "line": 65},
+        {"path": "docs/perpetua/evaluation.md", "line": 69}
+      ],
+      "evidence": "Current checker enforces source/contract/fixture bytes and exact structured outcomes, accepts no future answers or external candidates, and expressly declares design consistency only. All actual changed prose was independently assessed against source/request and evaluation boundaries. Historical C1 probe results are attributed to #547, not rerun here.",
+      "impact": "A verifier pass cannot substitute for independent semantic, unsupported-extra, contradiction or original/output citation review; nor prove native validity or run isolation. No unsupported corresponding claim was found in this candidate.",
+      "correction_or_next_step": "Retain the explicit limit. Before future trials independently freeze and approve every text/preservation/answer ID and claim/citation rules; any executable scorer needs its own authorized evaluator work and protected independent verification."
+    }
+  ],
+  "verification": {
+    "python": "3.12.3",
+    "command": "python3 -I benchmark/writing/verify_method.py",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout_sha256": "ae27dd5840329188b8efc80b8dff84f161a17186f18f6fefdb623fe3b35374cf",
+    "bounded_actual_output": {
+      "status": "design-consistent",
+      "meaning": "design consistency only",
+      "rejected_count": 44,
+      "project_text_preparation": {"positive_count": 1, "rejected_count": 30, "trial_executed": false, "native_save_version": "unverified", "overall_writing": "unverified", "independent_key_approval": "pending"},
+      "integration": {"status": "integration-pins-consistent", "historical_unchanged_count": 27, "current_output_pins": 5},
+      "native_executions": 0,
+      "agent_runs": 0,
+      "benchmark_ready": false
+    },
+    "recorded_verification": "Actual stdout bytes, parsed result, stdout hash, checker hash and every recorded input hash match verification.json. Author isolated repeat and CLI rejection are independently reproduced.",
+    "isolated_repeat": "Exit 0; stdout identical with cwd=/, environment={}, Python isolated mode, and an audit hook denying session reads, writes, filesystem mutation, subprocess and network access. The verifier needs no session artifacts or LABVIEW_ENVIRONMENT. Audit program and exact argv are preserved in the probe artifact.",
+    "external_input_rejection": {"extra_argument": "--candidate", "exit_code": 1, "stdout": "", "stderr": "writing method verification failed: no-external-inputs-supported\n"},
+    "git_commands": [
+      "git rev-parse <commit>^{commit} <commit>^{tree}",
+      "git cat-file commit <commit>",
+      "git cat-file tree <tree>",
+      "git show <commit>:<scoped-path>",
+      "git diff --name-status 575d59ef8fcaf1f81a81d2eb605f52eb94053839 0e371f84162004146990cb1262b044dd4bf0dd79",
+      "git diff --check 575d59ef8fcaf1f81a81d2eb605f52eb94053839 0e371f84162004146990cb1262b044dd4bf0dd79"
+    ],
+    "diff_check": {"exit_code": 0, "stdout": "", "stderr": ""},
+    "independent_review_check_summary": {"checks": 96, "failed_checks": [], "probes": 45, "positive_probes": 1, "rejecting_probes": 44, "mismatched_probes": []},
+    "probe_design": "Independent source resolution and positive bytes; focused byte/XML/file/native-boundary mutations against new integration functions; in-memory method/control/provenance overlays with only new integration output pins recomputed to isolate inventory and reason checks. No repository mutation or frozen historical checker execution.",
+    "historical_checker": "Not executed or refreshed. Frozen proposal checker intentionally pins the old five writing inputs and is invalid on the integrated tree. Historical replay, if separately needed, belongs only at e5165269b5625455ad17bf34a3a8d1be95ee362f / 385ea919fc4f7714aa7bbdd29fd48ef60eaa74bb, labeled historical."
+  },
+  "detailed_evidence": {
+    "probe_results": {"path": ".session/artifacts/wp1-integration-probes.json", "sha256": "084653d5eb0dbf5f2effed50f1e10132b94e5d3ac82e790b268d57172bcd796d"},
+    "replay_script": {"path": ".session/artifacts/wp1-integration-probes.py", "sha256": "3890ced11b9144dece07fafbed590188bb78dd759a005c60b910883127fe76eb", "command": "python3 -I .session/artifacts/wp1-integration-probes.py", "effects": "Writes only session probe evidence; project bytes remain in memory. Replay is for this exact integration input, not historical probes."},
+    "large_output_policy": "Probe artifact contains exact argv, bounded Git object hashes/size summaries, complete current verifier stdout once, checks and per-probe actual reasons. No large historical review dump or duplicated iteration input_state is included."
+  },
+  "readiness_dimensions": {
+    "integration_preparation_consistency": "independently confirmed at pinned candidate",
+    "source_request_text_delta": "independently confirmed for this scoped review",
+    "complete_future_trial_key_approval": "pending; not conferred by this review",
+    "text_trial": "unexecuted",
+    "root_version_declaration_trial": "unexecuted",
+    "native_validity_load": "unexecuted",
+    "dependency_resolution": "unexecuted",
+    "build": "unexecuted",
+    "behavior": "unexecuted",
+    "native_save_version": "unverified",
+    "native_keys_and_locators": "unavailable",
+    "overall_writing": "unverified",
+    "restricted_allocation_and_executed_isolation": "pending",
+    "matched_actual_models_settings_budgets_retries_repetitions_quota_arm_order": "pending",
+    "public_lineage": "one familiar-possible Actor Framework development lineage; no independent project or withheld/unseen evidence",
+    "owner_method_acceptance": "pending",
+    "benchmark_ready": false,
+    "product_authorization": "not established",
+    "evaluator_approval": "not issued"
+  },
+  "next": "Preserve this exact review artifact and SHA256 from the session report, together with focused probe evidence and candidate identities. This completes #557 review only. Before later trials, separately order independent complete key approval and resolve native validation/resources, matched allocations/quota and actual isolation. Owner acceptance of the independently reviewed method remains required before product work. Do not refresh historical pins, rerun #547/#541/#493 probes, execute the frozen proposal checker on changed writing inputs, infer native/readiness approval or edit repository files as part of this review."
+}
