@@ -1,30 +1,43 @@
 # Policy working memory
 
-Updated by Policymaker #535 for iteration 0107. Considers records 0000-0106, reports #524/#531/#533,
-current journal memory, constant-rules-0106.md, and loop-state owner decisions. Older runtime evidence remains dated below.
-Startup diagnostic: ok, 15,559 estimated tokens, no notices. No pending suggestions; exports manifest has no results.
+Updated by Policymaker #539 for iteration 0108. Considers records 0000-0107, reports #536/#537,
+current journal memory, real-project-0107.md and loop-state decisions; earlier sources remain indexed below.
+Startup diagnostic: ok, 15,704 estimated tokens, no notices. No suggestions; exports manifest has no results.
 #520 compressed this file from 46,403 bytes. Full predecessor: `git show 29ae339:policy/working-memory.md`
 (sha256 f332799010f475ce09d126438d354c64815653fba89e2bf8fd76662d368b038e).
 Older detail (0024-0091): `git show 2b6f6870:policy/working-memory.md`. Read only for missing pins or reasons.
-History entry: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`, reports
+History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`, reports
 `.session/history/sessions/<issue>/`. List selected report paths with Python. Keep memory below about 16 KB.
 
 ## Organization and current decision
-- #535 applies approved/completed Owner request #525 option A: `every_iterations: 3` in policy/params.yml.
-  Keep `no_progress: 3`, shaper, model order and other settings unchanged. Do not duplicate the request.
-  Compare iterations 0107-0109 session-limit events, parked_s and accepted outcomes with the dated baseline below.
-  Expected benefit: about two thirds fewer regularly triggered Policymaker sessions; quota saving is not measured yet.
-- With a shaper, Policymaker orders ONLY evaluator/audit (`.github/loop/task-graph.md:36-37`). The shaper owns
-  goal-directed tasks and journal/working-memory.md; it cannot read policy/. Reach it through its skill,
-  execution/roles/orchestrator/references/handoff.md or execution/protocol.md when a change is needed.
-- #535: cadence change only; no role, routing, evaluator or skill change. Empty policy orders. Iteration 0106
-  made an accepted improvement; no new audit question requires a session. The shaper continues goal work.
-- #526 crashed after three rebase conflicts; its report does not identify conflicting paths or prove a model fault.
-  Successor #527 finished and merged a valid graph. This is one failed shaper followed by recovery, not two failures.
-  If another shaper fails, inspect its exact conflict/error evidence before changing organization.
-- Reviewer profile deliberately has `write: []`. Findings go to .session/report.md and .session/artifacts/.
-  A permitted writer imports a saved review only if a committed record is useful. Do not broaden reviewer writes.
-- Audits #43/#55 crashed. Order another only for a concrete question with available data; none is open now.
+- #539 confirms #535's approved #525 cadence: every_iterations 3, no_progress 3. Keep organization, routing,
+  evaluator and skills unchanged; empty policy orders. Accepted progress continues; no concrete new audit question.
+  Compare 0107-0109 with the dated baseline after those records exist. Fewer sessions alone proves no quota saving.
+- Policymaker orders only evaluator/audit with a shaper (`.github/loop/task-graph.md:36-37`). The shaper owns
+  goal tasks and journal memory; it cannot read policy/. Use its skill/handoff or execution/protocol.md if needed.
+- #526 failed after three rebase conflicts; #527 recovered. No model fault is established. Inspect exact errors
+  before reorganizing on a new failure. Audits #43/#55 crashed; order audits only for concrete available evidence.
+- Reviewer write: [] is deliberate; findings use .session/report.md and .session/artifacts/. A permitted writer
+  preserves useful review evidence. Prefer another model family when available; do not broaden reviewer writes.
+
+## Iteration 0107: real-project measurement, writing case absent
+- Record 0107 closed/accepted/improved, no_progress 0; one task, zero limit hits, wall 1,781 s.
+  Codex #536 shaper: 24 turns, parked_s 0; #537 benchmark: 27 turns, parked_s 0, merged fc02ca6.
+  Totals: 3,442,137 input, 26,242 output, 3,228,160 cache-read. No quota-normalized comparison follows.
+- #536 resumed benchmark preparation after delivered negative POC and source-blocked #533. It did not turn
+  boundaries into edit readiness or wait for pending #532. No duplicate request or POC rerun is needed.
+- #537 finding blocked: existing W1-W8 has no direct LVPROJ writing case. Saved benchmark/real-project-0107.*,
+  original snapshot/license and checker. Selected minimum inventory (size,path): Core/AF PPL Build.lvproj,
+  5,806 bytes, upstream 371c631c16155d88f02be11a953e4964d7452fd8, original SHA256
+  1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf. Four XML declaration claims only.
+- #537 reports four passing claims, 16 rejection controls, offline isolation and unchanged seven writing files
+  against #493. Policymaker read reports/findings, not JSON/checker/original or prepared sources; no replay here.
+  Independent review remains pending; no edited artifact, native result, benchmark readiness or quality measured.
+- The shaper already saved the review path. Next: review exact original/license pins, D1-D4 locators/values,
+  selection, prohibited inferences and missing writing case. If confirmed, scope an extension of W1-W8.
+  This is goal work for the shaper; no policy audit/evaluator order or duplicate handoff is needed.
+- Reports: .session/history/sessions/536/f3a8f2fba9009c39e756b142c27f91a42e7cf3bf0df1a6530b295919375f072c.md;
+  .session/history/sessions/537/055a20baef5ef050c34b42b35d7f1b293b6b5a2718953b185d296daa7d3ba79d.md.
 
 ## Iterations 0105-0106: controlled-pair result and source blocker
 - 0105 #528 merged bba00f7: eight controlled comparisons, all exit 0, unchanged_inputs_after true.
@@ -150,10 +163,11 @@ History entry: `.session/history/manifest.json`; records `.session/history/recor
 - Evaluator changes need evaluator order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Confirm cadence activation from loop-state: every_iterations 3, no_progress 3, other settings unchanged.
-2. Compare 0107-0109 session-limit events, parked_s and accepted results with the dated quota baseline.
-   Read actual runtime summaries if needed; no causal quota-saving claim from fewer sessions alone.
-3. Read intervening records and reports. Check that source-blocked #533 did not become edit readiness.
-4. Verify any new control/source readiness before follow-up. #532 is pending; do not duplicate it or wait.
-5. If no ready POC evidence arrives, ensure benchmark preparation resumes after roles.md/evaluation.md reads.
-6. Keep policy orders to evaluator/audit; no duplicate replay, source-absence search, audit, estimate or gap map.
+1. Keep every_iterations 3 and no_progress 3 unless new evidence justifies a change.
+2. Complete the 0107-0109 comparison after those records exist; 0107 alone shows zero limit hits and parking.
+   Read actual runtime summaries only for missing availability evidence; no causal quota-saving claim yet.
+3. Read intervening records/reports. Check whether #537's original claims and missing-case finding received
+   separate review before any LVPROJ writing extension; inherited W1-W8 clearance does not cover that extension.
+4. Check new control/source readiness before POC follow-up. #532 is pending; do not duplicate it or wait.
+   Source-blocked #533 remains insufficient for editing; benchmark preparation already resumed in 0107.
+5. Keep policy orders to evaluator/audit; no duplicate replay, source-absence search, audit, estimate or gap map.
