@@ -1,6 +1,14 @@
 # Policy working memory
 
-## Latest: Policymaker #694, iteration 0152 (trigger: 3 iterations without progress)
+## Latest: Policymaker #708, iteration 0156 (trigger: every 3 iterations)
+
+- Considers records 0153/0154/0155 and session reports #703/#705/#706 (task/result files under .session/history/sessions/). All three iterations closed; 0155 is accepted/improved; live no_progress=0.
+- #694 input_budget rule result: 0153 task attempt-ledger-files-0153 used start_branch task/692 (max_turns 40, not ≤20). #698 done/merged. Review #699 NOT-CLEAR (5 findings). Fix #702 merged bc0dad20. Re-review #703 CLEAR at HEAD 48f2715e (md 8b2b30e6…, json 74c9a47a…). No third full resume and no input_budget. Keep the rule.
+- 0155: #706 wrote benchmark/baseline/matched-comparison-0155.md/.json (M01-M16, O01-O06; md bacdb800…, json 888671cc…), merged 27dc789b. It is not reviewed yet. The next Shaper should order an independent review on the pinned pair.
+- Finding: authors #698/#702/#706 and reviewers #699/#703 all ran claude-sonnet-5-5, so review was same-family. The 0120 reason (authors on Codex) no longer holds. Change: policy/params.yml `reviewer` now aliases `*review` (Codex first, then Sonnet, then Luna). Expected gain: different-family review of #706 and later Claude-authored work. Check: the next reviewer session record shows codex/gpt-6.1-sol, or a recorded fallback when Codex is unavailable.
+- .session/orders.json is {"wake":false,"tasks":[]}. No Owner request, no audit, no evaluator change. Token counters are not quota.
+
+## Previous: Policymaker #694, iteration 0152 (trigger: 3 iterations without progress)
 
 - Considers records 0150/0151/0152 and session reports #688/#689/#691/#692. Record 0152 was written as failed "stalled; policy/ rolled back", engine 0.8.0, with no tasks. #694 attempts paused 9 times with "All policy candidates are unavailable".
 - Cause of the stall: the ledger task ran twice, as #689 (0150) and #692 (0151). Both ended partial with cause input_budget: Sonnet cache_write was 803,586 and 815,101, 35 and 25 turns, 0 artifacts. The shaper's resume used the same full scope again.
