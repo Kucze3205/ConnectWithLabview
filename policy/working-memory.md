@@ -863,6 +863,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   (max_turns >= 25), then file #403 corrected draft as `question` with new commit + index hash. Revise -> Policymaker fix
   script, no blind re-review. Check reviewer `models` (authors GPT). #379 pending; do not wait.
 
+## Iteration 0073 (#411, wake false)
+- Considered record 0072, reports #408/#409 (.session/history/sessions/40N/*.md). Orders written first and parse-checked.
+- #408 (codex GPT 372k, 16 turns; author #404 GPT -> same family) REVISE: blocking finding 2 = disabling expected-reason
+  comparison at change_cases.py:118 leaves --check 0. Spec, 4 file hashes, 3 source hashes, other probes pass; README honest.
+  Evidence iter-0072/408-review-evidence.txt. #409 (codex GPT 332k, 13 turns; same family) REVISE: same blocking finding at
+  precision_plan.py:170; spec vs protocol.md:77-90 OK (95% paired lineage bootstrap, seed 40502, 10,000 resamples); 19
+  fields exist in manifest template. Evidence iter-0072/409-precision-review-evidence.json. Do not repeat these spec checks.
+- Order `reason-selftest-408-409` (benchmark, medium, 45/35, main): reason self-test in both checkers (runner_contract.py
+  #364 pattern), only the 2 scripts change, report new shas + revert-probe exits. Fix round 1 for both.
+- Next: verify both --check 0 on main + new shas; ONE re-review (finding 2 + hashes only; prefer Claude); accept -> hash-gated
+  pin script (change-cases under tasks, precision under baseline, max_turns >= 25); then file #403 corrected draft as
+  `question`. #379 pending; do not wait. Memory ~88 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
