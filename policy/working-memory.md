@@ -196,6 +196,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   diversity: routing `reviewer` list is sonnet->codex but sessions land on codex; record as a known limit or
   propose a Claude-first `review` route with measured evidence. Then pin scorer/results (landing script).
 
+## Iteration 0033 (#246, wake false)
+- Result of 0032: #244 DONE, merged 1da24f3 (routine, check passed, no owner acceptance needed). Actual models: codex
+  gpt-6.1-sol 733k input (near the 800k ceiling), 25 turns; sonnet 4 input. Shared condition helper for required and
+  derivable extras; sixth mutation `extra-claim-condition` -> incorrect/incorrect, ledger pointer /claims/12/conditions/3.
+  Verified by Policymaker on main: score.py --check exit 0, totals 33/33/0/0, six self-test entries,
+  score.py sha 810a5457…, results sha a5b97984… (matches #244's byte-identical regeneration).
+- Order `rereview-extra-conditions` (reviewer, alias opus, medium, 45/30, from main, Verification score.py --check):
+  spec of shared helper, reader/non-derivable unchanged vs 1da24f3^, 4 temp-copy mutations, regeneration identity.
+- Next: if accept -> write idempotent landing script pinning score.py + results/challenges.json under the challenges
+  milestone (+ review record), one low-effort run from main, then delete the script. If revise -> fix_rounds exhausted
+  for the scorer: re-scope (e.g. a narrower design note or a different author model), not a 3rd blind fix.
+  Check the reviewer's `models` block; if codex again (4th time), record no-diversity as a known limit in the
+  landing record rather than keep retrying the alias.
+- Cost note: codex benchmark sessions keep landing near the input ceiling (#228 917k partial, #244 733k); keep
+  bounded-read budgets in every order.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
