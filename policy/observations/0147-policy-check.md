@@ -62,6 +62,10 @@ Bounded engine source inspection: `docs/perpetua/engine.md:301–307` says inter
 
 Pool snapshots at first #653/#663 completion have recent Claude unknown/cooldown observations and Codex available observations. Later Claude is available. These do not establish the cause of the recovery gap or current entitlement. No route change follows from them. `docs/perpetua/operating-parameters.md` was read; owner safeguards and subscription-only limits remain unchanged.
 
+## Recovery of this session
+
+After the recorded accepted Finish, Read of `.session/report.md` returned FileNotFoundError. A direct Python existence check also found `.session/orders.json` missing. The shaper skill and policy memory retained their exact earlier hashes: 4aa723e17d5d4f5f1bc8c74c87b3f4b6f856298e1d2c905c899faaf419754ef4 and bccb0fb8af7317cb5257fa92b426eee1c40a22e2bfdeab778b183455265c561d. This evidence file existed at 12,027 bytes, SHA256 b8d454e0981657b052e9918f43dc4ead309aeaac331ca6f1792d3881cf21adcc before this addition. Recreated the missing report and restored the audit order from its recorded text. This establishes missing session files during recovery, not the cause or timing of their loss. Do not repeat completed benchmark work.
+
 ## Verification of this policy change
 
 Read back the actual order and changed files. Direct Python checks passed for the audit role, model alias, effort, limits, dependency list, explicit exports and required task sections. The audit's repository-only verification command parses; it was not executed before the audit outputs exist. Compared the skill against starting HEAD: four added lines and no removed lines. An initial assertion incorrectly expected five added lines; inspected the actual diff and corrected that verification assumption, without changing the skill. Predecessor memory size/hash matched the pinned source. Whitespace check exited 0. No benchmark, evaluator or historical probe was executed. Memory decreased from 16,120 to 13,656 bytes; detailed evidence remains here and in prior observations.

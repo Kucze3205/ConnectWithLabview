@@ -25,6 +25,8 @@ Updated by Policymaker #671 for iteration 0147. Directly considers records 0144â
 
 ## Recovery evidence: audit is pending, cause unknown
 
+- #671 recovery after accepted Finish found .session/report.md missing (Read FileNotFoundError) and .session/orders.json missing (Python existence check). Shaper skill and this memory still matched their earlier hashes; policy evidence also survived. Restored only the missing report and exact audit order; recorded the new observation in0147evidence. Cause and loss timing remain unknown. Check final session outputs on recovery; an accepted Finish alone did not establish their persistence. Do not repeat benchmark work.
+
 - Runtime pin510fc5af213cbe9f66dde42a27e3467bc225afcd at2026-11-15T15:22:35Z. Selected fields inspected from sessions/{643,653,663,669}.json; no credentials/whole records printed. Read named historical commits with git show, not broad streams.
 - #643 first final checkpoint2026-11-14T23:34:33Z(partial) then2026-11-15T00:33:13Z,gap3520s;#65301:42:29Z->07:02:51Z,gap19222s;#66308:39:14Z->14:35:51Z,gap21397s. All first checkpoints already have accepted Finish and final result. Later history: Finish rejected because report missing, Write report, Finish accepted. All final records0artifacts; one kick each. #669 one checkpoint,12artifacts,no kick.
 - First checkpoint commits898877d(#643),9f8a23a(#653),1381728(#663); later3b16ea1,d9511a8,9ba5a67. #663 saved command output asserted21indexedartifacts and existing links; this is observed command text, not recovered files. Do not reconstruct historical artifacts. Runtime outputs_asset=null also for successful#669, so null is not diagnostic.
