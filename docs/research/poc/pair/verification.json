@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "issue_structure_check": "passed; exact issue command exited 0",
+  "cli_identical": {
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "docs/research/poc/pair/pair_diff.py",
+      "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi",
+      "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi"
+    ],
+    "exit": 0,
+    "resource_count": 42,
+    "differing_resources": 0,
+    "whole_file_differing_bytes": 0,
+    "decompressed_types": [
+      "BDHb",
+      "DFDS",
+      "FPHb",
+      "GCDI",
+      "TM80",
+      "VCTP",
+      "VICD"
+    ],
+    "version_fields": {
+      "LVSR": "21008000",
+      "vers": "21008000"
+    },
+    "bdpw_chunks": 3,
+    "code_presence": {
+      "VICD": {
+        "left": [
+          {
+            "id": 0,
+            "occurrence": 0,
+            "length": 968,
+            "sha256": "7330bd08d07ffd3c57d0ecadb76429ffb76212cb4f602f5c3a6143520cb06530"
+          }
+        ],
+        "right": [
+          {
+            "id": 0,
+            "occurrence": 0,
+            "length": 968,
+            "sha256": "7330bd08d07ffd3c57d0ecadb76429ffb76212cb4f602f5c3a6143520cb06530"
+          }
+        ],
+        "left_present": true,
+        "right_present": true
+      },
+      "CPC2": {
+        "left": [
+          {
+            "id": 0,
+            "occurrence": 0,
+            "length": 2,
+            "sha256": "67a88a2dc9a9749ec611eef8f47ef5ffcc335f2950d1bfaaf31169ed01904012"
+          }
+        ],
+        "right": [
+          {
+            "id": 0,
+            "occurrence": 0,
+            "length": 2,
+            "sha256": "67a88a2dc9a9749ec611eef8f47ef5ffcc335f2950d1bfaaf31169ed01904012"
+          }
+        ],
+        "left_present": true,
+        "right_present": true
+      }
+    }
+  },
+  "manifest_controls": {
+    "status": "passed",
+    "cases": [
+      "matching VI-input/settings hashes accepted",
+      "changed input hash rejected",
+      "changed settings hash rejected"
+    ],
+    "classification": "Synthetic text and mocked reads only; no VI or fake owner pair written."
+  },
+  "document_lines": {
+    "owner-instructions.md": 17,
+    "protocol.md": 55
+  },
+  "tool_sha256": "47d27dee98f1642dc401195482fbf43c536cef8a160aa399444d2e3a2d3578cb",
+  "limitations": [
+    "No owner-authored pair available; replay on real pair remains outstanding.",
+    "No LabVIEW execution or changed VI."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "inputs": {
+    "paths": [
+      "@environment/pylavi/tests/add.vi"
+    ],
+    "pylavi_revision_required": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+    "expected_sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+    "prepared_root": "/home/runner/work/_temp/connectwithlabview-environment",
+    "pylavi_revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+    "pylavi_source_status": "",
+    "source_pins": [
+      {
+        "path": "@environment/pylavi/pylavi/file.py",
+        "sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+        "expected_sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9"
+      },
+      {
+        "path": "@environment/pylavi/pylavi/resource_types.py",
+        "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+        "expected_sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756"
+      },
+      {
+        "path": "@environment/pylavi/pylavi/data_types.py",
+        "sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+        "expected_sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea"
+      }
+    ],
+    "readiness": {
+      "path": "@environment/readiness.json",
+      "sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413"
+    },
+    "inspector": {
+      "path": "docs/research/poc/inspect_vi.py",
+      "sha256": "867698cb6b9dcef3319ab5c645a5be5e0501fa90d3fc05cacd988d56c3d0c28f"
+    },
+    "sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+    "resolved_path": "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi",
+    "fixture_sha256_after": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8"
+  },
+  "controls": [
+    {
+      "name": "identical_pair",
+      "status": "passed",
+      "left_path": "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi",
+      "right_path": "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi",
+      "differing_resources": 0,
+      "whole_file_differing_bytes": 0,
+      "resource_count": 42
+    },
+    {
+      "name": "single_decompressed_payload_byte",
+      "status": "passed",
+      "classification": "Tool control only; not LabVIEW evidence.",
+      "type": "BDHb",
+      "id": 0,
+      "occurrence": 0,
+      "differing_resources": 1,
+      "observed_range": {
+        "offset": 112,
+        "length": 1,
+        "left_hex": "67",
+        "right_hex": "66"
+      },
+      "raw_resources_unchanged": true,
+      "vi_written": false
+    },
+    {
+      "name": "bounded_ranges_and_length_tails",
+      "status": "passed",
+      "classification": "Synthetic byte-string tool control only.",
+      "cases": 4
+    }
+  ],
+  "limitations": [
+    "No owner-authored pair exists in this self-check; the perturbation is a tool control, not LabVIEW evidence.",
+    "No VI is written, no LabVIEW runs, and no behavior, valid edit or native compatibility is established.",
+    "Offsets are positional comparisons, not an insertion/deletion alignment or semantic interpretation.",
+    "Known BDHb/FPHb and other valid size-prefixed zlib payloads are decompressed; unsupported known heaps block rather than silently pass.",
+    "Observed spans and dependencies from a real pair cannot establish general integrity rules or other-version behavior."
+  ],
+  "invocation": "python3 -I docs/research/poc/pair/pair_diff.py --self-check"
+}
