@@ -294,6 +294,19 @@ def regression_self_test(fixture, inventory, extra_claim=False):
     positive = control['expected_positive']
     if baseline['cannot_evaluate_reasons'] or compare(baseline, positive):
         raise ValueError('regression self-test: positive control does not match')
+    keyed = next((c for c in fixture["controls"] if c["name"] == "constant-keyed-literal-export"), None)
+    if keyed is not None:
+        # Every claim answers with A0001's literal and citations: keyed-literal constant export.
+        for execution in (keyed["probe"]["actual_execution"], ran):
+            got = compute(fixture['source'], fixture['denominators'], inventory, keyed['submitted'],
+                          dict(keyed['probe'], actual_execution=execution), keyed['alignment'])
+            if (got['cannot_evaluate_reasons'] or
+                    any(got['dimensions'][d] != 'incorrect' for d in ('correctness', 'grounding')) or
+                    got['dimensions']['fidelity'] != 'unverified'):
+                raise ValueError('regression self-test failed: constant-keyed-literal-export')
+        if compare(compute(fixture['source'], fixture['denominators'], inventory, keyed['submitted'],
+                           keyed['probe'], keyed['alignment']), keyed['expected']):
+            raise ValueError('regression self-test failed: constant-keyed-literal-export expected')
     results = []
     mutations = (("extra-claim-condition",) if extra_claim else
                  ("extra-condition", "missing-condition", "wrong-literal",
