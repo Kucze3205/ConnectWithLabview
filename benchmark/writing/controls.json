@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "visibility": "public-development-synthetic-only",
+  "visibility": "public-development-synthetic-and-project-text-only",
   "provenance": "Hand-authored issue #481 contract examples. Frozen expectations are derived from the separate requested arithmetic/type/preservation rules, not from candidate outputs. No evaluated tool or POC contributes an oracle. Author and separate reviewer are not interchangeable: independent review is pending. These snapshots are a fictional JSON artifact family, never LabVIEW binaries or native reference evidence.",
   "frozen": {
     "request": "Create or change a fictional I32 graph to add exactly 1 to x, preserve label and sentinel, save as SYNTHETIC-v1. No other files or graph operations.",
@@ -1201,5 +1201,595 @@
       "run": "unexecuted",
       "reason": "missing-runtime"
     }
+  },
+  "strata": {
+    "synthetic": "Existing fictional graph examples and 44 rejecting controls are unchanged; no native/XML measurement.",
+    "project_text": "Distinct pinned-original in-memory XML/byte preparation controls only; no candidate, project write, native result or trial."
+  },
+  "project_text": {
+    "visibility": "public-development-project-text-only",
+    "case_id": "WP1-project-build-text",
+    "source": {
+      "upstream_url": "https://github.com/ni/actor-framework",
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "tree": "57c908deff90f4db9e539e32ebd8e07b8d8abc47",
+      "path": "Core/AF PPL Build.lvproj",
+      "git_blob": "339badda5b38bca6ad6f2df3be3716209937dcf1",
+      "snapshot": "benchmark/real-project-0107/original.lvproj",
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+      "size": 5806,
+      "license": "MIT",
+      "license_path": "benchmark/real-project-0107/LICENSE.txt",
+      "license_sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+      "upstream_verification": "Inherited from #541; this session compares review/current pins and preserved bytes only. No network/signature verification."
+    },
+    "positive": {
+      "id": "project-text-positive",
+      "contract": {
+        "locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+        "precondition": {
+          "original_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "root_tag": "Project",
+          "root_attributes": {
+            "Type": "Project",
+            "LVVersion": "20008000"
+          },
+          "match_count": 1,
+          "property_attributes": {
+            "Name": "Bld_version.build",
+            "Type": "Int"
+          },
+          "text": "2",
+          "property_children": 0
+        },
+        "delta": {
+          "before": "2",
+          "after": "3",
+          "offset_zero_based": 3347,
+          "line_one_based": 42,
+          "removed_hex": "32",
+          "inserted_hex": "33",
+          "output_size": 5806,
+          "allowed_changed_bytes": 1
+        }
+      },
+      "input_edits": [],
+      "original_after_edits": [],
+      "project_edits": [
+        {
+          "offset": 3347,
+          "remove_hex": "32",
+          "insert_hex": "33"
+        }
+      ],
+      "sentinel": "unchanged unrelated bytes",
+      "extra_files": {},
+      "omit_project": false,
+      "outcomes": {
+        "text_correctness": "correct",
+        "root_version_declaration": "correct",
+        "native_validity": "unexecuted",
+        "dependency_resolution": "unexecuted",
+        "build": "unexecuted",
+        "behavior": "unexecuted",
+        "save_version": "unverified",
+        "overall_writing": "unverified"
+      }
+    },
+    "expected": "project-text-consistent;native-unexecuted;save-version-unverified",
+    "rejecting_controls": [
+      {
+        "id": "project-no-op",
+        "reason": "project-no-op",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": []
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-locator",
+        "reason": "project-locator",
+        "changes": [
+          {
+            "path": [
+              "contract",
+              "locator"
+            ],
+            "value": ".//Property[@Name='Bld_version.major']"
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-value",
+        "reason": "project-value",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "34"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-precondition",
+        "reason": "project-precondition",
+        "changes": [
+          {
+            "path": [
+              "contract",
+              "precondition",
+              "text"
+            ],
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-original",
+        "reason": "project-original-hash",
+        "changes": [
+          {
+            "path": [
+              "input_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "31"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-allowance",
+        "reason": "project-delta-contract",
+        "changes": [
+          {
+            "path": [
+              "contract",
+              "delta",
+              "allowed_changed_bytes"
+            ],
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": "project-wrong-location-edit",
+        "reason": "project-value",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3410,
+                "remove_hex": "31",
+                "insert_hex": "33"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-unrelated-byte",
+        "reason": "project-byte-delta",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 127,
+                "remove_hex": "41",
+                "insert_hex": "42"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-extra-file",
+        "reason": "project-file-set",
+        "changes": [
+          {
+            "path": [
+              "extra_files"
+            ],
+            "value": {
+              "unexpected.txt": "extra"
+            }
+          }
+        ]
+      },
+      {
+        "id": "project-missing-file",
+        "reason": "project-file-set",
+        "changes": [
+          {
+            "path": [
+              "omit_project"
+            ],
+            "value": true
+          }
+        ]
+      },
+      {
+        "id": "project-unrelated-file",
+        "reason": "project-unrelated-file",
+        "changes": [
+          {
+            "path": [
+              "sentinel"
+            ],
+            "value": "changed"
+          }
+        ]
+      },
+      {
+        "id": "project-original-overwritten",
+        "reason": "project-original-not-preserved",
+        "changes": [
+          {
+            "path": [
+              "original_after_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-bom-removed",
+        "reason": "project-serialization",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 0,
+                "remove_hex": "efbbbf",
+                "insert_hex": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-line-endings",
+        "reason": "project-serialization",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 41,
+                "remove_hex": "0a",
+                "insert_hex": "0d0a"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-xml-declaration",
+        "reason": "project-serialization",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 17,
+                "remove_hex": "27312e3027",
+                "insert_hex": "22312e3022"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-entity-rewrite",
+        "reason": "project-byte-delta",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 1073,
+                "remove_hex": "266c743b",
+                "insert_hex": "262336303b"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-final-newline",
+        "reason": "project-serialization",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 5805,
+                "remove_hex": "0a",
+                "insert_hex": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-version-drift",
+        "reason": "project-version-declaration",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 77,
+                "remove_hex": "3230303038303030",
+                "insert_hex": "3231303038303030"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-duplicate-property",
+        "reason": "project-locator-count",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 3359,
+                "remove_hex": "",
+                "insert_hex": "3c50726f7065727479204e616d653d22426c645f76657273696f6e2e6275696c642220547970653d22496e74223e333c2f50726f70657274793e"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-property-type",
+        "reason": "project-property-precondition",
+        "changes": [
+          {
+            "path": [
+              "project_edits"
+            ],
+            "value": [
+              {
+                "offset": 3347,
+                "remove_hex": "32",
+                "insert_hex": "33"
+              },
+              {
+                "offset": 3336,
+                "remove_hex": "547970653d22496e7422",
+                "insert_hex": "547970653d2253747222"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "project-false-native_validity",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "native_validity"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-false-dependency_resolution",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "dependency_resolution"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-false-build",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "build"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-false-behavior",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "behavior"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-false-save_version",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "save_version"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-false-overall_writing",
+        "reason": "project-unsupported-pass",
+        "changes": [
+          {
+            "path": [
+              "outcomes",
+              "overall_writing"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-method-invented-save-version",
+        "reason": "invented-original-version",
+        "target": "method",
+        "changes": [
+          {
+            "path": [
+              "tasks",
+              4,
+              "originals",
+              0,
+              "save_version"
+            ],
+            "value": "20008000"
+          }
+        ]
+      },
+      {
+        "id": "project-method-native-key",
+        "reason": "native-key-unavailable",
+        "target": "method",
+        "changes": [
+          {
+            "path": [
+              "tasks",
+              4,
+              "oracle",
+              "native_key"
+            ],
+            "value": "established"
+          }
+        ]
+      },
+      {
+        "id": "project-method-overall-pass",
+        "reason": "project-task-planned_results",
+        "target": "method",
+        "changes": [
+          {
+            "path": [
+              "tasks",
+              4,
+              "planned_results",
+              "overall_writing"
+            ],
+            "value": "correct"
+          }
+        ]
+      },
+      {
+        "id": "project-method-missing-task",
+        "reason": "task-inventory",
+        "target": "method",
+        "changes": [
+          {
+            "path": [
+              "tasks",
+              4
+            ],
+            "delete": true
+          }
+        ]
+      }
+    ],
+    "boundary": "Structured fixture checks only. C1: arbitrary narrative and future agent answers still require semantic, extra-claim, contradiction and citation adjudication; no native authority or independent key approval."
   }
 }

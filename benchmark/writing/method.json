@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": "writing-design-1",
+  "revision": "writing-design-2-wp1-integration-0112",
   "status": "design-only-unreviewed",
   "authority": [
     "goal/goal.md#pisanie",
@@ -84,7 +84,7 @@
         "E1",
         "E2"
       ],
-      "requirement": "Creation uses an explicitly absent destination and frozen workspace/dependency manifest; modification pins every original and exact native locator before exposure. Preserve originals outside writable workspace."
+      "requirement": "Creation uses an explicitly absent destination and frozen workspace/dependency manifest; modification pins every original and exact native locator before exposure. Preserve originals outside writable workspace. WP1 text-only public-development preparation may use its pinned unique XML locator and byte precondition while native locators remain unavailable; this exception establishes no native/full-trial eligibility and waives none of their prerequisites."
     },
     {
       "id": "W3",
@@ -137,7 +137,7 @@
     "execution_state": "specification only; no session can run LabVIEW",
     "preflight": [
       "Freeze case revision, prompt, original/dependency manifest hashes, save-version evidence, target/module and output paths before agent exposure.",
-      "Independent preparer and separate checker freeze semantic IDs, object maps, I/O vectors, error/state/reset/timeout conditions, invariants, allowed metadata deltas and documentation version/location/hash. Unknown native locators block case eligibility.",
+      "Independent preparer and separate checker freeze semantic IDs, object maps, I/O vectors, error/state/reset/timeout conditions, invariants, allowed metadata deltas and documentation version/location/hash. Unknown native locators block case eligibility. WP1 is eligible only for text preparation using its exact XML/byte locator; unknown native locators still block native/full-trial eligibility. Independent approval of every text/preservation/answer key remains required before either trial arm.",
       "Record license/grant and capability readiness for any future native authoring, edits or rebuilds per existing protocol; this specification requests no execution or acceptance.",
       "Use isolated derived dependency trees. Reject dependency resolution into preserved originals, the other arm or another variant. Hash preserved originals before and after."
     ],
@@ -503,6 +503,241 @@
         "build/Increment.lvlibp"
       ],
       "output_manifest_rule": "Paths are relative to the isolated output root. Return an artifact manifest, original/output source map and validation-limits answer. List missing or unexpected files explicitly; freeze any allowed propagated consumer paths before exposure."
+    },
+    {
+      "id": "WP1-project-build-text",
+      "operation": "modify",
+      "family": ".lvproj",
+      "stratum": "public-development-project-text-preparation",
+      "source_anchors": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+          "kind": "pinned original XML text only; no native locator"
+        },
+        {
+          "path": "benchmark/project-text-writing-0109.json",
+          "locator": "/task",
+          "kind": "reviewed request and exact byte allowance"
+        }
+      ],
+      "originals": [
+        {
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "path": "Core/AF PPL Build.lvproj",
+          "snapshot": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "save_version": "unavailable"
+        }
+      ],
+      "preconditions": [
+        {
+          "original_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "root_tag": "Project",
+          "root_attributes": {
+            "Type": "Project",
+            "LVVersion": "20008000"
+          },
+          "match_count": 1,
+          "property_attributes": {
+            "Name": "Bld_version.build",
+            "Type": "Int"
+          },
+          "text": "2",
+          "property_children": 0
+        },
+        "Preserved original/license outside writable trees; later trial requires frozen complete workspace/dependency manifest and independent preparer/checker approval for every text, preservation and answer ID. Native/full-trial prerequisites remain pending."
+      ],
+      "request": "In the isolated writable Core/AF PPL Build.lvproj copy, require the pinned original hash and unique WP1 locator/precondition. Change only its exact property text from 2 to 3. Return the complete edited project, artifact manifest, original/output source map and honest validation-limits answer. Preserve every other byte and file, including root LVVersion 20008000. Stop and report any failed precondition; do not build or resolve dependencies.",
+      "semantic_ids": [
+        "WP1-property-text"
+      ],
+      "expected_semantics": {
+        "kind": "exact-text-only",
+        "locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+        "delta": {
+          "before": "2",
+          "after": "3",
+          "offset_zero_based": 3347,
+          "line_one_based": 42,
+          "removed_hex": "32",
+          "inserted_hex": "33",
+          "output_size": 5806,
+          "allowed_changed_bytes": 1
+        }
+      },
+      "preservation_ids": [
+        "WP1-other-project-bytes",
+        "WP1-file-set-and-unrelated-files",
+        "WP1-root-version-declaration",
+        "WP1-original-and-license"
+      ],
+      "preservation": {
+        "project_rule": "exact-one-byte-substitution",
+        "unrelated_files": "byte-identical",
+        "file_set": "unchanged",
+        "allowed_metadata_deltas": [],
+        "root_version": "20008000",
+        "root_version_authority": "declaration-only",
+        "native_save_version": "unverified",
+        "originals_outside_writable_workspace": true,
+        "complete_original_and_edited_bytes_required": true,
+        "license_notice_required": true,
+        "details": "Retain BOM, XML declaration, LF endings, tabs, entities, final newline, all other XML values/attributes/order; hash preserved originals/license before and after. Reject serializing/resaving noise or extra changes."
+      },
+      "answer_ids": [
+        "WP1-describe-text-delta",
+        "WP1-original-output-grounding",
+        "WP1-honest-limits"
+      ],
+      "oracle": {
+        "method": "review-0108.json#/claims/3 (D4), independently checked original text; validate locator/precondition directly against preserved source; task instruction supplies exact text 3; candidate output must never establish its own expectation",
+        "provenance": "Exact review-0110.json SHA256 2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf; scoped CLEAR permits integration preparation only. Complete trial key approval remains pending.",
+        "native_key": "unavailable",
+        "missing": [
+          "complete-independent-text-preservation-answer-key-approval",
+          "native-locators",
+          "native-property-semantics",
+          "native-save-version-authority",
+          "native-results"
+        ],
+        "text_key_status": "proposed-awaiting-separate-check",
+        "preflight": "Before either arm: separate preparer/checker records identities/sessions, key revision, original hashes, locator, delta, every text/preservation/answer ID, method, documentation pins, evidence hashes, agreement/disagreement and uncertainty. Resolve each ID against original and requirement independently. Disagreement blocks the affected key. Native locators/version/property effects remain missing; existing full-benchmark preflight is not waived.",
+        "native_recipe": "Future separately provisioned trusted job only: use frozen original/output hashes and isolated dependency copies; pin LabVIEW version/build, OS, modules/licenses/target and documentation. Inspect original/output project/property views and save-version evidence separately; record actual load/errors, resolved and missing dependencies, authorized build inputs/results, and controlled behavior under independently established fixtures with reset/error/timeout conditions. Preserve hashed logs/captures and before/after files; reject conversion, silent repairs or unexplained saves. No native outcome is currently predictable from this text-only proposal; freeze native expectations independently before any later native validation, or retain unverified/unexecuted statuses."
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; root LVVersion 20008000 is a declaration only, not native save-version authority",
+      "output_paths": [
+        "Core/AF PPL Build.lvproj"
+      ],
+      "output_manifest_rule": "Freeze original file set and dependencies before exposure. Only task.output_path may differ. Preserve immutable originals outside writable roots and reject cross-arm/original dependency resolution. A manifest or patch is not a substitute for complete artifact bytes.",
+      "text_contract": {
+        "locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+        "precondition": {
+          "original_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "root_tag": "Project",
+          "root_attributes": {
+            "Type": "Project",
+            "LVVersion": "20008000"
+          },
+          "match_count": 1,
+          "property_attributes": {
+            "Name": "Bld_version.build",
+            "Type": "Int"
+          },
+          "text": "2",
+          "property_children": 0
+        },
+        "delta": {
+          "before": "2",
+          "after": "3",
+          "offset_zero_based": 3347,
+          "line_one_based": 42,
+          "removed_hex": "32",
+          "inserted_hex": "33",
+          "output_size": 5806,
+          "allowed_changed_bytes": 1
+        }
+      },
+      "planned_results": {
+        "text_correctness": "unexecuted",
+        "root_version_declaration": "unexecuted",
+        "native_validity": "unexecuted",
+        "dependency_resolution": "unexecuted",
+        "build": "unexecuted",
+        "behavior": "unexecuted",
+        "save_version": "unverified",
+        "overall_writing": "unverified"
+      },
+      "trial_artifacts": {
+        "required": [
+          "complete-original-bytes",
+          "complete-edited-bytes",
+          "license-notice",
+          "workspace-dependency-manifest",
+          "output-path-size-sha256-manifest",
+          "original-output-source-map",
+          "missing-unexpected-paths",
+          "failed-invalid-empty-raw-outputs",
+          "errors-truncation-retries",
+          "request-response-tool-records",
+          "time-cost-budget-records",
+          "per-file-save-version-evidence",
+          "native-logs-or-explicit-missing-status"
+        ],
+        "manifest_rule": "Freeze original file set and dependencies before exposure. Only task.output_path may differ. Preserve immutable originals outside writable roots and reject cross-arm/original dependency resolution. A manifest or patch is not a substitute for complete artifact bytes."
+      },
+      "result_rule": "A correct text delta and unchanged root version text cannot yield an overall writing pass with missing native evidence. Report separate artifact/text, answer, grounding, reader-fidelity and native outcomes; false/unsupported extras or contradictions require independent claim adjudication.",
+      "reading_fidelity": "Separate frozen reader probes/native references required for any future reading measurement; this checker supplies no reader fidelity result.",
+      "lineage": {
+        "visibility": "public-development-only",
+        "withheld": false,
+        "model_unseen": false,
+        "lineage": "NI Actor Framework original and derivatives; same lineage, no new independent project",
+        "restricted_evaluation_ready": false,
+        "rule": "Future withheld cases/keys require separate commissioned sources, duplicate/variant adjudication, whole-lineage allocation, custodian and executed role-specific denial/allowed-access/leakage checks. Public history and evaluator paths provide no concealment. Store readiness alone does not establish case allocation/run isolation."
+      },
+      "comparison": {
+        "method_locator": "benchmark/writing/method.json#/comparison",
+        "runner": "benchmark/baseline/runner-contract.md",
+        "precision": "benchmark/precision/README.md",
+        "arms": [
+          "no-tool",
+          "tool"
+        ],
+        "matched_fields": [
+          "requested_change_hash",
+          "original_manifest_hash",
+          "allowed_inputs_hash",
+          "common_prompt_hash",
+          "model_snapshot_and_generation",
+          "total_token_budget",
+          "context_budget",
+          "output_token_and_artifact_byte_budget",
+          "wall_time_budget",
+          "ordinary_editing_capabilities",
+          "native_access_policy",
+          "case_key_revision",
+          "repetition_count",
+          "retry_policy"
+        ],
+        "native_access": "neither-arm; post-output-freeze identical separate trusted validation only",
+        "paired_runs_executed": 0,
+        "rule": "Freeze hashed writing addendum, model/settings, prompts, inputs, key revision, budgets, retry policy, repetitions and arm order before either arm; only evaluated-tool access differs. Both arms receive same XML/ordinary editing capabilities. Fresh sessions/workspaces and no cross-arm memory/cache/key/artifact access. Retain every planned/failed/missing slot, raw bytes and accounting. Four conditional development pilots is existing design only; evaluation count/quota unresolved. Inherit paired lineage uncertainty/missing-pair rules, no interval for one lineage."
+      },
+      "requirements_mapping": {
+        "W1": {
+          "contract": "task.output_path; task.request; task.delta",
+          "review": "Explicit project output and text change; no explanation-only success."
+        },
+        "W2": {
+          "contract": "source; task.locator; task.precondition; preservation",
+          "review": "Original hash/XML locator are available; native locators and full eligibility remain unavailable."
+        },
+        "W3": {
+          "contract": "task.text_ids; task.preservation_ids; task.answer_ids; task.delta",
+          "review": "Fixed IDs and one-byte allowance; no unrelated-content or metadata exceptions."
+        },
+        "W4": {
+          "contract": "preservation.root_version; planned_results.save_version",
+          "review": "Declaration preserved; native save version remains unverified."
+        },
+        "W5": {
+          "contract": "planned_results; result_rule",
+          "review": "Text and native judgments remain separate; no overall pass from missing evidence."
+        },
+        "W6": {
+          "contract": "task.operation",
+          "review": "No compiled output or rebuild; WB1 source/build chain cannot be inferred."
+        },
+        "W7": {
+          "contract": "comparison; trial_artifacts",
+          "review": "Identical copies/requests/budgets, symmetric output/retry accounting and isolated arms."
+        },
+        "W8": {
+          "contract": "checker; planned_results",
+          "review": "Positive and discriminating malformed controls; behavior/native evidence unavailable."
+        }
+      }
     }
   ],
   "comparison": {
@@ -541,7 +776,8 @@
     "designed_families": [
       ".vi creation and modification",
       ".ctl modification with consumer .vi",
-      ".lvlibp source/rebuild (missing source and builder)"
+      ".lvlibp source/rebuild (missing source and builder)",
+      ".lvproj WP1 exact property-text preparation only; no native coverage"
     ],
     "uncovered_families": [
       ".vim specialization",
@@ -571,8 +807,17 @@
       "Public development fixtures cannot establish withholding or unfamiliarity",
       "Restricted store readiness is not case allocation or evaluated-run isolation",
       "Model quota, repetitions for evaluation, owner precision targets and writing effort estimates unresolved"
-    ]
+    ],
+    "project_text_preparation": {
+      "case_id": "WP1-project-build-text",
+      "status": "narrow-public-development-text-preparation",
+      "root_version_declaration": "20008000",
+      "native_save_version": "unavailable",
+      "native_validation": "unexecuted",
+      "remaining": "Direct creation, LVLIB, other XML properties/projects, native semantics and all untested versions/families stay uncovered. Existing inventory and contracts unchanged.",
+      "lineage": "NI Actor Framework original and derivatives; same lineage, no new independent project"
+    }
   },
   "controls": "benchmark/writing/controls.json",
-  "next_review": "Separate reviewer session must inspect this exact tree, baseline pins, requirement mapping, synthetic control outputs and remaining native gaps. Only thereafter may owner assess method acceptance; do not seek acceptance in this task. Executable benchmark scoring, if needed, requires Policymaker-ordered evaluator work and separate evaluator-verifier approval."
+  "next_review": "Separate cold review of the changed integration tree and new integration-0112 provenance is pending. Separate reviewer session must inspect this exact tree, baseline pins, requirement mapping, synthetic control outputs and remaining native gaps. Only thereafter may owner assess method acceptance; do not seek acceptance in this task. Executable benchmark scoring, if needed, requires Policymaker-ordered evaluator work and separate evaluator-verifier approval."
 }
