@@ -137,6 +137,10 @@ Each task is one session's work and a section set the protocol defines. Rules:
   key thread used iterations 0115-0122 (four packages, four reviews). After the key revision that follows #587 and
   its review, reassess the next task against the remaining method gaps in `docs/perpetua/evaluation.md`. Name the
   gap and expected gain in working memory. Carry unresolved findings explicitly; never lift a block to end a chain.
+  For a narrow correction of one named finding, order the correction and its changed-scope review in one graph: the
+  review is `blocked_by` the correction, lists the producer's artifacts as `{"from": id, "name": X}` inputs and pins
+  the merged commit and file hashes itself, because the graph cannot know them (0129: #611 then #612 used one shaper
+  session; 0145-0146 used two). Use separate iterations when the review task needs facts from the correction report.
 - **Resume saved work, do not redo it.** A `blocked` or `partial` task keeps its unmerged work at the tag `iter/NNNN/N`.
   Order a task with `start_branch: task/N` that corrects only the failing check or the missing piece, and name what is
   already done so the session does not repeat it (#518: both files were written; only the check was wrong).

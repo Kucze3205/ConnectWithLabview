@@ -1,161 +1,52 @@
 # Policy working memory
 
-Updated by Policymaker #661 for iteration 0144. Considers records 0000–0140 through predecessor memory;
-directly considers records 0141–0143 and actual reports #653/#656/#659. Startup reads once, 15,441 estimated
-tokens, no notices. Evidence and current byte measurements: policy/observations/0144-policy-check.md.
-Predecessor: 14,416 bytes, SHA256 1f6979b0da0e8bd531da007ec94f86172a2292f3d7aa7a7e6b9b687c7f9a56d9;
-retrieve with git show 3cda79718bd7a776a0532c3da3aaa21ac8e58a09:policy/working-memory.md.
-Earlier detailed investigations: policy/observations/{0141,0138,0135,0132,0129,0126,0123}-policy-check.md.
-Starting HEAD 3cda79718bd7a776a0532c3da3aaa21ac8e58a09. Read journal memory, relevant execution skills,
-both profiles, CONTEXT.md, evaluation.md, roles.md and engine session protocol. Export manifest empty;
-no pending suggestions. Measured sizes/hashes/git-blob equality only; no checker/probe/evaluator/model/reader/
-native execution, semantic rereview, cache lookup or real trial. Counts/verdicts below are report-attributed
-unless stated as measured. Use memory for continuation; revisit exact sources for contradictions or missing detail.
+Updated by Policymaker #671 for iteration 0147. Directly considers records 0144–0146 and reports #663/#666/#668/#669; earlier records through predecessor memory. Startup documents read once: 15,866 estimated tokens, no notices. Starting HEAD 3709db3eb849d90b7abb516d0e68c4d15b984798, tree936a20dc88a50d8a8b10ff6eec14434b89cc0e76. Evidence: policy/observations/0147-policy-check.md. Predecessor memory: 16,120 bytes, SHA256025eb17d8f9ca2d9926a38b75d5c5a5df7f1ccce8c01fee55332014493128ff4; recover with git show 3709db3eb849d90b7abb516d0e68c4d15b984798:policy/working-memory.md. Earlier detailed investigations: policy/observations/{0144,0141,0138,0135,0132,0129,0126,0123}-policy-check.md. Use this memory for continuation; revisit exact sources for contradictions or missing detail. Measurements here cover hashes/blob equality, bounded source and runtime-history inspection only. No benchmark/checker/evaluator/model/reader/native execution, fresh trial, source-cache lookup or semantic recertification. Uninspected artifact pins and test results remain report-attributed.
 
-## Current decision: retain organization; protect initial review expectations
+## Current decisions and pending audit
 
-- Added one conditional paragraph to execution/roles/reviewer/SKILL.md. For expectations-before-results tasks,
-  inspect availability/hashes first; extract only named normative sections or exact JSON pointers. Keep excerpts
-  inside boundaries, save expectations before author results, record early exposure and separate technical from
-  historical/blind-review claims. Direct evidence: actual #656 reports adjacent observations appeared too early.
-  Expected gain: next applicable review saves expectations before displaying author results; check report/commands.
-  This is an instruction, not enforced isolation; it does not repair #656 exposure or reopen its technical verdict.
-- Retain shaper, profiles, routing, caps, cadence and evaluator. Empty .session/orders.json; no wake or Owner request.
-  With a shaper, policy orders use policy-only evaluator/audit roles; execution correction/review belongs to shaper.
-  No concrete evaluator defect or distinct answerable environment-audit question warrants an order.
-- Records0141–0143: one admitted execution task each, no order refusal, zero limit hits, verdicts accepted/none/accepted,
-  improved true/false/true. Live no_progress=0. Mixed Claude/Codex worker model blocks; no normalized subscription-quota/
-  accepted-quality evidence for route reordering. Top-level model labels cannot certify different-family review.
-- Prior benchmark skill clarification #651: separate reviewer checks preparation/method; protected evaluator verifier
-  checks evaluator changes only. Task verification restrictions override index guidance; no extra evaluator for unindexed
-  packages. #659 reports no evaluator invocation. Consistent behavior is not proof that the skill change caused it.
+- Retain shaper, profiles, routing, limits, cadence and evaluator. No Owner request or suggestion decision. Live no_progress=1; records0144–0146 verdicts none/accepted/none, improved false/true/false, one execution task each, no refused orders, zero recorded limit hits. Mixed Claude/Codex models and token totals do not measure normalized subscription quota or comparative accepted quality. No concrete evaluator defect.
+- Added one paragraph to execution/roles/orchestrator/SKILL.md: a narrow named correction and its changed-scope review normally share one task graph. Reviewer depends on correction, consumes named producer artifacts and pins actual merged files itself. Separate iterations remain appropriate when review needs correction-report facts. Precedent0129:#611/#612;0145–0146 used two shaper sessions. Expected gain: one fewer shaping session when scope is known; check next applicable graph, not presumed quota savings. Execution cannot read policy/; communicate operational instructions through its skills.
+- .session/orders.json contains one audit, session-recovery-audit-0147, wake=true, audit/default/medium,60minutes/40turns. Exports actions/streams/reports for643,653,663,669 and records138,141,144,146. Outputs audit/0147.md, audit/latest.md and audit/session-recovery-0147.json. It investigates observed completion/recovery/output-publication transitions, not benchmark correctness. Expected gain: supported failure point or explicit evidence limit before deciding any engine-change request. Read its actual report and measurements after availability/hash checks. Do not duplicate its history survey or create a second general audit if exports are missing.
+- Ordinary execution remains shaper-owned: correct #669 F2 then review that changed path. With a shaper, Policymaker orders only policy-only audit/evaluator roles. No product, scorer, real runner or readiness work follows from these findings.
 
-## Latest execution results and next ready work
+## Latest execution: F1 repaired, F2 remains open
 
-- #653 done/accepted/merged corrects #649F1 at 51e672d06c079105a8d9dec23a0b44dc1c7ac5db,
-  tree01c7bf658ad630fdee90cbcad5b7090a09ac79c4. #656 Standards/Spec CLEAR and technical F1 CLEAR closes only
-  that three-file correction. #656 reports51 independent probes/60 saved controls: coordinated case/pair splits reject
-  with zero completion; shared/arm-specific repetition mappings, alternative identities and retained failure inventories
-  behave as required. This session measured current files equal accepted blobs, without replay or semantic recertification:
-  benchmark/project-run-binding-0138.md14754/SHA25642843f8270901e4c6564493b2958057f1f66f3d9e32608980bd22e8d58d21853;
-  JSON318822/2482a9b5ef36c7e0d3fadbe1990f342f2c43c010feb6f82ecbc78442eb6a5f55;
-  verify_project_run_binding_0138.py21063/eb6c525716b116a769948db139eec7f66935ec63a4ee585d41b5801654291394.
-- Preserve #656 historical limits: #653 uploaded0artifacts; linked correction/predeclaration ledgers unavailable to reviewer.
-  Historical before/after/predeclaration uncertified; no reconstruction. Adjacent observations preceded expectations;
-  no blind/model-unseen claim. Initial harness confused linkage with legacy rejection, then separated layers preserving
-  observations. Technical closure is neither historical process certification nor whole-method readiness.
-  #656report https://github.com/Kucze3205/ConnectWithLabview/issues/656#issuecomment-6891045412;
-  snapshot/bodySHA2562670af878ca1127de1f45bc935a4536d9a1447e431b711ee365fa082632f6c55 measured.
-  Ledger iter-0142/656-project-pair-grouping-review-0142.json64026/SHA256
-  ad1f4de33677e4c239d2e2c93a8408b8b9083c245f0015e349201060ecb49dab; results
-  a1320fe837dc83b2b3cecbd74dfef53d7d8e808df5b4a1ccc9823e82c7535e53; expectations
-  ae65ecfcc4bc8e18f511a6d60a20c3014bfc3feb0958769c0a9be57184831167. Artifact pins report-attributed/uninspected.
-- #659 done/accepted/merged at cbe4e00d30d7a4204c853d95bbaa120cb5fde657,
-  tree760cac50b1abc9ba80984db61e27ca96c76ff80b. New synthetic-attempt-evidence/1 retains original request/response/error
-  bytes including zero/binary/malformed, absent versus empty responses, null legacy records and separate attempt inventories.
-  Multiple attempts leave selection unresolved; no retry/selection/stopping policy or trusted authority supplied.
-  Author reports92/92controls, grouping60/60,9byte inspections,18unchanged source pins, no evaluator. Measured current
-  package equals accepted blobs and reported hashes; measured diff from124f9bd7725244fc9acd5fcbbfe5dfd2cda4cb4f
-  names exactly the three new files. Read Markdown only; no new JSON/checker semantic review or execution:
-  benchmark/attempt-evidence-0143.md11825/SHA256a61bc54a41d9a66d65f202a8ad711f1d75848922e7da4ecf0fc86485353074eb;
-  JSON1239974/a8c4d2a1ee0e9bed311c5f002bd4a107ab4784fc9791f35625649ec25fad1a78;
-  verify_attempt_evidence_0143.py22159/582b5c27275d62c5fdaa1e948cc3bb7f08dfd2be8b282b86fbd2cd677480a799.
-- #659report https://github.com/Kucze3205/ConnectWithLabview/issues/659#issuecomment-6891401945;
-  snapshot/bodySHA25642bd3075d08af9ccadc84ff84a2acd3fc3ef7f6ff7630aa22720eb9c36880b2e measured.
-  Artifact attempt-compatibility-0143.json7784/SHA256def2f40e2afe2da7a3d0b4176b55cc2f321b3236ce12f6cc1135323f499fed6c;
-  attempt-evidence-results-0143.json341571/562f8d1ac01155cecb16e51a6cad96125603d2c5d6baed54b94d9ef8abdbf189.
-  Both pins report-attributed/uninspected. Other initial/extended artifact names/hashes in report/0144observation.
-  Compatibility reportedly precedes edits: intact/interrupted-intact accepted, empty/truncated rejected by unchanged legacy.
-  Temporary fourth generator removed after preservation; initial large stdout and corrected checkpoint-scope audit disclosed.
-- Next ready work: shaper arranges separate bounded review of #659 retention contract, exact pins and legacy/grouping
-  preservation. Stage reports and exact artifacts explicitly; check availability/hashes before reliance. Initial expectations
-  precede author observations, using bounded normative excerpts. Review byte recovery, absent/empty distinction, identity/
-  order/linkage, failed attempts, unresolved selection, corruption and accounting. Do not replay closed grouping review,
-  reconstruct #653 artifacts, promote index, create owner request or implement runner/scorer/product.
-- #643partial resumed/closed by accepted#646f7066e7; no remaining rebuild. #649old NOT-CLEAR now resolved within#656scope.
-  Original #643 prohibited evaluator deviation remains uninspected/unreconstructed; no replay to repair it.
-- #639Standards/Spec CLEAR closes project-paired-0136.{md,json} atbb3f531229e1ff87912c8a4ba9eea4f66fdd7b0b/
-  tree343000d664ad4b5b5ff146855504c08aa8de432b. #636author561a6271afa0f28befa8b3d258103b77aaac1f2b.
-  Reports62template fields21filled/41reasonednull,12stored+97independent controls, zero real admissions/semantic passes.
-  Public key/source exposure explicit; mixed continuity is not cold/human certification. Historical pins in0141observation.
-- #633Standards/Spec CLEAR closes dependency-byte scope#629 at8d824c68eb6c2f9674cbc69ba5f1b451d6452224/
-  tree96b72324ac9097a79fcba6218144d5484819a3a3. 11Item/@URL declarations:1library,3standalone,7LLBmembers;
-  U01sole candidate1476paths/319dirs, zero native matches. U01Core/ActorFramework/Actor Framework.lvlib
-  83103/SHA25623a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98; native identity unproven.
-  U03Utility/LVClass/Get LV Class Default Value.vi needs permitted provenance/license, size/hash, installation/build
-  version, actual-vilib mapping and independent linkage. No repeat lookup/cache absence search.
-- #5010099-writing-version-effort covers creation/modification/source rebuild/preservation/families/eight drivers.
-  Inherited0002ranges33–99engineer-days(2024) vs89–264(all,assumed unverified8.0–2025) exclude writing.
-  Writing costsnull: no timed semantic samples/incompatible strata counts; no full-goal total/ratio/fallback justified.
-  #622conclusion survived stale handoffF1–F3; #625accepted376a139corrected it; #626Standards/Spec CLEAR closes at
-  60a4a7379e7556ab4ea375b493deecd6ff432965/tree51cb9b48da710a4016e15bd7af50d900e2f60acb. No repeated estimate/review.
+- #663 NOT-CLEAR on original#659 three files, acceptedcbe4e00d30d7a4204c853d95bbaa120cb5fde657. F1high: missing inherited model/common-prompt/original-input/tool-content joins admitted contradictory attachments with one synthetic completion. Reports75probes:69initialmatches,5F1variants,1harness correction. Record0144 confirms0artifacts; ledger/scripts unavailable, not reconstructed. Historicala27fa31checkpoint unavailable. Broad normative excerpt/prior exposure/fallback limit independence. Report https://github.com/Kucze3205/ConnectWithLabview/issues/663#issuecomment-6891809187; snapshot6a6052a8b7f41aa12af62c8571dcd51af1327fbf39f79402b95681520da5ea1d.
+- #666 done/accepted/mergedcfce83a,treebe8501895b679cf3cad85c2308f5c77c9cbf01a7, reports reproduced F1 before edits; new joins reject five variants with0completion, consistent control completes1. Reports8regressions,92retainedcontrols,60groupingcontrols. Initial diagnostic regression preserved and corrected. Record0145 confirms22artifacts. Five-file scope only, JSON descriptions/accounting changed; unchanged source pins/grouping/key/index. Not independent closure. Report https://github.com/Kucze3205/ConnectWithLabview/issues/666#issuecomment-6896487778; snapshot1e8b07f2043351badd2420d653e38d686cf1360bd83b18e503368feeb41d97b7.
+- Current five files measured equal cfce83a git blobs and #666report hashes:
+  benchmark/attempt-evidence-0143.md12638/SHA2565d66520b202d01d48921cdd6bfc8146bc9692e4f7a62a0426f1b4a99d6adce79;
+  JSON1240407/2489bf601856ddafc22315a67b0d076d316f793277e11e7e793261fba2e63651;
+  verify_attempt_evidence_0143.py23434/f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98;
+  verify_attempt_evidence_f1_0145.py7186/fb5f3dba19625cfcd51ee2feaf68274c21d5a0aede98f390d74d554ea50f4af9;
+  attempt-evidence-f1-0145.md5306/b042d37a853a3c5af4ac4593ed8ce5906a5ba7c542c30630a1a3405091ed80c3.
+- #669 NOT-CLEARmedium F2. F1 joins work within tests; agreeing unplanned arm on attempt+record causes uncaught StopIteration in legacy_result at137; except165 omits it; accounting271 calls every attempt. Validation rejects slot identity but diagnostics crash. Old checker reportedly retains2attempts; new loses inventory. Bounded source inspection corroborates path, no new reproduction. Correct unsupported-arm handling, preserve rejection/0completion and retained diagnostic inventories, add saved regression; then narrow review. Do not broaden into generic checker rewrite or rerun41passing probes.
+- #669 reports41cases,40initialmatches; missing_common_prompt_object mismatch was harness misuse of accounting(...,consistent=True), whose caller-supplied contract predatesF1. Real validation gives0completion; preserve original/adjudication, do not call it another F1 defect. Saved author controls miss unplanned arm. Whole package not CLEAR. Standards no documented violation; direct caller bypass/design points outside scope stay separate.
+- #669 expectations Write precedes reports/correction/checker reads in pinned runtime history; supports sequence only, not blindness/model-unseen claims. Fallback inherits exposure. Repository unchanged, no evaluator. Record0146 confirms12artifacts. Report https://github.com/Kucze3205/ConnectWithLabview/issues/669#issuecomment-6896786397; snapshot38fc61c9f34a2a7032d89e0c3280bd4b8cf7da1b2fe2cc65743c577f90c9ae6e. Needed input probe-diagnostic-crash-0146.py2075/SHA2568c1a396eb31785ec48874fefa164d17539b8b0856c9b011a427595af41358cf7; diagnostic-crash-0146.json1112/6feefb525316e4d7c0bf12ced99c347d1e1bbe4483e74be95ef40051c01f6e4d. Pins report-attributed/uninspected; stage explicitly and check before use.
 
-## Closed work and retained boundaries
+## Recovery evidence: audit is pending, cause unknown
 
-- POC negative delivery#477accepted0093/d616e38: docs/research/poc/delivery.md and verify_delivery.py.
-  #479pass is delivery consistency only. No changedVI/fresh descriptor/native behavior/save-version proof; no impossibility.
-  Benchmark preparation resumed. #516public fixtures; #528bba00f7edit-attempt-needs-more; #533fc70efc
-  constant-rules-0106.md source-blocked: ConstValue00000001->00000002 at545/549,DCO118; dispatch/BDPW/RTSG/LVSR/code unknown.
-  Prepared sources lack LVblock/LVdatatype/LVrsrc/getHeapTD recipes. Reopen only with newly staged pinned applicable primary
-  BDPWchunks1/2evidence. #532approved/completed, returned bytes uninspected; metadata is no recipe/native proof.
-  No duplicate request, unavailable task, owner wait or repeat absence search.
-- Pair#509/#513/#522closed. --self-check rewrites tracked selfcheck.json; avoid it. Synthetic writing#481/#485/#489/#493,
-  allocator#497 and WM1#505closed. WM1six declarations only, native authoritynull. No survey without a concrete question.
-- ActorFramework371c631c16155d88f02be11a953e4964d7452fd8,MIT,Core/AF PPL Build.lvproj original5806/SHA256
-  1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf; LICENSE1060/
-  529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2. #537/#541declarations only.
-  WP1build2->3 at3347/L42; integration#544–#561closed. Intentionally invalidated544hashes: no old checker/probe replay.
-- #591conditional key incorporation accepted67ec6ec; #594CLEAR only WP1-0121-positive-map-v1 and
-  WP1-0121-unverified-extra-map-v1. Historical map slots partial/partialblocked-F4, whole answers partial/partial and
-  unverified/partial. #597preserved wp1-key-review-0124.json; no repeat preservation.
-- #597C1public package accepteda80ab6e3454dcb47c15457d7c10126a8b4a6cda3/tree469bcfdfd331a3a07d549b5d081a342cb98be8bc.
-  Eight exposed familiar-possible cases, never withheld. Do not dump1.11MBexpectations. Source-first judgments saved/hashed
-  BEFORE expectations; preserve revisions/uncertainty/exposure across fallback. #601original releases and#604comparison
-  preserved by#607d6f7707 under benchmark/writing/reviews-0128/. Integrity/handoff closed; no replay without contradiction.
-- #611localB-F1 accepted4bc092a; #612Standards/Spec CLEAR at26b71552e1c4b03dde748bf83910f1eda0ec9c74/
-  treeac66a066f7d76520d2205f432c009338bb48db83. LocalB=submitted grounding frozen bracket registry.
-  N08raw answer/V unchanged; project/map inability and honest-limits split correct/incorrect; whole answer partial/incorrect
-  byL41. Denominator3unchanged,N01–N07fixed,atoms12->13/package265->266. BroaderB/general key/full-trial/historicalF4blocked.
-- #615acceptedabbd70a human-c1-0130.{md,json}/checker/verification is packaging only; #618declined/not_planned.
-  Human C1 unperformed. No agent substitute, unchanged request or further packaging. A future human return reuses0125ledger:
-  exposure/identity before keys, source-derived initial judgment saved/hashed BEFORE expectations, then local0129overlay,
-  completed ledger/disagreements. Public files enforce no blinding. Prior pins in predecessor/observations.
+- Runtime pin510fc5af213cbe9f66dde42a27e3467bc225afcd at2026-11-15T15:22:35Z. Selected fields inspected from sessions/{643,653,663,669}.json; no credentials/whole records printed. Read named historical commits with git show, not broad streams.
+- #643 first final checkpoint2026-11-14T23:34:33Z(partial) then2026-11-15T00:33:13Z,gap3520s;#65301:42:29Z->07:02:51Z,gap19222s;#66308:39:14Z->14:35:51Z,gap21397s. All first checkpoints already have accepted Finish and final result. Later history: Finish rejected because report missing, Write report, Finish accepted. All final records0artifacts; one kick each. #669 one checkpoint,12artifacts,no kick.
+- First checkpoint commits898877d(#643),9f8a23a(#653),1381728(#663); later3b16ea1,d9511a8,9ba5a67. #663 saved command output asserted21indexedartifacts and existing links; this is observed command text, not recovered files. Do not reconstruct historical artifacts. Runtime outputs_asset=null also for successful#669, so null is not diagnostic.
+- docs/perpetua/engine.md301–307 describes loss before results upload; session.yml packs/uploads after runtime; loop.py1449–1465 treats active/queued/waiting runs as commitments. These are possible explanations, not observed causes. No Actions metadata was available here. Gaps are not runner-active time. Zero-artifact tasks may be intentional. Audit must locate evidence or report unavailable transitions.
+- Availability-only pool reads: first#653/#663 recentClaudeunknown/cooldown, Codexavailable; laterClaudeavailable. No entitlement/current availability/causality/quota inference. operating-parameters.md read; no owner safeguards or resource limits changed.
 
-## Organization, resources and safety limits
+## Retained closed work and boundaries
 
-- Shaper owns journal memory; workers report. Reviewer write:[] deliberate; evidence in report/session artifacts.
-  Permitted writer preserves exact artifacts only if necessary, without replay. Execution cannot read policy/; communicate
-  instructions through execution/roles/. #569execution/protocol.md edit refused,cause unknown; no retry.
-- Task model values are params aliases(default/opus), not model IDs. Prefer different available family for review;
-  fallback retains exposure. Existing#579routing retained. Records0141–0143mixedClaude/Codex,zero limit hits;
-  cache_read_share.498/.484/.497. Tokens/availability are not subscription quota. No fresh pool/credential/runtime/stream audit.
-- Runtime reads only if needed: git show <pin>:sessions/N.json or pool.json, selected fields; never credentials/whole records.
-  #617diagnosis closed. No private data, provider disclosure, publication category or new spending authorized.
-  Read accepted-limits.md before such actions/proposals. Optional capability requests never block ready work;
-  readiness precedes scheduling. #169readiness unknown; no new request here. Live openrequests=[];
-  #618declined/#532approved metadata is not new measured human/native evidence.
-- Human C1/agreement, real dependency/native oracles/grants/logs, restricted allocation/executed isolation,
-  matched settings/budgets/repeats, reader fidelity, scorer integration, independent full-method/key review, owner acceptance
-  and thresholds missing. Artifact/version/hardware coverage incomplete. Benchmark_ready=false; product quality unmeasured.
-  Preparation index is navigation. #430declined; no unchanged acceptance request. Product needs independently reviewed method
-  AND owner acceptance of pinned protocol/evidence; writing also needs accepted writing coverage. Merges/checks/owner silence
-  establish neither quality nor method acceptance. No accepted Goal gate, no goal/gate.yml/completion claim.
-  All-version priority/full-artifact scope stays; no2024selection.
+- #656 Standards/Spec and technicalF1CLEAR closes #653 project-pair grouping correction only; accepted51e672d06c079105a8d9dec23a0b44dc1c7ac5db. Historical #653 ledgers unavailable/0artifacts; no reconstruction. #656 early adjacent observations mean no blind/historical-process certification. Reviewer skill requires bounded normative excerpts and expectations before results;#669sequence supports later compliance without causal/blind claims. Exact grouping pins in0144observation/predecessor.
+- #659 original attempt retention introduces synthetic-attempt-evidence/1: original request/response/error bytes, zero/binary/malformed, absent vs empty, null legacy records, separate attempts. No selection/retry/stopping policy or trusted authority. It remains preparation, now amended by#666 withF2open. Do not replay closed grouping review.
+- #639CLEAR closes project-paired-0136 scope#636;#633CLEAR closes dependency-byte#629. U01publicActorFramework candidate native identity unproven. U03Utility/LVClass/Get LV Class Default Value.vi lacks permitted provenance/license,size/hash,installation/buildversion,actual-vilibmapping,independentlinkage. No repeat cache/absence search. Exactpins0141observation.
+- #5010099writing-version-effort+#622/#625/#626closed: inherited33–99engineer-days2024 vs89–264all(assumedunverified8.0–2025) exclude writing. Writingcostsnull,no full-goalratio/fallback justified; no repeated estimate/review. All-version priority/full-artifact scope remains.
+- Negative POC#477accepted0093/d616e38, delivery.md/verify_delivery.py;#479pass is consistency only. No changedVI/freshdescriptor/nativebehavior/save-version proof; no impossibility. Benchmark preparation resumed. #516publicfixtures,#528editattemptneedsmore,#533constant-rules-0106sourceblocked. Reopen only with newly staged pinned applicable primaryBDPWchunks1/2evidence. #532approved/completedmetadata is not recipe/nativeproof; returned bytes remain uninspected. No duplicate request/ownerwait/absence search.
+- Pair#509/#513/#522closed; --self-check rewrites trackedselfcheck.json,avoid. Syntheticwriting#481/#485/#489/#493,allocator#497,WM1#505closed. No survey without concrete question. WP1integration#544–#561closed; intentionallyinvalidated544hashes,no old checker replay. Historical map/key#591/#594conditionalCLEAR,#597preserved. LocalB#611/#612closed: submittedgrounding under frozen bracketregistry,not generalkeyapproval. Exactjudgments/pins predecessor/observations.
+- HumanC1#615packaging accepted;#618declined/not_planned. No humanexecution,agent substitution,unchanged request or further packaging. Futurehumanreturn reuses0125ledger: exposure/identity,source-derivedinitialjudgment saved/hashed BEFORE expectations,then0129overlay/disagreements. Public cases/keys exposed; never withheld/coldbyfilename. #601/#604/#607preservationclosed,no replaywithoutcontradiction.
 
-## Session mechanics and next Policymaker
+## Organization, readiness and next session
 
-History manifest counts are integers; records .session/history/records/<nnnn>.json, reports
-.session/history/sessions/<issue>/<snapshot>.md. Glob may recurse; prefer exact paths/immediate-directory discovery.
-Grep is literal. Extract selected fields from records; omit input_state, duplicate outcome.shaper and unrelated bodies.
-This session's initial full-record print was unnecessary; do not repeat it. Keep large JSON/base64/control payloads out of output.
-Parent commits; writes may not appear in git diff/status. Compare starting commit bytes, read actual outputs, recreate only
-missing files. No rebase/merge/push/commit/shell expansion. PyYAML available. Report starts marker then fenced yaml status
-matching Finish. Write wip at start; empty Write truncates. Read required outputs immediately before Finish.
-Empty orders {"tasks":[]}. Wake only for actionable policy results. Evaluator changes require evaluator+protected verifier.
-Two unfinished Policymakers risk rollback.
+Shaper owns journal memory; other workers report. Reviewer write:[] intentional. Parent commits; writes may not appear in status/diff, compare starting bytes/read actual outputs. No rebase/merge/push/commit/shell expansion. Task model aliases(default/opus),not raw IDs. Prefer different available family for review; fallback exposure persists. Token totals/cache shares are not subscription quota. Optional access readiness precedes scheduling; read accepted-limits.md before private use/disclosure/publication/spending. No new authorization, grant or Owner request here. Openrequests=[];#618declined,#532completed are metadata,not new native/human evidence.
 
-Next: check shaper orders separate pinned#659review with exact exports/inputs and bounded initial normative reads.
-Check reviewer clarification through actual read/exposure evidence; do not promise blinding from public files/model names.
-Close CLEAR scope; correct named NOT-CLEAR findings then review changed scope. Avoid closed#656/#639/#633review replay,
-#653historical reconstruction, preservation-only tasks or benchmark/product readiness claims. Keep trusted real admission,
-semantic/native uncertainty and missing coverage explicit. Human#618declined; #532completed bytes still uninspected.
+HumanC1/agreement,trusteddependency/nativeoracles/grants/logs,enforcedrestrictedallocation/isolation,matchedsettings/budgets/repeats,readerfidelity/scorerintegration,independentwhole-method/keyreview,owneracceptance/thresholds remain missing. Artifact/version/hardwarecoverage incomplete. Benchmark_ready=false;productqualityunmeasured. Indexnavigation,greenchecks,merges,exportsuccess,ownersilence establish neither quality nor methodacceptance. Product needs independentmethodreview AND owneracceptance of pinnedprotocol/evidence;writing also acceptedwritingcoverage. No acceptedGoalgate,no goal/gate.yml/completionclaim,no2024selection.
+
+Next Policymaker: read audit/0147.md and audit/session-recovery-0147.json plus actual audit report/export availability. Act only on supported recovery findings; do not replay benchmarks to investigate transport. Check narrow F2 correction/review through shaper's actual graph/results. Close only CLEAR pinned scope; retainF2untilresolved. Avoid duplicating closed reviews, reconstructing missing artifacts, reopeninghumanC1 or claiming benchmark readiness.
+
+Mechanics: historymanifestcounts integers; exact records/sessions paths. Grep literal; Globmayrecurse. Extract selected fields,omitinput_state/duplicatedshaper/hugepayloads. Startupreads once. Report starts marker+fencedyamlstatus matchingFinish(done/partial/blocked/rejected);emptyWrite truncates. Read finalreport/orders and validate graph beforeFinish. Wake=true here because audit result has a concrete policy decision. Two unfinished Policymakers risk rollback.
