@@ -1,0 +1,42 @@
+# Design proposal only. Owner installs after independent review and #169 approvals.
+name: Native inspection proposal
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LABVIEW_ENVIRONMENT: ${{ github.workspace }}/.native-inputs
+      NATIVE_OUTPUT: ${{ runner.temp }}/native-inspection
+      NATIVE_OPERATOR: ${{ github.actor }}
+    steps:
+      - name: Checkout reviewed job
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Stage public source checkout
+        uses: actions/checkout@v4
+        with:
+          repository: marcpage/pylavi
+          ref: 35d2a0318f71dcb87bb9c431dc00700ee6b9fb75
+          path: .native-inputs/pylavi
+          persist-credentials: false
+      - name: Synthetic integrity checks
+        run: python3 -I -B benchmark/native/job/native_job.py --self-test
+      - name: Collect proposed native inspection
+        run: python3 -I -B benchmark/native/job/native_job.py --output "$NATIVE_OUTPUT" --operator-identity "$NATIVE_OPERATOR"
+      - name: Upload record, manifest and logs only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-inspection-record
+          if-no-files-found: warn
+          retention-days: 7
+          path: |
+            ${{ runner.temp }}/native-inspection/record.json
+            ${{ runner.temp }}/native-inspection/output-sha256.json
+            ${{ runner.temp }}/native-inspection/logs/*.log
+            ${{ runner.temp }}/native-inspection/logs/installed-version.txt
