@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "split_revision": {
+      "value": null,
+      "reason": "No reviewed split revision exists before restricted-store provisioning and lineage adjudication."
+    },
+    "lineage_group_id": {
+      "value": null,
+      "reason": "Lineage-group identifiers will be assigned only after whole-project grouping and duplicate review."
+    },
+    "partition": {
+      "value": null,
+      "reason": "No allocation is authorized; the eventual value must be development, eval-unseen-lineage, or eval-held-out-family."
+    },
+    "group_member_hashes": {
+      "value": null,
+      "reason": "Member hashes await preservation and review of the restricted case inventory."
+    },
+    "adjudication_notes": {
+      "value": null,
+      "reason": "Variant, copy, dependency, and mixed-family adjudications have not been performed."
+    },
+    "key_revision_hashes": {
+      "value": null,
+      "reason": "Independently checked answer keys do not yet exist and must remain outside this public template."
+    },
+    "access_configuration_hash": {
+      "value": null,
+      "reason": "The restricted store, identities, access policy, and isolation configuration are not provisioned."
+    },
+    "custodian_label": {
+      "value": null,
+      "reason": "No custodian has been appointed for the restricted allocation manifest."
+    }
+  },
+  "lineage_groups": {
+    "schema": {
+      "value": null,
+      "reason": "This template references lineage-group identifiers by schema only; it contains no inventory or allocation records."
+    },
+    "records": []
+  }
+}
