@@ -1,0 +1,18 @@
+{
+  "artifact_path": "actor-framework/Core/ActorFramework/AF Specialty Messages.lvlib",
+  "artifact_sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0",
+  "claims": {
+    "A0001": {
+      "value": "20008000",
+      "locator": "/Library/@LVVersion (line 2)",
+      "scheme": "xpath-positional on the original file XML, with 1-based line numbers (line 1 = XML declaration, preceded by a UTF-8 BOM)",
+      "derivation": "Read the original file bytes; the root element <Library> on line 2 carries the attribute LVVersion=\"20008000\". Literal text of the attribute only; no claim about how LabVIEW interprets it."
+    },
+    "A0002": {
+      "value": "NI.LV.All.SourceOnly",
+      "locator": "/Library/Property[4]/@Name (line 6)",
+      "scheme": "xpath-positional on the original file XML, with 1-based line numbers (line 1 = XML declaration, preceded by a UTF-8 BOM)",
+      "derivation": "Direct <Property> children of <Library> in document order are NI.Lib.Icon (line 3), NI.Lib.SourceVersion (line 4), NI.Lib.Version (line 5), NI.LV.All.SourceOnly (line 6); the fourth has Name=\"NI.LV.All.SourceOnly\" (Type=\"Bool\", text true). <Item> siblings are not <Property> elements and do not count."
+    }
+  }
+}
