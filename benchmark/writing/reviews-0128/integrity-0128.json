@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "issue": 607,
+  "scope": "Complete only missing staged-byte integrity accounting from partial #604; no semantic review or disposition",
+  "source_reports": [
+    {
+      "issue": 601,
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/601#issuecomment-6872748257",
+      "expected_body_sha256": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+      "source_report_asserted_snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+      "observed_body_sha256": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 hashlib.sha256(body.encode(utf-8)); body decoded from exported JSON, no newline normalization"
+      },
+      "equality": true
+    },
+    {
+      "issue": 604,
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/604#issuecomment-6872958175",
+      "expected_body_sha256": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+      "source_report_asserted_snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+      "observed_body_sha256": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 hashlib.sha256(body.encode(utf-8)); body decoded from exported JSON, no newline normalization"
+      },
+      "equality": true
+    }
+  ],
+  "artifacts": [
+    {
+      "issue": 604,
+      "artifact_name": "c1-review-completion-0127.json",
+      "source_path": ".session/inputs/604-c1-review-completion-0127.json",
+      "release_reference": "iter-0127/604-c1-review-completion-0127.json",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0127/604-c1-review-completion-0127.json",
+      "source_report_assertions": [
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "body / Artifacts footer",
+          "bytes": 10038,
+          "sha256": "fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600"
+        }
+      ],
+      "expected": {
+        "bytes": 10038,
+        "sha256": "fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600"
+      },
+      "observed": {
+        "bytes": 10038,
+        "sha256": "fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/604-c1-review-completion-0127.json",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": "benchmark/writing/reviews-0128/c1-review-completion-0127.json",
+      "equality": true,
+      "destination_equals_source": true,
+      "preservation": "exact original bytes; original basename"
+    },
+    {
+      "issue": 601,
+      "artifact_name": "c1-artifact-manifest-0126.json",
+      "source_path": ".session/inputs/601-c1-artifact-manifest-0126.json",
+      "release_reference": "iter-0126/601-c1-artifact-manifest-0126.json",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0126/601-c1-artifact-manifest-0126.json",
+      "source_report_assertions": [
+        {
+          "report_issue": 601,
+          "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+          "locator": "body / Artifacts footer",
+          "bytes": 28787,
+          "sha256": "9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7"
+        },
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "c1-review-completion-0127.json#/input_pins",
+          "bytes": 28787,
+          "sha256": "9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7"
+        }
+      ],
+      "expected": {
+        "bytes": 28787,
+        "sha256": "9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7"
+      },
+      "observed": {
+        "bytes": 28787,
+        "sha256": "9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/601-c1-artifact-manifest-0126.json",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": "benchmark/writing/reviews-0128/c1-artifact-manifest-0126.json",
+      "equality": true,
+      "destination_equals_source": true,
+      "preservation": "exact original bytes; original basename"
+    },
+    {
+      "issue": 601,
+      "artifact_name": "c1-challenges-review-0126.json",
+      "source_path": ".session/inputs/601-c1-challenges-review-0126.json",
+      "release_reference": "iter-0126/601-c1-challenges-review-0126.json",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0126/601-c1-challenges-review-0126.json",
+      "source_report_assertions": [
+        {
+          "report_issue": 601,
+          "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+          "locator": "body / Artifacts footer",
+          "bytes": 956134,
+          "sha256": "cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27"
+        },
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "c1-review-completion-0127.json#/input_pins",
+          "bytes": 956134,
+          "sha256": "cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27"
+        }
+      ],
+      "expected": {
+        "bytes": 956134,
+        "sha256": "cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27"
+      },
+      "observed": {
+        "bytes": 956134,
+        "sha256": "cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/601-c1-challenges-review-0126.json",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": null,
+      "equality": true,
+      "destination_equals_source": null,
+      "preservation": "original artifact release only; deliberately not copied"
+    },
+    {
+      "issue": 601,
+      "artifact_name": "c1-findings-0126.md",
+      "source_path": ".session/inputs/601-c1-findings-0126.md",
+      "release_reference": "iter-0126/601-c1-findings-0126.md",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0126/601-c1-findings-0126.md",
+      "source_report_assertions": [
+        {
+          "report_issue": 601,
+          "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+          "locator": "body / Artifacts footer",
+          "bytes": 7179,
+          "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+        },
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "c1-review-completion-0127.json#/input_pins",
+          "bytes": 7179,
+          "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+        }
+      ],
+      "expected": {
+        "bytes": 7179,
+        "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+      },
+      "observed": {
+        "bytes": 7179,
+        "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/601-c1-findings-0126.md",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": "benchmark/writing/reviews-0128/c1-findings-0126.md",
+      "equality": true,
+      "destination_equals_source": true,
+      "preservation": "exact original bytes; original basename"
+    },
+    {
+      "issue": 601,
+      "artifact_name": "c1-pins-0126.json",
+      "source_path": ".session/inputs/601-c1-pins-0126.json",
+      "release_reference": "iter-0126/601-c1-pins-0126.json",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0126/601-c1-pins-0126.json",
+      "source_report_assertions": [
+        {
+          "report_issue": 601,
+          "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+          "locator": "body / Artifacts footer",
+          "bytes": 4511,
+          "sha256": "916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690"
+        },
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "c1-review-completion-0127.json#/input_pins",
+          "bytes": 4511,
+          "sha256": "916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690"
+        }
+      ],
+      "expected": {
+        "bytes": 4511,
+        "sha256": "916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690"
+      },
+      "observed": {
+        "bytes": 4511,
+        "sha256": "916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/601-c1-pins-0126.json",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": "benchmark/writing/reviews-0128/c1-pins-0126.json",
+      "equality": true,
+      "destination_equals_source": true,
+      "preservation": "exact original bytes; original basename"
+    },
+    {
+      "issue": 601,
+      "artifact_name": "c1-checker-run-0126.json",
+      "source_path": ".session/inputs/601-c1-checker-run-0126.json",
+      "release_reference": "iter-0126/601-c1-checker-run-0126.json",
+      "release_url": "https://github.com/Kucze3205/ConnectWithLabview/releases/download/iter-0126/601-c1-checker-run-0126.json",
+      "source_report_assertions": [
+        {
+          "report_issue": 601,
+          "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a",
+          "locator": "body / Artifacts footer",
+          "bytes": 2378,
+          "sha256": "04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e"
+        },
+        {
+          "report_issue": 604,
+          "snapshot": "9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87",
+          "locator": "c1-review-completion-0127.json#/input_pins",
+          "bytes": 2378,
+          "sha256": "04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e"
+        }
+      ],
+      "expected": {
+        "bytes": 2378,
+        "sha256": "04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e"
+      },
+      "observed": {
+        "bytes": 2378,
+        "sha256": "04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e"
+      },
+      "measurement": {
+        "session_issue": 607,
+        "method": "python3 pathlib.Path.read_bytes; len; hashlib.sha256",
+        "source_path": ".session/inputs/601-c1-checker-run-0126.json",
+        "kind": "session input byte measurement, not a source-report assertion"
+      },
+      "destination": "benchmark/writing/reviews-0128/c1-checker-run-0126.json",
+      "equality": true,
+      "destination_equals_source": true,
+      "preservation": "exact original bytes; original basename"
+    }
+  ],
+  "measurement_attribution": "Issue #607 exposed benchmark continuation; measurements performed using allowlisted python3 on staged bytes before preservation. Source-report assertions are recorded separately. Engine verification rehashes repository copies only; it does not rehash the unstaged large comparison or report exports.",
+  "verdicts": {
+    "Standards": "CLEAR",
+    "Spec": "NOT-CLEAR"
+  },
+  "benchmark_ready": false,
+  "open": [
+    "F1 citation interpretation and explicit inability correction/separate pinned recheck",
+    "human C1",
+    "historical F4",
+    "general established-key/full-trial release",
+    "owner acceptance"
+  ],
+  "native_behavior_validity_save_version_preservation": "unestablished; no LabVIEW execution"
+}

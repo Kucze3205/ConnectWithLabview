@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python3",
+    "-I",
+    "benchmark/writing/check_c1_challenges_0125.py"
+  ],
+  "exit": 0,
+  "stdout": "{\"answer_denominators\": {\"correctness\": 3, \"grounding\": 3}, \"atoms\": 265, \"benchmark_ready\": false, \"cases\": 8, \"checker_sha256\": \"8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b\", \"package_errors\": [], \"preserved_review_sha256\": \"23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6\", \"protected_files\": 125, \"rejection_checks\": [{\"name\": \"corrupted-raw-UTF8-bytes\", \"reason\": \"raw-answer-hash\", \"rejected\": true}, {\"name\": \"wrong-source-pin\", \"reason\": \"source-pin\", \"rejected\": true}, {\"name\": \"missing-required-item\", \"reason\": \"required-slot-accounting\", \"rejected\": true}, {\"name\": \"missing-required-inventory-slot\", \"reason\": \"required-slot-inventory\", \"rejected\": true}, {\"name\": \"unreported-missing-slot\", \"reason\": \"required-slot-accounting\", \"rejected\": true}, {\"name\": \"merged-whole-dimensions\", \"reason\": \"separate-dimensions\", \"rejected\": true}, {\"name\": \"copied-correctness-into-grounding\", \"reason\": \"required-dimension-accounting\", \"rejected\": true}, {\"name\": \"unsupported-readiness-promotion\", \"reason\": \"readiness-promotion\", \"rejected\": true}, {\"name\": \"invented-native-execution\", \"reason\": \"execution-overclaim\", \"rejected\": true}, {\"name\": \"dropped-unverified-extra\", \"reason\": \"extra-accounting\", \"rejected\": true}, {\"name\": \"dropped-contradiction\", \"reason\": \"contradiction-accounting\", \"rejected\": true}, {\"name\": \"dropped-duplicate\", \"reason\": \"duplicate-accounting\", \"rejected\": true}], \"resolved_unique_references\": 44, \"scope\": \"repository integrity and authored expectation accounting only; no arbitrary prose scoring or human result\", \"status\": \"ok\"}\n",
+  "stderr": "",
+  "time_utc": "2026-11-14T05:47:05.427421+00:00",
+  "static_review_before_execution": true,
+  "static_scope": "Repository paths only; stdlib imports; no writes, subprocess/native calls, historical-code imports or arbitrary answer input. validate recomputes author-assigned outcomes and structural bookkeeping, never independent semantics.",
+  "environment_note": "LABVIEW_ENVIRONMENT removed; checker receives no session artifacts or inputs",
+  "execution_count": 1
+}

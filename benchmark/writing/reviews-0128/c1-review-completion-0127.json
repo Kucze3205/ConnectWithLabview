@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "issue": 604,
+  "resumes": 601,
+  "scope": "Exposed author-report comparison only; saved #601 judgments retained, no new cold derivation.",
+  "missing_read_obligation": "complete",
+  "completion_status": "partial: staged-input byte hashes remain unverified with available role tools",
+  "report_identities": [
+    {"issue": 597, "path": ".session/exports/reports/597.json", "snapshot": "aeef52f483b51fcee7732e6bfd482199a2ce35bcd4bb67c862e9fb1b10a583bb", "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/597#issuecomment-6872273351", "read_full": true},
+    {"issue": 601, "path": ".session/exports/reports/601.json", "snapshot": "37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a", "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/601#issuecomment-6872748257", "read_full": true}
+  ],
+  "export_identity_check": "Both manifest entries are downloaded; issue/snapshot fields agree with exports and requested identities. These are trusted declared snapshots, not independently recomputed body digests.",
+  "input_pins": [
+    {"path": ".session/inputs/601-c1-artifact-manifest-0126.json", "bytes": 28787, "sha256": "9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7", "inspection": "targeted hash entries"},
+    {"path": ".session/inputs/601-c1-challenges-review-0126.json", "bytes": 956134, "sha256": "cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27", "inspection": "targeted N08/scenario locators only; no full dump"},
+    {"path": ".session/inputs/601-c1-findings-0126.md", "bytes": 7179, "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41", "inspection": "full"},
+    {"path": ".session/inputs/601-c1-pins-0126.json", "bytes": 4511, "sha256": "916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690", "inspection": "full"},
+    {"path": ".session/inputs/601-c1-checker-run-0126.json", "bytes": 2378, "sha256": "04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e", "inspection": "full"}
+  ],
+  "verified_input_hashes": [],
+  "input_integrity_limit": "All five exact staged paths exist. Published pins agree between issue and trusted #601 report; four artifact hashes also agree with saved manifest entries. Actual staged byte sizes/digests were not recomputed: role Read/Grep/Glob expose no digest operation, and the issue explicitly excludes session paths from engine verification. No silent rebaseline or claim of byte verification. The attempted narrow .session/inputs/manifest.json read returned FileNotFoundError; history manifest has records=0, report_snapshots=2; no broad history search followed.",
+  "source_identity": {
+    "baseline": "9faf73509ecc56bf8da81202037f1aa7551dfd09",
+    "admitted_commit": "a80ab6e3454dcb47c15457d7c10126a8b4a6cda3",
+    "admitted_tree": "469bcfdfd331a3a07d549b5d081a342cb98be8bc",
+    "saved_review_head": "f290ec768b5b0b159525afa92da8b968eb3b9bfd",
+    "saved_review_tree": "63be591e0b21ee532b2361c2f3b98400c3c80692",
+    "observed_head": "40e38bd50efc47e905dc700770487e26a23cd82d",
+    "observed_tree": "63be591e0b21ee532b2361c2f3b98400c3c80692",
+    "working_tree_status": "clean",
+    "scoped_byte_check": "Python compared all ten baseline-to-admitted changed files against admitted git blobs: zero mismatches; exit 0. HEAD drift does not change reviewed package bytes.",
+    "verification": {"path": "benchmark/writing/c1-challenges-0125-verification.json", "bytes": 7784, "sha256": "ce8642fc2c2b23e826cb24786fbc06c9a3319c978f30e4fdb1c7389a01540fbc", "assertion": "passed; exit 0"}
+  },
+  "bounded_comparison": [
+    {"topic": "Source and package", "finding": "Agreement: author commit a80ab6e and verification/cases/expectations hashes equal saved pins. Cases=73dfd06532782777d5cc7390fef290c5ef079730ed41ac9bd5786956d2b0a710; expectations=5b3761ae2b8e351038b9b2ace8b5a684940009b55e1fbee9d0907ff642864071. No newly implicated source discrepancy."},
+    {"topic": "Scope", "finding": "Agreement: eight public prose cases, 265 authored atoms, ordered procedure, blank template and author script are preparation only. Saved #601 independently records exactly ten additions and preserved protected bytes; this continuation does not repeat that audit."},
+    {"topic": "Checks", "finding": "Agreement: author and saved actual #601 checker execution each report exit 0, eight cases, 44 reference forms and 12 rejecting controls. Saved checker record says execution_count=1, static review first, empty stderr and integrity/accounting only. Author's separate evaluator check with 80 references is attributed to #597, not reproduced or supplied as semantic proof."},
+    {"topic": "Semantic judgments", "finding": "Author's assertion of separate correctness/grounding assessments does not settle F1 modality or citation interpretation. Saved #601 reports agreement on eight initial whole-answer pairs and 24 required-ID pairs, but retains later N08 branches. Preserve N04 omitted implicit 0x32/0x33 assertions and N03 evidence-label correction as reviewer revisions; do not overwrite initial ledger or attribute those mistakes solely to author."},
+    {"topic": "Exposure", "finding": "Agreement: codex/gpt-6.1-sol author and agent reviewer, public familiar-possible cases, no human or model-unseen claim. Startup claude-sonnet-5-5 label differs; continuity uncertified. This continuation is exposed to expectations and findings, and makes no fresh independence claim."},
+    {"topic": "Limitations and acceptance", "finding": "Agreement: human C1, native behavior/validity/build/dependencies, save-version preservation, trials and owner acceptance remain unresolved. Historical F4 and general established-key/full-trial release remain blocked; benchmark_ready=false. #597 accepted/merged metadata concerns that change and does not resolve later F1 or establish benchmark acceptance. #594's narrow closed review is preserved without replay."},
+    {"topic": "Missing report", "finding": "Saved F2 accurately described #601 staging then. Now both trusted exports are available and read fully, so only the missing-read obligation is discharged; the historical report and findings remain unaltered."}
+  ],
+  "F1": {
+    "status": "open",
+    "pointer": "benchmark/writing/c1-challenges-0125-expectations.json#/cases/7/atoms/11",
+    "raw_pointer": "benchmark/writing/c1-challenges-0125-cases.json#/cases/7/raw_answer",
+    "raw_utf8_span": "[554,635), excluding LF",
+    "raw": "I cannot supply an edited project or an original/output map in this scenario. [V]",
+    "modality": "Author absent row and initial reviewer absence rows omit inability. Zero files/trial outputs supports non-submission, not inability. Scenario explicitly stipulates both; retain separate inability assertions for project and map and separate absence assertions if retained.",
+    "interpretation_A": "Explicit in-this-scenario reference licenses scenario context evidence; inability correctness and grounding are correct.",
+    "interpretation_B": "Frozen bracket registry alone controls submitted support. V does not explicitly include scenario; inability grounding and honest-limits ID grounding become incorrect. N08 whole-answer grounding changes from partial to incorrect; whole-answer correctness remains partial.",
+    "affected_dimensions": "Scenario-based inability correctness stays correct in either reading. Grounding of inability atoms, honest-limits required ID and N08 whole answer depends on unresolved citation rule; do not collapse correctness into grounding.",
+    "new_author_evidence_resolves": false,
+    "next_resolver": "Shaper plus separate human adjudicator/method reviewer; not this continuation.",
+    "correction_and_recheck": [
+      "Before human scoring, freeze in a newly pinned package whether explicit deictic scenario references count as submitted citations; this is a local ambiguity to resolve, not a new general grading rule decided here.",
+      "At the exact F1 atom and revised ledger rows retain explicit inability for both objects, distinguish it from non-submission and preserve original judgments and attribution.",
+      "If B is intended, add a dedicated scenario token or explicitly extend V to /conditions/scenarios/abstention in a newly versioned package. Preserve original raw answers and hashes; record any changed answer separately with its new hash.",
+      "If A is intended, document the explicit scenario-reference rule and independently recheck it against the frozen citation contract.",
+      "A separate pinned method/key recheck must resolve evidence pointers and reassess affected N08 atoms, honest-limits ID and whole-answer grounding under the frozen choice; retain both original branches and disagreements. Publish resulting version, hashes and outcomes before affected expectations become established key material. Human execution remains a separate pending obligation."
+    ]
+  },
+  "verdicts": {"Standards": "CLEAR, preserved #601 judgment for admitted package", "Spec": "NOT-CLEAR, F1 unresolved for human-use release", "overall": "Missing author-report comparison complete; retain release block and resolve staged-input integrity before declaring all #604 acceptance complete."},
+  "exposure": {"candidate": "codex/gpt-6.1-sol", "startup_label": "claude-sonnet-5-5", "continuity": "uncertified", "fresh_cold_review": false, "human_result": false},
+  "benchmark_ready": false,
+  "not_performed": ["repository changes", "cold-ledger regeneration", "checker rerun", "author reproduction", "historical probes", "evaluator execution", "native or trial execution", "#594 replay", "git commit"],
+  "resume": "Use this addendum and saved #601 findings. Parent must provide independently measured byte sizes/SHA256 for only the five staged inputs and the persisted addendum, compare with published pins and investigate any mismatch without rebaselining. No further author-report read or cold review is needed. Then finish #604 integrity accounting; route F1 to shaper and separate human/method reviewer."
+}

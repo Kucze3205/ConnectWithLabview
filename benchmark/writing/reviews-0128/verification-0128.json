@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "issue": 607,
+  "attribution": "Observed parent-executed role-tool results in issue #607; these are integrity/preparation checks, not native or semantic benchmark results.",
+  "checks": [
+    {
+      "argv": ["python3", "-I", "benchmark/writing/reviews-0128/check_integrity_0128.py"],
+      "exit": 0,
+      "output": {"benchmark_ready": false, "copies_rehashed": 5, "fixed_artifact_pins_checked": 6, "large_comparison": "fixed published pin and attributed #607 measurement checked; original release not rehashed", "source_report_snapshot_records_checked": 2, "status": "ok"}
+    },
+    {
+      "argv": ["python3", "policy/evaluator/evaluate.py", "--check"],
+      "exit": 0,
+      "output": {"benchmark_executed": false, "benchmark_ready": false, "errors": [], "evidence_references": 80, "manifest": "indexed", "missing": [], "tool_quality": null}
+    },
+    {
+      "argv": ["git", "status", "--short", "--untracked-files=all"],
+      "exit": 0,
+      "output": "",
+      "scope": "After preservation, integrity verifier and handoff writes; parent had accepted these paths into the repository. Role issued no git commit."
+    },
+    {
+      "argv": ["git", "ls-files", "--stage", "benchmark/writing/reviews-0128"],
+      "exit": 0,
+      "tracked_files": ["c1-artifact-manifest-0126.json", "c1-checker-run-0126.json", "c1-findings-0126.md", "c1-pins-0126.json", "c1-review-completion-0127.json", "check_integrity_0128.py", "handoff-0128.md", "integrity-0128.json"]
+    }
+  ],
+  "limits": "The six input streams and two exported report bodies were measured during this session. Repository verification rehashes only five preserved copies; the large comparison and report snapshots are checked as fixed pins with session measurement attribution. No unstaged artifact is rehashed by engine verification."
+}
