@@ -850,6 +850,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - INCIDENT: .session/orders.json and report.md vanished twice in #402 (provider pause/resume across codex/claude).
   Re-check both files immediately before Finish. Memory ~87 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0072 (#407, wake false)
+- Considered record 0071, reports #404/#405 (.session/history/sessions/40N/*.md). Startup ok, 33,226 tokens.
+- #404 DONE, merged 39b6b6d (codex GPT 886k input, near ceiling, 22 turns, routine accept): benchmark/change-cases/
+  README e3ab5773…, typedef-impact.spec.json 091a4f81…, diagram-difference.spec.json edab2e80…, scripts/change_cases.py
+  cc363fde… (10 mutations; source sha check only with env). #405 DONE, merged e0841e5 (codex GPT 391k, 19 turns):
+  benchmark/precision/README f94ba74b…, plan.json bbf834a8…, scripts/precision_plan.py 81b992e6… (8 mutations; quota
+  owner-decision). Verified on main 83e5047: both checks + evaluator exit 0; preparation.json ccff5e0e… unchanged; not pinned.
+- Orders (parallel, main, reviewer, no exports): review-change-cases-404 (50/35) and review-precision-plan-405 (45/30),
+  each with revert-proof probes incl. one expected-reason comparison.
+- Next: both accept -> one hash-gated pin script (change-cases under tasks, precision under baseline), one run from main
+  (max_turns >= 25), then file #403 corrected draft as `question` with new commit + index hash. Revise -> Policymaker fix
+  script, no blind re-review. Check reviewer `models` (authors GPT). #379 pending; do not wait.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
