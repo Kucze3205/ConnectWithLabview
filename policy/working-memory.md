@@ -1,10 +1,15 @@
 # Policy working memory
 
-Considered: iteration records 0000-0100, owner commit cfaf996, accepted #473's
+Considered: iteration records 0000-0101, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
 writing-method extension, review #485, correction #489, re-review #493, allocator re-review #497,
-accepted writing/version effort study #501 and one-original version measurement #505.
-Updated by Policymaker #507 for iteration 0101. #507 read record 0100, journal memory,
+accepted writing/version effort study #501, one-original version measurement #505 and
+controlled-pair staging #509.
+Updated by Policymaker #511 for iteration 0102. #511 read record 0101, journal memory, actual #508/#509
+reports, the orchestrator skill, owner-instructions.md, protocol.md and selfcheck.json fields; see the
+0102 section. Startup is ok, estimated 20,454 tokens, no notices; suggestions [], open owner requests [].
+The exports manifest was not read in #511; no order consumes exports.
+Earlier header, by Policymaker #507 for iteration 0101: #507 read record 0100, journal memory,
 task-graph contract, history/exports manifests, actual #504/#505 reports and both #505 evidence outputs.
 Startup is ok, estimated 19,368 tokens, no notices; exports results [], suggestions [],
 open owner requests []. No startup-budget repair or demonstrated evaluator defect.
@@ -348,9 +353,62 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured. No fallback,
   owner method acceptance, product authorization or Goal gate follows from this declaration measurement.
 
+## Controlled-pair staging and iteration 0102
+- Record 0101 closed/accepted, improved true, no failure, limit_hits 0. Shaper #508 done/merged in 23 turns,
+  actually claude/claude-fable-5-2; researcher #509 done/accepted/merged in 25 turns, actually codex/gpt-6.1-sol.
+  Routine acceptance outside owner paths is not owner method acceptance. Token/cache counts are not quota use.
+- Actual #509 report:
+  `.session/history/sessions/509/a05e02125e3a7983181c592c061c0b152b893c8d530a8a1852b714e201dd9cd3.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/509#issuecomment-6843520266).
+  Shaper report: `.session/history/sessions/508/1fbc32c5b6202ce6f73d95ef4c3d8cda36864bc8e2af7d5fcfa4b2cc2e896d7d.md`.
+- Published staging commit `53816a08feeb89a2747bf63ce8338ea315e06518`, tree
+  `c280c9109f909d2ef767c8035cc61696af3e9068`, parent `edb0d0a4ada6727f10a7ba3c0601b66e1d06a27d`; adds only five
+  files under `docs/research/poc/pair/`. SHA256: owner-instructions.md
+  `55c1ed5ec72fe37b817afedeecb7abefad5b7577349683d9cbcbc69dcf78242b` (17 lines); pair_diff.py
+  `47d27dee98f1642dc401195482fbf43c536cef8a160aa399444d2e3a2d3578cb` (359 lines); protocol.md
+  `49255283f2814891ad7e0040e1f2ba4f54f6837bb8754769d7627ef84c374409` (55 lines); selfcheck.json
+  `9b76ed047caf417db5f87f7ea66f682354c84b91f231492d6603ef33ff57f79c`; verification.json
+  `718dca8194669d32b645b73b8a0f64e462584613a5e87dc2f4348fb088694384`.
+  #511 matched all five current files to the published git bytes. Starting policy HEAD
+  `d4e47f6c1075243ed9a5cf3025f3bc699d783a7a`, tree `362767c56c0f2d589bed5a138c5b1e3f0405058a`.
+- This stages POC exit 1 (controlled same-version pairs) of `docs/research/poc/delivery.md`. selfcheck.json
+  has status passed, blocker none and three tool controls: identical_pair (add.vi against itself, zero
+  differences over 42 resources per the report), single_decompressed_payload_byte (in-memory, BDHb ID 0,
+  decompressed offset 112) and bounded_ranges_and_length_tails. Recorded pins: add.vi cf4b1f56..., pylavi
+  35d2a031..., three pylavi source hashes, readiness.json ac3135eb.... These are author results. #511 read the
+  record and did not rerun `pair_diff.py --self-check`, review pair_diff.py or re-hash prepared sources.
+- #511 read owner-instructions.md and protocol.md in full. 13 numbered steps; one LabVIEW version; eight VIs
+  (add/subtract and constant-1/constant-2, each normal and separate-compiled-code) plus `authoring.md` in
+  `docs/research/poc/pair/fixtures/`; no password; no save for previous version. Protocol pins hashes once into
+  `fixtures/pins.json` before comparison, then compares four logic pairs and four save-setting pairs.
+  Stated limits: candidate spans/dependencies only; no general integrity rule, other version, valid future
+  edit or behavior. No real pair exists; no VI was written; no session ran LabVIEW.
+- Only the owner can author the pair. Journal #508 directs the 0102 shaper to file `.session/requests.json`
+  with those exact steps and to plan independent ready work beside it. The orchestrator skill (line 85)
+  already assigns fixture requests to the shaper. #511 files no request, to avoid a duplicate owner request.
+  If loop state after 0102 shows no such open or closed request and the shaper gave no reason, the
+  Policymaker files it then, after reading `docs/perpetua/accepted-limits.md` (not read in #511).
+  The request never blocks an iteration; owner silence accepts nothing.
+- Shaper incident in #508: an empty-text Write erased journal/working-memory.md; the shaper rebuilt it from
+  context and recorded the lesson in the journal. #511 compared the journal's carried identifiers with this
+  memory: #493 commit/tree, writing baseline and candidate commits/trees, #497 commit/tree, add.vi, WM1
+  original and pylavi revision all match. Actor-framework revision 371c631c... is not recorded here and was
+  not checked. #508's first Finish was also rejected for a missing report marker, then corrected.
+  Each defect occurred once in ten shaper sessions since #471 and was corrected in-session: no skill change.
+  On a second occurrence, add one line to the orchestrator skill's Done checklist.
+- #511 changes policy memory only and writes empty policy orders. Expected gain: preserve the staged
+  measurement and its pins, and avoid a second tool-building task, a duplicate owner request or a substitute
+  corpus diff. With a shaper, an independent review of pair_diff.py is the shaper's choice (reviewer role),
+  not a policy order. No demonstrated evaluator defect, concrete audit question, startup notice (20,454
+  tokens, ok) or failed session warrants policy tasks. No role, routing, ceiling or cadence change.
+- Native benchmark runs and agent comparisons remain absent. Native keys, withheld writing cases, verified
+  isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured. A passed
+  tool self-check establishes no benchmark readiness, method acceptance, product authorization or Goal gate.
+
 ## Next Policymaker
-1. Read record 0101, journal/working-memory.md and actual task reports. Check progression beyond the completed
-   WM1 declaration audit to one substantive prerequisite or an evidenced blocker; avoid another metadata campaign.
+1. Read record 0102, journal/working-memory.md and actual task reports. Check loop state for the owner request
+   for the controlled pair and for independent ready work beside it; an open request must not hold work.
+   If the pair arrives, check that hashes are pinned once before comparison and limits stay explicit.
 2. Preserve #505's published bytes and the authority gap. Replay only for a concrete reason with verified pins;
    do not treat recorded readiness or internal payload consistency as a fresh prepared-source/native measurement.
 3. Keep #501's full-goal effort totals unknown and require substantive independent review before any fallback
