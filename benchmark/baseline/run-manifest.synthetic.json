@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "provider": {
+      "value": "synthetic:provider",
+      "provenance": "synthetic"
+    },
+    "exact_model_snapshot": {
+      "value": "synthetic:provider/model/snapshot",
+      "provenance": "synthetic"
+    },
+    "snapshot_pinning_limitations_and_run_window": {
+      "value": null,
+      "reason": "Provider pinning limitations and a bounded run window must be established after selection."
+    },
+    "model_image_capabilities": {
+      "value": null,
+      "reason": "Required modalities must be checked against the selected model."
+    },
+    "generation_settings": {
+      "value": null,
+      "reason": "Settings must be selected and frozen using development pilots."
+    },
+    "generation_seeds_and_support": {
+      "value": null,
+      "reason": "Seed support and limitations depend on the selected model interface."
+    },
+    "common_prompt_and_hash": {
+      "value": {
+        "text": "SYNTHETIC common prompt; no model call.",
+        "sha256": "f7c13badd4cf63afb0e5cdcdddc38bb186000e71d34cdf294115645c07bab78d"
+      },
+      "provenance": "synthetic"
+    },
+    "question_input_hashes": {
+      "value": {
+        "synthetic:case-a": "8a9487da4092f7cdfdc3a68b32506360c294ba1aad2d7ab460885b7af9d664e0",
+        "synthetic:case-b": "b9667b1e919a74fe7182bf5eb9c15b98996fd64536d1260321d7f733d7e1fd8b",
+        "synthetic:case-c": "835d5147fd1ffa1b43ad144f66137de00838876949b1a9ea5a6318a74f336797"
+      },
+      "provenance": "synthetic"
+    },
+    "original_artifact_set_and_hashes": {
+      "value": {
+        "synthetic:case-a": "3808cc0d3617a335b0fd54c88e0260668859d3e3a2abf314e09103f80e70ef4a",
+        "synthetic:case-b": "a03f243f874783871d518e114e8a3baa83dc710162ada7303f16a013aec5d880",
+        "synthetic:case-c": "cda90b55514fe6cda8b3691a75c91630da3573897ce73d5207b059a55680fee3"
+      },
+      "provenance": "synthetic"
+    },
+    "permitted_documentation_and_hashes": {
+      "value": null,
+      "reason": "Permitted versioned documentation must be fixed per accepted case."
+    },
+    "native_images_and_unavailable_modalities": {
+      "value": null,
+      "reason": "Native panel and diagram images, hashes and unavailable-image records await native evidence."
+    },
+    "arm_specific_tool_instructions": {
+      "value": {
+        "no-tool": "SYNTHETIC none",
+        "tool": "SYNTHETIC use reader"
+      },
+      "provenance": "synthetic"
+    },
+    "reader_commit": {
+      "value": null,
+      "reason": "No reader revision is selected for a comparison."
+    },
+    "reader_configuration": {
+      "value": null,
+      "reason": "Reader configuration awaits an accepted reader and probe interface."
+    },
+    "tool_schema": {
+      "value": null,
+      "reason": "The complete tool schema and its hash await a fixed reader interface."
+    },
+    "runner_version": {
+      "value": "synthetic:runner-0",
+      "provenance": "synthetic"
+    },
+    "scorer_version": {
+      "value": "synthetic:scorer-0",
+      "provenance": "synthetic"
+    },
+    "split_revision": {
+      "value": "synthetic:split-0",
+      "provenance": "synthetic"
+    },
+    "case_key_revision": {
+      "value": "synthetic:keys-0",
+      "provenance": "synthetic"
+    },
+    "native_evidence_versions": {
+      "value": null,
+      "reason": "Native evidence hashes, save versions, reading builds and environment strata await checked observations."
+    },
+    "matched_total_token_budget": {
+      "value": {
+        "max_total_tokens": 1000
+      },
+      "provenance": "synthetic"
+    },
+    "matched_context_budget": {
+      "value": {
+        "max_context_tokens": 800
+      },
+      "provenance": "synthetic"
+    },
+    "matched_output_budget": {
+      "value": {
+        "max_output_tokens": 500
+      },
+      "provenance": "synthetic"
+    },
+    "matched_wall_time_budget": {
+      "value": {
+        "max_wall_ms": 60000
+      },
+      "provenance": "synthetic"
+    },
+    "tool_call_limits_and_accounting": {
+      "value": {
+        "max_tool_calls": 5
+      },
+      "provenance": "synthetic"
+    },
+    "truncation_and_exhaustion_recording": {
+      "value": null,
+      "reason": "Runner outcome records for truncation and exhausted budgets must be reviewed."
+    },
+    "independent_repetitions_per_case_arm": {
+      "value": 2,
+      "provenance": "synthetic"
+    },
+    "sampling_order": {
+      "value": "case-major, repetition, arm order by sha256(seed:pair_id:arm)",
+      "provenance": "synthetic"
+    },
+    "paired_arm_randomization": {
+      "value": {
+        "arms": [
+          "no-tool",
+          "tool"
+        ],
+        "seed": 20000101
+      },
+      "provenance": "synthetic"
+    },
+    "stopping_rule": {
+      "value": "SYNTHETIC fixed plan, run every planned run",
+      "provenance": "synthetic"
+    },
+    "affordable_run_ceiling": {
+      "value": null,
+      "reason": "Verified existing quota and development pilot resource estimates are unavailable."
+    },
+    "precision_cost_plan_revision": {
+      "value": null,
+      "reason": "Only a design method exists; no executed pilot plan is frozen."
+    },
+    "fresh_session_and_memory_isolation": {
+      "value": null,
+      "reason": "Fresh-session, cache and cross-run memory isolation require executed checks."
+    },
+    "restricted_access_evidence": {
+      "value": null,
+      "reason": "No tested restricted boundary or approved case routing is established."
+    },
+    "data_recipients_retention_and_grant": {
+      "value": null,
+      "reason": "Concrete recipients, retention settings and material-specific permissions remain unspecified."
+    },
+    "raw_run_record_schema_and_storage": {
+      "value": null,
+      "reason": "Restricted preservation of requests, responses, images, tool calls, errors, timestamps, usage and scores awaits the runner and boundary."
+    },
+    "task_reference_inventory_revision": {
+      "value": null,
+      "reason": "Required answer and observation inventories await independently checked native keys."
+    },
+    "claim_mapping_and_adjudication_revision": {
+      "value": null,
+      "reason": "Frozen atomic-claim, extra-claim, duplicate and contradiction handling awaits scorer review."
+    },
+    "dimension_outcome_rules_revision": {
+      "value": null,
+      "reason": "An executable implementation of the protocol rules awaits independent review."
+    },
+    "fixed_denominators": {
+      "value": null,
+      "reason": "Required IDs and planned-case denominators await accepted inventories."
+    },
+    "probe_suite_revision": {
+      "value": null,
+      "reason": "Independently selected required reader probes have not been prepared."
+    },
+    "probe_native_reference_revision": {
+      "value": null,
+      "reason": "Checked native references and probe alignment rules are unavailable."
+    },
+    "separate_probe_session_limits": {
+      "value": null,
+      "reason": "Probe order, adaptive rules, limits and isolation from answer sessions await review."
+    },
+    "probe_raw_alignment_and_outcome_records": {
+      "value": null,
+      "reason": "Raw response preservation, alignment ledgers and incomplete-scope records await the probe runner."
+    },
+    "no_reader_fidelity_not_applicable_record": {
+      "value": null,
+      "reason": "The reporting schema must explicitly encode no-tool fidelity as not applicable without a gain estimate."
+    },
+    "coverage_strata_and_pair_accounting": {
+      "value": null,
+      "reason": "Planned, attempted, executed, scored and complete-pair reporting by family, versions and target/module awaits accepted cases."
+    },
+    "required_item_and_extra_claim_reporting": {
+      "value": null,
+      "reason": "Separate dimension denominators, outcome counts, omissions, extras, duplicates and contradictions await scorer records."
+    },
+    "elapsed_and_tool_time_accounting": {
+      "value": null,
+      "reason": "End-to-end, tool and separate probe timing must be verified in development pilots."
+    },
+    "input_output_token_accounting": {
+      "value": null,
+      "reason": "Provider usage fields and reader context accounting must be verified in development pilots."
+    },
+    "provider_cost_basis": {
+      "value": null,
+      "reason": "No provider is selected; dated price basis and reported-versus-estimated accounting remain unresolved."
+    },
+    "infrastructure_cost_basis": {
+      "value": null,
+      "reason": "Infrastructure resources and any unpriced components have not been identified."
+    },
+    "cache_retry_queue_and_unpriced_accounting": {
+      "value": null,
+      "reason": "Runner accounting must expose caching, retries, queue time and unknown resource prices."
+    },
+    "separate_probe_time_and_cost_accounting": {
+      "value": null,
+      "reason": "Probe resource use must be measured separately from paired answer sessions."
+    },
+    "per_case_tolerances_and_nondeterminism": {
+      "value": null,
+      "reason": "Independent oracle evidence must establish case-specific comparison rules."
+    },
+    "uncertainty_procedure": {
+      "value": null,
+      "reason": "Paired-difference estimation and independent-lineage resampling must be specified before evaluation."
+    },
+    "confidence_level": {
+      "value": null,
+      "reason": "The uncertainty reporting level awaits the development precision plan and review."
+    },
+    "resampling_seed_and_count": {
+      "value": null,
+      "reason": "Resampling settings must be fixed using development pilots before evaluation."
+    },
+    "independent_lineage_units_and_repeat_preservation": {
+      "value": null,
+      "reason": "Accepted lineage groups are unavailable; repetitions must remain nested within their groups."
+    },
+    "missing_pair_treatment": {
+      "value": null,
+      "reason": "Predeclared missing-pair accounting and uncertainty handling await runner/scorer review."
+    },
+    "exclusions_and_aggregation_weights": {
+      "value": null,
+      "reason": "Any exclusions or within-dimension weighting must be reviewed and frozen before results."
+    },
+    "small_sample_and_unavailable_scope_reporting": {
+      "value": null,
+      "reason": "Limitations depend on accepted independent groups, unavailable cases and incomplete probes."
+    },
+    "owner_precision_target_and_acceptance_record": {
+      "value": null,
+      "reason": "No acceptable uncertainty target or quality threshold is accepted; these remain owner decisions."
+    }
+  }
+}
