@@ -1034,6 +1034,20 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Revise -> fix round 2 as Policymaker script; a further blocking finding -> re-scope. #430 pending; do not wait.
   Reader implementation gated. Memory ~108 KB: compress sections 0024-0050 in a quiet session.
 
+## Iterations 0086-0089 FAILED; Iteration 0090 (#464, wake false)
+- Considered records 0086-0089 (failure lines only) and loop state. 0086 stalled (policy rolled back); 0087-0089 failed
+  "ordered no valid tasks" (sessions #455/#458/#461 partial); rollback streak 3, target 392c1f37…. Notices #456/#462 pending.
+- GOAL CHANGED (seen in 0087 input): adds writing (Pisanie) and a POC section. POC comes before further benchmark work;
+  benchmark work not needed for the POC waits. POC = unseen VI: describe diagram + change logic without LabVIEW; result opens
+  without broken arrow, behaves as asked, keeps save version; deliver files, report, short owner instruction; failure ->
+  evidence + exits, no goal change; loop does not wait for the owner. Writing implementation waits for method acceptance
+  covering write tasks; reading implementation may start before writing.
+- Order `poc-vi-diagram-feasibility` (researcher, high, 120/80, main, no exports): docs/research/poc/inspect_vi.py +
+  README.md with `poc-feasibility: yes|partial|no`. Kept the session short: orders first, parse-checked, then report.
+- Next: read the poc-feasibility line. yes/partial -> order the edit step (changed VI copy, save version kept, owner check
+  instruction). no -> owner report with evidence and exits. Pause split/allocator re-review (#446 accept pending) unless POC
+  needs it.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
