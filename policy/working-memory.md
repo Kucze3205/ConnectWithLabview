@@ -987,6 +987,18 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   store (store holds no case; real cases need new/private sources). #430 (method assessment) pending; do not wait.
   Reader implementation gated. Memory ~100 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0082 (#439, wake false)
+- Considered record 0081 (#437 snapshot .github/loop/data/session-reports/437/9a4c2a85….json) and main files.
+- #437 DONE, merged e460835 (codex GPT 147k input, 11 turns, owner-accepted). Verified on main: lineage.py 1db0eb94…,
+  split README 3d52e717…, status 8f64e982…, preparation 99069d8d…; lineage.json 52f3d2ea… and lineage.md f3fc0534…
+  unchanged; evaluator 0, errors [], missing [], 74 refs. Deleted execution/scripts/update_store_text_431.py (scripts empty).
+- Order `split-allocator-synthetic` (benchmark, medium, 60/40, main): new benchmark/split/allocation.synthetic.json +
+  benchmark/scripts/split_allocate.py --check (whole-group allocation, 2 strata, explicit infeasible_strata, >=5
+  reason-compared mutations); no pinned-file edits. Not pinned until independent review.
+- Next: verify --check 0 on main + shas; ONE review from another family than the author (check models block); accept ->
+  hash-gated pin script under split (max_turns >= 25). #430 pending; do not wait. Reader implementation gated.
+  Memory ~104 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
