@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #911, iteration 0213 (trigger: every 3 iterations)
+## Latest: Policymaker #922, iteration 0216 (trigger: every 3 iterations)
+
+- Considers records 0213/0214/0215 and session reports #912, #913, #915, #916, #918, #919, #920 (.session/history/sessions/<issue>/). All three closed; every worker done; 0215 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
+- Scorer-intake thread closed: #913 wrote benchmark/scripts/score_record.py (39b006f0); review #916 NOT-CLEAR (medium: unvalidated records could reach `correct`); fix #919 merged 26b3e18b (sha256 2597f67b…, Stage 3 check); changed-scope review #920 CLEAR. #920 low finding: `validated` is a caller flag, not derived from run_record.validate (CLI never sets it). Fix round 1 of 2 used. Next gap is shaper-owned.
+- #911 git-status rule met: task.md of #913/#916/#919/#920 all say "Do not check changes with `git status`" and give the pathlib `__pycache__` check; no worker report mentions git status or "could not confirm". Keep the rule.
+- Cost (token counters, not quota): workers 0.22M-0.96M cache_read in 12-17 turns; reviewer #920 0.96M in 12 turns (largest, one data point); shaper #918 0.34M. No change.
+- Same-family review (Sonnet reviewing Sonnet, #916/#920) persists; cause unestablished. Stated limitation.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change.
+
+## Previous: Policymaker #911, iteration 0213 (trigger: every 3 iterations)
 
 - Considers records 0210/0211/0212 and session reports #902, #905, #906, #908, #909 (.session/history/sessions/<issue>/). All three closed; every worker done; #902/#905/#909 accepted/improved/merged; no_progress=0; rollback streak still 1 (2026-11-17).
 - Citation shape thread closed: #905 merged 4eef3934, review #906 CLEAR (62/62 input-pins, 80/80 preparation.json, score.py --check 35/35). #909 wrote benchmark/challenges/reader-integration-0212.md: no reader attempt can be recorded now; nine blockers classed; the one ready task is benchmark/scripts/score_record.py (`python3 -B -I benchmark/scripts/score_record.py --check`). Next order is shaper-owned.
