@@ -109,15 +109,31 @@ def rejecting_mutations(specs):
         ("diagram-difference", lambda s: s.pop("uncertain_effect_category"), "uncertain category required"),
         ("typedef-impact", lambda s: s["native_answers"][1].update(reason="pending"), "native answers unavailable #169"),
     ]
-    for case, mutate, reason in tests:
-        changed = copy.deepcopy(specs[case])
-        mutate(changed)
+    def expect_reject(case, changed, reason):
         try:
             validate(changed, case)
         except ValueError as exc:
             assert str(exc) == reason, (reason, str(exc))
         else:
             raise AssertionError(f"mutation accepted: {reason}")
+
+    for case, mutate, reason in tests:
+        changed = copy.deepcopy(specs[case])
+        mutate(changed)
+        expect_reject(case, changed, reason)
+
+    case, mutate, actual_reason = tests[0]
+    changed = copy.deepcopy(specs[case])
+    mutate(changed)
+    wrong_reason = "deliberately wrong expected reason"
+    try:
+        expect_reject(case, changed, wrong_reason)
+    except AssertionError as exc:
+        require(exc.args == ((wrong_reason, actual_reason),),
+                f"reason comparison self-test: wrong mismatch error: {exc}")
+    else:
+        raise ValueError("reason comparison self-test: mismatch accepted")
+    print("PASS: reason comparison self-test rejects a deliberately wrong expected reason")
     print(f"PASS: {len(tests)} in-memory rejecting mutations with asserted reasons")
 
 

@@ -158,12 +158,7 @@ def rejection_controls(plan, template):
         (('manifest_fields', 'independent_repetitions_per_case_arm', 'evaluation'), 8,
          'development pilot only; evaluation count unresolved'),
     ]
-    for path, value, expected in controls:
-        mutated = copy.deepcopy(plan)
-        node = mutated
-        for part in path[:-1]:
-            node = node[part]
-        node[path[-1]] = value
+    def expect_reject(path, mutated, expected):
         try:
             validate(mutated, template)
         except ValueError as error:
@@ -171,6 +166,30 @@ def rejection_controls(plan, template):
                 raise AssertionError(f'{path}: expected {expected!r}, got {str(error)!r}') from error
         else:
             raise AssertionError(f'{path}: mutation accepted')
+
+    for path, value, expected in controls:
+        mutated = copy.deepcopy(plan)
+        node = mutated
+        for part in path[:-1]:
+            node = node[part]
+        node[path[-1]] = value
+        expect_reject(path, mutated, expected)
+
+    path, value, actual_reason = controls[0]
+    mutated = copy.deepcopy(plan)
+    node = mutated
+    for part in path[:-1]:
+        node = node[part]
+    node[path[-1]] = value
+    wrong_reason = 'deliberately wrong expected reason'
+    try:
+        expect_reject(path, mutated, wrong_reason)
+    except AssertionError as error:
+        require(str(error) == f'{path}: expected {wrong_reason!r}, got {actual_reason!r}',
+                f'reason comparison self-test: wrong mismatch error: {error}')
+    else:
+        raise ValueError('reason comparison self-test: mismatch accepted')
+    print('PASS: reason comparison self-test rejects a deliberately wrong expected reason')
     changed_template = copy.deepcopy(template)
     del changed_template['fields']['confidence_level']
     try:
