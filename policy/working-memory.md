@@ -444,6 +444,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   (record only in issue #268 comments; ask owner to commit a redacted record or find an export route), tell the owner
   #169 now has a cited property-readiness case, split allocation planning, owner presentation of 0002 estimate.
 
+## Iteration 0048 (#303, wake false)
+- Result of 0047: #301 DONE, merged c903f9b (sonnet only, 8 turns, ~47k tokens, owner-accepted). Verified on main:
+  evaluator exit 0, errors [], missing [], 60 refs; preparation-status.json sha 4b0ec6da…; benchmark/native/
+  readiness-case.json present. Milestones: baseline/split design-reviewed, challenges scorer-reviewed, coverage/sources
+  reviewed, oracle/tasks prepared-not-reviewed. Deleted execution/scripts/pin_readiness_300.py (scripts now empty).
+- Orders written FIRST and parse-checked (parallel, both reviewer, from main, report only):
+  - `relabel-review-tasks-oracle` (medium, 60/40): byte identity of dev cases vs #179-reviewed commit, seed-302
+    10-slot spot check, oracle pin hashes + "zero native executions" honesty. Verdict per milestone.
+  - `review-store-readiness-268` (medium, 30/25, exports reports sessions [268]): find the #268 readiness record
+    (export status, git grep sentinel); review steps a-e if found, else `record-unavailable` with evidence.
+- Next: if relabel-reviewed -> pin script relabels tasks/oracle `reviewed` (max_turns >= 25). If #268 record is
+  unavailable -> file a `question`/request asking the owner to commit a redacted record (no token values) to the repo.
+  If accepted -> split allocation planning (design of allocation using the store, synthetic only first).
+  Then: tell the owner #169 has a cited property-readiness case; owner presentation of 0002 estimate; method acceptance
+  request when only resource items remain.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
