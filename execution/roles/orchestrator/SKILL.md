@@ -144,6 +144,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
 - **Resume saved work, do not redo it.** A `blocked` or `partial` task keeps its unmerged work at the tag `iter/NNNN/N`.
   Order a task with `start_branch: task/N` that corrects only the failing check or the missing piece, and name what is
   already done so the session does not repeat it (#518: both files were written; only the check was wrong).
+- **`input_budget` means the session wrote too much, not that the task is wrong.** The engine stops a session at about
+  800k unique input; Claude `cache_write` is the measure (#689: 803,586; #692: 815,101; both partial). Before you resume,
+  inspect the saved branch yourself with `git show <commit>:<path>` (size, headings, JSON parse). If the outputs look
+  complete, order a finishing task only: `start_branch`, at most 20 turns, no rewrite of a saved file, targeted `Edit`
+  fixes only, then the checks and the report. Otherwise split by file. Never resume the same full task a third time.
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
 - **Results.** Text and code go to git. Big and binary outputs go to `.session/artifacts/` and a later task lists them
