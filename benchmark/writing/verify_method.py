@@ -7,11 +7,14 @@ Every file read is checked against benchmark/writing/current-pins.json, the one 
 pin file; historical records (provenance, proposal, review) are compared only with each other.
 These checks deliberately do not implement an artifact reader, writer or evaluator.
 """
+import contextlib
 import copy
 import hashlib
+import io
 import json
 from pathlib import Path
 import sys
+import types
 import xml.etree.ElementTree as ET
 
 HERE = Path(__file__).resolve().parent
@@ -711,6 +714,211 @@ def check_project_controls(controls, method):
             'meaning': 'public-development text preparation only; C1 semantic/extra/contradiction/citation review remains required'}
 
 
+# R4a/R5a/R6b design records (issue #958, review #954 finding 1). Each check reads the
+# named method.json key and recomputes from the files themselves; none adds coverage.
+LINEAGE_PATH = 'benchmark/lineage.json'
+METHOD_PATH = 'benchmark/writing/method.json'
+ADDENDUM_PATH = 'benchmark/writing/baseline-addendum.json'
+ADDENDUM_BUILDER = 'benchmark/writing/build_addendum.py'
+MATRIX_KINDS = {'task', 'uncovered-family', 'version', 'limitation'}
+
+
+def check_lineage_map(method, lineage, lineage_sha256):
+    # method.json key lineage_map (review #938 row R4a) against benchmark/lineage.json.
+    lmap = method['lineage_map']
+    need(lmap['source'] == LINEAGE_PATH and lmap['source_sha256'] == lineage_sha256,
+         'lineage-map-source-hash')
+    need(lmap['source_status'] == lineage['status'], 'lineage-map-source-status')
+    need(lmap['partition'] == 'development' and lmap['restricted_claim'] is False,
+         'lineage-map-claim')
+    group = lineage['lineage_groups'].get(lmap['group_id'])
+    need(group is not None and lmap['group_status'] == group['status'], 'lineage-map-group')
+    members = set(group['members'])
+    artifacts = {a['id']: a for a in lineage['artifacts']}
+    candidates = {c['id']: c for c in lineage['candidate_variants']}
+    exact = {g['sha256']: g['members'] for g in lineage['exact_copy_groups']}
+    cases = {c['artifact_id']: c for c in lineage['development_case_map']}
+
+    def check_artifact(row, sha256):
+        artifact = artifacts.get(row['artifact_id'])
+        need(artifact is not None and artifact['sha256'] == sha256, 'lineage-map-artifact')
+        need(artifact['path'] == row['artifact_path'], 'lineage-map-path')
+        need(row['lineage_group_id'] == lmap['group_id'] and row['artifact_id'] in members,
+             'lineage-map-group')
+
+    def check_candidates(rows, artifact_id, complete):
+        for row in rows:
+            real = candidates.get(row['id'])
+            need(real is not None and artifact_id in real['members']
+                 and row['members'] == real['members'] and row['rule'] == real['rule']
+                 and row['status'] == real['status'] == 'candidate-unadjudicated',
+                 'lineage-map-candidate')
+        if complete:
+            need({row['id'] for row in rows} ==
+                 {name for name, real in candidates.items() if artifact_id in real['members']},
+                 'lineage-map-candidate')
+
+    tasks = method['tasks']
+    need([e['task'] for e in lmap['entries']] == [t['id'] for t in tasks], 'lineage-map-tasks')
+    for entry, task in zip(lmap['entries'], tasks):
+        if entry.get('lineage_status') == 'gap':
+            # A task without an original is a gap: no group, artifact or credit.
+            need(not task['originals'] and entry['original_sha256'] is None
+                 and set(entry) == {'task', 'original_sha256', 'lineage_status',
+                                    'blocking_row', 'reason'}
+                 and entry['blocking_row'] and entry['reason'], 'lineage-map-gap-credited')
+            continue
+        need(len(task['originals']) == 1 and entry['original_sha256'] == task['originals'][0]['sha256'],
+             'lineage-map-original-hash')
+        check_artifact(entry, entry['original_sha256'])
+        need(entry['partition'] == lmap['partition'], 'lineage-map-claim')
+        need(entry['exact_copy_group_members'] == exact.get(entry['original_sha256']),
+             'lineage-map-exact-copy')
+        check_candidates(entry['candidate_variants'], entry['artifact_id'], True)
+        real_case = cases.get(entry['artifact_id'])
+        case = entry['development_case_map_entry']
+        need(case is False if real_case is None else
+             (case is not False and case['path'] == real_case['path']
+              and case['sha256'] == real_case['sha256']), 'lineage-map-case-map')
+        consumers = entry.get('consumer_artifacts', [])
+        need({c['sha256'] for c in consumers} ==
+             {p['sha256'] for p in task.get('consumer_source_pins', [])}, 'lineage-map-consumers')
+        for consumer in consumers:
+            check_artifact(consumer, consumer['sha256'])
+            listed = consumer.get('candidate_variants', [])
+            check_candidates(listed, consumer['artifact_id'], False)
+            for member in consumer.get('variant_member_artifacts', []):
+                check_artifact(member, member['sha256'])
+                need(any(member['artifact_id'] in row['members'] for row in listed),
+                     'lineage-map-candidate')
+    need(lmap['gaps'] and all(g['gap'] and g['blocking_row'] for g in lmap['gaps']),
+         'lineage-map-gaps')
+    return 'lineage-map-consistent'
+
+
+def check_matrix(method):
+    # method.json key coverage.matrix (review #938 row R5a, finding UF-D), recounted from its rows.
+    matrix = method['coverage']['matrix']
+    rows, tasks = matrix['rows'], method['tasks']
+    need(rows and len({r['id'] for r in rows}) == len(rows)
+         and all(set(r) == set(rows[0]) for r in rows) and {r['kind'] for r in rows} <= MATRIX_KINDS,
+         'matrix-rows')
+    by_kind = {kind: [r for r in rows if r['kind'] == kind] for kind in MATRIX_KINDS}
+    product = matrix['counts']['task_product']
+    factors = [product[k] for k in ('tasks', 'families_per_task', 'original_save_versions_per_task',
+                                    'validation_versions', 'targets_per_task')]
+    need(product['tasks'] == len(tasks) and product['product'] == len(by_kind['task'])
+         and product['product'] == factors[0] * factors[1] * factors[2] * factors[3] * factors[4]
+         and [r['task'] for r in by_kind['task']] == [t['id'] for t in tasks], 'matrix-task-rows')
+    need([r['subject'] for r in by_kind['uncovered-family']] ==
+         method['coverage']['uncovered_families'], 'matrix-family-rows')
+    need([r['subject'] for r in by_kind['limitation']] ==
+         method['common']['limitation_codes'], 'matrix-limitation-rows')
+    expected_covered = {t['id']: t['operation'] == 'create' or bool(t['originals']) for t in tasks}
+    for row in rows:
+        need(row['native'] == 'gap', 'matrix-native-credited')
+        need(row['executed'] is False, 'matrix-executed')
+        need(row['coverage'] == ('covered' if row['kind'] == 'task' and expected_covered[row['task']]
+                                 else 'gap'), 'matrix-gap-credited')
+    need(same(matrix['counts'], {
+        'rows': len(rows), 'task_rows': len(by_kind['task']), 'task_product': product,
+        'uncovered_family_rows': len(by_kind['uncovered-family']),
+        'version_rows': len(by_kind['version']), 'limitation_rows': len(by_kind['limitation']),
+        'covered_design_only': sum(r['coverage'] == 'covered' for r in rows),
+        'gap': sum(r['coverage'] == 'gap' for r in rows),
+        'native_covered': sum(r['native'] != 'gap' for r in rows),
+        'executed': sum(r['executed'] is not False for r in rows)}), 'matrix-counts')
+    return 'matrix-consistent'
+
+
+def check_addendum(overrides):
+    # Reuses build_addendum.py --check (pinned in current-pins.json); no second builder.
+    # The pinned source runs with its file reads routed through read_repository (or the
+    # in-memory overrides of a control) and without LABVIEW_ENVIRONMENT.
+    module = types.ModuleType('build_addendum')
+    module.__file__ = str(ROOT / ADDENDUM_BUILDER)
+    exec(compile(read_repository(ADDENDUM_BUILDER), ADDENDUM_BUILDER, 'exec'), module.__dict__)
+    module.os = types.SimpleNamespace(environ={})
+    module.read = lambda path: overrides[path] if path in overrides else read_repository(path)
+    try:
+        with contextlib.redirect_stdout(io.StringIO()) as printed:
+            module.check()
+    except SystemExit as error:
+        raise Inconsistent('addendum:' + str(error).removeprefix('baseline addendum: '))
+    need(json.loads(printed.getvalue())['status'] == 'addendum-consistent', 'addendum-status')
+    return 'addendum-consistent'
+
+
+def check_coverage_controls(method, lineage, lineage_sha256):
+    positive = {'lineage-map': check_lineage_map(method, lineage, lineage_sha256),
+                'coverage-matrix': check_matrix(method),
+                'baseline-addendum': check_addendum({})}
+    entry = {e['task']: ['lineage_map', 'entries', i] for i, e in enumerate(method['lineage_map']['entries'])}
+    row = {r['id']: ['coverage', 'matrix', 'rows', i] for i, r in enumerate(method['coverage']['matrix']['rows'])}
+    wm1, wc1 = entry['WM1-diagram-not'], entry['WC1-create-vi']
+    wp1 = method['tasks'][4]['originals'][0]['snapshot']
+
+    def lineage_case(changes):
+        return lambda: check_lineage_map(mutate(method, changes), lineage, lineage_sha256)
+
+    def matrix_case(changes):
+        return lambda: check_matrix(mutate(method, changes))
+
+    def addendum_hash_drift():
+        document = json.loads(read_repository(ADDENDUM_PATH))
+        document['tasks'][0]['request']['sha256'] = '0' * 64
+        return check_addendum({ADDENDUM_PATH: (json.dumps(document, indent=2, ensure_ascii=False)
+                                                + '\n').encode()})
+
+    cases = [
+        ('lineage-map-source-hash-drift', 'lineage-map-source-hash',
+         lineage_case([{'path': ['lineage_map', 'source_sha256'], 'value': '0' * 64}])),
+        ('lineage-map-restricted-claim', 'lineage-map-claim',
+         lineage_case([{'path': ['lineage_map', 'restricted_claim'], 'value': True}])),
+        ('lineage-map-original-hash-drift', 'lineage-map-original-hash',
+         lineage_case([{'path': wm1 + ['original_sha256'], 'value': '0' * 64}])),
+        ('lineage-map-wrong-artifact-id', 'lineage-map-artifact',
+         lineage_case([{'path': wm1 + ['artifact_id'], 'value': 'artifact-0086'}])),
+        ('lineage-map-wrong-path', 'lineage-map-path',
+         lineage_case([{'path': wm1 + ['artifact_path'], 'value': 'Core/Other.vi'}])),
+        ('lineage-map-gap-credited', 'lineage-map-gap-credited',
+         lineage_case([{'path': wc1 + ['artifact_id'], 'value': 'artifact-0087'}])),
+        ('lineage-map-candidate-dropped', 'lineage-map-candidate',
+         lineage_case([{'path': wm1 + ['candidate_variants'], 'value': []}])),
+        ('matrix-task-row-missing', 'matrix-task-rows',
+         matrix_case([{'path': row['task-WC1-create-vi'], 'delete': True}])),
+        ('matrix-family-row-dropped', 'matrix-family-rows',
+         matrix_case([{'path': row['family-01'], 'delete': True}])),
+        ('matrix-limitation-row-dropped', 'matrix-limitation-rows',
+         matrix_case([{'path': row['limitation-missing-runtime'], 'delete': True}])),
+        ('matrix-gap-row-credited', 'matrix-gap-credited',
+         matrix_case([{'path': row['family-01'] + ['coverage'], 'value': 'covered'}])),
+        ('matrix-gap-task-credited', 'matrix-gap-credited',
+         matrix_case([{'path': row['task-WB1-source-rebuild'] + ['coverage'], 'value': 'covered'}])),
+        ('matrix-count-drift', 'matrix-counts',
+         matrix_case([{'path': ['coverage', 'matrix', 'counts', 'rows'], 'value': 39}])),
+        ('matrix-executed-row', 'matrix-executed',
+         matrix_case([{'path': row['family-01'] + ['executed'], 'value': True}])),
+        ('addendum-request-hash-drift', 'addendum:addendum-differs-from-recomputed-build',
+         addendum_hash_drift),
+        ('addendum-method-drift', 'addendum:addendum-differs-from-recomputed-build',
+         lambda: check_addendum({METHOD_PATH: json.dumps(mutate(method, [
+             {'path': ['tasks', 1, 'request'], 'value': method['tasks'][1]['request'] + ' '}])).encode()})),
+        ('addendum-original-drift', 'addendum:snapshot-hash:' + wp1,
+         lambda: check_addendum({wp1: read_repository(wp1) + b'\n'})),
+    ]
+    rejected = {}
+    for name, reason, run in cases:
+        try:
+            run()
+        except Inconsistent as error:
+            need(str(error) == reason, 'wrong-rejection-reason:' + name + ':' + str(error))
+            rejected[name] = str(error)
+        else:
+            raise Inconsistent('negative-control-accepted:' + name)
+    return {'positive': positive, 'rejected': rejected}
+
+
 def main():
     need(len(sys.argv) == 1, "no-external-inputs-supported")
     integration = check_integration_inputs()
@@ -775,6 +983,11 @@ def main():
     rejections.update(ledger["rejected"])
     project_text = check_project_controls(controls, method)
     pin_controls = check_pin_controls()
+    lineage_bytes = read_repository(LINEAGE_PATH)
+    coverage = check_coverage_controls(method, json.loads(lineage_bytes), digest(lineage_bytes))
+    need(not set(coverage["rejected"]) & set(rejections), "coverage-control-name-clash")
+    rejections.update(coverage["rejected"])
+    positives.update(coverage["positive"])
     print(json.dumps({
         "status": "design-consistent", "positive_controls": positives,
         "current_pin_controls": pin_controls,
