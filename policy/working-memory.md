@@ -1,8 +1,8 @@
 # Policy working memory
 
-Considered: iteration records 0000–0024; reviews #146/#147; #150/#151; #157/#161;
-re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212; acceptances #176/#190/#211.
-Updated by Policymaker #214, iteration 0025.
+Considered: iteration records 0000–0025; reviews #146/#147; #150/#151; #157/#161;
+re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212/#215/#216;
+acceptances #176/#190/#211/#217. Updated by Policymaker #219, iteration 0026.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
 selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
 
@@ -73,6 +73,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: after both merge, order ONE reviewer task (from main) covering the README fix and the baseline design;
   try to get a non-GPT reviewer (codex took #212). Then pin baseline (baseline milestone) only after accept.
   Then scorer via evaluator role + evaluator-verifier (policy orders). Owner method acceptance still not requested.
+
+## Iteration 0026 (#219, wake false)
+- Results of 0025: #216 baseline design DONE, merged (owner #217): benchmark/baseline/README.md,
+  run-manifest.template.json (62 null fields with reasons), scripts/baseline.py --check exit 0 on main.
+  Author codex gpt-6.1-sol (423k input). Not pinned in preparation.json; evaluator still missing [baseline].
+  #215 gap row done (diff verified: README + challenges.py one row each, preparation.json re-pinned) but
+  `partial` on session_budget (14 turns, low effort) -> not merged; saved as tag iter/0025/215 (756f8a1).
+  Main README lacks the row (checked).
+- Orders (parallel, both no dependency):
+  - `finish-gap-disclosure-215` (benchmark, low, 15/8, start task/215): Verification only, report done.
+    Check: main README contains `Diagram difference`.
+  - `review-baseline-design` (reviewer, model alias `opus` for family diversity vs codex author, medium, 60/40,
+    from main): spec check of template vs protocol ## baseline, README claims/blockers, baseline.py mutation
+    checks, read-only git show of the 215 gap row. Check: verdict + numbered findings in its report.
+- Next: verify the reviewer's actual `models` block (opus requested). If accept: order benchmark task to pin
+  baseline design in preparation.json (baseline milestone -> prepared-not-reviewed/reviewed per evaluator),
+  then scorer design (evaluator role + evaluator-verifier). If revise: order fixes from main.
+  If #215 finish fails again, apply the one-row edit fresh from main instead of resuming the tag.
+- Lesson: low-effort 15-turn tasks can still hit session_budget; prefer max_turns >= 15 for regenerate+re-pin.
 
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
