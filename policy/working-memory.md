@@ -460,6 +460,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Then: tell the owner #169 has a cited property-readiness case; owner presentation of 0002 estimate; method acceptance
   request when only resource items remain.
 
+## Iteration 0049 (#307, wake false)
+- Considered record 0048 and reports #304/#305. Startup diagnostic: ok, estimated 23,392 tokens; no budget notice.
+- #304 DONE (codex 632k input): tasks `relabel-reviewed`; all 11 case files identical to #179-reviewed eac73eb;
+  seed-302 sample 10/10 XML slots matched originals. Oracle `relabel-reviewed` only for XML keys and native design;
+  18 oracle pins match. Preserve 23 unresolved native slots, zero native executions, public visibility and model-family uncertainty.
+  Evidence: .github/loop/data/session-reports/304/089b02b9e0170b4b737d43576fffb79f93605897ae0b308116a281d2888ab330.json.
+- #305 DONE (codex 267k input): `record-unavailable`; session 268 reports export unavailable, detail
+  `no matching supported session data`; repository/history searches found no executed readiness record.
+  Evidence: .github/loop/data/session-reports/305/4ff1bcef83153d7bdb139f4873401208fb4d10478ed40774b8ea38b431008ac4.json.
+  Do not repeat these searches unless inputs change. Capability-ready does not replace the required independent record review.
+- Orders saved and JSON-checked: `relabel-tasks-oracle-304` (benchmark, medium, 40 min/35 turns, main, <=10 calls).
+  Changes only preparation-status.json and preparation.json: tasks/oracle reviewed within #304 scope, stale pending-review
+  text corrected, status references re-pinned. Expected check: evaluator errors [], missing [], 60 refs, ready/executed false.
+- Owner question saved: commit redacted executed #268 record and SHA256 at benchmark/split/store-readiness-268.redacted.json
+  and .sha256. No credentials, sentinel markers, private addresses or withheld material. Existing capability scope unchanged.
+- Next: verify the label update and preserved limits. If the owner supplies the record, order independent review before store use.
+  Other ready work: baseline runner/manifest validation contract from gap map #282; no baseline execution without prerequisites.
+  #169 still lacks native readiness; method acceptance and product implementation remain gated. Quality remains unmeasured.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
