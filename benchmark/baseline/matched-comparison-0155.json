@@ -1,0 +1,102 @@
+{
+ "schema_version": 1,
+ "contract_id": "matched-comparison-0155",
+ "status": "design_only_synthetic",
+ "scope": "Design contract for the matched comparison of the same tasks without and with the tool. No model, reader, evaluator or native run; no admissions; no scored results; no quality threshold. LabVIEW cannot be run in any session.",
+ "benchmark_ready": false,
+ "pins": {
+  "attempt_ledger_0150_md_sha256": "8b2b30e63fd095dcdbc1aeb52ad14886d99035107a84fcd5183fb43119a35436",
+  "attempt_ledger_0150_json_sha256": "74c9a47ab4966f79aec887f7bd72b1dd418cd8f0d9e9af13e6240baaf9690e6f",
+  "ledger_review": "#703 CLEAR at HEAD 48f2715e05b9c212eaeb62b64e41b3846d846d90 (found in .session/exports/manifest.json)",
+  "attempt_policy_0148": "CLEAR by #685",
+  "reused_not_edited": ["benchmark/baseline/attempt-policy-0148.md", "benchmark/baseline/attempt-policy-0148.json", "benchmark/baseline/attempt-ledger-0150.md", "benchmark/baseline/attempt-ledger-0150.json", "benchmark/baseline/runner-contract.md", "benchmark/project-run-binding-0138.json"],
+  "note_0138": "The 0138 file was named by the 0148 policy text and was not opened in this session; the per-arm repetition maps are reused by reference only (see open item O06)."
+ },
+ "arms": {
+  "arm_ids": ["without-tool", "with-tool", "with-images"],
+  "runner_names": {"without-tool": "no-tool", "with-tool": "tool", "with-images": "no runner arm yet"},
+  "required": ["without-tool", "with-tool"],
+  "optional": ["with-images"],
+  "with_images_rule": "Present only if native images exist for the case and the pinned model supports image input; otherwise the arm is recorded as unavailable for that case, never silently dropped or text-substituted.",
+  "order_rule": "Per (case, repetition) pair, arm order is ascending sha256(seed:pair_id:arm) with the seed from paired_arm_randomization, exactly as in runner-contract.md. Ties are rejected before dispatch. with-images, if enabled, joins the same hash ordering; that extension is not yet in the runner (O05).",
+  "differs_between_arms_only": ["reader access (tool availability or images)", "the minimal arm instruction naming that access"]
+ },
+ "matched_fields": {
+  "must_be_identical_across_arms": [
+   "provider",
+   "model_id and snapshot",
+   "effort and generation settings (temperature, max output, seeds where supported)",
+   "prompt_template_hash",
+   "tool_free_context (question, original artifacts supplied as text, documentation, presentation order)",
+   "token_budget (total, output, context)",
+   "time_budget (wall time)",
+   "call_budget (tool calls: same ceiling value; the without-tool arm has zero available calls)",
+   "environment pins (reader commit/config, tool schema, runner, scorer, split, key revisions, claim mapping)"
+  ],
+  "tool_free_context_note": "Text artifacts go directly to every arm. Tool output is not part of tool-free context and is recorded separately per attempt.",
+  "freeze": "All matched values are frozen in the manifest and plan hash before the first dispatch. Any later change is settings drift and uses ledger terminal stopped_settings_drift."
+ },
+ "repetitions": {
+  "source": "0138 explicit comparison and per-arm repetition maps, as consumed by attempt-policy-0148",
+  "rules": ["Each slot is the existing full tuple record_id, case_id, pair_id, repetition_id, arm joined by slot_ref.", "Explicit maps are authoritative even when arms use different repetition labels.", "No new repetition ids are minted by this contract.", "Pilot design allocation is four paired development repetitions per case (0148); evaluation count is null and remains an owner decision (O04)."],
+  "one_eligible_attempt_per_slot": true
+ },
+ "stopping": {
+  "ledger_phases": ["pre", "open", "stopped", "blocked", "terminal"],
+  "mapping": [
+   {"condition": "budget exhaustion before dispatch (reservation does not fit remaining ceiling)", "event": "stop_recorded cause budget", "phase_after": "stopped", "terminal": "stopped_budget", "slot_answer_class": "none (unstarted with cause)"},
+   {"condition": "budget exhausted inside an attempt", "event": "delivery_interpreted then usage_reconciled exhausted true then stop_recorded budget", "phase_after": "stopped", "terminal": "stopped_budget", "slot_answer_class": "exhausted or truncated", "slot_classification": "attempted_ineligible"},
+   {"condition": "external interruption", "event": "delivery_interpreted", "phase_after": "open then stopped if evidence is hard failure", "terminal": "finished_incomplete or stopped_hard_failure", "slot_answer_class": "interrupted", "slot_classification": "attempted_ineligible or unresolved"},
+   {"condition": "unsupported case or arm (for example no native images, tool cannot read the artifact family)", "event": "delivery_interpreted", "phase_after": "open", "terminal": "finished_incomplete", "slot_answer_class": "unsupported", "slot_classification": "attempted_ineligible"},
+   {"condition": "settings drift", "event": "stop_recorded cause settings_drift", "phase_after": "stopped", "terminal": "stopped_settings_drift"},
+   {"condition": "preflight blocked", "event": "preflight_result blocked", "phase_after": "blocked", "terminal": "blocked_preflight"}
+  ],
+  "answer_class_values_reused": ["ok", "interrupted", "unsupported", "absent", "empty", "invalid_utf8", "malformed", "legacy_invalid", "truncated", "exhausted", "error", "failed_tool_call"],
+  "no_retry_no_replacement": true,
+  "first_detected_stop_prevents_all_later_dispatch": true,
+  "complete_comparison": "A case is comparable only when every mapped slot of every required arm closed attempted_eligible with answer_class ok. Otherwise the pair is reported incomplete and stays visible."
+ },
+ "cost_and_time": {
+  "source": "ledger event usage_reconciled",
+  "fields": ["usage_known", "actual {tokens_in, tokens_out, time_s, calls}", "reserved_ref", "delta", "overrun", "remaining_after", "exhausted", "cost"],
+  "rules": ["One charge per distinct attempt_id; redelivery never charges again.", "cost is null unless a verified price exists; tokens, time and calls are the primary comparison quantities.", "Cost and time are reported per arm and per pair beside, never inside, the quality results.", "Overrun of a matched budget is reported and makes the slot ineligible unless the policy already allows it."]
+ },
+ "uncertainty_and_nondeterminism": {
+  "fixed_before_comparison": ["model snapshot, prompt template, settings and seeds where supported", "budgets", "case, repetition and arm order", "scorer and key revisions", "the uncertainty procedure itself", "repetition count for the stated stage"],
+  "not_fixed_reported_as_interval": ["model output variation across repetitions", "paired difference between arms for correctness and for grounding, separately", "difference of cost and time per arm"],
+  "procedure_reused_from_0148": "95% paired cluster percentile bootstrap, 10,000 resamples, seed 40502, resampling whole lineage/case/repetition/arm blocks. Fewer than two complete independent lineages gives no inferential interval.",
+  "nondeterminism_note": "Provider nondeterminism may remain even with fixed seeds and temperature; this is recorded as a limitation, not removed by selection.",
+  "quality_threshold": null,
+  "threshold_owner": "owner decision; this contract sets none"
+ },
+ "validation_rules": {
+  "M01": "Arm identity: each run belongs to exactly one declared arm (without-tool, with-tool, optional with-images) bound to the runner sha256 arm order; unknown arms or ordering ties reject the plan.",
+  "M02": "Any mismatch of a matched field between arms rejects the comparison for the affected cases; no partial credit and no after-the-fact normalisation.",
+  "M03": "Only reader access and its minimal arm instruction may differ between arms; any other difference is an M02 mismatch.",
+  "M04": "Repetitions reuse the 0138 per-arm repetition maps; new, missing or duplicated repetition ids reject the plan.",
+  "M05": "Exactly one attempt per slot counts; selection among multiple attempts after the fact (best, last, first successful, majority) is rejected and extra attempts make the slot unresolved.",
+  "M06": "Stopping uses only the ledger phases and terminals above; the first detected stop prevents all later dispatch and nothing resumes.",
+  "M07": "Budget exhaustion maps to stop_recorded budget and terminal stopped_budget; an exhausted or truncated attempt is ineligible.",
+  "M08": "Interruption is recorded as answer_class interrupted and stays ineligible; it is never replaced by a rerun.",
+  "M09": "Unsupported cases or arms are recorded as answer_class unsupported and stay visible in the inventory; they are neither dropped nor scored as wrong.",
+  "M10": "An incomplete pair (a missing or ineligible slot in any required arm) prevents a completed comparison for that case.",
+  "M11": "Cost and time come only from usage_reconciled; cost is null without a verified price; budget overrun is reported.",
+  "M12": "The uncertainty procedure and what is fixed versus reported as an interval are frozen before any comparison; changing them afterwards rejects the report.",
+  "M13": "No quality threshold, pass mark or ready verdict appears in this contract or in any record built on it; thresholds are an owner decision.",
+  "M14": "All content is synthetic design; any claim of an executed run, real model call, native LabVIEW evidence or measured tool quality rejects the file.",
+  "M15": "Open items O01 to O06 stay listed until an owner or independent reviewer resolves them; silent resolution rejects the file.",
+  "M16": "Matched values and environment pins are frozen in the manifest and plan hash before the first dispatch; drift maps to stopped_settings_drift."
+ },
+ "open_items": [
+  {"id": "O01", "item": "Real-envelope authority: who may admit real provider, model and budget values into the manifest; this contract admits none."},
+  {"id": "O02", "item": "F-A1 from attempt-ledger-0150 stays open (owner decision on the ledger author finding)."},
+  {"id": "O03", "item": "F-A2 from attempt-ledger-0150 stays open (owner decision on the ledger author finding)."},
+  {"id": "O04", "item": "Evaluation repetition count, affordable run ceiling and precision targets are null and owner decisions."},
+  {"id": "O05", "item": "Provider-independence limits: matched model and settings do not make arms equal if the provider changes behaviour, silently updates snapshots or does not support seeds; the with-images arm is not yet in the runner and image support differs by provider."},
+  {"id": "O06", "item": "The 0138 repetition maps were reused by reference through the 0148 policy and were not reopened in this session; the reviewer should check them directly."}
+ ],
+ "handoff": {
+  "next": "Independent review returning CLEAR or NOT-CLEAR on M01 to M16 and O01 to O06; the next shaper reads the rules and the open items.",
+  "not_claimed": ["any run", "benchmark readiness", "tool quality"]
+ }
+}
