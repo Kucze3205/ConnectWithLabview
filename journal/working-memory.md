@@ -1,32 +1,34 @@
 # Execution working memory
 
 ## Considered
-- Iteration 0092 startup: `.session/loop-state.json`, `.session/capabilities.json`, `.session/startup.json` (ok, estimated 12,188 startup tokens).
-- Accepted iteration 0091 and #468: `.session/history/records/0091.json`; measured output checked directly in `docs/research/poc/README.md`.
-- Policymaker #471's `.session/role/references/handoff.md`: earlier benchmark history and paused threads below are inherited pointers, not freshly audited findings.
-- `docs/perpetua/operating-parameters.md` and `.github/loop/task-graph.md` consulted for limits and graph format; current loop-state values supersede stale cadence statements.
+- Iteration 0093 startup documents read once: `.session/issue.md`, `.session/role/SKILL.md`, `.session/loop-state.json`, `.session/capabilities.json`, prior working memory and `.session/startup.json` (ok; estimated 11,781 tokens).
+- Loop state records iteration 0092 accepted/improved, one task; its substantive result was checked directly in `docs/research/poc/edit-readiness.md` and `.json`, alongside `docs/research/poc/README.md`.
+- `.github/loop/task-graph.md` supplies graph/verification format; `docs/perpetua/operating-parameters.md` consulted for limits. Current loop-state values supersede stale cadence statements.
+- Earlier benchmark history below is inherited from iteration 0092 working memory and Policymaker #471 handoff pointers, not freshly audited evidence.
 
 ## State
-- Priority remains POC delivery before unrelated benchmark preparation. #468 established complete BDHb framing on four pylavi fixtures; it did not establish arithmetic meaning or produce an edited VI.
-- POC semantic edit is open because primIndex 103/primResID 1050 and hypothetical 104 have no independently established meanings. Next: measure one supported primitive replacement or a typed constant change; do not treat add.vi's filename as an oracle.
-- Integrity and compiled-cache handling are open because zlib round trips do not establish LabVIEW validity. Next: inspect the relevant pinned source rules and their applicability to the selected fixture before ordering a disk edit. A previous Grep of LVparts-source.txt found no matches for the requested BDPW/hash terms; this is not evidence of absent integrity rules.
-- After a supported recipe: order the editor/rebuilder, preserve save-version bytes, deliver original VI, changed VI, tool, report and short owner manual check. All runtime claims require the owner's LabVIEW; no loop session can run it.
-- The fresh-agent demonstration remains outstanding. A later describing/editing session must receive the tool and a previously unseen VI, without that VI's prior analysis. Step 3 is preparation, not this demonstration.
-- If bounded research fails, deliver evidence and concrete exits as the unsuccessful POC; do not silently change the goal or wait indefinitely for owner fixtures. After delivery resume the benchmark thread without treating owner silence as acceptance.
-- Benchmark preparation remains deferred because the POC has not been delivered. Handoff pointers: `benchmark/preparation.json` (74 references, not executed), split allocator fix #446 needs re-review, native evidence #169, write-task method extension, and method assessment #430 declined as not_planned. Recheck these inputs before ordering their next tasks.
-- Product work remains deferred: independently reviewed benchmark readiness and owner method acceptance are prerequisites, including write-task coverage for writing implementation. No goal gate is accepted.
-- All-version estimate pointer: `docs/research/0002-delivery.md`; handoff says writing is not covered. Read/reconcile before choosing any LabVIEW 2024 fallback; no fallback choice made.
+- POC attempt reached a bounded negative result: eight selected VIs parsed, but no supported executable semantic edit. `docs/research/poc/edit-readiness.md` and `.json` say partial, recipe null, no edited VI and no runtime claim. Iteration 0093 chooses the goal's unsuccessful-POC delivery exit instead of further open-ended investigation.
+- Established: complete BDHb framing for the original four pylavi fixtures and stored connectivity/discriminator candidates. Unestablished: primitive meaning/replacement compatibility, connected constant type/value encoding, BDPW dependent chunks and compiled-cache invalidation. Container rebuilding alone cannot establish an edit's validity.
+- Delivery is still pending execution of the task below. Do not call the POC delivered merely because this graph exists. A failed POC delivery must expose missing changed VI, fresh-agent demonstration and LabVIEW runtime evidence; it does not establish impossibility beyond the inspected scope.
+- No session can run LabVIEW. No successful cold-agent demonstration exists. If the POC is revisited after new evidence, the fresh describing/editing session must receive only the tool and an unseen VI, not prior analysis of that VI.
+- After the bounded failure delivery is accepted, resume benchmark preparation without waiting for the owner. Optional controlled fixtures/source rules are possible exits, not prerequisites to continued work or permission to assume success.
+- Benchmark preparation is deferred only until that delivery. Before selecting its next task, read `docs/perpetua/roles.md`, `docs/perpetua/evaluation.md` and the relevant actual paused-thread evidence. Inherited pointers: `benchmark/preparation.json` (74 references, not executed), split allocator fix #446 needs independent re-review, native evidence #169, write-task method extension; method assessment #430 was declined as not_planned. Do not repeat #430 unchanged.
+- Product implementation remains deferred: independently reviewed benchmark readiness and owner method acceptance are required, including write-task coverage for writing implementation. No accepted goal gate exists, and owner silence is not acceptance.
+- All-version estimate remains open: `docs/research/0002-delivery.md`; inherited handoff says writing was not covered. Read/reconcile before choosing any LabVIEW 2024 fallback. No fallback choice made.
 
 ## This iteration
-- `.session/tasks.json` orders one researcher task, `poc-supported-edit-recipe`, default model/high effort, 120 minutes/60 turns, from main; no dependencies or artifacts consumed.
-- Expected gain: `docs/research/poc/edit-readiness.md` and `.json` with one evidenced edit recipe or bounded negative evidence and exits. Check verdict ready|partial|unsupported plus its cited sources, field spans, integrity/cache requirements and offline verifier.
-- One session owns the POC files, avoiding parallel merge conflicts. Search is bounded to relevant source slices and at most 12 small fixtures; findings are written early, investigation stops around turn 35.
-- Next cold shaper: read that result and its linked evidence. Ready permits planning a meaningful edit; partial/unsupported requires deciding between a specific measured follow-up and documented POC failure delivery, not another broad search.
+- `.session/tasks.json` orders one researcher task, `poc-bounded-failure-delivery`, default model/medium effort, 75 minutes/40 turns, from main, no dependencies or consumed artifacts.
+- Expected gain: new `docs/research/poc/delivery.md`, `delivery.json`, `verify_delivery.py`, `delivery-verification.json`, and unchanged original `.session/artifacts/poc-original.vi` if available. No changed VI is to be fabricated.
+- Delivery must map every POC criterion to evidence/status, explain concrete semantic/integrity/cache blockers, provide two exits and short honest owner reproduction instructions. Existing pinned POC files stay byte-for-byte intact; new delivery links them.
+- Check `python3 -I docs/research/poc/verify_delivery.py`, the delivery's evidence links and separate original-copy hash record. Verification passing means consistent negative delivery, never POC or runtime success. The engine rerun must need neither prepared environment nor session artifacts.
+- Next cold shaper: read the delivery/report and check that delivery happened. If accepted, record the unsuccessful POC as delivered and move to benchmark preparation after reading its role/readiness contracts and selected paused evidence. If task fails, repair only the concrete delivery failure rather than restarting format research.
 
 ## Tried, do not repeat
-- #465 measured RSRC container, BDHb decompression and save-version declaration; reused by #468. See POC README and handoff; do not reorder container discovery.
-- #468 framed all 162 add.vi entries / 842 heap bytes, compared four fixtures and cross-checked 373 entries. See POC README, comparison.json and verification.json; do not redo framing as a separate research task.
-- #468's four-byte 103 -> 104 mutation is syntactic only. See candidate-change.json and README; it is not evidence for Subtract or runnable logic.
-- A broad Glob with pattern **/* returned repository-wide truncated output despite the path argument. Use path-specific patterns and short targeted reads.
-- Historical handoff warns against repeating gap maps #282/#330/#400, lineage batches without allocation effect and store-record reviews; consult their actual reports only if resuming those threads.
-- Verification runs again without LABVIEW_ENVIRONMENT or .session/report.md; use committed small evidence and one plain python3 command. Parent commits; do not ask tasks to commit or use git diff/status as acceptance checks.
+- #465 measured RSRC container, BDHb decompression and save-version declaration; #468 reused it. See POC README; do not reorder container discovery.
+- #468 framed all 162 add.vi entries / 842 heap bytes and cross-checked 373 entries across four fixtures. See README, comparison.json and verification.json; framing is not semantic interpretation.
+- #468's four-byte 103 -> 104 mutation was syntactic only. See candidate-change.json and README; no evidence for Subtract or runnable logic.
+- Iteration 0092 inspected eight fixtures and relevant pinned source slices: no supported edit recipe. Resume saved candidates only with a new bounded question or new controlled evidence; do not search the remaining corpus indiscriminately. See edit-readiness.md/json.
+- Existing edit-readiness.json pins README.md and other evidence hashes. Avoid changing those files for delivery navigation; add separate delivery documents instead.
+- Broad Glob **/* produced truncated repository output despite path argument. Use path-specific patterns and short reads.
+- Inherited handoff warns against repeating gap maps #282/#330/#400, lineage batches without allocation effect and store-record reviews; consult actual reports only when resuming those threads.
+- Verification reruns without LABVIEW_ENVIRONMENT or .session/report.md; use committed small evidence and one plain python3 command. Parent commits; never require git diff/status as acceptance checks.
