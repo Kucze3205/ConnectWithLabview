@@ -1,112 +1,95 @@
 # Policy working memory
 
-Considered: iteration records 0000-0091 and the owner commit cfaf996. Rewritten and compressed by Policymaker #471 at
-the start of iteration 0092 (2026-11-12). The earlier per-iteration notes (0024-0091, 110 KB) are in git:
-`git show 2b6f6870:policy/working-memory.md` (sha256 68d353d1...). Read a section there only when a decision is reconsidered.
-History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`; session documents
-`.session/history/sessions/<issue>/` (list with python glob, not Glob).
+Considered: iteration records 0000-0092, owner commit cfaf996, and accepted #473's
+`docs/research/poc/edit-readiness.md`. Updated by Policymaker #475 for iteration 0093.
+Earlier detailed memory (0024-0091, 110 KB): `git show 2b6f6870:policy/working-memory.md`
+(sha256 68d353d1...). Compressed predecessor: accepted change #471, commit 5268784.
+History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
+session documents `.session/history/sessions/<issue>/` (list with python glob, not broad Glob).
 
-## Organization (changed 2026-11-12)
-- Owner commit cfaf996 set `shaper: orchestrator` (routes: Fable 5.2, Opus 5.5, codex) and put Fable 5.2 first for the
-  Policymaker. Reason in params.yml: iterations 0087-0089 failed with no shaper and no orders after input_budget exhaustion.
-  The owner comment says: keep this order. `every_iterations: 1` stays while task creation is restored.
-- With a shaper the Policymaker orders ONLY `evaluator` and `audit` (task-graph.md:36); other orders are refused whole.
-  An iteration no longer fails when the Policymaker writes no orders. It fails when the shaper writes no valid
-  `.session/tasks.json` (engine.md:84-85), and then `execution/` and `policy/` roll back.
-- The shaper cannot read `policy/`. Its inputs: loop state, `.session/capabilities.json`, `journal/working-memory.md`,
-  its skill folder, `.session/history/`.
-- #471 changes (iteration 0092):
-  - `execution/roles/orchestrator/SKILL.md` rewritten: `startup` list (state, capabilities, journal memory, handoff);
-    section "Write the graph first" (valid tasks.json by about the 12th tool call; iterations 0003-0005 failed at the turn cap
-    with no graph, reset-2026-10-28.md:56); section "Current priority: the proof of concept"; one memory file
-    `journal/working-memory.md` with four sections replaces per-iteration `journal/NNNN.md`; stale paths fixed
-    (`iterations/NNNN.json` -> `.session/history/records/`).
-  - `execution/roles/orchestrator/references/handoff.md` (new, 6.4 KB): loop state, POC thread with five open items and
-    hypotheses A-E, paused benchmark thread, task-writing lessons with session numbers. Staged as
-    `.session/role/references/handoff.md`.
-  - `execution/profiles.yml`: orchestrator `max_turns` 30 -> 45 (60 min, medium unchanged). Reason: 30 turns ended with no
-    graph three times; the graph-first rule is the main fix, the extra turns are margin for memory and report.
-  - `policy/layer-rules.py` on the new definitions: `{"errors": []}`.
-- Expected effects, to check in record 0092: shaper session `done`; `tasks` >= 1; `journal/working-memory.md` has the four
-  sections; shaper `startup.tokens` shows the handoff was read (about 12k tokens of documents); the ordered task
-  advances the POC and does not repeat #465/#468.
-- If the shaper fails: `rollbacks` in the loop state changes and this skill and handoff vanish. Read the shaper's
-  record first (turns, models, whether tasks.json existed). One failure -> re-apply with a tighter graph-first rule. Two
-  failures -> propose `shaper: null` with small Policymaker orders, or a script shaper, and tell the owner why.
+## Organization and evidence
+- Owner commit cfaf996 restored `shaper: orchestrator`, Fable 5.2 first for shaper and Policymaker.
+  Keep that routing order. Cadence stays `every_iterations: 1`; one measured success is insufficient to change it.
+- With a shaper, Policymaker orders ONLY evaluator/audit (task-graph.md:36). No such order is needed in 0093.
+  The shaper owns goal-directed tasks and journal memory; it cannot read policy/.
+- #471 rewrote the orchestrator skill with graph-first by about tool call 12, four-section journal memory,
+  POC priority and a startup handoff; raised max_turns 30 -> 45. Repeated shaper turn-cap failures motivated it.
+- Record 0092 confirms recovery: closed/accepted, one task, no failure; #472 done in 19 turns; all four journal
+  sections exist. #473 accepted/merged 7b37e07, 44 turns. Rollback timestamp remains 2026-11-11T21:41:42Z.
+  The record does not show which tool call first wrote tasks.json; do not claim that deadline was measured.
+- #472 startup estimate 12,188 tokens is consistent with the added package; journal memory cites the staged handoff.
+  A report snapshot exists. No report/request permission failure was observed; requests permission remains untested.
+- #475 removes the handoff from mandatory startup and the Cold start read rule. The journal now carries execution
+  state. The optional handoff is shorter, removes stale empty-journal claims and unmeasured hypotheses, preserves
+  task-writing lessons/paused-thread pointers, and links #473's result. No limits, routing or cadence changed.
+  Expected gain: fewer repeated startup reads without losing the task graph or POC continuity. Check record 0093
+  startup estimate, shaper done status, valid tasks, and journal update incorporating #473.
+- If the shaper fails, read its record before changing definitions. One failure: tighten graph-first if evidence
+  supports it. Two repeated failures: consider an owner proposal for shaper null or a script shaper, with reasons.
+  An iteration with a shaper fails on no valid tasks.json, not on empty Policymaker orders (engine.md:84-85).
 
-## Open questions
-- Cost of a Policymaker session at every iteration with a shaper (#467: 957k cache read, 19 turns). After two shaper
-  iterations in a row that close with tasks, consider `every_iterations` 3 and tell the owner (the owner set 1).
-- Is the `startup` list of an execution skill honoured for the shaper? Check record 0092 startup tokens.
-- Can the orchestrator write `.session/report.md` and `.session/requests.json`? (reset lesson 6 said its profile allowed
-  only `journal/**`; tool_broker.py:22 lists both as session outputs.) Check its report in 0092.
-- Loop state `owner_requests.open` is now []. Capability #169 (native jobs, waiting since 2026-11-04) is not listed; its
-  state is unknown. Do not assume it is ready or closed.
-- No audit report exists (`audit_report: null`); audits #43/#55 crashed. Order an audit only with a concrete question, for
-  example quota per accepted result of the shaper organization after 3 iterations.
+## POC state and next work
+- Goal adds writing and POC before further benchmark preparation. POC is the method-first exception, not a product
+  or quality result. No session can run LabVIEW. Successful delivery needs files, report, owner manual instructions,
+  save-version preservation and a fresh-agent demonstration. Unsuccessful delivery needs evidence and possible exits.
+  Do not wait for owner replies after delivery; silence does not accept the method or quality.
+- #465: RSRC/save version of pylavi add.vi. #468 (merged 0f35a16): inspect_vi.py, complete BDHb framing,
+  162 entries/842 bytes; no semantic edit. Do not repeat container/decompression/framing research.
+- #473: `docs/research/poc/edit-readiness.md` and `.json`, verdict partial after eight original VIs.
+  Neither primitive nor constant route supplies an executable semantic recipe. Do not order a disk edit from it.
+  Primitive identity/replacement remains unknown; ConstValue needs DTHP/VCTP type resolution/encoding;
+  BDPW's last 32 bytes and compiled-cache invalidation remain unexplained. LVparts lacks the relevant classes.
+  No edited VI, native behavior result or unseen-VI demonstration exists.
+- Shaper next reads #473's result and linked evidence, then chooses a bounded missing-source follow-up or
+  documented unsuccessful POC delivery. Controlled same-version fixture pairs are another exit only after verified
+  availability. No broad corpus search or repeat of 103 -> 104 speculation. No task waits for optional access.
+- `journal/working-memory.md` currently precedes #473; its This iteration section already directs the next shaper
+  to read edit-readiness. The optional handoff also carries the new result. Policymaker does not edit journal memory.
 
-## Goal state
-- Goal changed about iteration 0087: adds writing ("Pisanie") and a POC before further benchmark preparation.
-  Owner request #430 (method assessment) was DECLINED as not planned. A new method request needs write tasks in the
-  method first. `policy/proposals/method-acceptance-draft.md` is the old text; reuse only as a base.
-- POC thread: #465 (step 1, tag iter/0090/465) container + save version 21008000 of pylavi add.vi; #468 (step 2,
-  merged 0f35a16, codex 48 turns, accepted) `docs/research/poc/inspect_vi.py`, `verify_poc.py`, full BDHb tag tree
-  (162 entries / 842 bytes), README lines `heap-decode: yes`, `poc-feasibility: partial`. Open: primitive meaning
-  (primIndex 103, primResID 1050), no edited file on disk, integrity/cache rules, owner instruction, unseen-VI
-  demonstration. Details and hypotheses: the handoff file. The shaper owns the next step.
-- Benchmark thread (paused until POC delivery). Main: preparation.json 99069d8d..., preparation-status.json 8f64e982...,
-  evaluator `python3 policy/evaluator/evaluate.py --check` -> errors [], missing [], 74 refs, ready/executed false.
-  Milestones: baseline/split design-reviewed, challenges scorer-reviewed, coverage/oracle/sources/tasks reviewed.
-  Store record #379 reviewed (#431) and pinned. Unpinned, review pending: `benchmark/split/allocation.synthetic.json`
-  70d94d28... and `benchmark/scripts/split_allocate.py` 55c236ad... (fix #446 of review #443 finding 1; fix round 1 used).
-  Nothing was executed; quality is unmeasured; reader implementation is gated on method acceptance.
-- All-version estimate: docs/research/0002-delivery.md (89-264 d all versions vs 33-99 d 2024-only; strict 2024 excludes
-  413 of 415 RSRC files). Present before any fallback choice; it does not cover writing yet. Do not re-order it.
-- Do not repeat: gap maps #282/#330/#400; reviews #403/#408/#409/#415/#421/#427/#431/#443; lineage batches (stopped
-  in 0066: no allocation effect; rules kept in policy/proposals/lineage-pilot-359.json); old store-record searches.
-- `policy/proposals/store-readiness.yml` equals the installed workflow revision 4 (27b365ec...); it can be deleted.
+## Paused benchmark and gate
+- Benchmark work not needed for POC waits for POC delivery. Read `docs/perpetua/evaluation.md` before planning
+  reader/product work or resuming benchmark planning. Independent method review and owner acceptance still apply.
+- Existing preparation: preparation.json 99069d8d..., preparation-status.json 8f64e982...; prior evaluator check
+  errors [], missing [], 74 refs, ready/executed false. Not rerun in #475. Quality is unmeasured; missing native,
+  artifact/version, held-out and write-task coverage stays visible. A functioning checker does not establish readiness.
+- Baseline/split design-reviewed; challenges scorer-reviewed; coverage/oracle/sources/tasks reviewed. Store #379
+  reviewed in #431 and pinned. Unpinned review pending: allocation.synthetic.json 70d94d28... and split_allocate.py
+  55c236ad... (fix #446 for #443 finding 1, fix round 1 used). Recheck before resuming.
+- Owner method request #430 declined as not_planned. Old draft policy/proposals/method-acceptance-draft.md needs
+  writing coverage before reuse. No Goal gate is accepted; no goal/gate.yml or completion claim.
+- All-version estimate: docs/research/0002-delivery.md, 89-264 d versus 33-99 d 2024-only; strict 2024 excludes
+  413/415 RSRC files. It omits writing. Reconcile before fallback choice; do not repeat the original research.
+- No repeat: gap maps #282/#330/#400; reviews #403/#408/#409/#415/#421/#427/#431/#443;
+  lineage batches stopped in 0066 (no allocation effect; policy/proposals/lineage-pilot-359.json); store searches.
+- policy/proposals/store-readiness.yml equals installed workflow revision 4 (27b365ec...); optional deletion remains.
 
-## Session mechanics (lessons, each cost at least one failed session)
-- Finish rejects `.session/report.md` unless it begins with `<!-- session-report -->` and a yaml block whose `status`
-  equals Finish.status (#316).
-- Files under `.session/` vanished mid-session several times (provider switch; #368, #402, #429). Re-check that the
-  report (and orders, if any) exist immediately before Finish.
-- In this harness `git status` and `git diff` show nothing for files written in the session (#471). Verify written files
-  by reading them (bytes, sha256), not by git.
-- A Write with empty `text` truncates the file (#471 did this once to the orchestrator skill and rewrote it). Check the
-  byte count after each Write of a managed file.
-- Two Policymaker sessions in a row that do not end `done` roll back both managed roots (0041, 0051, 0086-0089).
-  Keep sessions short: decide, write, verify, report. Large reads caused the input_budget partials.
-- `wake: true` only when the next pass orders different work (0055 wasted 8 tasks, 2.7M input).
-- If the Policymaker orders goal work again (shaper null): write orders.json first and parse-check it; never ask a task
-  to `git commit`; no git diff/status acceptance; Verification is one plain python3 command that needs neither
-  LABVIEW_ENVIRONMENT nor `.session/report.md`; reviewers start from main and report only; max_turns >= 25; a task that
-  edits a pinned file re-pins it; unmerged work is tag `iter/NNNN/N` and `start_branch: task/N` resumes it; for
-  mechanical landings write a hash-gated idempotent script in `execution/scripts/`, dry-run it twice on a copy, order
-  one low-effort run, delete it afterwards. The same lessons are in the shaper handoff.
-- Both preparation JSON files are `json.dumps(indent=2, sort_keys=True)` + newline; a changed pinned file needs every
-  reference to preparation-status.json re-pinned. `lineage.py --check` needs LABVIEW_ENVIRONMENT.
+## Resources and open questions
+- No pending suggestions in loop state 0093. No owner requests listed open. Capability #169 readiness remains
+  unknown; disappearance from owner_requests.open is not proof of availability or closure.
+- No quota-use measurement exists. Input/cache accounting is not subscription quota use; model labels are not
+  actual routing. Record 0092: #473 entirely codex; #472 Fable plus codex. No routing change from these counts.
+- After two consecutive shaper iterations with tasks, reconsider Policymaker cadence; owner set every iteration.
+  After three, an audit can measure accepted results/resource evidence if it has a concrete question and real inputs.
+  No audit ordered now; previous #43/#55 crashed. Keep the current iteration short.
+- Read docs/perpetua/accepted-limits.md before private use/disclosure/publication/spending or capability requests.
+  Optional access uses capability proposals, never iteration dependencies or waiting tasks.
 
-## Model and resource evidence
-- Do not trust report/startup model labels; read each record's `models` block. Sessions that start on Sonnet often run
-  mostly on codex gpt-6.1-sol or copilot gpt-5.6-luna. Reviewer routes fell to GPT in most reviews; the `opus` alias did
-  not hold (#221, #232, #241, #247). A same-family review is recorded as a limit, not repeated.
-- Codex sessions hit the 800k unique-input ceiling often (#228, #258, #287, #465). #468 used 4.38M input with 4.24M
-  cache read in 48 turns and finished: long codex sessions are possible when cache reads are high.
-- No measured subscription-quota figure exists. Cache and input-budget accounting are not quota use. No routing change
-  without measurements; the owner's Fable-first order for Policymaker and orchestrator stays.
-
-## Rules to preserve
-- Read docs/perpetua/evaluation.md before reader planning or implementation; accepted-limits.md before private data,
-  disclosure, publication or spending. Optional access never blocks an iteration.
-- The POC is not the product and not quality evidence. No readiness, threshold, gate or fallback choice is implied by
-  any preparation result. Missing coverage and native answers stay explicit in every report.
-- Requests: `.github/loop/session-protocol.md` ("Requests to the owner"); owner texts in Simplified Technical English.
-- Evaluator path is `policy/evaluator/evaluate.py`; change it only through an `evaluator` order plus verifier.
+## Session mechanics to preserve
+- Report starts with <!-- session-report --> and yaml status matching Finish.status. Verify session outputs just
+  before Finish: provider switches lost them in #368/#402/#429. Two unfinished Policymakers trigger rollbacks.
+- git status/diff can show nothing for session writes (#471). Read back files and check bytes/hashes instead.
+  Empty Write.text truncates. Verify each managed write. Layer check needs a facts JSON argument:
+  `python3 policy/layer-rules.py .session/policy-facts.json`. #475's first call omitted it and failed;
+  regenerated facts from current profiles/params then passed with errors []. Startup references and empty orders
+  also passed local assertions. Engine activation remains authoritative.
+- wake true only when results change the next policy order; iteration 0055 wasted eight tasks/2.7M input.
+- Task lessons live in the optional shaper handoff: parent commits; offline plain python3 verification; reviewer
+  starts from main/report only; bounded reads; at least 25 turns; repin changed benchmark files; resume via task/N.
+- Preparation JSON uses json.dumps(indent=2, sort_keys=True) + newline; changes to preparation-status.json need
+  every reference re-pinned. lineage.py --check needs LABVIEW_ENVIRONMENT. Evaluator changes require evaluator
+  order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Read record 0092: shaper status, tasks, tokens, `rollbacks`. Check the expected effects above.
-2. Read `journal/working-memory.md` (the shaper's memory) instead of re-deriving the execution state.
-3. Decide pending shaper suggestions (`suggestions` in the loop state) in `policy/suggestion-decisions.json`.
-4. Change the skill, handoff or limits only from evidence in that record. When the journal memory covers the handoff,
-   shrink the handoff to the task-writing lessons and remove it from the shaper's `startup`.
+1. Read record 0093 and journal/working-memory.md. Check tasks, shaper status, startup estimate and #473 continuity.
+2. Check suggestions. Keep role changes tied to measured failures or unnecessary repeated reads.
+3. Avoid repeating #465/#468/#473, benchmark gap maps, or speculative format claims. Let the shaper choose POC work.

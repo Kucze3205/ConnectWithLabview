@@ -7,7 +7,6 @@ startup:
   - .session/loop-state.json
   - .session/capabilities.json
   - journal/working-memory.md
-  - .session/role/references/handoff.md
 ---
 
 # Orchestrator
@@ -54,9 +53,9 @@ read until its turn cap and wrote no graph.
 ## Cold start
 
 The startup documents are: the loop state (goal, open owner requests, `task_options`, the previous iteration), the
-capabilities (roles you may order), your working memory, and `.session/role/references/handoff.md` (what the
-Policymaker learned while it ordered every task in iterations 0017-0091; read it at that path if it was not in your
-startup list). Your working memory supersedes the handoff wherever it is newer.
+capabilities (roles you may order), and `journal/working-memory.md`. The working memory carries the execution state.
+Read `.session/role/references/handoff.md` only when you need the task-writing lessons or paused-thread pointers.
+Your working memory supersedes the handoff wherever it is newer.
 
 Then follow only the evidence needed to shape this iteration:
 
