@@ -887,6 +887,18 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   #403 corrected draft as `question` with new commit + index hash. Revise -> fix round 2 as Policymaker script, no blind
   fix. #379 pending; do not wait. Memory ~90 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0075 (#417, wake false)
+- Considered record 0074 and review #415 (.session/history/sessions/415/45abdf6845707de2f731a2b2cd1d2f919034aa1edd9cb7afbf3141e24ab6575b.md). Startup ok, 34,113 estimated tokens.
+- #415 DONE (codex GPT 265k input, 14 turns; same family as author #412), verdict REVISE. Two blocking bypasses in both scripts: first-character reason comparison passes; returning before the self-test passes. Existing specification checks remain accepted; do not repeat them.
+- Source mount /resources/environment was absent during #415. Environment-free reruns isolated the bypasses; missing-source failures are not mutation detection. Full source-pin verification remains incomplete.
+- Saved and parse-checked orders FIRST: apply-reason-controls-415 (benchmark, low, 25 min/30 turns, main, <=10 calls), wake false. This is fix round 2 for both checkers.
+- Wrote execution/scripts/fix_reason_controls_415.py: hash-gates original scripts, uses a wrong reason with the complete actual reason as prefix, returns completed control counts, and checks those counts at each caller. Existing 10 change-case and 8 precision rejection controls remain.
+- Tested the script twice in a temporary copy: both runs exit 0; all eight bypass probes exit 1 with intended diagnostics; restored checks exit 0; second run changes no bytes. Repository checker files remain unchanged until the ordered task applies the script.
+- Expected new SHA256: change_cases.py 657f7fec440790b2f73b9ada4a52dd7cff58da11b5559b3235aedf8dc03668d6; precision_plan.py 0bcc765aba2fbbbb76203fb07a749fe8a72fe71f3c6ef179f3f9df97201e8ec3. Isolated checks skip source pins explicitly.
+- Next: verify the task landed these hashes, then order ONE independent review of #415 findings only. Prefer a different model family using actual model evidence. Do not repeat spec/plan reviews #408/#409. If another blocking finding appears, fix_rounds 2 is exhausted: re-scope instead of ordering a third blind fix.
+- After independent acceptance: pin change-cases under tasks and precision under baseline, then use #403's corrected method-acceptance draft with current commit/index hash. Do not request method acceptance before that review.
+- #379 remains pending; no new private access, native execution or spending. Native answers, restricted-store readiness and owner method acceptance remain unresolved. Product quality remains unmeasured; reader implementation remains gated.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
