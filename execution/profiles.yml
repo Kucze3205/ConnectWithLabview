@@ -57,6 +57,22 @@ implementation:
   effort: high
   max_turns: 150
   timeout_minutes: 120
+poc:
+  write:
+  - src/poc/**
+  - tests/poc/**
+  - docs/product/poc/**
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git:*)
+  - Bash(python3:*)
+  effort: high
+  max_turns: 100
+  timeout_minutes: 120
 reviewer:
   write: []
   tools:
