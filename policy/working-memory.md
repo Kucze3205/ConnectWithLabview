@@ -1,15 +1,16 @@
 # Policy working memory
 
-Considered: iteration records 0000-0097, owner commit cfaf996, accepted #473's
+Considered: iteration records 0000-0098, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
-writing-method extension, independent review #485, accepted correction #489 and re-review #493.
-Updated by Policymaker #495 for iteration 0098. #495 read record 0097, journal memory,
-task-graph contract, evaluation requirements and the actual #493 report. Startup is ok,
-estimated 16,391 tokens, no notices; exports results [], suggestions [], open owner requests [].
-#495 resolved #493's reviewed tree and matched all seven current writing files against
-reviewed commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 and published correction 2033c33.
-It did not rerun the checker or review probes. Detailed #485/#493 artifacts were not staged
-or replayed here; findings and replay counts below are attributed review results.
+writing-method extension, review #485, correction #489, re-review #493 and allocator re-review #497.
+Updated by Policymaker #499 for iteration 0099. #499 read record 0098, journal memory,
+task-graph contract, evaluation requirements and the actual #497 report. Startup is ok,
+estimated 17,169 tokens, no notices; exports results [], suggestions [], open owner requests [].
+#499 resolved #497's reviewed tree and matched both current allocator files against
+reviewed commit 8aefb1583265f097a8569d76b4f8e5a0b0782833 and the report hashes.
+Neither file is directly referenced by benchmark/preparation.json. No evaluator defect is established.
+#499 did not rerun the allocator, evaluator or review probes. Detailed #497 artifacts were not staged
+or replayed here; findings and probe results below are attributed review results.
 Earlier detailed memory (0024-0091, 110 KB): `git show 2b6f6870:policy/working-memory.md`
 (sha256 68d353d1...). Compressed predecessor: accepted change #471, commit 5268784.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
@@ -171,8 +172,9 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   errors [], missing [], 74 refs, ready/executed false. Not rerun in #483. Quality remains unmeasured; native,
   artifact/version, held-out and write-task coverage remains missing. Consistency checks do not establish readiness.
 - Baseline/split design-reviewed; challenges scorer-reviewed; coverage/oracle/sources/tasks reviewed. Store #379
-  reviewed in #431 and pinned. Unpinned review pending: allocation.synthetic.json 70d94d28... and split_allocate.py
-  55c236ad... (fix #446 for #443 finding 1, fix round 1 used). Read actual #446 inputs before resuming.
+  reviewed in #431 and pinned. #497 now independently closes #443 finding 1 on #446's allocator correction;
+  see the pinned identities and limits below. The two allocator files have no direct preparation.json entries.
+  This closure does not authorize arbitrary index changes or establish benchmark readiness.
 - Owner method request #430 declined as not_planned. Old draft policy/proposals/method-acceptance-draft.md needs
   writing coverage before reuse. No Goal gate is accepted; no goal/gate.yml or completion claim.
 - All-version estimate: docs/research/0002-delivery.md, 89-264 d versus 33-99 d 2024-only; strict 2024 excludes
@@ -210,15 +212,56 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   every reference re-pinned. lineage.py --check needs LABVIEW_ENVIRONMENT. Evaluator changes require evaluator
   order plus verifier; path policy/evaluator/evaluate.py.
 
+## Allocator completion review and iteration 0099
+- Record 0098 closed without failure: shaper #496 done/merged in 26 turns; reviewer #497 done in 18 turns,
+  no repository changes to merge. improved false/no_progress 2 does not make these review sessions failures.
+  Both actually used codex/gpt-6.1-sol. Separate-session independence holds; model-family diversity was not achieved.
+- Actual #497 report, finding 1 CLOSED, recommendation CLEAR for the pinned completion guard:
+  `.session/history/sessions/497/6098526236d9d3938719e3131cfafcbb53c2aad7ea37aa341f32a663d77523eb.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/497#issuecomment-6842189433).
+  Reviewed commit 8aefb1583265f097a8569d76b4f8e5a0b0782833 / tree
+  94c6df4711068611c1c2eb3f7f5b54d150c1ea78. Reviewer starting/finishing HEAD
+  b92ecde9c465728be7961e5952a249dbaf110478 / tree bef5c8613e3d73ca083671c172bfbe6723c6026b;
+  reviewer reports administrative differences only.
+- Correction commit 298727a0bf9ec03ab5a4788e8fd7249604f010cc, parent
+  cad1f04f3cfec68971337d3e3cfa7d337cbb901a, identified by #497 through git. Patch changes completion
+  count and caller guard only. Original script SHA256 79ffbdffe60bc589be172de08a380a958ae4e220ee4d53303390f49230ae16fc;
+  reviewer independently reproduces historical early-return false acceptance (exit 0).
+- #499 matched current script SHA256 55c236ada2bce447990c7185ac8654a2c8aefba32ae4010fac65ae82a15c8ecd
+  and allocation.synthetic.json SHA256 70d94d28084b45938c698e6097c8afd40934f8e9ab0d70a29de36d242ab4de34
+  against the report and reviewed commit bytes; resolved tree matches. Current HEAD is
+  b552e135b9bde462a2fa30dcd7dfe1cafdf54b9e. No direct preparation.json references to these two paths exist;
+  no stale evaluator/index defect is established. Do not order evaluator work from journal speculation alone.
+- #497 reports ordinary --check exit 0 and independent tracing of reason mismatch plus all seven exact-reason
+  mutation rejections. Six isolated faults exit 1: early returns before reason/before mutations, disabled reason
+  comparison, duplicate-skipping, missing infeasible_strata and adjacent partial completion of seven.
+  Second normal run from another directory with empty environment/three public files has identical stdout;
+  audit observes no network/session/restricted access. All 1,044 tracked starting hashes remain unchanged.
+  These are attributed review results, not #499 reruns; no scoped Standards/Spec defect or regression remains.
+- Historical task bodies are title stubs; original probe-source artifact unavailable. Exported #443/#446 reports
+  and matching git blobs support independently reconstructed probes. Do not present a missing source as replayed.
+  Optional artifacts: iter-0098/497-completion-review.md SHA256
+  02b1a9f7cd830186253e888999300cd2ba9845c23eb21e171a96c1e7583aeb3f;
+  completion-review.json ebfc5fc79bca20227fd3c0e4118c6bbb3a75a26ad0ec745127cb435722a8c19b;
+  review_completion.py a19e7cd36aa3203b9ae239e3467a23cdb68aeda79677e582877c79e64d16d67b.
+  Read the report before requiring artifacts; they are not assumed staged in a cold session.
+- #499 changes policy memory only and writes empty policy orders. Expected gain: preserve #497's bounded
+  closure and avoid duplicate allocator review while the shaper chooses the next concrete prerequisite in 0099.
+  Check the next record/report for that progression or a specific blocker. No demonstrated evaluator defect,
+  concrete audit question or startup notice warrants an order. No role, routing, limit or cadence change.
+  Journal #496 already directs the next shaper to read #497, settle the guard, and inspect paused evidence
+  before selecting native/readiness work. Optional access requests cannot hold the iteration open.
+- Native benchmark executions and agent comparisons remain absent. Native keys, withheld writing cases,
+  verified evaluation isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured.
+  Synthetic guard approval does not accept the method, authorize product work or satisfy a Goal gate.
+
 ## Next Policymaker
-1. Read record 0098 and journal/working-memory.md. Check that the shaper used #493's bounded S1-S3 closure
-   to select the next concrete prerequisite rather than another correction/review of identical writing bytes.
-2. Read actual task reports before selecting further work. Deferred #446 allocator re-review needs its original
-   task/report and pinned bytes; it is not approved by #493. Do not substitute a new global gap map.
+1. Read record 0099, journal/working-memory.md and actual task reports. Check that #497's bounded closure led
+   to a concrete next prerequisite instead of repeated allocator or unchanged writing review.
+2. Inspect actual pin evidence before any evaluator order. The two reviewed allocator paths have no direct
+   preparation.json references; #499 established no evaluator defect. Do not create a new global gap map.
 3. Check suggestions and failures. Retain owner routing/cadence without measured contrary evidence; tokens/cache
-   counts do not measure subscription quota. Review family diversity was not achieved in 0097.
-4. Preserve reviewed writing commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 / tree
-   689ed2757ca4eb413cd37dc4f0cfcbc2fa90ba14 and #493's report above; changed bytes require new evidence.
-   Avoid repeating S1-S3 author correction/re-review, full method authoring, POC research or old gap maps.
-   Native executions and agent runs remain zero; coverage and product quality remain unmeasured.
-   No owner method acceptance or Goal gate exists; optional access must not hold the iteration open.
+   counts do not measure subscription quota. Review family diversity was not achieved in 0098.
+4. Preserve #493's writing identity/report and #497's allocator identity/report above. Changed bytes need new evidence.
+   Avoid repeating S1-S3 corrections, allocator review, full method authoring, POC research or old gap maps.
+   Native coverage and product quality remain unmeasured. No owner method acceptance or Goal gate exists.
