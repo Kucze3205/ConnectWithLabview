@@ -1,16 +1,19 @@
 # Policy working memory
 
-Considered: iteration records 0000-0098, owner commit cfaf996, accepted #473's
+Considered: iteration records 0000-0099, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
-writing-method extension, review #485, correction #489, re-review #493 and allocator re-review #497.
-Updated by Policymaker #499 for iteration 0099. #499 read record 0098, journal memory,
-task-graph contract, evaluation requirements and the actual #497 report. Startup is ok,
-estimated 17,169 tokens, no notices; exports results [], suggestions [], open owner requests [].
-#499 resolved #497's reviewed tree and matched both current allocator files against
-reviewed commit 8aefb1583265f097a8569d76b4f8e5a0b0782833 and the report hashes.
-Neither file is directly referenced by benchmark/preparation.json. No evaluator defect is established.
-#499 did not rerun the allocator, evaluator or review probes. Detailed #497 artifacts were not staged
-or replayed here; findings and probe results below are attributed review results.
+writing-method extension, review #485, correction #489, re-review #493, allocator re-review #497
+and accepted writing/version effort study #501.
+Updated by Policymaker #503 for iteration 0100. #503 read record 0099, journal memory,
+task-graph contract, evaluation requirements, actual #500/#501 reports, the study Markdown,
+and selected evidence JSON fields. Startup is ok, estimated 18,200 tokens, no notices;
+exports results [], suggestions [], open owner requests [].
+#503 matched both study outputs to report hashes and published commit e67bb1a, and checked
+all 14 tracked source hashes in the study against current files: no mismatches. Session and
+prepared-source hashes were not rechecked. This is provenance verification, not independent
+substantive review or a new effort measurement. No evaluator defect is established.
+No allocator, evaluator, writing-method or native checks were rerun. Detailed #493/#497
+artifacts were not replayed; their findings below remain attributed review results.
 Earlier detailed memory (0024-0091, 110 KB): `git show 2b6f6870:policy/working-memory.md`
 (sha256 68d353d1...). Compressed predecessor: accepted change #471, commit 5268784.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
@@ -255,13 +258,61 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   verified evaluation isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured.
   Synthetic guard approval does not accept the method, authorize product work or satisfy a Goal gate.
 
+## Writing/version effort study and iteration 0100
+- Record 0099 closed/accepted, improved true, no failure or limit hit. Shaper #500 done/merged in 23 turns;
+  researcher #501 done/accepted/merged in 28 turns. Both actually used codex/gpt-6.1-sol. Routine acceptance
+  outside owner paths is not owner method acceptance. Input/cache counts do not measure subscription quota.
+- Actual #501 report:
+  `.session/history/sessions/501/eca65fd6a148f17a1e7666a209063d2968260307f6c546ec3a527c5aa28c7ad5.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/501#issuecomment-6842657209).
+  Shaper report: `.session/history/sessions/500/81ff1941607ae2fdabb85b7840740e3a344fd149328da7bd30dbc917100d0bdf.md`.
+- Published study commit `e67bb1a2b6da4f0c70b0e9b7655256018c90da11`, tree
+  `cac4edff5c77e2d2994500565c970843b4037949`; changes only two new research files.
+  `docs/research/0099-writing-version-effort.md` SHA256
+  `e444c54a1cdc1f96b55735ef4ca2b06ea6e011087b6fb84e3ed3ea16b0477882`;
+  `docs/research/0099-writing-version-effort.json` SHA256
+  `992a3b22a690e917a1f144e32adaaa7d8d52ed7afe9223105cfe45746bcb31c4`.
+  #503 matched both current outputs to these hashes and published git bytes, and all 14 tracked input hashes
+  against the JSON. Current starting HEAD `da08fbc5fa4325160a51cad199660809c1a32dad`, tree
+  `e040a9f68cdfda7bcdf95275f922b9ea5ad7b632`. No study content changes or substantive independent review.
+- Finding: historical 33-99 versus 89-264 engineer-days covers reading only and assumes an unverified
+  8.0-2025 range. Writing, preservation and source rebuilds add unmeasured costs. No full-goal total,
+  meaningful ratio or 2024 fallback decision is supported. The study distinguishes four artifact-family
+  groups, eight cost drivers, shared versus incremental work, original version, emitted format and runtime.
+  Unknown costs remain unknown; the unsuccessful POC is a blocker record, not proof of impossibility.
+- Researcher lacked live `.session/loop-state.json` and selected history records; it explicitly used pinned
+  `goal/goal.md`. #503 read that committed goal and identified no substantive discrepancy with the startup
+  goal, but did not run a bytewise live-goal comparison. Keep the original session's staging limit explicit;
+  no role repair or repeated study is justified by this alone.
+- One proposed ready follow-up, not executed here: WM1 original version-evidence audit. JSON
+  `next_measurement` specifies inputs, pins, procedure and stop condition. Exact original:
+  `@environment/actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi`, SHA256
+  `19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c`;
+  method.json SHA256 `8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1`,
+  locator `/tasks/1/originals/0`; pylavi revision `35d2a0318f71dcb87bb9c431dc00700ee6b9fb75`.
+  Recheck availability/pins before ordering. Collect all vers/LVSR raw version bytes and decoded values,
+  including missing/duplicate/conflicting fields. Stop after one original or pin/parse failure; no substitutes
+  or corpus scan. Field agreement does not establish authoritative save version or native compatibility.
+- This audit narrows one missing input version, not the dominant semantic encoder/integrity/cache uncertainty.
+  A controlled independently authored same-save-version one-change pair and eventual native load/behavior
+  evidence address that uncertainty; neither is staged according to #501. Read accepted limits before access
+  requests; optional capability work cannot block ready work or hold an iteration open.
+- #503 changes policy memory only and writes empty policy orders. Expected gain: preserve the study and exact
+  follow-up without duplicate estimation or closed review. The shaper owns the next concrete prerequisite;
+  read the actual #501 report and both outputs before assessing the bounded measurement's readiness and value.
+  Independent substantive review is still required before using the estimate in any fallback proposal.
+  No demonstrated evaluator defect, concrete audit question or startup notice warrants policy tasks.
+  No role, routing, ceiling or cadence changes. Check record 0100 for the next measurement or evidenced blocker.
+- Native benchmark executions, agent comparisons, independent native keys, withheld writing cases, verified
+  isolation and artifact/version/hardware coverage remain incomplete. Tool quality is unmeasured. Provenance
+  checks do not establish benchmark readiness, owner method acceptance, product authorization or a Goal gate.
+
 ## Next Policymaker
-1. Read record 0099, journal/working-memory.md and actual task reports. Check that #497's bounded closure led
-   to a concrete next prerequisite instead of repeated allocator or unchanged writing review.
-2. Inspect actual pin evidence before any evaluator order. The two reviewed allocator paths have no direct
-   preparation.json references; #499 established no evaluator defect. Do not create a new global gap map.
-3. Check suggestions and failures. Retain owner routing/cadence without measured contrary evidence; tokens/cache
-   counts do not measure subscription quota. Review family diversity was not achieved in 0098.
-4. Preserve #493's writing identity/report and #497's allocator identity/report above. Changed bytes need new evidence.
-   Avoid repeating S1-S3 corrections, allocator review, full method authoring, POC research or old gap maps.
-   Native coverage and product quality remain unmeasured. No owner method acceptance or Goal gate exists.
+1. Read record 0100, journal/working-memory.md and actual task reports. Check progression from #501's study
+   to one bounded missing prerequisite, without repeating the estimate or closed allocator/writing reviews.
+2. Preserve the published study identity and hashes above. Recheck actual inputs before resource-dependent
+   work; do not treat the researcher's readiness observation as a new policy-session measurement.
+3. Inspect actual pin evidence before evaluator work. Keep policy orders limited to evaluator/audit while the
+   shaper exists. Check suggestions/failures; retain owner routing/cadence without measured contrary evidence.
+4. Preserve #493/#497's bounded closures. Avoid full method authoring, POC corpus research and global gap maps.
+   No fallback is selected. Native coverage and product quality remain unmeasured; no accepted method or Goal gate.
