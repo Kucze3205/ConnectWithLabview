@@ -6,7 +6,11 @@ run_record.score_answer and scores correctness and grounding with score.compute 
 library-specialty fixture. Prints outcome counts per frozen ID as JSON on stdout. Writes no file.
 Fidelity is reported 'not-applicable/unexecuted': compute needs a reader_response, so an empty
 placeholder is passed and compute's own fidelity result is discarded.
-Execution is taken from the record (executed/scored = 1 only for a complete, untruncated record).
+Execution is taken from the record (executed/scored = 1 only for a complete, untruncated record);
+`executed` is therefore self-reported by the record, not verified. Credit gate: only a record that
+run_record.validate accepted (synthetic provenance only) may reach `correct`. Any other record,
+including every record read from the command line, is scored with an evidence_record whose
+native_run and independent_key are None, so correctness and grounding cap at `unverified`.
 Without LABVIEW_ENVIRONMENT, cited artifact bytes are unreachable and grounding stays unverified.
 
 --check uses the synthetic record from runner_contract.py plus an in-memory loader that returns no
@@ -48,18 +52,21 @@ def sync_raw(submitted, score):
     submitted['raw_answer_record'] = {'text': text, 'sha256': score.digest(text.encode('utf-8'))}
 
 
-def score_record(record, score, run_record, load_bytes=None):
+def score_record(record, score, run_record, load_bytes=None, validated=False):
     fixture, inventory, control = fixture_inputs(score)
     submitted = run_record.score_answer(record)
-    return score_submitted(submitted, record, fixture, inventory, control, score, load_bytes)
+    return score_submitted(submitted, record, fixture, inventory, control, score, load_bytes, validated)
 
 
-def score_submitted(submitted, record, fixture, inventory, control, score, load_bytes):
+def score_submitted(submitted, record, fixture, inventory, control, score, load_bytes, validated=False):
     f = {k: v['value'] for k, v in record['fields'].items()}
     ran = f['outcome'] == 'complete' and not f['truncated']
     execution = {'attempted': 1, 'executed': int(ran), 'planned': 1, 'scored': int(ran)}
     submitted = dict(submitted, reader_response={},
                      raw_reader_response={'text': '', 'sha256': score.digest(b'')})
+    if not validated:
+        # No native run and no independent key exist for this record: score.compute caps credit.
+        submitted['evidence_record'] = {'native_run': None, 'independent_key': None}
     probe = dict(control['probe'], actual_execution=execution)
     computed = score.compute(fixture['source'], fixture['denominators'], inventory, submitted,
                              probe, control['alignment'], load_bytes)
@@ -97,7 +104,7 @@ def check():
     sync_raw(submitted, score)
 
     def run(sub):
-        return score_submitted(sub, keyed, fixture, inventory, control, score, nothing)
+        return score_submitted(sub, keyed, fixture, inventory, control, score, nothing, True)
 
     base = run(submitted)
     assert not base['cannot_evaluate_reasons'], base['cannot_evaluate_reasons']
@@ -108,10 +115,30 @@ def check():
     changed = run(altered)
     assert changed['per_id']['correctness']['A0001'] == 'incorrect', changed['per_id']['correctness']['A0001']
     assert changed['per_id'] != base['per_id'], 'altered claim answer did not change the outcome'
+
+    # Stage 3: a non-synthetic record carrying the keyed literal must not reach `correct`.
+    real = deepcopy(keyed)
+    for item in real['fields'].values():
+        if 'provenance' in item:
+            item['provenance'] = 'recorded'
+    try:
+        run_record.validate(real, manifest)
+        raise AssertionError('run_record.validate accepted non-synthetic provenance')
+    except ValueError:
+        pass
+    real_submitted = run_record.score_answer(real)
+    sync_raw(real_submitted, score)
+    unvalidated = score_submitted(real_submitted, real, fixture, inventory, control, score, nothing)
+    assert not unvalidated['cannot_evaluate_reasons'], unvalidated['cannot_evaluate_reasons']
+    for d in ('correctness', 'grounding'):
+        assert unvalidated['per_id'][d]['A0001'] != 'correct', (d, unvalidated['per_id'][d]['A0001'])
     print(json.dumps({'status': 'pass', 'synthetic_record': record['fields']['record_id']['value'],
                       'baseline_A0001': {d: base['per_id'][d]['A0001'] for d in base['per_id']},
                       'altered_A0001': {d: changed['per_id'][d]['A0001'] for d in changed['per_id']},
+                      'non_synthetic_A0001': {d: unvalidated['per_id'][d]['A0001'] for d in unvalidated['per_id']},
+                      'executed': 'self-reported by the record, not verified',
                       'fidelity': NA, 'benchmark_executed': False}, indent=2))
+
 
 
 def main():
