@@ -52,11 +52,6 @@ read until its turn cap and wrote no graph.
 - One well-cut task is a complete iteration. An empty graph is not: if no useful work is ready, order one task that
   measures the concrete blocker.
 
-## Recovery from iteration 0131
-
-#617's final read-back was invalid JSON: unescaped quotes around the verification command replaced an earlier valid graph. No reviewer task started. Its committed journal describes a plan, not an executed review.
-Resume the bounded independent review of `docs/research/0099-writing-version-effort.{md,json}` against the current goal and later named evidence; explicitly export #501's report. Rebuild and validate the graph before Finish. #501 already includes writing; do not reuse the superseded duplicate-estimate draft. Owner requests #618 (human C1) and #532 (Save As control) remain pending and must not be duplicated or awaited. Report recovery complete after the graph is admitted and the review result is accounted for; the Policymaker then removes this note.
-
 ## Cold start
 
 The startup documents are: the loop state (goal, open owner requests, `task_options`, the previous iteration), the
