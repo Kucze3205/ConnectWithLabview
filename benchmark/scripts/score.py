@@ -10,9 +10,11 @@ import argparse
 from copy import deepcopy
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import sys
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'benchmark/results/challenges.json'
@@ -74,6 +76,110 @@ def citation_support(citations, key):
     return 'correct' if all(c in key['citations'] for c in citations) else 'incorrect'
 
 
+STEP = re.compile(r'^([A-Za-z_][\w.-]*)(?:\[(\d+)\])?$')
+MANIFEST = {}
+
+
+def resolve_locator(root, locator):
+    # Copied from benchmark/challenges/check_xml_keys.py resolve (that file's SHA256 is pinned
+    # elsewhere and must not change). Evaluates /Root/Child[n]/.../(@Attr|text()).
+    parts = locator.strip('/').split('/')
+    if not parts or parts[0] != root.tag:
+        raise ValueError('root mismatch')
+    node = root
+    for part in parts[1:-1]:
+        m = STEP.match(part)
+        if not m:
+            raise ValueError('bad step ' + part)
+        tag, idx = m.group(1), int(m.group(2) or 1)
+        kids = [k for k in node if k.tag == tag]
+        if idx < 1 or idx > len(kids):
+            raise ValueError('no element ' + part)
+        node = kids[idx - 1]
+    last = parts[-1] if len(parts) > 1 else None
+    if last is None:
+        raise ValueError('locator has no leaf')
+    if last.startswith('@'):
+        name = last[1:]
+        if name not in node.attrib:
+            raise ValueError('no attribute ' + name)
+        return node.attrib[name]
+    if last == 'text()':
+        return node.text
+    raise ValueError('unsupported leaf ' + last)
+
+
+def manifest_pins():
+    # repository name -> (pinned commit, set of inventoried artifact paths) from benchmark/sources.json
+    if not MANIFEST:
+        data = json.loads((ROOT / 'benchmark/sources.json').read_bytes())
+        for repo in data['repositories']:
+            MANIFEST[repo['name']] = (repo['commit'], {a['path'] for a in repo['artifacts']})
+    return MANIFEST
+
+
+def environment_loader(citation):
+    # Original bytes of a cited artifact: benchmark/sources.json must list the repository at the
+    # cited commit and the path; bytes are read from $LABVIEW_ENVIRONMENT/<repository>/<path>
+    # (the layout benchmark/scripts/sources.py reads). Anything unreachable returns None.
+    location = os.environ.get('LABVIEW_ENVIRONMENT')
+    if not location:
+        return None
+    try:
+        commit, paths = manifest_pins()[citation['repository']]
+        if (citation['commit'] != commit or citation['path'] not in paths
+                or citation.get('archive_member_chain')):
+            return None
+        relative = Path(citation['path'])
+        if relative.is_absolute() or '..' in relative.parts:
+            return None
+        current = Path(location) / citation['repository']
+        for part in relative.parts:
+            current = current / part
+            if current.is_symlink():
+                return None
+        return current.read_bytes() if current.is_file() else None
+    except (KeyError, TypeError, OSError, ValueError):
+        return None
+
+
+def citation_resolves(citation, literal, artifact, load_bytes):
+    # Opens the cited original and evaluates the submitted locator. Only adds failures:
+    # `incorrect` for a wrong artifact, unresolvable locator or text differing from the literal;
+    # `unverified` when the scheme is unsupported or the bytes are unreachable.
+    try:
+        scheme = citation['locator']['scheme']
+        expression = citation['locator']['expression']
+    except (KeyError, TypeError):
+        return 'unverified'
+    if scheme != 'xml-positional-path':
+        return 'unverified'
+    data = load_bytes(citation)
+    if data is None:
+        return 'unverified'
+    if digest(data) != citation.get('sha256') or citation.get('sha256') != artifact.get('sha256'):
+        return 'incorrect'
+    try:
+        got = resolve_locator(ET.fromstring(data), expression)
+    except (ValueError, ET.ParseError):
+        return 'incorrect'
+    return 'correct' if got == literal else 'incorrect'
+
+
+def citations_resolve(citations, literal, artifact, load_bytes):
+    if not citations:
+        return 'missing'
+    return assessment([citation_resolves(c, literal, artifact, load_bytes) for c in citations], [])
+
+
+def combine_grounding(support, resolution):
+    # Any `incorrect` wins, `unverified` blocks `correct`; resolution never upgrades the key match.
+    for outcome in ('incorrect', 'unverified'):
+        if outcome in (support, resolution):
+            return outcome
+    return support if support != 'correct' else resolution
+
+
 def condition_policy(records, key, identifier, condition_ledger):
     keyed_conditions = set(key.get("conditions", []))
     unsupported = missing = False
@@ -91,7 +197,7 @@ def condition_policy(records, key, identifier, condition_ledger):
     return unsupported, missing
 
 
-def extra_outcome(item, channel, keys, key_absent, pointer, condition_ledger):
+def extra_outcome(item, channel, keys, key_absent, pointer, condition_ledger, artifact, load_bytes):
     value = item.get('answer' if channel == 'answer' else 'value')
     match = re.fullmatch(r'The XML-parsed literal at (.+) has UTF-8 byte length (\d+)\.', value or '')
     key = None
@@ -107,7 +213,10 @@ def extra_outcome(item, channel, keys, key_absent, pointer, condition_ledger):
             if channel == 'reader':
                 outcomes = {'fidelity': 'unverified' if correct else 'incorrect'}
             else:
-                grounding = citation_support(item.get('citations', []), key)
+                grounding = combine_grounding(
+                    citation_support(item.get('citations', []), key),
+                    citations_resolve(item.get('citations', []), key['atomic_fact']['value'],
+                                      artifact, load_bytes))
                 outcomes = {'correctness': 'correct' if correct else 'incorrect',
                             'grounding': grounding if correct else 'incorrect'}
                 unsupported, missing = condition_policy(
@@ -122,7 +231,11 @@ def extra_outcome(item, channel, keys, key_absent, pointer, condition_ledger):
             {'correctness': 'unverified', 'grounding': 'unverified'}), None
 
 
-def compute(source, denominators, inventory, submitted, probe, alignment):
+def compute(source, denominators, inventory, submitted, probe, alignment, load_bytes=None):
+    # load_bytes(citation) returns the cited original's bytes or None; default reads the prepared
+    # environment. Controls inject their own loader so they need no real sources.
+    load_bytes = load_bytes or environment_loader
+    artifact = source.get('artifact') or {}
     problems = []
     answer = submitted['answer_record']
     response = submitted['reader_response']
@@ -161,7 +274,7 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             pointer = prefix + str(index)
             if identifier not in required[dimensions[0]]:
                 outcomes, derivation = extra_outcome(
-                    item, channel, keys, key_absent, pointer, condition_ledger)
+                    item, channel, keys, key_absent, pointer, condition_ledger, artifact, load_bytes)
                 entry = {'channel': channel, 'assertion_id': identifier, 'assertion': item.get(value_field),
                          'raw_json_pointer': pointer, 'outcomes': outcomes, 'required_credit': 0,
                          'derivation': derivation}
@@ -219,7 +332,10 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             for dimension in dimensions:
                 outcome = common
                 if dimension == 'grounding' and common == 'correct':
-                    supports = [citation_support(r.get('citations', []), key) for r, _ in records]
+                    supports = [combine_grounding(citation_support(r.get('citations', []), key),
+                                                  citations_resolve(r.get('citations', []), target,
+                                                                    artifact, load_bytes))
+                                for r, _ in records]
                     outcome = assessment(supports, [])
                 if missing_conditions and outcome == 'correct':
                     outcome = 'partial'
@@ -280,14 +396,15 @@ def compare(computed, expected):
     return mismatches
 
 
-def regression_self_test(fixture, inventory, extra_claim=False):
+def regression_self_test(fixture, inventory, extra_claim=False, load_bytes=None):
     # Mutate only in memory; keep preserved raw JSON and its hash consistent.
     control_name = "extra-true-answer" if extra_claim else "positive-control"
     control = next(c for c in fixture["controls"] if c["name"] == control_name)
     ran = {'attempted': 1, 'executed': 1, 'planned': 1, 'scored': 1}
     def score(submitted, execution=ran):
         return compute(fixture['source'], fixture['denominators'], inventory,
-                       submitted, dict(control['probe'], actual_execution=execution), control['alignment'])
+                       submitted, dict(control['probe'], actual_execution=execution), control['alignment'],
+                       load_bytes)
     baseline = score(control['submitted'])
     # The control's `expected` reflects its own (zero) execution; the baseline here runs with
     # positive execution, so it is checked against the authored `expected_positive`.
@@ -365,10 +482,97 @@ def regression_self_test(fixture, inventory, extra_claim=False):
             raise ValueError('regression self-test failed: ' + mutation)
         results.append({'mutation': mutation, 'outcomes': outcomes,
                         'mismatches': len(mismatches), 'condition_ledger': computed['condition_ledger']})
+    if not extra_claim:
+        results += citation_controls(fixture, inventory, control, ran, load_bytes)
     return results
 
 
-def generate():
+def citation_controls(fixture, inventory, control, ran, load_bytes):
+    # citation-gap-0206 controls 1-7 on the A0002 claim (/Library/Property[4]/@Name). Expected
+    # outcomes are written here, before the first run, from the design's reasons; they are not
+    # derived from the scorer output.
+    load_bytes = load_bytes or environment_loader
+    claim0 = next(c for c in control['submitted']['answer_record']['claims'] if c['claim_id'] == 'A0002')
+    good = claim0['citations'][0]
+    literal = claim0['answer']
+    artifact = fixture['source']['artifact']
+    real = load_bytes(good)
+    if real is None:
+        raise ValueError('regression self-test: artifact bytes unreachable; set LABVIEW_ENVIRONMENT')
+
+    def run(mutate, loader=load_bytes, key_locator=None):
+        submitted = deepcopy(control['submitted'])
+        claim = next(c for c in submitted['answer_record']['claims'] if c['claim_id'] == 'A0002')
+        mutate(claim)
+        text = json.dumps(submitted['answer_record'], ensure_ascii=False)
+        submitted['raw_answer_record']['text'] = text
+        submitted['raw_answer_record']['sha256'] = digest(text.encode('utf-8'))
+        inv = deepcopy(inventory)
+        key = next(k for k in inv['reference_inventory'] if k['claim_id'] == 'A0002')
+        if key_locator:
+            key['citations'][0]['locator']['expression'] = key_locator
+        computed = compute(fixture['source'], fixture['denominators'], inv, submitted,
+                           dict(control['probe'], actual_execution=ran), control['alignment'], loader)
+        if computed['cannot_evaluate_reasons']:
+            raise ValueError('regression self-test: citation control cannot evaluate')
+        return {d: computed['per_id'][d]['A0002'] for d in ('correctness', 'grounding')}, key
+
+    def locator(expression):
+        def mutate(claim):
+            claim['citations'][0]['locator']['expression'] = expression
+        return mutate
+
+    def wrong_sha(claim):
+        claim['citations'][0]['sha256'] = '0' * 64
+
+    def wrong_literal(claim):
+        claim['answer'] = 'Wrong'
+
+    modified = real + b'\n'  # still parses and resolves to the same text, but different bytes
+
+    def modified_citation(claim):
+        claim['citations'][0]['sha256'] = digest(modified)
+
+    bad = {'correctness': 'correct', 'grounding': 'incorrect'}
+    cases = (
+        (1, 'correct-citation', lambda: run(lambda c: None), {'correctness': 'correct', 'grounding': 'correct'}),
+        (2, 'wrong-locator', lambda: run(locator('/Library/Property[3]/@Name')), bad),
+        (3, 'right-locator-wrong-hash-over-right-bytes', lambda: run(wrong_sha), bad),
+        (3, 'right-locator-modified-bytes-own-hash',
+         lambda: run(modified_citation, lambda c: modified), bad),
+        (4, 'self-consistent-key-wrong-locator',
+         lambda: run(locator('/Library/Property[3]/@Name'), key_locator='/Library/Property[3]/@Name'), bad),
+        (5, 'unresolvable-locator',
+         lambda: run(locator('/Library/NoSuch[1]/@Name'), key_locator='/Library/NoSuch[1]/@Name'), bad),
+        (6, 'artifact-not-available', lambda: run(lambda c: None, lambda c: None),
+         {'correctness': 'correct', 'grounding': 'unverified'}),
+        (7, 'wrong-literal-right-citation', lambda: run(wrong_literal),
+         {'correctness': 'incorrect', 'grounding': 'incorrect'}),
+    )
+    results = []
+    for number, name, act, expected in cases:
+        actual, key = act()
+        if actual != expected:
+            raise ValueError('regression self-test failed: citation control %d %s: %r != %r'
+                             % (number, name, actual, expected))
+        entry = {'citation_control': number, 'name': name, 'expected': expected, 'actual': actual}
+        if number in (4, 5):
+            # The identity-only check passes these: the submission copies the corrupted key citation.
+            copied = [dict(good, locator=dict(good['locator'],
+                                              expression=key['citations'][0]['locator']['expression']))]
+            entry['identity_only_outcome'] = citation_support(copied, key)
+            if entry['identity_only_outcome'] != 'correct':
+                raise ValueError('regression self-test: control %d premise failed' % number)
+        results.append(entry)
+    # The helper called directly agrees with the full scoring path.
+    wrong = dict(good, locator=dict(good['locator'], expression='/Library/Property[3]/@Name'))
+    if (citation_resolves(good, literal, artifact, load_bytes) != 'correct' or
+            citation_resolves(wrong, literal, artifact, load_bytes) != 'incorrect'):
+        raise ValueError('regression self-test failed: citation_resolves direct check')
+    return results
+
+
+def generate(load_bytes=None):
     fixtures = []
     regression_results = []
     extra_regression_results = []
@@ -382,15 +586,15 @@ def generate():
             raise ValueError(fixture_id + ': inventory SHA256 mismatch')
         inventory = json.loads(inventory_bytes)
         if fixture_id == "library-icon-tests":
-            extra_regression_results = regression_self_test(fixture, inventory, extra_claim=True)
+            extra_regression_results = regression_self_test(fixture, inventory, extra_claim=True, load_bytes=load_bytes)
         if fixture_id == 'library-specialty':
-            regression_results = regression_self_test(fixture, inventory)
+            regression_results = regression_self_test(fixture, inventory, load_bytes=load_bytes)
         controls = []
         for control in fixture['controls']:
             # Never pass expected, purpose, evidence, or alignment's authored
             # expected_outcome to the computation function.
             computed = compute(fixture['source'], fixture['denominators'], inventory,
-                               control['submitted'], control['probe'], control['alignment'])
+                               control['submitted'], control['probe'], control['alignment'], load_bytes)
             expected = control['expected']
             mismatches = compare(computed, expected)
             reasons = computed['cannot_evaluate_reasons']

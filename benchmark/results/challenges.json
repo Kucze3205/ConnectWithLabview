@@ -24081,7 +24081,7 @@
       ],
       "fixture_id": "library-icon-tests",
       "path": "benchmark/challenges/library-icon-tests.json",
-      "sha256": "5c1b6873499b08f67c1be60abe73135788b86da5ef70a2696dd57c76c4fc5c57"
+      "sha256": "ff98a13eaa47baa9ffaaded4337def1cc51b81cddffb8348d4d9ca5259d1f202"
     },
     {
       "controls": [
@@ -26595,7 +26595,7 @@
       ],
       "fixture_id": "library-specialty",
       "path": "benchmark/challenges/library-specialty.json",
-      "sha256": "42480b8ca50ed3ad3c2b6a3328992b19e230c65fe87e62ba95968411903fab3f"
+      "sha256": "bc3be21700c201fd3f70dd2ee180b50df2d8f5e66446e8b169be212ecfcc4c83"
     },
     {
       "controls": [
@@ -28094,6 +28094,104 @@
         "correctness": "correct",
         "grounding": "incorrect"
       }
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "correct"
+      },
+      "citation_control": 1,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "correct"
+      },
+      "name": "correct-citation"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "citation_control": 2,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "name": "wrong-locator"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "citation_control": 3,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "name": "right-locator-wrong-hash-over-right-bytes"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "citation_control": 3,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "name": "right-locator-modified-bytes-own-hash"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "citation_control": 4,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "identity_only_outcome": "correct",
+      "name": "self-consistent-key-wrong-locator"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "citation_control": 5,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "identity_only_outcome": "correct",
+      "name": "unresolvable-locator"
+    },
+    {
+      "actual": {
+        "correctness": "correct",
+        "grounding": "unverified"
+      },
+      "citation_control": 6,
+      "expected": {
+        "correctness": "correct",
+        "grounding": "unverified"
+      },
+      "name": "artifact-not-available"
+    },
+    {
+      "actual": {
+        "correctness": "incorrect",
+        "grounding": "incorrect"
+      },
+      "citation_control": 7,
+      "expected": {
+        "correctness": "incorrect",
+        "grounding": "incorrect"
+      },
+      "name": "wrong-literal-right-citation"
     },
     {
       "condition_ledger": [
