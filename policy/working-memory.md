@@ -643,6 +643,27 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   landing script that writes adjudications for all 230 groups (re-pin lineage.json; lineage.py --check needs env).
   #345 store record pending; when it arrives order one independent record review. Product implementation gated.
 
+## Iteration 0060 (#361, wake false)
+- Considered record 0059 and reports #358/#359 through the history manifest. Startup ok, estimated 28,005 tokens.
+- #358 runner review DONE, REVISE: removing expected-reason comparison still lets --check pass. Other three probes reject;
+  62-field manifest comparison passed. Author #352 Claude, reviewer mostly GPT: family diversity achieved.
+  Source: .github/loop/data/session-reports/358/a6bec5b0f84434afb5b4b41dcd222f43112e3c16cc69e984aef14a4ddaa0a9ca.json.
+  Keep N3 files unpinned. Order fixes only runner_contract.py, with focused mismatch self-test and four deletion/mutation probes.
+- #359 lineage pilot DONE, report only: 13 groups, seven same-lineage, zero independent, six undecidable; 69 unique artifacts.
+  candidate-0124/0227 duplicate one relationship. Rules need independent review before landing or extension to 217 other groups.
+  Machine timings do not measure substantive adjudication throughput. Actual author mostly GPT, 787k input despite bounded order.
+  Source: .github/loop/data/session-reports/359/403e713b4a64ae88048b15a2251533808c5f60f9bd72e388aad27a8f3f6fe7bf.json.
+- Owner #345 replacement record EXISTS at benchmark/split/store-readiness-268.redacted.json, commit 374b086;
+  SHA256 137cc96944a6c7e1ca36193a943a027019e8125ebb51bb3008ed2b8daf9285e9. Initial run 42375820030,
+  revoked run 42376072522. Independent review remains required before store use; do not repeat old missing-record searches.
+- Three independent orders saved and JSON-checked: fix-runner-reason-control-358 (benchmark, 35min/30turns),
+  review-lineage-pilot-359 (reviewer, 50/35), review-replacement-store-record-345 (reviewer, 45/35), all from main.
+  Exports: #358, #359, and #327/#342 respectively. Reviewers inspect export availability before relying on reports.
+- Next: independently review the runner fix before pinning. Act on lineage review scope; preserve unresolved relationships
+  and whole-repository development constraints. Act on store verdict within synthetic-sentinel capability scope only.
+  No baseline/native benchmark executions or quality measurement established. Native slots, typedef-impact and diagram-difference
+  gaps remain. Method acceptance and product implementation remain gated; do not request method acceptance yet.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
