@@ -115,24 +115,24 @@ def mutations(manifest, isolation):
     cases = []
     altered = copy.deepcopy(isolation)
     altered["steps"][0]["actual"] = "unexpected"
-    cases.append((altered, "non-null actual"))
+    cases.append((manifest, altered, "non-null actual", "step 0 actual must be null"))
     altered = copy.deepcopy(manifest)
     altered["fields"]["partition"]["value"] = "unknown"
-    cases.append((altered, "unknown partition"))
+    cases.append((altered, isolation, "unknown partition", "fields.partition: unknown partition 'unknown'"))
     altered = copy.deepcopy(isolation)
     altered["steps"].pop()
-    cases.append((altered, "missing step"))
+    cases.append((manifest, altered, "missing step", "exactly five steps required"))
     altered = copy.deepcopy(manifest)
-    altered["fields"]["custodian_label"]["value"] = "ghp_example_token_123456789"
-    cases.append((altered, "token-like string"))
-    for candidate, label in cases:
+    altered["fields"]["custodian_label"]["reason"] = "ghp_example_token_123456789"
+    cases.append((altered, isolation, "token-like string", "token-like value at $.fields.custodian_label.reason"))
+    for candidate_manifest, candidate_isolation, label, expected_reason in cases:
         try:
-            if label == "unknown partition":
-                if candidate["fields"]["partition"]["value"] not in PARTITIONS:
-                    raise AssertionError("partition rejected")
-            validate(candidate if label != "missing step" and label != "non-null actual" else manifest,
-                     candidate if label in {"missing step", "non-null actual"} else isolation)
-        except (AssertionError, KeyError, TypeError):
+            validate(candidate_manifest, candidate_isolation)
+        except AssertionError as exc:
+            if str(exc) != expected_reason:
+                raise AssertionError(
+                    f"mutation {label}: expected {expected_reason!r}, got {str(exc)!r}"
+                ) from exc
             continue
         raise AssertionError(f"mutation was accepted: {label}")
 
