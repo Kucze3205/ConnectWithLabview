@@ -7,6 +7,7 @@ XML credit is conditional on the provisional key; current-evidence credit is
 reported separately. This same-role-family implementation is unreviewed.
 """
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -122,6 +123,7 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
     key_absent = 'independent_key' in evidence_record and evidence_record['independent_key'] is None
     per_id = {d: {} for d in DIMS}
     extras, duplicates, contradictions = [], [], []
+    condition_ledger = []
     details = {d: {} for d in DIMS}
 
     for channel, items, id_field, value_field, dimensions in (
@@ -161,8 +163,22 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
                 key = align.get(identifier)
                 target = key['xml_expected'] if key else None
                 native = key.get('native_reference', 'unavailable') if key else 'unavailable'
+            unsupported_conditions = missing_conditions = False
+            if channel == 'answer' and key is not None:
+                keyed_conditions = set(key.get('conditions', []))
+                for record, pointer in records:
+                    submitted_conditions = record.get('conditions', [])
+                    missing_conditions |= bool(keyed_conditions - set(submitted_conditions))
+                    seen_conditions = set()
+                    for index, condition in enumerate(submitted_conditions):
+                        if condition not in keyed_conditions:
+                            unsupported_conditions = True
+                            if condition not in seen_conditions:
+                                condition_ledger.append({'claim_id': identifier, 'condition': condition,
+                                    'raw_json_pointer': pointer + '/conditions/' + str(index)})
+                                seen_conditions.add(condition)
             common = None
-            if contradiction:
+            if contradiction or unsupported_conditions:
                 common = 'incorrect'
             elif status == 'unsupported' and not records:
                 common = 'unsupported'
@@ -185,6 +201,8 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
                 if dimension == 'grounding' and common == 'correct':
                     supports = [citation_support(r.get('citations', []), key) for r, _ in records]
                     outcome = assessment(supports, [])
+                if missing_conditions and outcome == 'correct':
+                    outcome = 'partial'
                 per_id[dimension][identifier] = outcome
                 details[dimension][identifier] = {'outcome': outcome, 'submitted_values': values,
                     'reference_value': target, 'native_reference': native,
@@ -202,6 +220,7 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             'counts': {d: counts(per_id[d].values()) for d in DIMS},
             'required_ids': required, 'fixed_denominators': {d: len(required[d]) for d in DIMS},
             'extra_counts': {d: counts(extra_values[d]) for d in DIMS},
+            'condition_ledger': condition_ledger,
             'extras_ledger': extras, 'duplicates_ledger': duplicates, 'contradictions_ledger': contradictions,
             'current_evidence_per_id': current, 'current_evidence_dimensions': current_dimensions,
             'details': details, 'cannot_evaluate_reasons': problems,
@@ -211,7 +230,9 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
 
 
 def ledger_projection(entries, kind):
-    if kind == 'extras_ledger':
+    if kind == 'condition_ledger':
+        fields = ('claim_id', 'condition', 'raw_json_pointer')
+    elif kind == 'extras_ledger':
         fields = ('channel', 'assertion_id', 'assertion', 'raw_json_pointer', 'outcomes', 'required_credit', 'derivation')
     else:
         fields = ('channel', 'required_id', 'count', 'raw_json_pointers')
@@ -222,7 +243,7 @@ def compare(computed, expected):
     mismatches = []
     fields = ('per_id', 'dimensions', 'counts', 'required_ids', 'fixed_denominators', 'extra_counts',
               'current_evidence_per_id', 'current_evidence_dimensions',
-              'extras_ledger', 'duplicates_ledger', 'contradictions_ledger')
+              'condition_ledger', 'extras_ledger', 'duplicates_ledger', 'contradictions_ledger')
     def walk(actual, wanted, path):
         if isinstance(actual, dict) and isinstance(wanted, dict):
             for key in sorted(set(actual) | set(wanted)):
@@ -231,15 +252,56 @@ def compare(computed, expected):
             mismatches.append({'location': path, 'computed': actual, 'expected': wanted,
                                'reason': 'Independently computed submission/key result differs from frozen expectation.'})
     for field in fields:
-        actual, wanted = computed[field], expected[field]
+        actual = computed[field]
+        wanted = expected.get(field, []) if field == 'condition_ledger' else expected[field]
         if field.endswith('_ledger'):
             actual, wanted = ledger_projection(actual, field), ledger_projection(wanted, field)
         walk(actual, wanted, '/' + field)
     return mismatches
 
 
+def regression_self_test(fixture, inventory):
+    # Mutate only in memory; keep preserved raw JSON and its hash consistent.
+    control = next(c for c in fixture['controls'] if c['name'] == 'positive-control')
+    def score(submitted):
+        return compute(fixture['source'], fixture['denominators'], inventory,
+                       submitted, control['probe'], control['alignment'])
+    baseline = score(control['submitted'])
+    if baseline['cannot_evaluate_reasons'] or compare(baseline, control['expected']):
+        raise ValueError('regression self-test: positive control does not match')
+    results = []
+    for mutation in ('extra-condition', 'missing-condition', 'wrong-literal',
+                     'missing-claim', 'wrong-citation'):
+        submitted = deepcopy(control['submitted'])
+        claims = submitted['answer_record']['claims']
+        claim = next(c for c in claims if c['claim_id'] == 'A0005')
+        if mutation == 'extra-condition':
+            claim['conditions'].append('Native runtime dependency resolved successfully.')
+        elif mutation == 'missing-condition':
+            claim['conditions'].pop(0)
+        elif mutation == 'wrong-literal':
+            claim['answer'] = 'Deliberately wrong A0005 literal.'
+        elif mutation == 'missing-claim':
+            claims.remove(claim)
+        else:
+            claim['citations'] = deepcopy(next(c for c in claims if c['claim_id'] == 'A0001')['citations'])
+        text = json.dumps(submitted['answer_record'], ensure_ascii=False)
+        submitted['raw_answer_record']['text'] = text
+        submitted['raw_answer_record']['sha256'] = digest(text.encode('utf-8'))
+        computed = score(submitted)
+        outcomes = {d: computed['per_id'][d]['A0005'] for d in ('correctness', 'grounding')}
+        changed = any(value != baseline['per_id'][d]['A0005'] for d, value in outcomes.items())
+        mismatches = compare(computed, control['expected'])
+        if not changed or not mismatches or computed['cannot_evaluate_reasons']:
+            raise ValueError('regression self-test failed: ' + mutation)
+        results.append({'mutation': mutation, 'outcomes': outcomes,
+                        'mismatches': len(mismatches), 'condition_ledger': computed['condition_ledger']})
+    return results
+
+
 def generate():
     fixtures = []
+    regression_results = None
     total = matched = unevaluable = 0
     for fixture_id in FIXTURES:
         path = ROOT / 'benchmark/challenges' / (fixture_id + '.json')
@@ -249,6 +311,8 @@ def generate():
         if digest(inventory_bytes) != fixture['source']['inventory_sha256']:
             raise ValueError(fixture_id + ': inventory SHA256 mismatch')
         inventory = json.loads(inventory_bytes)
+        if fixture_id == 'library-specialty':
+            regression_results = regression_self_test(fixture, inventory)
         controls = []
         for control in fixture['controls']:
             # Never pass expected, purpose, evidence, or alignment's authored
@@ -272,7 +336,7 @@ def generate():
             'method': 'Conditional provisional XML key comparison; native matches stay unverified. Current-evidence view separately retains pending XML review. Synthetic fixture scoring is not reader execution.',
             'totals': {'fixtures': len(fixtures), 'controls': total, 'matches': matched,
                        'mismatches': total - matched, 'cannot_evaluate': unevaluable},
-            'fixtures': fixtures}
+            'regression_self_test': regression_results, 'fixtures': fixtures}
 
 
 def main():
