@@ -150,6 +150,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
   inspect the saved branch yourself with `git show <commit>:<path>` (size, headings, JSON parse). If the outputs look
   complete, order a finishing task only: `start_branch`, `limits.max_turns` at most 20, no rewrite of a saved file, targeted `Edit`
   fixes only, then the checks and the report. Otherwise split by file. Never resume the same full task a third time.
+- **A change to a pinned file checks every live pin map, not one hash.** Its `## Verification` recomputes every entry of
+  each live map that lists a changed file (for example all of `protected_inputs_sha256` in
+  `benchmark/writing/input-pins.json`) against disk and fails on any mismatch. Name the changed files in `## Goal`.
+  Step 4 needed two extra review rounds for stale pins: #857 finding 4 (score.py, challenges.json), then #861
+  finding 1 (`benchmark/preparation.json`, changed by #856, never re-pinned). Historical snapshots stay frozen.
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
 - **Results.** Text and code go to git. Big and binary outputs go to `.session/artifacts/` and a later task lists them

@@ -1,6 +1,16 @@
 # Policy working memory
 
-## Latest: Policymaker #854, iteration 0199 (trigger: new session suggestions)
+## Latest: Policymaker #863, iteration 0201 (trigger: every 3 iterations)
+
+- Considers records 0199/0200 and sessions #855-#857, #859-#861 (.session/history/sessions/<issue>/). Both iterations closed; 0200 accepted/improved; no_progress=0; rollback streak 1 (quiet time, 2026-11-17).
+- #854 tool note worked: #856/#860 benchmark sessions done/merged, #857/#861 reviews done, none stopped on the native-tool message. No suggestion_diagnostics are new (the three listed are the old #787/#837/#851). Keep the note.
+- Step 4 (positive-control #763 f4) took apply #856 -> review #857 NOT-CLEAR (finding 4, stale score.py/challenges.json pins) -> fix #860 -> review #861 NOT-CLEAR (finding 1). I measured it: of 62 `protected_inputs_sha256` entries in benchmark/writing/input-pins.json, only benchmark/preparation.json mismatches (pinned 99069d8d…, disk e304aff0…). The cause is pattern: verification checked only named hashes, not the whole live pin map.
+- Change: execution/roles/orchestrator/SKILL.md "Writing a task" gets one rule: a change to a pinned file has a Verification that recomputes every entry of each live pin map against disk. Expected gain: the next step-4 fix + re-review closes in one iteration and later pinned-file changes need no extra stale-pin review round. Check: next record has a pin task whose Verification loops over the whole map, and the review is CLEAR.
+- Reviewers #857/#861 again ran claude-sonnet-5-5 (task model 'default'), same family as authors. Cause still not established; do not change routing without provider-state evidence. Report same-family review as a limitation.
+- Discovery: `python3 -B benchmark/scripts/check_real_project_0107.py` fails "input-hash:benchmark/writing/README.md"; it pins input-pins.json d6a9914b… (commit 2033c33f state), so it is likely a frozen historical checker like #544. Not verified; do not order work only for it.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing or evaluator change.
+
+## Previous: Policymaker #854, iteration 0199 (trigger: new session suggestions)
 
 - Considers records 0197/0198, sessions #848 (blocked), #852 (partial, artifacts 0, branch task/852 e8c4e3c2), shapers #787/#837/#851 and outboxes iterations/suggestions/{787,837,851}.json. no_progress=7; rollback streak 1 (quiet time).
 - All three suggestions were invalid (loop-state suggestion_diagnostics): `kind` missing, `evidence` a list. Nothing pending to decide; no suggestion-decisions.json written.
