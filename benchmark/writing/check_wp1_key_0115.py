@@ -281,7 +281,7 @@ def check_key(key, ctx, md):
         add('allocation-invented')
     ca = key.get('claim_adjudication', {})
     c1 = ca.get('C1', '')
-    if not c1.startswith('open') or 'No structured flags' not in c1 or 'substring' not in c1:
+    if not c1.startswith('open') or 'no structured flags' not in c1.lower() or 'substring' not in c1:
         add('c1-limit')
     dn = ca.get('required_denominators', {})
     if dn != {'artifact_semantic': len(task['semantic_ids']), 'preservation': len(task['preservation_ids']),
