@@ -1,373 +1,685 @@
 {
   "schema_version": 1,
-  "method": {
-    "selection": "Manifest first; all seven downloaded Actions runs retained separately (attempt 1 each), four report snapshots and four requested records; all four streams unavailable.",
-    "runtime": "Reuse observation 0147 checkpoints, accepted Finish/recovery sequence and outputs_asset findings at runtime pin 510fc5af213cbe9f66dde42a27e3467bc225afcd; no broad history survey or runtime record reread.",
-    "pointers": "JSON pointers use zero-based array indices. Source hashes cover actual staged wrapper bytes; report.snapshot separately identifies the report snapshot, not its wrapper hash.",
-    "timing": "UTC timestamp pairs only; step boundaries are Actions observations, runtime checkpoints are persistence observations. Gaps are elapsed intervals, never agent-active time. Publication counts are final observations with no exact event timestamp.",
-    "cause": "Supported localization is the initial Epilogue command step; cause_status remains undetermined for the underlying error and output loss. Successful transport steps do not prove package completeness or later admission.",
-    "code_checkout": "e066c82bb70fa289e3ba55a2b2d65af4cd5dbc40",
-    "code_sections": [
-      ".github/workflows/session.yml:247-307",
-      ".github/loop/loop.py:903-947",
-      ".github/loop/loop.py:1469-1490",
-      "docs/perpetua/engine.md:301-307"
-    ],
-    "code_limit": "Checkout code explains ordering and channel mapping; exports omit historical workflow revision, step logs and package contents. Do not assign an exception to a particular epilogue function.",
-    "usage": "Request/token continuation deltas unmeasured; aggregate models/turns are not attributable incremental recovery usage. No subscription-quota or monetary inference.",
-    "scope": "Environment audit only. No historical commands, probes, evaluator or native execution replayed; no artifact reconstruction. Benchmark readiness and product quality unmeasured."
-  },
-  "source_hashes": {
+  "method": "Reuse policy-check 0147 checkpoint measurements; join staged Actions run/job/step metadata to report headers and iteration outcome.sessions by issue. Preserve exact JSON pointers and SHA256 bytes. Timestamp differences are wall intervals only, not agent-active time. Read only allowlisted runtime fields at a fixed git pin; no historical command, probe, evaluator, transport or native replay. cause_status describes root cause, not whether the failed step is located.",
+  "checkout": "ffc42fd3e922121d814f5df8f385108b185723f3",
+  "runtime_pin": "510fc5af213cbe9f66dde42a27e3467bc225afcd",
+  "sources": {
     ".session/exports/manifest.json": {
-      "sha256": "9090ae6d4f1cb2664794b4ea7ecb17722d077f63dbd612dc3e67ed09e112d8e5",
-      "bytes": 5599
-    },
-    ".session/issue.md": {
-      "sha256": "3fe6fcd42a2fffdec7e54b013b8bab24e01e871b634f3309f7c1c5dc7b7964f2",
-      "bytes": 5512
-    },
-    ".session/role/SKILL.md": {
-      "sha256": "9abe6992a87c7246727567e26ca244dc2a151915cb9adb0d53db3bf373bdf7f0",
-      "bytes": 2980
+      "availability": "available",
+      "bytes": 5599,
+      "sha256": "9090ae6d4f1cb2664794b4ea7ecb17722d077f63dbd612dc3e67ed09e112d8e5"
     },
     ".session/startup.json": {
-      "sha256": "dee046184e743f0bb3b8d3586537d083dd4d24eb9c3e5216dd07eb7b492de6f5",
-      "bytes": 718
+      "availability": "available",
+      "bytes": 718,
+      "sha256": "aefc7a5d9f8967256e666a81be6aaaaa6a88eb119792e21ceef0452106bc2095"
+    },
+    ".session/issue.md": {
+      "availability": "available",
+      "bytes": 4012,
+      "sha256": "b0f21962f44c78e2e19c56dd58f6669e7875499a44d91380aef6fb8343e58743"
+    },
+    ".session/role/SKILL.md": {
+      "availability": "available",
+      "bytes": 2980,
+      "sha256": "9abe6992a87c7246727567e26ca244dc2a151915cb9adb0d53db3bf373bdf7f0"
     },
     "policy/observations/0147-policy-check.md": {
-      "sha256": "a157cf9f8b4d9b1d3dd8eaa52793fa1ee31e3ed2cb149ceb3c4c0e2752871ec1",
-      "bytes": 12787
+      "availability": "available",
+      "bytes": 12787,
+      "sha256": "a157cf9f8b4d9b1d3dd8eaa52793fa1ee31e3ed2cb149ceb3c4c0e2752871ec1"
     },
     "docs/perpetua/operating-parameters.md": {
-      "sha256": "a2012dd21390e6022961e52dd9b518cee31e54fb9c0ff1e28877fa86bcee6c45",
-      "bytes": 4790
-    },
-    ".github/workflows/session.yml": {
-      "sha256": "fc5ac9ffad086a95eb45552337ac680f1396ea345cbdc2b87340ac9a25b21057",
-      "bytes": 15213
-    },
-    ".github/loop/loop.py": {
-      "sha256": "8299ada31576136767a83f03113cb9c05f314352b5cd62f75915ef3a879f11df",
-      "bytes": 82097
+      "availability": "available",
+      "bytes": 4790,
+      "sha256": "a2012dd21390e6022961e52dd9b518cee31e54fb9c0ff1e28877fa86bcee6c45"
     },
     "docs/perpetua/engine.md": {
-      "sha256": "0e8ac6397d5346163e99097e3240a284646ba6a3f400218231963cb088f297fc",
-      "bytes": 23782
+      "availability": "available",
+      "bytes": 23782,
+      "sha256": "0e8ac6397d5346163e99097e3240a284646ba6a3f400218231963cb088f297fc"
     },
-    ".session/exports/actions/43658484769.json": {
-      "sha256": "5446de90fa56fa7d9f521c607747bab5d7292be66b7a819cf92df6f45d31f778",
-      "bytes": 13369
+    ".github/workflows/session.yml": {
+      "availability": "available",
+      "bytes": 15213,
+      "sha256": "fc5ac9ffad086a95eb45552337ac680f1396ea345cbdc2b87340ac9a25b21057"
     },
-    ".session/exports/actions/43652564966.json": {
-      "sha256": "bd87e058df606642fe37614f5808a0c87144b30bda16689318f07da52159ef0a",
-      "bytes": 13369
-    },
-    ".session/exports/reports/643.json": {
-      "sha256": "4a585f922914b8485afab167e716ded482781b1be2864c978832bca726ce5de9",
-      "bytes": 3290
-    },
-    ".session/exports/records/0138.json": {
-      "sha256": "dbcb4827d0d3ae39bdbf062e71b9b2b1176d535277d3c44b29e75123ddcf159d",
-      "bytes": 24836
-    },
-    ".session/exports/actions/43687899425.json": {
-      "sha256": "9c3a03536a0ecf739da80dc13176301d27d30987965d2427906e02a7e7840059",
-      "bytes": 13369
-    },
-    ".session/exports/actions/43663290752.json": {
-      "sha256": "b3991ceff621c35757e8fce3bb238eaa5aefea34eb4eab35f079e5c3f71e70fe",
-      "bytes": 13369
-    },
-    ".session/exports/reports/653.json": {
-      "sha256": "cc47af88da4c401e8e09e57fc28e93753aa8e161d79fcc3c9b54ca5be15c01cc",
-      "bytes": 3117
-    },
-    ".session/exports/records/0141.json": {
-      "sha256": "ba4237d7555de5690f2f7fa952a51cd185a50a7e68c222342192fa2088913ad6",
-      "bytes": 25542
-    },
-    ".session/exports/actions/43724956130.json": {
-      "sha256": "482d66ab31c72c42628c1b661e322d53f87a1c3e07577ba9bd493dd3381a9457",
-      "bytes": 13368
-    },
-    ".session/exports/actions/43694128074.json": {
-      "sha256": "6aeaa19d27f66e2786a9e3a68581b8cadccb50af07c6ea9e74a43493b642cdd9",
-      "bytes": 13368
-    },
-    ".session/exports/reports/663.json": {
-      "sha256": "0835c20d1c9d1b623dbc60888ba2f12da6b4b61cf891e52361aea1013e0b06b1",
-      "bytes": 3711
-    },
-    ".session/exports/records/0144.json": {
-      "sha256": "f88ff7dd4ce7049eaab27671184772da74b1aad661e325b431825f26bf3dae9a",
-      "bytes": 26311
+    ".github/loop/loop.py": {
+      "availability": "available",
+      "bytes": 82097,
+      "sha256": "8299ada31576136767a83f03113cb9c05f314352b5cd62f75915ef3a879f11df"
     },
     ".session/exports/actions/43728358074.json": {
-      "sha256": "e7e285b0dbe3a3a7a5b43c575994832f63937e154ef33c2d80746fce6fe00a91",
-      "bytes": 13368
+      "availability": "available",
+      "bytes": 13368,
+      "sha256": "e7e285b0dbe3a3a7a5b43c575994832f63937e154ef33c2d80746fce6fe00a91"
+    },
+    ".session/exports/actions/43724956130.json": {
+      "availability": "available",
+      "bytes": 13368,
+      "sha256": "482d66ab31c72c42628c1b661e322d53f87a1c3e07577ba9bd493dd3381a9457"
+    },
+    ".session/exports/actions/43694128074.json": {
+      "availability": "available",
+      "bytes": 13368,
+      "sha256": "6aeaa19d27f66e2786a9e3a68581b8cadccb50af07c6ea9e74a43493b642cdd9"
+    },
+    ".session/exports/actions/43687899425.json": {
+      "availability": "available",
+      "bytes": 13369,
+      "sha256": "9c3a03536a0ecf739da80dc13176301d27d30987965d2427906e02a7e7840059"
+    },
+    ".session/exports/actions/43663290752.json": {
+      "availability": "available",
+      "bytes": 13369,
+      "sha256": "b3991ceff621c35757e8fce3bb238eaa5aefea34eb4eab35f079e5c3f71e70fe"
+    },
+    ".session/exports/actions/43658484769.json": {
+      "availability": "available",
+      "bytes": 13369,
+      "sha256": "5446de90fa56fa7d9f521c607747bab5d7292be66b7a819cf92df6f45d31f778"
+    },
+    ".session/exports/actions/43652564966.json": {
+      "availability": "available",
+      "bytes": 13369,
+      "sha256": "bd87e058df606642fe37614f5808a0c87144b30bda16689318f07da52159ef0a"
+    },
+    ".session/exports/reports/643.json": {
+      "availability": "available",
+      "bytes": 3290,
+      "sha256": "4a585f922914b8485afab167e716ded482781b1be2864c978832bca726ce5de9"
+    },
+    ".session/exports/reports/653.json": {
+      "availability": "available",
+      "bytes": 3117,
+      "sha256": "cc47af88da4c401e8e09e57fc28e93753aa8e161d79fcc3c9b54ca5be15c01cc"
+    },
+    ".session/exports/reports/663.json": {
+      "availability": "available",
+      "bytes": 3711,
+      "sha256": "0835c20d1c9d1b623dbc60888ba2f12da6b4b61cf891e52361aea1013e0b06b1"
     },
     ".session/exports/reports/669.json": {
-      "sha256": "fbcd01592405ea1ad106e8c16af0b9dc9f364ea7e05d91b6f5dd26e2c80e67e1",
-      "bytes": 8216
+      "availability": "available",
+      "bytes": 8216,
+      "sha256": "fbcd01592405ea1ad106e8c16af0b9dc9f364ea7e05d91b6f5dd26e2c80e67e1"
+    },
+    ".session/exports/records/0138.json": {
+      "availability": "available",
+      "bytes": 24836,
+      "sha256": "dbcb4827d0d3ae39bdbf062e71b9b2b1176d535277d3c44b29e75123ddcf159d"
+    },
+    ".session/exports/records/0141.json": {
+      "availability": "available",
+      "bytes": 25542,
+      "sha256": "ba4237d7555de5690f2f7fa952a51cd185a50a7e68c222342192fa2088913ad6"
+    },
+    ".session/exports/records/0144.json": {
+      "availability": "available",
+      "bytes": 26311,
+      "sha256": "f88ff7dd4ce7049eaab27671184772da74b1aad661e325b431825f26bf3dae9a"
     },
     ".session/exports/records/0146.json": {
-      "sha256": "39570245c018f499312469610fc144e5403a75df20af51e494cc716e7dd15e47",
-      "bytes": 26344
+      "availability": "available",
+      "bytes": 26344,
+      "sha256": "39570245c018f499312469610fc144e5403a75df20af51e494cc716e7dd15e47"
+    },
+    "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json": {
+      "availability": "available",
+      "bytes": 263012,
+      "sha256": "176e302f237122196ad05cdd40c96dd8704562e5874eb5b85b8871ac6859f280"
+    },
+    "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json": {
+      "availability": "available",
+      "bytes": 328028,
+      "sha256": "fa58d9d1af63fec62f55aedf3ec9225cd5c8da6ce8d53be18806952b8734cb50"
+    },
+    "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json": {
+      "availability": "available",
+      "bytes": 294513,
+      "sha256": "22c50d9c5e89a8fbc8602342b48337f14c6016cc0c24fd404a624bc0c0f25b72"
+    },
+    "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/669.json": {
+      "availability": "available",
+      "bytes": 226236,
+      "sha256": "6545911ff555605100372471d1dfea849b94af1b308182681a0f0762d1a25474"
     }
   },
+  "availability": [
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 669,
+      "run": 43728358074,
+      "path": "exports/actions/43728358074.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 663,
+      "run": 43724956130,
+      "path": "exports/actions/43724956130.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 663,
+      "run": 43694128074,
+      "path": "exports/actions/43694128074.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 653,
+      "run": 43687899425,
+      "path": "exports/actions/43687899425.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 653,
+      "run": 43663290752,
+      "path": "exports/actions/43663290752.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 643,
+      "run": 43658484769,
+      "path": "exports/actions/43658484769.json"
+    },
+    {
+      "selector": 0,
+      "source": "actions",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 643,
+      "run": 43652564966,
+      "path": "exports/actions/43652564966.json"
+    },
+    {
+      "selector": 1,
+      "source": "streams",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "unavailable",
+      "issue": 643,
+      "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
+    },
+    {
+      "selector": 1,
+      "source": "streams",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "unavailable",
+      "issue": 653,
+      "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
+    },
+    {
+      "selector": 1,
+      "source": "streams",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "unavailable",
+      "issue": 663,
+      "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
+    },
+    {
+      "selector": 1,
+      "source": "streams",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "unavailable",
+      "issue": 669,
+      "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
+    },
+    {
+      "selector": 2,
+      "source": "reports",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 643,
+      "path": "exports/reports/643.json",
+      "snapshot": "ebdfc72f1c91c864041e263d47187b9e8597e8bd8170b90bf9141dfc9faad255"
+    },
+    {
+      "selector": 2,
+      "source": "reports",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 653,
+      "path": "exports/reports/653.json",
+      "snapshot": "82745cc9a27dfb337351a0c8e23193638941239a93278d63c4c95ff0b1a170cd"
+    },
+    {
+      "selector": 2,
+      "source": "reports",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 663,
+      "path": "exports/reports/663.json",
+      "snapshot": "6a6052a8b7f41aa12af62c8571dcd51af1327fbf39f79402b95681520da5ea1d"
+    },
+    {
+      "selector": 2,
+      "source": "reports",
+      "scope": {
+        "sessions": [
+          643,
+          653,
+          663,
+          669
+        ]
+      },
+      "status": "downloaded",
+      "issue": 669,
+      "path": "exports/reports/669.json",
+      "snapshot": "38fc61c9f34a2a7032d89e0c3280bd4b8cf7da1b2fe2cc65743c577f90c9ae6e"
+    },
+    {
+      "selector": 3,
+      "source": "records",
+      "scope": {
+        "iterations": [
+          138,
+          141,
+          144,
+          146
+        ]
+      },
+      "status": "downloaded",
+      "iteration": 138,
+      "path": "exports/records/0138.json",
+      "snapshot": "dbcb4827d0d3ae39bdbf062e71b9b2b1176d535277d3c44b29e75123ddcf159d"
+    },
+    {
+      "selector": 3,
+      "source": "records",
+      "scope": {
+        "iterations": [
+          138,
+          141,
+          144,
+          146
+        ]
+      },
+      "status": "downloaded",
+      "iteration": 141,
+      "path": "exports/records/0141.json",
+      "snapshot": "ba4237d7555de5690f2f7fa952a51cd185a50a7e68c222342192fa2088913ad6"
+    },
+    {
+      "selector": 3,
+      "source": "records",
+      "scope": {
+        "iterations": [
+          138,
+          141,
+          144,
+          146
+        ]
+      },
+      "status": "downloaded",
+      "iteration": 144,
+      "path": "exports/records/0144.json",
+      "snapshot": "f88ff7dd4ce7049eaab27671184772da74b1aad661e325b431825f26bf3dae9a"
+    },
+    {
+      "selector": 3,
+      "source": "records",
+      "scope": {
+        "iterations": [
+          138,
+          141,
+          144,
+          146
+        ]
+      },
+      "status": "downloaded",
+      "iteration": 146,
+      "path": "exports/records/0146.json",
+      "snapshot": "39570245c018f499312469610fc144e5403a75df20af51e494cc716e7dd15e47"
+    }
+  ],
+  "source_interpretation": "Manifest report/record snapshot identifiers and actual staged-file SHA256 values are retained separately; they need not match because the staged JSON is a wrapper. Stream absence has multiple possible causes. Source-code hashes describe the audit checkout, not a proven checkout of every historical run.",
+  "source_sections": [
+    "docs/perpetua/engine.md:301-307",
+    ".github/workflows/session.yml:247-307",
+    ".github/loop/loop.py:903-947",
+    ".github/loop/loop.py:1449-1465"
+  ],
   "sessions": {
     "643": {
       "cause_status": "undetermined",
-      "cause_scope": "Underlying epilogue error and mechanism/timing of missing output; successful control has no observed failure.",
-      "availability": [
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 643,
-          "run": 43658484769,
-          "path": "exports/actions/43658484769.json"
-        },
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 643,
-          "run": 43652564966,
-          "path": "exports/actions/43652564966.json"
-        },
-        {
-          "selector": 1,
-          "source": "streams",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "unavailable",
-          "issue": 643,
-          "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
-        },
-        {
-          "selector": 2,
-          "source": "reports",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 643,
-          "path": "exports/reports/643.json",
-          "snapshot": "ebdfc72f1c91c864041e263d47187b9e8597e8bd8170b90bf9141dfc9faad255"
-        },
-        {
-          "selector": 3,
-          "source": "records",
-          "scope": {
-            "iterations": [
-              138,
-              141,
-              144,
-              146
-            ]
-          },
-          "status": "downloaded",
-          "iteration": 138,
-          "path": "exports/records/0138.json",
-          "snapshot": "dbcb4827d0d3ae39bdbf062e71b9b2b1176d535277d3c44b29e75123ddcf159d"
-        }
-      ],
+      "failure_location": "Supported failed step: original Epilogue; exception/root cause and artifact-loss mechanism undetermined.",
       "evidence": [
-        ".session/exports/manifest.json#/results",
-        "policy/observations/0147-policy-check.md:49-59",
-        "policy/observations/0147-policy-check.md:53",
-        ".session/exports/actions/43658484769.json#/jobs/3",
-        ".session/exports/actions/43658484769.json#/jobs/5",
-        ".session/exports/actions/43652564966.json#/jobs/3",
-        ".session/exports/actions/43652564966.json#/jobs/5",
+        "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence",
+        ".session/exports/records/0138.json#/outcome/sessions/0",
         ".session/exports/reports/643.json#/body",
-        ".session/exports/records/0138.json#/outcome/sessions/0"
+        "https://github.com/Kucze3205/ConnectWithLabview/issues/643#issuecomment-6885966434",
+        ".session/exports/actions/43658484769.json#",
+        ".session/exports/actions/43652564966.json#",
+        "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json#/history"
       ],
       "missing": [
-        "Diagnostic stream unavailable; catalogue absence does not distinguish pruning, expiry or non-upload.",
-        "No staged Actions step logs, failure annotations, traceback or results package bytes/inventory.",
-        "No independently timestamped final release-asset publication event.",
-        "Actions exports supply updated_at, not completed_at for workflows; exact workflow completion time unavailable.",
-        "Historical workflow/code revision not supplied by Actions exports; checkout code is explanatory only.",
-        "Continuation-only model request count and tokens unmeasured; staged records aggregate session usage.",
-        "Exact report/artifact disappearance time and original packaged content; no artifacts reconstructed."
+        "All selected stream exports unavailable; absence does not distinguish retention, expiry or upload failure.",
+        "Original result bundle contents, pack inventory, tree admission diagnostics and epilogue exception logs are not staged.",
+        "Exact publication time and per-transition artifact inventory are unavailable.",
+        "Continuation-only tokens are unmeasured: available usage is cumulative and no checkpoint usage delta is reused here. Tokens do not measure subscription quota or money.",
+        "Exact report/artifact disappearance time and causal link between epilogue failure and missing recovery files are undetermined.",
+        "Watchdog decisions and other concurrent commitments are not staged; recovery delay cause is undetermined."
       ],
       "durations": [
         {
-          "name": "runtime checkpoint gap (not agent-active time)",
-          "start": "2026-11-14T23:34:33Z",
-          "end": "2026-11-15T00:33:13Z",
-          "seconds": 3520.0,
-          "evidence": "policy/observations/0147-policy-check.md:53"
+          "name": "run 43658484769 created-to-updated (metadata interval)",
+          "start": "2026-11-15T00:30:14Z",
+          "end": "2026-11-15T00:35:36Z",
+          "seconds": 322.0,
+          "evidence": ".session/exports/actions/43658484769.json#"
         },
         {
-          "name": "43658484769 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43658484769 job 132642852173 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T00:32:29Z",
           "end": "2026-11-15T00:32:30Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/1"
         },
         {
-          "name": "43658484769 / session / step[5] Routed session",
+          "name": "run 43658484769 job 132642852173 step 5: Routed session",
           "start": "2026-11-15T00:32:40Z",
           "end": "2026-11-15T00:33:00Z",
           "seconds": 20.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/5"
         },
         {
-          "name": "43658484769 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43658484769 job 132642852173 step 6: Session",
+          "start": "2026-11-15T00:33:00Z",
+          "end": "2026-11-15T00:33:00Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43658484769 job 132642852173 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T00:33:00Z",
           "end": "2026-11-15T00:33:00Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/8"
         },
         {
-          "name": "43658484769 / session / step[9] Pack the results",
+          "name": "run 43658484769 job 132642852173 step 9: Pack the results",
           "start": "2026-11-15T00:33:00Z",
           "end": "2026-11-15T00:33:00Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/9"
         },
         {
-          "name": "43658484769 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43658484769 job 132642852173 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T00:33:00Z",
           "end": "2026-11-15T00:33:02Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/10"
         },
         {
-          "name": "43658484769 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43658484769 job 132643019308 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T00:33:08Z",
           "end": "2026-11-15T00:33:09Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/2"
         },
         {
-          "name": "43658484769 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43658484769 job 132643019308 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T00:33:09Z",
           "end": "2026-11-15T00:33:10Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/3"
         },
         {
-          "name": "43658484769 / epilogue / step[4] Epilogue",
+          "name": "run 43658484769 job 132643019308 step 4: Epilogue",
           "start": "2026-11-15T00:33:10Z",
           "end": "2026-11-15T00:35:34Z",
           "seconds": 144.0,
           "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/4"
         },
         {
-          "name": "43652564966 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43652564966 created-to-updated (metadata interval)",
+          "start": "2026-11-14T23:18:25Z",
+          "end": "2026-11-14T23:34:51Z",
+          "seconds": 986.0,
+          "evidence": ".session/exports/actions/43652564966.json#"
+        },
+        {
+          "name": "run 43652564966 job 132624659561 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-14T23:20:52Z",
           "end": "2026-11-14T23:20:53Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/1"
         },
         {
-          "name": "43652564966 / session / step[5] Routed session",
+          "name": "run 43652564966 job 132624659561 step 5: Routed session",
           "start": "2026-11-14T23:21:04Z",
           "end": "2026-11-14T23:34:12Z",
           "seconds": 788.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/5"
         },
         {
-          "name": "43652564966 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43652564966 job 132624659561 step 6: Session",
+          "start": "2026-11-14T23:34:12Z",
+          "end": "2026-11-14T23:34:12Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43652564966 job 132624659561 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-14T23:34:12Z",
           "end": "2026-11-14T23:34:12Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/8"
         },
         {
-          "name": "43652564966 / session / step[9] Pack the results",
+          "name": "run 43652564966 job 132624659561 step 9: Pack the results",
           "start": "2026-11-14T23:34:12Z",
           "end": "2026-11-14T23:34:12Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/9"
         },
         {
-          "name": "43652564966 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43652564966 job 132624659561 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-14T23:34:12Z",
           "end": "2026-11-14T23:34:14Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/10"
         },
         {
-          "name": "43652564966 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43652564966 job 132628109954 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-14T23:34:22Z",
           "end": "2026-11-14T23:34:24Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/2"
         },
         {
-          "name": "43652564966 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43652564966 job 132628109954 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-14T23:34:24Z",
           "end": "2026-11-14T23:34:25Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/3"
         },
         {
-          "name": "43652564966 / epilogue / step[4] Epilogue",
+          "name": "run 43652564966 job 132628109954 step 4: Epilogue",
           "start": "2026-11-14T23:34:25Z",
           "end": "2026-11-14T23:34:48Z",
           "seconds": 23.0,
           "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/4"
         },
         {
-          "name": "initial failed Epilogue step end to reported kick (elapsed only)",
-          "start": "2026-11-14T23:34:48Z",
-          "end": "2026-11-15T00:30:08Z",
-          "seconds": 3320.0,
-          "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/4; .session/exports/reports/643.json#/body"
+          "name": "first-to-later checkpoint gap; not agent-active time",
+          "start": "2026-11-14T23:34:33Z",
+          "end": "2026-11-15T00:33:13Z",
+          "seconds": 3520.0,
+          "evidence": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
         },
         {
-          "name": "reported kick to recovery run creation",
-          "start": "2026-11-15T00:30:08Z",
-          "end": "2026-11-15T00:30:14Z",
-          "seconds": 6.0,
-          "evidence": ".session/exports/reports/643.json#/body; .session/exports/actions/43658484769.json#/created_at"
+          "name": "original run updated to recorded kick; not proven watchdog wait",
+          "start": "2026-11-14T23:34:51Z",
+          "end": "2026-11-15T00:30:08Z",
+          "seconds": 3317.0,
+          "evidence": [
+            ".session/exports/actions/43652564966.json#",
+            ".session/exports/reports/643.json#/body"
+          ]
         }
       ],
       "runs": [
         {
           "id": 43652564966,
-          "run_attempt": 1,
+          "name": "session #643 \u00b7 benchmark",
           "status": "completed",
           "conclusion": "failure",
           "created_at": "2026-11-14T23:18:25Z",
           "run_started_at": "2026-11-14T23:18:25Z",
           "updated_at": "2026-11-14T23:34:51Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966",
-          "phase": "initial",
-          "evidence": ".session/exports/actions/43652564966.json",
+          "source": ".session/exports/actions/43652564966.json#",
           "jobs": [
+            {
+              "id": 132624043582,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-14T23:18:28Z",
+              "completed_at": "2026-11-14T23:18:42Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132624043582",
+              "source": ".session/exports/actions/43652564966.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132624116040,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-14T23:18:47Z",
+              "completed_at": "2026-11-14T23:19:05Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132624116040",
+              "source": ".session/exports/actions/43652564966.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132624217040,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-14T23:19:08Z",
+              "completed_at": "2026-11-14T23:20:47Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132624217040",
+              "source": ".session/exports/actions/43652564966.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132624659561,
               "name": "session",
@@ -375,7 +687,8 @@
               "conclusion": "success",
               "started_at": "2026-11-14T23:20:51Z",
               "completed_at": "2026-11-14T23:34:15Z",
-              "evidence": ".session/exports/actions/43652564966.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132624659561",
+              "source": ".session/exports/actions/43652564966.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -383,9 +696,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:20:52Z",
                   "completed_at": "2026-11-14T23:20:53Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -393,8 +704,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:21:04Z",
                   "completed_at": "2026-11-14T23:34:12Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-14T23:34:12Z",
+                  "completed_at": "2026-11-14T23:34:12Z",
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -402,9 +720,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:34:12Z",
                   "completed_at": "2026-11-14T23:34:12Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -412,8 +728,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:34:12Z",
                   "completed_at": "2026-11-14T23:34:12Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -421,11 +736,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:34:12Z",
                   "completed_at": "2026-11-14T23:34:14Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132624660425,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-14T23:20:47Z",
+              "completed_at": "2026-11-14T23:20:47Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132624660425",
+              "source": ".session/exports/actions/43652564966.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132628109954,
@@ -434,7 +758,8 @@
               "conclusion": "failure",
               "started_at": "2026-11-14T23:34:17Z",
               "completed_at": "2026-11-14T23:34:51Z",
-              "evidence": ".session/exports/actions/43652564966.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43652564966/job/132628109954",
+              "source": ".session/exports/actions/43652564966.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -442,9 +767,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:34:22Z",
                   "completed_at": "2026-11-14T23:34:24Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -452,9 +775,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-14T23:34:24Z",
                   "completed_at": "2026-11-14T23:34:25Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -462,8 +783,7 @@
                   "conclusion": "failure",
                   "started_at": "2026-11-14T23:34:25Z",
                   "completed_at": "2026-11-14T23:34:48Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43652564966.json#/jobs/5/steps/4"
                 }
               ]
             }
@@ -471,16 +791,49 @@
         },
         {
           "id": 43658484769,
-          "run_attempt": 1,
+          "name": "session #643 \u00b7 benchmark",
           "status": "completed",
           "conclusion": "success",
           "created_at": "2026-11-15T00:30:14Z",
           "run_started_at": "2026-11-15T00:30:14Z",
           "updated_at": "2026-11-15T00:35:36Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769",
-          "phase": "recovery",
-          "evidence": ".session/exports/actions/43658484769.json",
+          "source": ".session/exports/actions/43658484769.json#",
           "jobs": [
+            {
+              "id": 132642286323,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T00:30:18Z",
+              "completed_at": "2026-11-15T00:30:27Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132642286323",
+              "source": ".session/exports/actions/43658484769.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132642336283,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T00:30:31Z",
+              "completed_at": "2026-11-15T00:30:44Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132642336283",
+              "source": ".session/exports/actions/43658484769.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132642414451,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T00:30:46Z",
+              "completed_at": "2026-11-15T00:32:23Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132642414451",
+              "source": ".session/exports/actions/43658484769.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132642852173,
               "name": "session",
@@ -488,7 +841,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T00:32:28Z",
               "completed_at": "2026-11-15T00:33:03Z",
-              "evidence": ".session/exports/actions/43658484769.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132642852173",
+              "source": ".session/exports/actions/43658484769.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -496,9 +850,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:32:29Z",
                   "completed_at": "2026-11-15T00:32:30Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -506,8 +858,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:32:40Z",
                   "completed_at": "2026-11-15T00:33:00Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T00:33:00Z",
+                  "completed_at": "2026-11-15T00:33:00Z",
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -515,9 +874,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:00Z",
                   "completed_at": "2026-11-15T00:33:00Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -525,8 +882,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:00Z",
                   "completed_at": "2026-11-15T00:33:00Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -534,11 +890,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:00Z",
                   "completed_at": "2026-11-15T00:33:02Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132642853189,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T00:32:24Z",
+              "completed_at": "2026-11-15T00:32:24Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132642853189",
+              "source": ".session/exports/actions/43658484769.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132643019308,
@@ -547,7 +912,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T00:33:05Z",
               "completed_at": "2026-11-15T00:35:36Z",
-              "evidence": ".session/exports/actions/43658484769.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43658484769/job/132643019308",
+              "source": ".session/exports/actions/43658484769.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -555,9 +921,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:08Z",
                   "completed_at": "2026-11-15T00:33:09Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -565,9 +929,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:09Z",
                   "completed_at": "2026-11-15T00:33:10Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -575,327 +937,348 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T00:33:10Z",
                   "completed_at": "2026-11-15T00:35:34Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43658484769.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43658484769.json#/jobs/5/steps/4"
                 }
               ]
             }
           ]
         }
       ],
+      "timeline": [
+        {
+          "event": "First checkpoint already contains accepted Finish and final result; timestamp reused from policy measurement (not tool execution time)",
+          "at": "2026-11-14T23:34:33Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Original workflow fails in Epilogue after successful results upload and both downloads",
+          "at": "2026-11-14T23:34:48Z",
+          "source": ".session/exports/actions/43652564966.json#/jobs/5/steps/4"
+        },
+        {
+          "event": "Report records one kick",
+          "at": "2026-11-15T00:30:08Z",
+          "source": ".session/exports/reports/643.json#/body"
+        },
+        {
+          "event": "Later checkpoint contains report recreation and accepted Finish",
+          "at": "2026-11-15T00:33:13Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Published report and final artifact count confirmed by staged report/record; exact publication time unavailable",
+          "at": null,
+          "source": [
+            ".session/exports/records/0138.json#/outcome/sessions/0",
+            ".session/exports/reports/643.json#/body"
+          ]
+        }
+      ],
       "runtime": {
-        "pin": "510fc5af213cbe9f66dde42a27e3467bc225afcd",
-        "record": "sessions/643.json",
-        "measurement_source": "policy/observations/0147-policy-check.md:49-59",
+        "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json",
         "outputs_asset": null,
-        "outputs_asset_diagnostic": false,
-        "first_final_checkpoint": "2026-11-14T23:34:33Z",
-        "later_final_checkpoint": "2026-11-15T00:33:13Z",
-        "first_finish_accepted": true,
-        "recovery_history": [
-          "Finish rejected: Use Write to create .session/report.md before Finish",
-          "Write report",
-          "Finish accepted"
+        "final_status": "partial",
+        "history_actions": [
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "partial",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json#/history/30",
+            "outcome_status": "partial",
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "partial",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json#/history/31",
+            "outcome_status": null,
+            "rejected_missing_report": true
+          },
+          {
+            "tool": "Write",
+            "path": ".session/report.md",
+            "status": "",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json#/history/32",
+            "outcome_status": null,
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "partial",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/643.json#/history/33",
+            "outcome_status": "partial",
+            "rejected_missing_report": false
+          }
         ],
-        "finish_status": "partial"
+        "usage_scope": "Cumulative session usage only; no continuation attribution."
       },
-      "extra_continuation_usage": {
-        "requests": null,
-        "tokens": null,
-        "status": "unmeasured; no request-level or checkpoint usage delta measured"
-      },
-      "report": {
-        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/643#issuecomment-6885966434",
-        "comment": 6885966434,
-        "snapshot": "ebdfc72f1c91c864041e263d47187b9e8597e8bd8170b90bf9141dfc9faad255",
-        "evidence": ".session/exports/reports/643.json#/body",
-        "kick": "2026-11-15T00:30:08Z",
-        "kick_count": 1,
-        "note": "No kick field in control report; no-kick finding also comes from policy observation."
-      },
-      "record": {
-        "status": "partial",
-        "artifacts": 0,
+      "checkpoint_timestamp_interpretation": "Policy-saved checkpoint/commit timestamps, not exact Finish action timestamps; full first checkpoint records not reread.",
+      "saved_metrics": {
         "agent_s": 19,
         "gate_s": 0,
         "total_s": 46,
         "parked_s": 0,
+        "artifacts": 0,
         "turns": 34,
-        "iteration": 138,
-        "iteration_ended": "2026-11-15T00:33:36Z",
-        "engine_version": "0.7.1",
-        "evidence": ".session/exports/records/0138.json#/outcome/sessions/0",
-        "timing_note": "Existing record values reused; not lifetime elapsed time or continuation usage attribution."
+        "tokens": {
+          "in": 1793626,
+          "out": 32886,
+          "cache_read": 2083405,
+          "cache_write": 213794
+        },
+        "models": {
+          "claude/claude-sonnet-5-5": {
+            "cache_read": 412109,
+            "cache_write": 213794,
+            "in": 16,
+            "out": 3734
+          },
+          "codex/gpt-6.1-sol": {
+            "cache_read": 1671296,
+            "cache_write": 0,
+            "in": 1793610,
+            "out": 29152
+          }
+        },
+        "status": "partial",
+        "commit": "a59d88d"
       },
-      "publication": {
-        "observed_artifacts": 0,
-        "timestamp": null,
-        "evidence": ".session/exports/records/0138.json#/outcome/sessions/0",
-        "status": "zero final artifacts recorded"
-      },
-      "observed_failure": {
-        "status": "supported",
-        "stage": "Epilogue command step after successful results packaging/upload and both epilogue downloads",
-        "run": 43652564966,
-        "job": 132628109954,
-        "start": "2026-11-14T23:34:25Z",
-        "end": "2026-11-14T23:34:48Z",
-        "evidence": ".session/exports/actions/43652564966.json#/jobs/5/steps/4",
-        "limit": "Step spans pip install, git-identity and epilogue command; failing subcommand/exception unavailable."
+      "metrics_interpretation": "Reuse recorded values without summing checkpoint gaps or treating short final-run measurements as lifetime agent time.",
+      "report": {
+        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/643#issuecomment-6885966434",
+        "snapshot": "ebdfc72f1c91c864041e263d47187b9e8597e8bd8170b90bf9141dfc9faad255",
+        "kicks": 1,
+        "kicked": "2026-11-15T00:30:08Z",
+        "artifact_entries": []
       }
     },
     "653": {
       "cause_status": "undetermined",
-      "cause_scope": "Underlying epilogue error and mechanism/timing of missing output; successful control has no observed failure.",
-      "availability": [
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 653,
-          "run": 43687899425,
-          "path": "exports/actions/43687899425.json"
-        },
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 653,
-          "run": 43663290752,
-          "path": "exports/actions/43663290752.json"
-        },
-        {
-          "selector": 1,
-          "source": "streams",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "unavailable",
-          "issue": 653,
-          "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
-        },
-        {
-          "selector": 2,
-          "source": "reports",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 653,
-          "path": "exports/reports/653.json",
-          "snapshot": "82745cc9a27dfb337351a0c8e23193638941239a93278d63c4c95ff0b1a170cd"
-        },
-        {
-          "selector": 3,
-          "source": "records",
-          "scope": {
-            "iterations": [
-              138,
-              141,
-              144,
-              146
-            ]
-          },
-          "status": "downloaded",
-          "iteration": 141,
-          "path": "exports/records/0141.json",
-          "snapshot": "ba4237d7555de5690f2f7fa952a51cd185a50a7e68c222342192fa2088913ad6"
-        }
-      ],
+      "failure_location": "Supported failed step: original Epilogue; exception/root cause and artifact-loss mechanism undetermined.",
       "evidence": [
-        ".session/exports/manifest.json#/results",
-        "policy/observations/0147-policy-check.md:49-59",
-        "policy/observations/0147-policy-check.md:54",
-        ".session/exports/actions/43687899425.json#/jobs/3",
-        ".session/exports/actions/43687899425.json#/jobs/5",
-        ".session/exports/actions/43663290752.json#/jobs/3",
-        ".session/exports/actions/43663290752.json#/jobs/5",
+        "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence",
+        ".session/exports/records/0141.json#/outcome/sessions/0",
         ".session/exports/reports/653.json#/body",
-        ".session/exports/records/0141.json#/outcome/sessions/0"
+        "https://github.com/Kucze3205/ConnectWithLabview/issues/653#issuecomment-6887461142",
+        ".session/exports/actions/43687899425.json#",
+        ".session/exports/actions/43663290752.json#",
+        "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json#/history"
       ],
       "missing": [
-        "Diagnostic stream unavailable; catalogue absence does not distinguish pruning, expiry or non-upload.",
-        "No staged Actions step logs, failure annotations, traceback or results package bytes/inventory.",
-        "No independently timestamped final release-asset publication event.",
-        "Actions exports supply updated_at, not completed_at for workflows; exact workflow completion time unavailable.",
-        "Historical workflow/code revision not supplied by Actions exports; checkout code is explanatory only.",
-        "Continuation-only model request count and tokens unmeasured; staged records aggregate session usage.",
-        "Exact report/artifact disappearance time and original packaged content; no artifacts reconstructed."
+        "All selected stream exports unavailable; absence does not distinguish retention, expiry or upload failure.",
+        "Original result bundle contents, pack inventory, tree admission diagnostics and epilogue exception logs are not staged.",
+        "Exact publication time and per-transition artifact inventory are unavailable.",
+        "Continuation-only tokens are unmeasured: available usage is cumulative and no checkpoint usage delta is reused here. Tokens do not measure subscription quota or money.",
+        "Exact report/artifact disappearance time and causal link between epilogue failure and missing recovery files are undetermined.",
+        "Watchdog decisions and other concurrent commitments are not staged; recovery delay cause is undetermined."
       ],
       "durations": [
         {
-          "name": "runtime checkpoint gap (not agent-active time)",
-          "start": "2026-11-15T01:42:29Z",
-          "end": "2026-11-15T07:02:51Z",
-          "seconds": 19222.0,
-          "evidence": "policy/observations/0147-policy-check.md:54"
+          "name": "run 43687899425 created-to-updated (metadata interval)",
+          "start": "2026-11-15T06:59:35Z",
+          "end": "2026-11-15T07:06:07Z",
+          "seconds": 392.0,
+          "evidence": ".session/exports/actions/43687899425.json#"
         },
         {
-          "name": "43687899425 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43687899425 job 132732651252 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T07:01:56Z",
           "end": "2026-11-15T07:02:01Z",
           "seconds": 5.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/1"
         },
         {
-          "name": "43687899425 / session / step[5] Routed session",
+          "name": "run 43687899425 job 132732651252 step 5: Routed session",
           "start": "2026-11-15T07:02:18Z",
           "end": "2026-11-15T07:02:35Z",
           "seconds": 17.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/5"
         },
         {
-          "name": "43687899425 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43687899425 job 132732651252 step 6: Session",
+          "start": "2026-11-15T07:02:35Z",
+          "end": "2026-11-15T07:02:35Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43687899425 job 132732651252 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T07:02:35Z",
           "end": "2026-11-15T07:02:35Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/8"
         },
         {
-          "name": "43687899425 / session / step[9] Pack the results",
+          "name": "run 43687899425 job 132732651252 step 9: Pack the results",
           "start": "2026-11-15T07:02:35Z",
           "end": "2026-11-15T07:02:35Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/9"
         },
         {
-          "name": "43687899425 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43687899425 job 132732651252 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T07:02:35Z",
           "end": "2026-11-15T07:02:38Z",
           "seconds": 3.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/10"
         },
         {
-          "name": "43687899425 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43687899425 job 132732858094 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T07:02:46Z",
           "end": "2026-11-15T07:02:47Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/2"
         },
         {
-          "name": "43687899425 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43687899425 job 132732858094 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T07:02:47Z",
           "end": "2026-11-15T07:02:47Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/3"
         },
         {
-          "name": "43687899425 / epilogue / step[4] Epilogue",
+          "name": "run 43687899425 job 132732858094 step 4: Epilogue",
           "start": "2026-11-15T07:02:47Z",
           "end": "2026-11-15T07:06:04Z",
           "seconds": 197.0,
           "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/4"
         },
         {
-          "name": "43663290752 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43663290752 created-to-updated (metadata interval)",
+          "start": "2026-11-15T01:29:04Z",
+          "end": "2026-11-15T01:42:51Z",
+          "seconds": 827.0,
+          "evidence": ".session/exports/actions/43663290752.json#"
+        },
+        {
+          "name": "run 43663290752 job 132657676031 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T01:31:28Z",
           "end": "2026-11-15T01:31:29Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/1"
         },
         {
-          "name": "43663290752 / session / step[5] Routed session",
+          "name": "run 43663290752 job 132657676031 step 5: Routed session",
           "start": "2026-11-15T01:31:44Z",
           "end": "2026-11-15T01:42:13Z",
           "seconds": 629.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/5"
         },
         {
-          "name": "43663290752 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43663290752 job 132657676031 step 6: Session",
+          "start": "2026-11-15T01:42:13Z",
+          "end": "2026-11-15T01:42:13Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43663290752 job 132657676031 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T01:42:13Z",
           "end": "2026-11-15T01:42:13Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/8"
         },
         {
-          "name": "43663290752 / session / step[9] Pack the results",
+          "name": "run 43663290752 job 132657676031 step 9: Pack the results",
           "start": "2026-11-15T01:42:13Z",
           "end": "2026-11-15T01:42:13Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/9"
         },
         {
-          "name": "43663290752 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43663290752 job 132657676031 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T01:42:13Z",
           "end": "2026-11-15T01:42:15Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/10"
         },
         {
-          "name": "43663290752 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43663290752 job 132660262717 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T01:42:22Z",
           "end": "2026-11-15T01:42:24Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/2"
         },
         {
-          "name": "43663290752 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43663290752 job 132660262717 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T01:42:24Z",
           "end": "2026-11-15T01:42:25Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/3"
         },
         {
-          "name": "43663290752 / epilogue / step[4] Epilogue",
+          "name": "run 43663290752 job 132660262717 step 4: Epilogue",
           "start": "2026-11-15T01:42:25Z",
           "end": "2026-11-15T01:42:47Z",
           "seconds": 22.0,
           "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/4"
         },
         {
-          "name": "initial failed Epilogue step end to reported kick (elapsed only)",
-          "start": "2026-11-15T01:42:47Z",
-          "end": "2026-11-15T06:59:29Z",
-          "seconds": 19002.0,
-          "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/4; .session/exports/reports/653.json#/body"
+          "name": "first-to-later checkpoint gap; not agent-active time",
+          "start": "2026-11-15T01:42:29Z",
+          "end": "2026-11-15T07:02:51Z",
+          "seconds": 19222.0,
+          "evidence": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
         },
         {
-          "name": "reported kick to recovery run creation",
-          "start": "2026-11-15T06:59:29Z",
-          "end": "2026-11-15T06:59:35Z",
-          "seconds": 6.0,
-          "evidence": ".session/exports/reports/653.json#/body; .session/exports/actions/43687899425.json#/created_at"
+          "name": "original run updated to recorded kick; not proven watchdog wait",
+          "start": "2026-11-15T01:42:51Z",
+          "end": "2026-11-15T06:59:29Z",
+          "seconds": 18998.0,
+          "evidence": [
+            ".session/exports/actions/43663290752.json#",
+            ".session/exports/reports/653.json#/body"
+          ]
         }
       ],
       "runs": [
         {
           "id": 43663290752,
-          "run_attempt": 1,
+          "name": "session #653 \u00b7 benchmark",
           "status": "completed",
           "conclusion": "failure",
           "created_at": "2026-11-15T01:29:04Z",
           "run_started_at": "2026-11-15T01:29:04Z",
           "updated_at": "2026-11-15T01:42:51Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752",
-          "phase": "initial",
-          "evidence": ".session/exports/actions/43663290752.json",
+          "source": ".session/exports/actions/43663290752.json#",
           "jobs": [
+            {
+              "id": 132657119146,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T01:29:07Z",
+              "completed_at": "2026-11-15T01:29:21Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132657119146",
+              "source": ".session/exports/actions/43663290752.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132657183091,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T01:29:25Z",
+              "completed_at": "2026-11-15T01:29:43Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132657183091",
+              "source": ".session/exports/actions/43663290752.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132657265654,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T01:29:45Z",
+              "completed_at": "2026-11-15T01:31:22Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132657265654",
+              "source": ".session/exports/actions/43663290752.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132657676031,
               "name": "session",
@@ -903,7 +1286,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T01:31:26Z",
               "completed_at": "2026-11-15T01:42:16Z",
-              "evidence": ".session/exports/actions/43663290752.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132657676031",
+              "source": ".session/exports/actions/43663290752.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -911,9 +1295,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:31:28Z",
                   "completed_at": "2026-11-15T01:31:29Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -921,8 +1303,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:31:44Z",
                   "completed_at": "2026-11-15T01:42:13Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T01:42:13Z",
+                  "completed_at": "2026-11-15T01:42:13Z",
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -930,9 +1319,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:42:13Z",
                   "completed_at": "2026-11-15T01:42:13Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -940,8 +1327,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:42:13Z",
                   "completed_at": "2026-11-15T01:42:13Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -949,11 +1335,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:42:13Z",
                   "completed_at": "2026-11-15T01:42:15Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132657677582,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T01:31:23Z",
+              "completed_at": "2026-11-15T01:31:22Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132657677582",
+              "source": ".session/exports/actions/43663290752.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132660262717,
@@ -962,7 +1357,8 @@
               "conclusion": "failure",
               "started_at": "2026-11-15T01:42:18Z",
               "completed_at": "2026-11-15T01:42:50Z",
-              "evidence": ".session/exports/actions/43663290752.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43663290752/job/132660262717",
+              "source": ".session/exports/actions/43663290752.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -970,9 +1366,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:42:22Z",
                   "completed_at": "2026-11-15T01:42:24Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -980,9 +1374,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T01:42:24Z",
                   "completed_at": "2026-11-15T01:42:25Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -990,8 +1382,7 @@
                   "conclusion": "failure",
                   "started_at": "2026-11-15T01:42:25Z",
                   "completed_at": "2026-11-15T01:42:47Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43663290752.json#/jobs/5/steps/4"
                 }
               ]
             }
@@ -999,16 +1390,49 @@
         },
         {
           "id": 43687899425,
-          "run_attempt": 1,
+          "name": "session #653 \u00b7 benchmark",
           "status": "completed",
           "conclusion": "success",
           "created_at": "2026-11-15T06:59:35Z",
           "run_started_at": "2026-11-15T06:59:35Z",
           "updated_at": "2026-11-15T07:06:07Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425",
-          "phase": "recovery",
-          "evidence": ".session/exports/actions/43687899425.json",
+          "source": ".session/exports/actions/43687899425.json#",
           "jobs": [
+            {
+              "id": 132732139765,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T06:59:39Z",
+              "completed_at": "2026-11-15T06:59:53Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732139765",
+              "source": ".session/exports/actions/43687899425.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132732199397,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T06:59:58Z",
+              "completed_at": "2026-11-15T07:00:15Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732199397",
+              "source": ".session/exports/actions/43687899425.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132732277775,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T07:00:17Z",
+              "completed_at": "2026-11-15T07:01:46Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732277775",
+              "source": ".session/exports/actions/43687899425.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132732651252,
               "name": "session",
@@ -1016,7 +1440,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T07:01:51Z",
               "completed_at": "2026-11-15T07:02:40Z",
-              "evidence": ".session/exports/actions/43687899425.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732651252",
+              "source": ".session/exports/actions/43687899425.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1024,9 +1449,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:01:56Z",
                   "completed_at": "2026-11-15T07:02:01Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -1034,8 +1457,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:18Z",
                   "completed_at": "2026-11-15T07:02:35Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T07:02:35Z",
+                  "completed_at": "2026-11-15T07:02:35Z",
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1043,9 +1473,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:35Z",
                   "completed_at": "2026-11-15T07:02:35Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -1053,8 +1481,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:35Z",
                   "completed_at": "2026-11-15T07:02:35Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1062,11 +1489,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:35Z",
                   "completed_at": "2026-11-15T07:02:38Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132732652845,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T07:01:47Z",
+              "completed_at": "2026-11-15T07:01:46Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732652845",
+              "source": ".session/exports/actions/43687899425.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132732858094,
@@ -1075,7 +1511,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T07:02:42Z",
               "completed_at": "2026-11-15T07:06:06Z",
-              "evidence": ".session/exports/actions/43687899425.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43687899425/job/132732858094",
+              "source": ".session/exports/actions/43687899425.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1083,9 +1520,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:46Z",
                   "completed_at": "2026-11-15T07:02:47Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1093,9 +1528,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:47Z",
                   "completed_at": "2026-11-15T07:02:47Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -1103,327 +1536,348 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T07:02:47Z",
                   "completed_at": "2026-11-15T07:06:04Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43687899425.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43687899425.json#/jobs/5/steps/4"
                 }
               ]
             }
           ]
         }
       ],
+      "timeline": [
+        {
+          "event": "First checkpoint already contains accepted Finish and final result; timestamp reused from policy measurement (not tool execution time)",
+          "at": "2026-11-15T01:42:29Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Original workflow fails in Epilogue after successful results upload and both downloads",
+          "at": "2026-11-15T01:42:47Z",
+          "source": ".session/exports/actions/43663290752.json#/jobs/5/steps/4"
+        },
+        {
+          "event": "Report records one kick",
+          "at": "2026-11-15T06:59:29Z",
+          "source": ".session/exports/reports/653.json#/body"
+        },
+        {
+          "event": "Later checkpoint contains report recreation and accepted Finish",
+          "at": "2026-11-15T07:02:51Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Published report and final artifact count confirmed by staged report/record; exact publication time unavailable",
+          "at": null,
+          "source": [
+            ".session/exports/records/0141.json#/outcome/sessions/0",
+            ".session/exports/reports/653.json#/body"
+          ]
+        }
+      ],
       "runtime": {
-        "pin": "510fc5af213cbe9f66dde42a27e3467bc225afcd",
-        "record": "sessions/653.json",
-        "measurement_source": "policy/observations/0147-policy-check.md:49-59",
+        "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json",
         "outputs_asset": null,
-        "outputs_asset_diagnostic": false,
-        "first_final_checkpoint": "2026-11-15T01:42:29Z",
-        "later_final_checkpoint": "2026-11-15T07:02:51Z",
-        "first_finish_accepted": true,
-        "recovery_history": [
-          "Finish rejected: Use Write to create .session/report.md before Finish",
-          "Write report",
-          "Finish accepted"
+        "final_status": "done",
+        "history_actions": [
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json#/history/25",
+            "outcome_status": "done",
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json#/history/26",
+            "outcome_status": null,
+            "rejected_missing_report": true
+          },
+          {
+            "tool": "Write",
+            "path": ".session/report.md",
+            "status": "",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json#/history/27",
+            "outcome_status": null,
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/653.json#/history/28",
+            "outcome_status": "done",
+            "rejected_missing_report": false
+          }
         ],
-        "finish_status": "done"
+        "usage_scope": "Cumulative session usage only; no continuation attribution."
       },
-      "extra_continuation_usage": {
-        "requests": null,
-        "tokens": null,
-        "status": "unmeasured; no request-level or checkpoint usage delta measured"
-      },
-      "report": {
-        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/653#issuecomment-6887461142",
-        "comment": 6887461142,
-        "snapshot": "82745cc9a27dfb337351a0c8e23193638941239a93278d63c4c95ff0b1a170cd",
-        "evidence": ".session/exports/reports/653.json#/body",
-        "kick": "2026-11-15T06:59:29Z",
-        "kick_count": 1,
-        "note": "No kick field in control report; no-kick finding also comes from policy observation."
-      },
-      "record": {
-        "status": "done",
-        "artifacts": 0,
+      "checkpoint_timestamp_interpretation": "Policy-saved checkpoint/commit timestamps, not exact Finish action timestamps; full first checkpoint records not reread.",
+      "saved_metrics": {
         "agent_s": 17,
         "gate_s": 0,
         "total_s": 52,
         "parked_s": 0,
+        "artifacts": 0,
         "turns": 29,
-        "iteration": 141,
-        "iteration_ended": "2026-11-15T07:03:57Z",
-        "engine_version": "0.7.1",
-        "evidence": ".session/exports/records/0141.json#/outcome/sessions/0",
-        "timing_note": "Existing record values reused; not lifetime elapsed time or continuation usage attribution."
+        "tokens": {
+          "in": 1543420,
+          "out": 25466,
+          "cache_read": 1872082,
+          "cache_write": 279501
+        },
+        "models": {
+          "claude/claude-sonnet-5-5": {
+            "cache_read": 449362,
+            "cache_write": 279501,
+            "in": 20,
+            "out": 5647
+          },
+          "codex/gpt-6.1-sol": {
+            "cache_read": 1422720,
+            "cache_write": 0,
+            "in": 1543400,
+            "out": 19819
+          }
+        },
+        "status": "done",
+        "commit": "51e672d"
       },
-      "publication": {
-        "observed_artifacts": 0,
-        "timestamp": null,
-        "evidence": ".session/exports/records/0141.json#/outcome/sessions/0",
-        "status": "zero final artifacts recorded"
-      },
-      "observed_failure": {
-        "status": "supported",
-        "stage": "Epilogue command step after successful results packaging/upload and both epilogue downloads",
-        "run": 43663290752,
-        "job": 132660262717,
-        "start": "2026-11-15T01:42:25Z",
-        "end": "2026-11-15T01:42:47Z",
-        "evidence": ".session/exports/actions/43663290752.json#/jobs/5/steps/4",
-        "limit": "Step spans pip install, git-identity and epilogue command; failing subcommand/exception unavailable."
+      "metrics_interpretation": "Reuse recorded values without summing checkpoint gaps or treating short final-run measurements as lifetime agent time.",
+      "report": {
+        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/653#issuecomment-6887461142",
+        "snapshot": "82745cc9a27dfb337351a0c8e23193638941239a93278d63c4c95ff0b1a170cd",
+        "kicks": 1,
+        "kicked": "2026-11-15T06:59:29Z",
+        "artifact_entries": []
       }
     },
     "663": {
       "cause_status": "undetermined",
-      "cause_scope": "Underlying epilogue error and mechanism/timing of missing output; successful control has no observed failure.",
-      "availability": [
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 663,
-          "run": 43724956130,
-          "path": "exports/actions/43724956130.json"
-        },
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 663,
-          "run": 43694128074,
-          "path": "exports/actions/43694128074.json"
-        },
-        {
-          "selector": 1,
-          "source": "streams",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "unavailable",
-          "issue": 663,
-          "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
-        },
-        {
-          "selector": 2,
-          "source": "reports",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 663,
-          "path": "exports/reports/663.json",
-          "snapshot": "6a6052a8b7f41aa12af62c8571dcd51af1327fbf39f79402b95681520da5ea1d"
-        },
-        {
-          "selector": 3,
-          "source": "records",
-          "scope": {
-            "iterations": [
-              138,
-              141,
-              144,
-              146
-            ]
-          },
-          "status": "downloaded",
-          "iteration": 144,
-          "path": "exports/records/0144.json",
-          "snapshot": "f88ff7dd4ce7049eaab27671184772da74b1aad661e325b431825f26bf3dae9a"
-        }
-      ],
+      "failure_location": "Supported failed step: original Epilogue; exception/root cause and artifact-loss mechanism undetermined.",
       "evidence": [
-        ".session/exports/manifest.json#/results",
-        "policy/observations/0147-policy-check.md:49-59",
-        "policy/observations/0147-policy-check.md:55",
-        ".session/exports/actions/43724956130.json#/jobs/3",
-        ".session/exports/actions/43724956130.json#/jobs/5",
-        ".session/exports/actions/43694128074.json#/jobs/3",
-        ".session/exports/actions/43694128074.json#/jobs/5",
+        "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence",
+        ".session/exports/records/0144.json#/outcome/sessions/0",
         ".session/exports/reports/663.json#/body",
-        ".session/exports/records/0144.json#/outcome/sessions/0"
+        "https://github.com/Kucze3205/ConnectWithLabview/issues/663#issuecomment-6891809187",
+        ".session/exports/actions/43724956130.json#",
+        ".session/exports/actions/43694128074.json#",
+        "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json#/history"
       ],
       "missing": [
-        "Diagnostic stream unavailable; catalogue absence does not distinguish pruning, expiry or non-upload.",
-        "No staged Actions step logs, failure annotations, traceback or results package bytes/inventory.",
-        "No independently timestamped final release-asset publication event.",
-        "Actions exports supply updated_at, not completed_at for workflows; exact workflow completion time unavailable.",
-        "Historical workflow/code revision not supplied by Actions exports; checkout code is explanatory only.",
-        "Continuation-only model request count and tokens unmeasured; staged records aggregate session usage.",
-        "Exact report/artifact disappearance time and original packaged content; no artifacts reconstructed."
+        "All selected stream exports unavailable; absence does not distinguish retention, expiry or upload failure.",
+        "Original result bundle contents, pack inventory, tree admission diagnostics and epilogue exception logs are not staged.",
+        "Exact publication time and per-transition artifact inventory are unavailable.",
+        "Continuation-only tokens are unmeasured: available usage is cumulative and no checkpoint usage delta is reused here. Tokens do not measure subscription quota or money.",
+        "Exact report/artifact disappearance time and causal link between epilogue failure and missing recovery files are undetermined.",
+        "Watchdog decisions and other concurrent commitments are not staged; recovery delay cause is undetermined."
       ],
       "durations": [
         {
-          "name": "runtime checkpoint gap (not agent-active time)",
-          "start": "2026-11-15T08:39:14Z",
-          "end": "2026-11-15T14:35:51Z",
-          "seconds": 21397.0,
-          "evidence": "policy/observations/0147-policy-check.md:55"
+          "name": "run 43724956130 created-to-updated (metadata interval)",
+          "start": "2026-11-15T14:32:59Z",
+          "end": "2026-11-15T14:38:05Z",
+          "seconds": 306.0,
+          "evidence": ".session/exports/actions/43724956130.json#"
         },
         {
-          "name": "43724956130 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43724956130 job 132845351163 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T14:35:08Z",
           "end": "2026-11-15T14:35:09Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/1"
         },
         {
-          "name": "43724956130 / session / step[5] Routed session",
+          "name": "run 43724956130 job 132845351163 step 5: Routed session",
           "start": "2026-11-15T14:35:20Z",
           "end": "2026-11-15T14:35:38Z",
           "seconds": 18.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/5"
         },
         {
-          "name": "43724956130 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43724956130 job 132845351163 step 6: Session",
+          "start": "2026-11-15T14:35:38Z",
+          "end": "2026-11-15T14:35:38Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43724956130 job 132845351163 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T14:35:38Z",
           "end": "2026-11-15T14:35:38Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/8"
         },
         {
-          "name": "43724956130 / session / step[9] Pack the results",
+          "name": "run 43724956130 job 132845351163 step 9: Pack the results",
           "start": "2026-11-15T14:35:38Z",
           "end": "2026-11-15T14:35:38Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/9"
         },
         {
-          "name": "43724956130 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43724956130 job 132845351163 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T14:35:38Z",
           "end": "2026-11-15T14:35:39Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/10"
         },
         {
-          "name": "43724956130 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43724956130 job 132845532637 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T14:35:47Z",
           "end": "2026-11-15T14:35:47Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/2"
         },
         {
-          "name": "43724956130 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43724956130 job 132845532637 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T14:35:47Z",
           "end": "2026-11-15T14:35:48Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/3"
         },
         {
-          "name": "43724956130 / epilogue / step[4] Epilogue",
+          "name": "run 43724956130 job 132845532637 step 4: Epilogue",
           "start": "2026-11-15T14:35:48Z",
           "end": "2026-11-15T14:38:02Z",
           "seconds": 134.0,
           "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/4"
         },
         {
-          "name": "43694128074 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43694128074 created-to-updated (metadata interval)",
+          "start": "2026-11-15T08:21:36Z",
+          "end": "2026-11-15T08:39:28Z",
+          "seconds": 1072.0,
+          "evidence": ".session/exports/actions/43694128074.json#"
+        },
+        {
+          "name": "run 43694128074 job 132751390619 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T08:24:07Z",
           "end": "2026-11-15T08:24:09Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/1"
         },
         {
-          "name": "43694128074 / session / step[5] Routed session",
+          "name": "run 43694128074 job 132751390619 step 5: Routed session",
           "start": "2026-11-15T08:24:26Z",
           "end": "2026-11-15T08:39:00Z",
           "seconds": 874.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/5"
         },
         {
-          "name": "43694128074 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43694128074 job 132751390619 step 6: Session",
+          "start": "2026-11-15T08:39:00Z",
+          "end": "2026-11-15T08:39:00Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43694128074 job 132751390619 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T08:39:00Z",
           "end": "2026-11-15T08:39:00Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/8"
         },
         {
-          "name": "43694128074 / session / step[9] Pack the results",
+          "name": "run 43694128074 job 132751390619 step 9: Pack the results",
           "start": "2026-11-15T08:39:00Z",
           "end": "2026-11-15T08:39:01Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/9"
         },
         {
-          "name": "43694128074 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43694128074 job 132751390619 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T08:39:01Z",
           "end": "2026-11-15T08:39:03Z",
           "seconds": 2.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/10"
         },
         {
-          "name": "43694128074 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43694128074 job 132754986114 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T08:39:09Z",
           "end": "2026-11-15T08:39:10Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/2"
         },
         {
-          "name": "43694128074 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43694128074 job 132754986114 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T08:39:10Z",
           "end": "2026-11-15T08:39:11Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/3"
         },
         {
-          "name": "43694128074 / epilogue / step[4] Epilogue",
+          "name": "run 43694128074 job 132754986114 step 4: Epilogue",
           "start": "2026-11-15T08:39:11Z",
           "end": "2026-11-15T08:39:26Z",
           "seconds": 15.0,
           "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/4"
         },
         {
-          "name": "initial failed Epilogue step end to reported kick (elapsed only)",
-          "start": "2026-11-15T08:39:26Z",
-          "end": "2026-11-15T14:32:53Z",
-          "seconds": 21207.0,
-          "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/4; .session/exports/reports/663.json#/body"
+          "name": "first-to-later checkpoint gap; not agent-active time",
+          "start": "2026-11-15T08:39:14Z",
+          "end": "2026-11-15T14:35:51Z",
+          "seconds": 21397.0,
+          "evidence": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
         },
         {
-          "name": "reported kick to recovery run creation",
-          "start": "2026-11-15T14:32:53Z",
-          "end": "2026-11-15T14:32:59Z",
-          "seconds": 6.0,
-          "evidence": ".session/exports/reports/663.json#/body; .session/exports/actions/43724956130.json#/created_at"
+          "name": "original run updated to recorded kick; not proven watchdog wait",
+          "start": "2026-11-15T08:39:28Z",
+          "end": "2026-11-15T14:32:53Z",
+          "seconds": 21205.0,
+          "evidence": [
+            ".session/exports/actions/43694128074.json#",
+            ".session/exports/reports/663.json#/body"
+          ]
         }
       ],
       "runs": [
         {
           "id": 43694128074,
-          "run_attempt": 1,
+          "name": "session #663 \u00b7 reviewer",
           "status": "completed",
           "conclusion": "failure",
           "created_at": "2026-11-15T08:21:36Z",
           "run_started_at": "2026-11-15T08:21:36Z",
           "updated_at": "2026-11-15T08:39:28Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074",
-          "phase": "initial",
-          "evidence": ".session/exports/actions/43694128074.json",
+          "source": ".session/exports/actions/43694128074.json#",
           "jobs": [
+            {
+              "id": 132750814776,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T08:21:39Z",
+              "completed_at": "2026-11-15T08:21:47Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132750814776",
+              "source": ".session/exports/actions/43694128074.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132750856795,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T08:21:52Z",
+              "completed_at": "2026-11-15T08:22:18Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132750856795",
+              "source": ".session/exports/actions/43694128074.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132750976078,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T08:22:20Z",
+              "completed_at": "2026-11-15T08:24:01Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132750976078",
+              "source": ".session/exports/actions/43694128074.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132751390619,
               "name": "session",
@@ -1431,7 +1885,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T08:24:05Z",
               "completed_at": "2026-11-15T08:39:04Z",
-              "evidence": ".session/exports/actions/43694128074.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132751390619",
+              "source": ".session/exports/actions/43694128074.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1439,9 +1894,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:24:07Z",
                   "completed_at": "2026-11-15T08:24:09Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -1449,8 +1902,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:24:26Z",
                   "completed_at": "2026-11-15T08:39:00Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T08:39:00Z",
+                  "completed_at": "2026-11-15T08:39:00Z",
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1458,9 +1918,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:39:00Z",
                   "completed_at": "2026-11-15T08:39:00Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -1468,8 +1926,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:39:00Z",
                   "completed_at": "2026-11-15T08:39:01Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1477,11 +1934,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:39:01Z",
                   "completed_at": "2026-11-15T08:39:03Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132751391566,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T08:24:02Z",
+              "completed_at": "2026-11-15T08:24:01Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132751391566",
+              "source": ".session/exports/actions/43694128074.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132754986114,
@@ -1490,7 +1956,8 @@
               "conclusion": "failure",
               "started_at": "2026-11-15T08:39:06Z",
               "completed_at": "2026-11-15T08:39:28Z",
-              "evidence": ".session/exports/actions/43694128074.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43694128074/job/132754986114",
+              "source": ".session/exports/actions/43694128074.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1498,9 +1965,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:39:09Z",
                   "completed_at": "2026-11-15T08:39:10Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1508,9 +1973,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T08:39:10Z",
                   "completed_at": "2026-11-15T08:39:11Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -1518,8 +1981,7 @@
                   "conclusion": "failure",
                   "started_at": "2026-11-15T08:39:11Z",
                   "completed_at": "2026-11-15T08:39:26Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43694128074.json#/jobs/5/steps/4"
                 }
               ]
             }
@@ -1527,16 +1989,49 @@
         },
         {
           "id": 43724956130,
-          "run_attempt": 1,
+          "name": "session #663 \u00b7 reviewer",
           "status": "completed",
           "conclusion": "success",
           "created_at": "2026-11-15T14:32:59Z",
           "run_started_at": "2026-11-15T14:32:59Z",
           "updated_at": "2026-11-15T14:38:05Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130",
-          "phase": "recovery",
-          "evidence": ".session/exports/actions/43724956130.json",
+          "source": ".session/exports/actions/43724956130.json#",
           "jobs": [
+            {
+              "id": 132844780136,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T14:33:02Z",
+              "completed_at": "2026-11-15T14:33:10Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132844780136",
+              "source": ".session/exports/actions/43724956130.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132844826667,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T14:33:14Z",
+              "completed_at": "2026-11-15T14:33:39Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132844826667",
+              "source": ".session/exports/actions/43724956130.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132844959410,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T14:33:41Z",
+              "completed_at": "2026-11-15T14:35:02Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132844959410",
+              "source": ".session/exports/actions/43724956130.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132845351163,
               "name": "session",
@@ -1544,7 +2039,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T14:35:07Z",
               "completed_at": "2026-11-15T14:35:41Z",
-              "evidence": ".session/exports/actions/43724956130.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132845351163",
+              "source": ".session/exports/actions/43724956130.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1552,9 +2048,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:08Z",
                   "completed_at": "2026-11-15T14:35:09Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -1562,8 +2056,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:20Z",
                   "completed_at": "2026-11-15T14:35:38Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T14:35:38Z",
+                  "completed_at": "2026-11-15T14:35:38Z",
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1571,9 +2072,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:38Z",
                   "completed_at": "2026-11-15T14:35:38Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -1581,8 +2080,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:38Z",
                   "completed_at": "2026-11-15T14:35:38Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1590,11 +2088,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:38Z",
                   "completed_at": "2026-11-15T14:35:39Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132845353186,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T14:35:03Z",
+              "completed_at": "2026-11-15T14:35:03Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132845353186",
+              "source": ".session/exports/actions/43724956130.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132845532637,
@@ -1603,7 +2110,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T14:35:43Z",
               "completed_at": "2026-11-15T14:38:04Z",
-              "evidence": ".session/exports/actions/43724956130.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43724956130/job/132845532637",
+              "source": ".session/exports/actions/43724956130.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1611,9 +2119,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:47Z",
                   "completed_at": "2026-11-15T14:35:47Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1621,9 +2127,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:47Z",
                   "completed_at": "2026-11-15T14:35:48Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -1631,212 +2135,206 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T14:35:48Z",
                   "completed_at": "2026-11-15T14:38:02Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43724956130.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43724956130.json#/jobs/5/steps/4"
                 }
               ]
             }
           ]
         }
       ],
+      "timeline": [
+        {
+          "event": "First checkpoint already contains accepted Finish and final result; timestamp reused from policy measurement (not tool execution time)",
+          "at": "2026-11-15T08:39:14Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Original workflow fails in Epilogue after successful results upload and both downloads",
+          "at": "2026-11-15T08:39:26Z",
+          "source": ".session/exports/actions/43694128074.json#/jobs/5/steps/4"
+        },
+        {
+          "event": "Report records one kick",
+          "at": "2026-11-15T14:32:53Z",
+          "source": ".session/exports/reports/663.json#/body"
+        },
+        {
+          "event": "Later checkpoint contains report recreation and accepted Finish",
+          "at": "2026-11-15T14:35:51Z",
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Published report and final artifact count confirmed by staged report/record; exact publication time unavailable",
+          "at": null,
+          "source": [
+            ".session/exports/records/0144.json#/outcome/sessions/0",
+            ".session/exports/reports/663.json#/body"
+          ]
+        }
+      ],
       "runtime": {
-        "pin": "510fc5af213cbe9f66dde42a27e3467bc225afcd",
-        "record": "sessions/663.json",
-        "measurement_source": "policy/observations/0147-policy-check.md:49-59",
+        "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json",
         "outputs_asset": null,
-        "outputs_asset_diagnostic": false,
-        "first_final_checkpoint": "2026-11-15T08:39:14Z",
-        "later_final_checkpoint": "2026-11-15T14:35:51Z",
-        "first_finish_accepted": true,
-        "recovery_history": [
-          "Finish rejected: Use Write to create .session/report.md before Finish",
-          "Write report",
-          "Finish accepted"
+        "final_status": "done",
+        "history_actions": [
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json#/history/27",
+            "outcome_status": "done",
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json#/history/28",
+            "outcome_status": null,
+            "rejected_missing_report": true
+          },
+          {
+            "tool": "Write",
+            "path": ".session/report.md",
+            "status": "",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json#/history/29",
+            "outcome_status": null,
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/663.json#/history/30",
+            "outcome_status": "done",
+            "rejected_missing_report": false
+          }
         ],
-        "finish_status": "done"
+        "usage_scope": "Cumulative session usage only; no continuation attribution."
       },
-      "extra_continuation_usage": {
-        "requests": null,
-        "tokens": null,
-        "status": "unmeasured; no request-level or checkpoint usage delta measured"
-      },
-      "report": {
-        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/663#issuecomment-6891809187",
-        "comment": 6891809187,
-        "snapshot": "6a6052a8b7f41aa12af62c8571dcd51af1327fbf39f79402b95681520da5ea1d",
-        "evidence": ".session/exports/reports/663.json#/body",
-        "kick": "2026-11-15T14:32:53Z",
-        "kick_count": 1,
-        "note": "No kick field in control report; no-kick finding also comes from policy observation."
-      },
-      "record": {
-        "status": "done",
-        "artifacts": 0,
+      "checkpoint_timestamp_interpretation": "Policy-saved checkpoint/commit timestamps, not exact Finish action timestamps; full first checkpoint records not reread.",
+      "saved_metrics": {
         "agent_s": 18,
         "gate_s": 0,
         "total_s": 44,
         "parked_s": 0,
+        "artifacts": 0,
         "turns": 31,
-        "iteration": 144,
-        "iteration_ended": "2026-11-15T14:36:14Z",
-        "engine_version": "0.7.1",
-        "evidence": ".session/exports/records/0144.json#/outcome/sessions/0",
-        "timing_note": "Existing record values reused; not lifetime elapsed time or continuation usage attribution."
+        "tokens": {
+          "in": 1413514,
+          "out": 30774,
+          "cache_read": 1673895,
+          "cache_write": 238767
+        },
+        "models": {
+          "claude/claude-sonnet-5-5": {
+            "cache_read": 402087,
+            "cache_write": 238767,
+            "in": 22,
+            "out": 5758
+          },
+          "codex/gpt-6.1-sol": {
+            "cache_read": 1271808,
+            "cache_write": 0,
+            "in": 1413492,
+            "out": 25016
+          }
+        },
+        "status": "done",
+        "commit": "872a133"
       },
-      "publication": {
-        "observed_artifacts": 0,
-        "timestamp": null,
-        "evidence": ".session/exports/records/0144.json#/outcome/sessions/0",
-        "status": "zero final artifacts recorded"
-      },
-      "observed_failure": {
-        "status": "supported",
-        "stage": "Epilogue command step after successful results packaging/upload and both epilogue downloads",
-        "run": 43694128074,
-        "job": 132754986114,
-        "start": "2026-11-15T08:39:11Z",
-        "end": "2026-11-15T08:39:26Z",
-        "evidence": ".session/exports/actions/43694128074.json#/jobs/5/steps/4",
-        "limit": "Step spans pip install, git-identity and epilogue command; failing subcommand/exception unavailable."
+      "metrics_interpretation": "Reuse recorded values without summing checkpoint gaps or treating short final-run measurements as lifetime agent time.",
+      "report": {
+        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/663#issuecomment-6891809187",
+        "snapshot": "6a6052a8b7f41aa12af62c8571dcd51af1327fbf39f79402b95681520da5ea1d",
+        "kicks": 1,
+        "kicked": "2026-11-15T14:32:53Z",
+        "artifact_entries": []
       }
     },
     "669": {
       "cause_status": "undetermined",
-      "cause_scope": "Underlying epilogue error and mechanism/timing of missing output; successful control has no observed failure.",
-      "availability": [
-        {
-          "selector": 0,
-          "source": "actions",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 669,
-          "run": 43728358074,
-          "path": "exports/actions/43728358074.json"
-        },
-        {
-          "selector": 1,
-          "source": "streams",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "unavailable",
-          "issue": 669,
-          "detail": "no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)"
-        },
-        {
-          "selector": 2,
-          "source": "reports",
-          "scope": {
-            "sessions": [
-              643,
-              653,
-              663,
-              669
-            ]
-          },
-          "status": "downloaded",
-          "issue": 669,
-          "path": "exports/reports/669.json",
-          "snapshot": "38fc61c9f34a2a7032d89e0c3280bd4b8cf7da1b2fe2cc65743c577f90c9ae6e"
-        },
-        {
-          "selector": 3,
-          "source": "records",
-          "scope": {
-            "iterations": [
-              138,
-              141,
-              144,
-              146
-            ]
-          },
-          "status": "downloaded",
-          "iteration": 146,
-          "path": "exports/records/0146.json",
-          "snapshot": "39570245c018f499312469610fc144e5403a75df20af51e494cc716e7dd15e47"
-        }
-      ],
+      "failure_location": "Successful publication control; no failed step or failure cause observed.",
       "evidence": [
-        ".session/exports/manifest.json#/results",
-        "policy/observations/0147-policy-check.md:49-59",
-        ".session/exports/actions/43728358074.json#/jobs/3",
-        ".session/exports/actions/43728358074.json#/jobs/5",
+        "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence",
+        ".session/exports/records/0146.json#/outcome/sessions/0",
         ".session/exports/reports/669.json#/body",
-        ".session/exports/records/0146.json#/outcome/sessions/0"
+        "https://github.com/Kucze3205/ConnectWithLabview/issues/669#issuecomment-6896786397",
+        ".session/exports/actions/43728358074.json#",
+        "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/669.json#/history"
       ],
       "missing": [
-        "Diagnostic stream unavailable; catalogue absence does not distinguish pruning, expiry or non-upload.",
-        "No staged Actions step logs, failure annotations, traceback or results package bytes/inventory.",
-        "No independently timestamped final release-asset publication event.",
-        "Actions exports supply updated_at, not completed_at for workflows; exact workflow completion time unavailable.",
-        "Historical workflow/code revision not supplied by Actions exports; checkout code is explanatory only.",
-        "Continuation-only model request count and tokens unmeasured; staged records aggregate session usage.",
-        "Exact final runtime checkpoint timestamp not in reused observation; no historical reread required."
+        "All selected stream exports unavailable; absence does not distinguish retention, expiry or upload failure.",
+        "Original result bundle contents, pack inventory, tree admission diagnostics and epilogue exception logs are not staged.",
+        "Exact publication time and per-transition artifact inventory are unavailable.",
+        "Continuation-only tokens are unmeasured: available usage is cumulative and no checkpoint usage delta is reused here. Tokens do not measure subscription quota or money."
       ],
       "durations": [
         {
-          "name": "43728358074 / session / step[1] Run actions/download-artifact@v4",
+          "name": "run 43728358074 created-to-updated (metadata interval)",
+          "start": "2026-11-15T15:10:12Z",
+          "end": "2026-11-15T15:25:09Z",
+          "seconds": 897.0,
+          "evidence": ".session/exports/actions/43728358074.json#"
+        },
+        {
+          "name": "run 43728358074 job 132855774667 step 1: Run actions/download-artifact@v4",
           "start": "2026-11-15T15:12:32Z",
           "end": "2026-11-15T15:12:32Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/1"
         },
         {
-          "name": "43728358074 / session / step[5] Routed session",
+          "name": "run 43728358074 job 132855774667 step 5: Routed session",
           "start": "2026-11-15T15:12:41Z",
           "end": "2026-11-15T15:22:17Z",
           "seconds": 576.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/5"
         },
         {
-          "name": "43728358074 / session / step[8] Run actions/upload-artifact@v4",
+          "name": "run 43728358074 job 132855774667 step 6: Session",
+          "start": "2026-11-15T15:22:17Z",
+          "end": "2026-11-15T15:22:17Z",
+          "seconds": 0.0,
+          "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/6"
+        },
+        {
+          "name": "run 43728358074 job 132855774667 step 8: Run actions/upload-artifact@v4",
           "start": "2026-11-15T15:22:17Z",
           "end": "2026-11-15T15:22:18Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/8"
         },
         {
-          "name": "43728358074 / session / step[9] Pack the results",
+          "name": "run 43728358074 job 132855774667 step 9: Pack the results",
           "start": "2026-11-15T15:22:18Z",
           "end": "2026-11-15T15:22:18Z",
           "seconds": 0.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/9"
         },
         {
-          "name": "43728358074 / session / step[10] Run actions/upload-artifact@v4",
+          "name": "run 43728358074 job 132855774667 step 10: Run actions/upload-artifact@v4",
           "start": "2026-11-15T15:22:18Z",
           "end": "2026-11-15T15:22:19Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/10"
         },
         {
-          "name": "43728358074 / epilogue / step[2] Run actions/download-artifact@v4",
+          "name": "run 43728358074 job 132858621248 step 2: Run actions/download-artifact@v4",
           "start": "2026-11-15T15:22:27Z",
           "end": "2026-11-15T15:22:28Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/5/steps/2"
         },
         {
-          "name": "43728358074 / epilogue / step[3] Run actions/download-artifact@v4",
+          "name": "run 43728358074 job 132858621248 step 3: Run actions/download-artifact@v4",
           "start": "2026-11-15T15:22:28Z",
           "end": "2026-11-15T15:22:29Z",
           "seconds": 1.0,
           "evidence": ".session/exports/actions/43728358074.json#/jobs/5/steps/3"
         },
         {
-          "name": "43728358074 / epilogue / step[4] Epilogue",
+          "name": "run 43728358074 job 132858621248 step 4: Epilogue",
           "start": "2026-11-15T15:22:29Z",
           "end": "2026-11-15T15:25:06Z",
           "seconds": 157.0,
@@ -1846,16 +2344,49 @@
       "runs": [
         {
           "id": 43728358074,
-          "run_attempt": 1,
+          "name": "session #669 \u00b7 reviewer",
           "status": "completed",
           "conclusion": "success",
           "created_at": "2026-11-15T15:10:12Z",
           "run_started_at": "2026-11-15T15:10:12Z",
           "updated_at": "2026-11-15T15:25:09Z",
+          "run_attempt": 1,
           "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074",
-          "phase": "control",
-          "evidence": ".session/exports/actions/43728358074.json",
+          "source": ".session/exports/actions/43728358074.json#",
           "jobs": [
+            {
+              "id": 132855133751,
+              "name": "prep",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T15:10:15Z",
+              "completed_at": "2026-11-15T15:10:22Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132855133751",
+              "source": ".session/exports/actions/43728358074.json#/jobs/0",
+              "steps": []
+            },
+            {
+              "id": 132855178102,
+              "name": "credentials / codex",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T15:10:26Z",
+              "completed_at": "2026-11-15T15:10:43Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132855178102",
+              "source": ".session/exports/actions/43728358074.json#/jobs/1",
+              "steps": []
+            },
+            {
+              "id": 132855278290,
+              "name": "stage",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-11-15T15:10:45Z",
+              "completed_at": "2026-11-15T15:12:27Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132855278290",
+              "source": ".session/exports/actions/43728358074.json#/jobs/2",
+              "steps": []
+            },
             {
               "id": 132855774667,
               "name": "session",
@@ -1863,7 +2394,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T15:12:30Z",
               "completed_at": "2026-11-15T15:22:20Z",
-              "evidence": ".session/exports/actions/43728358074.json#/jobs/3",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132855774667",
+              "source": ".session/exports/actions/43728358074.json#/jobs/3",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1871,9 +2403,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:12:32Z",
                   "completed_at": "2026-11-15T15:12:32Z",
-                  "index": 1,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/1",
-                  "channel_from_checkout_workflow": "staged session input"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/1"
                 },
                 {
                   "name": "Routed session",
@@ -1881,8 +2411,15 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:12:41Z",
                   "completed_at": "2026-11-15T15:22:17Z",
-                  "index": 5,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/5"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/5"
+                },
+                {
+                  "name": "Session",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "started_at": "2026-11-15T15:22:17Z",
+                  "completed_at": "2026-11-15T15:22:17Z",
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/6"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1890,9 +2427,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:17Z",
                   "completed_at": "2026-11-15T15:22:18Z",
-                  "index": 8,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/8",
-                  "channel_from_checkout_workflow": "diagnostic stream"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/8"
                 },
                 {
                   "name": "Pack the results",
@@ -1900,8 +2435,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:18Z",
                   "completed_at": "2026-11-15T15:22:18Z",
-                  "index": 9,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/9"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/9"
                 },
                 {
                   "name": "Run actions/upload-artifact@v4",
@@ -1909,11 +2443,20 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:18Z",
                   "completed_at": "2026-11-15T15:22:19Z",
-                  "index": 10,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/3/steps/10",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/3/steps/10"
                 }
               ]
+            },
+            {
+              "id": 132855776055,
+              "name": "stage-failed",
+              "status": "completed",
+              "conclusion": "skipped",
+              "started_at": "2026-11-15T15:12:27Z",
+              "completed_at": "2026-11-15T15:12:27Z",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132855776055",
+              "source": ".session/exports/actions/43728358074.json#/jobs/4",
+              "steps": []
             },
             {
               "id": 132858621248,
@@ -1922,7 +2465,8 @@
               "conclusion": "success",
               "started_at": "2026-11-15T15:22:23Z",
               "completed_at": "2026-11-15T15:25:09Z",
-              "evidence": ".session/exports/actions/43728358074.json#/jobs/5",
+              "html_url": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/43728358074/job/132858621248",
+              "source": ".session/exports/actions/43728358074.json#/jobs/5",
               "steps": [
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1930,9 +2474,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:27Z",
                   "completed_at": "2026-11-15T15:22:28Z",
-                  "index": 2,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/5/steps/2",
-                  "channel_from_checkout_workflow": "results"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/5/steps/2"
                 },
                 {
                   "name": "Run actions/download-artifact@v4",
@@ -1940,9 +2482,7 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:28Z",
                   "completed_at": "2026-11-15T15:22:29Z",
-                  "index": 3,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/5/steps/3",
-                  "channel_from_checkout_workflow": "baseline"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/5/steps/3"
                 },
                 {
                   "name": "Epilogue",
@@ -1950,69 +2490,109 @@
                   "conclusion": "success",
                   "started_at": "2026-11-15T15:22:29Z",
                   "completed_at": "2026-11-15T15:25:06Z",
-                  "index": 4,
-                  "evidence": ".session/exports/actions/43728358074.json#/jobs/5/steps/4"
+                  "source": ".session/exports/actions/43728358074.json#/jobs/5/steps/4"
                 }
               ]
             }
           ]
         }
       ],
+      "timeline": [
+        {
+          "event": "Single final checkpoint and accepted Finish; exact checkpoint timestamp not reused",
+          "at": null,
+          "source": "policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence"
+        },
+        {
+          "event": "Published report and final artifact count confirmed by staged report/record; exact publication time unavailable",
+          "at": null,
+          "source": [
+            ".session/exports/records/0146.json#/outcome/sessions/0",
+            ".session/exports/reports/669.json#/body"
+          ]
+        }
+      ],
       "runtime": {
-        "pin": "510fc5af213cbe9f66dde42a27e3467bc225afcd",
-        "record": "sessions/669.json",
-        "measurement_source": "policy/observations/0147-policy-check.md:49-59",
+        "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/669.json",
         "outputs_asset": null,
-        "outputs_asset_diagnostic": false,
-        "final_checkpoint_count": 1,
-        "first_final_checkpoint": null,
-        "note": "One final checkpoint and no kick, per reused observation; exact timestamp not reported there."
+        "final_status": "done",
+        "history_actions": [
+          {
+            "tool": "Write",
+            "path": ".session/report.md",
+            "status": "",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/669.json#/history/27",
+            "outcome_status": null,
+            "rejected_missing_report": false
+          },
+          {
+            "tool": "Finish",
+            "path": "",
+            "status": "done",
+            "source": "git:510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/669.json#/history/28",
+            "outcome_status": "done",
+            "rejected_missing_report": false
+          }
+        ],
+        "usage_scope": "Cumulative session usage only; no continuation attribution."
       },
-      "extra_continuation_usage": {
-        "requests": null,
-        "tokens": null,
-        "status": "unmeasured; no request-level or checkpoint usage delta measured"
-      },
-      "report": {
-        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/669#issuecomment-6896786397",
-        "comment": 6896786397,
-        "snapshot": "38fc61c9f34a2a7032d89e0c3280bd4b8cf7da1b2fe2cc65743c577f90c9ae6e",
-        "evidence": ".session/exports/reports/669.json#/body",
-        "kick": null,
-        "kick_count": 0,
-        "note": "No kick field in control report; no-kick finding also comes from policy observation."
-      },
-      "record": {
-        "status": "done",
-        "artifacts": 12,
+      "checkpoint_timestamp_interpretation": "Policy-saved checkpoint/commit timestamps, not exact Finish action timestamps; full first checkpoint records not reread.",
+      "saved_metrics": {
         "agent_s": 576,
         "gate_s": 0,
         "total_s": 606,
         "parked_s": 0,
+        "artifacts": 12,
         "turns": 29,
-        "iteration": 146,
-        "iteration_ended": "2026-11-15T15:23:15Z",
-        "engine_version": "0.7.1",
-        "evidence": ".session/exports/records/0146.json#/outcome/sessions/0",
-        "timing_note": "Existing record values reused; not lifetime elapsed time or continuation usage attribution."
+        "tokens": {
+          "in": 1079611,
+          "out": 23809,
+          "cache_read": 1352577,
+          "cache_write": 28747
+        },
+        "models": {
+          "claude/claude-sonnet-5-5": {
+            "cache_read": 359297,
+            "cache_write": 28747,
+            "in": 8,
+            "out": 8313
+          },
+          "codex/gpt-6.1-sol": {
+            "cache_read": 993280,
+            "cache_write": 0,
+            "in": 1079603,
+            "out": 15496
+          }
+        },
+        "status": "done",
+        "commit": "3300893"
       },
-      "publication": {
-        "observed_artifacts": 12,
-        "timestamp": null,
-        "evidence": ".session/exports/records/0146.json#/outcome/sessions/0",
-        "status": "12 final artifacts recorded"
-      },
-      "observed_failure": {
-        "status": "none observed",
-        "stage": null
+      "metrics_interpretation": "Reuse recorded values without summing checkpoint gaps or treating short final-run measurements as lifetime agent time.",
+      "report": {
+        "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/669#issuecomment-6896786397",
+        "snapshot": "38fc61c9f34a2a7032d89e0c3280bd4b8cf7da1b2fe2cc65743c577f90c9ae6e",
+        "kicks": 0,
+        "kicked": null,
+        "artifact_entries": [
+          "- artifact: attempt-evidence-f1-review-expectations-0146.json | release: iter-0146/669-attempt-evidence-f1-review-expectations-0146.json | size: 5712 | sha256: ef1c43314b82476fd3f5176f151a880808c4e0d389071643d31fe66a54369047",
+          "- artifact: author-regression-0146.json | release: iter-0146/669-author-regression-0146.json | size: 427 | sha256: bc9fd6a5c97b51e3b37aabc981fd090939412f0ced557d8c4361c8dde30382b1",
+          "- artifact: diagnostic-crash-0146.json | release: iter-0146/669-diagnostic-crash-0146.json | size: 1112 | sha256: 6feefb525316e4d7c0bf12ced99c347d1e1bbe4483e74be95ef40051c01f6e4d",
+          "- artifact: extension-execution-0146.json | release: iter-0146/669-extension-execution-0146.json | size: 949 | sha256: d9e647a87b8f8552ae64cd346f1572ae49138a7090026327daf73df7fcbd69ac",
+          "- artifact: independent-probes-0146.json | release: iter-0146/669-independent-probes-0146.json | size: 167007 | sha256: c610da577ea790f8c8e5f4dd1d4696c509240970ab7541284b230154e4b3a985",
+          "- artifact: integrity-0146.json | release: iter-0146/669-integrity-0146.json | size: 2354 | sha256: aff3b37a6805c600f64e2ab8116eee7a8836851c78a6f0981893756122a6c31d",
+          "- artifact: probe-adjudication-0146.json | release: iter-0146/669-probe-adjudication-0146.json | size: 3411 | sha256: d5052b17556261e5c5b5ff9a258f2b90443f5d667466380fa64485898be0d965",
+          "- artifact: probe-attempt-evidence-f1-0146.py | release: iter-0146/669-probe-attempt-evidence-f1-0146.py | size: 14738 | sha256: 71b139c977c2cc7608909bbfdf34069deda012ba33367564a54fd39c9fabfce5",
+          "- artifact: probe-diagnostic-crash-0146.py | release: iter-0146/669-probe-diagnostic-crash-0146.py | size: 2075 | sha256: 8c1a396eb31785ec48874fefa164d17539b8b0856c9b011a427595af41358cf7",
+          "- artifact: reproduce-tool_call_list_duplicate-0146.json | release: iter-0146/669-reproduce-tool_call_list_duplicate-0146.json | size: 4675 | sha256: e061258a487d93a0ce0b6af07a95ccd3ebc5cdef98f9181a136a57b18e751df3",
+          "- artifact: reproduce-tool_call_list_omitted-0146.json | release: iter-0146/669-reproduce-tool_call_list_omitted-0146.json | size: 4671 | sha256: e62d37c676c0d71724cca2d4c6c97e91a603d5226a95e1ab757de8687230cabb",
+          "- artifact: scope-audit-0146.json | release: iter-0146/669-scope-audit-0146.json | size: 3194 | sha256: 600fb0b6a6796c080684d8c05d93593cce41f737f38a716720458941003131f6"
+        ]
       }
     }
   },
   "next_action": {
-    "owner": "Policymaker",
-    "action": "Seek only existing failure annotations or short redacted traceback from the three initial Epilogue command steps, keyed by the recorded run/job IDs. Close this audit without waiting for unavailable logs.",
-    "expected_gain": "Distinguish dependency/setup, baseline/tree/commit admission, runtime publication and finalization failure before proposing a repair.",
-    "check": "Each error must identify its exact run/job and failing subcommand/phase; successful transport alone is insufficient.",
-    "fallback": "If logs are expired, propose narrowly scoped engine diagnostics: retain a safe failing-phase marker and results inventory hashes across epilogue failure; verify through engine-owned failure-path checks. Do not rerun historical model work or request broad private access."
+    "action": "Policymaker should request only the existing failed Epilogue step log/exception for job 132628109954 (run 43652564966) first, if retained; compare its terminal boundary with the pinned receive_status/receive_tree/receive_commits/publish_runtime_state/finalize sequence. Do not replay the session.",
+    "expected_gain": "Identify one exception and last completed publication boundary before deciding whether an engine-change request is supported.",
+    "verification": "Pin returned log bytes by SHA256 and run/job/step identity; confirm exception location and whether report/artifact inventory was received. If unavailable, close historical root-cause attribution at Epilogue; a future narrowly scoped diagnostic proposal must capture inventory and terminal boundary, not reconstruct old artifacts."
   }
 }

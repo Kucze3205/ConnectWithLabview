@@ -1,26 +1,19 @@
-# Recovery/output publication audit 0147
+# Recovery and publication audit 0147
 
-Three initial runs reached successful results packing/upload and both epilogue downloads, then failed in the **Epilogue command step**; all three recovery runs succeeded. This supports a failure stage, not the underlying exception or a proven mechanism of output loss.
+3/3 original workflows failed in **Epilogue**, after successful routed-session, result packing, results upload and both epilogue downloads; 3/3 recovery workflows succeeded. #669 passed the same chain and published 12 artifacts.
 
-| Session | Initial run; failed Epilogue step UTC | Kick UTC → recovery run | Final artifacts |
-| --- | --- | --- | ---: |
-| #643 | 43652564966; Nov 14 23:34:25–23:34:48 (23 s) | Nov 15 00:30:08 → 43658484769 | 0 |
-| #653 | 43663290752; Nov 15 01:42:25–01:42:47 (22 s) | Nov 15 06:59:29 → 43687899425 | 0 |
-| #663 | 43694128074; Nov 15 08:39:11–08:39:26 (15 s) | Nov 15 14:32:53 → 43724956130 | 0 |
-| #669 control | 43728358074; successful Epilogue Nov 15 15:22:29–15:25:06 | No kick observed | 12 |
+| Session | Run identity / workflow outcome (attempt 1 each) | Checkpoint gap s | Published artifacts | Saved agent/gate/total/parked s |
+| --- | --- | ---: | ---: | --- |
+| #643 | 43652564966 failure, 43658484769 success | 3520 | 0 | 19/0/46/0 |
+| #653 | 43663290752 failure, 43687899425 success | 19222 | 0 | 17/0/52/0 |
+| #663 | 43694128074 failure, 43724956130 success | 21397 | 0 | 18/0/44/0 |
+| #669 | 43728358074 success | single checkpoint | 12 | 576/0/606/0 |
 
-Availability: seven Actions runs (each attempt 1), four report snapshots and records 0138/0141/0144/0146 downloaded; streams unavailable for all four sessions. [Normalized evidence](session-recovery-0147.json) retains each run/job/step pointer, outcome, timestamp, supported duration, availability entry and exact staged SHA-256; report snapshot identities are separate from wrapper hashes.
-
-Reuse [0147's measurements](../policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence), pinned to runtime `510fc5af213cbe9f66dde42a27e3467bc225afcd`: #643 first/later final checkpoints Nov 14 23:34:33 → Nov 15 00:33:13 (3,520 s); #653 Nov 15 01:42:29 → 07:02:51 (19,222 s); #663 Nov 15 08:39:14 → 14:35:51 (21,397 s). These persistence gaps are not agent-active time. Each first checkpoint already accepted Finish; later recovery rejected Finish for missing `.session/report.md`, then accepted report recreation. #669 has one checkpoint; its exact timestamp is absent from the reused observation.
-
-The [checkout workflow](../.github/workflows/session.yml#L247) separates diagnostic streams from results and allows missing files without upload failure. Successful transport therefore does not establish package completeness. [Epilogue code](../.github/loop/loop.py#L903) explains admission/runtime-publication/finalization order only; historical workflow revisions are absent. The failing step also includes dependency installation and git identity setup. No staged traceback, failure annotation or package inventory locates the failing subcommand. All underlying causes remain **undetermined**.
-
-Final records establish 0/0/0/12 artifacts, not exact publication times; workflow `updated_at` is not a measured completion event. Missing streams cannot distinguish expiry/pruning from non-upload. Null `outputs_asset` also occurs in #669 and proves no loss. Zero artifacts alone is not a general failure test. Report/artifact disappearance timing and original package contents remain unavailable; nothing was reconstructed.
-
-Continuation-only model requests/tokens are unmeasured: aggregate session usage cannot establish the extra recovery consumption. Existing record `agent_s/gate_s/total_s/parked_s` values are preserved without relabeling them as lifetime timing. No quota or monetary inference. This environment audit measures no benchmark quality or readiness; benchmark coverage and acceptance gaps remain unchanged.
-
-## What next
-
-Policymaker: seek only existing failure annotations or short redacted tracebacks for initial Epilogue jobs **132628109954, 132660262717, 132754986114**, retaining their run IDs above. Expected gain: identify the failing phase before requesting a repair; check that each error identifies its exact run/job/subcommand. If expired, close this audit and propose only safe phase markers plus retained results-inventory hashes for engine-owned failure-path verification. No broad access or historical model rerun is justified.
-
-Resume from [saved measurements](session-recovery-0147.json) and [normalizer](metrics/session_recovery_0147.py); do not repeat the history survey, reconstruct artifacts or replay evaluator/probe commands. Input hashes and source pins permit checking any newly supplied narrow evidence against this audit.
+Checkpoint gaps reuse [policy measurements](../policy/observations/0147-policy-check.md#recovery-discovery-and-audit-evidence), not agent-active time. Their first checkpoint timestamps fall inside the failed Epilogue steps; they are not exact Finish execution times. Short saved runtimes are preserved as recorded, not lifetime work measurements.
+The [detailed timelines, exact run/job/step pointers, source SHA256 values and runtime projections](session-recovery-0147.json) retain all seven runs. Runtime pin: `510fc5af213cbe9f66dde42a27e3467bc225afcd`; source-code inspection describes the audit checkout, without asserting every historical run used those bytes.
+Each affected session already had an accepted Finish, then later received “Use Write to create .session/report.md before Finish”, wrote the report and finished again. Reports record one kick each at 00:30:08, 06:59:29 and 14:32:53 UTC on November 15. Recovery published reports but zero artifacts; #663's saved 21-artifact command result is not recovered bytes.
+**Root causes remain undetermined.** Metadata locates failure at the Epilogue step, not a Python function or the point files disappeared. Successful upload/download steps establish workflow outcomes, not complete bundle contents or successful admission. Missing logs/bundles prevent distinguishing admission, finalization and other exceptions.
+All four streams are unavailable (retention, expiry and never-uploaded remain alternatives). `outputs_asset=null` occurs in all four runtime records, including #669; neither null nor zero artifacts alone diagnoses failure. Watchdog commitments are a possible delay mechanism, without historical decision evidence.
+Continuation-only tokens are **unmeasured**; saved usage is cumulative. Tokens measure neither subscription quota nor money. No evaluator, historical command, benchmark probe, model/reader/native execution or artifact reconstruction was run.
+**Smallest next action:** Policymaker should obtain only failed job `132628109954`'s Epilogue exception/log, if retained. Expected gain: locate one exception before considering an engine change. Verify its run/job identity, byte hash and last completed receive/finalize boundary; if unavailable, close historical attribution at the step-level limit and capture that boundary plus inventory on a future occurrence.
+Benchmark_ready=false; missing benchmark coverage, whole-method review and owner acceptance remain unchanged. Product quality is unmeasured. This audit measures recovery only.
