@@ -1,15 +1,28 @@
 {
+  "development_cases": {
+    "cases": 11,
+    "families": {
+      ".lvclass": 3,
+      ".lvlib": 4,
+      ".lvproj": 3,
+      ".vi": 1
+    },
+    "generating_command": "python3 -I benchmark/scripts/dev_cases.py",
+    "reference_status": "Provisional XML declarations; independent review pending. Every native reference unavailable; VI oracle unavailable.",
+    "verification_command": "python3 -I benchmark/scripts/dev_cases.py --check",
+    "visibility": "All public development cases; none can be withheld."
+  },
   "generating_command": "python3 -I benchmark/scripts/sources.py",
   "independent_review": "pending; author does not approve readiness",
-  "limitations": "Public sources cannot serve as withheld or unseen cases. Header metadata does not establish semantic reading, native compatibility or benchmark readiness.",
+  "limitations": "Public inputs and cases cannot serve as withheld or unseen evidence. XML declarations await independent checking; native references, semantic reading and compatibility remain unverified. No benchmark readiness claim.",
   "milestones": {
     "baseline": "not-started",
     "challenges": "not-started",
     "coverage": "prepared-not-reviewed",
-    "oracle": "not-started",
+    "oracle": "prepared-not-reviewed",
     "sources": "prepared-not-reviewed",
     "split": "not-started",
-    "tasks": "not-started"
+    "tasks": "prepared-not-reviewed"
   },
   "reading_environment": {
     "git": "2.55.0",
