@@ -1,0 +1,36 @@
+argv=["/usr/bin/python3", "-I", "docs/research/poc/verify_poc.py"]
+exit=0
+{
+  "scope": "structural, no LabVIEW execution",
+  "primary_source_hashes": "pass",
+  "fixtures": {
+    "add": {
+      "sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+      "entries": 162,
+      "source_reader_matches": true,
+      "truncation_and_scope_failure": "pass"
+    },
+    "empty": {
+      "sha256": "d58fe28f21ad9ac1623009f290a1d7cd4f34a514f236f61867cbcb854772f173",
+      "entries": 23,
+      "source_reader_matches": true,
+      "truncation_and_scope_failure": "pass"
+    },
+    "empty_separate_code": {
+      "sha256": "fdb970bf9198e63f0aabf6c7c0f987bcb872173210718081a7faa695555729ba",
+      "entries": 23,
+      "source_reader_matches": true,
+      "truncation_and_scope_failure": "pass"
+    },
+    "add_breakpoints": {
+      "sha256": "510a227bb02cca8238654261761f95ba422c7e7be9631996e41769f73a80feb6",
+      "entries": 165,
+      "source_reader_matches": true,
+      "truncation_and_scope_failure": "pass"
+    }
+  },
+  "escape_fields_and_extended_tag": "pass",
+  "candidate_reparse_and_zlib_roundtrip": "pass",
+  "issue_marker_check": "pass"
+}
+Candidate: {"status": "syntactic candidate only; target primitive semantics and terminal compatibility unknown", "artifact_sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8", "original_index": 103, "hypothetical_target_index": 104, "primitive_uid": 43, "primitive_resource_id_retained": 1050, "replacements": [{"heap_offset": 112, "body_offset_excluding_UInt32": 108, "old_hex": "67", "new_hex": "68", "field": "OF__primIndex"}, {"heap_offset": 171, "body_offset_excluding_UInt32": 167, "old_hex": "67", "new_hex": "68", "field": "OF__primIndex"}, {"heap_offset": 223, "body_offset_excluding_UInt32": 219, "old_hex": "67", "new_hex": "68", "field": "OF__primIndex"}, {"heap_offset": 258, "body_offset_excluding_UInt32": 254, "old_hex": "67", "new_hex": "68", "field": "OF__primIndex"}], "heap_length_unchanged": 842, "reparse": "complete", "original_BDHb_payload_bytes": 477, "candidate_BDHb_payload_bytes_default_zlib": 477, "zlib_runtime_version": "1.3", "original_heap_sha256": "ab61adc40d5072966f901671496ed00fe48b0c9f4b0e6e2a350d56f9afac0a28", "candidate_heap_sha256": "18c2b6c58d8324cef5443f4af1a4b314ba8fe3aac45b850fa1a3fee6093a0d6a", "original_adler32": 3002322637, "candidate_adler32": 3172978385, "vi_written": false, "LabVIEW_tested": false}
