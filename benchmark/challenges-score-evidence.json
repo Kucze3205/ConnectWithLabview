@@ -1,0 +1,415 @@
+{
+  "inspected_controls": [
+    {
+      "contradictions": [],
+      "control": "wrong-answer-declared-dependency",
+      "counts": {
+        "correctness": {
+          "correct": 9,
+          "error": 0,
+          "incorrect": 1,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "grounding": {
+          "correct": 9,
+          "error": 0,
+          "incorrect": 1,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "incorrect",
+        "fidelity": "unverified",
+        "grounding": "incorrect"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "wrong-citation-existing",
+      "counts": {
+        "correctness": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "grounding": {
+          "correct": 9,
+          "error": 0,
+          "incorrect": 1,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "unverified",
+        "grounding": "incorrect"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "selective-omission-answer",
+      "counts": {
+        "correctness": {
+          "correct": 9,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 1,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "grounding": {
+          "correct": 9,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 1,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "unverified",
+        "grounding": "unverified"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "duplicate-answer",
+      "counts": {
+        "correctness": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "grounding": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "unverified",
+        "grounding": "unverified"
+      },
+      "duplicates": [
+        {
+          "channel": "answer",
+          "count": 1,
+          "raw_json_pointers": [
+            "/claims/4",
+            "/claims/12"
+          ],
+          "required_id": "A0005"
+        }
+      ],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [
+        {
+          "assertions": [
+            "Test Caller.vi",
+            "It is not the case that this literal equals 'Test Caller.vi'."
+          ],
+          "channel": "reader",
+          "count": 1,
+          "raw_json_pointers": [
+            "/observations/4",
+            "/observations/12"
+          ],
+          "required_id": "R0005"
+        }
+      ],
+      "control": "contradiction-reader",
+      "counts": {
+        "correctness": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 1,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 11
+        },
+        "grounding": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "incorrect",
+        "grounding": "unverified"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "missing-independent-key",
+      "counts": {
+        "correctness": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        },
+        "grounding": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 12
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "unverified",
+        "grounding": "unverified"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "constant-export",
+      "counts": {
+        "correctness": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 2,
+          "missing": 10,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 0
+        },
+        "grounding": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "incorrect",
+        "grounding": "unverified"
+      },
+      "duplicates": [],
+      "fixture": "library-icon-tests",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "constant-export",
+      "counts": {
+        "correctness": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 1,
+          "missing": 10,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 1
+        },
+        "grounding": {
+          "correct": 10,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 0,
+          "unverified": 2
+        }
+      },
+      "dimensions": {
+        "correctness": "unverified",
+        "fidelity": "incorrect",
+        "grounding": "unverified"
+      },
+      "duplicates": [],
+      "fixture": "library-specialty",
+      "match": true
+    },
+    {
+      "contradictions": [],
+      "control": "unsupported-missing-runtime",
+      "counts": {
+        "correctness": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 3,
+          "unverified": 0
+        },
+        "fidelity": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 3,
+          "unverified": 0
+        },
+        "grounding": {
+          "correct": 0,
+          "error": 0,
+          "incorrect": 0,
+          "missing": 0,
+          "partial": 0,
+          "unsupported": 3,
+          "unverified": 0
+        }
+      },
+      "dimensions": {
+        "correctness": "unsupported",
+        "fidelity": "unsupported",
+        "grounding": "unsupported"
+      },
+      "duplicates": [],
+      "fixture": "vi-actor-core-native-gap",
+      "match": true
+    }
+  ],
+  "totals": {
+    "cannot_evaluate": 0,
+    "controls": 33,
+    "fixtures": 3,
+    "matches": 33,
+    "mismatches": 0
+  },
+  "verification": {
+    "challenges_check": "failed: results.json is an extra entry; frozen challenges.py rejects every file not generated by it",
+    "constraint": "Issue prohibits editing challenges.py or fixtures; required results.json is retained.",
+    "preparation_check": {
+      "errors": [],
+      "evidence_references": 49,
+      "missing": []
+    },
+    "prescribed_command_exit": 1,
+    "score_check": "passed"
+  }
+}
