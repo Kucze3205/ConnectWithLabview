@@ -1,68 +1,89 @@
 # Policy working memory
 
-Considered: iteration records 0000–0021; reviews #146/#147; #150/#151; #157/#161;
-re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189; acceptances #176/#190.
-Updated by Policymaker #192, iteration 0022.
+Considered: iteration records 0000–0022; reviews #146/#147/#166/#179/#185;
+reports #150/#157/#170/#172/#175/#180/#184/#188/#189/#193/#195/#196/#197;
+acceptances #151/#161/#176/#190 and current loop-state #200.
+Updated by Policymaker #200, iteration 0023.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
-selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
+selected reports `.session/history/sessions/<issue>/` (.md; list with python glob).
 
 ## Current organization and state
 - `shaper: null`: always write `.session/orders.json`; without valid orders the iteration fails (0017 failed so).
 - Protocol re-review #166 (codex) closed F1/F2 at 2669ec4, overall accept; design review lacked model-family diversity.
-- Dev cases (11 public, on main via #175/#176): review #179 recomputed 1,053/1,053 XML agreements, 23 native slots
-  unresolvable; accepted as development evidence only. Gaps: typedef-impact and diagram-difference cases,
-  VI semantic key, native evidence.
-- Lineage LANDED via #188/#190, commit 8d3403c. `benchmark/scripts/lineage.py` exists on main.
-  Review #185 independently rehashed 829 artifacts, 24 duplicate groups/50 members, zero mismatches;
-  accept as split preparation evidence only, revise before allocation. Split remains `not-started`.
-- Main evaluator check in #192: exit 0, errors [], missing [baseline, challenges], benchmark_ready false,
-  benchmark_executed false, tool_quality null. An evidence index does not establish substantive readiness.
-- #189 challenge work saved at ecd17c4ccbd8671fcaa0c72451ac4e295ee955cd, unmerged (input_budget), branch task/189.
-  Four files: generator and three JSON fixtures; despite the report, no README was committed.
-  #192 inspected the generator: it submits only 2 of 50/141 required claims yet expects correct positive controls;
-  mutations are descriptions rather than materialized records; no per-required-ID expected ledger.
-  Thus repair before pinning/review/scorer work. Do not land the saved files unchanged.
-- Owner acceptance of the method NOT requested: needs reviewed split/baseline/challenge evidence first.
-  No reader implementation or planning before the evaluation protocol and independent review/owner gate.
+- Dev cases (11 public, landed via #175/#176): #179 recomputed 1,053/1,053 XML agreements;
+  23 native slots unresolvable. Development evidence only; typedef-impact, diagram-difference,
+  VI semantic key and native evidence remain gaps.
+- Lineage landed via #188/#190, commit 8d3403c. #185 rehashed 829 artifacts,
+  24 duplicate groups/50 members, zero mismatches; accepted as split preparation only,
+  revise before allocation. Split remains not-started despite pinned lineage references.
+- Owner acceptance of the method has NOT been requested: reviewed split/baseline/challenge evidence remains needed.
+  No reader planning or implementation before independent method review and owner acceptance of pinned protocol/evidence.
+  Goal gate remains unaccepted; no quality measurement or benchmark readiness established.
 
-## Model diversity and resource evidence
-- Do not trust report/startup model labels; inspect each record's `models` block.
-- #179/#185 reviewing diversity doubtful: authors used codex, most review input used codex or copilot luna (GPT family).
-- Iteration 0021: #188 accepted using 27,554 input; #189 partial using 460,178 input in 18 turns.
-  Both started Sonnet but overwhelmingly used copilot/gpt-5.6-luna; #189 stopped at input_budget.
-  No measured subscription-quota figures justify a routing change yet. Cache/input-budget accounting is not quota use.
-  Keep tasks small, bounded reads, checkpointing. Prefer another model family for independent review when available.
+## Saved challenge work: recover #195, do not repeat repair
+- Iteration 0022 ran four partial sessions from the same stale task/189 starting point:
+  #193 d58d58f, #195 fbcdb75, #196 a09009e, #197 dfa289a. None merged.
+  All four commits are available locally and retained under origin tags `iter/0022/<issue>`.
+  Remote task branches 193/195/196/197 are deleted; task/189 still points to ecd17c4.
+  Task-graph contract resolves deleted task/N branches through their retained iteration tags.
+- #195 is the useful completed checkpoint: `fbcdb75e5687955c0cda49bd1f40014b1647e726`,
+  tag `iter/0022/195`. Its report records 33 materialized controls, 1,080 required ledger slots,
+  generated README, preparation pins, passing Verification and six no-write drift trials.
+  This is author-reported structural verification, not independent semantic acceptance.
+- #200 inspected #195's README: two libraries freeze 12 IDs each (10 XML plus 2 unavailable native);
+  VI freezes 3 native IDs. Native answers stay null and whole positive outcomes unverified.
+  Fidelity lacks native alignment; computation/typedef-impact and full partial-case demonstrations remain gaps.
+  Inputs are synthetic public development fixtures, unexecuted, without scorer or concrete reader adapter.
+- #195 descends from pre-lineage ecd17c4. A whole-tree restore would delete landed lineage.
+  `git merge-tree` against current main 1d6b97b conflicts only in preparation.json and preparation-status.json.
+  Preserve main's split references/limitations while adding #195's challenges and refreshing status hashes.
+  Remove tracked benchmark/scripts/__pycache__/challenges.cpython-312.pyc.
+- #195 evaluator missing [split, baseline] reflects its old branch; main already pins lineage under split.
+  Expected after integration: missing [baseline], still benchmark_ready false and quality unmeasured.
+  Evidence-index completeness cannot establish substantive readiness.
 
-## Iteration 0022 orders (#192, wake true)
-- `challenge-fixtures-2` (benchmark, high, 60 min/30 turns, start_branch task/189): repair saved fixtures,
-  favor library-icon-tests/library-specialty (12 IDs each) plus native-gap VI; materialize actual submissions,
-  freeze per-ID outcomes and ledgers, generate README with protocol-row coverage/gaps, pin challenges and
-  mark prepared-not-reviewed. Verification runs generator --check and evaluator --check without environment.
-- Expected gain: reviewable public development fixtures; main evaluator no longer lists challenges missing.
-  No scorer, challenge execution, readiness, scope restriction or product work authorized by this order.
+## Iteration 0023 order (#200, wake true)
+- `.session/orders.json`: `land-challenges-195`, benchmark/medium, 40 minutes/25 turns,
+  start_branch task/195 (retained tag fallback). Merge origin/main, resolve only the two preparation JSONs,
+  preserve lineage bytes and split entries, remove bytecode, run environment-free generator/evaluator checks.
+  Do not redesign or alter fixtures/generator/README; stop with exact evidence if checks fail.
+- Expected gain: reviewable challenge preparation on main alongside lineage; evaluator missing only baseline.
+  No scorer, reader work, challenge execution, readiness, threshold or scope change authorized.
 
 ## Next Policymaker
-- Wake after the repair task: read its report, actual model usage and Verification outcome. Check main vs saved branch.
-- Inspect denominator-correct positive controls, actual mutation records, per-ID ledgers and README coverage/gaps.
-  Generation/byte equality cannot establish semantic correctness. Fidelity still lacks native reference alignment.
-- If landed and reviewable: order independent review before evaluator/scorer work; prefer a different model family,
-  verify actual model usage. Scorer changes require evaluator role plus separate verifier on policy-layer orders.
-- If budget stop: use saved commit, read the exact failure and restore/repair only missing work; avoid repeating reads.
-- Ready later: baseline design (manifest and development-only precision/cost plan), typedef-impact and diagram-difference
-  dev cases, native-job input/output schema. Resource-dependent execution waits for verified readiness.
-- Capability #169 (native jobs) and engine-change #165 remain waiting; do not duplicate or block ready work on them.
-- All-version effort estimate remains outstanding before any LabVIEW 2024 fallback choice.
+- Wake after landing: inspect report, actual model usage, Verification and landed-vs-saved state.
+  Check preservation of lineage, split pins/limitations, challenge hashes and removal of bytecode.
+- If landed, order independent substantive challenge review: original locators, frozen denominators,
+  mutation records, per-ID outcomes, extras/duplicates/contradictions and README gaps.
+  Prefer Claude family because #195 authorship was predominantly codex; confirm actual usage afterward.
+  Generator equality does not establish semantic correctness or positive-control validity.
+- Scorer work follows review and requires evaluator role plus separate policy-layer verifier.
+- If partial, resume the newest saved checkpoint; never restart repair from task/189 by default.
+  Each wake must inspect the result before issuing another order; do not repeat identical stale-branch orders.
+- Ready later: baseline design, typedef-impact/diagram-difference development cases, native-job schemas.
+  Resource-dependent execution waits for verified readiness. All-version effort estimate remains outstanding
+  before choosing any LabVIEW 2024 fallback.
+- Capability #169 remains waiting for explicit capability-ready; do not duplicate or block ready work on it.
+  Engine-change #165 is approved/engine-applied according to current loop-state; earlier memory was stale.
+
+## Model and resource evidence
+- Inspect record `models` blocks; startup/report labels are insufficient.
+- Iteration 0022: four partial tasks, 2,642,518 input tokens, no merged output;
+  #193 input_budget, #195 session_budget, #196/#197 input_budget (see record 0022 and selected reports).
+  #195 achieved passing checks but subsequent tasks restarted from task/189, wasting saved progress.
+  Recover checkpoints and bound reads before changing routing. No measured subscription-quota figures
+  justify provider ranking changes; cache/input accounting is not subscription quota use.
+- #179/#185 diversity doubtful: authors used codex, reviews largely codex/copilot (GPT family).
 
 ## Evidence and mechanisms to preserve
-- Sources: #134 revise → #139 fix → #140 accept at d588fa9. Coverage: #133 accept at 6933e17 as limited inventory.
-- Input ceiling 800k: #179/#180/#185/#189 hit input_budget. Keep smaller limits, bounded JSON inspection,
-  write report first and checkpoint commits. Public case JSON ranges from ~11k to ~445k serialized characters.
-- Task Verification runs in-session AND in an engine epilogue WITHOUT LABVIEW_ENVIRONMENT (#184 failed there).
-  Use environment-free generator/evaluate.py checks in Verification. Rebase runs evaluator --check.
-- Changed pinned evidence requires preparation.json re-pinning, including every reference to preparation-status.json.
+- Sources: #134 revise → #139 fix → #140 accept at d588fa9; #133 coverage accepted at 6933e17 as limited inventory.
+- Input ceiling 800k: use bounded JSON summaries; never print whole case JSON, lineage, sources or coverage.
+  Write reports early and checkpoint completed work. Startup #200: 12,612 estimated tokens, status ok.
+- Verification runs in-session AND engine epilogue without LABVIEW_ENVIRONMENT (#184 failed there).
+  Use environment-free checks. Changed evidence requires preparation.json repinning, including every status reference.
   Parent commits accepted changes.
-- Orders: `.github/loop/task-graph.md`; ids unique within iteration. Requests: `.github/loop/session-protocol.md`.
-  Check `.session/exports/manifest.json` before relying on exported artifacts; no exports requested this iteration.
-- Read evaluation.md before reader planning/implementation; accepted-limits.md before private data, disclosure,
-  publication or new spending. Optional access must not block ready work.
+- Orders: `.github/loop/task-graph.md`; request formats: `.github/loop/session-protocol.md`.
+  Check `.session/exports/manifest.json` before relying on exported artifacts; no exports requested for landing.
+- Read evaluation.md before reader planning/implementation; accepted-limits.md before private-data use,
+  disclosure, publication or new spending. Optional access requests must not hold an iteration open.
 - Do not reinstate the crashed script shaper without contract review. Notices #92/#100/#158 approved.
