@@ -910,6 +910,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: read the independent verdict and actual model evidence. Accept -> pin change-cases under tasks and precision under baseline, then update #403's method-acceptance draft with current commit/index hash. Another blocking defect exhausts fix_rounds 2: re-scope instead of a third blind fix.
 - #379 remains pending. Native answers, restricted-store readiness and owner method acceptance remain unresolved. Missing coverage remains explicit; quality is unmeasured; reader implementation remains gated. Do not repeat old store-record searches.
 
+## Iteration 0077 (#423, wake false)
+- Considered record 0076 and review #421 (.github/loop/data/session-reports/421/a34b8ded….json). Orders written first and parse-checked.
+- #421 (codex GPT 181k, 12 turns; fix author #418 Policymaker Claude -> cross-family) ACCEPT: probes (a)-(c) exit 1 in both
+  scripts for intended reasons. Finding 4 non-blocking: early return + caller count-check removal exits 0 (coordinated edit,
+  recorded as a limit). Probe artifact iter-0076/421-reason-controls-probes.json. Do not repeat #408/#409/#415/#421.
+- Verified on main: change-cases README e3ab5773…, typedef spec 091a4f81…, diagram spec edab2e80…, change_cases.py 657f7fec…,
+  precision README f94ba74b…, plan.json bbf834a8…, precision_plan.py 0bcc765a…; preparation.json ccff5e0e…, status 85b0f719….
+- Wrote execution/scripts/pin_change_precision_421.py (hash-gated, idempotent; pattern of pin_runner_369.py): 4 files under
+  tasks, 3 under baseline, one #421 limitation sentence, re-pins status refs. Dry run twice on a copy without env: status
+  02d5ea9b…, preparation 25cf0059…, 5 checks exit 0, evaluator 72 refs, missing [].
+- Order `pin-change-precision-421` (benchmark, low, 20/25, main, <=8 calls).
+- Next: verify main preparation.json 25cf0059… + 72 refs, delete the pin script. Then update the #403 corrected STE draft
+  (snapshot .session/history/sessions/403/1aec5844….md) with current commit + index hash and file ONE `question` for method
+  acceptance only (all gaps visible; no readiness/threshold/gate/fallback choice). #379 pending; do not wait.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
