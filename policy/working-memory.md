@@ -339,6 +339,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   limitation sentence; one run from main (max_turns >= 25). If revise: one narrow checker fix from main (fix round 1).
   Remaining: native evidence (#169 waiting), store readiness (#268), typedef/diagram cases, owner presentation of 0002.
 
+## Iteration 0041 (#275) FAILED, rolled back; Iteration 0042 (#277, wake false)
+- 0040 results: #272 landing merged 88eb9a9 (split files on main, split_boundary.py 1365e531…). Review #273 (codex 388k)
+  ACCEPT, no blocking findings; non-blocking: split_boundary.py:126 token mutation masked by null rule, :130 unknown-
+  partition mutation rejected before validate(). Probes all rejected as expected. Author copilot, reviewer codex: both GPT.
+- #275 wrote pin_split_273.py and deleted land_split_269.py but the iteration failed "ordered no valid tasks"
+  (orders_refused null -> most likely .session/orders.json was never written). policy/ rolled back to e961b3dc, so
+  land_split_269.py came back and pin script vanished. Main still: split not-started, status sha 5c972a14….
+- #277: re-wrote execution/scripts/pin_split_273.py (same content as 0e2afd6), dry run twice on a copy without env:
+  status fae1e26d…, preparation.json 98077172…, 59 refs, split design-reviewed. Deleted land_split_269.py again.
+  Order `pin-split-273` (benchmark, low, 20/25, main, Verification evaluator --check).
+- LESSON: write `.session/orders.json` FIRST, then verify it parses before Finish; a missing file costs a whole iteration.
+- Next: verify main split design-reviewed + 59 refs, delete pin_split_273.py; then one checker fix for #273 findings 1-2
+  (re-pin split_boundary.py via script); then consider review of prepared-not-reviewed milestones (coverage, sources,
+  tasks) and the owner presentation of docs/research/0002-delivery.md. Do not repeat #273 probes; do not wait on #169/#268.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
