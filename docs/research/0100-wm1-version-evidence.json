@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "status": "measured",
+  "starting_state": {
+    "commit": "06cadfb64f1412f11a8e670f13b15a0f48711375",
+    "tree": "e7a2dd977f6a1930522b28d439bcece18ea01fa6",
+    "git_status_short": "",
+    "captured_before_outputs": true
+  },
+  "inputs": {
+    "pins": [
+      {
+        "path": "benchmark/writing/method.json",
+        "expected_sha256": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1",
+        "sha256": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1",
+        "matches": true
+      },
+      {
+        "path": "@environment/actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+        "expected_sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+        "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+        "matches": true
+      },
+      {
+        "path": "@environment/pylavi/pylavi/file.py",
+        "expected_sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+        "sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+        "matches": true
+      },
+      {
+        "path": "@environment/pylavi/pylavi/resource_types.py",
+        "expected_sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+        "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+        "matches": true
+      }
+    ],
+    "parser_revision_required": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+    "prepared_root_observed": "/home/runner/work/_temp/connectwithlabview-environment",
+    "pylavi_revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+    "actor-framework_revision": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "readiness": {
+      "path": "@environment/readiness.json",
+      "sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413",
+      "public_sources": "ready",
+      "sources": [
+        {
+          "name": "pylavi",
+          "commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+          "license": "Unlicense"
+        },
+        {
+          "name": "actor-framework",
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "license": "MIT"
+        }
+      ],
+      "authority_limit": "Prepared-source availability only; native/model fields are not current execution tests."
+    },
+    "wm1_requirement": {
+      "locator": "benchmark/writing/method.json:/tasks/1",
+      "id": "WM1-diagram-not",
+      "original": {
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+        "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+        "save_version": "unavailable"
+      },
+      "preservation_id": "WM1-original-save-version",
+      "oracle_missing": [
+        "original-save-version",
+        "native-object-map",
+        "frozen-io",
+        "native-results",
+        "documentation-pins",
+        "separate-check"
+      ],
+      "changed": false
+    },
+    "directly_required_definition": {
+      "path": "@environment/pylavi/pylavi/data_types.py",
+      "sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+      "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75"
+    }
+  },
+  "entries": [
+    {
+      "type": "vers",
+      "ordinal_within_type": 0,
+      "resource_id": 4,
+      "name_hex": null,
+      "length": 12,
+      "payload_hex": "2000800000000432302e3000",
+      "payload_sha256": "5909d8cb3a524c1884a51aa8a8b4af0078c874d4f1ab4ffb03d516006139a0ef",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.Typevers",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "language": 0,
+        "text": "20.0",
+        "name": ""
+      },
+      "parsed_size": 12,
+      "trailing_hex": ""
+    },
+    {
+      "type": "vers",
+      "ordinal_within_type": 1,
+      "resource_id": 7,
+      "name_hex": null,
+      "length": 12,
+      "payload_hex": "2000800000000432302e3000",
+      "payload_sha256": "5909d8cb3a524c1884a51aa8a8b4af0078c874d4f1ab4ffb03d516006139a0ef",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.Typevers",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "language": 0,
+        "text": "20.0",
+        "name": ""
+      },
+      "parsed_size": 12,
+      "trailing_hex": ""
+    },
+    {
+      "type": "vers",
+      "ordinal_within_type": 2,
+      "resource_id": 8,
+      "name_hex": null,
+      "length": 12,
+      "payload_hex": "2000800000000432302e3000",
+      "payload_sha256": "5909d8cb3a524c1884a51aa8a8b4af0078c874d4f1ab4ffb03d516006139a0ef",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.Typevers",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "language": 0,
+        "text": "20.0",
+        "name": ""
+      },
+      "parsed_size": 12,
+      "trailing_hex": ""
+    },
+    {
+      "type": "vers",
+      "ordinal_within_type": 3,
+      "resource_id": 9,
+      "name_hex": null,
+      "length": 12,
+      "payload_hex": "2000800000000432302e3000",
+      "payload_sha256": "5909d8cb3a524c1884a51aa8a8b4af0078c874d4f1ab4ffb03d516006139a0ef",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.Typevers",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "language": 0,
+        "text": "20.0",
+        "name": ""
+      },
+      "parsed_size": 12,
+      "trailing_hex": ""
+    },
+    {
+      "type": "vers",
+      "ordinal_within_type": 4,
+      "resource_id": 10,
+      "name_hex": null,
+      "length": 12,
+      "payload_hex": "2000800000000432302e3000",
+      "payload_sha256": "5909d8cb3a524c1884a51aa8a8b4af0078c874d4f1ab4ffb03d516006139a0ef",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.Typevers",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "language": 0,
+        "text": "20.0",
+        "name": ""
+      },
+      "parsed_size": 12,
+      "trailing_hex": ""
+    },
+    {
+      "type": "LVSR",
+      "ordinal_within_type": 0,
+      "resource_id": 0,
+      "name_hex": "457175616c73204e6f742041205265666e756d2e7669",
+      "length": 160,
+      "payload_hex": "200080000100000000020640000000040003003c0000001f008020000000000100010002ffffffff0000000000000000000000005e6e91bb28d7704fa582771785a4cd370000000c000000100000000334b75c175ccabb49acf7a23d34bf8cced41d8cd98f00b204e9800998ecf8427e0000000000000000bb223a6079911e4a9b9459f263c7481502000000ffffffffd41d8cd98f00b204e9800998ecf8427e",
+      "payload_sha256": "a89f96d7347939c9b0e7bd3c95ee62e1069069a5588fd2494d31a377b19d43a4",
+      "version_field": {
+        "offset": 0,
+        "offset_basis": "zero-based within returned resource payload, excluding resource length prefix",
+        "length": 4,
+        "raw_hex": "20008000"
+      },
+      "parser_class": "pylavi.resource_types.TypeLVSR",
+      "decode_status": "decoded",
+      "decoded_version_uint32": 536903680,
+      "decoded_version_hex": "20008000",
+      "decoded_tuple": [
+        20,
+        0,
+        0,
+        4,
+        0
+      ],
+      "decoded_value": "20",
+      "decoded_structure": {
+        "version": "20",
+        "flags": "\\x01\\x00\\x00\\x00\\x00\\x02\\x06@\\x00\\x00\\x00\\x04\\x00\\x03\\x00<\\x00\\x00\\x00\\x1f\\x00\\x80 \\x00\\x00\\x00\\x00\\x01\\x00\\x01\\x00\\x02\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00^n\\x91\\xbb(\\xd7pO\\xa5\\x82w\\x17\\x85\\xa4\\xcd7\\x00\\x00\\x00\\x0c\\x00\\x00\\x00\\x10\\x00\\x00\\x00\\x034\\xb7\\x5c\\x17\\x5c\\xca\\xbbI\\xac\\xf7\\xa2=4\\xbf\\x8c\\xce\\xd4\\x1d\\x8c\\xd9\\x8f\\x00\\xb2\\x04\\xe9\\x80\\x09\\x98\\xec\\xf8B~\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xbb\":`y\\x91\\x1eJ\\x9b\\x94Y\\xf2c\\xc7H\\x15\\x02\\x00\\x00\\x00\\xff\\xff\\xff\\xff\\xd4\\x1d\\x8c\\xd9\\x8f\\x00\\xb2\\x04\\xe9\\x80\\x09\\x98\\xec\\xf8B~"
+      },
+      "parsed_size": 160,
+      "trailing_hex": ""
+    }
+  ],
+  "conclusion": {
+    "agreement": "agree",
+    "decoded_tuples": [
+      [
+        20,
+        0,
+        0,
+        4,
+        0
+      ]
+    ],
+    "measurement": "Every vers/LVSR declaration in the one pinned original is retained above; values are pinned-parser interpretations of the recorded bytes.",
+    "uncertainty_narrowed": "WM1 original version declarations were unmeasured; their presence, raw bytes and pinned-class interpretations are now measured.",
+    "authoritative_original_save_version": null,
+    "independent_save_version_confirmation": "unavailable",
+    "wm1_requirement": "Original save_version remains unavailable in unchanged method.json; observed declarations are supporting evidence, not an authoritative replacement.",
+    "next_action": "Carry this one-original evidence into independent save-version confirmation before freezing WM1 original/output version-preservation checks; retain the missing-authority status until then."
+  },
+  "limitations": [
+    "Offline observation of one immutable original and third-party parser interpretation only.",
+    "Independent authoritative original-save-version confirmation is unavailable; declarations alone do not discharge WM1-original-save-version.",
+    "Agreeing declarations establish neither native compatibility nor preservation, semantic writing feasibility, method readiness or a 2024 fallback.",
+    "No LabVIEW execution, semantic edit, benchmark run, corpus scan or protected-input change."
+  ],
+  "invocation": "python3 docs/research/0100-wm1-version-evidence.py",
+  "environment_requirement": "LABVIEW_ENVIRONMENT points to prepared source root; run from repository root with Python 3.",
+  "parser_locators": {
+    "Resources.load": "pylavi/file.py:420-465",
+    "Resources.get_resources": "pylavi/file.py:331-338 (list preserves all entries, including duplicate IDs)",
+    "resource_payload_framing": "pylavi/file.py:413-418 (four-byte length prefix excluded from returned payload)",
+    "Typevers": "pylavi/resource_types.py:221-268; version is first field at payload byte 0",
+    "TypeLVSR": "pylavi/resource_types.py:115-121,210-215; version is first field at payload byte 0",
+    "Structure.from_bytes": "pylavi/data_types.py:334-340",
+    "integer_decoding": "pylavi/data_types.py:74-101,158-162 (unsigned big-endian UInt32)",
+    "Version": "pylavi/data_types.py:657-664,744-782,802-825 (tuple order major,minor,patch,phase,build; phase 4=release)",
+    "Header.VERSION": "pylavi/file.py:27,75 (container framing constant, not used as save-version evidence)"
+  },
+  "invocation_state": {
+    "commit": "9ecf377946da3aeb941567c2647a6a37fa826e02",
+    "tree": "4704a486925ac3ff8d5bcadd5e61384513bb5094"
+  },
+  "enumeration": {
+    "method": "Resources.get_resources for each of vers and LVSR; never get_resource by ID or a dictionary keyed by ID",
+    "counts": {
+      "vers": 5,
+      "LVSR": 1
+    },
+    "duplicate_ids": {
+      "vers": [],
+      "LVSR": []
+    },
+    "absent_types": [],
+    "malformed_entries": [],
+    "tuple_order": [
+      "major",
+      "minor",
+      "patch",
+      "phase",
+      "build"
+    ]
+  }
+}
