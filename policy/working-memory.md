@@ -1,5 +1,13 @@
 # Policy working memory
 
+Current continuation: Policymaker #515 for iteration 0103 considered record 0102 and actual #512/#513 reports.
+Read `## Pair-tool review and iteration 0103` and `## Next Policymaker` first for the latest decisions.
+#513's substantive review reports no major finding, but its repository output was blocked by reviewer permissions.
+#515 preserves reviewer permissions, repairs the shaper instructions and writes the public fixture owner question.
+Startup is ok (21,867 estimated tokens); no notices, suggestions or open owner requests in startup loop state.
+The owner question is a proposal written this session, not a confirmed issue or available resource.
+Earlier header and evidence below are retained as attributed history.
+
 Considered: iteration records 0000-0101, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
 writing-method extension, review #485, correction #489, re-review #493, allocator re-review #497,
@@ -405,15 +413,74 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured. A passed
   tool self-check establishes no benchmark readiness, method acceptance, product authorization or Goal gate.
 
+## Pair-tool review and iteration 0103
+- Considered by Policymaker #515: record 0102, actual #512/#513 reports, journal memory, history/exports
+  manifests, startup diagnostic, profiles and reviewer/orchestrator skills, handoff, engine session protocol,
+  task-graph contract, accepted limits, pair owner instructions/protocol and four current pair-file hashes.
+  Startup is ok, estimated 21,867 tokens, notices []; exports results [], suggestions [], owner requests open [].
+  No prepared-source replay, original rehash, native run, substantive code review or artifact inspection here.
+- Record 0102 closed, failure null, limit_hits 0, improved false/no_progress 1. Shaper #512 done/merged in
+  24 turns, actually claude/claude-fable-5-2. Reviewer #513 blocked/unmerged in 17 turns, attempted
+  claude/claude-sonnet-5-5 and completed substantial work with codex/gpt-6.1-sol. Author #509 used Codex;
+  separate-session independence holds, model-family diversity was not achieved for the substantive review.
+  Token/cache accounting does not measure subscription quota. No routing, ceiling, cadence or role change.
+- Actual #513 report:
+  `.session/history/sessions/513/6abac9b44d6b454682b610752f52017e6c245a2e36964f6273d3dc8c330958e5.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/513#issuecomment-6844063713).
+  Reviewed main `8f5ae4c48581459aa09b3f5e56f79db56188b86c`; report says all four files match task
+  commit `53816a08feeb89a2747bf63ce8338ea315e06518`. #515 matched current owner-instructions.md,
+  protocol.md, pair_diff.py and selfcheck.json hashes to #511's five-file staging record above.
+  These current-pin checks do not inspect or authenticate the saved review artifact's internal fields.
+- #513 reports no major finding, recommendation `closed` under the task's definition; task acceptance remains
+  incomplete. Minor R1: pair_diff.py:229-237 rewrites tracked selfcheck.json during the documented self-check.
+  Replay exited 0 and matched committed bytes exactly; reviewer says committed bytes stayed intact.
+  Reviewer reports eight independent probes passed (raw resource, FPHb, tail, one-sided empty resource,
+  versions, BDPW chunks, pin mismatch, virtual pinned loader), plus virtual execution of both protocol blocks.
+  These are attributed reviewer results, not #515 reruns. LabVIEW menu wording and native behavior unverified.
+- Blocker is a task/profile mismatch: execution/profiles.yml gives reviewer `write: []`; reviewer SKILL.md
+  explicitly requires report/session artifacts only. #512 required a committed review-0102.json and optional
+  probe script, both rejected by the path guard. Do not broaden reviewer writes or repeat completed probes.
+  Optional saved artifact: `iter-0102/513-review-0102.json`, 5,320 bytes, SHA256
+  `562467370d558b15eb9a7faf8cb1bc283365f99ef3c8cada9c6f54f1ead8249f`.
+  Availability was not verified here; it is not assumed staged. Read report first. If a repository record is
+  needed, a permitted writer must explicitly consume the artifact and check its hash, four pins and structure.
+  A copied record must preserve R1, limitations and the original blocked acceptance; no fresh review claim.
+- Actual #512 report:
+  `.session/history/sessions/512/dcffec9274f2c8e0d53ac0ab0cad314448d0381cfb49003a78381625921b5093.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/512#issuecomment-6843902867).
+  Owner request not filed: shaper could not find the format and declined to guess. #515 found the exact
+  array format in `.github/loop/session-protocol.md` (Requests to the owner). #512 also repeated #508's
+  missing-report-marker error, then corrected it in-session. This is the second occurrence promised in #511.
+- #515 changes only the orchestrator skill and policy memory. Skill now includes the five-field question
+  format and capability-contract pointer, reviewer report/artifact output boundaries and a report-marker
+  readback checkbox. Profiles stay unchanged. Expected gains: avoid another output-path blockage, request
+  format search and rejected Finish. Next record can check these outcomes; no claim they are already achieved.
+- After reading accepted-limits.md and current owner instructions/protocol, #515 writes one `question`
+  to `.session/requests.json`: owner authors eight public synthetic VIs with existing LabVIEW, supplies
+  authoring.md, then freezes pins once before comparison. It asks for owner manual action, not a new native
+  role capability, private access or spending. Publication/model processing is explicit in the request.
+  Writing the proposal does not establish publication, owner agreement, issue number or fixture availability.
+  Check later loop state before any duplicate request. Do not attach this request as an iteration dependency.
+- #515 checked activation with policy/layer-rules.py and facts derived from current profiles/params: errors [].
+  Saved skill, memory, request JSON and empty orders checks passed; reviewer writes remain empty.
+  These are definition/output checks, not benchmark or review-probe results. Engine activation is authoritative.
+- #515 writes empty policy orders: no demonstrated evaluator defect or concrete available audit question.
+  The shaper chooses ready work independently of the request. R1 is minor and does not block fixture authoring;
+  preserve/restore committed selfcheck bytes on any necessary replay, without rerunning solely for bookkeeping.
+- Native benchmark runs and agent comparisons remain absent. Native keys, withheld writing cases, verified
+  isolation and artifact/version/hardware coverage remain incomplete; tool quality is unmeasured. No benchmark
+  readiness, method acceptance, product authorization, fallback choice or Goal gate follows from this review.
+
 ## Next Policymaker
-1. Read record 0102, journal/working-memory.md and actual task reports. Check loop state for the owner request
-   for the controlled pair and for independent ready work beside it; an open request must not hold work.
-   If the pair arrives, check that hashes are pinned once before comparison and limits stay explicit.
-2. Preserve #505's published bytes and the authority gap. Replay only for a concrete reason with verified pins;
-   do not treat recorded readiness or internal payload consistency as a fresh prepared-source/native measurement.
-3. Keep #501's full-goal effort totals unknown and require substantive independent review before any fallback
-   proposal. Preserve #493/#497 closures; do not repeat unchanged study, POC research, reviews or gap maps.
-4. Inspect actual pin evidence before evaluator work. Keep policy orders limited to evaluator/audit with a shaper.
-   Retain owner routing/cadence absent measured contrary evidence. Read accepted limits before optional access
-   proposals; unavailable access cannot hold an iteration open. Quality and native coverage remain unmeasured;
-   product implementation still requires independently reviewed method/evidence and explicit owner acceptance.
+1. Read record 0103 and actual reports. Check publication of #515's owner question and independent ready work.
+   Check whether the shaper respects reviewer output paths and supplies the report marker on its first Finish.
+2. Preserve #513's attributed review and minor R1; do not repeat probes to repair the output-path mismatch.
+   If a committed record is useful, verify artifact availability/hash and unchanged four-file pins before import.
+   A missing artifact is an availability limit, not evidence the review never happened. Do not invent its contents.
+3. If the owner supplies the controlled pair, inspect authoring.md and pin all inputs once before comparison.
+   Keep parser observations separate from semantic/native evidence. No substitute corpus diff or new pair tool.
+4. Preserve #505's authority gap, #501's unknown full-goal totals and #493/#497's bounded closures.
+   No duplicate estimation, version audit, POC delivery, closed review or gap map without a new concrete question.
+5. Keep policy orders limited to evaluator/audit with a shaper. Retain owner routing/cadence absent measured
+   contrary evidence. Optional access cannot hold an iteration open. Product work still needs independently
+   reviewed method/evidence and explicit owner acceptance; writing also needs accepted writing-task coverage.

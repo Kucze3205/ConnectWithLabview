@@ -83,7 +83,12 @@ Start with the proof of concept; defer benchmark work that is not needed to deli
 - If the POC cannot work, the delivery is the evidence and the possible exits. Do not change the goal; do not wait for
   the owner. After delivery, record it in the working memory and return to the benchmark thread.
 - A question or request to the owner (for example labelled fixture VIs) goes in `.session/requests.json` in short,
-  plain sentences with exact steps. An open request never blocks the iteration: plan work that is ready without it.
+  plain sentences with exact steps. Its format is a JSON array:
+  `[{"kind":"question","title":"Action","what":"Situation and numbered owner steps","why":"Reason","unblocks":"Work enabled"}]`.
+  `question` has no engine effect. Before requesting private material, provider disclosure, publication, spending or
+  native capabilities, read `docs/perpetua/accepted-limits.md`. Optional access uses `capability`, with exact steps in
+  `frozen` and a concrete `readiness` check; read `.github/loop/session-protocol.md` for that contract.
+  An open request never blocks the iteration: plan work that is ready without it.
 
 ## Writing a task
 
@@ -95,8 +100,12 @@ POC is delivered, resume benchmark preparation with independent expected
 answers, extended with write tasks. Plan preparation and independent review before product work; cite the reviewed protocol/tree and the
 owner acceptance before issuing an implementation task. A missing prerequisite is work
 to resolve, not a reason to invent a readiness pass. Independent review of product or
-benchmark preparation uses `reviewer` in a separate session with pinned inputs. The
-engine's evaluator verifier remains exclusive to evaluator changes.
+benchmark preparation uses `reviewer` in a separate session with pinned inputs. Reviewers have no repository write paths:
+require findings in `.session/report.md` and detailed evidence in `.session/artifacts/`, never a repository review file.
+The engine's verification cannot read session artifacts; do not require it to check them. If a committed review record
+is necessary, give a permitted writer a separate task with the exact reviewer artifact as an input and check its pins;
+do not repeat completed review probes to repair an output-path error (#513).
+The engine's evaluator verifier remains exclusive to evaluator changes.
 
 Each task is one session's work and a section set the protocol defines. Rules:
 
@@ -150,4 +159,5 @@ graph costs more than one that investigated less.
 - [ ] `.session/tasks.json` valid: every task has a role from `.session/capabilities.json`, a `body` with the sections, edges
 - [ ] each acceptance checkbox verifiable; `## Budget` by name; `## Verification` one plain `python3` command
 - [ ] `journal/working-memory.md` updated with the four sections
+- [ ] the report starts with `<!-- session-report -->`, then a fenced `yaml` block containing `status: done`; read it back before Finish
 - [ ] the report, in the engine contract's format, says what you shaped and why
