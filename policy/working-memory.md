@@ -319,6 +319,26 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   decision from loop state; do not wait on it. Remaining: native evidence (#169 waiting), typedef-impact/diagram-
   difference cases (need native evidence + paired revisions), owner presentation of the 0002 estimate.
 
+## Iteration 0040 (#271, wake false)
+- Result of 0039: #269 split design `partial` on input_budget (copilot gpt-5.6-luna 399k input, 30 turns; sonnet 14),
+  not merged; saved at tag iter/0039/269 (665409e). Report says completed. Policymaker extracted the 4 files without
+  LABVIEW_ENVIRONMENT: split_boundary.py --check exit 0 ("templates valid; 4 rejecting mutations passed"). Hashes:
+  split_boundary.py 1365e531…, README c2ecb9a7…, allocation template 5ebe26be…, isolation template 6d540b66….
+  README is honest (design only, no allocation, no secrecy, store pending, two strata, infeasible-stratum rule).
+- Checker weaknesses seen on reading (not yet probed): the token mutation sets custodian_label.value non-null, so it is
+  rejected by the null rule and may never exercise TOKEN_VALUE_RE; the unknown-partition mutation is rejected by a
+  special branch inside mutations(), and validate() would reject it only through the null rule. Passed to the reviewer as probes.
+- Wrote execution/scripts/land_split_269.py (hash-gated, idempotent, copies 4 files, runs --check; no preparation
+  edits). Dry run twice on a clone of origin/main without env: wrote then unchanged, --check 0; policy/evaluator/evaluate.py
+  --check exit 0, missing [], 55 refs. (Evaluator path is policy/evaluator/evaluate.py, not evaluator/.)
+- Orders (parallel, both from main): `land-split-269` (benchmark, low, 20/25, <=6 calls) and `review-split-design-269`
+  (reviewer, medium, 60/40, reads the tag read-only, 4 checker probes, Verification score.py --check).
+- Capability #268 (Row 1 store) pending; do not wait on it.
+- Next: verify main split_boundary.py sha 1365e531… then delete land_split_269.py. If review accept (blocking
+  findings none): write a pin script adding the 4 split files to the split milestone (label design-reviewed) + a review
+  limitation sentence; one run from main (max_turns >= 25). If revise: one narrow checker fix from main (fix round 1).
+  Remaining: native evidence (#169 waiting), store readiness (#268), typedef/diagram cases, owner presentation of 0002.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
