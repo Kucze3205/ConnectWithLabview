@@ -1,0 +1,1621 @@
+{
+  "capability_169_ready": false,
+  "mapped_slot_count": 23,
+  "native_executed": false,
+  "recipes": [
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "class-actor:N0001",
+        "class-actor:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-class-actor",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Actor/Actor.lvclass",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "65e9c455596c6d028bf0f9320fd2416b4e0fadad27af17f3520e584e4ab5ec0e"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "class-actor",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Inspect native direct parent and complete inheritance chain, including qualified identities and hashed resolved files. Encoded XML payloads alone are insufficient; capture the native inheritance view.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-actor:N0001",
+          "topic": "resolved-direct-parent-and-inheritance"
+        },
+        {
+          "case_id": "class-actor",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect each member native access scope, dispatch mode, overrides and parent-call requirement. Capture property values and original member locators; absence of XML flags does not establish defaults.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-actor:N0002",
+          "topic": "effective-scope-and-dispatch"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "class-archive-another-actor:N0001",
+        "class-archive-another-actor:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-class-archive-another-actor",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [
+          {
+            "container_path": "Documentation/Test Plan/Test Harness Master.zip",
+            "container_sha256": "34b7d61d6cd82ec3f4f25e2839e070970cdda4de31242469af9557681269fe5d",
+            "member_index": 45,
+            "member_path": "Rescripter Test Harness/Another Actor/Another Actor/Another Actor.lvclass",
+            "member_sha256": "376bb88ac91d8d323c4a4ba7cb9051e56941fe41ca805a8b7f616c5f3245c47b"
+          }
+        ],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/coverage.json",
+        "identity_manifest_sha256": "d9430e17133b81157faf3afd7a240a4ae81ef88c1dedee44249cb01b466d48fc",
+        "path": "Rescripter Test Harness/Another Actor/Another Actor/Another Actor.lvclass",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "376bb88ac91d8d323c4a4ba7cb9051e56941fe41ca805a8b7f616c5f3245c47b"
+      },
+      "original_save_version_evidence": {
+        "fields": [
+          {
+            "decoded": "14.0.0f0",
+            "field": "XML root @LVVersion",
+            "raw_hex": "14008000"
+          }
+        ],
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "class-archive-another-actor",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Inspect native direct parent and complete inheritance chain, including qualified identities and hashed resolved files. Encoded XML payloads alone are insufficient; capture the native inheritance view.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-archive-another-actor:N0001",
+          "topic": "resolved-direct-parent-and-inheritance"
+        },
+        {
+          "case_id": "class-archive-another-actor",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect each member native access scope, dispatch mode, overrides and parent-call requirement. Capture property values and original member locators; absence of XML flags does not establish defaults.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-archive-another-actor:N0002",
+          "topic": "effective-scope-and-dispatch"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "class-stop-msg:N0001",
+        "class-stop-msg:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-class-stop-msg",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "class-stop-msg",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Inspect native direct parent and complete inheritance chain, including qualified identities and hashed resolved files. Encoded XML payloads alone are insufficient; capture the native inheritance view.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-stop-msg:N0001",
+          "topic": "resolved-direct-parent-and-inheritance"
+        },
+        {
+          "case_id": "class-stop-msg",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect each member native access scope, dispatch mode, overrides and parent-call requirement. Capture property values and original member locators; absence of XML flags does not establish defaults.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "class-stop-msg:N0002",
+          "topic": "effective-scope-and-dispatch"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "library-debug:N0001",
+        "library-debug:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-library-debug",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/AFDebug/AF Debug.lvlib",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "012d7216facfa8f4a8f25644961c70e25c23fc608fb9a1015a26a8c4e4b6486f"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "library-debug",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Enumerate native qualified members and resolved paths, pin resolved file hashes, compare membership with original XML and list unresolved/missing members explicitly.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-debug:N0001",
+          "topic": "resolved-membership"
+        },
+        {
+          "case_id": "library-debug",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native effective access for each member, accounting for containing libraries. Capture native properties and match original member locators; do not infer defaults from absent XML properties.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-debug:N0002",
+          "topic": "effective-scope"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "library-framework:N0001",
+        "library-framework:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-library-framework",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Actor Framework.lvlib",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "library-framework",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Enumerate native qualified members and resolved paths, pin resolved file hashes, compare membership with original XML and list unresolved/missing members explicitly.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-framework:N0001",
+          "topic": "resolved-membership"
+        },
+        {
+          "case_id": "library-framework",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native effective access for each member, accounting for containing libraries. Capture native properties and match original member locators; do not infer defaults from absent XML properties.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-framework:N0002",
+          "topic": "effective-scope"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "library-icon-tests:N0001",
+        "library-icon-tests:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-library-icon-tests",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+      },
+      "original_save_version_evidence": {
+        "decoded": "21.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "21008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "library-icon-tests",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Enumerate native qualified members and resolved paths, pin resolved file hashes, compare membership with original XML and list unresolved/missing members explicitly.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-icon-tests:N0001",
+          "topic": "resolved-membership"
+        },
+        {
+          "case_id": "library-icon-tests",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native effective access for each member, accounting for containing libraries. Capture native properties and match original member locators; do not infer defaults from absent XML properties.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-icon-tests:N0002",
+          "topic": "effective-scope"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "library-specialty:N0001",
+        "library-specialty:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-library-specialty",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "library-specialty",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Enumerate native qualified members and resolved paths, pin resolved file hashes, compare membership with original XML and list unresolved/missing members explicitly.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-specialty:N0001",
+          "topic": "resolved-membership"
+        },
+        {
+          "case_id": "library-specialty",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native effective access for each member, accounting for containing libraries. Capture native properties and match original member locators; do not infer defaults from absent XML properties.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "library-specialty:N0002",
+          "topic": "effective-scope"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "project-archive-ppl:N0001",
+        "project-archive-ppl:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-project-archive-ppl",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [
+          {
+            "container_path": "Documentation/Test Plan/PPL Test.zip",
+            "container_sha256": "1174da0d93e00a33a26b8ea65155020abba2edfdab8a78b87cce807960272273",
+            "member_index": 2,
+            "member_path": "PPL Test/AF PPL.lvproj",
+            "member_sha256": "7ecf560d8a3d43568a02882feb8a9c646a5c3093a9d200dee451974d14628feb"
+          }
+        ],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/coverage.json",
+        "identity_manifest_sha256": "d9430e17133b81157faf3afd7a240a4ae81ef88c1dedee44249cb01b466d48fc",
+        "path": "PPL Test/AF PPL.lvproj",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "7ecf560d8a3d43568a02882feb8a9c646a5c3093a9d200dee451974d14628feb"
+      },
+      "original_save_version_evidence": {
+        "fields": [
+          {
+            "decoded": "15.0.0f0",
+            "field": "XML root @LVVersion",
+            "raw_hex": "15008000"
+          }
+        ],
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "project-archive-ppl",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "For every declared dependency and target, record native resolved path, identity/hash, resolution status and unresolved reason; compare against original project XML. Never fetch missing dependencies.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-archive-ppl:N0001",
+          "topic": "resolved-dependencies"
+        },
+        {
+          "case_id": "project-archive-ppl",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native build properties and source/destination inclusion with original XML locators. Record build-result as unavailable: builds and build hooks are forbidden. Settings alone cannot establish a build result.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-archive-ppl:N0002",
+          "topic": "effective-build-inclusion-and-build-result"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "project-debug-ppl:N0001",
+        "project-debug-ppl:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-project-debug-ppl",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/AF Debug PPL Build.lvproj",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "5df4c94e558a27506fa6b997c0dd5494b36281b0bd2844374f28000deabd54ba"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "project-debug-ppl",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "For every declared dependency and target, record native resolved path, identity/hash, resolution status and unresolved reason; compare against original project XML. Never fetch missing dependencies.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-debug-ppl:N0001",
+          "topic": "resolved-dependencies"
+        },
+        {
+          "case_id": "project-debug-ppl",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native build properties and source/destination inclusion with original XML locators. Record build-result as unavailable: builds and build hooks are forbidden. Settings alone cannot establish a build result.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-debug-ppl:N0002",
+          "topic": "effective-build-inclusion-and-build-result"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No execution permitted by this inspection recipe.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "project-ppl:N0001",
+        "project-ppl:N0002"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-project-ppl",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/AF PPL Build.lvproj",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+      },
+      "original_save_version_evidence": {
+        "decoded": "20.0.0f0",
+        "method": "XML root @LVVersion",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "project-ppl",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "For every declared dependency and target, record native resolved path, identity/hash, resolution status and unresolved reason; compare against original project XML. Never fetch missing dependencies.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-ppl:N0001",
+          "topic": "resolved-dependencies"
+        },
+        {
+          "case_id": "project-ppl",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Inspect native build properties and source/destination inclusion with original XML locators. Record build-result as unavailable: builds and build hooks are forbidden. Settings alone cannot establish a build result.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "project-ppl:N0002",
+          "topic": "effective-build-inclusion-and-build-result"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "Connector identity, state/reset, discriminating vectors, independent expected values, comparison rules, timeout and safe stop must be frozen before any execution.",
+        "value": null
+      },
+      "covered_slot_ids": [
+        "vi-actor-core-native-gap:N0001",
+        "vi-actor-core-native-gap:N0002",
+        "vi-actor-core-native-gap:N0003"
+      ],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "native-vi-actor-core-native-gap",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "Core/ActorFramework/Actor/Actor Core.vi",
+        "repository": "actor-framework",
+        "repository_url": "https://github.com/ni/actor-framework",
+        "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+      },
+      "original_save_version_evidence": {
+        "byte_offset": 80,
+        "decoded": "20.0.0f0",
+        "method": "RSRC/LVSR first UInt32",
+        "raw_hex": "20008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture",
+        "controlled-io"
+      ],
+      "revision": 1,
+      "slot_procedures": [
+        {
+          "case_id": "vi-actor-core-native-gap",
+          "claim_id": "N0001",
+          "expected_value": null,
+          "procedure": "Capture connector pane and front panel. Enumerate terminal direction, position, required/optional status, exact type and typedef identity with original object-to-capture mapping.",
+          "reader_observation_id": "RN0001",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "vi-actor-core-native-gap:N0001",
+          "topic": "connector-terminals-and-types"
+        },
+        {
+          "case_id": "vi-actor-core-native-gap",
+          "claim_id": "N0002",
+          "expected_value": null,
+          "procedure": "Capture all accessible diagram frames and nested structures. Map node/terminal/wire identities and endpoints to capture regions. Record inaccessible diagrams; distinguish dataflow guarantees from one observed schedule.",
+          "reader_observation_id": "RN0002",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "vi-actor-core-native-gap:N0002",
+          "topic": "diagram-nodes-wires-and-execution-dependencies"
+        },
+        {
+          "case_id": "vi-actor-core-native-gap",
+          "claim_id": "N0003",
+          "expected_value": null,
+          "procedure": "Before execution, independently freeze hashed input vectors, initial state/reset, dependency set, target, timeout, stop condition, expected outputs/errors, units, precision and allowed variation. Select vectors separating plausible wrong computations. No I/O until these fixtures are reviewed; record actual outputs, errors and execution observations without deriving expectations from the reader.",
+          "reader_observation_id": "RN0003",
+          "reference_status": "unavailable-native-not-executed",
+          "slot_id": "vi-actor-core-native-gap:N0003",
+          "topic": "controlled-input-output-behavior"
+        }
+      ],
+      "status": "design-only-not-dispatchable"
+    },
+    {
+      "controlled_io_fixture": {
+        "reason": "No independent behaviour evidence or connector mapping is available for this candidate; filename add.vi is not evidence of addition. Dispatch is blocked until a separate session establishes and pins expected vectors.",
+        "value": null
+      },
+      "covered_slot_ids": [],
+      "dependency_inputs": {
+        "reason": "Before dispatch enumerate every needed dependency with source path, commit/archive identity and sha256; missing inputs stay unavailable and cannot be fetched.",
+        "value": null
+      },
+      "environment_requirements": {
+        "candidate_path": "Owner-provisioned #169 NI 2026 Q1 cloud path; load/compile evidence does not prove property inspection, capture or controlled I/O.",
+        "required_bitness": {
+          "reason": "No native load/property/capture experiment establishes required bitness.",
+          "value": null
+        },
+        "required_labview_version": {
+          "reason": "Native compatibility is unproven; original save-version evidence is recorded separately. Select and pin a suitable reading version before dispatch.",
+          "value": null
+        },
+        "required_modules": {
+          "reason": "Dependencies, modules, targets and licences have not been resolved natively. Null does not mean no modules required.",
+          "value": null
+        }
+      },
+      "execution_boundary": "Trusted job receives only predeclared hashed public originals/dependencies and licence access. Preserve originals read-only; inspect separately hashed disposable copies, never save. Disable network and automatic execution/build hooks. Roles receive staged outputs, no runner credentials or Docker daemon. Abort on undeclared input, unsupported API or side effect.",
+      "expected_staged_outputs": [
+        {
+          "path": "environment.json",
+          "required_content": "Actual native version/build/bitness, OS, image digest, modules, licence/target availability and API support/failures.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "preservation.json",
+          "required_content": "Original and working-copy pre/post SHA256, source status before/after, load/save warnings and mutation verdict.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "properties.json",
+          "required_content": "Native property names, typed values, original object locators, resolved identities/hashes and inaccessible/unresolved reasons for every requested slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "captures/index.json",
+          "required_content": "Every capture path and SHA256, original object locator, view/frame and region; capture binaries separately hashed. Include unavailable views explicitly.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "slot-results.json",
+          "required_content": "One record per covered slot with aligned reader observation, substantive value or null/unavailable reason, native locator, evidence hashes and uncertainty. Partial coverage cannot establish the full slot.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "job.log",
+          "required_content": "Complete bounded operation log, timestamps, warnings/errors, timeouts, forbidden-operation refusal and clean shutdown.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "independent-check.json",
+          "required_content": "Separate checker identity/session, frozen key/fixture hashes and claim-level substantive agreements/disagreements with original/native citations.",
+          "sha256": null,
+          "status": "not-produced"
+        },
+        {
+          "path": "controlled-io.json",
+          "required_content": "Pre-frozen independent input/output expectations and hashes, reset/stop/timeout, exact typed actual values/errors and per-vector comparison. Compile success alone fails readiness.",
+          "sha256": null,
+          "status": "not-produced"
+        }
+      ],
+      "forbidden_operations": [
+        "edits",
+        "saves",
+        "builds",
+        "network"
+      ],
+      "id": "capability-169-readiness-candidate",
+      "independent_check_procedure": [
+        "A separate checker session records checker identity/role/session, recipe revision, case/key revision and every evidence hash; this author cannot approve its own native expectations.",
+        "Rehash preserved original and separately hashed working copy before/after with python3 -I; compare to the declared manifest identity. Capture git status --porcelain before/after on the mounted source checkout; require no source mutation. Close without saving.",
+        "Resolve every covered claim and aligned reader observation against original native objects, property values and capture regions. Hashes and filenames alone are insufficient. Do not use an evaluated reader/export to establish expectations.",
+        "Record claim-level agreement/disagreement, native locator, evidence path/hash, substantive observed value, derivation method and uncertainty. Disagreement or missing evidence leaves the claim unverified until adjudicated and independently rechecked.",
+        "For I/O, freeze independent expectations before running, inspect full logs and compare every vector using its declared comparison rules. Challenge wrong answers and wrong source locations; reject constant outputs that fail discriminating vectors."
+      ],
+      "input": {
+        "archive_member_chain": [],
+        "commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+        "identity_manifest": "benchmark/sources.json",
+        "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "path": "tests/add.vi",
+        "repository": "pylavi",
+        "repository_url": "https://github.com/marcpage/pylavi",
+        "sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8"
+      },
+      "original_save_version_evidence": {
+        "byte_offset": 36,
+        "decoded": "21.0.0f0",
+        "method": "RSRC/LVSR first UInt32",
+        "raw_hex": "21008000",
+        "status": "recorded"
+      },
+      "permitted_operations": [
+        "read-properties",
+        "diagram-capture",
+        "controlled-io"
+      ],
+      "readiness_selection": {
+        "acceptance_gap": "No VI with independently known behaviour was established in this design session. This candidate does not yet satisfy the known-behaviour prerequisite of #169.",
+        "candidate_vi": "pylavi/tests/add.vi",
+        "independently_known_behavior": false,
+        "why": "Public, small, source-hashed VI intended as a candidate for a discriminating arithmetic check; semantics have not been established."
+      },
+      "revision": 1,
+      "slot_procedures": [],
+      "status": "design-only-not-dispatchable"
+    }
+  ],
+  "schema_version": 1,
+  "status": "design-only",
+  "unmapped_slot_ids": []
+}
