@@ -1,0 +1,215 @@
+{
+  "fields": {
+    "schema_version": {
+      "value": 1,
+      "provenance": "synthetic"
+    },
+    "record_id": {
+      "value": "synthetic:record-1",
+      "provenance": "synthetic"
+    },
+    "case_id": {
+      "value": "synthetic:case-1",
+      "provenance": "synthetic"
+    },
+    "pair_id": {
+      "value": "synthetic:pair-1",
+      "provenance": "synthetic"
+    },
+    "arm": {
+      "value": "tool",
+      "provenance": "synthetic"
+    },
+    "repetition_id": {
+      "value": "synthetic:repetition-1",
+      "provenance": "synthetic"
+    },
+    "manifest_sha256": {
+      "value": "d3ddafe452d33a1939d31688721da4dd8b696c7ff3d564a753409141bd708b28",
+      "provenance": "synthetic"
+    },
+    "common_prompt_sha256": {
+      "value": "7f59d4895293897653e8071cf039ed79424e284ded0fb9faaab67c5883d07cdc",
+      "provenance": "synthetic"
+    },
+    "effective_prompt_sha256": {
+      "value": "26f25183cec354ce7e21c7ea9586a48af52b5f7149336188a374e18ab7b1b8ae",
+      "provenance": "synthetic"
+    },
+    "model_identity": {
+      "value": "synthetic:provider/model/snapshot",
+      "provenance": "synthetic"
+    },
+    "session_id": {
+      "value": "synthetic:fresh-session-1",
+      "provenance": "synthetic"
+    },
+    "started_at": {
+      "value": "2000-01-01T00:00:00Z",
+      "provenance": "synthetic"
+    },
+    "finished_at": {
+      "value": "2000-01-01T00:00:02Z",
+      "provenance": "synthetic"
+    },
+    "elapsed_ms": {
+      "value": 2000,
+      "provenance": "synthetic"
+    },
+    "tool_time_ms": {
+      "value": 100,
+      "provenance": "synthetic"
+    },
+    "queue_time_ms": {
+      "value": 10,
+      "provenance": "synthetic"
+    },
+    "input_tokens": {
+      "value": 20,
+      "provenance": "synthetic"
+    },
+    "output_tokens": {
+      "value": 10,
+      "provenance": "synthetic"
+    },
+    "total_tokens": {
+      "value": 30,
+      "provenance": "synthetic"
+    },
+    "reader_context_tokens": {
+      "value": 5,
+      "provenance": "synthetic"
+    },
+    "cached_input_tokens": {
+      "value": 0,
+      "provenance": "synthetic"
+    },
+    "retry_count": {
+      "value": 0,
+      "provenance": "synthetic"
+    },
+    "tool_call_count": {
+      "value": 1,
+      "provenance": "synthetic"
+    },
+    "tool_calls": {
+      "value": [
+        {
+          "call_id": "synthetic:call-1",
+          "request": "SYNTHETIC reader request",
+          "response": "SYNTHETIC reader response",
+          "elapsed_ms": 100,
+          "error": null
+        }
+      ],
+      "provenance": "synthetic"
+    },
+    "truncated": {
+      "value": false,
+      "provenance": "synthetic"
+    },
+    "exhausted_budgets": {
+      "value": [],
+      "provenance": "synthetic"
+    },
+    "outcome": {
+      "value": "complete",
+      "provenance": "synthetic"
+    },
+    "raw_request": {
+      "value": {
+        "text": "SYNTHETIC full request; no model call.",
+        "sha256": "26f25183cec354ce7e21c7ea9586a48af52b5f7149336188a374e18ab7b1b8ae"
+      },
+      "provenance": "synthetic"
+    },
+    "raw_response": {
+      "value": {
+        "text": "{\"claims\": [{\"answer\": \"SYNTHETIC answer; no artifact fact asserted.\", \"citations\": [{\"artifact_sha256\": \"957a3de0d0c6a4ee9ef3ed4da1d1871fea5d041fc46534aa9b8a2db38a006571\", \"locator\": {\"expression\": \"synthetic:original/object/property\"}}], \"claim_id\": \"synthetic:claim-1\", \"conditions\": [\"synthetic:condition\"]}], \"limitations\": [\"SYNTHETIC design fixture only.\"], \"status\": \"complete\"}",
+        "sha256": "5501f21cff1526e350faf5abd2a0b2a25463142d9984449d6c5b18bdeefc6ee2"
+      },
+      "provenance": "synthetic"
+    },
+    "answer_claims": {
+      "value": [
+        {
+          "claim_id": "synthetic:claim-1",
+          "answer": "SYNTHETIC answer; no artifact fact asserted.",
+          "conditions": [
+            "synthetic:condition"
+          ],
+          "citations": [
+            {
+              "artifact_sha256": "957a3de0d0c6a4ee9ef3ed4da1d1871fea5d041fc46534aa9b8a2db38a006571",
+              "locator": {
+                "expression": "synthetic:original/object/property"
+              }
+            }
+          ],
+          "source_pointer": "/claims/0"
+        }
+      ],
+      "provenance": "synthetic"
+    },
+    "answer_status": {
+      "value": "complete",
+      "provenance": "synthetic"
+    },
+    "answer_limitations": {
+      "value": [
+        "SYNTHETIC design fixture only."
+      ],
+      "provenance": "synthetic"
+    },
+    "input_evidence": {
+      "value": [
+        {
+          "kind": "synthetic:original",
+          "identity": "synthetic:artifact-1",
+          "sha256": "957a3de0d0c6a4ee9ef3ed4da1d1871fea5d041fc46534aa9b8a2db38a006571"
+        }
+      ],
+      "provenance": "synthetic"
+    },
+    "errors": {
+      "value": [],
+      "provenance": "synthetic"
+    },
+    "reader_fidelity": {
+      "value": "not_measured",
+      "provenance": "synthetic"
+    },
+    "restricted_storage": {
+      "value": null,
+      "reason": "No approved restricted boundary, custodian, retention or resolvable object layout exists."
+    },
+    "provider_usage_mapping": {
+      "value": null,
+      "reason": "Provider selection and verified token/cache/retry accounting are unavailable; fixture total is input plus output, reader context is a subset of input."
+    },
+    "provider_cost": {
+      "value": null,
+      "reason": "No provider, dated price basis or billing evidence is selected; unknown is not zero."
+    },
+    "infrastructure_cost": {
+      "value": null,
+      "reason": "Resources and unpriced components have not been inventoried."
+    },
+    "interruption_policy": {
+      "value": null,
+      "reason": "Runner retry, partial-response and resume rules require review before runs."
+    },
+    "claim_mapping_revision": {
+      "value": null,
+      "reason": "Atomic claim extraction, extras, duplicates and contradictions need independently reviewed mapping; this fixture preserves submitted order and duplicates."
+    },
+    "manifest_binding_evidence": {
+      "value": null,
+      "reason": "No populated pinned manifest exists; actual case/key, budgets, prompt/input identities and runner/scorer revision matching cannot yet be verified."
+    },
+    "isolation_evidence": {
+      "value": null,
+      "reason": "Fresh-session, memory, key and cross-case isolation have not been executed or reviewed."
+    }
+  }
+}
