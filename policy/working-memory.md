@@ -1,43 +1,47 @@
 # Policy working memory
 
-Considered: iteration records 0000–0011; reports #139/#140/#141 (iteration 0011); benchmark/protocol.md at the
-prepared checkout 932ec4a. Updated by Policymaker #145, iteration 0012.
-Historical inputs: `.session/history/manifest.json`; iteration 0011: `.session/history/records/0011.json`.
+Considered: iteration records 0000–0012; review reports #146/#147 (iteration 0012); benchmark/protocol.md as
+reviewed at a595009. Updated by Policymaker #149, iteration 0013.
+Historical inputs: `.session/history/manifest.json`; iteration 0012: `.session/history/records/0012.json`;
+reports: `.github/loop/data/session-reports/<issue>/*.json`.
 
 ## Current organization and state
 - `shaper: null`: always write `.session/orders.json`; it supplies the iteration's work.
-- Iteration 0011 ran almost entirely on codex/gpt-6.1-sol (1.12M input) after Claude fallback; three sessions done,
-  accepted/improved, `no_progress` 0. Owner accepted #142 (conflict fix) and #143 (protocol draft).
-- Routing change in 0012: `reviewer` is now Claude-first (sonnet, then codex, luna) because the reviewed work
-  (protocol.md, #141) was authored by codex. `review` and `evaluator-verifier` stay codex-first. When ordering a
-  review, check the author's family in the record's `models` and pick the class whose first candidate differs.
-- Evaluator --check (per #139 report): exit 0, errors [], 8 evidence refs; missing tasks, oracle, split, baseline,
-  challenges. Benchmark readiness false, not executed, tool quality unmeasured.
+- Iteration 0012: one order (`order-145-review-protocol1`) became two sessions #146 and #147 (same id, both
+  reviewer, both done). Both ran on codex/gpt-6.1-sol after Claude fallback despite Claude-first `reviewer`
+  routing, ~400k codex input each (796k total). Cause of the duplicate unknown; watch whether it recurs.
+- Both reviews: Recommendation **revise** at a595009 (protocol unchanged since cf38154). Shared finding
+  F1/S1: no frozen required-claim accounting / dimension outcome rules / denominators (tasks 26–30, baseline
+  72–76, challenges 85–92). #147 adds F2: no reader-observation contract (fixed probes, raw outputs, native
+  alignment, missing/unsupported/error outcomes). Rest of the method judged consistent with evaluation.md.
+- Resources table (lines 103–109): neither review found any of the 7 rows concrete enough for a `capability`
+  request; each needs named resources, recipient providers, access/publication/revocation and readiness terms.
+  Ordinary public review needs no new access.
+- Caveat: both reviews are codex, same family as the protocol author (#141). The re-review of the revision
+  should be Claude if the revision is done by codex, and vice versa (check the record's `models`).
+- Evaluator --check: exit 0, 8 evidence refs, tasks/oracle/split/baseline/challenges missing; not readiness.
+
+## Orders for iteration 0013
+- `revise-protocol-f1f2` (benchmark, Claude-first, high, 60 min/30 turns, exports reports 146/147): focused
+  F1+F2 edit of benchmark/protocol.md; verification evaluator --check.
+- No parallel re-review: the revision reaches main only after owner merge-acceptance, so a blocked review
+  in the same iteration would read the old text.
+- Next Policymaker: if the revision is accepted/merged, order an independent re-review (family other than the
+  revision's author) focused on F1/F2 plus a regression look. If it failed or stayed partial, read its report
+  and narrow the task. Then: concrete resource proposals (native-job runner, restricted store) as a separate
+  benchmark/research task before any `capability` request. Ask the owner how a commit-bound review
+  recommendation becomes milestone `reviewed` status if still undecided.
 
 ## Milestone evidence
-- sources: review #134 revise → fix #139 → re-review #140 Recommendation accept at d588fa9 (focused correction;
-  actor-framework 356 requires + 1 conflict, pylavi 0). Coverage review #133 accept at 6933e17 as limited inventory.
-- Both stay prepared-not-reviewed in benchmark/preparation-status.json. How a recommendation becomes `reviewed`
-  is undecided; it goes through the owner change gate. Do not mark it from reviews alone.
-- protocol.md (#141, 114 lines, unpinned, unreviewed): sections tasks/oracle/split/baseline/challenges plus a
-  resources table of 7 rows (restricted store, native cloud jobs, native versions/licenses, private projects,
-  new restricted cases, model quota/runner, reviewers/scorer). It states no concrete service is identified yet.
-
-## Orders for iteration 0012
-- `review-protocol1` (reviewer, Claude-first, high, 60 min/25 turns): independent method review against
-  evaluation.md, goal.md and accepted-limits.md; per resources row, whether it is concrete enough for a
-  `capability` request. No parallel development work: it would be built on an unreviewed method.
-- Next Policymaker: read the review's recommendation; on revise order a focused benchmark revision then
-  re-review; on accept, file `capability` requests only for rows the review called concrete (fields: what,
-  frozen owner steps, readiness), and order public development work the protocol lists (case specs, answer/
-  citation schema, lineage analysis, native-job input/output records). Ask the owner how a commit-bound review
-  recommendation becomes a milestone `reviewed` status if still undecided.
+- sources: review #134 revise → fix #139 → re-review #140 accept at d588fa9. Coverage review #133 accept at
+  6933e17 as limited inventory. Both stay prepared-not-reviewed in benchmark/preparation-status.json; do not
+  mark reviewed from reviews alone (owner change gate).
 
 ## Mechanisms to preserve
 - Input ceiling is 800k unique input; codex counts all non-cached input. Never read large sources.json/
   coverage.json directly; bounded Python summaries. Keep codex sessions short or route Claude-first.
 - Task Verification runs in-session and again offline; keep it over committed files. Report-only reviews use
-  no command and write report findings from the start (worked in 0010 and 0011).
+  no command and write report findings from the start.
 - After rebase the engine runs evaluator --check; changed pinned files require preparation.json re-pinning.
 - Missing git identity: leave changes staged; parent engine commits. Partial predecessors block dependants.
 - Requests: `.session/requests.json`, format in `.github/loop/session-protocol.md` ("Three additional kinds").
@@ -46,4 +50,6 @@ Historical inputs: `.session/history/manifest.json`; iteration 0011: `.session/h
 ## Open questions
 - Notices #92/#100 remain pending for the owner. Do not reinstate the crashed script shaper without contract review.
 - Fallback variant (LabVIEW 2024) needs an all-version effort estimate before any choice; not yet started.
-- cache_read_share 0.053 in 0011 reflects codex sessions; not a Claude transport problem.
+- Duplicate session per order in 0012 (#146/#147): engine behaviour or retry? If it recurs, raise an
+  `engine-change` with evidence; it doubles quota use.
+- Claude routing fell back to codex for all sessions in 0011 and 0012; Claude availability unmeasured.
