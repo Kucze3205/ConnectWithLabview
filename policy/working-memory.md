@@ -228,6 +228,26 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   diagram-difference case (needs paired revisions), split (restricted store/custodian -> capability request per
   protocol ## split), native evidence (#169 waiting), owner presentation of docs/research/0002-delivery.md estimate.
 
+## Iteration 0035 (#253, wake false)
+- Result of 0034: #250 landing ran the script correctly (score/challenges/evaluator --check 0, missing [], 51 refs,
+  preparation.json 07e30c21…, status d32ec550…) but ended `partial` on session_budget at 14/15 turns -> not merged.
+  Saved as tag iter/0034/250 (diff vs main = only the 2 preparation JSON + session data). Main still has challenges
+  `prepared-not-reviewed`, status sha 1199295c…. Script execution/scripts/land_scorer_review_247.py still on main.
+  Actual models: codex 139k input (sonnet 8). Lesson: even one-script landings need max_turns >= 25 under codex fallback.
+- #251 typedef feasibility DONE (codex 880k input, near ceiling; report-only, nothing to merge): actor-framework has
+  9 loose .ctl (LVSR 20008000) + 7 .vip members, pylavi 0. Candidates with XML declarations + binary name hits:
+  Dequeue Priority.ctl (1 VI), DVR Contents.ctl (6 VIs), Time-Delay Override Options.ctl (6 VIs). Static reading
+  cannot confirm typedef vs custom control, instances, transitive users or change effects. Prepared actor-framework
+  checkout has 1 commit (rev-list --count 1): no paired revisions. DECISION: no typedef-impact dev case now; the gap
+  stays visible (challenges README:15 already names it) until native evidence (#169 waiting) and authorized paired
+  revisions exist. Do not re-order the feasibility measurement.
+- Order `land-scorer-review-247-retry` (benchmark, low, 20 min/25 turns, from main, <=6 tool calls).
+- Not filed: split capability request. resources-proposal.md row 1 still has owner questions (which store exists,
+  custodian, separate identities); a capability needs concrete owner steps. Next option: one `question` request
+  asking the owner to name the store/custodian, combined with the presentation of docs/research/0002-delivery.md.
+- Next: verify main challenges `scorer-reviewed` + 51 refs, then delete the landing script. Then consider the owner
+  question/presentation above; remaining preparation gaps: split, native evidence, diagram-difference/typedef cases.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
