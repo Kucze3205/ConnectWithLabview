@@ -1,69 +1,995 @@
 {
   "controls": [
     {
+      "alignment": [
+        {
+          "aligned_claim_id": "N0001",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0001",
+          "raw_json_pointers": [],
+          "reference_scope": "connector-terminals-and-types",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0002",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0002",
+          "raw_json_pointers": [],
+          "reference_scope": "diagram-nodes-wires-and-execution-dependencies",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0003",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0003",
+          "raw_json_pointers": [],
+          "reference_scope": "controlled-input-output-behavior",
+          "xml_expected": null
+        }
+      ],
+      "evidence": [
+        {
+          "inventory": "benchmark/cases/dev/vi-actor-core-native-gap.json",
+          "json_pointer": "/dependencies_and_environment",
+          "note": "Condition is injected for the fixture, not an observed native failure."
+        }
+      ],
       "expected": {
-        "correctness": "unsupported",
-        "fidelity": "unsupported",
-        "grounding": "unsupported"
+        "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+        "contradictions_ledger": [],
+        "counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          }
+        },
+        "current_evidence_dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "current_evidence_per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "duplicates_ledger": [],
+        "extra_counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          }
+        },
+        "extras_ledger": [],
+        "fixed_denominators": {
+          "correctness": 3,
+          "fidelity": 3,
+          "grounding": 3
+        },
+        "per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "required_ids": {
+          "correctness": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ],
+          "fidelity": [
+            "RN0001",
+            "RN0002",
+            "RN0003"
+          ],
+          "grounding": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ]
+        }
       },
-      "mutation": {
-        "declared_limitation": true
+      "name": "unsupported-missing-runtime",
+      "probe": {
+        "actual_execution": {
+          "attempted": 0,
+          "executed": 0,
+          "planned": 1,
+          "scored": 0
+        },
+        "configuration_revision": null,
+        "environment": "synthetic public fixture; no reader/runtime invoked",
+        "raw_request": "{\"arguments\":{\"artifact\":{\"archive_member_chain\":[],\"commit\":\"371c631c16155d88f02be11a953e4964d7452fd8\",\"identity_manifest\":\"benchmark/sources.json\",\"identity_manifest_sha256\":\"e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a\",\"path\":\"Core/ActorFramework/Actor/Actor Core.vi\",\"repository\":\"actor-framework\",\"repository_url\":\"https://github.com/ni/actor-framework\",\"sha256\":\"135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c\"},\"observation_ids\":[\"RN0001\",\"RN0002\",\"RN0003\"],\"scope\":\"all-required-observation-ids-in-order\"},\"entry_point\":\"abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure\",\"probe_id\":\"vi-actor-core-native-gap-probe-1\"}\n",
+        "raw_request_sha256": "fc0e81f0759c7a798263cd6c02dc59a3aff94a870b2bfe56f860f83d595ca1e7",
+        "reader_revision": null,
+        "request": {
+          "arguments": {
+            "artifact": {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "identity_manifest": "benchmark/sources.json",
+              "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+              "path": "Core/ActorFramework/Actor/Actor Core.vi",
+              "repository": "actor-framework",
+              "repository_url": "https://github.com/ni/actor-framework",
+              "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+            },
+            "observation_ids": [
+              "RN0001",
+              "RN0002",
+              "RN0003"
+            ],
+            "scope": "all-required-observation-ids-in-order"
+          },
+          "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+          "probe_id": "vi-actor-core-native-gap-probe-1"
+        },
+        "simulated_operation": {
+          "error": null,
+          "exit_code": 0,
+          "truncated": false
+        },
+        "timestamps": {
+          "end": null,
+          "start": null
+        }
       },
-      "name": "unsupported-case"
+      "purpose": "Synthetic declared limitation; no demonstrated native behavior.",
+      "submitted": {
+        "answer_record": {
+          "case_id": "vi-actor-core-native-gap",
+          "claims": [],
+          "limitations": "Controlled fixture condition: missing-runtime; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "status": "unsupported"
+        },
+        "raw_answer_record": {
+          "encoding": "utf-8",
+          "sha256": "2d834bd636a8ec18f91f2b3159a9588a9561b78f77944e64b507d063fc51c12d",
+          "text": "{\"case_id\":\"vi-actor-core-native-gap\",\"claims\":[],\"limitations\":\"Controlled fixture condition: missing-runtime; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"status\":\"unsupported\"}\n"
+        },
+        "raw_reader_response": {
+          "encoding": "utf-8",
+          "sha256": "382deb1e91b8f83ac2df20f751fe124d9e962668791cdd4b8db308333e56ccb4",
+          "text": "{\"limitations\":\"Controlled fixture condition: missing-runtime; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"observations\":[],\"probe_id\":\"vi-actor-core-native-gap-probe-1\",\"status\":\"unsupported\"}\n"
+        },
+        "reader_response": {
+          "limitations": "Controlled fixture condition: missing-runtime; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "observations": [],
+          "probe_id": "vi-actor-core-native-gap-probe-1",
+          "status": "unsupported"
+        }
+      }
     },
     {
+      "alignment": [
+        {
+          "aligned_claim_id": "N0001",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0001",
+          "raw_json_pointers": [],
+          "reference_scope": "connector-terminals-and-types",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0002",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0002",
+          "raw_json_pointers": [],
+          "reference_scope": "diagram-nodes-wires-and-execution-dependencies",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0003",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0003",
+          "raw_json_pointers": [],
+          "reference_scope": "controlled-input-output-behavior",
+          "xml_expected": null
+        }
+      ],
+      "evidence": [
+        {
+          "inventory": "benchmark/cases/dev/vi-actor-core-native-gap.json",
+          "json_pointer": "/dependencies_and_environment",
+          "note": "Condition is injected for the fixture, not an observed native failure."
+        }
+      ],
       "expected": {
-        "comparison_required": true,
-        "fidelity": "incorrect"
+        "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+        "contradictions_ledger": [],
+        "counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          }
+        },
+        "current_evidence_dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "current_evidence_per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "duplicates_ledger": [],
+        "extra_counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          }
+        },
+        "extras_ledger": [],
+        "fixed_denominators": {
+          "correctness": 3,
+          "fidelity": 3,
+          "grounding": 3
+        },
+        "per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "required_ids": {
+          "correctness": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ],
+          "fidelity": [
+            "RN0001",
+            "RN0002",
+            "RN0003"
+          ],
+          "grounding": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ]
+        }
       },
-      "mutation": {
-        "compared_cases": [
-          "class-stop-msg",
-          "library-framework"
-        ],
-        "export": "same-plausible-export",
-        "incompatible_facts": "case-specific required observations differ"
+      "name": "unsupported-missing-dependency",
+      "probe": {
+        "actual_execution": {
+          "attempted": 0,
+          "executed": 0,
+          "planned": 1,
+          "scored": 0
+        },
+        "configuration_revision": null,
+        "environment": "synthetic public fixture; no reader/runtime invoked",
+        "raw_request": "{\"arguments\":{\"artifact\":{\"archive_member_chain\":[],\"commit\":\"371c631c16155d88f02be11a953e4964d7452fd8\",\"identity_manifest\":\"benchmark/sources.json\",\"identity_manifest_sha256\":\"e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a\",\"path\":\"Core/ActorFramework/Actor/Actor Core.vi\",\"repository\":\"actor-framework\",\"repository_url\":\"https://github.com/ni/actor-framework\",\"sha256\":\"135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c\"},\"observation_ids\":[\"RN0001\",\"RN0002\",\"RN0003\"],\"scope\":\"all-required-observation-ids-in-order\"},\"entry_point\":\"abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure\",\"probe_id\":\"vi-actor-core-native-gap-probe-1\"}\n",
+        "raw_request_sha256": "fc0e81f0759c7a798263cd6c02dc59a3aff94a870b2bfe56f860f83d595ca1e7",
+        "reader_revision": null,
+        "request": {
+          "arguments": {
+            "artifact": {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "identity_manifest": "benchmark/sources.json",
+              "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+              "path": "Core/ActorFramework/Actor/Actor Core.vi",
+              "repository": "actor-framework",
+              "repository_url": "https://github.com/ni/actor-framework",
+              "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+            },
+            "observation_ids": [
+              "RN0001",
+              "RN0002",
+              "RN0003"
+            ],
+            "scope": "all-required-observation-ids-in-order"
+          },
+          "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+          "probe_id": "vi-actor-core-native-gap-probe-1"
+        },
+        "simulated_operation": {
+          "error": null,
+          "exit_code": 0,
+          "truncated": false
+        },
+        "timestamps": {
+          "end": null,
+          "start": null
+        }
       },
-      "name": "constant-export"
+      "purpose": "Synthetic declared limitation; no demonstrated native behavior.",
+      "submitted": {
+        "answer_record": {
+          "case_id": "vi-actor-core-native-gap",
+          "claims": [],
+          "limitations": "Controlled fixture condition: missing-dependency; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "status": "unsupported"
+        },
+        "raw_answer_record": {
+          "encoding": "utf-8",
+          "sha256": "f53eb0270f2c520e1373a06b646e9246429657c37a92967416d7b05eab253d65",
+          "text": "{\"case_id\":\"vi-actor-core-native-gap\",\"claims\":[],\"limitations\":\"Controlled fixture condition: missing-dependency; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"status\":\"unsupported\"}\n"
+        },
+        "raw_reader_response": {
+          "encoding": "utf-8",
+          "sha256": "c9440764596d6c62a8e975b77fb7d05b3568e577f27cce25637155dff51d6549",
+          "text": "{\"limitations\":\"Controlled fixture condition: missing-dependency; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"observations\":[],\"probe_id\":\"vi-actor-core-native-gap-probe-1\",\"status\":\"unsupported\"}\n"
+        },
+        "reader_response": {
+          "limitations": "Controlled fixture condition: missing-dependency; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "observations": [],
+          "probe_id": "vi-actor-core-native-gap-probe-1",
+          "status": "unsupported"
+        }
+      }
+    },
+    {
+      "alignment": [
+        {
+          "aligned_claim_id": "N0001",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0001",
+          "raw_json_pointers": [],
+          "reference_scope": "connector-terminals-and-types",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0002",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0002",
+          "raw_json_pointers": [],
+          "reference_scope": "diagram-nodes-wires-and-execution-dependencies",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0003",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0003",
+          "raw_json_pointers": [],
+          "reference_scope": "controlled-input-output-behavior",
+          "xml_expected": null
+        }
+      ],
+      "evidence": [
+        {
+          "inventory": "benchmark/cases/dev/vi-actor-core-native-gap.json",
+          "json_pointer": "/dependencies_and_environment",
+          "note": "Condition is injected for the fixture, not an observed native failure."
+        }
+      ],
+      "expected": {
+        "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+        "contradictions_ledger": [],
+        "counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          }
+        },
+        "current_evidence_dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "current_evidence_per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "duplicates_ledger": [],
+        "extra_counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          }
+        },
+        "extras_ledger": [],
+        "fixed_denominators": {
+          "correctness": 3,
+          "fidelity": 3,
+          "grounding": 3
+        },
+        "per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "required_ids": {
+          "correctness": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ],
+          "fidelity": [
+            "RN0001",
+            "RN0002",
+            "RN0003"
+          ],
+          "grounding": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ]
+        }
+      },
+      "name": "unsupported-missing-license",
+      "probe": {
+        "actual_execution": {
+          "attempted": 0,
+          "executed": 0,
+          "planned": 1,
+          "scored": 0
+        },
+        "configuration_revision": null,
+        "environment": "synthetic public fixture; no reader/runtime invoked",
+        "raw_request": "{\"arguments\":{\"artifact\":{\"archive_member_chain\":[],\"commit\":\"371c631c16155d88f02be11a953e4964d7452fd8\",\"identity_manifest\":\"benchmark/sources.json\",\"identity_manifest_sha256\":\"e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a\",\"path\":\"Core/ActorFramework/Actor/Actor Core.vi\",\"repository\":\"actor-framework\",\"repository_url\":\"https://github.com/ni/actor-framework\",\"sha256\":\"135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c\"},\"observation_ids\":[\"RN0001\",\"RN0002\",\"RN0003\"],\"scope\":\"all-required-observation-ids-in-order\"},\"entry_point\":\"abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure\",\"probe_id\":\"vi-actor-core-native-gap-probe-1\"}\n",
+        "raw_request_sha256": "fc0e81f0759c7a798263cd6c02dc59a3aff94a870b2bfe56f860f83d595ca1e7",
+        "reader_revision": null,
+        "request": {
+          "arguments": {
+            "artifact": {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "identity_manifest": "benchmark/sources.json",
+              "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+              "path": "Core/ActorFramework/Actor/Actor Core.vi",
+              "repository": "actor-framework",
+              "repository_url": "https://github.com/ni/actor-framework",
+              "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+            },
+            "observation_ids": [
+              "RN0001",
+              "RN0002",
+              "RN0003"
+            ],
+            "scope": "all-required-observation-ids-in-order"
+          },
+          "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+          "probe_id": "vi-actor-core-native-gap-probe-1"
+        },
+        "simulated_operation": {
+          "error": null,
+          "exit_code": 0,
+          "truncated": false
+        },
+        "timestamps": {
+          "end": null,
+          "start": null
+        }
+      },
+      "purpose": "Synthetic declared limitation; no demonstrated native behavior.",
+      "submitted": {
+        "answer_record": {
+          "case_id": "vi-actor-core-native-gap",
+          "claims": [],
+          "limitations": "Controlled fixture condition: missing-license; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "status": "unsupported"
+        },
+        "raw_answer_record": {
+          "encoding": "utf-8",
+          "sha256": "73952f28bdbc44ff2c7683957cf822f2c6095fa634e0e98cc6dfae9d0f312729",
+          "text": "{\"case_id\":\"vi-actor-core-native-gap\",\"claims\":[],\"limitations\":\"Controlled fixture condition: missing-license; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"status\":\"unsupported\"}\n"
+        },
+        "raw_reader_response": {
+          "encoding": "utf-8",
+          "sha256": "a44abe50b4935cbc0c4e4de2eeb95f2ef5948bfbc1ba47238b7d1a831e68c77e",
+          "text": "{\"limitations\":\"Controlled fixture condition: missing-license; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"observations\":[],\"probe_id\":\"vi-actor-core-native-gap-probe-1\",\"status\":\"unsupported\"}\n"
+        },
+        "reader_response": {
+          "limitations": "Controlled fixture condition: missing-license; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "observations": [],
+          "probe_id": "vi-actor-core-native-gap-probe-1",
+          "status": "unsupported"
+        }
+      }
+    },
+    {
+      "alignment": [
+        {
+          "aligned_claim_id": "N0001",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0001",
+          "raw_json_pointers": [],
+          "reference_scope": "connector-terminals-and-types",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0002",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0002",
+          "raw_json_pointers": [],
+          "reference_scope": "diagram-nodes-wires-and-execution-dependencies",
+          "xml_expected": null
+        },
+        {
+          "aligned_claim_id": "N0003",
+          "expected_outcome": "unsupported",
+          "native_reference": "unavailable",
+          "observation_id": "RN0003",
+          "raw_json_pointers": [],
+          "reference_scope": "controlled-input-output-behavior",
+          "xml_expected": null
+        }
+      ],
+      "evidence": [
+        {
+          "inventory": "benchmark/cases/dev/vi-actor-core-native-gap.json",
+          "json_pointer": "/dependencies_and_environment",
+          "note": "Condition is injected for the fixture, not an observed native failure."
+        }
+      ],
+      "expected": {
+        "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+        "contradictions_ledger": [],
+        "counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 3,
+            "unverified": 0
+          }
+        },
+        "current_evidence_dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "current_evidence_per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "dimensions": {
+          "correctness": "unsupported",
+          "fidelity": "unsupported",
+          "grounding": "unsupported"
+        },
+        "duplicates_ledger": [],
+        "extra_counts": {
+          "correctness": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "fidelity": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          },
+          "grounding": {
+            "correct": 0,
+            "error": 0,
+            "incorrect": 0,
+            "missing": 0,
+            "partial": 0,
+            "unsupported": 0,
+            "unverified": 0
+          }
+        },
+        "extras_ledger": [],
+        "fixed_denominators": {
+          "correctness": 3,
+          "fidelity": 3,
+          "grounding": 3
+        },
+        "per_id": {
+          "correctness": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          },
+          "fidelity": {
+            "RN0001": "unsupported",
+            "RN0002": "unsupported",
+            "RN0003": "unsupported"
+          },
+          "grounding": {
+            "N0001": "unsupported",
+            "N0002": "unsupported",
+            "N0003": "unsupported"
+          }
+        },
+        "required_ids": {
+          "correctness": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ],
+          "fidelity": [
+            "RN0001",
+            "RN0002",
+            "RN0003"
+          ],
+          "grounding": [
+            "N0001",
+            "N0002",
+            "N0003"
+          ]
+        }
+      },
+      "name": "unsupported-inaccessible-diagram",
+      "probe": {
+        "actual_execution": {
+          "attempted": 0,
+          "executed": 0,
+          "planned": 1,
+          "scored": 0
+        },
+        "configuration_revision": null,
+        "environment": "synthetic public fixture; no reader/runtime invoked",
+        "raw_request": "{\"arguments\":{\"artifact\":{\"archive_member_chain\":[],\"commit\":\"371c631c16155d88f02be11a953e4964d7452fd8\",\"identity_manifest\":\"benchmark/sources.json\",\"identity_manifest_sha256\":\"e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a\",\"path\":\"Core/ActorFramework/Actor/Actor Core.vi\",\"repository\":\"actor-framework\",\"repository_url\":\"https://github.com/ni/actor-framework\",\"sha256\":\"135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c\"},\"observation_ids\":[\"RN0001\",\"RN0002\",\"RN0003\"],\"scope\":\"all-required-observation-ids-in-order\"},\"entry_point\":\"abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure\",\"probe_id\":\"vi-actor-core-native-gap-probe-1\"}\n",
+        "raw_request_sha256": "fc0e81f0759c7a798263cd6c02dc59a3aff94a870b2bfe56f860f83d595ca1e7",
+        "reader_revision": null,
+        "request": {
+          "arguments": {
+            "artifact": {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "identity_manifest": "benchmark/sources.json",
+              "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+              "path": "Core/ActorFramework/Actor/Actor Core.vi",
+              "repository": "actor-framework",
+              "repository_url": "https://github.com/ni/actor-framework",
+              "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+            },
+            "observation_ids": [
+              "RN0001",
+              "RN0002",
+              "RN0003"
+            ],
+            "scope": "all-required-observation-ids-in-order"
+          },
+          "entry_point": "abstract reader inspect-original operation; concrete adapter unavailable and must be frozen before exposure",
+          "probe_id": "vi-actor-core-native-gap-probe-1"
+        },
+        "simulated_operation": {
+          "error": null,
+          "exit_code": 0,
+          "truncated": false
+        },
+        "timestamps": {
+          "end": null,
+          "start": null
+        }
+      },
+      "purpose": "Synthetic declared limitation; no demonstrated native behavior.",
+      "submitted": {
+        "answer_record": {
+          "case_id": "vi-actor-core-native-gap",
+          "claims": [],
+          "limitations": "Controlled fixture condition: inaccessible-diagram; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "status": "unsupported"
+        },
+        "raw_answer_record": {
+          "encoding": "utf-8",
+          "sha256": "75e8ec3b24178d776ef7cae64a6616c87865e1f8020dd972dfa74a73b16ca2f5",
+          "text": "{\"case_id\":\"vi-actor-core-native-gap\",\"claims\":[],\"limitations\":\"Controlled fixture condition: inaccessible-diagram; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"status\":\"unsupported\"}\n"
+        },
+        "raw_reader_response": {
+          "encoding": "utf-8",
+          "sha256": "f62dee639603f518bdcb712d7e68909f7b918211856ff8da17548f3f8094f317",
+          "text": "{\"limitations\":\"Controlled fixture condition: inaccessible-diagram; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.\",\"observations\":[],\"probe_id\":\"vi-actor-core-native-gap-probe-1\",\"status\":\"unsupported\"}\n"
+        },
+        "reader_response": {
+          "limitations": "Controlled fixture condition: inaccessible-diagram; affects N0001,N0002,N0003 and RN0001,RN0002,RN0003.",
+          "observations": [],
+          "probe_id": "vi-actor-core-native-gap-probe-1",
+          "status": "unsupported"
+        }
+      }
     }
   ],
   "denominators": {
-    "answer_correctness": 3,
-    "reading_fidelity": 3,
-    "source_grounding": 3
-  },
-  "evidence_status": "independently derived from public provisional inventory; native evidence unavailable",
-  "expected": {
-    "contradictions": [],
-    "dimensions": {
-      "correctness": "unsupported",
-      "fidelity": "unsupported",
-      "grounding": "unsupported"
+    "answer_correctness": {
+      "count": 3,
+      "required_ids": [
+        "N0001",
+        "N0002",
+        "N0003"
+      ]
     },
-    "duplicates": [],
-    "extras_ledger": []
+    "reading_fidelity": {
+      "count": 3,
+      "required_ids": [
+        "RN0001",
+        "RN0002",
+        "RN0003"
+      ]
+    },
+    "source_grounding": {
+      "count": 3,
+      "required_ids": [
+        "N0001",
+        "N0002",
+        "N0003"
+      ]
+    },
+    "submitted_extras_change_denominator": false,
+    "unavailable_items_retained": true
+  },
+  "execution": {
+    "attempted_cases": 0,
+    "executed_cases": 0,
+    "planned_cases": 1,
+    "scored_cases": 0
   },
   "fixture_id": "vi-actor-core-native-gap",
-  "gaps": [
-    {
-      "id": "N0001",
-      "reason": "native evidence and controlled fixture unavailable",
-      "status": "explicit-gap"
-    },
-    {
-      "id": "N0002",
-      "reason": "native evidence and controlled fixture unavailable",
-      "status": "explicit-gap"
-    },
-    {
-      "id": "N0003",
-      "reason": "native evidence and controlled fixture unavailable",
-      "status": "explicit-gap"
-    }
-  ],
-  "label": "unsupported/native-gap row and constant-export comparison",
   "public_development_only": true,
-  "schema_version": 1,
+  "schema_version": 2,
   "source": {
     "artifact": {
       "archive_member_chain": [],
@@ -77,27 +1003,8 @@
     },
     "case_id": "vi-actor-core-native-gap",
     "case_revision": 1,
-    "family": ".vi",
-    "save_version": {
-      "byte_offset": 80,
-      "decoded": "20.0.0f0",
-      "method": "RSRC/LVSR first UInt32",
-      "raw_hex": "20008000",
-      "status": "recorded"
-    }
-  },
-  "submitted": {
-    "answer_record": {
-      "case_id": "vi-actor-core-native-gap",
-      "claims": [],
-      "limitations": "Native connector, diagram and controlled behavior evidence unavailable.",
-      "status": "unsupported"
-    },
-    "reader_response": {
-      "limitations": "",
-      "observations": [],
-      "probe_id": "vi-actor-core-native-gap-probe-1",
-      "status": "unsupported"
-    }
+    "inventory_path": "benchmark/cases/dev/vi-actor-core-native-gap.json",
+    "inventory_revision": 1,
+    "inventory_sha256": "ac7d2a6498ee0c757d780f2d1f2b7af39b3d6a2a01e2a80571a596e4fa3ad5e2"
   }
 }
