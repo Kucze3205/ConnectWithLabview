@@ -69,7 +69,7 @@
    "transport_outcome": "succeeded|failed|interrupted|unsupported, and must equal the attempt_event bytes",
    "response_parsing": "label that must equal the state derived from raw_response bytes: absent|empty|invalid_utf8|malformed_json|parseable_json (missing_evidence/unreadable only in diagnostics)",
    "input_binding": "byte_match when raw_request bytes equal the pinned 0138 request, else not_bound",
-   "legacy_record": "unchanged schema_version 1 record or null; non-null requires legacy validate and manifest binding to pass and raw request/response/errors to equal the retained bytes",
+   "legacy_record": "unchanged schema_version 1 record or null; non-null requires legacy validate and manifest binding, pinned manifest/returned-model identity, source common-prompt hash, complete original input kind/identity/hash inventory and canonical tool-call content binding; raw request/response/errors must equal retained bytes; sidecar source evidence binding remains independently required",
    "evidence": "exactly one entry for each required evidence kind"
   },
   "evidence_entry_fields": {
@@ -84,7 +84,7 @@
    "sha256": "SHA256 of the bytes",
    "utf8": "decoded text, or null for invalid UTF-8; a view only, never a replacement"
   },
-  "accounting": "present_slots counts planned slots referenced by at least one attempt, missing_slots the others; response, outcome and parse counts derive from retained bytes, not labels; synthetic_complete_comparisons requires a valid envelope, exactly one attempt per planned slot, legacy-valid succeeded complete records, and is therefore zero when an arm is missing, failed, interrupted, unsupported or retried Complete synthetic comparisons additionally require raw request byte_match; a valid legacy record with an unbound request cannot complete. Legacy-valid inventory checks representation/byte joins only, and is not an admission count.",
+  "accounting": "present_slots counts planned slots referenced by at least one attempt, missing_slots the others; response, outcome and parse counts derive from retained bytes, not labels; synthetic_complete_comparisons requires a valid envelope, exactly one attempt per planned slot, legacy-valid succeeded complete records, and is therefore zero when an arm is missing, failed, interrupted, unsupported or retried Complete synthetic comparisons additionally require raw request byte_match; a valid legacy record with an unbound request cannot complete. Legacy-valid inventory checks representation, retained raw-byte joins and inherited model/common-prompt/original-input/tool-content joins against pinned source values; missing/corrupt sidecar source objects independently reject without changing this diagnostic attachment inventory. It is not an admission count.",
   "unsupported_real_policies": [
    "automatic retry",
    "attempt selection or favorable-result substitution",

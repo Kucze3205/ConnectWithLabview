@@ -130,6 +130,25 @@ def legacy_result(fixture, attempt, source, legacy):
     try:
         f = {k: v['value'] for k, v in record['fields'].items()}
         require(all(f[k] == attempt[k] for k in IDENTITY), 'legacy identity')
+        # Bind attachments to pinned source content. validate() separately binds
+        # every sidecar object to that source. Missing/corrupt sidecar objects
+        # still reject without changing rejected-fixture attachment inventories.
+        inv = source['base']['source_inventory']
+        old = next(a for a in source['base']['attempts'] if a['arm'] == attempt['arm'])
+        expected = {e['kind']: e['text'].encode('utf-8') for e in old['evidence']}
+        require(f['model_identity'] ==
+                source['manifest']['fields']['exact_model_snapshot']['value'] and
+                f['model_identity'].encode('utf-8') == expected['returned_model'],
+                'legacy model binding')
+        require(f['common_prompt_sha256'] == inv['common_prompt_and_hash']['sha256'] and
+                f['common_prompt_sha256'] == sha(expected['common_prompt']),
+                'legacy common prompt binding')
+        require(f['input_evidence'] == [{
+            'kind': 'synthetic:original', 'identity': 'synthetic:original-1',
+            'sha256': inv['original_artifact_set_and_hashes'][0]['sha256']
+        }], 'legacy original input binding')
+        require(pack(f['tool_calls']) == expected['tool_inventory'],
+                'legacy tool content binding')
         for kind in ('raw_request', 'raw_response'):
             require(f[kind]['text'].encode('utf-8') == raw_at(fixture, attempt, kind),
                     'legacy raw bytes')
