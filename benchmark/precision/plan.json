@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "design-only",
+  "model_runs_executed": 0,
+  "quality_threshold_proposed": false,
+  "manifest_field_matches": [
+    "provider", "exact_model_snapshot", "snapshot_pinning_limitations_and_run_window",
+    "model_image_capabilities", "independent_repetitions_per_case_arm",
+    "sampling_order", "paired_arm_randomization", "stopping_rule", "affordable_run_ceiling",
+    "precision_cost_plan_revision", "per_case_tolerances_and_nondeterminism",
+    "uncertainty_procedure", "confidence_level", "resampling_seed_and_count",
+    "independent_lineage_units_and_repeat_preservation", "missing_pair_treatment",
+    "exclusions_and_aggregation_weights", "small_sample_and_unavailable_scope_reporting",
+    "owner_precision_target_and_acceptance_record"
+  ],
+  "manifest_fields": {
+    "provider": {"value": null, "reason": "Owner must select an existing subscription route and approve data recipients; candidates are not verified capabilities."},
+    "exact_model_snapshot": {"value": null, "reason": "Capture the selected interface's returned model identifier and immutable snapshot if supported; loop aliases alone do not pin snapshots."},
+    "snapshot_pinning_limitations_and_run_window": {"value": null, "reason": "Verify snapshot support and record alias drift limits plus an owner-approved bounded UTC run window before freezing the manifest."},
+    "model_image_capabilities": {"requirement": "Both arms must accept identical native panel/diagram images where available. Verify selected interface image limits with public development inputs; record unavailable images and unsupported modalities explicitly."},
+    "independent_repetitions_per_case_arm": {
+      "development_pilot": 4,
+      "evaluation": null,
+      "candidate_counts": [2, 4, 8, 16, 32],
+      "arms": ["no-tool", "tool"],
+      "pairing": "Same case/key and repetition ID in both arms; each arm uses a fresh isolated session. Counts apply equally to each case and arm. Pilot count is a design allocation, not executed evidence."
+    },
+    "sampling_order": "Sort case IDs and repetition IDs; freeze complete order before evaluation. No evaluation-driven reordering or repeat selection.",
+    "paired_arm_randomization": {"method": "Sort arms by sha256(seed:pair_id:arm), matching runner-contract.md", "seed": 40501},
+    "stopping_rule": "Execute the frozen planned pairs once; no optional stopping on observed gains. Quota exhaustion stops dispatch, preserves all outcomes and marks the comparison incomplete; no selective replacement of failed pairs.",
+    "affordable_run_ceiling": {"value": null, "reason": "Owner quota allocation and development resource estimates are missing. Include pilot, evaluation, separate probes, retries and operational reserve; never authorize extra spending."},
+    "precision_cost_plan_revision": "benchmark/precision/plan.json design v1; freeze content SHA256 and independent review/owner acceptance records after development pilots, before evaluation",
+    "per_case_tolerances_and_nondeterminism": {"source": "independently checked case oracles", "global_numeric_tolerance": null, "dimensions": ["reading_fidelity", "answer_correctness", "source_grounding"], "rule": "Freeze numerical units, comparison tolerances and allowed nondeterminism per case and dimension before exposure; precision settings do not supply oracle tolerances."},
+    "uncertainty_procedure": {
+      "method": "paired-cluster-percentile-bootstrap",
+      "paired_dimensions": ["answer_correctness", "source_grounding"],
+      "fidelity": "Report required reader-probe outcomes separately; no-tool is not applicable and no paired fidelity gain is defined.",
+      "estimand": "For each dimension separately, case/repetition score is correct required items divided by the frozen required-item denominator; difference is tool minus no-tool. Report full outcome counts, extras and dimension assessments alongside this descriptive score; it is not an overall pass or a substitute for protocol precedence rules.",
+      "aggregation": "Average complete repetition differences within case, then equally weight cases within each lineage, then equally weight independent lineages. Recompute within declared coverage strata; never combine dimensions.",
+      "resampling": "Sample G lineage IDs with replacement, G draws per replicate; carry each selected lineage's whole project/case/repetition block, preserving paired arms. Recompute the same estimator; take empirical 2.5th and 97.5th percentiles using linear interpolation at (B-1)*p. No resampling of files or repetitions as independent lineages."
+    },
+    "confidence_level": 0.95,
+    "resampling_seed_and_count": {"seed": 40502, "count": 10000, "generator": "Python stdlib random.Random; pin Python implementation/version with the future executed analysis"},
+    "independent_lineage_units_and_repeat_preservation": {"unit": "independent project/lineage connected group", "preserve_all_nested_repetitions": true, "rule": "Use accepted lineage allocation, not file hashes alone. Shared dependencies and variants stay in the same group. Groups, not repeated calls, determine independent sample size."},
+    "missing_pair_treatment": {
+      "impute": false,
+      "comparison_complete_requires_all_planned_pairs": true,
+      "rule": "A pair requires both arms and independently scored fixed inventories; never replace missing arms with zero or a successful repeat. Scored unsupported/error/missing items remain non-correct in fixed denominators, with their explicit outcomes. Missing keys or unscorable arms make a pair incomplete.",
+      "report": "Keep all planned cases in coverage and report planned/attempted/executed/scored/complete pairs and reasons by stratum. Any complete-pair-only estimate/interval is explicitly conditional and cannot establish a completed comparison. Show planned-weight lower/upper bounds by assigning each missing paired difference -1/+1 under fixed case/lineage weights; all-missing scope has bounds [-1,1] and no point estimate."
+    },
+    "exclusions_and_aggregation_weights": "No result-dependent exclusions. Fixed equal case weights within lineage and equal lineage weights; predeclare stratum membership and planned denominators before evaluation. Conditional complete-pair estimates disclose their changed eligible denominator; planned-weight bounds preserve missing scope.",
+    "small_sample_and_unavailable_scope_reporting": "Report independent lineage count, repeat counts and unavailable scope per stratum. With fewer than two complete independent lineages, no inferential interval; with small G, label bootstrap intervals unstable and do not claim nominal coverage. Repeats cannot repair missing lineage diversity.",
+    "owner_precision_target_and_acceptance_record": {"value": null, "reason": "Owner must accept per-dimension uncertainty targets, scope, reviewed method and final repetition/cost plan. This design proposes no precision target or quality threshold."}
+  },
+  "pilot_sizing": {
+    "data_partition": "development-only",
+    "evaluation_results_used": false,
+    "prerequisites": "Independently checked development cases/keys, accepted lineage groups, reviewed scorer, matched budgets/prompts, tested isolation, verified route and existing quota allocation. No pilot is authorized or executed by this file.",
+    "variance_model": "For each paired dimension and stratum, fit development paired differences with random lineage intercept and independent repeat residual, after fixed within-lineage case averaging. Estimate nonnegative between-lineage variance tau2 and within-lineage repetition variance sigma2; preserve case covariance by averaging the same repetition index across cases. Document estimator, fit diagnostics, counts and sensitivity; inadequate groups or model fit block sizing rather than invent variance.",
+    "prediction": "For G planned independent lineages and candidate r, predicted variance of equal-lineage mean = tau2/G + sigma2/(G*r); predicted 95% half-width = 1.96*sqrt(tau2/G + sigma2/(G*r)). This normal planning approximation is not the final cluster-bootstrap interval or a coverage guarantee; validate sensitivity with development cluster resampling.",
+    "selection": "Once owner targets exist, select the smallest candidate r satisfying every declared paired dimension/stratum target under development-only variance and the verified quota ceiling. If none fits, or the between-lineage floor exceeds a target, report infeasible and request an owner decision on more independent development-supported scope/resources or targets; do not tune against evaluation gains.",
+    "cost": "Planned paired calls = 2 * case_count * r. Add 2 * development_case_count * 4 pilot calls, separately budgeted probes, all attempted/retried calls and reserve. Use conservative development token/time measurements against verified subscription units, renewal window, rate limits and existing remaining quota. Unknown conversion or quota means not affordable yet.",
+    "freeze": "Before any evaluation request, record pilot evidence hashes, variance estimates and diagnostics, G and scope, selected integer r per case/arm, exact model/manifest settings, owner targets/acceptance, uncertainty settings, resource ceiling and stopping rule. A pilot-derived change requires a new reviewed revision; evaluation results cannot influence it."
+  },
+  "quota": {
+    "status": "owner-decision",
+    "candidate_routes": [
+      {"provider": "claude", "model": "claude-sonnet-5-5", "evidence": "supplied loop routing; startup identifies claude-sonnet-5-5"},
+      {"provider": "codex", "model": "gpt-6.1-sol", "evidence": "supplied loop routing candidate; codex is the loop adapter, underlying service/interface must be verified"},
+      {"provider": "codex", "model": "gpt-5.6-luna", "evidence": "issue-specified loop routing candidate; availability unverified"}
+    ],
+    "capability_status": "All candidates require interface-level verification of model identity, image support, fresh-session controls, token accounting, seed/settings support, snapshot pinning and permitted data routing/retention; no capability or quota has been verified here.",
+    "owner_decision": "Which existing subscription quota should be allocated: name one candidate provider/model route and the underlying account/service/interface (no credentials), authorize the case data recipients/retention, and allocate explicit existing remaining units, renewal/run window, rate limits and a hard total ceiling covering development pilots, paired evaluation, separate probes, retries and reserve. Confirm no extra spending. After measured development costs, accept the affordable repetition plan or leave evaluation blocked.",
+    "extra_spending_authorized": false,
+    "allocated_quota": null
+  }
+}
