@@ -1,0 +1,558 @@
+{
+  "S1": {
+    "baseline_commit": "486030b461e57ca0f322a17a5b7853e83e9655e3",
+    "baseline_tree": "cf75cf6892de2f9410fa09ee2589dcba47d825a4",
+    "index_references": 74,
+    "only_identity_fields_changed": true,
+    "previous_identity": {
+      "commit": "3c518d6dc6aeec05e53e3437152c66cef088f78e",
+      "commit_resolvable": false,
+      "provenance": "No locally resolvable commit; no provenance invented.",
+      "tree": "ff724919e9aa09ae2a62bafdfcb83ca1c6b0e70e"
+    },
+    "protected_baseline_reviewed_worktree_mismatches": [],
+    "protected_hashes_retained": 62,
+    "unique_index_pins_retained": 56
+  },
+  "S2": "Output must equal both frozen version and preserved original version for both modification paths. Creation remains governed by requested frozen version.",
+  "S3": {
+    "derivation": {
+      "allowed_inputs": "protocol.md:79-81 documentation/images/inputs; writing/method.json#/comparison/matched_fields allowed_inputs_hash",
+      "budgets": "protocol.md:81 token/context/output/time; baseline/runner-contract.md Audit item 6; writing artifact-byte addendum",
+      "key_revision": "protocol.md:80,83-84 split/key revision and same assigned case/key; writing/method.json#/comparison/matched_fields case_key_revision",
+      "model": "protocol.md:80 provider/model/generation; baseline/runner-contract.md Still undecided",
+      "originals": "protocol.md:79 original artifact set; writing/method.json#/comparison/matched_fields original_manifest_hash",
+      "repetitions": "protocol.md:82 frozen repetitions; baseline/runner-contract.md Plan and Still undecided",
+      "request": "protocol.md:79-81 common question/prompt; writing/method.json#/comparison/matched_fields requested_change_hash"
+    },
+    "required_names": [
+      "request",
+      "originals",
+      "allowed_inputs",
+      "model",
+      "budgets",
+      "key_revision",
+      "repetitions"
+    ],
+    "rule": "Mandatory names checked independently in frozen and each arm, before existing key-set/value equality; arm/session/accounting invariants preserved.",
+    "source_base": "benchmark/"
+  },
+  "added_controls": 9,
+  "comparison_before_edits": {
+    "changed_paths": [
+      ".github/loop/data/session-reports/484/6bb8be49c7085bbb3c701e2cbf43e309490517149426ef31a0746b523e5a35d9.json",
+      ".github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json",
+      ".github/loop/data/session-reports/487/5db58797007afa0c83e706eb06efe1d1a32df0da2fbd36cfc602dbaef1dc3494.json",
+      ".github/loop/data/session-reports/487/e0dffb0c17df51bf706aa8ac39298ff1e6ea01ca370d27d2adb5fcab83d48389.json",
+      ".github/loop/data/session-reports/488/d890dc029fa8f6626b21798c6954be68e44cc681860ce1a451d701dc14a539e8.json",
+      "iterations/0095.json",
+      "iterations/0095/tasks.json",
+      "iterations/0096/tasks.json",
+      "journal/working-memory.md",
+      "policy/working-memory.md"
+    ],
+    "clean_worktree": true,
+    "parent_checkpoints": "Parent checkpoints accepted edits; original starting identity remains fixed, never replaced by later HEAD.",
+    "six_writing_files_identical": true,
+    "timing": "Identities, six hashes, protected hashes and all nine false acceptances observed before correction; outcomes replayed from reviewed git bytes to save this record."
+  },
+  "counterexamples": [
+    {
+      "control": {
+        "changes": [
+          {
+            "path": [
+              "original",
+              "result.synth",
+              "version"
+            ],
+            "value": "SYNTHETIC-v0"
+          },
+          {
+            "path": [
+              "candidate",
+              "original_after",
+              "result.synth",
+              "version"
+            ],
+            "value": "SYNTHETIC-v0"
+          }
+        ],
+        "example": "synthetic-modify",
+        "id": "original-output-version-drift",
+        "reason": "version-drift",
+        "target": "example"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "version-drift"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "version-drift"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "version-drift"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-consistent;native-unexecuted"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "path": [
+              "original",
+              "result.synth",
+              "version"
+            ],
+            "value": "SYNTHETIC-v0"
+          },
+          {
+            "path": [
+              "candidate",
+              "original_after",
+              "result.synth",
+              "version"
+            ],
+            "value": "SYNTHETIC-v0"
+          }
+        ],
+        "example": "synthetic-source-rebuild",
+        "id": "source-original-output-version-drift",
+        "reason": "version-drift",
+        "target": "example"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "version-drift"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "version-drift"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "version-drift"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-source-consistent;build-unexecuted"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "request"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "request"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "request"
+            ]
+          }
+        ],
+        "id": "missing-pair-request",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "originals"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "originals"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "originals"
+            ]
+          }
+        ],
+        "id": "missing-pair-originals",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "allowed_inputs"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "allowed_inputs"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "allowed_inputs"
+            ]
+          }
+        ],
+        "id": "missing-pair-allowed_inputs",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "model"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "model"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "model"
+            ]
+          }
+        ],
+        "id": "missing-pair-model",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "budgets"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "budgets"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "budgets"
+            ]
+          }
+        ],
+        "id": "missing-pair-budgets",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "key_revision"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "key_revision"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "key_revision"
+            ]
+          }
+        ],
+        "id": "missing-pair-key_revision",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    },
+    {
+      "control": {
+        "changes": [
+          {
+            "delete": true,
+            "path": [
+              "frozen",
+              "repetitions"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              0,
+              "settings",
+              "repetitions"
+            ]
+          },
+          {
+            "delete": true,
+            "path": [
+              "arms",
+              1,
+              "settings",
+              "repetitions"
+            ]
+          }
+        ],
+        "id": "missing-pair-repetitions",
+        "reason": "pair-setting-required",
+        "target": "pair"
+      },
+      "expected_after": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "expected_before": {
+        "accepted": false,
+        "reason": "pair-setting-required"
+      },
+      "observed": {
+        "after": {
+          "accepted": false,
+          "actual": "pair-setting-required"
+        },
+        "before": {
+          "accepted": true,
+          "actual": "synthetic-pair-consistent;zero-agent-runs"
+        }
+      }
+    }
+  ],
+  "issue": 489,
+  "limits": "No native execution, artifact writer, benchmark runner or evaluator; no native keys, readiness, owner method acceptance or independent approval.",
+  "original_controls_retained_unchanged": 35,
+  "reports": {
+    "481": {
+      "export_sha256": "7a9890141413d9cfd6d72cad24727ad1565bff5a66751d8dc3a6004503599672",
+      "snapshot": "41040c2327ddad5d40d1e546fa9c4e64efbd2b0706f58b11ead54a8c69e8d7c5",
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/481#issuecomment-6838991584"
+    },
+    "485": {
+      "export_sha256": "1bb99d39ce7850297c6f68afcd4916b0c433e24a63657bfbea02cb4232e0706a",
+      "snapshot": "3afd2492606ed7bf67a763c7805211fe2b95eb4ef2fdd213b5b4f3fc5b29ee7c",
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/485#issuecomment-6839451431"
+    }
+  },
+  "reviewed": {
+    "commit": "7435c05c4fd7ddbaafb6f5db9081ad5a4f5db427",
+    "six_sha256": {
+      "README.md": "83cfb823acb1363e7f534bbd30b84c10d164e0e59d183a2b591ae33819b74f07",
+      "controls.json": "1c929ad4efdd8c8ef4c1a5338d6a9492b69588c43add42b198aa2f722a151db3",
+      "input-pins.json": "e144292872f55409426f6e665c1c67312559de0929d62562929ec021c7bdab88",
+      "method.json": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1",
+      "verification.json": "05abe5a5bcfcc0fb353c61fd8baa3703a929b9fe0cb59554b7a2d45f0086d5e8",
+      "verify_method.py": "3c2252d0fd8020b6a88b5a1e1ce90c9828a913d7a2e7e6c40369def4f54967b0"
+    },
+    "tree": "555960a979f4bec474850a39bd9b284b7188496a"
+  },
+  "reviewed_checker_sha256": "3c2252d0fd8020b6a88b5a1e1ce90c9828a913d7a2e7e6c40369def4f54967b0",
+  "schema_version": 1,
+  "scope": "Author corrections S1-S3 only; public synthetic design; independent review pending",
+  "starting": {
+    "commit": "8fc86feca449c9a844394343b256f5f197f9e248",
+    "six_sha256": {
+      "README.md": "83cfb823acb1363e7f534bbd30b84c10d164e0e59d183a2b591ae33819b74f07",
+      "controls.json": "1c929ad4efdd8c8ef4c1a5338d6a9492b69588c43add42b198aa2f722a151db3",
+      "input-pins.json": "e144292872f55409426f6e665c1c67312559de0929d62562929ec021c7bdab88",
+      "method.json": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1",
+      "verification.json": "05abe5a5bcfcc0fb353c61fd8baa3703a929b9fe0cb59554b7a2d45f0086d5e8",
+      "verify_method.py": "3c2252d0fd8020b6a88b5a1e1ce90c9828a913d7a2e7e6c40369def4f54967b0"
+    },
+    "tree": "333a5d3821c2dbe7da194279c87c492907877e3b"
+  },
+  "total_rejecting_controls": 44
+}

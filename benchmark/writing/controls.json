@@ -893,6 +893,280 @@
         }
       ],
       "reason": "source-build-link"
+    },
+    {
+      "id": "original-output-version-drift",
+      "example": "synthetic-modify",
+      "target": "example",
+      "changes": [
+        {
+          "path": [
+            "original",
+            "result.synth",
+            "version"
+          ],
+          "value": "SYNTHETIC-v0"
+        },
+        {
+          "path": [
+            "candidate",
+            "original_after",
+            "result.synth",
+            "version"
+          ],
+          "value": "SYNTHETIC-v0"
+        }
+      ],
+      "reason": "version-drift"
+    },
+    {
+      "id": "source-original-output-version-drift",
+      "example": "synthetic-source-rebuild",
+      "target": "example",
+      "changes": [
+        {
+          "path": [
+            "original",
+            "result.synth",
+            "version"
+          ],
+          "value": "SYNTHETIC-v0"
+        },
+        {
+          "path": [
+            "candidate",
+            "original_after",
+            "result.synth",
+            "version"
+          ],
+          "value": "SYNTHETIC-v0"
+        }
+      ],
+      "reason": "version-drift"
+    },
+    {
+      "id": "missing-pair-request",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "request"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "request"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "request"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-originals",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "originals"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "originals"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "originals"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-allowed_inputs",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "allowed_inputs"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "allowed_inputs"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "allowed_inputs"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-model",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "model"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "model"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "model"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-budgets",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "budgets"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "budgets"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "budgets"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-key_revision",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "key_revision"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "key_revision"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "key_revision"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
+    },
+    {
+      "id": "missing-pair-repetitions",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "frozen",
+            "repetitions"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            0,
+            "settings",
+            "repetitions"
+          ],
+          "delete": true
+        },
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "repetitions"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "pair-setting-required"
     }
   ],
   "frozen_source_rebuild": {

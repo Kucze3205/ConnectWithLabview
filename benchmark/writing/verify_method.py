@@ -48,7 +48,25 @@ CONTROL_REASONS = {
     "method-missing-preservation": "task-preservation-ids",
     "method-invented-key": "native-key-unavailable",
     "method-missing-anchor": "task-source-anchor",
+    "original-output-version-drift": "version-drift",
+    "source-original-output-version-drift": "version-drift",
+    "missing-pair-request": "pair-setting-required",
+    "missing-pair-originals": "pair-setting-required",
+    "missing-pair-allowed_inputs": "pair-setting-required",
+    "missing-pair-model": "pair-setting-required",
+    "missing-pair-budgets": "pair-setting-required",
+    "missing-pair-key_revision": "pair-setting-required",
+    "missing-pair-repetitions": "pair-setting-required",
 }
+
+# Mandatory names in this bounded synthetic pair representation, independent of
+# its frozen dictionary: protocol.md:79-84 and baseline/runner-contract.md
+# (Inputs, Audit, Still undecided); writing method.json#/comparison maps the
+# request/original/input/model/budget/key/repetition obligations to these names.
+REQUIRED_PAIR_SETTINGS = frozenset({
+    "request", "originals", "allowed_inputs", "model", "budgets",
+    "key_revision", "repetitions",
+})
 
 
 class Inconsistent(ValueError):
@@ -148,6 +166,10 @@ def check_example(example, frozen):
     artifact = files["result.synth"]
     need(artifact.get("version") is not None, "save-version-unverified")
     need(artifact["version"] == frozen["version"], "version-drift")
+    if example["operation"] == "modify":
+        original_version = original["result.synth"].get("version")
+        need(original_version is not None, "save-version-unverified")
+        need(artifact["version"] == original_version, "version-drift")
     graph = artifact["graph"]
     if example["operation"] == "modify":
         need(not same(graph, original["result.synth"]["graph"]), "no-op-edit")
@@ -179,8 +201,10 @@ def check_pair(pair):
     arms = pair["arms"]
     need(len(arms) == 2 and {a["arm"] for a in arms} == {"no-tool", "tool"}, "planned-arm-missing")
     need(len({a["session"] for a in arms}) == 2, "session-reused")
+    need(REQUIRED_PAIR_SETTINGS <= set(pair["frozen"]), "pair-setting-required")
     for arm in arms:
         settings = arm["settings"]
+        need(REQUIRED_PAIR_SETTINGS <= set(settings), "pair-setting-required")
         need(set(settings) == set(pair["frozen"]), "pair-setting-set")
         for name, value in pair["frozen"].items():
             need(same(settings[name], value), "pair-" + name + "-mismatch")
@@ -248,7 +272,12 @@ def main():
             else:
                 example = copy.deepcopy(examples[row["example"]])
                 target = row["target"]
-                example[target] = mutate(example[target], row["changes"])
+                if target == "example":
+                    # Version-linkage controls preserve the original before/after
+                    # while changing its version relative to the output/reference.
+                    example = mutate(example, row["changes"])
+                else:
+                    example[target] = mutate(example[target], row["changes"])
                 reference = controls["frozen_source_rebuild"] if example.get("requirement") else frozen
                 check_example(example, reference)
         except Inconsistent as error:

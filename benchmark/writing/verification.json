@@ -1,12 +1,19 @@
 {
-  "checker_sha256": "3c2252d0fd8020b6a88b5a1e1ce90c9828a913d7a2e7e6c40369def4f54967b0",
+  "checker_sha256": "b24ca4515ab8f7bd3980cd273647114c4f01abffc942a2464390a4d206e40a5f",
   "command": "python3 -I benchmark/writing/verify_method.py",
+  "evidence_sha256": {
+    "input-pins.json": "d6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44",
+    "review-corrections.json": "3c92d3e102bb3976ee267ea74393855e520461e2e5f4869fa9d5a864ff17430e"
+  },
   "exit_code": 0,
   "isolated_repeat": {
     "audit": "deny file writes, filesystem mutation and .session reads",
+    "audit_program": "import os,sys,runpy\nfrom pathlib import Path\nscript = sys.argv[1]\nsys.argv = [script]\nsys.dont_write_bytecode = True\ndef audit(event, args):\n    if event == \"open\":\n        path, mode, flags = args\n        if isinstance(path, (str, bytes, os.PathLike)) and \".session\" in Path(os.fsdecode(path)).parts:\n            raise PermissionError(\"session read denied\")\n        if (isinstance(mode, str) and any(c in mode for c in \"wax+\")) or (isinstance(flags, int) and flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND)):\n            raise PermissionError(\"file write denied\")\n    if event in {\"os.remove\", \"os.rename\", \"os.rmdir\", \"os.mkdir\", \"os.link\", \"os.symlink\", \"os.chmod\", \"os.truncate\", \"os.utime\"}:\n        raise PermissionError(\"filesystem mutation denied\")\nsys.addaudithook(audit)\nrunpy.run_path(script, run_name=\"__main__\")\n",
     "cwd": "/",
     "environment": {},
     "exit_code": 0,
+    "replay": "Run python3 -I -c <audit_program> <absolute checkout path>/benchmark/writing/verify_method.py with cwd=/ and environment={}",
+    "stderr": "",
     "stdout_identical": true
   },
   "limits": "Author-run synthetic design checks only; separate independent review pending; no native or agent run.",
@@ -29,7 +36,7 @@
     "benchmark_ready": false,
     "independent_review": "pending",
     "inputs_sha256": {
-      "controls.json": "1c929ad4efdd8c8ef4c1a5338d6a9492b69588c43add42b198aa2f722a151db3",
+      "controls.json": "96d48292fcf2b461b7c8f4af98dc0e894cef8e10eeb6c45edd04bdacad896824",
       "method.json": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1"
     },
     "meaning": "design consistency only",
@@ -60,9 +67,18 @@
       "method-native-claim": "method-overclaim",
       "missing-arm": "planned-arm-missing",
       "missing-artifact": "output-file-set",
+      "missing-pair-allowed_inputs": "pair-setting-required",
+      "missing-pair-budgets": "pair-setting-required",
+      "missing-pair-key_revision": "pair-setting-required",
+      "missing-pair-model": "pair-setting-required",
+      "missing-pair-originals": "pair-setting-required",
+      "missing-pair-repetitions": "pair-setting-required",
+      "missing-pair-request": "pair-setting-required",
       "no-op": "no-op-edit",
+      "original-output-version-drift": "version-drift",
       "original-overwritten": "original-not-preserved",
       "shared-session": "session-reused",
+      "source-original-output-version-drift": "version-drift",
       "unintended-file-edit": "unintended-edits",
       "unintended-object-edit": "unintended-edits",
       "unknown-version": "save-version-unverified",
@@ -78,7 +94,8 @@
       "wrong-source-build-link": "source-build-link",
       "wrong-type": "wrong-type"
     },
-    "rejected_count": 35,
+    "rejected_count": 44,
     "status": "design-consistent"
-  }
+  },
+  "stdout_sha256": "7e581ae9ffa49c02461e2aef032a717fb9ec257e9dd584258bc8589c1f7241b4"
 }
