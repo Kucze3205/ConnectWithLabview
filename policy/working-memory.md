@@ -925,6 +925,17 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   (snapshot .session/history/sessions/403/1aec5844….md) with current commit + index hash and file ONE `question` for method
   acceptance only (all gaps visible; no readiness/threshold/gate/fallback choice). #379 pending; do not wait.
 
+## Iteration 0078 (#426, wake false)
+- Considered record 0077, session #424 outcome, review #403 corrected draft and startup diagnostics. Startup ok, 35,669 estimated tokens.
+- #424 DONE, merged 2d95dba (mainly codex GPT, 127,475 input tokens). Verified preparation.json SHA256 25cf0059164b7ec7d3be88f0bca00dbb16ccac85a82c0f8b28d5b6a7a31c1d35 and status 02d5ea9b72e3b292b876b4cbee0c09141c757983b4971430f01693cbaa47987f.
+- Evaluator --check exit 0: errors [], missing [], 72 references, benchmark_ready false, benchmark_executed false, tool_quality null. Deleted completed execution/scripts/pin_change_precision_421.py.
+- Saved policy/proposals/method-acceptance-draft.md using #403's corrected draft, current main 0222240d1bd71d88c2bcec8c9084d739b3023aad and the new index hash. Updated change-case and precision sections; preserved native, isolation, documentation, quota and scorer gaps.
+- Saved one order: review-method-request-draft-426 (reviewer, medium, 40 min/30 turns, main, no exports), wake false. Expected gain: verified owner request wording or exact corrections before filing one method-only question. Do not repeat accepted specification reviews or the #400 requirement map.
+- /resources/environment is absent. No source-pin verification or native execution occurred. Startup diagnostics contain no budget notice; subscription quota remains unmeasured.
+- Next: read the review verdict and actual model evidence, apply exact corrections, then file ONE method-only question. Keep the named snapshot if benchmark/docs bytes remain identical; otherwise verify and update the snapshot and index hash.
+- #379 remains pending. No new private access or spending. Missing coverage and native answers remain explicit; product quality is unmeasured; reader implementation remains gated.
+- Sources: .session/history/records/0077.json; .github/loop/data/session-reports/403/f2f9617058d208b792b09030f37e745cbc161705de5cc442eb61470642fb805a.json (report.body); benchmark/preparation-status.json.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
