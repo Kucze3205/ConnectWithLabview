@@ -832,6 +832,118 @@
       "lineage": "NI Actor Framework original and derivatives; same lineage, no new independent project"
     }
   },
+  "lineage_map": {
+    "purpose": "Row R4a of whole-method review #938: map each writing task original to the whole-lineage groups and copy/variant records of benchmark/lineage.json. Design record only; it adds no coverage and no restricted-evaluation claim.",
+    "source": "benchmark/lineage.json",
+    "source_sha256": "52f3d2eafcbbda6695e30fb73d3a8b4f6f891b13acaf129d4ea1b091ad83d077",
+    "source_status": "prepared-unreviewed",
+    "partition": "development",
+    "restricted_claim": false,
+    "group_id": "public-ni-actor-framework-all-projects-copies-variants",
+    "group_status": "conservative-public-development-constraint",
+    "entries": [
+      {
+        "task": "WC1-create-vi",
+        "original_sha256": null,
+        "lineage_status": "gap",
+        "blocking_row": "R4b",
+        "reason": "No original exists (R1d, owner material). No lineage group can be assigned; the owned prospective WC1 reference lineage is not in benchmark/lineage.json."
+      },
+      {
+        "task": "WM1-diagram-not",
+        "original_sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+        "artifact_id": "artifact-0087",
+        "artifact_path": "Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+        "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+        "partition": "development",
+        "exact_copy_group_members": ["artifact-0087"],
+        "candidate_variants": [
+          {
+            "id": "candidate-0043",
+            "members": ["artifact-0087", "artifact-0092", "artifact-0591", "artifact-0596"],
+            "rule": "same-basename",
+            "status": "candidate-unadjudicated"
+          }
+        ],
+        "development_case_map_entry": false
+      },
+      {
+        "task": "WM2-typedef-cluster",
+        "original_sha256": "4a291d5d18c372ab0221bfc84a16b56fb7e97f736329a393c047a4c84bfc4ea9",
+        "artifact_id": "artifact-0085",
+        "artifact_path": "Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl",
+        "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+        "partition": "development",
+        "exact_copy_group_members": ["artifact-0085"],
+        "candidate_variants": [
+          {
+            "id": "candidate-0031",
+            "members": ["artifact-0085", "artifact-0589"],
+            "rule": "same-basename",
+            "status": "candidate-unadjudicated"
+          }
+        ],
+        "consumer_artifacts": [
+          {
+            "sha256": "656c0cff6cfadbe3a918728d03a5634423a26b0e55605cc29de50481c8072fbc",
+            "artifact_id": "artifact-0086",
+            "artifact_path": "Core/ActorFramework/Message Dequeuer/Dequeue.vi",
+            "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants"
+          },
+          {
+            "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+            "artifact_id": "artifact-0087",
+            "artifact_path": "Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+            "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants"
+          }
+        ],
+        "development_case_map_entry": false
+      },
+      {
+        "task": "WB1-source-rebuild",
+        "original_sha256": null,
+        "lineage_status": "gap",
+        "blocking_row": "R4b",
+        "reason": "No source or build originals exist (R1d, owner material and builder capability). No lineage group can be assigned."
+      },
+      {
+        "task": "WP1-project-build-text",
+        "original_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+        "artifact_id": "artifact-0005",
+        "artifact_path": "Core/AF PPL Build.lvproj",
+        "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+        "partition": "development",
+        "exact_copy_group_members": ["artifact-0005"],
+        "candidate_variants": [],
+        "development_case_map_entry": {
+          "path": "benchmark/cases/dev/project-ppl.json",
+          "sha256": "280ae39e1424899dda745709d89ceef138931cdb294da545148dfa573fdb6d3e"
+        }
+      }
+    ],
+    "gaps": [
+      {
+        "gap": "Only one lineage group (NI Actor Framework) is available; all three present originals share it, so no cross-lineage split or paired-lineage interval is possible.",
+        "blocking_row": "R4b"
+      },
+      {
+        "gap": "WC1 and WB1 have no original and no lineage assignment.",
+        "blocking_row": "R4b"
+      },
+      {
+        "gap": "Restricted allocation, new independent cases, custodian, restricted store and tested isolation are absent; this map is not coverage and makes no withheld or model-unseen claim.",
+        "blocking_row": "R4b"
+      },
+      {
+        "gap": "Candidate variants above are unadjudicated name matches with different hashes; hash inequality does not establish independence, and renamed, edited or resaved variants may escape these heuristics.",
+        "blocking_row": "R4b"
+      },
+      {
+        "gap": "benchmark/lineage.json is prepared-unreviewed; this map inherits that status.",
+        "blocking_row": "R4b"
+      }
+    ]
+  },
   "controls": "benchmark/writing/controls.json",
   "next_review": "Separate cold review of the changed integration tree and new integration-0112 provenance is pending. Separate reviewer session must inspect this exact tree, baseline pins, requirement mapping, synthetic control outputs and remaining native gaps. Only thereafter may owner assess method acceptance; do not seek acceptance in this task. Executable benchmark scoring, if needed, requires Policymaker-ordered evaluator work and separate evaluator-verifier approval."
 }
