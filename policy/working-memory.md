@@ -668,6 +668,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   .session/history/sessions/359/0a041dc81e14594574a34f6e1e9a74df8b142dd9fb4eba432d8bcdc85621d382.md;
   .session/history/sessions/361/159dc30f735b2e540f622e1e9d3a6b316c13e6cdd96caa1672352afeadac91db.md.
 
+## Iteration 0062 (#368, wake false)
+- Considered record 0061, reports #364/#365/#366. Startup ok, 28,601 tokens.
+- #364 DONE, merged f748718 (codex 266k, 15 turns): runner_contract.py sha 866e9c44…, reason self-test; 4 probes exit 1.
+  Author GPT. Still unpinned until independent review.
+- #365 lineage review CRASHED at 0 turns (no models, no report). Re-ordered unchanged scope.
+- #366 store record review (codex 266k) REVISE: record sha 137cc969… matches sidecar, replaces #308 record; runs
+  42375820030 (initial) then 42376072522 (revoked). F1 blocking: issue/comment search uses raw API JSON, control plants
+  unescaped text. F2: (c)/(e) accept any nonzero exit. (a)/(b)/(d) otherwise fixed vs #327. Do not repeat.
+- Wrote policy/proposals/store-readiness.yml revision 3 (sha 768a447e…, bash -n 0): qr() classifies read denials
+  (not-found/auth-failed/401/403 -> access-denied, else other); (c)/(e) fail unless access-denied; dj() jq-decodes all
+  strings of issues/comments and of a jq-built issue control before grep.
+- Orders (parallel, main, reviewer): review-runner-fix-364, retry-lineage-pilot-review-359, review-store-workflow-v3.
+- INCIDENT: .session/orders.json and report.md written early in this session were missing later (transport switch from
+  codex to claude mid-session?). Rewrote both. LESSON: re-check both files exist just before Finish.
+- Next: v3 accept -> one Owner `question`: install revision 3, add nothing new, run initial, revoke a NEW scorer token,
+  run revoked, commit replacement record + .sha256; then independent record review. v3 revise -> fix file myself.
+  Runner accept -> pin script adds 3 N3 files + runner_contract.py to baseline pins (max_turns >= 25).
+  Lineage accept -> bounded next triage batch per reviewer scope.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
