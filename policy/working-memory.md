@@ -783,6 +783,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   commit record); do not claim #169 ready. Revise -> fix by Policymaker script (hash-gated), no blind re-review.
   #379 pending; when the record arrives order one cross-family record review. Memory is large: compress 0024-0050.
 
+## Iteration 0068 (#393, wake false)
+- Considered record 0067, report #391 (.github/loop/data/session-reports/391/f8565598….json), workflow.proposal.yml.
+- #391 review (codex GPT 322k, 15 turns; author #388 also GPT -> same family) REVISE: (1) native gaps remain (already
+  disclosed, stay visible); (2) workflow.proposal.yml:38 uploads no HTML -> separate comparison session cannot inspect
+  diagram output; README clause map omits known-behaviour dispatch clause and compile-only exclusion; (3) cross-family
+  review still needed. Safety checks and all 5 self-test mutation probes passed; do not repeat them.
+  Evidence artifact iter-0067/391-native-job-review.md.
+- Order `native-job-fix-391` (benchmark, medium, 45/35, main): upload reports/*.html with sha256 in output-sha256.json,
+  6th rejecting mutation, README adds the 2 clauses; only benchmark/native/job/ changes.
+- Next: verify main self-test 0 with 6 mutations and HTML upload paths. Then ONE cross-family review (Claude if the fix
+  author was GPT; check models block), then Owner `question` with #169 install steps. #379 pending; do not wait.
+  Memory is ~80 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
