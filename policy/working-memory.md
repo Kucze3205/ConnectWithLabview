@@ -409,6 +409,23 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: verify lineage.py --check 0, sources/coverage `reviewed`. Land the readiness case by script after an independent review.
   Find and review the #268 readiness record. Then split allocation planning can use the store.
 
+## Iteration 0046 (#295, wake false)
+- Results of 0045: #291 DONE, merged 4d1890a (codex 446k, 20 turns, routine accept): lineage.py reads split status
+  (not-started|design-reviewed), sources/coverage `reviewed`, stale split sentence replaced; all 9 generator --check 0;
+  evaluator 0, missing [], 59 refs; status sha ed298a85…, lineage.py f7a58168…. #292 DONE report only (codex 677k,
+  18 turns, not merged): proposed readiness-case.json in its report (snapshot
+  .github/loop/data/session-reports/292/d44dc437….json): empty_separate_code.vi (fdb970bf…) and empty_no_debugging.vi
+  (7ca77f95…) with contrasting saved properties (21.0f, separate code, debuggable) from test.yaml:86-125; controlled
+  I/O = explicit gap (none found). Key is `not_debuggable`, not `no_debugging`. Do not repeat the bounded search.
+- #268 readiness record: not in request-state/268.json or any repo file; it lives only in issue #268 comments
+  (owner's capability-ready post). No order reads GitHub comments yet; next: find whether a session can read it
+  (exports `reports`? issue comments) or ask the owner to commit the redacted record, then order its review.
+- Orders (parallel, reviewers from main, report only): `review-readiness-case-292` (verdict on #292 proposal: hashes,
+  line pointers, honesty) and `rereview-gap-row-and-split-checker` (#212 gap row + #281 split fix, revert-proof).
+- Next: if 292 review accepts -> idempotent landing script writing benchmark/native/readiness-case.json (+ native_jobs
+  --check support if needed, pin under oracle), max_turns >= 25. If both re-reviews accept -> pin script replaces the two
+  "not independently re-reviewed" limitation sentences. Then: #268 record review, split allocation planning.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
