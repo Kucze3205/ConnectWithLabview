@@ -751,6 +751,26 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   change lineage.py or add a separate adjudication file pinned under split; decide then). When #379 record arrives,
   order one independent record review.
 
+## Iteration 0066 (#387, wake false)
+- Considered record 0065, report #385 (.session/history/sessions/385/be2c0319….md), gap delta #330, request-state/169.json,
+  .github/loop/check_labview_runtime.py + labview_runtime.sh, environment.md:138-190, accepted-limits.md:50-60.
+- #384 DONE, merged (codex 138k, 12 turns). Verified on main: status 85b0f719…, preparation ccff5e0e…, lineage.py
+  9b080b25…, lineage.json 52f3d2ea…, lineage.md f3fc0534…; evaluator 0, missing [], 65 refs; lineage.py --check 0 (env).
+  N3 runner contract now pinned under baseline. Deleted pin_runner_369.py and land_runner_lineage_380.py (scripts empty).
+- #385 batch 2 DONE report only (codex 404k): 10 groups (candidate-0000..0011 minus pilot), all R3 undecidable.
+- DECISION: STOP N2 lineage batches. Measured: lineage.json lineage_groups already put each repository in one conservative
+  group (actor-framework 802, pylavi 27); 0 of 230 candidate groups cross repositories; protocol.md:69 forbids splitting a
+  project. So within-repo adjudication cannot change any allocation. Do not order batch 3 or a review of #385. Keep
+  policy/proposals/lineage-pilot-359.json as accepted rules; land it only if a future split needs within-repo partitions.
+- Remaining non-resource work is small; the main blocker is native evidence (#169 waiting since 2026-11-04; owner step 6 =
+  implement the workflow extension). Order `native-job-draft-169` (benchmark, medium, 75/45): new files only under
+  benchmark/native/job/ (native_job.py --self-test with >=4 mutations, native_job.sh LabVIEWCLI-only, workflow.proposal.yml,
+  README mapping each #169 readiness clause). Expected gain: an installable draft so #169 readiness can run.
+- Next: if done -> cross-family review (author family from models block), then one Owner `question` with install steps
+  (copy workflow.proposal.yml to .github/workflows/, dispatch once, commit record). Do not claim #169 ready. If partial
+  near the input ceiling -> verify tag, land by script (max_turns >= 25). #379 (store workflow rev 4) pending; when the
+  record arrives order one cross-family record review. Memory file is ~76 KB: compress sections 0024-0050 next session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
