@@ -1,0 +1,10 @@
+commit bc32902eeee76429386bbaf9dbadd2cd4ea61b5d
+FIXTURE library-icon-tests controls ['positive-control', 'wrong-answer-declared-dependency', 'wrong-citation-existing', 'wrong-citation-unresolvable', 'selective-omission-answer', 'extra-false-answer', 'extra-true-answer', 'extra-unverified-answer', 'true-extra-with-omission-answer', 'duplicate-answer', 'contradiction-answer', 'selective-omission-reader', 'extra-false-reader', 'extra-true-reader', 'extra-unverified-reader', 'true-extra-with-omission-reader', 'duplicate-reader', 'contradiction-reader', 'empty-probe', 'wrapper-only-probe', 'truncated-probe', 'unsupported-probe', 'failed-probe', 'missing-independent-key', 'missing-native-run', 'zero-executed-tests', 'constant-export']
+  baseline/executed dims={'correctness': 'unverified', 'grounding': 'unverified', 'fidelity': 'unverified'} corr={'correct': 10, 'unverified': 2} gnd={'correct': 10, 'unverified': 2} reasons=[]
+  baseline/declared dims={'correctness': 'unverified', 'grounding': 'unverified', 'fidelity': 'unverified'} corr={'unverified': 12} gnd={'unverified': 12} reasons=[]
+  empty/executed dims={'correctness': 'missing', 'grounding': 'missing', 'fidelity': 'missing'} corr={'missing': 12} gnd={'missing': 12} reasons=[]
+Traceback (most recent call last):
+  File "/home/runner/work/ConnectWithLabview/ConnectWithLabview/work/benchmark/challenges/constant_probe_tmp.py", line 66, in <module>
+    print('    compare-vs-positive mismatches:', len(score.compare(r, pc['expected_positive'])))
+                                                                      ~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'expected_positive'
