@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "original_copy_check": {
+    "status": "pass",
+    "prepared_path": "@environment/pylavi/tests/add.vi",
+    "command_source_path": "/home/runner/work/_temp/connectwithlabview-environment/pylavi/tests/add.vi",
+    "artifact": ".session/artifacts/poc-original.vi",
+    "source_bytes": 6371,
+    "artifact_bytes": 6371,
+    "source_sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+    "artifact_sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+    "byte_identical": true,
+    "method": "Read prepared original, write unchanged bytes, independently reread artifact and compare bytes and SHA256. No LabVIEW execution."
+  },
+  "offline_check": {
+    "status": "pass",
+    "argv": [
+      "python3",
+      "-I",
+      "docs/research/poc/verify_delivery.py"
+    ],
+    "returncode": 0,
+    "LABVIEW_ENVIRONMENT": "unset",
+    "stdout": "{\"criteria\": 13, \"exits\": 2, \"negative_checks\": 9, \"original_rehashed_offline\": false, \"outcome\": \"unsuccessful\", \"pinned_files\": 38, \"readiness_verifier\": \"pass\", \"session_artifacts_required\": false, \"status\": \"pass\"}\nPassing validates failure-delivery consistency only.\n",
+    "session_report_present_during_check": false,
+    "dependency_guard": {
+      "status": "pass",
+      "description": "Additional isolated parent verifier run denied open calls to .session and prepared pylavi/environment paths; nested pinned readiness verifier ran with LABVIEW_ENVIRONMENT unset.",
+      "same_stdout": true
+    },
+    "limitations": "Does not rehash original artifacts offline, validate semantic meaning, execute LabVIEW or demonstrate a changed VI."
+  },
+  "limitations": "Original-copy check is session evidence only. Offline passing validates failure-delivery consistency only; no changed VI or LabVIEW validity.",
+  "inspector_reproduction": {
+    "status": "pass",
+    "argv": [
+      "python3",
+      "-I",
+      "docs/research/poc/inspect_vi.py",
+      ".session/artifacts/poc-original.vi"
+    ],
+    "returncode": 0,
+    "stdout_sha256": "26853163b1b67c999897e0993d75bf6d9556b4386352e88d8fcb95adb2c01de4",
+    "stdout_bytes": 3496,
+    "stderr": "",
+    "scope": "Structural inspection of unchanged original only."
+  }
+}

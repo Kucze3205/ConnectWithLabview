@@ -1,0 +1,436 @@
+{
+  "schema_version": 1,
+  "outcome": "unsuccessful",
+  "goal_source": "../../../goal/goal.md#proof-of-concept",
+  "scope": {
+    "selected_originals": 8,
+    "changed_vi_produced": false,
+    "fresh_agent_edit_demonstration_produced": false,
+    "labview_run": false,
+    "semantic_diagram_description_established": false,
+    "structural_parsing_established": true,
+    "general_impossibility_claim": false,
+    "product_or_benchmark_changes": false
+  },
+  "original": {
+    "prepared_path": "@environment/pylavi/tests/add.vi",
+    "command_path": "$LABVIEW_ENVIRONMENT/pylavi/tests/add.vi",
+    "upstream_path": "tests/add.vi",
+    "revision": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+    "url": "https://github.com/marcpage/pylavi/blob/35d2a0318f71dcb87bb9c431dc00700ee6b9fb75/tests/add.vi",
+    "license": "Unlicense",
+    "license_file": "step3/pylavi-LICENSE.txt",
+    "bytes": 6371,
+    "sha256": "cf4b1f56c8e42a7a353101ba1322aa3d64207bb19df5dc791cb3eedf2bb2f7e8",
+    "declared_save_version_hex": "21008000",
+    "declared_save_version": "21.0.0 final build 0",
+    "save_version_evidence": "README.md",
+    "artifact": ".session/artifacts/poc-original.vi",
+    "artifact_status": "copied_unchanged",
+    "copy_check": "delivery-verification.json"
+  },
+  "criteria": {
+    "fresh_agent": {
+      "status": "not_attempted",
+      "finding": "No fresh-agent describing/editing demonstration produced. Public fixture provenance does not prove an unseen input.",
+      "evidence": [
+        "../../../journal/working-memory.md"
+      ]
+    },
+    "semantic_description": {
+      "status": "unestablished",
+      "finding": "Complete structural framing and stored connectivity are established; arithmetic identity, direction and complete diagram meaning remain unestablished.",
+      "evidence": [
+        "add.tree.txt",
+        "comparison.json",
+        "verification.json",
+        "edit-readiness.md"
+      ]
+    },
+    "logic_edit_without_labview": {
+      "status": "not_attempted",
+      "finding": "Only an in-memory syntactic mutation exists; no changed VI or supported executable semantic recipe.",
+      "evidence": [
+        "candidate-change.json",
+        "edit-readiness.json"
+      ]
+    },
+    "opens_without_broken_arrow": {
+      "status": "not_attempted",
+      "finding": "No changed VI and no LabVIEW execution.",
+      "evidence": [
+        "edit-readiness.json"
+      ]
+    },
+    "requested_behavior": {
+      "status": "not_attempted",
+      "finding": "No supported semantic replacement or runtime demonstration.",
+      "evidence": [
+        "edit-readiness.md"
+      ]
+    },
+    "preserved_save_version": {
+      "status": "unestablished",
+      "finding": "Original declares 21008000 / 21.0.0 final build 0; no changed VI demonstrates preservation.",
+      "evidence": [
+        "README.md",
+        "edit-readiness.md"
+      ]
+    },
+    "files_report_owner_instructions": {
+      "status": "established",
+      "finding": "Failure package includes delivery documents, retained inspector, original session artifact and short owner instructions.",
+      "evidence": [
+        "delivery.md",
+        "delivery-verification.json",
+        "inspect_vi.py",
+        "heap-labels.json"
+      ]
+    },
+    "failure_evidence_and_exits": {
+      "status": "established",
+      "finding": "Bounded negative evidence retained with controlled-fixture and pinned-source exits.",
+      "evidence": [
+        "edit-readiness.md",
+        "edit-readiness.json"
+      ]
+    },
+    "separate_from_product_quality": {
+      "status": "established",
+      "finding": "Research delivery is neither product nor quality proof; normal testing and review remain necessary.",
+      "evidence": [
+        "../../../goal/goal.md",
+        "../../perpetua/roles.md"
+      ]
+    },
+    "continue_without_owner_wait": {
+      "status": "established",
+      "finding": "Handoff directs return to benchmark preparation after delivery; no benchmark work performed here.",
+      "evidence": [
+        "delivery.md",
+        "../../../journal/working-memory.md"
+      ]
+    },
+    "silence_not_acceptance": {
+      "status": "established",
+      "finding": "No method, quality, product or goal acceptance follows from owner silence.",
+      "evidence": [
+        "../../../goal/goal.md",
+        "delivery.md"
+      ]
+    },
+    "concept_feasibility": {
+      "status": "unestablished",
+      "finding": "No successful semantic edit demonstration; structural progress does not establish full concept feasibility or general impossibility.",
+      "evidence": [
+        "edit-readiness.json",
+        "edit-readiness.md"
+      ]
+    },
+    "poc_before_further_benchmark": {
+      "status": "established",
+      "finding": "This permitted failure delivery precedes resuming benchmark preparation; no benchmark changes occur in this task.",
+      "evidence": [
+        "delivery.md",
+        "../../../journal/working-memory.md"
+      ]
+    }
+  },
+  "blockers": {
+    "semantics": {
+      "finding": "No independent primitive discriminator/replacement contract; no typed ConstValue interpretation.",
+      "evidence": [
+        "LVheap-source.txt",
+        "step3/constant-candidate.json",
+        "step3/source-search.json"
+      ]
+    },
+    "encoding": {
+      "finding": "ConstValue bodies and heap-type references observed; DTHP/VCTP indirection and actual constant encoding unresolved. Numeric range-field decoder is not a ConstValue decoder.",
+      "evidence": [
+        "LVheap-source.txt",
+        "step3/constant-candidate.json"
+      ]
+    },
+    "integrity": {
+      "finding": "BDPW first MD5-sized chunk interpreted as password; remaining two add.vi chunks have no inspected derivation/update rule. No absence-of-integrity inference.",
+      "evidence": [
+        "step3/pylavi-resource-types-source.txt",
+        "step3/fixture-probe.json",
+        "step3/source-search.json"
+      ]
+    },
+    "compiled_cache": {
+      "finding": "VICD/CPC2 observed; no safe invalidation, regeneration or dependent-flag rule in inspected sources.",
+      "evidence": [
+        "step3/source-search.json",
+        "step3/fixture-probe.json"
+      ]
+    }
+  },
+  "exits": [
+    {
+      "id": "controlled_same_version_fixtures",
+      "action": "Obtain independently authored same-version connected I32 1-to-2 or identified Add/Subtract pairs with unchanged terminals, normal and separate-code variants; pin hashes, settings and exact change; compare heap/type spans, all BDPW chunks, LVSR flags and code resources.",
+      "resolves": "Semantic identity/value spans and candidate dependent changes.",
+      "does_not_prove": "General integrity/cache rules, all-version compatibility, fresh-agent editing or runtime validity.",
+      "evidence": [
+        "edit-readiness.md"
+      ]
+    },
+    {
+      "id": "missing_pinned_source_rules",
+      "action": "Pin revision, original paths, license and hashes for relevant LVblock/LVdatatype/RSRC rules covering BDPW derivation, compiled-cache invalidation and dependent flags, DTHP/VCTP indirection and ConstValue encoding.",
+      "resolves": "Missing semantic encoding, integrity and cache contracts required for an executable edit recipe.",
+      "does_not_prove": "Correct application to a VI, fresh-agent demonstration or LabVIEW behavior.",
+      "evidence": [
+        "edit-readiness.md",
+        "step3/source-provenance.json",
+        "source-provenance.json"
+      ]
+    }
+  ],
+  "reproduction": {
+    "inspector_argv": [
+      "python3",
+      "-I",
+      "docs/research/poc/inspect_vi.py",
+      ".session/artifacts/poc-original.vi"
+    ],
+    "offline_argv": [
+      "python3",
+      "-I",
+      "docs/research/poc/verify_delivery.py"
+    ],
+    "readiness_argv": [
+      "python3",
+      "-I",
+      "docs/research/poc/verify_edit_readiness.py"
+    ],
+    "evidence": [
+      "README.md",
+      "comparison-runs.json",
+      "verification-run.txt",
+      "verify_poc.py"
+    ],
+    "offline_limit": "Passing validates failure-delivery consistency only."
+  },
+  "owner_checks": {
+    "original_only": "Open a disposable original copy in appropriate LabVIEW supporting its declared save version, preferably same-version; inspect front panel and diagram, record editor and load/dependency diagnostics, avoid saving over original.",
+    "limitation": "Cannot validate a changed VI because none exists. No session can run LabVIEW.",
+    "future_changed_vi_checks": [
+      "No broken arrow",
+      "Requested behavior",
+      "Preserved save version and runtime validity"
+    ],
+    "status": "outstanding"
+  },
+  "resume": {
+    "action": "Return to benchmark preparation after this delivery without waiting for owner action; read readiness/role contracts and relevant actual paused-thread evidence before selecting benchmark work.",
+    "read_first": [
+      "../../perpetua/roles.md",
+      "../../perpetua/evaluation.md",
+      "../../../benchmark/preparation-status.json",
+      "../../../journal/working-memory.md"
+    ],
+    "avoid": "Do not repeat RSRC framing, expand the corpus, patch disk bytes speculatively, delete caches, assume arithmetic semantics from 103/104, or repeat declined #430 unchanged. Product implementation and benchmark changes are outside this task.",
+    "silence_is_acceptance": false
+  },
+  "context_gaps": [
+    ".session/loop-state.json: FileNotFoundError; committed goal/goal.md used instead.",
+    ".session/history/manifest.json: records=0, report_snapshots=0; working-memory pointers are inherited, not a new paused-thread audit."
+  ],
+  "evidence": [
+    {
+      "path": "LVheap-source.txt",
+      "bytes": 91307,
+      "sha256": "379d6645839ade727257387be4529c47dcd6481cb7cf177ae11e782ec996a7f0"
+    },
+    {
+      "path": "LVmisc-source.txt",
+      "bytes": 21394,
+      "sha256": "738773b3356f0902bb83e94ba28f1da0d8b060cafc178b7c1eb046273cb9219a"
+    },
+    {
+      "path": "LVparts-source.txt",
+      "bytes": 12862,
+      "sha256": "56399996b3bb1f8ec94a56887d4cba6bf9b70fb377acdc9aa0f1825fc9273bb0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11033,
+      "sha256": "d0d9ef3722798c3a220d99bbfd12fd8588131e4842de99c613e58977edab3b8a"
+    },
+    {
+      "path": "add.json",
+      "bytes": 59597,
+      "sha256": "0625f9dfa9661ea183a6bd304d64db2b09976383700f7dbfdd03cbb912a6f4fe"
+    },
+    {
+      "path": "add.tree.txt",
+      "bytes": 8387,
+      "sha256": "47faa00ffb29cf9e1d14b09fbae7f8e88512e7631455099868d1a6d5b1e88951"
+    },
+    {
+      "path": "add_breakpoints.json",
+      "bytes": 60488,
+      "sha256": "bbdea4f0fa779c46c248bc51ed0806ef093e237105d7f1671bb5cc076d4685f2"
+    },
+    {
+      "path": "add_breakpoints.tree.txt",
+      "bytes": 8531,
+      "sha256": "c9faf777b1d14c7d86f38f68941ff1c80746f7affec3a4bfd1ae382b5e81cd53"
+    },
+    {
+      "path": "candidate-change.json",
+      "bytes": 1469,
+      "sha256": "91775565b5b6f8ec272adbb8a41d6099755680ab54f52808bf9845c32d4ec528"
+    },
+    {
+      "path": "comparison-runs.json",
+      "bytes": 3183,
+      "sha256": "12f06f804f751eb713ff632d1fc1c7632d03849eb4c31c4eb87ef6719368ea02"
+    },
+    {
+      "path": "comparison.json",
+      "bytes": 5169,
+      "sha256": "45f045eb2a88f36584475d290ca2cb37e32250293c58f082b94b0413cf39c59f"
+    },
+    {
+      "path": "edit-readiness.json",
+      "bytes": 10026,
+      "sha256": "2f791c6ed69e1d166dccf51a496a0136fb79f143c950fa76ab2277c39703c186"
+    },
+    {
+      "path": "edit-readiness.md",
+      "bytes": 5709,
+      "sha256": "b4400c6964553a4bbb2914395c9312dd89f9db7c59d46447d245cbc59a1971ea"
+    },
+    {
+      "path": "empty.json",
+      "bytes": 8990,
+      "sha256": "2d323cc1c5cbe5ca3399272f5cf9c1afc41173e26f4aae5ba95d113d38277a26"
+    },
+    {
+      "path": "empty.tree.txt",
+      "bytes": 974,
+      "sha256": "3727d69189868739e23f1e7f4af07407c36e95bd6ddd1cac8e3225bf062502be"
+    },
+    {
+      "path": "empty_separate_code.json",
+      "bytes": 9004,
+      "sha256": "1a67e39f2f6e99e8c060c245d5c442ebad20f76cdc9755168afbd39f8b67c726"
+    },
+    {
+      "path": "empty_separate_code.tree.txt",
+      "bytes": 974,
+      "sha256": "3727d69189868739e23f1e7f4af07407c36e95bd6ddd1cac8e3225bf062502be"
+    },
+    {
+      "path": "first-run.txt",
+      "bytes": 3877,
+      "sha256": "15c29431dcede20fc541b413d41560b4a688f6c15c7e7070b26dfdd664038305"
+    },
+    {
+      "path": "heap-format-source.md",
+      "bytes": 745,
+      "sha256": "90b83b2f08757fe96bf2b4f161c5138893d9a6f52c456f4567607c3edd033f96"
+    },
+    {
+      "path": "heap-labels.json",
+      "bytes": 37773,
+      "sha256": "ca585c5bd975c4a3398c33d1ca5111625852b422072f6713b8c99584672279cf"
+    },
+    {
+      "path": "inspect_vi.py",
+      "bytes": 10545,
+      "sha256": "867698cb6b9dcef3319ab5c645a5be5e0501fa90d3fc05cacd988d56c3d0c28f"
+    },
+    {
+      "path": "pylabview-LICENSE.txt",
+      "bytes": 1159,
+      "sha256": "ee5593253506c58530b5e032b5b2a2c9365070b324f63812e4c8881d544d51bb"
+    },
+    {
+      "path": "source-provenance.json",
+      "bytes": 1387,
+      "sha256": "a5489a95717d9accf876cb6d3335fe98c92855e259e60ebb6fc40315be333c0c"
+    },
+    {
+      "path": "step3/build_readiness.py",
+      "bytes": 5896,
+      "sha256": "928cf50fcd93bf4fc1d3cf70b315ae62fe165af9c50b5038dc16e82bb14a7702"
+    },
+    {
+      "path": "step3/capture_evidence.py",
+      "bytes": 3660,
+      "sha256": "3be854bce294da96706e3d27670364127f3900de85cb9da98ad40f4e925cf588"
+    },
+    {
+      "path": "step3/constant-candidate.json",
+      "bytes": 46256,
+      "sha256": "a948cfdd8b7a7ac785a639fa24508f82ca2c39ebc4088369e918af79c8f4ccbc"
+    },
+    {
+      "path": "step3/fixture-probe.json",
+      "bytes": 57760,
+      "sha256": "569913ba1cbec18a4754b44263d10380ca031000fa47ec4f564867a20d123ed7"
+    },
+    {
+      "path": "step3/probe_fixtures.py",
+      "bytes": 3918,
+      "sha256": "6d138c458da244445d322be5440ac0fe99ef584582f5a31ae5e318c2cfc3cf8c"
+    },
+    {
+      "path": "step3/probe_sources.py",
+      "bytes": 1866,
+      "sha256": "0f45f031a8fb60334499f1b49b6af76b0507e3c6e315516888dc9135616f7af4"
+    },
+    {
+      "path": "step3/pylavi-LICENSE.txt",
+      "bytes": 1211,
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e"
+    },
+    {
+      "path": "step3/pylavi-resource-types-source.txt",
+      "bytes": 9383,
+      "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756"
+    },
+    {
+      "path": "step3/schema.md",
+      "bytes": 3218,
+      "sha256": "352c1047784444d219c88ded2739b36b74ab8eca21d8a1ee1f4417be1d525f95"
+    },
+    {
+      "path": "step3/source-provenance.json",
+      "bytes": 1073,
+      "sha256": "a0211dd3dd9dc905d7473b984b890d2b67e333fcd391190fd5d5d50b0c20571c"
+    },
+    {
+      "path": "step3/source-search.json",
+      "bytes": 39187,
+      "sha256": "6f63c24889f0f2146fd2cf9add561f264937ca0bdcc29ff795a427759084a35d"
+    },
+    {
+      "path": "verification-run.txt",
+      "bytes": 2443,
+      "sha256": "88957ccc01cb8a403c86d8088fcb48f917f960761e76549bd85e4d6e712d9901"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 1091,
+      "sha256": "e4c8b4058791d86e46c8730a5965d21f22e3888aa3917390548e7557132a6735"
+    },
+    {
+      "path": "verify_edit_readiness.py",
+      "bytes": 13713,
+      "sha256": "e4c415c161e75aa64536ed76eeda170bc47319420bd0491581f0880f3a1e3684"
+    },
+    {
+      "path": "verify_poc.py",
+      "bytes": 7534,
+      "sha256": "6e875f3ffdf133182a2ad863dda0d01787aa8be1f368eb6696804694144c725c"
+    }
+  ],
+  "delivery_md_sha256": "587ee8c113b09d34725437ddf0913b2d6424985f79e2bfdb9e6cea6a26562c6f"
+}
