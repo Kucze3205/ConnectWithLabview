@@ -111,6 +111,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   still not requested. `opus` alias did not hold for reviewers: investigate routing (reviewer route list
   starts with sonnet, falls to codex) before relying on it for diversity.
 
+## Iteration 0028 (#227, wake false)
+- Result of 0027: #224 (sonnet only, 9 turns, ~57k tokens) ran the landing script, done, owner accepted (#225).
+  Main evaluator --check: exit 0, errors [], missing [], 49 refs; README has `Diagram difference`; baseline
+  milestone `design-reviewed`. Script deleted by #227. Lesson confirmed: Policymaker-written idempotent script +
+  one low-effort run from main lands cheaply (vs 2 partials resuming tags).
+- Milestones: split not-started; others prepared-not-reviewed (baseline design-reviewed). No scorer, no executed
+  challenge. evaluator/README untouched; policy/evaluator stays the preparation-index check.
+- Order `dev-scorer-challenges` (benchmark, medium, 90/60, from main): stdlib `benchmark/scripts/score.py` +
+  `benchmark/challenges/results.json` (--check), computed independently of `expected` fields, then compared;
+  mismatches reported, not edited away. Not policy/evaluator (benchmark-side development scorer only).
+- Next: read results.json (controls, matches, mismatches). Then order ONE independent review (reviewer, from main)
+  of scorer + results + challenge fixtures; check actual `models` (prefer non-GPT if author was codex). If the scorer
+  task ends partial, write a narrower order from its saved tag only if the work is mostly done; else re-scope.
+  Still pending after that: split/isolation design, typedef-impact/diagram-difference dev cases, all-version effort
+  estimate, reviewer routing diversity (reviewer route list sonnet->codex; `opus` alias did not hold in #221).
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
