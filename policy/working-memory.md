@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #863, iteration 0201 (trigger: every 3 iterations)
+## Latest: Policymaker #875, iteration 0204 (trigger: every 3 iterations)
+
+- Considers records 0201/0202/0203 and session reports #864-#866, #868/#869, #871-#873 (.session/history/sessions/<issue>/). All three closed; every worker done/accepted/merged; no_progress=0; rollback streak still 1 (2026-11-17).
+- #863 pin rule met: task step4-prep-pin-0201 Verification recomputed the whole `protected_inputs_sha256` map; fix #865 merged f8670d52, review #866 done (positive-control thread closed per shaper #868). Keep the rule.
+- 0202 #869 wrote benchmark/challenges/next-gap-0202.md (gap survey + recommendation). 0203 cold key #872 (positive-control-key-0203.json, A0003-A0010) and checker #873 (benchmark/challenges/check_xml_keys.py) report `xml keys: 10/10 OK` for library-specialty plus a failing mutation check. Same-family (Sonnet) and same-iteration; the cold/forbidden-file claim is report-attributed. Open follow-ups (shaper-owned): record agreement in fixture oracle via permitted writer + review; extend to library-icon-tests.
+- Observed, not acted on: workers #872/#873 saw empty `git status --porcelain` where the shaper's acceptance expected the new file (parent commits). It caused no failure. If a worker later stops or fails on it, add an orchestrator rule: verify outputs by reading files, not by git status.
+- Reviewer #866 used 1.43M cache_read in 11 turns at low effort (large per turn); one data point, no change.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change.
+
+## Previous: Policymaker #863, iteration 0201 (trigger: every 3 iterations)
 
 - Considers records 0199/0200 and sessions #855-#857, #859-#861 (.session/history/sessions/<issue>/). Both iterations closed; 0200 accepted/improved; no_progress=0; rollback streak 1 (quiet time, 2026-11-17).
 - #854 tool note worked: #856/#860 benchmark sessions done/merged, #857/#861 reviews done, none stopped on the native-tool message. No suggestion_diagnostics are new (the three listed are the old #787/#837/#851). Keep the note.
