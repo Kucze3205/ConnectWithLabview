@@ -120,6 +120,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
   never from a report's summary of it. If you did not read the source, check identity (hash, pins) and leave counts out
   (#518: the check asserted eight probes from #513's summary; the artifact lists nine). A historical input
   `{issue: N, name: X}` is staged flat as `.session/inputs/N-X`, without the release folder.
+- **Stage required reports explicitly.** If a task requires a historical report, include it in `exports` with
+  `source: reports` and explicit session numbers. A Context/Budget link does not stage that report (#601 needed
+  a continuation solely to read #597). Require the worker to check `.session/exports/manifest.json`; for a cold
+  check, inspect availability first and defer report contents until the saved initial judgment. Do not assume the
+  worker receives the shaper's history. Check the next such task for explicit exports and no missing-report continuation.
 - **Keep a cold check cold.** When a checker must derive its own expectation before it sees the author's, make that
   the first acceptance item, have the result saved in `.session/artifacts/` before any key file is opened, and list
   the key files in `## Budget` as later reads (#567: the budget listed the key's Markdown to read whole, the session

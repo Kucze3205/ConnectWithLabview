@@ -14,6 +14,15 @@ The report starts with `<!-- session-report -->`, then a fenced `yaml` block wit
 Finish takes the same one word as that status: `done`, `partial`, `blocked` or `rejected`. A verdict such as CLEAR or
 NOT-CLEAR goes in the report prose, never in the status (#567 lost three Finish calls to this).
 
+For required integrity measurements, use the role's allowlisted `Bash` action with Python to measure
+staged inputs and saved session artifacts. Keep expectation-bearing content unread until the task permits it;
+hashing bytes does not require displaying them. The engine's later verification cannot access session paths;
+that restriction does not prohibit your in-session measurements. Do not infer that Python is unavailable because
+Read/Grep/Glob cannot hash: #604 successfully ran Python but left required hashes unmeasured without a rejected
+hashing attempt. If the supplied tools exclude Bash or an allowed action fails, record that exact evidence once
+and preserve the remaining work. Claim no measured hash without actual execution. The next integrity review
+must record measurements or the concrete unavailable tool/rejection, not an assumed capability gap.
+
 1. Resolve the task's pinned baseline and candidate commits and specification from staged
    inputs. Confirm the intended diff and reviewed tree. If inputs are missing or the diff
    is unexpectedly empty, report what is needed; do not invent a specification.
