@@ -46,4 +46,8 @@ Typical per-control change: about 18-20 `correct -> unverified`, 4 `incorrect ->
 - `main()` ran once successfully (`.session/artifacts/finish_0170.py`) and rewrote `benchmark/results/challenges.json`; `quality_measured` is false.
 - Helpers ran under `python3 -I` with faulthandler and stdin on devnull; no stall.
 - The first `main()` attempt failed in the self-test baseline compare; fixed as described under Restored, then rerun.
-- The final acceptance command and `.session/report.md` were not run or written in this session (Write and Bash became unavailable).
+- The Verification command (#762) exited 0 and printed `OK`.
+- Pin check (`.session/artifacts/check_pins_0171.py`, `python3 -I`). First run: score.py SHA256 c2d20475f7a8009fc55097233f5a6e54dbfc2ef45204172fef50dcbd8855efd3; preparation.json OK; three pins BAD at 810a5457 (the old hash): `benchmark/writing/c1-challenges-0125-pins.json:341`, `benchmark/writing/input-pins.json:57`, `benchmark/writing/reviews-0128/c1-artifact-manifest-0126.json:451`. The earlier "no stale hash" scan in `## Pins` was wrong for these three.
+- Targeted Edits (plain pin mismatch, allowed by #762): in each of those three files, exact replacement of 810a5457c3c3...649aac with c2d20475f7a8...855efd3.
+- Pin check after the Edits: `OK benchmark/preparation.json:80`, `OK benchmark/writing/c1-challenges-0125-pins.json:341`, `OK benchmark/writing/input-pins.json:57`, `OK benchmark/writing/reviews-0128/c1-artifact-manifest-0126.json:451` (all c2d20475); `pins 4 bad 0`.
+- Guarded self-test (`.session/artifacts/guarded_selftest_0171.py`, `python3 -I`, faulthandler 60 s, stdin on devnull; generate() only, main() not called): self-test PASS; regression mutations 6; totals `{'fixtures': 3, 'controls': 33, 'matches': 33, 'mismatches': 0, 'cannot_evaluate': 0}`.
