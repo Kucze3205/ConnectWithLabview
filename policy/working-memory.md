@@ -626,6 +626,23 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   one of 38) in benchmark/lineage.json `candidate_variants`, status candidate-unadjudicated; split by group batches.
   When #345 record arrives -> order one independent record review.
 
+## Iteration 0059 (#357, wake false)
+- Considered record 0058, report #352 (snapshot .github/loop/data/session-reports/352/5ab8c701….json), main bb83b79.
+- #351 pin DONE, merged c91665c (sonnet only, 14 turns, ~124k tokens, owner #353). Verified on main: run_record.py
+  b39c3060…, README 75892269…, status bcd2881b…, preparation 315d83a4…; run_record/evaluator --check 0.
+  Deleted execution/scripts/pin_binding_347.py (scripts now empty).
+- #352 N3 DONE, merged f405d54 (sonnet only, 16 turns, owner #354): run-manifest.synthetic.json 4d4c2b0f…,
+  runner_contract.py f5f1b174… (--check 0 on main; 3 cases x 2 arms x 2 reps = 12 runs; 10 mutations),
+  runner-contract.md b9e47205…. Not pinned. Author Claude Sonnet.
+- Orders written FIRST and parse-checked (parallel, main): `review-runner-contract-352` (reviewer, medium, 45/35,
+  report only, 4 temp-copy probes) and `lineage-adjudication-n2-pilot` (benchmark, medium, 60/40, report only):
+  rules + decisions JSON for the 13 version-difference groups of 230 `candidate_variants` (all same-basename,
+  different-sha256, candidate-unadjudicated), measured per-group cost.
+- Next: if review accepts -> pin script adds the 3 N3 files to baseline pins + #-review sentence, re-pins (max_turns
+  >= 25). If revise -> fix by script myself. If pilot rules hold -> order an independent review of the rules, then a
+  landing script that writes adjudications for all 230 groups (re-pin lineage.json; lineage.py --check needs env).
+  #345 store record pending; when it arrives order one independent record review. Product implementation gated.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
