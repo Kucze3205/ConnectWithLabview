@@ -88,6 +88,10 @@ If compression changes the payload length, update that resource length and four-
 
 Gaps: primitive mathematical identity/replacement compatibility; front-panel DCO names/types and terminal directions; compound label/image/rectangle bodies and wire routing; compressed-code/cache consistency; BDPW integrity rules and other heap invariants; encrypted/other heap formats and cross-version compatibility. No numeric constant value was identified in this heap. No claim extends beyond these four public fixtures. Opening a future edited VI without a broken arrow, observing changed behavior, and preserving the save version remain owner checks in an appropriate LabVIEW environment.
 
+## Step 3 edit readiness
+
+[Logic-edit readiness](edit-readiness.md) records a **partial** verdict: eight bounded fixture inspections found constant candidates, but semantic encoding, BDPW integrity and compiled-cache rules still block an executable recipe. [Offline evidence check](verify_edit_readiness.py) validates the saved result without prepared sources or LabVIEW.
+
 ## What next
 
 Use the saved tree and offsets to request a discriminator mapping or a controlled Add/Subtract fixture pair, then decide whether to perform the edit/rebuild step or record a semantic-evidence POC exit. Do not repeat the RSRC/decompression investigation or assume the filename is an arithmetic oracle. The parser and verifier run offline against the prepared fixtures; saved source snapshots avoid repeating network retrieval.

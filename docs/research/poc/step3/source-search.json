@@ -1,0 +1,1270 @@
+{
+  "method": "regex search of complete named snapshots and prepared pylavi Python sources; class inventory via AST; matches are discovery aids, not semantic proof",
+  "files": [
+    {
+      "path": "LVheap-source.txt",
+      "origin": "saved",
+      "sha256": "379d6645839ade727257387be4529c47dcd6481cb7cf177ae11e782ec996a7f0",
+      "bytes": 91307,
+      "classes": [
+        "HEAP_FORMAT",
+        "NODE_SCOPE",
+        "ENUM_TAGS",
+        "SL_SYSTEM_TAGS",
+        "SL_SYSTEM_ATTRIB_TAGS",
+        "OBJ_FIELD_TAGS",
+        "SL_CLASS_TAGS",
+        "SL_MULTI_DIM_CLASS_TAGS",
+        "OBJ_FONT_RUN_TAGS",
+        "OBJ_TEXT_HAIR_TAGS",
+        "OBJ_COMPLEX_SCALAR_TAGS",
+        "OBJ_TIME128_TAGS",
+        "OBJ_IMAGE_TAGS",
+        "OBJ_SUBCOSM_TAGS",
+        "OBJ_EMBED_OBJECT_TAGS",
+        "OBJ_SCENE_GRAPH_TAGS",
+        "OBJ_SCENE_COLOR_TAGS",
+        "OBJ_SCENE_EYE_POINT_TAGS",
+        "OBJ_ATTRIBUTE_LIST_ITEM_TAGS",
+        "OBJ_BROWSE_OPTIONS_TAGS",
+        "OBJ_ROW_COL_TAGS",
+        "OBJ_COLOR_PAIR_TAGS",
+        "OBJ_TREE_NODE_TAGS",
+        "OBJ_TAB_INFO_ITEM_TAGS",
+        "OBJ_PAGE_INFO_ITEM_TAGS",
+        "OBJ_MAPPED_POINT_TAGS",
+        "OBJ_PLOT_DATA_TAGS",
+        "OBJ_CURSOR_DATA_TAGS",
+        "OBJ_PLOT_IMAGES_TAGS",
+        "OBJ_CURS_BUTTONS_REC_TAGS",
+        "OBJ_PLOT_LEGEND_DATA_TAGS",
+        "OBJ_DIGITAL_BUS_ORG_CLUST_TAGS",
+        "OBJ_SCALE_LEGEND_DATA_TAGS",
+        "OBJ_SCALE_DATA_TAGS",
+        "OBJ_KEY_MAPPING_TAGS",
+        "OBJ_MULTI_DIM_TAGS",
+        "OBJ_GROW_TERM_INFO_TAGS",
+        "OBJ_CONNECTION_TAGS",
+        "OBJ_SELECTOR_RANGE_TAGS",
+        "OBJ_EVENT_SPEC_TAGS",
+        "OBJ_BASE_TABLE_CONTROL_FLAGS",
+        "OBJ_BASE_LISTBOX_FLAGS",
+        "PHONY_ENUM",
+        "UNRECOGNIZED_TAG",
+        "UNRECOGNIZED_CLASS",
+        "HeapNode",
+        "HeapNodeStdInt",
+        "HeapNodeTypeId",
+        "HeapNodeRect",
+        "HeapNodePoint",
+        "HeapNodeString",
+        "HeapNodePStrList",
+        "HeapNodeBool",
+        "HeapNodeTDDataFill",
+        "HeapNodeTDDataFillLeaf"
+      ],
+      "matches": {
+        "primitive_contract": [
+          {
+            "line": 67,
+            "text": "        # Add the new names/values from the definition class (cls_def)"
+          },
+          {
+            "line": 316,
+            "text": "    OF__primIndex = 202"
+          },
+          {
+            "line": 317,
+            "text": "    OF__primResID = 203"
+          },
+          {
+            "line": 2458,
+            "text": "    OBJ_FIELD_TAGS.OF__primIndex,"
+          },
+          {
+            "line": 2459,
+            "text": "    OBJ_FIELD_TAGS.OF__primResID,"
+          },
+          {
+            "line": 2847,
+            "text": "    # Add node to parent"
+          }
+        ],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 89,
+            "text": "        # Copy the docstring"
+          },
+          {
+            "line": 161,
+            "text": "    OF__dataNodeList = 47"
+          },
+          {
+            "line": 333,
+            "text": "    OF__rtPopupString = 219"
+          },
+          {
+            "line": 341,
+            "text": "    OF__selString = 227"
+          },
+          {
+            "line": 363,
+            "text": "    OF__strings = 249"
+          },
+          {
+            "line": 397,
+            "text": "    OF__typeDesc = 283"
+          },
+          {
+            "line": 430,
+            "text": "    OF__dataTypeDesc = 316"
+          },
+          {
+            "line": 548,
+            "text": "    OF__dataValRefDCO = 433"
+          },
+          {
+            "line": 597,
+            "text": "    OF__baseListboxItemStrings = 493"
+          },
+          {
+            "line": 673,
+            "text": "    OF__SelectStringArray = 569"
+          },
+          {
+            "line": 718,
+            "text": "    OF__arrayOfStringsIsCellArray = 614"
+          },
+          {
+            "line": 810,
+            "text": "    SL__stdString = 81"
+          },
+          {
+            "line": 1116,
+            "text": "    Strings as the same as in OBJ_TEXT_HAIR_TAGS, but support is a bit different."
+          },
+          {
+            "line": 1837,
+            "text": "class HeapNodeString(HeapNode):"
+          },
+          {
+            "line": 1838,
+            "text": "    \"\"\" Class for Heap Nodes which store string data"
+          },
+          {
+            "line": 1859,
+            "text": "            raise AttributeError(\"Tag '{}' of Class '{}' has content with bad String value '{}'\"\\"
+          },
+          {
+            "line": 1865,
+            "text": "    \"\"\" Class for Heap Nodes which store list of strings with one-byte lengths"
+          },
+          {
+            "line": 1884,
+            "text": "                raise AttributeError(\"Tag '{}' of Class '{}' has truncated strings list in content\"\\"
+          },
+          {
+            "line": 1909,
+            "text": "            raise AttributeError(\"Tag '{}' of Class '{}' has content with no string list length\"\\"
+          },
+          {
+            "line": 1914,
+            "text": "            raise AttributeError(\"Tag '{}' of Class '{}' has content with too few strings\"\\"
+          },
+          {
+            "line": 1927,
+            "text": "    \"\"\" Class for Heap Nodes which store boolean value"
+          },
+          {
+            "line": 1945,
+            "text": "            raise AttributeError(\"Tag '{}' of Class '{}' has content with bad boolean value\"\\"
+          },
+          {
+            "line": 1954,
+            "text": "    This node gets data before TD is available, so stores it in raw or string form."
+          },
+          {
+            "line": 1971,
+            "text": "            typeDescNode = self.parent.findChild(OBJ_FIELD_TAGS.OF__typeDesc)"
+          },
+          {
+            "line": 2001,
+            "text": "    def parseRSRCContentDirect(bldata, tdType):"
+          },
+          {
+            "line": 2005,
+            "text": "        if tdType in (TD_FULL_TYPE.NumInt8,):"
+          },
+          {
+            "line": 2007,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt16,):"
+          },
+          {
+            "line": 2009,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt32,):"
+          },
+          {
+            "line": 2011,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt64,):"
+          },
+          {
+            "line": 2014,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt8,TD_FULL_TYPE.UnitUInt8,):"
+          },
+          {
+            "line": 2016,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt16,TD_FULL_TYPE.UnitUInt16,):"
+          },
+          {
+            "line": 2019,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt32,TD_FULL_TYPE.UnitUInt32,):"
+          },
+          {
+            "line": 2022,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt64,):"
+          },
+          {
+            "line": 2026,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloat32,TD_FULL_TYPE.UnitFloat32,):"
+          },
+          {
+            "line": 2028,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloat64,TD_FULL_TYPE.UnitFloat64,):"
+          },
+          {
+            "line": 2030,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloatExt,TD_FULL_TYPE.UnitFloatExt,):"
+          },
+          {
+            "line": 2039,
+            "text": "        if tdType in (TD_FULL_TYPE.NumInt8,):"
+          },
+          {
+            "line": 2042,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt16,):"
+          },
+          {
+            "line": 2045,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt32,):"
+          },
+          {
+            "line": 2048,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumInt64,):"
+          },
+          {
+            "line": 2052,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt8,TD_FULL_TYPE.UnitUInt8,):"
+          },
+          {
+            "line": 2055,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt16,TD_FULL_TYPE.UnitUInt16,):"
+          },
+          {
+            "line": 2058,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt32,TD_FULL_TYPE.UnitUInt32,):"
+          },
+          {
+            "line": 2061,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumUInt64,):"
+          },
+          {
+            "line": 2065,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloat32,TD_FULL_TYPE.UnitFloat32,):"
+          },
+          {
+            "line": 2068,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloat64,TD_FULL_TYPE.UnitFloat64,):"
+          },
+          {
+            "line": 2071,
+            "text": "        elif tdType in (TD_FULL_TYPE.NumFloatExt,TD_FULL_TYPE.UnitFloatExt,):"
+          },
+          {
+            "line": 2113,
+            "text": "            val = self.parseRSRCContentDirect(bldata, tdType)"
+          },
+          {
+            "line": 2146,
+            "text": "        from pylabview.LVdatatype import TD_FULL_TYPE, numericToStringUnequivocal"
+          },
+          {
+            "line": 2147,
+            "text": "        tmpText = numericToStringUnequivocal(self.value, tdType)"
+          },
+          {
+            "line": 2174,
+            "text": "            # if we have no TD, we can't do anything with the string"
+          },
+          {
+            "line": 2182,
+            "text": "        from pylabview.LVdatatype import TD_FULL_TYPE, stringUnequivocalToNumeric"
+          },
+          {
+            "line": 2183,
+            "text": "        val = stringUnequivocalToNumeric(text, tdType)"
+          },
+          {
+            "line": 2201,
+            "text": "    This node gets content before TD is available, so stores it in raw or string form."
+          },
+          {
+            "line": 2210,
+            "text": "    def parseRSRCContentDirect(bldata, tdType):"
+          },
+          {
+            "line": 2217,
+            "text": "                val = HeapNodeTDDataFill.parseRSRCContentDirect(bldata, TD_FULL_TYPE.NumFloat32)"
+          },
+          {
+            "line": 2219,
+            "text": "                val = HeapNodeTDDataFill.parseRSRCContentDirect(bldata, TD_FULL_TYPE.NumFloat64)"
+          },
+          {
+            "line": 2221,
+            "text": "                val = HeapNodeTDDataFill.parseRSRCContentDirect(bldata, TD_FULL_TYPE.NumFloatExt)"
+          },
+          {
+            "line": 2235,
+            "text": "            val = self.parseRSRCContentDirect(bldata, self.parent.td.fullType())"
+          },
+          {
+            "line": 2253,
+            "text": "                content = HeapNodeTDDataFill.prepareRSRCContentDirect(self.value, TD_FULL_TYPE.NumFloat32)"
+          },
+          {
+            "line": 2255,
+            "text": "                content = HeapNodeTDDataFill.prepareRSRCContentDirect(self.value, TD_FULL_TYPE.NumFloat64)"
+          },
+          {
+            "line": 2257,
+            "text": "                content = HeapNodeTDDataFill.prepareRSRCContentDirect(self.value, TD_FULL_TYPE.NumFloatExt)"
+          },
+          {
+            "line": 2276,
+            "text": "        from pylabview.LVdatatype import TD_FULL_TYPE, numericToStringUnequivocal"
+          },
+          {
+            "line": 2278,
+            "text": "            tmpText = numericToStringUnequivocal(self.value, TD_FULL_TYPE.NumFloat32)"
+          },
+          {
+            "line": 2283,
+            "text": "            tmpText = numericToStringUnequivocal(self.value, TD_FULL_TYPE.NumFloat64)"
+          },
+          {
+            "line": 2288,
+            "text": "            tmpText = numericToStringUnequivocal(self.value, TD_FULL_TYPE.NumFloatExt)"
+          },
+          {
+            "line": 2309,
+            "text": "            # if we have no TD, we can't do anything with the string"
+          },
+          {
+            "line": 2317,
+            "text": "            from pylabview.LVdatatype import TD_FULL_TYPE, stringUnequivocalToNumeric"
+          },
+          {
+            "line": 2319,
+            "text": "                val = stringUnequivocalToNumeric(text, TD_FULL_TYPE.NumFloat32)"
+          },
+          {
+            "line": 2321,
+            "text": "                val = stringUnequivocalToNumeric(text, TD_FULL_TYPE.NumFloat64)"
+          },
+          {
+            "line": 2323,
+            "text": "                val = stringUnequivocalToNumeric(text, TD_FULL_TYPE.NumFloatExt)"
+          },
+          {
+            "line": 2541,
+            "text": "NODE_STRING_TAGS_LIST = ("
+          },
+          {
+            "line": 2556,
+            "text": "    OBJ_FIELD_TAGS.OF__typeDesc,"
+          },
+          {
+            "line": 2560,
+            "text": "    OBJ_FIELD_TAGS.OF__dataTypeDesc,"
+          },
+          {
+            "line": 2577,
+            "text": "NODE_STRING_ARRAY_TAGS_LIST = ("
+          },
+          {
+            "line": 2578,
+            "text": "    OBJ_FIELD_TAGS.OF__strings,"
+          },
+          {
+            "line": 2590,
+            "text": "NODE_DATAFILL_TAGS_LIST = ("
+          },
+          {
+            "line": 2734,
+            "text": "      OBJ_FIELD_TAGS.OF__baseListboxItemStrings,"
+          },
+          {
+            "line": 2808,
+            "text": "    elif tagEn in NODE_STRING_TAGS_LIST:"
+          },
+          {
+            "line": 2809,
+            "text": "        obj = HeapNodeString(vi, po, parentNode, tagEn, scopeInfo)"
+          },
+          {
+            "line": 2814,
+            "text": "    elif tagEn in NODE_DATAFILL_TAGS_LIST:"
+          },
+          {
+            "line": 2818,
+            "text": "      parentNodeTagMatches(parentNode, NODE_STRING_ARRAY_TAGS_LIST):"
+          },
+          {
+            "line": 2819,
+            "text": "        obj = HeapNodeString(vi, po, parentNode, tagEn, scopeInfo)"
+          },
+          {
+            "line": 2824,
+            "text": "      parentNodeTagMatches(parentNode, (OBJ_FIELD_TAGS.OF__baseListboxItemStrings,), start=1):"
+          },
+          {
+            "line": 2826,
+            "text": "            obj = HeapNodeString(vi, po, parentNode, tagEn, scopeInfo)"
+          },
+          {
+            "line": 2837,
+            "text": "      parentNodeTagMatches(parentNode, NODE_DATAFILL_TAGS_LIST):"
+          }
+        ]
+      }
+    },
+    {
+      "path": "LVmisc-source.txt",
+      "origin": "saved",
+      "sha256": "738773b3356f0902bb83e94ba28f1da0d8b060cafc178b7c1eb046273cb9219a",
+      "bytes": 21394,
+      "classes": [
+        "RSRCStructure",
+        "LABVIEW_VERSION_STAGE"
+      ],
+      "matches": {
+        "primitive_contract": [
+          {
+            "line": 279,
+            "text": "        # Add only properties which have bit set or have non-default bit name"
+          }
+        ],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 143,
+            "text": "    \"\"\" Gives alphanumeric string representation of a 4-byte identifier, like block ident"
+          },
+          {
+            "line": 156,
+            "text": "    \"\"\" Gives 4-byte identifier from alphanumeric string representation"
+          },
+          {
+            "line": 190,
+            "text": "    ver['stage_text'] = stringFromValEnumOrInt(LABVIEW_VERSION_STAGE, ver['stage'])"
+          },
+          {
+            "line": 197,
+            "text": "        ver['stage'] = valFromEnumOrIntString(LABVIEW_VERSION_STAGE, ver['stage_text'])"
+          },
+          {
+            "line": 213,
+            "text": "def simpleVersionFromString(vstr):"
+          },
+          {
+            "line": 221,
+            "text": "def simpleVersionToString(ver):"
+          },
+          {
+            "line": 245,
+            "text": "        stage = valFromEnumOrIntString(LABVIEW_VERSION_STAGE, stage)"
+          },
+          {
+            "line": 258,
+            "text": "def stringFromValEnumOrInt(EnumClass, value):"
+          },
+          {
+            "line": 264,
+            "text": "def valFromEnumOrIntString(EnumClass, strval):"
+          },
+          {
+            "line": 538,
+            "text": "            \"Qualified name consists of {:d} string elements, limit is {:d}\""
+          },
+          {
+            "line": 575,
+            "text": "        raise RuntimeError(\"Long string is suspiciously long\")"
+          }
+        ]
+      }
+    },
+    {
+      "path": "LVparts-source.txt",
+      "origin": "saved",
+      "sha256": "56399996b3bb1f8ec94a56887d4cba6bf9b70fb377acdc9aa0f1825fc9273bb0",
+      "bytes": 12862,
+      "classes": [
+        "PARTID",
+        "OBJ_FLAGS",
+        "DSINIT",
+        "DCO"
+      ],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 43,
+            "text": "    BOOLEAN_BUTTON\t= 21"
+          },
+          {
+            "line": 44,
+            "text": "    BOOLEAN_TEXT\t= 22"
+          },
+          {
+            "line": 85,
+            "text": "    BOOLEAN_TRUE_LABEL\t= 63"
+          },
+          {
+            "line": 86,
+            "text": "    BOOLEAN_FALSE_LABEL\t= 64"
+          },
+          {
+            "line": 108,
+            "text": "    BOOLEAN_LIGHT\t= 86"
+          },
+          {
+            "line": 109,
+            "text": "    BOOLEAN_GLYPH\t= 87"
+          },
+          {
+            "line": 110,
+            "text": "    BOOLEAN_DIVOT\t= 88"
+          },
+          {
+            "line": 111,
+            "text": "    BOOLEAN_SHADOW\t= 89"
+          },
+          {
+            "line": 293,
+            "text": "    numInternalHiliteTableEntries = 30"
+          }
+        ]
+      }
+    },
+    {
+      "path": "pylavi/pylavi/__init__.py",
+      "origin": "prepared",
+      "sha256": "6f498f015d836ca66ec5efd3e9f335c74267a12bf5de26b960653e999bc2e0fe",
+      "bytes": 112,
+      "classes": [],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [],
+        "constant_encoding": []
+      }
+    },
+    {
+      "path": "pylavi/pylavi/assembler.py",
+      "origin": "prepared",
+      "sha256": "97be44f11bd9fce2e75a65205bab8cce1c7cfdb932133b2f58330c596ea127d6",
+      "bytes": 1793,
+      "classes": [],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 37,
+            "text": "        \"type\": resources.file_type.to_string(),"
+          },
+          {
+            "line": 38,
+            "text": "        \"creator\": resources.file_creator.to_string(),"
+          }
+        ]
+      }
+    },
+    {
+      "path": "pylavi/pylavi/data_types.py",
+      "origin": "prepared",
+      "sha256": "5ee827ae02abad1e37fd0c54f0ca5a9df491e2ed639bf12b807c76368d932cea",
+      "bytes": 25365,
+      "classes": [
+        "Description",
+        "Endian",
+        "IntSize",
+        "Integer",
+        "UInt32",
+        "UInt16",
+        "UInt8",
+        "Bytes",
+        "FourCharCode",
+        "PString",
+        "PString16",
+        "PStringPad2",
+        "Structure",
+        "Array",
+        "Path",
+        "Version"
+      ],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 28,
+            "text": "    def to_string(self) -> str:"
+          },
+          {
+            "line": 29,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 46,
+            "text": "        return self.to_string()"
+          },
+          {
+            "line": 120,
+            "text": "    def to_string(self) -> str:"
+          },
+          {
+            "line": 121,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 126,
+            "text": "            f\"Integer({self.to_string()}, {self.endian}, \""
+          },
+          {
+            "line": 224,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 225,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 232,
+            "text": "        return f\"Bytes('{self.to_string()}')\""
+          },
+          {
+            "line": 236,
+            "text": "            return self.to_string() == other"
+          },
+          {
+            "line": 252,
+            "text": "        return f\"FourCharCode('{self.to_string()}')\""
+          },
+          {
+            "line": 255,
+            "text": "class PString(Bytes):"
+          },
+          {
+            "line": 256,
+            "text": "    \"\"\"length-prefixed string\"\"\""
+          },
+          {
+            "line": 304,
+            "text": "        return f\"PString('{self.to_string()}')\""
+          },
+          {
+            "line": 307,
+            "text": "class PString16(PString):"
+          },
+          {
+            "line": 308,
+            "text": "    \"\"\"16-bit length prefixed string\"\"\""
+          },
+          {
+            "line": 314,
+            "text": "class PStringPad2(PString):"
+          },
+          {
+            "line": 315,
+            "text": "    \"\"\"16-bit length prefixed string\"\"\""
+          },
+          {
+            "line": 360,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 361,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 426,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 427,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 454,
+            "text": "    NOT_A_PATH_STRING = \"\\\\\\\\NOT A PATH//\""
+          },
+          {
+            "line": 474,
+            "text": "        self.elements = Array(PString)"
+          },
+          {
+            "line": 511,
+            "text": "        return self.type.to_string() == Path.NEW_TYPES[path_format]"
+          },
+          {
+            "line": 519,
+            "text": "        assert self.type.to_string() in Path.NEW_TYPES, ["
+          },
+          {
+            "line": 520,
+            "text": "            self.type.to_string(),"
+          },
+          {
+            "line": 524,
+            "text": "        return Path.NEW_TYPES.index(self.type.to_string())"
+          },
+          {
+            "line": 531,
+            "text": "        if self.format.to_string() == Path.KNOWN_PATH_FORMATS[0]:"
+          },
+          {
+            "line": 532,
+            "text": "            string_type = PString"
+          },
+          {
+            "line": 536,
+            "text": "            assert self.format.to_string() in Path.KNOWN_PATH_FORMATS, ["
+          },
+          {
+            "line": 542,
+            "text": "            string_type = PString16"
+          },
+          {
+            "line": 562,
+            "text": "            elements.append(string_type().from_bytes(data, offset))"
+          },
+          {
+            "line": 571,
+            "text": "        self.elements = Array(string_type, *elements)"
+          },
+          {
+            "line": 587,
+            "text": "        if description is None or description == Path.NOT_A_PATH_STRING:"
+          },
+          {
+            "line": 592,
+            "text": "            self.elements = Array(PString)"
+          },
+          {
+            "line": 600,
+            "text": "            name_type = PString16"
+          },
+          {
+            "line": 603,
+            "text": "            name_type = PString"
+          },
+          {
+            "line": 633,
+            "text": "            return Path.NOT_A_PATH_STRING"
+          },
+          {
+            "line": 638,
+            "text": "        if self.format.to_string() != Path.KNOWN_PATH_FORMATS[0]:"
+          },
+          {
+            "line": 639,
+            "text": "            value = f\"{{{Path.KNOWN_PATH_FORMATS.index(self.format.to_string())}}}\""
+          },
+          {
+            "line": 646,
+            "text": "    def to_string(self) -> str:"
+          },
+          {
+            "line": 668,
+            "text": "    def __from_string(version: str) -> (int, int, int, int, int):"
+          },
+          {
+            "line": 671,
+            "text": "        assert correct_format, f\"Incorrect version string: '{version}'\""
+          },
+          {
+            "line": 719,
+            "text": "                major, minor, patch, phase, build = Version.__from_string(major_or_str)"
+          },
+          {
+            "line": 750,
+            "text": "        self.value = Version.__compose(*Version.__from_string(description))"
+          },
+          {
+            "line": 760,
+            "text": "        version_string = str(major)"
+          },
+          {
+            "line": 763,
+            "text": "            version_string += f\".{minor}\""
+          },
+          {
+            "line": 766,
+            "text": "                version_string += f\".{patch}\""
+          },
+          {
+            "line": 774,
+            "text": "            version_string += phase_str"
+          },
+          {
+            "line": 777,
+            "text": "                version_string += str(build)"
+          },
+          {
+            "line": 778,
+            "text": "        return version_string"
+          },
+          {
+            "line": 780,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 781,
+            "text": "        \"\"\"Get a string representation\"\"\""
+          },
+          {
+            "line": 785,
+            "text": "        return f\"Version('{self.to_string()}')\""
+          }
+        ]
+      }
+    },
+    {
+      "path": "pylavi/pylavi/file.py",
+      "origin": "prepared",
+      "sha256": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+      "bytes": 15605,
+      "classes": [
+        "Header",
+        "MetadataHeader",
+        "TypeInfo",
+        "TypeList",
+        "ResourceMetadata",
+        "ResourceList",
+        "Resources"
+      ],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [],
+        "constant_encoding": [
+          {
+            "line": 5,
+            "text": "from pylavi.data_types import Structure, Array, FourCharCode, PString, UInt16, UInt32"
+          },
+          {
+            "line": 55,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 56,
+            "text": "        \"\"\"String representation of the header\"\"\""
+          },
+          {
+            "line": 59,
+            "text": "            + f\"file_type={self.file_type.to_string()}, \""
+          },
+          {
+            "line": 60,
+            "text": "            + f\"file_creator={self.file_creator.to_string()}, \""
+          },
+          {
+            "line": 67,
+            "text": "        return f\"Header({self.to_string()})\""
+          },
+          {
+            "line": 132,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 133,
+            "text": "        \"\"\"String representation of the header\"\"\""
+          },
+          {
+            "line": 145,
+            "text": "        return f\"MetadataHeader({self.to_string()})\""
+          },
+          {
+            "line": 184,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 185,
+            "text": "        \"\"\"get string values\"\"\""
+          },
+          {
+            "line": 188,
+            "text": "            + f\"resource_type = {self.resource_type.to_string()}, \""
+          },
+          {
+            "line": 195,
+            "text": "        return f\"TypeInfo({self.to_string()})\""
+          },
+          {
+            "line": 259,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 260,
+            "text": "        \"\"\"Convert to a string\"\"\""
+          },
+          {
+            "line": 272,
+            "text": "        return f\"ResourceMetadata({self.to_string()})\""
+          },
+          {
+            "line": 406,
+            "text": "            name = PString().from_bytes(contents, name_offset)"
+          },
+          {
+            "line": 459,
+            "text": "            resource_types.append((entry.resource_type.to_string(), resources))"
+          }
+        ]
+      }
+    },
+    {
+      "path": "pylavi/pylavi/resource_types.py",
+      "origin": "prepared",
+      "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+      "bytes": 9383,
+      "classes": [
+        "TypePATH",
+        "TypeDLLP",
+        "TypeHLPP",
+        "TypeRTMP",
+        "TypeLPTH",
+        "TypeBDPW",
+        "TypeLVSR",
+        "Typevers"
+      ],
+      "matches": {
+        "primitive_contract": [],
+        "integrity_cache": [
+          {
+            "line": 54,
+            "text": "class TypeBDPW(Array):"
+          },
+          {
+            "line": 55,
+            "text": "    \"\"\"handles 'BDPW' resources types\"\"\""
+          },
+          {
+            "line": 57,
+            "text": "    EMPTY_PASSWORD = \"d41d8cd98f00b204e9800998ecf8427e\""
+          },
+          {
+            "line": 58,
+            "text": "    PASSWORD_MD5_INDEX = 0"
+          },
+          {
+            "line": 64,
+            "text": "    def __password_hash(self):"
+          },
+          {
+            "line": 65,
+            "text": "        return self.value[TypeBDPW.PASSWORD_MD5_INDEX].value"
+          },
+          {
+            "line": 67,
+            "text": "    def has_password(self):"
+          },
+          {
+            "line": 68,
+            "text": "        \"\"\"Determines if a password was set\"\"\""
+          },
+          {
+            "line": 69,
+            "text": "        return self.__password_hash().hex().lower() != TypeBDPW.EMPTY_PASSWORD"
+          },
+          {
+            "line": 71,
+            "text": "    def password_matches(self, password: str) -> bool:"
+          },
+          {
+            "line": 72,
+            "text": "        \"\"\"checks the password to see if it matches\"\"\""
+          },
+          {
+            "line": 73,
+            "text": "        return hashlib.md5(password.encode(\"ascii\")).digest() == self.__password_hash()"
+          },
+          {
+            "line": 79,
+            "text": "        assert (len(data) - offset) % TypeBDPW.MD5_SIZE == 0"
+          },
+          {
+            "line": 80,
+            "text": "        md5_count = int((len(data) - offset) / TypeBDPW.MD5_SIZE)"
+          },
+          {
+            "line": 81,
+            "text": "        self.value = [Bytes(byte_count=TypeBDPW.MD5_SIZE) for _ in range(0, md5_count)]"
+          },
+          {
+            "line": 86,
+            "text": "        assert all(len(b.value) == TypeBDPW.MD5_SIZE for b in self.value)"
+          },
+          {
+            "line": 93,
+            "text": "        return f\"TypeBDPW({self.to_string()})\""
+          },
+          {
+            "line": 174,
+            "text": "        \"\"\"Was this VI locked (possibly with password)\"\"\""
+          }
+        ],
+        "constant_encoding": [
+          {
+            "line": 8,
+            "text": "from pylavi.data_types import PString, Version, Path"
+          },
+          {
+            "line": 93,
+            "text": "        return f\"TypeBDPW({self.to_string()})\""
+          },
+          {
+            "line": 218,
+            "text": "        return f\"TypeLVSR({self.to_string()})\""
+          },
+          {
+            "line": 245,
+            "text": "            PString(text or b\"\"),"
+          },
+          {
+            "line": 247,
+            "text": "            PString(name or b\"\"),"
+          },
+          {
+            "line": 259,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 260,
+            "text": "        \"\"\"Get a string representation of the vers resource information\"\"\""
+          },
+          {
+            "line": 263,
+            "text": "            + f\"version={self.version.to_string()}, \""
+          },
+          {
+            "line": 271,
+            "text": "        return f\"Typevers({self.to_string()})\""
+          }
+        ]
+      }
+    },
+    {
+      "path": "pylavi/pylavi/validate.py",
+      "origin": "prepared",
+      "sha256": "5d6e24ec184bda171189aca504a753aef36a436ced3126e5c68974f757042132",
+      "bytes": 23324,
+      "classes": [
+        "Problem"
+      ],
+      "matches": {
+        "primitive_contract": [
+          {
+            "line": 99,
+            "text": "    \"\"\"add options for checking flags\"\"\""
+          },
+          {
+            "line": 370,
+            "text": "        found.add(INLINE_REENTRANT)"
+          },
+          {
+            "line": 373,
+            "text": "        found.add(NON_REENTRANT)"
+          },
+          {
+            "line": 375,
+            "text": "        found.add(SHARED_REENTRANT)"
+          },
+          {
+            "line": 377,
+            "text": "        found.add(PREALLOCATE_REENTRANT)"
+          }
+        ],
+        "integrity_cache": [
+          {
+            "line": 17,
+            "text": "from pylavi.resource_types import Typevers, TypeLVSR, TypeBDPW"
+          },
+          {
+            "line": 50,
+            "text": "BLOCK_DIAGRAM_RESOURCE_TYPE = \"BDPW\""
+          },
+          {
+            "line": 106,
+            "text": "        \"--locked\", action=\"count\", help=\"File is locked (maybe with password)\""
+          },
+          {
+            "line": 110,
+            "text": "        \"--password-match\", type=str, help=\"Ensure the password is exactly\""
+          },
+          {
+            "line": 113,
+            "text": "        \"--password\", action=\"count\", help=\"File is locked with a password\""
+          },
+          {
+            "line": 116,
+            "text": "        \"--no-password\", action=\"count\", help=\"File is not saved with a password\""
+          },
+          {
+            "line": 174,
+            "text": "    args.no_password = args.no_password or 0"
+          },
+          {
+            "line": 175,
+            "text": "    args.password = args.password or 0"
+          },
+          {
+            "line": 196,
+            "text": "    has_password = args.password > 0 or args.no_password > 0"
+          },
+          {
+            "line": 198,
+            "text": "    has_binary = has_code or has_locked or has_password or has_debuggable"
+          },
+          {
+            "line": 202,
+            "text": "        or args.password_match"
+          },
+          {
+            "line": 384,
+            "text": "    VIs with no block diagram such as globals (no BDPW record) and"
+          },
+          {
+            "line": 418,
+            "text": "def validate_locked_password("
+          },
+          {
+            "line": 419,
+            "text": "    args, save_record: TypeLVSR, password: TypeBDPW, problems: list, next_path: str"
+          },
+          {
+            "line": 422,
+            "text": "    if args.password_match and not password.password_matches(args.password_match):"
+          },
+          {
+            "line": 423,
+            "text": "        problems.append(Problem(next_path, f\"Password is not '{args.password_match}'\"))"
+          },
+          {
+            "line": 425,
+            "text": "    if args.password - args.no_password > 0:"
+          },
+          {
+            "line": 426,
+            "text": "        if not save_record.locked() or not password.has_password():"
+          },
+          {
+            "line": 427,
+            "text": "            problems.append(Problem(next_path, \"No password\"))"
+          },
+          {
+            "line": 429,
+            "text": "    if args.password - args.no_password < 0:"
+          },
+          {
+            "line": 430,
+            "text": "        if save_record.locked() and password.has_password():"
+          },
+          {
+            "line": 431,
+            "text": "            problems.append(Problem(next_path, \"Has password\"))"
+          },
+          {
+            "line": 547,
+            "text": "    password_resources = resources.get_resources(\"BDPW\")"
+          },
+          {
+            "line": 555,
+            "text": "    password_record = ("
+          },
+          {
+            "line": 556,
+            "text": "        TypeBDPW().from_bytes(password_resources[0][2]) if password_resources else None"
+          },
+          {
+            "line": 590,
+            "text": "    if save_record_resources and password_record:"
+          },
+          {
+            "line": 591,
+            "text": "        validate_locked_password("
+          },
+          {
+            "line": 592,
+            "text": "            args, save_record, password_record, problems, next_path"
+          }
+        ],
+        "constant_encoding": [
+          {
+            "line": 32,
+            "text": "    def to_string(self):"
+          },
+          {
+            "line": 39,
+            "text": "        return self.to_string()"
+          },
+          {
+            "line": 42,
+            "text": "        return self.to_string()"
+          },
+          {
+            "line": 387,
+            "text": "        resources.file_type.to_string() != VI_FILE_TYPE"
+          },
+          {
+            "line": 445,
+            "text": "        version_string = version.to_string()"
+          },
+          {
+            "line": 450,
+            "text": "                Problem(next_path, f\"VI saved in LabVIEW {version_string} < {args.gt}\")"
+          },
+          {
+            "line": 456,
+            "text": "                Problem(next_path, f\"VI saved in LabVIEW {version_string} > {args.lt}\")"
+          },
+          {
+            "line": 463,
+            "text": "                    next_path, f\"VI saved in LabVIEW {version_string} is not {args.eq}\""
+          },
+          {
+            "line": 472,
+            "text": "                    f\"VI saved in LabVIEW {version_string} is a release version\","
+          },
+          {
+            "line": 480,
+            "text": "                    next_path, f\"VI saved in LabVIEW {version_string} is a beta version\""
+          },
+          {
+            "line": 489,
+            "text": "                    f\"VI saved in LabVIEW {version_string} is an alpha version\","
+          },
+          {
+            "line": 498,
+            "text": "                    f\"VI saved in LabVIEW {version_string} is a development version\","
+          },
+          {
+            "line": 507,
+            "text": "                    f\"VI saved in LabVIEW {version_string} is an invalid phase\","
+          }
+        ]
+      }
+    }
+  ]
+}

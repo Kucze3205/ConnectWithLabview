@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "verdict": "partial",
+  "summary": "Primitive and connected constant candidates located; no evidenced semantic replacement with integrity/cache rules. Do not order a disk edit.",
+  "scope": {
+    "fixture_limit": 12,
+    "edited_vi": false,
+    "behavior_claim": false,
+    "save_version_policy": "Preserve each original declared save version; add.vi declares 21.0.0 final build 0. Constant candidate version not decoded; no cross-version claim.",
+    "runtime_checks": [
+      "Owner opens without broken arrow",
+      "Owner observes intended changed behavior",
+      "Owner checks runtime validity and preserved save version"
+    ]
+  },
+  "sources": [
+    "source-provenance.json",
+    "step3/source-provenance.json",
+    "step3/source-search.json"
+  ],
+  "fixtures": "step3/fixture-probe.json",
+  "requirements": {
+    "semantics": {
+      "status": "unresolved",
+      "finding": "No independent primitive discriminator/replacement contract; no typed ConstValue interpretation.",
+      "evidence": [
+        "LVheap-source.txt",
+        "step3/constant-candidate.json",
+        "step3/source-search.json"
+      ]
+    },
+    "connectivity": {
+      "status": "unresolved",
+      "finding": "Stored endpoint pairs known, but direction, consumer semantics and compatible replacement terminal contract are unproved.",
+      "evidence": [
+        "add.tree.txt",
+        "step3/constant-candidate.json"
+      ]
+    },
+    "encoding": {
+      "status": "unresolved",
+      "finding": "ConstValue bodies and heap-type references observed; DTHP/VCTP indirection and actual constant encoding unresolved. Numeric range-field decoder is not a ConstValue decoder.",
+      "evidence": [
+        "LVheap-source.txt",
+        "step3/constant-candidate.json"
+      ]
+    },
+    "container_rebuild": {
+      "status": "resolved",
+      "finding": "Necessary framing checklist: fresh zlib checksum, length prefixes, resource size/padding, downstream offsets, both RSRC headers and affected map offsets. This alone is insufficient for an edit.",
+      "evidence": [
+        "README.md",
+        "candidate-change.json"
+      ]
+    },
+    "integrity": {
+      "status": "unresolved",
+      "finding": "BDPW first MD5-sized chunk interpreted as password; remaining two add.vi chunks have no inspected derivation/update rule. No absence-of-integrity inference.",
+      "evidence": [
+        "step3/pylavi-resource-types-source.txt",
+        "step3/fixture-probe.json",
+        "step3/source-search.json"
+      ]
+    },
+    "compiled_cache": {
+      "status": "unresolved",
+      "finding": "VICD/CPC2 observed; no safe invalidation, regeneration or dependent-flag rule in inspected sources.",
+      "evidence": [
+        "step3/source-search.json",
+        "step3/fixture-probe.json"
+      ]
+    },
+    "save_version": {
+      "status": "unresolved",
+      "finding": "Preservation is mandatory; constant candidate declared version not decoded and no version-specific edit rule established.",
+      "evidence": [
+        "README.md",
+        "edit-readiness.md"
+      ]
+    },
+    "owner_runtime": {
+      "status": "owner_check",
+      "finding": "Future edited artifact must pass owner opening, behavior and runtime/save-version checks in an appropriate LabVIEW environment.",
+      "evidence": [
+        "edit-readiness.md"
+      ]
+    }
+  },
+  "blockers": [
+    "Independent primitive identity and compatible terminal/resource-family replacement contract absent.",
+    "Constant heap-type resolution and ConstValue value/encoding contract absent.",
+    "BDPW non-password chunk derivation/update rules absent from inspected sources.",
+    "Compiled-code/cache invalidation and dependent flag rules absent.",
+    "Candidate-specific save-version preservation not demonstrated; no runtime check possible here."
+  ],
+  "exits": [
+    "Obtain pinned owner-authored same-version I32 1/2 or independently identified Add/Subtract pairs, including normal/separate-code variants; compare type/value spans, all BDPW chunks, flags and code resources. Controlled differences locate candidate dependencies but still need validated rules.",
+    "Pin missing BDPW, code-cache and DTHP/VCTP/ConstValue implementations with revision/license/hash; otherwise deliver a bounded documented step-3 POC failure and retain the inspector."
+  ],
+  "recipe": null,
+  "spans": [
+    {
+      "fixture": "pylavi/tests/add.vi",
+      "start": 112,
+      "end": 113,
+      "hex": "67",
+      "field": "OF__primIndex"
+    },
+    {
+      "fixture": "pylavi/tests/add.vi",
+      "start": 171,
+      "end": 172,
+      "hex": "67",
+      "field": "OF__primIndex"
+    },
+    {
+      "fixture": "pylavi/tests/add.vi",
+      "start": 223,
+      "end": 224,
+      "hex": "67",
+      "field": "OF__primIndex"
+    },
+    {
+      "fixture": "pylavi/tests/add.vi",
+      "start": 258,
+      "end": 259,
+      "hex": "67",
+      "field": "OF__primIndex"
+    },
+    {
+      "fixture": "pylavi/tests/add.vi",
+      "start": 254,
+      "end": 256,
+      "hex": "041a",
+      "field": "OF__primResID"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 929,
+      "end": 930,
+      "hex": "12",
+      "field": "OF__typeDesc"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 1339,
+      "end": 1340,
+      "hex": "13",
+      "field": "OF__typeDesc"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 1347,
+      "end": 1351,
+      "hex": "00000001",
+      "field": "OF__ConstValue"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 1380,
+      "end": 1381,
+      "hex": "14",
+      "field": "OF__typeDesc"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 1790,
+      "end": 1791,
+      "hex": "15",
+      "field": "OF__typeDesc"
+    },
+    {
+      "fixture": "actor-framework/Core/ActorFramework/tracing/Support/Get Clone Name.vi",
+      "start": 1799,
+      "end": 1808,
+      "hex": "000000055c2e76693a",
+      "field": "OF__ConstValue"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "LVheap-source.txt",
+      "sha256": "379d6645839ade727257387be4529c47dcd6481cb7cf177ae11e782ec996a7f0",
+      "bytes": 91307
+    },
+    {
+      "path": "LVmisc-source.txt",
+      "sha256": "738773b3356f0902bb83e94ba28f1da0d8b060cafc178b7c1eb046273cb9219a",
+      "bytes": 21394
+    },
+    {
+      "path": "LVparts-source.txt",
+      "sha256": "56399996b3bb1f8ec94a56887d4cba6bf9b70fb377acdc9aa0f1825fc9273bb0",
+      "bytes": 12862
+    },
+    {
+      "path": "README.md",
+      "sha256": "d0d9ef3722798c3a220d99bbfd12fd8588131e4842de99c613e58977edab3b8a",
+      "bytes": 11033
+    },
+    {
+      "path": "add.tree.txt",
+      "sha256": "47faa00ffb29cf9e1d14b09fbae7f8e88512e7631455099868d1a6d5b1e88951",
+      "bytes": 8387
+    },
+    {
+      "path": "candidate-change.json",
+      "sha256": "91775565b5b6f8ec272adbb8a41d6099755680ab54f52808bf9845c32d4ec528",
+      "bytes": 1469
+    },
+    {
+      "path": "edit-readiness.md",
+      "sha256": "b4400c6964553a4bbb2914395c9312dd89f9db7c59d46447d245cbc59a1971ea",
+      "bytes": 5709
+    },
+    {
+      "path": "heap-format-source.md",
+      "sha256": "90b83b2f08757fe96bf2b4f161c5138893d9a6f52c456f4567607c3edd033f96",
+      "bytes": 745
+    },
+    {
+      "path": "heap-labels.json",
+      "sha256": "ca585c5bd975c4a3398c33d1ca5111625852b422072f6713b8c99584672279cf",
+      "bytes": 37773
+    },
+    {
+      "path": "inspect_vi.py",
+      "sha256": "867698cb6b9dcef3319ab5c645a5be5e0501fa90d3fc05cacd988d56c3d0c28f",
+      "bytes": 10545
+    },
+    {
+      "path": "pylabview-LICENSE.txt",
+      "sha256": "ee5593253506c58530b5e032b5b2a2c9365070b324f63812e4c8881d544d51bb",
+      "bytes": 1159
+    },
+    {
+      "path": "source-provenance.json",
+      "sha256": "a5489a95717d9accf876cb6d3335fe98c92855e259e60ebb6fc40315be333c0c",
+      "bytes": 1387
+    },
+    {
+      "path": "step3/build_readiness.py",
+      "sha256": "928cf50fcd93bf4fc1d3cf70b315ae62fe165af9c50b5038dc16e82bb14a7702",
+      "bytes": 5896
+    },
+    {
+      "path": "step3/capture_evidence.py",
+      "sha256": "3be854bce294da96706e3d27670364127f3900de85cb9da98ad40f4e925cf588",
+      "bytes": 3660
+    },
+    {
+      "path": "step3/constant-candidate.json",
+      "sha256": "a948cfdd8b7a7ac785a639fa24508f82ca2c39ebc4088369e918af79c8f4ccbc",
+      "bytes": 46256
+    },
+    {
+      "path": "step3/fixture-probe.json",
+      "sha256": "569913ba1cbec18a4754b44263d10380ca031000fa47ec4f564867a20d123ed7",
+      "bytes": 57760
+    },
+    {
+      "path": "step3/probe_fixtures.py",
+      "sha256": "6d138c458da244445d322be5440ac0fe99ef584582f5a31ae5e318c2cfc3cf8c",
+      "bytes": 3918
+    },
+    {
+      "path": "step3/probe_sources.py",
+      "sha256": "0f45f031a8fb60334499f1b49b6af76b0507e3c6e315516888dc9135616f7af4",
+      "bytes": 1866
+    },
+    {
+      "path": "step3/pylavi-LICENSE.txt",
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    {
+      "path": "step3/pylavi-resource-types-source.txt",
+      "sha256": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+      "bytes": 9383
+    },
+    {
+      "path": "step3/schema.md",
+      "sha256": "352c1047784444d219c88ded2739b36b74ab8eca21d8a1ee1f4417be1d525f95",
+      "bytes": 3218
+    },
+    {
+      "path": "step3/source-provenance.json",
+      "sha256": "a0211dd3dd9dc905d7473b984b890d2b67e333fcd391190fd5d5d50b0c20571c",
+      "bytes": 1073
+    },
+    {
+      "path": "step3/source-search.json",
+      "sha256": "6f63c24889f0f2146fd2cf9add561f264937ca0bdcc29ff795a427759084a35d",
+      "bytes": 39187
+    },
+    {
+      "path": "verify_edit_readiness.py",
+      "sha256": "e4c415c161e75aa64536ed76eeda170bc47319420bd0491581f0880f3a1e3684",
+      "bytes": 13713
+    }
+  ]
+}
