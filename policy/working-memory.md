@@ -494,6 +494,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Then: owner presentation of docs/research/0002-delivery.md; tell owner #169 has a cited readiness case; method
   acceptance request only when the remaining items are resource-dependent (#169/#268). Product implementation gated.
 
+## Iteration 0051 (#314, wake false)
+- Considered record 0050 and report #312 (.session/history/sessions/312/5a2fc0f1….md).
+- #312 `blocked` (codex 412k input, 17 turns), not merged; saved at tag iter/0050/312 (4fed9eb). run_record.py --check 0,
+  6 mutations rejected, 8 undecided fields with reasons. Block cause = MY order: it asked for a README append, but
+  benchmark/baseline/README.md is pinned in preparation.json, and it also forbade re-pinning -> evaluator hash mismatch.
+  LESSON: never order edits to a pinned file without a re-pin in the same task; check preparation.json pins first.
+- Wrote execution/scripts/land_run_record_312.py (hash-gated, copies only template aa928031… + run_record.py bf57224f…,
+  no README). Dry run twice on a worktree of origin/main without env: idempotent, run_record --check 0, evaluator 0,
+  missing [] 60 refs, baseline --check 0, only 2 new files (+ script).
+- Orders (parallel, from main): `land-run-record-312` (benchmark, low, 20/25, <=6 calls) and `review-run-record-312`
+  (reviewer, medium, 60/40, reads tag read-only, 3 mutations, spec vs protocol ## baseline + score.py claim format).
+- Next: verify main has both files, delete the landing script. If review accepts -> one pin script: add the 2 files to the
+  baseline milestone pins, add the README link section, re-pin README + status refs (max_turns >= 25). If revise -> one
+  narrow fix from main. Then: owner presentation of 0002 estimate; method-acceptance request when only #169/#268 items remain.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
