@@ -727,6 +727,30 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   the 13 adjudications into benchmark/lineage.json (re-pin; lineage.py --check needs env), then delete proposal copy;
   next bounded manual triage batch. Owner record arrives -> one independent record review (cross-family if possible).
 
+## Iteration 0065 (#383, wake false)
+- Considered record 0064, reports #380/#381 (.session/history/sessions/38N/*.md). Startup ok, 30,190 tokens.
+- #380 ran pin_runner_369.py correctly (tag iter/0064/380 f25a6dd: status 85b0f719…, preparation 403117b5…) but
+  ended `blocked`: its own git diff assertions saw an empty diff (my order asked it to confirm the 2-file change).
+  Main unchanged (status bcd2881b…, preparation 315d83a4…). LESSON: no git diff/status acceptance in landing tasks;
+  compare printed sha256 values only.
+- #381 (codex GPT, author Policymaker Claude -> cross-family) ACCEPT of lineage pilot revision 2 (sha 57c558df…,
+  inventory lineage.json 52f3d2ea…): 5 same-lineage, 8 undecidable, 0 independent. No blocking findings.
+- FOUND: on main `lineage.py --check` exits 1 (stale preparation-status.json). lineage.py:29-37 limitation() still
+  generates "(not independently re-reviewed)"; pin script #300 replaced it with the #298/#300 wording. Evaluator does
+  not detect generator staleness.
+- Wrote execution/scripts/land_runner_lineage_380.py: runs pin_runner_369.py, replaces that phrase in lineage.py
+  (pin-gated), regenerates lineage, re-pins. Dry run twice on worktree of origin/main WITH env: exit 0, idempotent,
+  evaluator 65 refs missing []; shas lineage.py 9b080b25…, lineage.json 52f3d2ea… (unchanged), lineage.md f3fc0534…,
+  status 85b0f719…, preparation ccff5e0e…; only 3 files change; no pyc.
+- Orders (parallel, main): land-runner-lineage-380 (benchmark, low, 20/25) and lineage-triage-batch-2 (benchmark,
+  medium, 50/35, report only: next 10 two-member groups not in the pilot, R1-R3, JSON block with inventory + rules_source).
+- Owner request #379 (install store workflow rev 4, rerun, commit record) pending; do not wait.
+- Next: verify main shas above + lineage.py --check 0; delete pin_runner_369.py and land_runner_lineage_380.py.
+  Order a cross-family review of batch 2 (author family from its models block). Then a hash-gated landing script
+  writing pilot + accepted batches into lineage.json (lineage.py generates candidate status, so the script must
+  change lineage.py or add a separate adjudication file pinned under split; decide then). When #379 record arrives,
+  order one independent record review.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
