@@ -823,6 +823,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   visible). do-first -> order only listed items. Then decide #169 install question with same-family limit + gaps.
   Memory ~84 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0071 (#402, wake true)
+- Considered record 0070, report #400 (.session/history/sessions/400/98d74853….md), evaluation.md:1-96,
+  session-protocol.md request format, task-graph.md.
+- #400 (codex GPT 298k, 12 turns, report only) `decision: request-acceptance-now`: requirement map (every row
+  met-for-method / resource-blocked #169 or #268/#379 / owner-decision; no not-met-now-doable) + STE owner draft naming
+  main 817dac6 and preparation.json sha ccff5e0e…; 0002 estimate 89-264 d all versions vs 33-99 d 2024-only, strict 2024
+  excludes 413 of 415 RSRC files (information only). Verified by Policymaker: preparation.json sha ccff5e0e… on main
+  cadf090; benchmark/, docs/, .github/workflows unchanged 817dac6..cadf090.
+- NOT filed yet: evaluation.md:58-59 requires independent method check before owner assessment; author GPT.
+- Order `review-method-acceptance-400` (reviewer, medium, 45/35, main, no exports; reads snapshot
+  .github/loop/data/session-reports/400/0473f3e7….json). Output: `verdict:` + corrected STE draft naming current main.
+- On wake: verdict accept -> file one `question` request (method only; all gaps visible; no readiness/threshold/gate/
+  fallback). revise -> order only the listed now-doable items. Check the reviewer `models` block (Claude preferred).
+  Do not repeat the #400 map or the hash checks. Memory ~86 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
