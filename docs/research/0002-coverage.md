@@ -1,54 +1,32 @@
 # 0002 Coverage: artifact families, save versions and pylavi decoding
 
-Status: partial (first commit). Sources: pylavi `35d2a03`, Actor Framework `371c631` (`@environment/readiness.json`).
+Status: **partial (first pass)**. The tables below are output from the script. Sections still being written are marked TODO.
 
-## Families x save versions
+## Inputs (pinned)
 
-Produced by:
+- Prepared sources, read-only: `$LABVIEW_ENVIRONMENT` (= `/resources/environment`, seen as `@environment/`).
+- pylavi `35d2a0318f71dcb87bb9c431dc00700ee6b9fb75` (Unlicense), actor-framework `371c631c16155d88f02be11a953e4964d7452fd8` (MIT): `@environment/readiness.json`.
+- Fixture `Core/ActorFramework/Actor/Actor Core.vi`, sha256 `135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c`: `@environment/readiness.json`.
 
-```
-python3 -I docs/research/scripts/coverage/inventory.py --table
-```
+## Method
 
-Versions come from the file itself. RSRC files: the first `LVSR` resource's version word, or the lowest-id `vers` resource if there is no LVSR. XML files: the `LVVersion` attribute. `.vipb`: `<Package_LabVIEW_Version>`. Decoding uses the bit layout of `Version` in `@environment/pylavi/pylavi/data_types.py`. `unknown` means the script found no version field.
+Script: `docs/research/scripts/coverage/inventory.py`.
 
-### Top-level files
+- Walks `$LABVIEW_ENVIRONMENT` (skips `.git`, `node_modules`) and opens zip containers (`.zip .vip .vipc .vsix .lvlibp`) to look at LabVIEW members inside them.
+- Families are named `<extension> <container>`: `RSRC <file_type>` for binary resource files (magic `RSRC`), `XML` when an `LVVersion="…"` attribute is present, `zip`, or `text/other`.
+- The save version of an RSRC file comes from its `vers` resource with the lowest id. It is cross-checked against the version prefix of `LVSR`. The RSRC container is parsed by the script, not by pylavi, so the version does not depend on pylavi.
+- pylavi decoding: `pylavi/resource_types.py` has no type registry. Its decoders are classes named `Type<fourcc>`. The script looks each resource up by that name, calls `from_bytes`, and records `decoded` only when `to_bytes()` round-trips byte-identically. Whole-file load uses `pylavi.file.Resources.load` (`@environment/pylavi/pylavi/file.py`).
 
-| family | files | 20.0 | 20.0.0 | 21.0.0 | 21.0.0a0 | 21.0.0b0 | 21.0.0d0 | 21.0.0{0}0 | 23.0.0 | 24.0.0 | 26.0.0 | unknown |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| `.aliases` project aliases | 2 |  |  |  |  |  |  |  |  |  |  | 2 |
-| `.ctl` control / typedef | 9 |  | 9 |  |  |  |  |  |  |  |  |  |
-| `.lvclass` class (XML) | 48 |  | 48 |  |  |  |  |  |  |  |  |  |
-| `.lvlib` project library (XML) | 12 |  | 11 | 1 |  |  |  |  |  |  |  |  |
-| `.lvlibp` packed project library | 1 |  |  |  |  |  |  |  |  |  |  | 1 |
-| `.lvlps` project local settings | 1 |  |  |  |  |  |  |  |  |  |  | 1 |
-| `.lvproj` project (XML) | 5 |  | 5 |  |  |  |  |  |  |  |  |  |
-| `.mnu` run-time menu | 5 |  |  |  |  |  |  |  |  |  |  | 5 |
-| `.vi` VI | 432 |  | 385 | 31 | 1 | 1 | 1 | 1 | 5 | 2 | 5 |  |
-| `.vim` malleable VI | 1 |  | 1 |  |  |  |  |  |  |  |  |  |
-| `.vip` VI package (zip) | 1 |  |  |  |  |  |  |  |  |  |  | 1 |
-| `.vipb` VIPM build spec | 3 | 3 |  |  |  |  |  |  |  |  |  |  |
-| `.vipc` VIPM configuration (zip) | 2 |  |  |  |  |  |  |  |  |  |  | 2 |
+Commands: `python3 -I docs/research/scripts/coverage/inventory.py` (JSON) and `python3 -I docs/research/scripts/coverage/inventory.py --table` (Markdown below).
 
-### Members of zip archives (`.zip`, `.vip`, `.vipc`, ...)
+## Families x save versions (first pass)
 
-| family | files | 13.0.0 | 14.0.0 | 15.0.0 | 15.0.0b0 | 16.0.0 | 20.0.0 | unknown |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `.aliases` project aliases | 5 |  |  |  |  |  |  | 5 |
-| `.ctl` control / typedef | 7 |  |  |  |  |  | 7 |  |
-| `.lvclass` class (XML) | 47 | 2 | 16 | 1 | 5 |  | 23 |  |
-| `.lvlib` project library (XML) | 13 |  | 7 | 1 | 2 |  | 3 |  |
-| `.lvlibp` packed project library | 11 |  |  |  |  |  |  | 11 |
-| `.lvlps` project local settings | 5 |  |  |  |  |  |  | 5 |
-| `.lvproj` project (XML) | 5 |  | 3 | 1 | 1 |  |  |  |
-| `.mnu` run-time menu | 5 |  |  |  |  |  |  | 5 |
-| `.vi` VI | 200 | 8 | 41 | 4 | 12 | 1 | 134 |  |
-| `.vim` malleable VI | 1 |  |  |  |  |  | 1 |  |
+TODO: regenerate after the next script revision. Known issue: counts for `.vi`/`.ctl` include zip-nested members, which pylavi does not load.
 
-## pylavi decoding per family
+## pylavi decoding per resource type
 
-TODO (next step): fill this in from `samples`, `archive_samples` and `fixture` in the JSON output of `python3 -I docs/research/scripts/coverage/inventory.py`.
+TODO.
 
 ## Gaps
 
-TODO (next step).
+TODO.
