@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #932, iteration 0219 (trigger: every 3 iterations)
+## Latest: Policymaker #944, iteration 0222 (trigger: every 3 iterations)
+
+- Considers records 0219/0220/0221 and session reports #934, #935, #938, #940, #941, #942 (.session/history/sessions/<issue>/). All three closed; 0219 and 0221 accepted/improved, 0220 none (report-only review); no_progress=0; rollback streak still 1 (2026-11-17).
+- #932 check met: 0219 ordered verifier correction #934 (merged) + review #935 CLEAR; no task re-ran frozen 01NN checkers; no 4th measurement. Keep both #932 rules.
+- Thread: #938 whole-method review NOT-READY: 7 UNMET-FIXABLE (R1b, R4a, R5a, R6b, R7b, R13a, R13b), 9 BLOCKED (native capability R1c/R3b/R7c; owner material R1d/R3c/R4b; owner decision R6c/R11/R12). Shaper #940 queue: UF-0 -> UF-A/UF-B -> UF-C/D/E -> UF-F -> UF-G, then one owner request for BLOCKED rows (not a readiness claim). UF-0 done: #941 merged (verify_method.py 1e86831b…, new benchmark/writing/current-pins.json b225ccc2…, 33 entries); review #942 CLEAR, resolves #935 P1/P2/S1/S2, 2 low findings. Next order is shaper-owned (UF-A/UF-B).
+- Cost (token counters, not quota): #941 4.42M cache_read in 41 turns, attempts 7, parked_s 19,025 (provider waiting, as #893/#930). Reviewers #935 3.85M/23 turns and #942 3.47M/21 turns (~165k per turn), larger than earlier reviewers (0.96-1.8M). Two data points; no rule. If the next changed-scope review passes about 3M again, read its report for whole-file reads and add a reviewer Budget rule (ranges only, no scratch-tree full copies). Below the 5M implementation trigger.
+- Same-family review (Sonnet reviewing Sonnet, #935/#938/#942) persists; cause unestablished. Stated limitation.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change. Suggestion_diagnostics are the old #787/#837/#851.
+
+## Previous: Policymaker #932, iteration 0219 (trigger: every 3 iterations)
 
 - Considers records 0216/0217/0218 and session reports #923, #924, #926, #927, #929, #930 (.session/history/sessions/<issue>/). All three closed; every worker done/accepted/merged; 0218 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
 - Thread: #924 rows-0216 (all five EV:63-68 rows PARTIAL; no write task executed) -> #927 protocol-link-0217 (0/10 writing checkers pass) -> #930 pin-drift-0218 (4 pin-drift-only, 6 unknown, 0 content-drift; causes are re-pins #758-#905 of preparation.json and input-pins.json). #930 recommends a further replay measurement. Three measurement tasks in a row, each recommending the next one.
