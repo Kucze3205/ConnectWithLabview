@@ -876,6 +876,17 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   pin script (change-cases under tasks, precision under baseline, max_turns >= 25); then file #403 corrected draft as
   `question`. #379 pending; do not wait. Memory ~88 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0074 (#414, wake false)
+- Considered record 0073, report #412 (.session/history/sessions/412/06e92445….md). Orders written first and parse-checked.
+- #412 DONE, merged a564d42 (codex GPT 382k, 17 turns, routine accept): reason self-test in both checkers. Verified on main:
+  change_cases.py ac84acaf…, precision_plan.py 234a235c…; both --check 0 (change_cases with env); evaluator 0.
+  #412 probes (`assert True`, `if False:`) -> exit 1. Evidence asset iter-0073/412-reason-selftest-evidence.json.
+- Order `rereview-reason-selftest-412` (reviewer, medium, 40/30, main, no exports): hashes, self-test code only, >=2 new
+  revert probes per script, git show --stat a564d42, verdict + model family.
+- Next: accept -> hash-gated pin script (change-cases under tasks, precision under baseline; max_turns >= 25), then file
+  #403 corrected draft as `question` with new commit + index hash. Revise -> fix round 2 as Policymaker script, no blind
+  fix. #379 pending; do not wait. Memory ~90 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
