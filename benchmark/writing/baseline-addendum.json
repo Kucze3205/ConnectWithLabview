@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "kind": "writing-baseline-addendum",
+  "status": "draft-unreviewed; not accepted or frozen by the owner; no run executed",
+  "requirement": {
+    "review": "#938",
+    "row": "R6b",
+    "row_text": "Frozen, hashed baseline addendum (prompts, output schema, ID lists, budgets) | UF (for prompts, schema, IDs, manifests) | method.json:768 `freeze`; protocol-link-0217 reports no addendum file | UF-E. Model, quota and repetition count within it are BLOCKED owner decision (method.json:769)",
+    "staged_line": ".session/inputs/938-method-review-0220.md:42",
+    "method_rule_locator": "/comparison/freeze",
+    "method_rule_sha256": "e0dfbdf2fefce49c818a83ae7e3b39aec7ddb635aae6677d264f068cc68051a4"
+  },
+  "method": {
+    "path": "benchmark/writing/method.json",
+    "sha256": "5a7fb194ad1600e89fc8b6f98a2b4e5012259077e65f9b4a32a4a43bbd1d9af3",
+    "revision": "writing-design-2-wp1-integration-0112"
+  },
+  "arms": {
+    "matched_fields": [
+      "requested_change_hash",
+      "original_manifest_hash",
+      "allowed_inputs_hash",
+      "common_prompt_hash",
+      "model_snapshot_and_generation",
+      "total_token_budget",
+      "context_budget",
+      "output_token_and_artifact_byte_budget",
+      "wall_time_budget",
+      "ordinary_editing_capabilities",
+      "native_access_policy",
+      "case_key_revision",
+      "repetition_count",
+      "retry_policy"
+    ],
+    "no-tool": {
+      "definition": "Same ordinary file editing facilities and inputs as the tool arm; no evaluated tool and no substitute semantic writer or exporter.",
+      "source_locator": "/comparison/tool_difference"
+    },
+    "tool": {
+      "definition": "Evaluated tool access and its minimal instruction are the only difference; tool output, time and cost count against the shared totals.",
+      "source_locator": "/comparison/tool_difference"
+    },
+    "tool_difference_sha256": "d7c837cfea58664404c78d49a7400260ac0d3d63b84216ebb7d2e245d1a122be",
+    "native_access_policy_sha256": "caa9136c4ef3cadabe48a0ecae5a59bc8947531be75e67dda563331cdcc4ce82"
+  },
+  "tasks": [
+    {
+      "id": "WC1-create-vi",
+      "operation": "create",
+      "method_locator": "/tasks/0",
+      "request": {
+        "locator": "/tasks/0/request",
+        "sha256": "075bb99106bdd3a3c16c5dc826505a45e83e7f87de4dc4f95a02fd0b36487b13"
+      },
+      "expected_semantics": {
+        "locator": "/tasks/0/expected_semantics",
+        "sha256": "1a9d17c37d43e1f1480bc4ff4dedd2bfd5e4b64ef85e97b7e454aa07e3595a35"
+      },
+      "semantic_ids": [
+        "WC1-file-and-connector",
+        "WC1-i32-plus-one-graph",
+        "WC1-domain-results"
+      ],
+      "preservation_ids": [
+        "WC1-unrelated-workspace",
+        "WC1-no-extra-files",
+        "WC1-target-save-version"
+      ],
+      "answer_ids": [
+        "WC1-explain-graph",
+        "WC1-report-validation-limits"
+      ],
+      "id_lists_sha256": "cdabc2e7768f01c232f53b774b42c7b8a5e79405190aaf4089095c19b9086fae",
+      "output_paths": [
+        "Increment.vi"
+      ],
+      "output_manifest_rule_sha256": "49b733f0a8f661da9c5b2cbc7fcc6ac446dbd481c916ecda1a1945f80119357b",
+      "originals": [],
+      "workspace_manifest": {
+        "status": "unavailable",
+        "reason": "A separate preparer/checker freezes workspace and dependency manifests before exposure (method.json#/common/preflight); no workspace or dependency tree exists."
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; no VI created"
+    },
+    {
+      "id": "WM1-diagram-not",
+      "operation": "modify",
+      "method_locator": "/tasks/1",
+      "request": {
+        "locator": "/tasks/1/request",
+        "sha256": "6d4ba7f8f049ab59e01d4164536b5ff555318954d4b5939e6f2297aaf6131321"
+      },
+      "expected_semantics": {
+        "locator": "/tasks/1/expected_semantics",
+        "sha256": "3afbde969116a6bab13640d764bd947d1a1ada342544ed14f3e59dffabdf83de"
+      },
+      "semantic_ids": [
+        "WM1-selected-output-inverted",
+        "WM1-single-not-rewire"
+      ],
+      "preservation_ids": [
+        "WM1-other-sinks-and-connector",
+        "WM1-settings-labels-dependencies",
+        "WM1-other-files",
+        "WM1-original-save-version"
+      ],
+      "answer_ids": [
+        "WM1-explain-original-and-edit",
+        "WM1-cite-original-output-map",
+        "WM1-report-validation-limits"
+      ],
+      "id_lists_sha256": "b92d2bd8f628e6fe09f2292eb41eeac5b4a7d1dacdf4f7af11fb2eb561944c79",
+      "output_paths": [
+        "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi"
+      ],
+      "output_manifest_rule_sha256": "49b733f0a8f661da9c5b2cbc7fcc6ac446dbd481c916ecda1a1945f80119357b",
+      "originals": [
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+          "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+          "role": "original",
+          "location": "environment",
+          "read_path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi"
+        }
+      ],
+      "workspace_manifest": {
+        "status": "unavailable",
+        "reason": "A separate preparer/checker freezes workspace and dependency manifests before exposure (method.json#/common/preflight); no workspace or dependency tree exists."
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; DD claims remain unavailable"
+    },
+    {
+      "id": "WM2-typedef-cluster",
+      "operation": "modify",
+      "method_locator": "/tasks/2",
+      "request": {
+        "locator": "/tasks/2/request",
+        "sha256": "3cddb41a033f3290456e67eea3a439b50a54878c320efe33b131d5d8b9234789"
+      },
+      "expected_semantics": {
+        "locator": "/tasks/2/expected_semantics",
+        "sha256": "cc6d918dadd8732e4f03356ce66c820834b6b7ad6e52c1089e4ec6f35baabd01"
+      },
+      "semantic_ids": [
+        "WM2-cluster-members-and-defaults",
+        "WM2-typedef-mode",
+        "WM2-consumer-impact-accounted"
+      ],
+      "preservation_ids": [
+        "WM2-original-value-properties",
+        "WM2-no-consumer-repairs",
+        "WM2-unrelated-files",
+        "WM2-per-file-save-version"
+      ],
+      "answer_ids": [
+        "WM2-explain-type-change",
+        "WM2-cite-consumer-effects",
+        "WM2-report-validation-limits"
+      ],
+      "id_lists_sha256": "f9fc82e11b3185d0bb2271c240b2b6b49c2d3197debe30b4e3295f6f180292f0",
+      "output_paths": [
+        "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl"
+      ],
+      "output_manifest_rule_sha256": "49b733f0a8f661da9c5b2cbc7fcc6ac446dbd481c916ecda1a1945f80119357b",
+      "originals": [
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl",
+          "sha256": "4a291d5d18c372ab0221bfc84a16b56fb7e97f736329a393c047a4c84bfc4ea9",
+          "role": "original",
+          "location": "environment",
+          "read_path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl"
+        },
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue.vi",
+          "sha256": "656c0cff6cfadbe3a918728d03a5634423a26b0e55605cc29de50481c8072fbc",
+          "role": "consumer-unconfirmed",
+          "location": "environment",
+          "read_path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue.vi"
+        },
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+          "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+          "role": "consumer-unconfirmed",
+          "location": "environment",
+          "read_path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi"
+        }
+      ],
+      "workspace_manifest": {
+        "status": "unavailable",
+        "reason": "A separate preparer/checker freezes workspace and dependency manifests before exposure (method.json#/common/preflight); no workspace or dependency tree exists."
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; broken consumers cannot count as successful execution"
+    },
+    {
+      "id": "WB1-source-rebuild",
+      "operation": "source-edit-and-rebuild",
+      "method_locator": "/tasks/3",
+      "request": {
+        "locator": "/tasks/3/request",
+        "sha256": "5b9a55249a5617a43f3260afd7944f0addfb5f047a7ddcfa44b1b6b1345093ac"
+      },
+      "expected_semantics": {
+        "locator": "/tasks/3/expected_semantics",
+        "sha256": "81cba17c35a37e22fe92fa6d2f04ab2fdb2df0c1896b9c5480d87daa460b58bb"
+      },
+      "semantic_ids": [
+        "WB1-source-plus-two",
+        "WB1-source-build-link",
+        "WB1-exported-api-behavior"
+      ],
+      "preservation_ids": [
+        "WB1-source-save-versions",
+        "WB1-api-and-other-members",
+        "WB1-target-build-dependencies",
+        "WB1-unrelated-files"
+      ],
+      "answer_ids": [
+        "WB1-explain-source-build-chain",
+        "WB1-cite-source-and-export",
+        "WB1-report-unexecuted-build"
+      ],
+      "id_lists_sha256": "8682af94de3ff0d1c39fef6d93ad458fc6c5aa84a8e3794612a6ba87909cf519",
+      "output_paths": [
+        "source/Increment.vi",
+        "build/Increment.lvlibp"
+      ],
+      "output_manifest_rule_sha256": "49b733f0a8f661da9c5b2cbc7fcc6ac446dbd481c916ecda1a1945f80119357b",
+      "originals": [],
+      "workspace_manifest": {
+        "status": "unavailable",
+        "reason": "A separate preparer/checker freezes workspace and dependency manifests before exposure (method.json#/common/preflight); no workspace or dependency tree exists."
+      },
+      "native_outcome": "unexecuted: missing-source, missing-builder, missing-runtime and missing-independent-key; compiled output unsupported until those gaps close"
+    },
+    {
+      "id": "WP1-project-build-text",
+      "operation": "modify",
+      "method_locator": "/tasks/4",
+      "request": {
+        "locator": "/tasks/4/request",
+        "sha256": "459fa073638f103bc83a9e8b6148490efe898e29ad4c154594db5af9edc66969"
+      },
+      "expected_semantics": {
+        "locator": "/tasks/4/expected_semantics",
+        "sha256": "462f6f00fa62e69969f68fc101d9e303f6f9493d8bca4c5d32c2aa2fc9c3b911"
+      },
+      "semantic_ids": [
+        "WP1-property-text"
+      ],
+      "preservation_ids": [
+        "WP1-other-project-bytes",
+        "WP1-file-set-and-unrelated-files",
+        "WP1-root-version-declaration",
+        "WP1-original-and-license"
+      ],
+      "answer_ids": [
+        "WP1-describe-text-delta",
+        "WP1-original-output-grounding",
+        "WP1-honest-limits"
+      ],
+      "id_lists_sha256": "d343ffffb3a58a52aae002af3af5b8affdab7fc9ba9ba829d4da8b206a7f33da",
+      "output_paths": [
+        "Core/AF PPL Build.lvproj"
+      ],
+      "output_manifest_rule_sha256": "2367eac6fa52ad0178c04a7d87f646797f831a9cd8cf1a2dbe32b92f316cef50",
+      "originals": [
+        {
+          "path": "Core/AF PPL Build.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "role": "original",
+          "location": "repository",
+          "read_path": "benchmark/real-project-0107/original.lvproj"
+        }
+      ],
+      "workspace_manifest": {
+        "status": "unavailable",
+        "reason": "A separate preparer/checker freezes workspace and dependency manifests before exposure (method.json#/common/preflight); no workspace or dependency tree exists."
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; root LVVersion 20008000 is a declaration only, not native save-version authority"
+    }
+  ],
+  "output_schema": {
+    "source_locator": "/common",
+    "artifact_record": [
+      "case_pair_repeat_arm",
+      "requested_change_hash",
+      "original_manifest_hash",
+      "output_manifest_with_paths_sizes_sha256_and_raw_bytes",
+      "missing_and_unexpected_paths",
+      "per_artifact_save_version_evidence",
+      "resolved_dependency_paths",
+      "semantic_id_results_and_original_to_output_object_map",
+      "preservation_invariant_results",
+      "errors_truncation_budget_and_retry_records"
+    ],
+    "dimensions": [
+      "artifact-fidelity",
+      "answer-correctness",
+      "source-grounding",
+      "native-execution"
+    ],
+    "outcomes": [
+      "correct",
+      "incorrect",
+      "partial",
+      "missing",
+      "unverified",
+      "unsupported",
+      "error",
+      "unexecuted"
+    ],
+    "limitation_codes": [
+      "missing-runtime",
+      "missing-dependency",
+      "missing-license",
+      "protected-or-removed-diagram",
+      "unknown-save-version",
+      "missing-source",
+      "missing-builder",
+      "missing-independent-key",
+      "unsupported-family-or-version"
+    ],
+    "sha256": "bdd06824e79fdd893b07dd10c3a3f3f5a60ea7892f8958bb3b851838d2159850"
+  },
+  "id_lists": {
+    "count": 45,
+    "unique": true,
+    "sha256": "0202e4d65ecec3ca5343872f6ebd18525266725d1d759726d47ddcddddab511e"
+  },
+  "derived_matched_fields": {
+    "requested_change_hash": "636ef745a838e2e122f32f033ebcb4bc305500f20101d3ff235d873c2464a991",
+    "original_manifest_hash": "8bb7efd662d38992afbc53ad320d87ce810218934f618f521188dc89c7b2b76c",
+    "native_access_policy": "Both paired writing arms edit without LabVIEW. Trusted native validation, when provisioned, occurs after outputs are frozen in a separate job under identical conditions; native results are not fed back for one arm alone. Any future iterative native-assisted experiment is a separately labeled matched stratum."
+  },
+  "owner_pending": {
+    "allowed_inputs_hash": {
+      "value": null,
+      "status": "pending-preparer-freeze",
+      "reason": "Allowed documentation and images are not selected or hashed."
+    },
+    "common_prompt_hash": {
+      "value": null,
+      "status": "pending-preparer-freeze",
+      "reason": "The common prompt wrapper around each request is not authored; only the per-task requests are frozen here."
+    },
+    "model_snapshot_and_generation": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "Model, snapshot and generation settings are an owner decision (review #938 row R6b)."
+    },
+    "total_token_budget": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "Budgets need owner quota decisions."
+    },
+    "context_budget": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "Budgets need owner quota decisions."
+    },
+    "output_token_and_artifact_byte_budget": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "Budgets need owner quota decisions."
+    },
+    "wall_time_budget": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "Budgets need owner quota decisions."
+    },
+    "ordinary_editing_capabilities": {
+      "value": null,
+      "status": "pending-preparer-freeze",
+      "reason": "method.json requires identical ordinary editing facilities in both arms but names no concrete list."
+    },
+    "case_key_revision": {
+      "value": null,
+      "status": "unavailable",
+      "reason": "No independently established key exists; every task oracle.native_key is unavailable."
+    },
+    "repetition_count": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "method.json#/comparison/repetitions records four conditional pilots as design only and leaves evaluation count null."
+    },
+    "retry_policy": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "No retry policy is frozen."
+    },
+    "arm_order_seed": {
+      "value": null,
+      "status": "owner-pending",
+      "reason": "The runner contract derives order from a seed that is not chosen for writing."
+    }
+  },
+  "limits": {
+    "agent_runs": 0,
+    "native_executions": 0,
+    "benchmark_ready": false,
+    "meaning": "Draft baseline definition for review. It claims no LabVIEW behaviour and supplies no model, budget or repetition choice."
+  }
+}
