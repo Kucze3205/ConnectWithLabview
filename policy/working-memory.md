@@ -527,6 +527,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   check whether only resource-dependent items (#169, #268/#308) remain before a method-acceptance request.
   Product implementation stays gated. #308 still pending; do not wait on it.
 
+## Iteration 0054 (#326, wake false)
+- Considered record 0053 and git log of origin/main (72e6b0f). #322 pin DONE, owner-accepted #323. Verified on main:
+  preparation-status.json fbdb65ce…, preparation.json 54c5c701…, baseline README 24c2018f…; milestones baseline/split
+  design-reviewed, challenges scorer-reviewed, coverage/oracle/sources/tasks reviewed. Deleted
+  execution/scripts/pin_run_record_318.py (scripts now empty).
+- Owner answered #308: commit a43a7b9 added benchmark/split/store-readiness-268.redacted.json (sha 4bed1602…, matches its
+  .sha256 file) from workflow .github/workflows/store-readiness.yml; steps a-d pass in run 42283794047; step (e) note: the
+  owner deleted the scorer token before the revoked run. Not yet independently reviewed.
+- Order `review-store-readiness-308` (reviewer, medium, 40/30, main, report only, <=15 calls): sha check, steps a-e vs
+  #268 clause and split templates, redaction scan, limits, verdict accept/revise. A confirmation-only task was dropped (busywork).
+- Next: if accept -> design synthetic split allocation using the store (benchmark, design only, no real cases), and pin the
+  record + review under split via script (max_turns >= 25). If revise -> owner request with exact action. Still pending:
+  owner presentation of docs/research/0002-delivery.md, tell owner #169 has a cited readiness case, method-acceptance
+  request once only resource items remain. Product implementation gated.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
