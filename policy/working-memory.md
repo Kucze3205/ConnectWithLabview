@@ -605,6 +605,27 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   "awaits independent review" sentences. If revise -> fix the script myself. Watch the owner's store record; then order one
   independent record review. Then N2 lineage adjudication (bounded, split by case family) and N3 populated-manifest contract.
 
+## Iteration 0058 (#350, wake false)
+- Considered record 0057, report #347 (snapshot .github/loop/data/session-reports/347/6310c97e….json), main files.
+- #346 DONE, merged 611da6c (sonnet only, 11 turns, ~78k tokens, owner #348). Verified on main: run_record.py 48404c93…,
+  README 9008a808…, status e225d24c…, preparation 27542683…; evaluator 0, errors [], missing [], 62 refs.
+  Deleted execution/scripts/bind_manifest_n1.py.
+- #347 review DONE (sonnet only, 18 turns, 795k cache_read): ACCEPT. Findings: (1) add uppercase-hash and str-input
+  controls; (2) "not yet independently reviewed" wording stale. Reviewer and author (Policymaker) are both Claude family.
+- Wrote execution/scripts/pin_binding_347.py (hash-gated, idempotent): 2 new controls (5 manifest_binding entries),
+  README + status sentences record #347, re-pins. Dry run twice on a copy without env: run_record/baseline/score/
+  evaluator --check 0, 62 refs; shas run_record.py b39c3060…, README 75892269…, status bcd2881b…, preparation 315d83a4…;
+  revert probes (accept str via encode; .lower() normalization) -> --check exit 1. No __pycache__.
+- Orders (parallel, main, wake false): `pin-binding-review-347` (benchmark, low, 20/25) and
+  `populated-manifest-contract-n3` (benchmark, medium, 75/45): new run-manifest.synthetic.json, runner_contract.py --check
+  (imports run_record.py by path, >=4 mutations), runner-contract.md; no edits to pinned files.
+- Owner request #345 (install store-readiness workflow, rerun, commit new record) pending; do not wait on it.
+- Next: verify main run_record.py b39c3060… + 62 refs, delete pin_binding_347.py. If N3 done -> one review (reviewer from
+  main, Verification runner_contract.py --check), then pin under baseline by script (max_turns >= 25). If partial near the
+  input ceiling -> verify the tag and land by script. Then N2 lineage adjudication: 230 candidate groups (183 of size 2,
+  one of 38) in benchmark/lineage.json `candidate_variants`, status candidate-unadjudicated; split by group batches.
+  When #345 record arrives -> order one independent record review.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
