@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "synthetic_only": true,
+  "seed": 440,
+  "split_revision": "SYN-SPLIT-1",
+  "families": [
+    {"family_id": "SYN-F1", "requested_stratum": "eval-unseen-lineage"},
+    {"family_id": "SYN-F2", "requested_stratum": "eval-held-out-family"},
+    {"family_id": "SYN-F3", "requested_stratum": "eval-held-out-family"}
+  ],
+  "projects": [
+    {"project_id": "SYN-P1", "family_ids": ["SYN-F1"]},
+    {"project_id": "SYN-P2", "family_ids": ["SYN-F3"]},
+    {"project_id": "SYN-P3", "family_ids": ["SYN-F1"]},
+    {"project_id": "SYN-P4", "family_ids": ["SYN-F2"]},
+    {"project_id": "SYN-P5", "family_ids": ["SYN-F2"]},
+    {"project_id": "SYN-P6", "family_ids": ["SYN-F1"]}
+  ],
+  "lineage_groups": [
+    {"lineage_group_id": "SYN-G1", "project_ids": ["SYN-P1", "SYN-P2"], "required_development": true},
+    {"lineage_group_id": "SYN-G2", "project_ids": ["SYN-P3"], "required_development": false},
+    {"lineage_group_id": "SYN-G3", "project_ids": ["SYN-P4"], "required_development": false},
+    {"lineage_group_id": "SYN-G4", "project_ids": ["SYN-P5"], "required_development": false},
+    {"lineage_group_id": "SYN-G5", "project_ids": ["SYN-P6"], "required_development": false}
+  ],
+  "design_notes": [
+    "All identifiers and relationships are invented; projects stand for whole connected lineage inputs, not cases or keys.",
+    "SYN-G1 is mixed-family and must remain in development. SYN-F3 therefore cannot be held out.",
+    "One development and one unseen group per requested represented family are mechanical synthetic feasibility minima, not accepted benchmark size thresholds.",
+    "No source files, answer keys, store material or access configurations are represented."
+  ]
+}
