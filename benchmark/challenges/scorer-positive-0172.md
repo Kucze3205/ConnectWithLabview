@@ -35,3 +35,8 @@ mutation detected library-specialty regression self-test: positive control does 
 generate totals {"cannot_evaluate": 0, "controls": 33, "fixtures": 3, "matches": 33, "mismatches": 0}
 ```
 The in-memory mutation set one `expected_positive` correctness value to `incorrect`, and the self-test failed as expected. `main()` printed the same totals and returned 0. The pin helper output is listed under Pins. No evaluator, network, model or LabVIEW calls were made, and check_c1_challenges_0125.py was not run.
+
+## Finish 0176
+Task scorer-positive-finish-0176 re-pinned the two changed fixtures with targeted Edits (no main(), no fixture rewrite). Pins found by scanning benchmark/**/*.json: benchmark/preparation.json (sha256), benchmark/writing/input-pins.json (sha256), benchmark/writing/c1-challenges-0125-pins.json (bytes and sha256), benchmark/writing/reviews-0128/c1-artifact-manifest-0126.json (bytes and sha256). benchmark/results/challenges.json already held the current sha256 values.
+- library-icon-tests.json: 1057554 bytes, sha256 `e4ef68c4c2f3ce25b9ea1ab50297f13e229b7373b0430a97667de6610c3e13fa`.
+- library-specialty.json: 83146 bytes, sha256 `b62e249554b25fa67ec5726d9751f52bda74a982914ab53df0b5917a68604a2e`.
