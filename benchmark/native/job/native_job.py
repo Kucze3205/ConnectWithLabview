@@ -101,6 +101,16 @@ def validate(before, after, work_before, work_after, network, actual, expected):
         raise ValueError('Invalid output SHA256')
 
 
+def validate_output_manifest(root, manifest_path):
+    """Verify collected payload hashes, including every HTML report."""
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    actual = inventory(root)
+    for name in ('record.json', 'output-sha256.json'):
+        actual.pop(name, None)
+    if manifest.get('algorithm') != 'sha256' or manifest.get('files') != actual:
+        raise ValueError('Collected output manifest missing a payload or hash mismatch')
+
+
 def git_status(root):
     result = subprocess.run(['git', '-C', str(root), 'status', '--porcelain',
                              '--untracked-files=all'], check=True,
@@ -146,6 +156,20 @@ def self_test():
                 rejected.append(label)
             else:
                 raise AssertionError('Accepted rejecting mutation: ' + label)
+
+        manifest_path = outputs / 'output-sha256.json'
+        manifest = {'algorithm': 'sha256', 'files': inventory(outputs)}
+        write_json(manifest_path, manifest)
+        validate_output_manifest(outputs, manifest_path)
+        del manifest['files']['reports/00.html']
+        write_json(manifest_path, manifest)
+        try:
+            validate_output_manifest(outputs, manifest_path)
+        except ValueError:
+            rejected.append('HTML missing from output manifest')
+        else:
+            raise AssertionError('Accepted HTML missing from output manifest')
+        manifest_path.unlink()
 
         original.write_bytes(b'changed source')
         reject('changed source hash', lambda a: a.update(after={next(iter(before)): digest(original)}))
@@ -324,6 +348,7 @@ def inspect(output, operator):
         write_json(output / 'output-sha256.json', {
             'algorithm': 'sha256', 'files': payloads,
             'scope': 'Collected reports/logs only; excludes record and this manifest.'})
+        validate_output_manifest(output, output / 'output-sha256.json')
         payloads['output-sha256.json'] = digest(output / 'output-sha256.json')
         record['outputs'] = [{'path': p, 'sha256': h, 'status': 'produced-unverified'}
                              for p, h in sorted(payloads.items())]

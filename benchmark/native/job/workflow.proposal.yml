@@ -28,7 +28,7 @@ jobs:
         run: python3 -I -B benchmark/native/job/native_job.py --self-test
       - name: Collect proposed native inspection
         run: python3 -I -B benchmark/native/job/native_job.py --output "$NATIVE_OUTPUT" --operator-identity "$NATIVE_OPERATOR"
-      - name: Upload record, manifest and logs only
+      - name: Upload record, manifest, logs and HTML reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -40,3 +40,4 @@ jobs:
             ${{ runner.temp }}/native-inspection/output-sha256.json
             ${{ runner.temp }}/native-inspection/logs/*.log
             ${{ runner.temp }}/native-inspection/logs/installed-version.txt
+            ${{ runner.temp }}/native-inspection/reports/*.html
