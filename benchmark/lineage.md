@@ -18,6 +18,6 @@
 
 Counts describe the [public inventory](lineage.json); candidate groups overlap and remain unadjudicated. This summary contains no case keys. Hash inequality does not establish independence.
 
-Split remains **not-started**. Public inventory preparation is unreviewed; no evaluation partitions are allocated. Missing: restricted store, custodian, private/new cases, native structural comparison and tested isolation. Independent method review and owner acceptance are still required; no readiness or product claim.
+Split is design-reviewed (benchmark/split/, review #273); no evaluation partitions are allocated. Public inventory preparation is unreviewed. Missing: restricted store, custodian, private/new cases, native structural comparison and tested isolation. Independent method review and owner acceptance are still required; no readiness or product claim.
 
 Generate: `python3 -I benchmark/scripts/lineage.py`. Verify: `python3 -I benchmark/scripts/lineage.py --check` and `python3 -I policy/evaluator/evaluate.py --check`.

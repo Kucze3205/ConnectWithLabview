@@ -21,10 +21,22 @@ ROOT = Path(__file__).resolve().parents[2]
 GROUP_PREFIX = 'public-repository-'
 MISSING = ['restricted store', 'custodian', 'private/new cases',
            'native structural comparison', 'tested isolation']
-LIMITATION = ('Public lineage inventory is prepared, unreviewed preparation only. '
-              'Split remains not-started: restricted allocation and isolation evidence do not exist. '
-              'Still missing: ' + ', '.join(MISSING) + '. '
-              'Hash inequality does not establish independence. No evaluation allocation or readiness claim.')
+def split_text(split):
+    reference = " (benchmark/split/, review #273)" if split == "design-reviewed" else ""
+    return "Split is " + split + reference + "; no evaluation partitions are allocated."
+
+
+def limitation(split):
+    detail = (
+        " Split is a reviewed design only (benchmark/split/ with benchmark/scripts/split_boundary.py, "
+        "review #273 accept, the two non-blocking checker findings of #273 were fixed by #281 "
+        "(not independently re-reviewed)): no allocation exists, no isolation step is executed, "
+        "the restricted store (capability #268) is not ready, and no secrecy is claimed; "
+        "author (copilot gpt-5.6-luna) and reviewer (codex gpt-6.1-sol) are both GPT-family models."
+    ) if split == "design-reviewed" else ""
+    return ("Public lineage inventory is prepared, unreviewed preparation only. "
+            + split_text(split) + detail + " Still missing: " + ", ".join(MISSING)
+            + ". Hash inequality does not establish independence. No evaluation allocation or readiness claim.")
 
 
 def require(condition, message):
@@ -90,7 +102,8 @@ def pinned_inputs():
     require(coverage['sources_json_sha256'] == sha(contents['benchmark/sources.json']),
             'Coverage was generated from different sources')
     status = json.loads(contents['benchmark/preparation-status.json'])
-    require(status['milestones']['split'] == 'not-started', 'Unexpected split status')
+    require(status['milestones']['split'] in ('not-started', 'design-reviewed'),
+            'Unexpected split status')
     return preparation, contents, sources, coverage, status
 
 
@@ -363,7 +376,7 @@ def build():
               'development_lineage_ids': len({c['lineage_group_id'] for c in case_records}),
               'static_membership_declarations': len(declarations), 'static_name_gaps': len(name_gaps)}
     result = {'schema_version': 1, 'scope': 'Public development sources only; no allocation into evaluation partitions.',
-              'status': 'prepared-unreviewed', 'split_milestone': 'not-started',
+              'status': 'prepared-unreviewed', 'split_milestone': status['milestones']['split'],
               'input_pins': {p: sha(d) for p, d in sorted(contents.items()) if not p.endswith('preparation-status.json')},
               'repository_commits': {n: r['commit'] for n, r in sorted(repositories.items())},
               'method': [
@@ -388,15 +401,24 @@ def build():
     summary = '# Public lineage preparation\n\n' + '\n'.join('- ' + k.replace('_', ' ') + ': ' + str(v) for k, v in counts.items()) + '\n\n'
     summary += ('Counts describe the [public inventory](lineage.json); candidate groups overlap and remain unadjudicated. '
                 'This summary contains no case keys. Hash inequality does not establish independence.\n\n'
-                'Split remains **not-started**. Public inventory preparation is unreviewed; no evaluation partitions are allocated. '
+                + split_text(status['milestones']['split']) + ' Public inventory preparation is unreviewed. '
                 'Missing: restricted store, custodian, private/new cases, native structural comparison and tested isolation. '
                 'Independent method review and owner acceptance are still required; no readiness or product claim.\n\n'
                 'Generate: `python3 -I benchmark/scripts/lineage.py`. '
                 'Verify: `python3 -I benchmark/scripts/lineage.py --check` and '
                 '`python3 -I policy/evaluator/evaluate.py --check`.\n')
     old_limitations = status['limitations']
-    if LIMITATION not in old_limitations:
-        status['limitations'] = old_limitations + ' ' + LIMITATION
+    prefix = 'Public lineage inventory is prepared, unreviewed preparation only.'
+    suffix = 'No evaluation allocation or readiness claim.'
+    current = limitation(status['milestones']['split'])
+    require(old_limitations.count(prefix) <= 1, 'Duplicate lineage limitation')
+    if prefix in old_limitations:
+        before, _, tail = old_limitations.partition(prefix)
+        _, marker, after = tail.partition(suffix)
+        require(marker, 'Incomplete lineage limitation')
+        status['limitations'] = before + current + after
+    else:
+        status['limitations'] = old_limitations + ' ' + current
     outputs = {'benchmark/lineage.json': encode(result), 'benchmark/lineage.md': summary.encode(),
                'benchmark/preparation-status.json': encode(status)}
     evidence_paths = ['benchmark/scripts/lineage.py', 'benchmark/lineage.json',
