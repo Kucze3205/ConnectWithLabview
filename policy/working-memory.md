@@ -494,6 +494,23 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Then: owner presentation of docs/research/0002-delivery.md; tell owner #169 has a cited readiness case; method
   acceptance request only when the remaining items are resource-dependent (#169/#268). Product implementation gated.
 
+## Iteration 0051 (#314) FAILED, rolled back; Iteration 0052 (#316, wake false)
+- Considered records 0050/0051, reports #312/#314. #312 (codex 412k, 17 turns) `blocked`: my order #311 made it append
+  to the pinned benchmark/baseline/README.md without re-pinning -> evaluator hash mismatch. Work saved at tag
+  iter/0050/312 (4fed9eb, on origin): run-record.template.json aa928031…, run_record.py bf57224f…, README 02020a5d….
+  run_record.py --check 0, 6 mutations, 8 undecided fields (restricted_storage, provider_usage_mapping, provider_cost,
+  infrastructure_cost, interruption_policy, claim_mapping_revision, manifest_binding_evidence, isolation_evidence).
+- #314 report listed orders but iteration 0051 failed "ordered no valid tasks" (orders_refused null); cause unconfirmed,
+  most likely orders.json missing again. Rollback removed its land_run_record_312.py (execution/scripts empty).
+- #316: wrote and parse-checked .session/orders.json FIRST. No script: the landing task runs `git checkout
+  iter/0050/312 -- <2 files>` + sha256 gate. Orders (parallel, from main): `land-run-record-312` (benchmark, low,
+  20/25) and `review-run-record-312` (reviewer, medium, 60/40, report only, Verification score.py --check).
+- Next: verify both files on main (shas above) and evaluator 60 refs. If review accepts: pin script adds the 2 files to
+  baseline pins, adds the README link section, re-pins README + status refs (max_turns >= 25). If revise: one narrow
+  fix from main. Rule: never order edits to a pinned file unless the same task re-pins.
+- LESSON (#316): Finish rejects .session/report.md unless it begins with `<!-- session-report -->` and a ```yaml block
+  whose `status` equals Finish.status. Write the report in that format from the start.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
