@@ -1,9 +1,12 @@
 # Policy working memory
 
-Considered: iteration records 0000-0095, owner commit cfaf996, accepted #473's
+Considered: iteration records 0000-0096, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
-writing-method extension and independent review #485. Updated by Policymaker #487 for iteration 0096.
-#487 read record 0095, journal memory, task-graph contract, evaluation requirements and #485's report.
+writing-method extension, independent review #485 and accepted correction #489.
+Updated by Policymaker #491 for iteration 0097. #491 read record 0096, journal memory,
+engine/task-graph contracts, evaluation requirements, #489's report and verification.json.
+#491 resolved the published correction commit/tree and matched all seven writing-file hashes
+and bytes; it did not rerun the author's checks or perform independent review.
 Detailed #485 artifacts were not staged or replayed here; its findings below are attributed review results.
 Earlier detailed memory (0024-0091, 110 KB): `git show 2b6f6870:policy/working-memory.md`
 (sha256 68d353d1...). Compressed predecessor: accepted change #471, commit 5268784.
@@ -29,10 +32,13 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   no repository changes to merge. Engine improved false/no_progress 1 does not make this review a failed session.
   #485 found three medium defects and recommended REVISE. Separate sessions establish review independence;
   author and reviewer both actually used codex/gpt-6.1-sol, so model-family diversity was not achieved.
-- #487 changes only policy memory and writes empty orders. Expected gain: retain the three actionable review
-  findings and avoid duplicate review, authoring, POC research or policy tasks. Journal #484 already directs
-  the next shaper to read the review, order bounded correction on REVISE, then separately review changed bytes.
-  Check record 0096 and its journal update for that correction or an evidenced blocker; no role/routing change.
+- Record 0096 closed/accepted, improved true, no failure: shaper #488 done/merged in 22 turns;
+  correction worker #489 done/accepted/merged in 26 turns. Both actually used codex/gpt-6.1-sol.
+  Journal #488 directs the next shaper to read the correction report and separately review changed bytes.
+- #491 changes only policy memory and writes empty orders. Expected gain: preserve #489's published candidate
+  and evidence without duplicate correction, POC research or policy tasks. Check record 0097 for independent
+  re-review of that candidate or an evidenced blocker. No role, routing, ceiling or cadence change.
+  #491 startup is ok, estimated 15,598 tokens, no notices; no startup-budget repair is indicated.
 - If the shaper fails, read its record before changing definitions. One failure: tighten graph-first if supported.
   Two repeated failures: consider an owner proposal for shaper null or a script shaper, with reasons.
   A shaper iteration fails on no valid tasks.json, not on empty Policymaker orders (engine.md:84-85).
@@ -97,10 +103,35 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   and review-evidence.md (19,951 bytes, sha256 7967a9982e7927097ee14a6c0eeb351e0e7e54c4c9f45845bbece8ced764caf4),
   release names iter-0095/485-counterexamples.py and iter-0095/485-review-evidence.md. They are session artifacts,
   not assumed present in a fresh checkout. Read the report first; verify availability before requiring replay.
-- Next shaper owns bounded correction of S1-S3, output/hash refresh and a newly pinned candidate, then separate
-  re-review. Journal #484 already instructs this branch; no policy order or role change is necessary.
-  Prefer a different available model family; #481 and #485 actually used codex/gpt-6.1-sol. Preserve separate
-  sessions/evidence after fallback. Do not repeat the full review, method authoring or POC investigation.
+- Correction #489 is accepted/merged in record 0096. Report:
+  `.session/history/sessions/489/39b276d010c055840bef365a3c538138c366e0f21ca9b79ada023b78db3676cf.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/489#issuecomment-6839895609).
+  Acceptance metadata says routine change outside owner paths, accepted without the owner; this is not method approval.
+- Published correction candidate: commit `2033c33fac195161fc3ac15b78f906a7d3140785`,
+  tree `50a0180535642f6fda877a5acea9e4c3801acd51`, resolved by #491 with git.
+  Report checkpoint `f86939aed871aee754a096d9b378870ebb39d095` is unresolvable locally; its reported tree
+  equals the published tree. Use the published commit, not that checkpoint or the old #485 candidate.
+  Current checkout in #491: d147f40b540548f4b8bb39f5db2e75f4d7056f62, tree 4f14b43633ffbd8fb71fa263c2be703f28818e27.
+- #491 matched all seven current writing files against the report hashes and published commit bytes.
+  Six changed paths: README.md, controls.json, input-pins.json, verification.json, verify_method.py and new
+  review-corrections.json; method.json remains unchanged. Published commit changes only these six paths.
+  The report above lists all seven exact hashes; review-corrections.json SHA256
+  3c92d3e102bb3976ee267ea74393855e520461e2e5f4869fa9d5a864ff17430e;
+  checker b24ca4515ab8f7bd3980cd273647114c4f01abffc942a2464390a4d206e40a5f;
+  verification 01e4ad1d72cb8f782e0dcfe3ce5e9b27756520da8a403df41707a1d37f1e1022.
+- #489 reports S1 identity corrected to the verified historical baseline; all 62 protected hashes and 56 unique
+  preparation pins/74 references preserved. S2 original/output version drift now rejects in modification and
+  source-rebuild paths. S3 independently requires request, originals, allowed_inputs, model, budgets,
+  key_revision and repetitions; deleting each from frozen and both arms now rejects.
+- #489 reports both original false acceptances reproduced before correction, 35 old controls retained unchanged,
+  nine added controls, 44 total rejections and five positive checks. verification.json records ordinary/isolated
+  checks passing, empty-environment repeat from / with mutation/session reads denied, and preparation check
+  errors [], missing [], 74 refs, benchmark_ready false. These are author results, not independent approval;
+  #491 read the record and hashes without repeating the checks or substantively reviewing the checker.
+- Next shaper owns separate independent re-review of #489's changed bytes, all S1-S3 conditions and regressions,
+  pinned to the published candidate above. Journal #488 already instructs this branch; no policy order is needed.
+  Prefer a different available model family; #481, #485 and #489 actually used codex/gpt-6.1-sol. Preserve separate
+  sessions/evidence after fallback. Do not repeat correction, full method authoring or POC investigation.
 - No real artifact edit, native answer key, withheld writing case, agent comparison or native run is established.
   Public fixtures remain development-only; artifact/version and hardware coverage remain incomplete.
   Product implementation waits for independent method review and owner acceptance of pinned protocol/evidence.
@@ -124,10 +155,10 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
 - policy/proposals/store-readiness.yml equals installed workflow revision 4 (27b365ec...); optional deletion remains.
 
 ## Resources and open questions
-- No pending suggestions or open owner requests in loop state 0096. #487 exports manifest has results [].
+- No pending suggestions or open owner requests in loop state 0097. #491 exports manifest has results [].
   Capability #169 readiness remains unknown; disappearance from owner_requests.open does not establish availability.
 - No quota-use measurement exists. Input/cache accounting is not subscription quota use; model labels are not
-  actual routing. Record 0095 sessions #484/#485 ran entirely codex/gpt-6.1-sol, as did #480/#481 in 0094.
+  actual routing. Record 0096 sessions #488/#489 ran entirely codex/gpt-6.1-sol, as did #484/#485 in 0095.
   No routing change follows. A same-family fallback review is not evidence that other families were available.
 - Three successful shaper iterations prompted audit reconsideration in #483. No concrete audit question with
   available quota evidence or repeated defect warrants an order. Continue ready independent review instead.
@@ -153,8 +184,10 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Read record 0096 and journal/working-memory.md. Check the correction of #485 S1-S3 and newly pinned candidate.
-2. Check separate re-review of changed bytes when available; no old review approves a changed snapshot.
+1. Read record 0097 and journal/working-memory.md. Check separate re-review of correction #489 at published
+   commit 2033c33fac195161fc3ac15b78f906a7d3140785 / tree 50a0180535642f6fda877a5acea9e4c3801acd51.
+2. Read the actual reviewer report before selecting further correction or method work. No old review approves
+   changed bytes; routine acceptance and the author's 44 controls do not establish independent approval.
 3. Check suggestions. Tie role changes to measured failures or unnecessary repeated reads; retain owner routing/cadence.
-4. Avoid repeating #485's full review, method authoring, POC format research or old gap maps. Keep synthetic
-   consistency separate from readiness; native outcomes and product quality remain unmeasured.
+4. Avoid repeating completed S1-S3 author correction, method authoring, POC format research or old gap maps.
+   Keep synthetic consistency separate from readiness; native outcomes and product quality remain unmeasured.
