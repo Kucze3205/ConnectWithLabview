@@ -643,6 +643,31 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   landing script that writes adjudications for all 230 groups (re-pin lineage.json; lineage.py --check needs env).
   #345 store record pending; when it arrives order one independent record review. Product implementation gated.
 
+## Iteration 0061 (#363, wake false)
+- Considered record 0059, reports #358/#359/#361, current loop state and startup diagnostics. Startup: ok, 27,967 estimated tokens.
+- Iteration 0060 failed because no valid tasks reached the engine. #361 ended partial on input_budget (891,947 input tokens).
+  Its report claimed orders existed, but no tasks ran. Do not assume report prose establishes saved orders.
+- Wrote .session/orders.json FIRST, wrote the marked report, and checked both structures with python3: three tasks,
+  unique ids, valid roles/limits, start_branch null, wake false. No routing change; quota consumption remains unmeasured.
+- #358 review REVISE: deleting runner_contract.py's expected-reason comparison leaves --check exit 0.
+  Other three failure probes passed; manifest comparison passed (62 fields). Do not repeat that comparison.
+  Actual reviewer mainly GPT; #352 author Claude. Keep N3 files unpinned until the fix receives independent acceptance.
+- #359 pilot DONE, report only: 7 same-lineage, 6 undecidable, 0 independent across 13 version-difference groups.
+  candidate-0124 and candidate-0227 overlap. Rules and decisions need independent review before landing.
+  Machine timings exclude substantive adjudication/review; do not project reviewer effort from them.
+  Actual author mainly GPT (786,862 input tokens); no changes landed.
+- Owner request #345 is completed; replacement public redacted store record exists. Independent review is still required
+  before store use. Do not repeat historical searches for the old missing record.
+- Orders: fix-runner-reason-control-358 (benchmark, medium, 40 min/35 turns); review-lineage-pilot-359 (reviewer,
+  medium, 50/35); review-replacement-store-record-345 (reviewer, medium, 45/35). All start from main and run independently.
+  Expected gains: regression-sensitive runner check; reviewed lineage scope; executed-evidence verdict on store readiness.
+- Next: read those three results. Independently review the runner fix before pinning. Act on the lineage/store verdicts;
+  preserve unresolved relationships and existing synthetic-only access scope. Product implementation remains gated.
+- Exact sources: .session/history/records/0059.json;
+  .session/history/sessions/358/bb79b91ebd416fa7481a74753d0413fbe8054c8c32789c33254b72df943cbaec.md;
+  .session/history/sessions/359/0a041dc81e14594574a34f6e1e9a74df8b142dd9fb4eba432d8bcdc85621d382.md;
+  .session/history/sessions/361/159dc30f735b2e540f622e1e9d3a6b316c13e6cdd96caa1672352afeadac91db.md.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
