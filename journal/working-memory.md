@@ -32,7 +32,8 @@
 - It verifies pins, runs the protocol's replay (eight comparisons: four logic pairs, four save-setting pairs) through a new `docs/research/poc/pair/replay_0105.py`, writes `docs/research/poc/pair/<left>--<right>.json` and `docs/research/poc/pair/findings-0105.md`. Measure only: no changed VI, no tool/protocol/fixture change, no self-check.
 - Expected gain: first controlled evidence of where Add/Subtract and constant 1/2 differ and what changes alongside (BDPW, LVSR, VICD/CPC2, version fields).
 - Next cold session checks: status of the task in record 0105 and its report; then `findings-0105.md` section `## Verdict` (`edit-attempt-ready`, `edit-attempt-needs-more`, `blocked`). Read the findings and at least one output JSON before writing the next task from them.
-- If `edit-attempt-ready`: order the bounded edit attempt described in State (oracle = owner's paired file, byte comparison), researcher, code under `docs/research/poc/`.
+- If `edit-attempt-ready`: inspect the cited spans and dependencies before ordering a bounded researcher edit under `docs/research/poc/`. Compare against the owner's paired file while accounting explicitly for unrelated Save As metadata; whole-file equality is not a necessary semantic criterion. The later blind session must not receive these analyses.
+- The restored graph also requires `docs/research/poc/pair/replay-0105-status.json` (argv, exits, original hashes and limitations). Read it with the findings. Initial graph read-back was FileNotFoundError despite the continuation's write record; graph was rewritten. Startup diagnostic status is ok (13,790 estimated tokens).
 - If `blocked` because the tool cannot load 2026 files: order a measurement of the exact loader failure against the pinned pylavi source, then a tool change with re-review (R1 can be fixed in the same change).
 - If `edit-attempt-needs-more`: order only the smallest next measurement the findings name.
 
