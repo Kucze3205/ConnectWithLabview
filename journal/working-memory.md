@@ -1,19 +1,20 @@
 # Execution working memory
 
 ## Considered
-- Iteration 0180 / #790: startup documents read once. no_progress=3. Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
-- Record 0179 (.session/history/records/0179.json): closed, verdict none. Task constant-export-probe-0179 (#788) has only task.md in .session/history/sessions/788/; no report, no session entry.
-- Session report #785 (.session/history/sessions/785/da40b75d...md): it DID run (status blocked). Reviewer verdict CLEAR on the in-memory mutation check; merge refused because importing score.py wrote benchmark/scripts/__pycache__/score.cpython-314.pyc outside write paths. Earlier memory "never started" was wrong for #785; #782 report snapshot exists (.github/loop/data/session-reports/782/) but not inspected in detail.
-- Final .session/tasks.json validated by the direct Python JSON/heading check, exit 0. No task/product/benchmark execution ran in the shaper.
+- Iteration 0181 / #793: startup documents read once. no_progress=4. Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
+- Record 0180 (.session/history/records/0180.json): closed, verdict none; only the shaper session #790 is in outcome.sessions. Task constant-export-probe-0180 (#791) has only task.md in .session/history/sessions/791/; no report snapshot.
+- #788 report snapshot (.session/history/sessions/788/a5fe122d...md): status paused, cause runtime:checkpoint_or_execution_interrupted, agent_s 60, commit 5c50126d. Not a task-content failure.
+- Records 0177-0179: reviewer/benchmark sessions absent from outcome.sessions (0178 #785, 0179 #788) even when they ran; check session snapshots, not only records.
+- Final .session/tasks.json validated by the direct Python JSON/heading check, exit 0. No task/product/benchmark execution in the shaper.
 
 ## State
 - OPEN challenges row (evaluation.md, row `challenges`). gap-0160 (#725): all five kinds `partial`, author-written synthetic fixtures only; results/challenges.json self-comparison (quality_measured false).
-- Zero-execution scorer scope: CLOSED. #779 CLEAR on expected values and pins; #785 report: mutation check of positive guard (score.py lines 294-296) CLEAR for both fixtures, artifacts iter-0178/785-mutation-output.txt and 785-mutation_check.py. Merge refused only for the .pyc; review result stands as evidence; no repository file was needed. Do not re-run.
+- Constant/empty-export detection: third attempt ordered 0181 (constant-export-probe-0181). Reason open: #788 paused by runtime interruption; #791 left nothing. The 0181 task writes the design file with PENDING in its first 8 calls so a partial session leaves saved work. Next: on verdicts delivered, order fixture+scorer change per design and its changed-scope review in one graph; on NOT-APPLICABLE, design the missing seam. If 0181 also leaves no report, do NOT re-order: check for tag iter/0181/* / branch task/<issue> content and file a suggestion to the Policymaker about runtime interruptions (concrete blocker: sessions not executing).
+- Zero-execution scorer scope: CLOSED (#779 CLEAR; #785 mutation check CLEAR, merge refused for .pyc only). Do not re-run.
 - #763 finding 4 (minor, no `correct`-path/citation-grounding control) and finding 6 (minor, null native_run cases do not assert extras_ledger): carried.
-- Constant/empty-export detection (challenges row): #788 (0179) left no report; re-ordered 0180 as constant-export-probe-0180 with `python3 -B` / no __pycache__. Next: on design delivered, order fixture+scorer change per design and its changed-scope review in one graph; on NOT-APPLICABLE, design the missing seam. If 0180 also leaves no report, inspect its branch/tag iter/0180/* and report a concrete blocker rather than re-ordering.
-- Bytecode trap: any task importing benchmark/scripts/*.py must use `python3 -B` and `sys.dont_write_bytecode = True` and check `git status --porcelain`; otherwise merge is refused (#785).
+- Bytecode trap: any task importing benchmark/scripts/*.py must use `python3 -B` and `sys.dont_write_bytecode = True` and check `git status --porcelain` (#785).
 - Iterations 0173-0175 failed (no graph / quiet-time rollbacks); 0176+ ran fine.
-- Tool loss late in session recurs: #718/#722/#754/#758/#779. Short limits, Bash first.
+- Tool loss / interruptions late or early in session recur: #718/#722/#754/#758/#779/#788. Short limits, save files first.
 - CLOSED: matched comparison #722 CLEAR 81d309e5; attempt-ledger seam #703 CLEAR 48f2715e (F-A1, F-A2 open for owner); attempt policy #685 CLEAR cf0c84e5.
 - Real-envelope authority, legacy multiple-attempt selection: unresolved; no retrospective selection.
 - Remaining method gaps: challenges row (constant detection in progress; XML key independent confirmation; independent positive-control key); dependency/native keys/access/grants/logs; restricted split/allocation/isolation (#636 blockers); reader/probes/scorer integration; independent whole-method review and owner acceptance/thresholds. benchmark_ready=false. Zero admissions, executions, scored runs, real comparisons.
@@ -21,15 +22,16 @@
 - Owner #618 declined human C1; #532 approved metadata only; #430 declined. #533 source-blocked.
 
 ## This iteration
-- constant-export-probe-0180 (benchmark/default/medium, 60 min/40 turns): same probe as #788 plus no-bytecode rule; writes benchmark/challenges/constant-export-design.md (`## Measured`, `## Design`, `## Limits`, verdicts DETECTED/NOT-DETECTED/NOT-APPLICABLE); modifies no existing file. Check: verification asserts headings, a verdict word, and no benchmark/scripts/__pycache__.
-- Next cold shaper: read the design and the report; order the change+review pair, or the seam design if NOT-APPLICABLE.
+- constant-export-probe-0181 (benchmark/default/medium, 45 min/30 turns): writes benchmark/challenges/constant-export-design.md early (PENDING), then helper .session/artifacts/constant_probe.py and output; verdicts DETECTED/NOT-DETECTED/NOT-APPLICABLE. Check: verification asserts headings, a verdict word, no PENDING, no benchmark/scripts/__pycache__.
+- Next cold shaper: Glob .session/history/sessions/<issue>/ for the 0181 report; read design file; order change+review pair or seam design.
 
 ## Tried, do not repeat
-- Mutation check of the positive guard: done by #785 (CLEAR, merge refused for .pyc only). Do not order again.
+- Constant-export probe ordered 0179 (#788 paused, runtime interruption) and 0180 (#791, no report). 0181 is the last re-order of the same probe.
+- Mutation check of the positive guard: done by #785 (CLEAR). Do not order again.
 - #779 derived the independent expectation and checked all pins; do not repeat.
 - #766/#778 fix and re-pin done and merged; do not redo fix, main() or pins.
-- 0173 shaper read too long without a graph; write the graph by ~10th call (0177 at 11, 0178 at 9, 0179 at 11, 0180 at 12).
-- Before calling a task "never started", Glob .session/history/sessions/<issue>/ for a report snapshot (0178/0179 missed #785's report).
+- 0173 shaper read too long without a graph; write the graph by ~10th call (0177 at 11, 0178 at 9, 0179 at 11, 0180 at 12, 0181 at 13).
+- Before calling a task "never started", Glob .session/history/sessions/<issue>/ for a report snapshot; records may omit worker sessions.
 - Session report snapshots: .session/history/sessions/<issue>/<sha>.md and .github/loop/data/session-reports/<issue>/.
 - #763 findings 1-3 closed; do not re-review logic, old pins or the 558 fixture leaves.
 - #758: real change is d46236b6 / iter/0165/739. #762 finished checks; do not rerun.
