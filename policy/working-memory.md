@@ -809,6 +809,20 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   If the reviewer is GPT again, record same-family as a known limit; no 3rd review. #379 pending; do not wait.
   Memory ~82 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0070 (#399, wake false)
+- Considered record 0069, report #397 (.session/history/sessions/397/b55e170c….md), main 5b31c48, benchmark/native/job/.
+- #397 review `blocked` (codex GPT 214k, 13 turns): all technical checks pass (4 hashes match, 6th mutation revert-proof,
+  #391 finding 2 closed); blocked only because it was GPT, not the required non-GPT family. 3rd GPT review of the native job
+  draft -> same-family limit recorded as known; NO 4th review. Policymaker re-verified on main: self-test 0, 6 mutations.
+- #169 install question NOT filed: draft still leaves known-behaviour dispatch, controlled I/O, native properties, safe
+  loading as gaps (README.md:13-23); readiness clause cannot pass yet.
+- Order `method-acceptance-delta` (benchmark, medium, 60/40, main, report only): requirement table vs evaluation.md/protocol.md,
+  acceptance mechanism lines, `decision:` request-acceptance-now | do-first, STE draft if ready. Reason: N1/N3 done, N2 stopped,
+  remaining items look resource-blocked (#169, #379).
+- Next: read `decision:`. request-acceptance-now -> check draft vs evaluation.md and file `question` (method only, all gaps
+  visible). do-first -> order only listed items. Then decide #169 install question with same-family limit + gaps.
+  Memory ~84 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
