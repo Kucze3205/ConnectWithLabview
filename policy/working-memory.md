@@ -971,6 +971,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: verify new pins + ref count; order lineage.py text update (with env); then design-only synthetic split allocation
   that uses the store. Memory ~98 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0081 (#436, wake false)
+- Considered record 0080 (#434 snapshot .github/loop/data/session-reports/434/7fdef47e….json) and main files.
+- #434 DONE, merged dfe8c4c (codex GPT 201k input, 11 turns): store record + .sha256 pinned under split. Verified on main:
+  evaluator 0, errors [], missing [], 74 refs; preparation.json 447e32a8…, status b39ecbe2…; lineage.py --check 0 (env set).
+- Stale text remained: lineage.py:34 "restricted store (capability #268) is not ready" (generated into status), split
+  README.md:3 and its last paragraph, plus the #434 "supersedes ... needs a later run" clause.
+- Wrote execution/scripts/update_store_text_431.py (record-hash-gated, idempotent, needs LABVIEW_ENVIRONMENT): edits the
+  3 texts, re-pins README + status FIRST (lineage.py:98 checks the status input pin before regenerating), runs lineage.py,
+  then lineage/split_boundary/evaluator --check. First dry run failed on that input pin; fixed. Dry run twice on a copy with
+  env: exit 0, idempotent, 74 refs; shas lineage.py 1db0eb94…, README 3d52e717…, status 8f64e982…, preparation 99069d8d…;
+  lineage.json 52f3d2ea… and lineage.md f3fc0534… unchanged; env-free evaluator 0; no pyc.
+- Order `update-store-text-431` (benchmark, low, 30/30, main, <=8 calls).
+- Next: verify main shas above + 74 refs, then delete the script. Then design-only synthetic split allocation that uses the
+  store (store holds no case; real cases need new/private sources). #430 (method assessment) pending; do not wait.
+  Reader implementation gated. Memory ~100 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
