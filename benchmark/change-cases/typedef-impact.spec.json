@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "case_id": "typedef-impact",
+  "revision": "design-1",
+  "status": "design-only",
+  "source": {
+    "repository": "NI Actor Framework",
+    "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl",
+    "sha256": "4a291d5d18c372ab0221bfc84a16b56fb7e97f736329a393c047a4c84bfc4ea9",
+    "size_bytes": 4417,
+    "save_version": "unavailable; native property inspection required",
+    "preservation": "Read-only prepared original; hash before and after any future job. Never save or convert the original."
+  },
+  "scope": {
+    "partition": "public-development",
+    "lineage_group": "public-ni-actor-framework-all-projects-copies-variants",
+    "native_executions": 0,
+    "edits_performed": 0,
+    "key_established": false,
+    "limitations": "Static filename references identify candidates only; neither absence of a string nor class membership proves consumer behavior. No completeness of the consumer set is claimed."
+  },
+  "authorization": {
+    "explicit_owner_grant_required_for_edits": true,
+    "explicit_owner_grant_required_for_builds": true,
+    "grant_obtained": false,
+    "derived_copies_only": true,
+    "authority": "benchmark/protocol.md:120",
+    "execution_gate": "Before any edit/build, obtain a grant naming material hashes, permitted operations, provider/operator, licensed authoring environment, output/publication limits and disposal. Current official headless container cannot author/edit LabVIEW source (docs/perpetua/environment.md). #169 native inspection/experiment capability is unavailable; a grant alone supplies neither capability nor license permission."
+  },
+  "documentation": {
+    "pin_required": true,
+    "pin_fields": ["version", "section_or_location", "sha256_or_preserved_permitted_excerpt"],
+    "authority": "benchmark/protocol.md:59",
+    "status": "gap",
+    "unpinned": ["LabVIEW typedef versus strict typedef propagation and disconnection rules", "LabVIEW cluster typing, coercion and broken-wire rules", "LabVIEW control default propagation and save/load behavior", "Actor Framework priority/dequeue contract for the selected source revision"],
+    "rule": "Pin semantic documentation by version, location and content hash before interpreting observations. Documentation cannot establish original diagram contents."
+  },
+  "inventory_frozen": true,
+  "questions": [
+    {"claim_id": "TI-01", "question": "What are the original root type, typedef/strictness settings and default value, at which native property/object locators?"},
+    {"claim_id": "TI-02", "question": "Which candidate terminals actually bind to this original typedef, and which are disconnected or unrelated?"},
+    {"claim_id": "TI-03", "question": "After recipe TI-E1, which confirmed consumers propagate the type change, coerce, break or remain unchanged, and why?"},
+    {"claim_id": "TI-04", "question": "Do the affected candidate and negative-control candidate show different before/after native differences and controlled outputs/errors under the frozen fixtures?"}
+  ],
+  "required_claim_ids": ["TI-01", "TI-02", "TI-03", "TI-04"],
+  "required_observation_ids": ["TI-O1-original-properties", "TI-O2-consumer-bindings", "TI-O3-native-differences", "TI-O4-controlled-io"],
+  "consumer_candidates": [
+    {
+      "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue.vi",
+      "sha256": "656c0cff6cfadbe3a918728d03a5634423a26b0e55605cc29de50481c8072fbc",
+      "status": "unconfirmed",
+      "role": "potentially-affected",
+      "static_evidence": "Bounded raw-byte search of the 9763-byte original found ASCII Dequeue Priority.ctl at zero-based offsets 2449 and 2484, adjacent to TDCC/PTH0 labels. These are byte locators, not decoded native terminal bindings."
+    },
+    {
+      "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+      "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+      "status": "unconfirmed",
+      "role": "potentially-unaffected-negative-control",
+      "static_evidence": "Bounded search of all 6847 original bytes found no ASCII Dequeue Priority string. Shared Message Dequeuer class naming makes this a candidate control only; compressed references and indirect dependencies remain possible."
+    }
+  ],
+  "edit_recipes": [
+    {
+      "recipe_id": "TI-E1",
+      "category": "type-changing",
+      "status": "not-executed",
+      "derived_copies_only": true,
+      "preconditions": "In an authorized native authoring environment confirm that the selected CTL is a typedef and capture its complete root type/default and strictness. If it is not a typedef or cannot be edited legally, stop and record recipe blocked; do not silently substitute an original.",
+      "steps": [
+        "Create two isolated complete dependency-tree copies, baseline and variant, from preserved hashed originals; ensure neither resolves dependencies into the original or other copy. Log all resolved paths.",
+        "In the variant CTL only, replace the root control with a cluster containing a copy of the complete original root control named original_value and a Boolean named impact_probe default false. Preserve typedef/strictness mode and original_value default; record native before/after object maps and save-version changes.",
+        "Save only derived variant files. Open each candidate in each isolated tree with identical native settings; record propagation, broken wires, coercions, load errors and every implicitly modified dependency. Do not repair consumers or disconnect typedefs.",
+        "Hash every derived before/after artifact and capture native differences; a broken consumer is an observation, not a successful execution. Builds remain separately gated and are unnecessary for this observation plan."
+      ]
+    }
+  ],
+  "observation_procedure": [
+    "Record native version/build, OS, license, modules, target, source save versions, dependencies and inaccessible diagrams. Resolve each candidate binding using native type properties and terminal/object maps before classifying affected/unaffected.",
+    "Capture original CTL properties and each candidate diagram/connector in baseline, then the same views in variant. Native comparison must identify semantic changes separately from automatic resave/conversion noise, with original and derived hashes and capture hashes.",
+    "Before runs or reader exposure, a preparer freezes a hashed fixture manifest: create/reset an isolated queue, enqueue two distinguishable messages at distinct valid priorities confirmed natively, then dequeue; include empty queue with a bounded timeout and invalid queue reference. Record exact message payloads, priority values, timeout, initial state, output/error comparison rules and reset/release steps. Unknown numeric inputs are a gap, not inferred from filenames.",
+    "For the candidate negative control freeze valid and invalid reference fixtures. Run identical baseline/variant fixtures only when loadable and authorized, preserving exact outputs/errors and bounded timeout logs; if the changed consumer breaks, record nonexecution instead of repairing it. Compare full typed values and errors exactly; do not infer ordering guarantees from one run.",
+    "Freeze fixture hashes and resolved object locators in a separately reviewed case revision before reader exposure. Currently these native fixtures and locators are unavailable under #169; no runnable oracle is claimed."
+  ],
+  "checker_steps": [
+    "Run python3 -I -B benchmark/scripts/change_cases.py --check; structural validation is not semantic approval.",
+    "After provisioning and authorization, an independent checker resolves TI-01 through TI-04 and every observation ID against original/native evidence, never reader output; record checker identity, session, case revision and per-ID agreement/disagreement.",
+    "Verify original preservation, copy isolation, edit fidelity, source/capture/fixture hashes, affected and negative-control observations, controlled inputs/state/errors, and version-pinned documentation. Disagreement or missing evidence blocks the affected key.",
+    "Keep all four required claims in separate correctness and grounding denominators and all four observation IDs in fidelity. Apply protocol omission/extra/contradiction rules; unavailability cannot earn semantic credit."
+  ],
+  "native_answers": [
+    {"claim_id": "TI-01", "status": "unavailable", "answer": null, "reason": "#169: native inspection and independent checking unavailable", "citations": []},
+    {"claim_id": "TI-02", "status": "unavailable", "answer": null, "reason": "#169: native binding inspection unavailable", "citations": []},
+    {"claim_id": "TI-03", "status": "unavailable", "answer": null, "reason": "#169: authorized derived edit and native impact observations unavailable", "citations": []},
+    {"claim_id": "TI-04", "status": "unavailable", "answer": null, "reason": "#169: native difference and controlled I/O evidence unavailable", "citations": []}
+  ]
+}

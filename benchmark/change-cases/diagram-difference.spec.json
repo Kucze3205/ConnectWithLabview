@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "case_id": "diagram-difference",
+  "revision": "design-1",
+  "status": "design-only",
+  "source": {
+    "repository": "NI Actor Framework",
+    "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+    "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+    "size_bytes": 6847,
+    "save_version": "unavailable; native inspection required",
+    "preservation": "Preserve the read-only original and verify its hash before and after future jobs; never save or convert it."
+  },
+  "scope": {
+    "partition": "public-development",
+    "lineage_group": "public-ni-actor-framework-all-projects-copies-variants",
+    "native_executions": 0,
+    "edits_performed": 0,
+    "key_established": false,
+    "limitations": "No paired public revisions exist in the prepared actor-framework checkout: git rev-list --count HEAD returned 1. These are proposed derived variants, not historical revisions. The filename suggests an inspection target but establishes no computation or connector type."
+  },
+  "authorization": {
+    "explicit_owner_grant_required_for_edits": true,
+    "explicit_owner_grant_required_for_builds": true,
+    "grant_obtained": false,
+    "derived_copies_only": true,
+    "authority": "benchmark/protocol.md:120",
+    "execution_gate": "Obtain an explicit owner grant naming source hashes, operations, licensed authoring environment, operators/providers, publication and disposal before edits/builds. The official headless container cannot author/edit LabVIEW source (docs/perpetua/environment.md). #169 native inspection/experiment capability remains unavailable; approval alone does not provision capability."
+  },
+  "documentation": {
+    "pin_required": true,
+    "pin_fields": ["version", "section_or_location", "sha256_or_preserved_permitted_excerpt"],
+    "authority": "benchmark/protocol.md:59",
+    "status": "gap",
+    "unpinned": ["LabVIEW Boolean NOT and terminal wiring semantics", "LabVIEW reference validity and Actor Framework queue reference lifecycle", "LabVIEW diagram free labels versus executable objects", "Version-specific native comparison and save/conversion behavior"],
+    "rule": "Pin semantic documentation by version, section/location and content hash before interpreting observations. Documentation does not establish original diagram contents."
+  },
+  "inventory_frozen": true,
+  "questions": [
+    {"claim_id": "DD-01", "question": "What original diagram path computes the chosen Boolean output, and what are its connector, node and wire locators?"},
+    {"claim_id": "DD-02", "question": "Which computation and controlled outputs change under DD-E1, and what native structural evidence explains the change?"},
+    {"claim_id": "DD-03", "question": "Does DD-E2 change only presentation, with unchanged native executable structure and controlled outputs under the frozen fixtures?"},
+    {"claim_id": "DD-04", "question": "Which observed differences remain uncertain because of conversion, dependencies, inaccessible diagrams, insufficient fixtures or timing, and what evidence would resolve them?"}
+  ],
+  "required_claim_ids": ["DD-01", "DD-02", "DD-03", "DD-04"],
+  "required_observation_ids": ["DD-O1-original-dataflow", "DD-O2-behavior-variant", "DD-O3-presentation-variant", "DD-O4-uncertainty"],
+  "edit_recipes": [
+    {
+      "recipe_id": "DD-E1",
+      "category": "behavior-changing",
+      "status": "not-executed",
+      "derived_copies_only": true,
+      "preconditions": "Native inspection must identify an existing scalar Boolean connector output and its terminal wire, and confirm that it can be exercised with valid and invalid isolated queue references. The filename is insufficient. If these conditions fail, stop as blocked and revise the public design through review; do not invent diagram facts or substitute another original.",
+      "steps": [
+        "Create isolated baseline and behavior-variant dependency trees from hashed originals; record all resolved dependency paths and reject resolution into originals or another variant.",
+        "On the derived behavior variant only, insert exactly one Boolean NOT node on the wire immediately before the selected scalar Boolean output terminal. Preserve the source branch and other sinks, connector pane, other terminals, execution settings and dependencies. Record the precise original wire and new node/terminal identities in native object maps.",
+        "Save only the derived variant, hash every changed file, and capture native comparison and before/after diagrams. Record automatic conversion/resave differences separately; do not repair unrelated diagrams or build."
+      ]
+    },
+    {
+      "recipe_id": "DD-E2",
+      "category": "presentation-only",
+      "status": "not-executed",
+      "derived_copies_only": true,
+      "preconditions": "Start from a separate fresh original dependency-tree copy, not DD-E1. Confirm native diagram access and an unused diagram location.",
+      "steps": [
+        "Add a free diagram text label reading presentation_probe in unused space. Do not add controls, local variables, executable nodes, wires, structures or property changes; record label coordinates and native object identity.",
+        "Save only the derived presentation variant and hash all changed files. Capture native differences and an executable-object/connection comparison against baseline, separating label/layout metadata from automatic resave/conversion changes.",
+        "If any executable structure, connector, setting or dependency changes unexpectedly, classify that effect uncertain; do not declare presentation equivalence from matching outputs alone."
+      ]
+    }
+  ],
+  "uncertain_effect_category": {
+    "category": "uncertain-effect",
+    "criteria": ["Unexplained executable-object or wire changes", "Save-version conversion or dependency rebinding without interpretable native comparison", "Missing/inaccessible diagram regions or incomplete captures", "Matching selected outputs with insufficient structural evidence", "Timing or scheduling effects not distinguished by the fixtures"],
+    "handling": "Retain uncertain differences and affected claim IDs explicitly. No equivalence or behavior-change answer is established until independent native evidence resolves them. Do not execute an additional uncertain edit under either recipe."
+  },
+  "observation_procedure": [
+    "After capability provisioning and required grants, record native version/build, OS, licenses, target/modules, original save version, dependency resolution and inaccessible regions. Preserve baseline, DD-E1 and DD-E2 as separate hashed trees.",
+    "Before execution or reader exposure, freeze a hashed fixture manifest with native connector/object locators, exact typed inputs, output/error comparison rules, initial state, reset/disposal and bounded timeout. Include an invalid reference and a valid newly created isolated queue reference; verify baseline exercises both possible values of the selected Boolean output, otherwise stop and revise fixtures before exposure.",
+    "For each fixture, reset state and run baseline and each loadable variant under identical conditions. Capture complete typed outputs and error records. Compare Boolean and error values exactly; record timing without claiming scheduling guarantees. DD-E1 is intended to invert only the selected output, but this remains an unavailable expectation until independently checked.",
+    "Capture native comparison for baseline versus each variant, with original/derived hashes, nested structure/case paths, node/terminal/wire maps, owning VI and hashed captures. A screenshot or differing file hash alone does not establish semantic difference.",
+    "Check DD-E2 executable objects, wiring, connector, settings and dependencies independently of controlled outputs. Record unexplained changes in the uncertain-effect category. Native fixtures, locators, differences and outputs are unavailable under #169; none of these steps has run."
+  ],
+  "checker_steps": [
+    "Run python3 -I -B benchmark/scripts/change_cases.py --check; a structural pass establishes neither native answers nor semantic equivalence.",
+    "An independent checker records identity, session and case revision, resolves each required claim and observation against preserved originals and native evidence, and checks that DD-E1 and DD-E2 both derive directly from the same original.",
+    "Verify grants, licensed authoring environment, copy isolation, recipe fidelity, dependency and source/capture/fixture hashes, discriminating valid/invalid-reference runs, native structural comparison and pinned documentation. Record per-ID agreement/disagreement and unresolved effects without using reader output as an oracle.",
+    "Keep four claims in each of correctness and grounding denominators and four observations in fidelity; omissions, extras and contradictions follow the protocol. Missing evidence or disagreement blocks key establishment."
+  ],
+  "native_answers": [
+    {"claim_id": "DD-01", "status": "unavailable", "answer": null, "reason": "#169: native diagram and connector inspection unavailable", "citations": []},
+    {"claim_id": "DD-02", "status": "unavailable", "answer": null, "reason": "#169: authorized behavior variant, native difference and controlled I/O evidence unavailable", "citations": []},
+    {"claim_id": "DD-03", "status": "unavailable", "answer": null, "reason": "#169: authorized presentation variant and independent native equivalence checks unavailable", "citations": []},
+    {"claim_id": "DD-04", "status": "unavailable", "answer": null, "reason": "#169: native difference observations and independent uncertainty adjudication unavailable", "citations": []}
+  ]
+}
