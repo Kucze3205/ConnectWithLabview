@@ -59,7 +59,7 @@ jobs:
           # Publish fixed read-denial classifications; discard private diagnostic text.
           qr() { local r; "$@" >/dev/null 2>work/read-err; r=$?
                  if [ "$r" = 0 ]; then echo 0
-                 elif grep -q -E '^remote: (Repository not found|Invalid username or token|Invalid username or password|Authentication failed)|^fatal: Authentication failed for |The requested URL returned error: (401|403)' work/read-err; then echo "$r access-denied"
+                 elif grep -q -E '^remote: (Repository not found|Invalid username or token|Invalid username or password|Authentication failed)|^fatal: Authentication failed for |^fatal: could not read (Username|Password) for |The requested URL returned error: (401|403)' work/read-err; then echo "$r access-denied"
                  else echo "$r other"; fi
                  rm -f work/read-err; }
           # Decode API string values before searching responses and their positive control.

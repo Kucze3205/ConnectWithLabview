@@ -687,6 +687,28 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Runner accept -> pin script adds 3 N3 files + runner_contract.py to baseline pins (max_turns >= 25).
   Lineage accept -> bounded next triage batch per reviewer scope.
 
+## Iteration 0063 (#373, wake false)
+- Considered record 0062, reports #369/#370/#371 (snapshots .github/loop/data/session-reports/36N|37N/*.json), main c63ad79.
+- #369 review ACCEPT of #364 runner reason fix (sonnet, cross-family to codex author); all probes exit 1 for intended reasons.
+  Non-blocking: KeyError diagnostic prints only 'boom'. Main shas: runner_contract.py 866e9c44…, synthetic manifest
+  4d4c2b0f…, runner-contract.md b9e47205…, status bcd2881b…, preparation 315d83a4… (all verified).
+- #371 review of store workflow v3 (sonnet; author Policymaker also Claude -> same family) REVISE: tokenless git prints
+  `fatal: could not read Username for ... terminal prompts disabled` -> qr gave `other`. #366 F1 closed. Fixed in
+  policy/proposals/store-readiness.yml revision 4 (sha 27b365ec…): pattern adds `^fatal: could not read (Username|Password) for `.
+  Synthetic harness: prompt texts/not-found/auth-failed/403 -> access-denied; DNS/refused/local path -> other; bash -n 0.
+- #370 lineage review crashed at 0 turns, like #365. Both staged the 113 KB #359 report export (suspected cause,
+  unconfirmed). Copied the JSON block to policy/proposals/lineage-pilot-359.json (sha 3c416ffd…, keys rules/decisions);
+  re-ordered with no exports.
+- Wrote execution/scripts/pin_runner_369.py (hash-gated, idempotent): pins the 3 N3 files under baseline, appends #369
+  limitation sentence, re-pins status refs. Dry run twice on worktree of origin/main without env: 4 checks exit 0,
+  65 refs, status 85b0f719…, preparation 403117b5…, only 2 files change, no pyc.
+- Orders (parallel, main): review-lineage-pilot-359-noexport (reviewer, 50/35), pin-runner-contract-369 (benchmark,
+  low, 20/25), rereview-store-workflow-v4-qr (reviewer, 30/25).
+- Next: verify main 65 refs + status 85b0f719…, delete pin_runner_369.py. v4 accept -> one Owner `question`: install
+  revision 4, new scorer token, run initial, revoke, run revoked, commit replacement record + .sha256; then independent
+  record review. v4 revise -> fix file myself. If lineage review crashes again WITHOUT exports, investigate engine/profile
+  (do not order a 4th time). Lineage accept -> bounded next triage batch; delete the proposal copy after landing.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
