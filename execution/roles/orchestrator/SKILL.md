@@ -116,6 +116,13 @@ Each task is one session's work and a section set the protocol defines. Rules:
   discrepancy it meets and be right as an engineer, and it will bypass the measurement.
 - **Claims from research are turned into measurement tasks**, never straight into changes.
 - **State the expected gain and its check** in `## Goal`: the file, line or verdict the next shaper reads.
+- **Assert only what you read.** A count, path or field value in `## Verification` comes from the source file itself,
+  never from a report's summary of it. If you did not read the source, check identity (hash, pins) and leave counts out
+  (#518: the check asserted eight probes from #513's summary; the artifact lists nine). A historical input
+  `{issue: N, name: X}` is staged flat as `.session/inputs/N-X`, without the release folder.
+- **Resume saved work, do not redo it.** A `blocked` or `partial` task keeps its unmerged work at the tag `iter/NNNN/N`.
+  Order a task with `start_branch: task/N` that corrects only the failing check or the missing piece, and name what is
+  already done so the session does not repeat it (#518: both files were written; only the check was wrong).
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
 - **Results.** Text and code go to git. Big and binary outputs go to `.session/artifacts/` and a later task lists them
