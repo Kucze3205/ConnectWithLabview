@@ -391,6 +391,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   then tell the owner #169 now has a concrete readiness VI. Then the 1,053-slot XML review (split into batches by case to
   stay under the input ceiling) and #212 gap-row re-review. Do not re-run the gap map.
 
+## Iteration 0045 (#290, wake false)
+- #286 (iteration 0044 Policymaker) loop state says `partial`, but its orders ran. Record 0044 shows 2 tasks: #287 and #288.
+- #288 review DONE (codex 439k, report only): sources and coverage `relabel-reviewed`. The bytes are identical to d588fa9/6933e17,
+  and the seed-288 10-row spot check matched. Findings 1-4: sources.md:57, lineage.md:21 and baseline/README.md:3,27 are stale,
+  and status labels need a relabel. Evidence artifact iter-0044/288-review-evidence.md.
+- #287 readiness case `partial` on input_budget (codex 940k in 18 turns). It left only a wip report and no result.
+- FOUND by Policymaker: on main, `benchmark/scripts/lineage.py --check` exits 1 (`Unexpected split status`). lineage.py:93
+  hardcodes split == not-started, and #278 set design-reviewed. The evaluator still passes (59 refs). The other 5 generator checks pass.
+- Capability #268 (restricted store) APPROVED 2026-11-06T15:28Z, and the owner posted capability-ready. Readiness clause: "a loop session
+  other than the author independently reviews the record before split work uses the store". The location of the record was not found yet
+  (request-state/268.json has none). Next: find it (issue #268 comments) and order a review of it.
+- Orders (parallel, from main): `status-currency-288` (benchmark, medium, 60/40) fixes lineage.py split handling, relabels sources/
+  coverage reviewed, replaces the stale split-finding sentence and re-pins. It does not edit the reviewed sources.md/baseline README bytes; a status
+  sentence records them as dated instead. `readiness-case-pylavi` (benchmark, medium, 45/30, report only, <=20 calls, <250k)
+  uses pylavi/tests/test.yaml + args.yaml expected properties (eq 21.0f etc.) as independent evidence.
+- Next: verify lineage.py --check 0, sources/coverage `reviewed`. Land the readiness case by script after an independent review.
+  Find and review the #268 readiness record. Then split allocation planning can use the store.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
