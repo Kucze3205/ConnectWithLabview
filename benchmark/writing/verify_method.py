@@ -218,6 +218,86 @@ def check_pair(pair):
     return "synthetic-pair-consistent;zero-agent-runs"
 
 
+# Answer-ledger controls (issue #947, UF-A). The scoring rules they enforce are the
+# protocol.md "Account for every required ID ..." paragraph: omissions retain their
+# required slots; repeated equivalent assertions earn credit once; an assertion and
+# its negation are a contradiction that marks the affected item incorrect. They run
+# on in-memory synthetic ledgers built from the method's own required answer IDs
+# and add no scoring semantics: a ledger is data a scorer would have to produce.
+LEDGER_REASONS = {
+    "ledger-omitted-required-id": "required-id-omitted",
+    "ledger-duplicate-credited-twice": "duplicate-credited-twice",
+    "ledger-contradiction-not-incorrect": "contradiction-not-incorrect",
+}
+
+
+def check_answer_ledger(ledger, required):
+    outcomes, rows = ledger["outcomes"], ledger["assertions"]
+    # A dropped required ID must stay in the frozen denominator, not vanish.
+    need(len(outcomes) == len(required) and set(outcomes) == set(required),
+         "required-id-omitted")
+    credited, polarities = {}, {}
+    for row in rows:
+        slot = row["required_id"]
+        credited[slot] = credited.get(slot, 0) + (1 if row["credited"] else 0)
+        polarities.setdefault((slot, row["claim"]), set()).add(row["polarity"])
+    need(all(count <= 1 for count in credited.values()), "duplicate-credited-twice")
+    contradicted = [key for key, signs in polarities.items() if signs == {True, False}]
+    for slot, _ in contradicted:
+        need(outcomes[slot] == "incorrect", "contradiction-not-incorrect")
+    duplicates = len(rows) - len({(r["required_id"], r["claim"], r["polarity"]) for r in rows})
+    need(same(ledger["counts"], {"duplicates": duplicates, "contradictions": len(contradicted)}),
+         "ledger-count-mismatch")
+    return "ledger-consistent"
+
+
+def check_answer_ledger_controls(method):
+    required = method["tasks"][0]["answer_ids"]
+    need(len(required) >= 2, "ledger-fixture-ids")
+    first, last = required[0], required[-1]
+    base = {"outcomes": {i: "correct" for i in required},
+            "assertions": [{"required_id": i, "claim": "synthetic claim for " + i,
+                            "polarity": True, "credited": True} for i in required],
+            "counts": {"duplicates": 0, "contradictions": 0}}
+    # Positive controls: a duplicate credited once and a contradiction marked
+    # incorrect are accepted, so rejecting everything cannot pass these controls.
+    duplicate_once = copy.deepcopy(base)
+    duplicate_once["assertions"].append(dict(base["assertions"][0], credited=False))
+    duplicate_once["counts"]["duplicates"] = 1
+    contradiction_incorrect = copy.deepcopy(base)
+    contradiction_incorrect["assertions"][0]["credited"] = False
+    contradiction_incorrect["assertions"].append(
+        dict(base["assertions"][0], polarity=False, credited=False))
+    contradiction_incorrect["outcomes"][first] = "incorrect"
+    contradiction_incorrect["counts"]["contradictions"] = 1
+    positive = {}
+    for name, ledger in (("ledger-base", base), ("ledger-duplicate-credited-once", duplicate_once),
+                         ("ledger-contradiction-incorrect", contradiction_incorrect)):
+        positive[name] = check_answer_ledger(ledger, required)
+    omitted = copy.deepcopy(base)
+    del omitted["outcomes"][last]
+    omitted["assertions"] = [r for r in omitted["assertions"] if r["required_id"] != last]
+    duplicate = copy.deepcopy(base)
+    duplicate["assertions"].append(dict(base["assertions"][0]))
+    duplicate["counts"]["duplicates"] = 1
+    contradiction = copy.deepcopy(base)
+    contradiction["assertions"].append(dict(base["assertions"][0], polarity=False, credited=False))
+    contradiction["counts"]["contradictions"] = 1
+    rejected = {}
+    for name, ledger in (("ledger-omitted-required-id", omitted),
+                         ("ledger-duplicate-credited-twice", duplicate),
+                         ("ledger-contradiction-not-incorrect", contradiction)):
+        try:
+            check_answer_ledger(ledger, required)
+        except Inconsistent as error:
+            need(str(error) == LEDGER_REASONS[name],
+                 "wrong-rejection-reason:" + name + ":" + str(error))
+            rejected[name] = str(error)
+        else:
+            raise Inconsistent("negative-control-accepted:" + name)
+    return {"positive": positive, "rejected": rejected}
+
+
 def mutate(value, changes):
     result = copy.deepcopy(value)
     for change in changes:
@@ -689,6 +769,10 @@ def main():
             rejections[row["id"]] = str(error)
         else:
             raise Inconsistent("negative-control-accepted:" + row["id"])
+    ledger = check_answer_ledger_controls(method)
+    positives.update(ledger["positive"])
+    need(not set(ledger["rejected"]) & set(rejections), "ledger-control-name-clash")
+    rejections.update(ledger["rejected"])
     project_text = check_project_controls(controls, method)
     pin_controls = check_pin_controls()
     print(json.dumps({
