@@ -1,0 +1,30 @@
+# 0134 — Bytes behind AF project dependency declarations
+
+**Finding:** all 11 project `Item/@URL` declarations are inventoried; one has an available source candidate, three standalone VI candidates are not found, and seven LLB-member rows lack both a named container and standalone member candidate in the bounded checkout. **Zero native matches are established.** The [JSON](0134-project-dependency-bytes.json) records every exact XML locator, original entity spelling, decoded URL, line/byte offset, lookup result and uncertainty.
+
+The original is [original.lvproj](../../benchmark/real-project-0107/original.lvproj), 5,806 bytes, SHA256 `1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf`. Starting repository commit/tree: `5e2b6dde5d9f6df27b3c9ac06c01b6ab432c65d2` / `4eb64f70ef4f1cbe7cc82cbf761a6b0ff163c394`, initially clean. Prepared Actor Framework HEAD is `371c631c16155d88f02be11a953e4964d7452fd8`, tree `57c908deff90f4db9e539e32ebd8e07b8d8abc47`, with clean tracked status. Original and MIT notice match their pinned Git blobs and committed snapshots; readiness SHA256 `ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413` and license SHA256 `529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2` match existing pins. No pin was refreshed and no mismatch was observed.
+
+[#537](https://github.com/Kucze3205/ConnectWithLabview/issues/537#issuecomment-6859647757) and [#541](https://github.com/Kucze3205/ConnectWithLabview/issues/541#issuecomment-6860272905) answer declaration/original-identity questions, not this complete dependency-byte question: #537 explicitly needed no dependency files. Their completed findings are reused without checker or review replay. [#626](https://github.com/Kucze3205/ConnectWithLabview/issues/626#issuecomment-6876628972) closes F1–F3 documentation only; [0133](0133-writing-estimate-handoff.md) preserves later narrow WP1 integration and remaining gaps. None is reopened here.
+
+The 11-row inventory was saved before candidate lookup; JSON `/inventory_freeze` retains its checksum. The bounded lookup then examined only path metadata under the readiness cache's `actor-framework` root: 1,476 filesystem files equal the pinned Git tree's paths, 319 directories, no walk errors or symlink directories. Rules compare exact/casefold post-token suffixes and declaration basenames, plus the two named LLB containers; these generate candidates, not identities. No `vi.lib`, `vilib`, `resource`, `<vilib>` or `<resource>` directory mapping was found. One initial location Glob returned an overbroad truncated path listing; no unrelated source contents were read or used.
+
+| Rows; original lines | Declared input | Bounded byte finding |
+| --- | --- | --- |
+| U01; 16 | `/<vilib>/ActorFramework/Actor Framework.lvlib` | One source candidate; virtual mapping unproven |
+| U02; 19 | `error.llb/Error Cluster From Error Code.vi` under vilib/Utility | Container/member unavailable |
+| U03–U05; 20–22 | Get LV Class Default Value.vi; Get LV Class Name.vi; High Resolution Relative Seconds.vi | No standalone basename or suffix candidates |
+| U06–U11; 24–29 | Six LV Config Read VIs under resource/dialog/lvconfig.llb | Container/member unavailable |
+
+U01's [primary source candidate](https://github.com/ni/actor-framework/blob/371c631c16155d88f02be11a953e4964d7452fd8/Core/ActorFramework/Actor%20Framework.lvlib), `Core/ActorFramework/Actor Framework.lvlib`, is 83,103 bytes, SHA256 `23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98`, Git blob `f811522438e8b48fc67217c7d5333afb38e1147a`; bytes equal the pinned blob. Its XML declares local name `Actor Framework` and LVVersion `20008000`. This supports candidate relevance, without proving that an installed virtual path resolves to those bytes. No ambiguous matches arose; no transitive member lookup followed the library XML.
+
+JSON `/build_references` separately records AF PPL's `Source[1].itemID` link `/My Computer/Actor Framework.lvlib` to U01, its source options, and the opaque `Source[0].itemID` GUID. `Bld_localDestDir` and destination paths declare `../builds/NI_AB_PROJECTNAME/AF PPL` and its `Actor Framework.lvlibp` output. They supply no input bytes; substitutions and build semantics were not evaluated, and no built artifact was substituted for source.
+
+Missing bytes are cache-bounded observations, not global absence. LLB/package/archive interiors, VI diagrams, other projects, other repositories and transitive dependencies remain unsearched. Source presence, native resolution, transitive closure, buildability, runtime behavior and save-version preservation are distinct; only candidate source presence was measured. No LabVIEW, build, benchmark, edit trial, coverage pass, withheld/model-unseen claim or method acceptance follows. XML version text remains a declaration.
+
+The issue's structural verification passed (`declaration inventory and original identity: OK`); additional checks passed all 11 unique locators/raw URL slices, the frozen-inventory checksum and 20 build references. `git diff --check` exited 0. These checks establish structure and consistency only; candidate evidence comes from the bounded Git/path/byte measurements recorded above and in JSON. These findings extend the [evaluation sources/oracle requirements](../perpetua/evaluation.md), without satisfying their independent native-oracle requirement.
+
+## What next
+
+Stage **one offline U03 sample**, `Utility/LVClass/Get LV Class Default Value.vi`, with unchanged original bytes, size/SHA256, permitted-access/license provenance, and a version-labelled manifest identifying the actual vilib root and explicit URL-to-file mapping. Verify that new manifest and hash before using the sample; stop on absent/mismatched evidence. This is the smallest standalone byte-plus-mapping increment and requires neither LLB extraction nor LabVIEW execution; it will not establish native resolution or the remaining dependency closure.
+
+Resume from this JSON's frozen inventory and U01 hash. Avoid repeating cache discovery, closed D1–D4/WM1/pair/WP1 reviews or checkers, restarting corpus research, or duplicating/awaiting #618/#532.

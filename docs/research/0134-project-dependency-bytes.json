@@ -1,0 +1,806 @@
+{
+  "schema_version": 1,
+  "original": {
+    "path": "benchmark/real-project-0107/original.lvproj",
+    "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+    "size": 5806
+  },
+  "source_pins": {
+    "starting_commit": "5e2b6dde5d9f6df27b3c9ac06c01b6ab432c65d2",
+    "starting_tree": "4eb64f70ef4f1cbe7cc82cbf761a6b0ff163c394",
+    "starting_status": "clean",
+    "actor_framework_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "actor_framework_tree": "57c908deff90f4db9e539e32ebd8e07b8d8abc47",
+    "actor_framework_root": "@environment/actor-framework",
+    "command_root": "/home/runner/work/_temp/connectwithlabview-environment/actor-framework",
+    "readiness_sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413",
+    "readiness_status": "ready; commit and hash match existing pins",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+    "original_matches_prepared_and_git_blob": true,
+    "license_matches_snapshot_and_git_blob": true,
+    "mismatches": [],
+    "input_files": [
+      {
+        "path": "goal/goal.md",
+        "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      {
+        "path": "docs/perpetua/environment.md",
+        "sha256": "649d7e318d3617a042e151f27900384ed3a8954b3318f81e4f17603cb9836b35"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+      },
+      {
+        "path": "benchmark/real-project-0107.md",
+        "sha256": "0c5df64c7d06c61e512e94d1949275c24eaacec2ed6a7f7938b7025dbde9b673"
+      },
+      {
+        "path": "benchmark/real-project-0107.json",
+        "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53"
+      },
+      {
+        "path": "benchmark/sources.md",
+        "sha256": "43eafe9c348eba4516871f508121b29147e7c07677e6a6ca9b0d63bfc23babb2"
+      },
+      {
+        "path": "docs/research/0133-writing-estimate-handoff.md",
+        "sha256": "5ae1d574f3b1de17462c89d66393e88e3a10fa82eec933a4053bfcdb2e2826a3"
+      }
+    ]
+  },
+  "inventory_freeze": {
+    "stage": "before candidate lookup",
+    "count": 11,
+    "method": "ElementTree all Item elements with URL, document order; raw URL spellings and byte offsets from original byte regex in same order",
+    "rows_sha256": "9f02eaedcb16794551c9363ec144964583e7d828d249ff53dd8035dbe18f044e",
+    "frozen_fields": [
+      "id",
+      "locator",
+      "name",
+      "type",
+      "url",
+      "raw_url",
+      "line",
+      "url_byte_offset"
+    ],
+    "initial_status": "not_searched_inventory_frozen",
+    "initial_evidence": []
+  },
+  "declarations": [
+    {
+      "id": "U01",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Actor Framework.lvlib']/@URL",
+      "name": "Actor Framework.lvlib",
+      "type": "Library",
+      "url": "/<vilib>/ActorFramework/Actor Framework.lvlib",
+      "raw_url": "/&lt;vilib&gt;/ActorFramework/Actor Framework.lvlib",
+      "line": 16,
+      "url_byte_offset": 1072,
+      "status": "source_candidate_available_mapping_unproven",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Actor Framework.lvlib']/@URL",
+          "line": 16
+        },
+        {
+          "source": "search",
+          "result_paths": [
+            "Core/ActorFramework/Actor Framework.lvlib"
+          ],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Candidate bytes measured; virtual mapping and installed identity unproven."
+        }
+      ],
+      "lookup": {
+        "root_token": "<vilib>",
+        "suffix_without_root": "ActorFramework/Actor Framework.lvlib",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [
+          "Core/ActorFramework/Actor Framework.lvlib"
+        ],
+        "casefold_suffix_matches": [
+          "Core/ActorFramework/Actor Framework.lvlib"
+        ],
+        "basename_matches": [
+          "Core/ActorFramework/Actor Framework.lvlib"
+        ],
+        "container_name": null,
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [
+        {
+          "path": "Core/ActorFramework/Actor Framework.lvlib",
+          "prepared_path": "@environment/actor-framework/Core/ActorFramework/Actor Framework.lvlib",
+          "size": 83103,
+          "sha256": "23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98",
+          "file_kind": "regular file",
+          "tracked": {
+            "mode": "100644",
+            "kind": "blob",
+            "git_blob": "f811522438e8b48fc67217c7d5333afb38e1147a"
+          },
+          "bytes_equal_pinned_git_blob": true,
+          "provenance": {
+            "repository": "https://github.com/ni/actor-framework",
+            "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+            "license": "MIT",
+            "license_path": "LICENSE.txt",
+            "source_url": "https://github.com/ni/actor-framework/blob/371c631c16155d88f02be11a953e4964d7452fd8/Core/ActorFramework/Actor%20Framework.lvlib"
+          },
+          "identity": "source candidate only; exact post-token suffix and local-name declaration support relevance, but no installed vilib mapping or native resolved path is supplied",
+          "xml_observations": {
+            "root": "Library",
+            "LVVersion_declaration": "20008000",
+            "properties": {
+              "NI.Lib.LocalName": "Actor Framework",
+              "NI.Lib.SourceVersion": "536903680",
+              "NI.Lib.Version": "4.1.0.0",
+              "NI.LV.All.SourceOnly": "true"
+            },
+            "member_lookup": "not performed; no transitive traversal"
+          }
+        }
+      ],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U02",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Error Cluster From Error Code.vi']/@URL",
+      "name": "Error Cluster From Error Code.vi",
+      "type": "VI",
+      "url": "/<vilib>/Utility/error.llb/Error Cluster From Error Code.vi",
+      "raw_url": "/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi",
+      "line": 19,
+      "url_byte_offset": 1279,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Error Cluster From Error Code.vi']/@URL",
+          "line": 19
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<vilib>",
+        "suffix_without_root": "Utility/error.llb/Error Cluster From Error Code.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "error.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U03",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Get LV Class Default Value.vi']/@URL",
+      "name": "Get LV Class Default Value.vi",
+      "type": "VI",
+      "url": "/<vilib>/Utility/LVClass/Get LV Class Default Value.vi",
+      "raw_url": "/&lt;vilib&gt;/Utility/LVClass/Get LV Class Default Value.vi",
+      "line": 20,
+      "url_byte_offset": 1410,
+      "status": "not_found_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Get LV Class Default Value.vi']/@URL",
+          "line": 20
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "No suffix or exact/casefold basename candidate in bounded checkout; no claim of global absence."
+        }
+      ],
+      "lookup": {
+        "root_token": "<vilib>",
+        "suffix_without_root": "Utility/LVClass/Get LV Class Default Value.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": null,
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U04",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Get LV Class Name.vi']/@URL",
+      "name": "Get LV Class Name.vi",
+      "type": "VI",
+      "url": "/<vilib>/Utility/LVClass/Get LV Class Name.vi",
+      "raw_url": "/&lt;vilib&gt;/Utility/LVClass/Get LV Class Name.vi",
+      "line": 21,
+      "url_byte_offset": 1527,
+      "status": "not_found_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Get LV Class Name.vi']/@URL",
+          "line": 21
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "No suffix or exact/casefold basename candidate in bounded checkout; no claim of global absence."
+        }
+      ],
+      "lookup": {
+        "root_token": "<vilib>",
+        "suffix_without_root": "Utility/LVClass/Get LV Class Name.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": null,
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U05",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='High Resolution Relative Seconds.vi']/@URL",
+      "name": "High Resolution Relative Seconds.vi",
+      "type": "VI",
+      "url": "/<vilib>/Utility/High Resolution Relative Seconds.vi",
+      "raw_url": "/&lt;vilib&gt;/Utility/High Resolution Relative Seconds.vi",
+      "line": 22,
+      "url_byte_offset": 1650,
+      "status": "not_found_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='High Resolution Relative Seconds.vi']/@URL",
+          "line": 22
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "No suffix or exact/casefold basename candidate in bounded checkout; no claim of global absence."
+        }
+      ],
+      "lookup": {
+        "root_token": "<vilib>",
+        "suffix_without_root": "Utility/High Resolution Relative Seconds.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": null,
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U06",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Boolean.vi']/@URL",
+      "name": "LV Config Read Boolean.vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read Boolean.vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Boolean.vi",
+      "line": 24,
+      "url_byte_offset": 1780,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Boolean.vi']/@URL",
+          "line": 24
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read Boolean.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U07",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Color.vi']/@URL",
+      "name": "LV Config Read Color.vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read Color.vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Color.vi",
+      "line": 25,
+      "url_byte_offset": 1902,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Color.vi']/@URL",
+          "line": 25
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read Color.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U08",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Numeric (I32).vi']/@URL",
+      "name": "LV Config Read Numeric (I32).vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read Numeric (I32).vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Numeric (I32).vi",
+      "line": 26,
+      "url_byte_offset": 2030,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Numeric (I32).vi']/@URL",
+          "line": 26
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read Numeric (I32).vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U09",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Pathlist.vi']/@URL",
+      "name": "LV Config Read Pathlist.vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read Pathlist.vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Pathlist.vi",
+      "line": 27,
+      "url_byte_offset": 2161,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read Pathlist.vi']/@URL",
+          "line": 27
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read Pathlist.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U10",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read String.vi']/@URL",
+      "name": "LV Config Read String.vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read String.vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read String.vi",
+      "line": 28,
+      "url_byte_offset": 2285,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read String.vi']/@URL",
+          "line": 28
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read String.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    },
+    {
+      "id": "U11",
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read.vi']/@URL",
+      "name": "LV Config Read.vi",
+      "type": "VI",
+      "url": "/<resource>/dialog/lvconfig.llb/LV Config Read.vi",
+      "raw_url": "/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read.vi",
+      "line": 29,
+      "url_byte_offset": 2400,
+      "status": "container_and_member_unavailable_in_bounded_checkout",
+      "evidence": [
+        {
+          "source": "benchmark/real-project-0107/original.lvproj",
+          "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='LV Config Read.vi']/@URL",
+          "line": 29
+        },
+        {
+          "source": "search",
+          "result_paths": [],
+          "scope": "1476 filesystem file paths and corresponding pinned Git tree; no container interiors"
+        },
+        {
+          "source": "lookup",
+          "finding": "Neither named container nor standalone member basename found; member bytes unavailable and not inspected."
+        }
+      ],
+      "lookup": {
+        "root_token": "<resource>",
+        "suffix_without_root": "dialog/lvconfig.llb/LV Config Read.vi",
+        "root_mapping": "unavailable; no explicit mapping in inspected evidence",
+        "lookup_rule": "search.rule",
+        "exact_suffix_matches": [],
+        "casefold_suffix_matches": [],
+        "basename_matches": [],
+        "container_name": "lvconfig.llb",
+        "container_matches": [],
+        "ambiguous_matches": []
+      },
+      "candidates": [],
+      "native_resolution": "unverified",
+      "available_declared_input_bytes": null
+    }
+  ],
+  "build_references": [
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_localDestDir']",
+      "name": "Bld_localDestDir",
+      "type": "Path",
+      "value": "../builds/NI_AB_PROJECTNAME/AF PPL",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_localDestDirType']",
+      "name": "Bld_localDestDirType",
+      "type": "Str",
+      "value": "relativeToProject",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[0].destName']",
+      "name": "Destination[0].destName",
+      "type": "Str",
+      "value": "Actor Framework.lvlibp",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[0].path']",
+      "name": "Destination[0].path",
+      "type": "Path",
+      "value": "../builds/NI_AB_PROJECTNAME/AF PPL/Actor Framework.lvlibp",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[0].path.type']",
+      "name": "Destination[0].path.type",
+      "type": "Str",
+      "value": "relativeToProject",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[1].destName']",
+      "name": "Destination[1].destName",
+      "type": "Str",
+      "value": "Support Directory",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[1].path']",
+      "name": "Destination[1].path",
+      "type": "Path",
+      "value": "../builds/NI_AB_PROJECTNAME/AF PPL",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Destination[1].path.type']",
+      "name": "Destination[1].path.type",
+      "type": "Str",
+      "value": "relativeToProject",
+      "role": "output_declaration"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[0].itemID']",
+      "name": "Source[0].itemID",
+      "type": "Str",
+      "value": "{227B7CA2-8506-464F-A2B4-8D428F106ED0}",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[0].type']",
+      "name": "Source[0].type",
+      "type": "Str",
+      "value": "Container",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].destinationIndex']",
+      "name": "Source[1].destinationIndex",
+      "type": "Int",
+      "value": "0",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].itemID']",
+      "name": "Source[1].itemID",
+      "type": "Ref",
+      "value": "/My Computer/Actor Framework.lvlib",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].Library.allowMissingMembers']",
+      "name": "Source[1].Library.allowMissingMembers",
+      "type": "Bool",
+      "value": "true",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].Library.atomicCopy']",
+      "name": "Source[1].Library.atomicCopy",
+      "type": "Bool",
+      "value": "true",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].Library.LVLIBPtopLevel']",
+      "name": "Source[1].Library.LVLIBPtopLevel",
+      "type": "Bool",
+      "value": "true",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].preventRename']",
+      "name": "Source[1].preventRename",
+      "type": "Bool",
+      "value": "true",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].sourceInclusion']",
+      "name": "Source[1].sourceInclusion",
+      "type": "Str",
+      "value": "TopLevel",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Source[1].type']",
+      "name": "Source[1].type",
+      "type": "Str",
+      "value": "Library",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='SourceCount']",
+      "name": "SourceCount",
+      "type": "Int",
+      "value": "2",
+      "role": "source_link"
+    },
+    {
+      "locator": "/Project/Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='TgtF_targetfileName']",
+      "name": "TgtF_targetfileName",
+      "type": "Str",
+      "value": "Actor Framework.lvlibp",
+      "role": "output_declaration"
+    }
+  ],
+  "limitations": [
+    "Absence is bounded to this pinned prepared checkout; containers/packages may contain unexamined bytes. No global absence claim.",
+    "No explicit virtual vilib/resource mapping is available in inspected project, matching library and provenance evidence. Source suffix/basename similarity alone proves neither installed identity nor native resolution.",
+    "Library XML was parsed for local name/version declarations only. Its classes, VIs, transitive requirements and closure were not searched or inspected.",
+    "LLB interiors, ZIP/VIP/other archives, VI diagrams, other projects and other repositories were not inspected; no source code executed.",
+    "Source presence, native resolution, transitive closure, buildability, runtime behavior and save-version preservation remain separate. The latter five were not established.",
+    "LVVersion 20008000 and library version/source-version text are declarations, not native save-version authority or runtime compatibility. No LabVIEW execution is possible in this session.",
+    "Public development evidence only; no withheld/model-unseen claim, coverage pass, native/build pass, artifact edit trial, benchmark run or method acceptance.",
+    "An initial Glob using path @environment/ and pattern * returned an overbroad truncated path listing; only the actor-framework location was used, no unrelated source contents read. Subsequent search used the exact readiness cache root."
+  ],
+  "next_step": {
+    "action": "Stage one provenance-preserving offline dependency sample for U03: Utility/LVClass/Get LV Class Default Value.vi, together with a version-labelled manifest identifying the actual vilib root and its mapping to the declared URL.",
+    "required_evidence": [
+      "Original bytes with size/SHA256 and permitted-access/license provenance",
+      "LabVIEW installation/build identity and explicit virtual-root-to-file mapping; preserve original unchanged",
+      "An independent provenance source linking these bytes to that environment; do not infer identity from filename"
+    ],
+    "readiness_check": "On newly staged evidence only, verify the manifest root/version and source provenance, hash the original sample and compare its path to U03. If missing/mismatched, retain U03 unavailable; do not refresh current pins.",
+    "why": "U03 is a single standalone missing VI; it can establish the smallest byte-plus-mapping evidence increment without container extraction or LabVIEW execution. Ten VI rows and native resolution remain gaps until independently supplied.",
+    "resume": "Reuse this frozen inventory and measured U01 candidate. Do not repeat cache discovery, closed D1-D4/WP1/WM1/pair reviews or checker runs, restart corpus work, or duplicate/await #618/#532."
+  },
+  "search": {
+    "boundary": "Only prepared pinned actor-framework checkout; .git excluded; no other repository, installed NI tree, network, archives or transitive content searched.",
+    "tracked_files": 1476,
+    "filesystem_files": 1476,
+    "filesystem_directories": 319,
+    "filesystem_matches_tracked_paths": true,
+    "walk_errors": [],
+    "symlink_directories": [],
+    "virtual_root_directory_matches": [],
+    "rule": "For each frozen URL, strip /<root>/ for an unmapped suffix candidate. Compare all paths by exact suffix and casefold suffix; compare exact and casefold declaration basename plus any named .llb container. A match generates a candidate only; no root substitution or LLB-member identity is inferred.",
+    "commands": [
+      "git -C ACTOR_ROOT ls-tree -rz --full-tree 371c631c16155d88f02be11a953e4964d7452fd8",
+      "Python os.walk(ACTOR_ROOT, followlinks=False), pruning .git; filter path metadata by frozen declaration names/suffixes/containers; read/hash only matched library and LICENSE.txt",
+      "git -C ACTOR_ROOT show COMMIT:Core/ActorFramework/Actor Framework.lvlib; compare original bytes, no XML reserialization"
+    ],
+    "lookup_errors": []
+  },
+  "prior_work": [
+    {
+      "issue": 537,
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/537#issuecomment-6859647757",
+      "snapshot": "055a20baef5ef050c34b42b35d7f1b293b6b5a2718953b185d296daa7d3ba79d",
+      "reused_finding": "D1-D4 declaration measurement, original/license provenance and selection; explicitly no dependency files needed, so no complete byte-availability answer."
+    },
+    {
+      "issue": 541,
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/541#issuecomment-6860272905",
+      "snapshot": "76ff7a20024053285dc2a1d0dfb018249e33cc13017ebcdba5ad0828e1ad5afc",
+      "reused_finding": "Independent D1-D4 and original/license review reused; native outcomes unavailable; no per-dependency byte inventory in report. No checker/probe replay."
+    },
+    {
+      "issue": 626,
+      "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/626#issuecomment-6876628972",
+      "snapshot": "ef786f63d9bddec10498b7071d7d9042537ad5c2110d67a9f58eb977ff72198f",
+      "reused_finding": "F1-F3 documentation closure reused; no new dependency-byte measurement. Preserve WM1/pair/WP1 review closures."
+    }
+  ],
+  "build_reference_interpretation": {
+    "Source[0].itemID": "Opaque declared container GUID; not a path or proof of available bytes.",
+    "Source[1].itemID": "/My Computer/Actor Framework.lvlib names project item U01; no native path resolution.",
+    "outputs": "Bld_localDestDir, Destination paths/names and TgtF_targetfileName are output declarations only. No output artifact searched, hashed or substituted for sources. relativeToProject is declared metadata; NI_AB_PROJECTNAME expansion not evaluated.",
+    "allowMissingMembers": "Declared true; does not prove member availability or successful build."
+  },
+  "summary": {
+    "declarations": 11,
+    "source_candidate_rows": 1,
+    "standalone_vi_rows_not_found": 3,
+    "llb_member_rows_unavailable": 7,
+    "proven_native_matches": 0,
+    "ambiguous_candidate_rows": 0,
+    "transitive_lookup_rows": 0
+  },
+  "verification": {
+    "required_structural_check": {
+      "exit": 0,
+      "stdout": "declaration inventory and original identity: OK",
+      "scope": "Issue-provided Python verification command; no candidate or native resolution validation."
+    },
+    "additional_checks": {
+      "exit": 0,
+      "stdout": "11 unique locators/raw URL slices, frozen inventory checksum, 20 build references and scope distinctions: OK"
+    },
+    "git_diff_check_exit": 0,
+    "native_executions": 0,
+    "closed_checkers_replayed": 0
+  }
+}
