@@ -2,7 +2,7 @@
 
 Considered: iteration records 0000–0025; reviews #146/#147; #150/#151; #157/#161;
 re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212/#215/#216;
-acceptances #176/#190/#211/#217. Updated by Policymaker #219, iteration 0026.
+acceptances #176/#190/#211/#217; record 0026, reports #220/#221. Updated by Policymaker #223, iteration 0027.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
 selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
 
@@ -92,6 +92,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   then scorer design (evaluator role + evaluator-verifier). If revise: order fixes from main.
   If #215 finish fails again, apply the one-row edit fresh from main instead of resuming the tag.
 - Lesson: low-effort 15-turn tasks can still hit session_budget; prefer max_turns >= 15 for regenerate+re-pin.
+
+## Iteration 0027 (#223, wake false)
+- Results of 0026: review #221 ACCEPT of baseline design (actual models: codex gpt-6.1-sol 481k input despite
+  `opus` alias -> same family as author #216; no diversity again). Findings: none actionable; 62 null fields,
+  mutation checks rejected. #220 finish-gap: Verification exit 0 but `partial` session_budget at 7/8 turns,
+  not merged (2nd partial for the same row). Main README still lacks `Diagram difference` (checked).
+- Lesson: "resume a saved tag" tasks with tiny max_turns keep ending partial; instead write an idempotent
+  git-free script in `execution/scripts/` and order one run from main with max_turns 15.
+- Wrote `execution/scripts/land_gap_and_baseline.py`: adds gap row (hash-checked against #215's values),
+  sets baseline milestone `design-reviewed` + limitation note, pins 3 baseline files + preparation-status.json,
+  re-pins changed refs. Dry run on temp copy: all --check 0, evaluator missing [] with 49 refs, 4 files changed.
+- Order `land-gap-and-baseline` (benchmark, low, 20/15, from main). Check: main evaluator missing == [],
+  README has `Diagram difference`. Then delete the script.
+- Next after landing: all seven milestones indexed but split `not-started`, no scorer, no native evidence,
+  no executed challenges. Next substantive work: scorer design (evaluator role + evaluator-verifier, policy
+  orders) and split/isolation design; typedef-impact/diagram-difference dev cases. Owner method acceptance
+  still not requested. `opus` alias did not hold for reviewers: investigate routing (reviewer route list
+  starts with sonnet, falls to codex) before relying on it for diversity.
 
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
