@@ -16,7 +16,7 @@ All four pinned files exist and their current SHA256 equals the saved pin:
 | docs/research/poc/pair/owner-instructions.md | yes |
 | docs/research/poc/pair/selfcheck.json | yes |
 
-The saved review records: schema_version 1, verdict `closed`, no major findings, 8 probes all `passed`, and nonempty limitations. They are preserved unchanged.
+The saved review records: schema_version 1, verdict `closed`, no major findings, 9 probes all `passed` (issue #518 and the #513 report said eight; the hash-verified artifact lists nine, the ninth being protocol_blocks_virtual_execution), and nonempty limitations. They are preserved unchanged; the count discrepancy is recorded, not corrected.
 
 ## Meaning of "closed"
 
