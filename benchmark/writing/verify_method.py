@@ -514,7 +514,7 @@ def check_wp1_method(method):
          and '.lvlib and .lvproj direct creation/modification' in method['coverage']['uncovered_families'],
          'project-coverage-boundary')
     need(digest(canonical(method['tasks'][:4]).encode()) ==
-         '1b6c682e02afa1763109b0d250e8be8a0145db685953f20386753bd6128ec414',
+         'c12b0686ebfe6a0e15c563734d12dae1b30b6496e3d25110ba048e1cff937875',
          'synthetic-task-definition-drift')
 
 
