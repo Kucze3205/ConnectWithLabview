@@ -1,0 +1,75 @@
+{
+  "checks": [
+    {
+      "check": "Committed JSON and Markdown reproduce from prepared originals",
+      "result": "pass"
+    },
+    {
+      "check": "Every artifact occurrence counted in the prior research table remains represented",
+      "result": "pass"
+    },
+    {
+      "check": "Broader container inspection retains nine additional container occurrences",
+      "result": "pass"
+    },
+    {
+      "check": "Family totals retain the complete artifact denominator",
+      "result": "pass"
+    },
+    {
+      "check": "Original fixture independently confirms both disagreeing header values",
+      "result": "pass"
+    },
+    {
+      "check": "Fixture diagram heap is explicitly opaque despite successful resource loading",
+      "result": "pass"
+    },
+    {
+      "check": "Older archive-member version and hash match original member bytes",
+      "result": "pass"
+    },
+    {
+      "check": "Unknown release phase, opaque packed libraries and unavailable menu versions remain visible",
+      "result": "pass"
+    },
+    {
+      "check": "Native execution and 2024 fallback are not claimed",
+      "result": "pass"
+    },
+    {
+      "check": "Check rejects drift without rewriting benchmark/coverage.json",
+      "result": "pass"
+    },
+    {
+      "check": "Check rejects drift without rewriting benchmark/coverage.md",
+      "result": "pass"
+    },
+    {
+      "check": "Missing prepared environment fails without a fallback",
+      "result": "pass"
+    },
+    {
+      "check": "Restored records pass final regeneration check",
+      "result": "pass"
+    },
+    {
+      "check": "Existing provenance record still reproduces",
+      "result": "pass"
+    },
+    {
+      "check": "Exactly sources and coverage are prepared and independent review remains pending",
+      "result": "pass"
+    }
+  ],
+  "command": "python3 -I benchmark/scripts/coverage.py --check",
+  "limitations": "These checks verify inventory preservation, original metadata and drift detection; they do not constitute semantic reading, native execution or independent review.",
+  "native_labview": "not executed",
+  "prior_failed_check": {
+    "assertion": "Broader ZIP signature inspection retains twelve additional container occurrences",
+    "cause": "Harness incorrectly summed the research table as 819; its listed counts total 822. The nine additional containers are two DOCX, two VSIX and five ZIP files, giving 831.",
+    "resolution": "Corrected arithmetic assertion; inventory unchanged.",
+    "result": "failed assertion in verification harness"
+  },
+  "schema_version": 1,
+  "verification_stdout": "Verified coverage JSON + Markdown: {'tracked_files_inspected': 1545, 'artifact_occurrences': 831, 'tracked_artifacts': 532, 'archive_member_artifacts': 299, 'duplicates_retained': True, 'unresolved_archive_gaps': 0, 'unknown_embedded_artifact_count': 'Unknown for opaque/limited/unreadable containers; not zero'}; native_labview: not executed"
+}

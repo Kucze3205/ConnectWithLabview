@@ -1,11 +1,13 @@
 {
+  "coverage_generating_command": "python3 -I benchmark/scripts/coverage.py",
+  "coverage_verification_command": "python3 -I benchmark/scripts/coverage.py --check",
   "generating_command": "python3 -I benchmark/scripts/sources.py",
   "independent_review": "pending; author does not approve readiness",
-  "limitations": "Public sources cannot serve as withheld or unseen cases. Header metadata does not establish semantic reading, native compatibility or benchmark readiness.",
+  "limitations": "Public sources cannot serve as withheld or unseen cases. Header metadata and resource byte round-trips do not establish semantic reading, native compatibility or benchmark readiness. Unknown embedded artifacts, unsupported families, versions, modules and access conditions remain gaps; the 2024 fallback is not selected.",
   "milestones": {
     "baseline": "not-started",
     "challenges": "not-started",
-    "coverage": "not-started",
+    "coverage": "prepared-not-reviewed",
     "oracle": "not-started",
     "sources": "prepared-not-reviewed",
     "split": "not-started",
