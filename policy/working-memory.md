@@ -1,38 +1,42 @@
 # Policy working memory
 
-Considered: iteration records 0000-0005 (`.session/history/records/`), Policymaker reports #78-#102,
-sessions #99, #103-#106, `.github/loop/role_runtime.py`, git up to `0350fd9`. Updated by Policymaker session #108
-(start of iteration 0006).
+Considered: iteration records 0000-0007 (`.session/history/records/`), session reports #109-#112
+(`.github/loop/data/session-reports/`), `.github/loop/loop.py:427-445,802-809`, `.github/loop/task-graph.md`,
+git up to `7500e77`. Updated by Policymaker session #116 (start of iteration 0008).
 
 ## Current organization
 - `shaper: null`. The Policymaker's `.session/orders.json` is the iteration's only work. Never end a session
-  without it while `shaper: null` (iterations 0001-0003 failed that way).
-- Routing (`policy/params.yml`): `benchmark` now Claude-first (`*implementation`); reviewer/audit stay codex-first
-  so review runs on another family than the work.
-- Benchmark state (HEAD `benchmark/preparation-status.json`): `sources: prepared-not-reviewed`, other milestones
-  `not-started`, `independent_review: pending`, `native_labview: not executed`. Readiness not established.
+  without it while `shaper: null`. Iteration 0007 failed because `every_iterations: 5` skipped the Policymaker;
+  commit `9bc8016` set it to 1 (fixed).
+- Routing (`policy/params.yml`): `benchmark` Claude-first; reviewer/audit codex-first (other family than the work).
+- Benchmark state on main: `sources: prepared-not-reviewed`, others `not-started`, `independent_review: pending`,
+  `native_labview: not executed`. Readiness not established.
 
-## Key mechanism (why sessions stop `partial`)
-- `role_runtime.py`: a session stops `partial/input_budget` when unique input >= 800k tokens (`CONTEXT`).
-  For codex/copilot, unique input = `in - cache_read`; for claude, `in` already excludes cache reads.
-  Every turn resends the whole history, so cost grows quadratically with turns.
-- Iteration 0005, all codex: #103 reviewer 12 turns/855k, #104 benchmark 28 turns/947k, #106 benchmark 26 turns/883k,
-  cache_read share 5%. All `partial`, nothing merged. #105 crashed with 0 turns.
-- Consequence: codex sessions get ~12-28 turns. Orders must be small, write early, and Finish well before that.
+## Key mechanisms
+- Input budget: a session stops `partial/input_budget` at 800k unique input (`role_runtime.py`). Codex counts
+  `in - cache_read`, Claude excludes cache reads. Keep orders small; Claude-first gives ~20 turns at ~300k.
+- **`## Verification` runs twice: in-session (environment present) and in the engine epilogue in the tokenless job,
+  which has NO `LABVIEW_ENVIRONMENT`** (`loop.py:802-809`). `sources.py --check` / `coverage.py --check` need the
+  environment, so they always fail in the epilogue -> `partial`, nothing merges after fix rounds. Iteration 0006
+  lost all four sessions this way (#109-#112 `verification: fail`). Rule: an order's `## Verification` must be an
+  offline check over committed files (e.g. `python3 -I -c` JSON assertions); environment-dependent checks go into
+  Acceptance as in-session steps with reported exit codes. Report-only reviews: no backticked command at all.
+- Each order of 0005 and 0006 was issued twice (109/111, 110/112: same id, pass 1). Duplicate sessions both ran;
+  cause still unknown. If 0008 repeats it, consider an `engine-change` request with the record as evidence.
 
-## Iteration 0006 decision (session #108)
-- `bench-coverage` (benchmark, Claude-first, 40 turns): restore commit `c6830d1` (coverage.py, coverage.json 83k lines,
-  coverage.md from #104), verify, set status, finish. Expected: `python3 -I benchmark/scripts/coverage.py --check`
-  exits 0 on the main line and `coverage: prepared-not-reviewed`.
-- `review-sources` (reviewer, codex, 12 turns): sources row only; expected `.session/artifacts/review-sources.md`
-  ending with `Recommendation: ... at <commit>` and status `done`.
-- Measure: Claude benchmark turns/unique input vs codex in 0005, to decide routing for later benchmark tasks.
+## Iteration 0006 results
+- Coverage: #109 and #111 restored `c6830d1` correctly; finished result is commit `0285248` (no branch, in object store).
+- Sources review: #110 and #112 independently -> `Recommendation: revise at 52d2aa1`; sole finding: dependency
+  identities/constraints missing per source (`benchmark/sources.md:41,48`). Everything else checked (523 hashes).
+
+## Iteration 0008 decision (session #116)
+- `bench-coverage-land` (benchmark, 30 turns): restore `0285248`, offline Verification. Expect `coverage:
+  prepared-not-reviewed` on main.
+- `bench-sources-deps` (benchmark, 45 turns, after land): per-repository `dependencies` in `sources.json`, unknowns
+  explicit. Expect every repository to carry a non-empty `dependencies` object; then order a sources re-review.
+- `review-coverage` (reviewer, 15 turns, after land): expect `Recommendation: ... at <commit>` in its report.
 
 ## Open questions
-- Was `c6830d1` reachable for the next session? It is in the object store of this checkout but on no branch.
-  If the benchmark session reports it missing, ask for an `engine-change`: merge or preserve partial branches.
-- Each order of 0005 was issued twice (issues 103/105, 104/106, same ids, pass 1). Cause unknown; check 0006 record.
-- #103's partial artifact is in release `iter-0005/103-review-sources.md`; not reachable as an order input.
-- Script shaper crash (0004, session #99): do not reinstate without checking the script-role contract.
 - How a review verdict moves a milestone to `reviewed` (owner change gate per evaluation.md) is undecided.
+- Script shaper crash (0004, #99): do not reinstate without checking the script-role contract.
 - Notices #92 and #100 remain pending for the owner.
