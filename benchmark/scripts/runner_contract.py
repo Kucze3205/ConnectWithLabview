@@ -210,6 +210,17 @@ def expect_reject(name, reason, action):
 
 
 def check():
+    def reject_with_actual_reason():
+        raise ValueError('actual reason')
+
+    try:
+        expect_reject('reason comparison self-test', 'expected reason', reject_with_actual_reason)
+    except ValueError as exc:
+        require(str(exc) == 'reason comparison self-test: unexpected reason: actual reason',
+                'reason comparison self-test: wrong mismatch error: ' + str(exc))
+    else:
+        raise ValueError('reason comparison self-test: mismatch accepted')
+
     expected_text = build_manifest_text()
     manifest_bytes = SYNTHETIC.read_bytes()
     require(manifest_bytes == expected_text.encode(), 'synthetic manifest file differs from generator')
