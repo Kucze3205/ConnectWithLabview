@@ -1,0 +1,319 @@
+{
+ "schema_version": 1,
+ "contract_id": "attempt-ledger-contract/1",
+ "status": "design-only supplement; separately versioned from attempt-policy 0148, attempt-evidence 0143 and the run record/manifest schemas; no wrapper, ledger implementation, receipt, storage or real envelope admission exists or is authorized",
+ "scope": "External freeze receipt and append-only dispatch/delivery/audit ledger data contract for prospective-attempt-policy/1-no-automatic-retry. Specifies fields, evidence bindings, event transitions and deterministic handoff outputs only. Does not reopen the CLEAR policy, supply real-envelope authority, choose real settings/counts/quota or claim readiness.",
+ "starting_checkout": {
+  "tree": "6f07f44d25a150e9fd11ee9338b67a760523c8d3",
+  "commit_observations": ["b73e1a81524ab89dc17c39659222f013eef21e8c (first rev-parse of this session)", "0d91fef0c8465c94697161a59fbdead5cc8493e7 (later rev-parse; same tree)"],
+  "note": "Two different commit ids were reported for one identical tree during the session; the tree id is the pin used here and the commit discrepancy is an unexplained limitation, not cleared."
+ },
+ "pins": {
+  "reviewed_policy": {
+   "accepted_commit": "cf0c84e5b16e8e719ae83af35da7a0c80bed7160",
+   "accepted_tree": "7c204fa6f00d40ef1e057cdcd5ddd8725edda4f5",
+   "accepted_parent": "663ed5a3db52086590e9d2c678730519635bb9c7",
+   "markdown": {"path": "benchmark/baseline/attempt-policy-0148.md", "bytes": 17682, "sha256": "22c837604524677c06e0eaad9410018c1230ce86d0e6cfd767b8f3fcaaa79e39"},
+   "json": {"path": "benchmark/baseline/attempt-policy-0148.json", "bytes": 67721, "sha256": "15ccbdf618ad86cf477dc2f6a680ad8fdd146cf1ced060de6cd96f77eb9797df"},
+   "review": "#685 CLEAR for the two-file policy design scope only; export snapshot e5ea4a5fa94bdae13c507d988004c6204b2dbbf067c3b94ed8c1e6752eb5de3c matches the SHA256 of the exported report body as measured here. Both policy blobs at HEAD equal the accepted-commit blobs."
+  },
+  "source_pins": [
+   {"path": "docs/perpetua/evaluation.md", "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"},
+   {"path": "goal/goal.md", "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"},
+   {"path": "benchmark/attempt-evidence-0143.md", "sha256": "5d66520b202d01d48921cdd6bfc8146bc9692e4f7a62a0426f1b4a99d6adce79"},
+   {"path": "benchmark/attempt-evidence-0143.json", "sha256": "2489bf601856ddafc22315a67b0d076d316f793277e11e7e793261fba2e63651"},
+   {"path": "benchmark/project-paired-0136.md", "sha256": "d2231d611fd015d141e870c294f1d887cf6c5ae19f3cb8a855bee17fa99c79e1"},
+   {"path": "benchmark/project-run-binding-0138.json", "sha256": "2482a9b5ef36c7e0d3fadbe1990f342f2c43c010feb6f82ecbc78442eb6a5f55"},
+   {"path": "benchmark/baseline/runner-contract.md", "sha256": "b9e47205b0ef3f479a77bd3b4dd06e89c3521923e6b316bef14f624cbbcaa5c0"},
+   {"path": "benchmark/baseline/run-manifest.template.json", "sha256": "fcb458e4ee289a01a372805564b0f1578b5dcfebfe16bb7dba11e4d2ba2c84d1"},
+   {"path": "benchmark/precision/README.md", "sha256": "f94ba74b1c22e551b3cf8eabafdb5868705baa889e17ad5f301fb08cbe18824b"},
+   {"path": "benchmark/precision/plan.json", "sha256": "bbf834a810706f291dde095183a96b04b0f6de05a39687ce3373e1ad1381e7f3"},
+   {"path": "benchmark/protocol.md", "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"}
+  ],
+  "source_pin_note": "All 11 hashes were measured equal to the bytes in the checkout. Read selectively this session: 0148 md and json (rules, preflight, freeze_contract, state_model, integration_seam, documented_boundary, expectation_record), evaluation.md, 0143 md and /contract, 0136 md, runner-contract.md, 0138 /binding_design and /future_extension, template field names and four null reasons. precision/* and protocol.md are pinned by hash and consumed only through the 0148 rules that cite them; they were not re-read.",
+  "regression_inputs": [
+   {"path": ".session/inputs/685-attempt-policy-independent-expectations-0149.json", "bytes": 15032, "sha256": "26c754b2d9bda1f0a7ebdfb100b9899b34f9ecc34644ac4f8c297fe2b1294ee6", "use": "I01-I20 inventory/terminal expectations reused as regression inputs, not rederived"},
+   {"path": ".session/inputs/685-attempt-policy-independent-comparison-0149.json", "bytes": 17184, "sha256": "8e3b1fbe1302dc6c90dd107fbcd4a8aaaa1e750c057a8752b1ac9a7b7f92f860", "use": "hash and size identity verified; CLEAR verdict metadata only"},
+   {"path": ".session/inputs/685-attempt-policy-measured-checks-0149.json", "bytes": 10275, "sha256": "a55bf35f05965e00914de193c65323ab114af86b73c9addbbb00567b55100b75", "use": "hash and size identity verified"}
+  ],
+  "seam_expectations_saved_before_this_file": {"path": ".session/artifacts/attempt-ledger-expectations-0150.json", "bytes": 9777, "sha256": "f6737c6a244c2acec012ff4cbb8e950863d9ac3939afa71505c2875ba4655aec", "independence": "author-saved before authoring this contract; not blind, not independent review"}
+ },
+ "finding_before_proposal": {
+  "existing_bytes_define": [
+   {"source": "attempt-policy-0148.json#/integration_seam", "defines": "location (after manifest and plan, before first request; retention before parsing; audit beside legacy checks), input and output prose, duplicate boundary, implementation_status none"},
+   {"source": "attempt-policy-0148.json#/freeze_contract", "defines": "acyclic four-step sequence and ten receipt field labels; current_receipt is null"},
+   {"source": "attempt-policy-0148.json#/state_model and rules R05-R15", "defines": "plan and slot states, stop priority, late-evidence rule, decisions per outcome class"},
+   {"source": "attempt-evidence-0143.json#/contract", "defines": "envelope fields, slot_ref, unique attempt_id and attempt_order, 24 evidence kinds, verification not_performed, real_admission blocked, attempt_selection unresolved, zero completion for multiple attempts, per-attempt byte payloads"},
+   {"source": "project-run-binding-0138.json#/binding_design", "defines": "five-field slot identity, explicit per-arm repetition map, manifest/plan/settings hash joins"},
+   {"source": "run-manifest.template.json", "defines": "62 field names; stopping_rule, sampling_order, precision_cost_plan_revision, generation_settings null with reasons"},
+   {"source": "runner-contract.md#Plan", "defines": "cases sorted, arm order by sha256(seed:pair_id:arm), plan hash"}
+  ],
+  "external_receipt_and_ledger_still_need": [
+   "A byte layout and field-level authority class for the freeze receipt (0148 lists labels only) and an explicit binding from ledger events to receipt bytes",
+   "A per-event field set, event vocabulary, sequence/ordering/UTC rules and producer/trust provenance; 0148 names ledger kinds without fields",
+   "Delivery identity separate from attempt identity (0143 has attempts and byte payloads but no delivery_id or delivery sequence, and no rejection/quarantine ledger)",
+   "Event-level preconditions and legal transitions for one-at-a-time dispatch, write-ahead persistence, stop and terminal handling",
+   "Reservation to usage reconciliation fields and unknown-usage handling",
+   "Deterministic decision table from retained bytes to a handoff output, including what is never turned into an envelope row",
+   "Crash, interruption and incomplete/ambiguous ordering handling with no resume authority",
+   "Separation of immutable operational terminal history from later audit revisions",
+   "Which checks need external authority that does not exist (verifier registry, trusted clock, immutable storage, provider usage and model identity, delivery-only proof)"
+  ],
+  "compatibility_constraints": [
+   "No new envelope enum, outcome value, legacy schema field, scoring denominator, null reason or checker behavior; ledger vocabulary (decisions, indeterminate, unresolved inventory terms) lives only in the ledger and audit outputs",
+   "Legacy multiple-attempt selection stays unresolved with zero completion; duplicate rows are still rejected by the old checker",
+   "Locally computed hashes or an append-only claim establish byte consistency only, never trusted provenance"
+  ]
+ },
+ "authority_classes": {
+  "declared": "value asserted inside the bytes under inspection (identifiers, labels, producer names, claimed verification)",
+  "locally_computed": "hash, size, sequence and chain recomputed from bytes in hand; establishes byte consistency only, never provenance or append-only storage",
+  "stipulated_synthetic": "premise of a synthetic example; usable only in synthetic traces, never satisfies a real requirement",
+  "independently_verified": "accepted only when a verification receipt, bound to the object hash by a party independent of its producer, names a verifier present in an external registry",
+  "unavailable": "evidence that does not exist in this repository or session",
+  "current_state": {"verifier_registry": null, "verification_receipts": [], "result": "no object can be independently_verified; every real requirement below fails closed"},
+  "rule": "Any event or evidence entry that claims independently_verified while its verifier is absent from the registry is counted as a rejected claim and treated as declared only."
+ },
+ "freeze_receipt": {
+  "status": "external document; none exists. The ledger only cites it.",
+  "fields": [
+   {"name": "receipt_id", "authority_required": "declared"},
+   {"name": "receipt_sha256", "content": "SHA256 of the exact receipt bytes, held outside the receipt", "authority_required": "locally_computed"},
+   {"name": "policy_id, policy_sha256", "content": "prospective-attempt-policy/1-no-automatic-retry and hash of independently reviewed 0148 bytes", "authority_required": "independent_verification of the review record"},
+   {"name": "manifest_sha256, plan_sha256", "content": "exact-byte hashes", "authority_required": "locally_computed"},
+   {"name": "settings_sha256", "content": "canonical UTF-8 JSON, sorted keys, compact separators, ensure_ascii false", "authority_required": "locally_computed"},
+   {"name": "slots_ordered", "content": "full tuples record_id, case_id, pair_id, repetition_id, arm plus slot_ref, in the materialized dispatch order", "authority_required": "locally_computed against plan"},
+   {"name": "comparisons", "content": "pair_id, case_id, explicit per-arm repetition map, slot_refs", "authority_required": "locally_computed against plan"},
+   {"name": "order_derivation", "content": "R04 rule id, seed, tie and duplicate rejection result", "authority_required": "locally_computed"},
+   {"name": "preflight_evidence[]", "content": "kind, object_id, sha256, size, uri, producer, producer_version, utc, authority for each applicable manifest field group", "authority_required": "independent_verification"},
+   {"name": "owner_records[]", "content": "precision, quota and acceptance records where required", "authority_required": "independent_verification"},
+   {"name": "ceilings", "content": "per-request matched limits, total token/time/call/quota ceilings, run window UTC; unknown prices stay null", "authority_required": "independent_verification"},
+   {"name": "reservation_rule", "content": "whole-slot worst case before each dispatch", "authority_required": "declared"},
+   {"name": "ledger_id and ledger_storage", "content": "identity and location of the ledger plus an immutability or retention receipt reference", "authority_required": "independent_verification"},
+   {"name": "producer", "content": "id, version", "authority_required": "declared"},
+   {"name": "freeze_utc", "content": "UTC before the first request", "authority_required": "independent_verification (trusted clock)"},
+   {"name": "verification_receipt_ref", "content": "verifier id, registry entry, scope, method, utc and the receipt_sha256 it verified", "authority_required": "independent_verification"}
+  ],
+  "acyclic_binding_order": [
+   "1 reviewed policy bytes; hash recorded externally; policy contains no hash of later artifacts",
+   "2 manifest instance referencing policy_id and policy hash (existing stopping_rule, sampling_order and precision_cost_plan_revision fields)",
+   "3 explicit paired plan referencing manifest hash",
+   "4 canonical settings hash referenced by manifest",
+   "5 materialized dispatch order derived from the plan by R04",
+   "6 freeze receipt binding 1-5, ceilings and ledger_id; it contains neither its own hash nor any ledger event hash",
+   "7 independent verification receipt citing the receipt hash",
+   "8 ledger events citing receipt_sha256 and verification receipt id; each event cites only earlier events"
+  ],
+  "fail_closed": "A null, missing, mismatching or unverified receipt gives preflight_result outcome blocked and plan_terminal blocked_preflight; no dispatch event is legal. A locally generated hash never substitutes for step 7."
+ },
+ "ledger": {
+  "identity": "ledger_id from the receipt; one ledger per frozen plan. Events never contain a receipt's own hash recursively.",
+  "event_envelope": {
+   "ledger_id": "string",
+   "receipt_sha256": "hash of the exact receipt bytes cited",
+   "seq": "positive integer; contiguous within one ledger across segments",
+   "segment": "main | recovery",
+   "event_type": "one of event_types",
+   "event_utc": "UTC YYYY-MM-DDTHH:MM:SSZ, non-decreasing with seq within the main segment",
+   "prev_event_sha256": "event_sha256 of the immediately preceding event; null only for seq 1",
+   "event_sha256": "SHA256 of canonical JSON of the event without this field (sorted keys, compact separators, ensure_ascii false)",
+   "persistence": "acknowledged | unacknowledged | unverifiable; acknowledged requires storage acknowledgement before any dependent action",
+   "producer": {"id": "string", "version": "string", "authority_class": "declared | stipulated_synthetic | independently_verified (claim)"},
+   "slot": "full five-field identity or null",
+   "slot_ref": "record_id or null",
+   "attempt_id": "unique attempt identity or null",
+   "attempt_order": "positive integer strictly increasing across the ledger, or null",
+   "delivery_id": "identity of one retained submission or null",
+   "evidence_refs": "list of {kind, object_id, sha256, size, uri, authority_class}",
+   "payload": "event-type fields below"
+  },
+  "ordering": {
+   "authority": "seq is the only ordering claim; UTC corroborates and never reorders",
+   "integrity_break_conditions": ["V02 sequence gap or duplicate", "V03 prev_event_sha256 mismatch", "V04 event_sha256 mismatch", "V05 UTC earlier than previous event", "V06 persistence not acknowledged"],
+   "verified_prefix": "maximal prefix of the main segment from seq 1 with none of the break conditions; every event at or after the first break is unverified",
+   "unverified_event_effect": "bytes stay retained; the event contributes to no inventory and no completion; every slot it references and that lacks a verified eligible closure becomes indeterminate (ineligible and unresolved); a count can only fall, never rise",
+   "local_chain_status": "the hash chain is locally_computed: consistency evidence only; it does not show the ledger was append-only or unmodified before the check"
+  },
+  "segments": {
+   "main": "written by the dispatch/gate producer",
+   "recovery": "appended after interruption; may only contain recovery_opened, evidence_gap_recorded, stop_recorded, plan_terminal (stopped_hard_failure) , final_audit and submission_quarantined; recovery_opened.last_verified_seq must equal the computed last verified main seq (V21); no reservation, dispatch, resume or retry (V13)"
+  }
+ },
+ "event_types": {
+  "preflight_result": {"phases": ["pre"], "payload": ["outcome ready|blocked", "reasons[]", "receipt_status verified_external|stipulated_synthetic|unavailable"], "note": "first event; outcome ready requires receipt verified by independent authority for real use"},
+  "reservation_made": {"phases": ["open"], "payload": ["gate {bindings_match, model_window_ok, evidence_ok, reservation_covers: all true}", "reserved {tokens, time_s, calls} whole-slot worst case", "remaining_after"], "preconditions": ["no open slot", "slot is next in frozen order", "slot identity equals frozen tuple"]},
+  "dispatch_recorded": {"phases": ["open"], "payload": ["request_sha256", "request_size"], "preconditions": ["no other slot open (V08)", "slot is next in frozen order (V07)", "reservation_made for this slot (V09)", "persistence acknowledged before the request is sent (write-ahead)", "request bytes retained before send"], "note": "carries attempt_id and attempt_order; one dispatch per slot"},
+  "delivery_retained": {"phases": ["open", "stopped", "terminal"], "payload": ["kind dispatched|redelivery|unsolicited", "response {presence present|absent, hex, size, sha256}", "evidence_missing[] kinds from the 24 required kinds"], "preconditions": ["kind dispatched only while that slot is open (V23)", "after plan_terminal only kinds unsolicited or redelivery (V17)", "bytes retained before any interpretation"]},
+  "delivery_interpreted": {"phases": ["open", "stopped", "terminal"], "payload": ["delivery_id of an earlier delivery_retained (V11)", "answer_class", "legacy_valid declared", "proof none|stipulated_synthetic|independently_verified", "decision (must equal decision_table result, V25)", "postdispatch {settings_match, model_ok, evidence_ok}"]},
+  "usage_reconciled": {"phases": ["open", "stopped", "terminal"], "payload": ["usage_known bool", "tokens_in|null", "tokens_out|null", "exhausted bool", "cost null always unless a verified price exists"], "note": "one charge per distinct attempt_id; deliveries and proven redeliveries never charge again"},
+  "slot_closed": {"phases": ["open", "stopped"], "payload": ["classification attempted_eligible|attempted_ineligible|unresolved (V15 checked against closure rule)"]},
+  "stop_recorded": {"phases": ["open"], "payload": ["gate predispatch|postdispatch|final", "causes[] in detection order from hard_evidence_failure|settings_drift|budget", "primary by precedence (V27)"], "note": "at most one per plan; first detected stop prevents all later reservation and dispatch"},
+  "plan_terminal": {"phases": ["blocked", "open", "stopped"], "payload": ["state, must equal terminal_derivation (V14)"], "preconditions": ["exactly once", "no open slot in main segment (V16); a recovery terminal may leave open slots as unresolved gaps"]},
+  "final_audit": {"phases": ["terminal"], "payload": ["revision 0", "declared inventories (V19)"], "note": "first event after plan_terminal; fixes operational completion at terminal"},
+  "audit_revision": {"phases": ["terminal"], "payload": ["revision n>=1", "trigger_seqs", "declared inventories (V19)"], "note": "recomputed inventories after late evidence; appended, never replacing earlier audits or the terminal state"},
+  "submission_quarantined": {"phases": ["blocked", "open", "stopped", "terminal"], "payload": ["reason", "bytes retained with hash/size", "no envelope row"]},
+  "evidence_gap_recorded": {"phases": ["blocked", "open", "stopped", "terminal"], "payload": ["slot_ref", "missing or corrupt kinds", "irrecoverable true|false"], "note": "explicit storage/evidence gap; a gap is never turned into an absent response"},
+  "recovery_opened": {"phases": ["any"], "segment": "recovery", "payload": ["last_verified_seq", "suspect_tail_seqs[]", "reason"]}
+ },
+ "plan_states": {
+  "nonterminal": ["pre", "ready/open", "running"],
+  "terminal": ["blocked_preflight", "finished_complete", "finished_incomplete", "stopped_hard_failure", "stopped_settings_drift", "stopped_budget"],
+  "transitions": [
+   "pre -> open via preflight_result ready",
+   "pre -> blocked via preflight_result blocked; blocked -> terminal via plan_terminal blocked_preflight",
+   "open -> open via slot cycle: reservation_made, dispatch_recorded, delivery_retained, delivery_interpreted, usage_reconciled, slot_closed",
+   "open -> stopped via stop_recorded; stopped -> terminal via plan_terminal (in-flight slot may still close first)",
+   "open -> terminal via plan_terminal finished_* when the frozen order is exhausted",
+   "terminal accepts only retention and audit events; no reopen, restart or resume"
+  ],
+  "terminal_derivation": "blocked preflight -> blocked_preflight; else stop causes present -> state of the primary cause (hard_evidence_failure > settings_drift > budget); else all slots closed and every comparison structurally complete and no unresolved/indeterminate slot -> finished_complete; else finished_incomplete. A stop on the last slot keeps the stop state."
+ },
+ "slot_states": ["planned", "reserved", "dispatched", "delivered", "closed", "unstarted (derived at terminal)", "indeterminate (derived from unverified events)"],
+ "gate_inputs": {
+  "preflight": ["receipt bytes hash and independent verification status", "manifest/plan/settings hashes equal receipt", "all applicable preflight evidence authority", "first-slot reservation affordable against verified ceilings"],
+  "predispatch_each_slot": ["no stop and no terminal in verified ledger", "previous slot closed", "next slot from receipt order", "manifest/plan/settings/input/model-window recheck", "required evidence storage writable", "remaining ceiling covers whole-slot worst case", "usage of earlier attempts reconciled or explicitly unknown with stop"],
+  "postdispatch_each_slot": ["returned model and settings match frozen values", "required evidence kinds present", "usage known if required for ceilings"],
+  "failure_to_cause": {"hard_evidence_failure": "missing or corrupt required evidence, identity conflict, unproved redelivery, unsolicited attempt, storage/isolation loss, unknown usage needed for a ceiling, external interruption, unreconcilable resources", "settings_drift": "manifest/plan/settings/input/model-window difference before or after dispatch", "budget": "whole-slot reservation does not fit, or request budget exhausted"}
+ },
+ "decision_table": {
+  "inputs": {"kind": "from delivery_retained", "bytes_relation": "derived by comparing SHA256 of response bytes with the earlier delivery of the same attempt_id: identical | conflicting | no_prior | not_applicable", "proof": "effective proof; independently_verified without a registered verifier is downgraded to none", "evidence_complete": "derived: evidence_missing is empty", "representable": "slot_ref and identity tuple match the frozen plan"},
+  "rows": [
+   {"when": {"kind": "redelivery", "bytes_relation": "conflicting"}, "decision": "QUARANTINE"},
+   {"when": {"kind": "redelivery", "bytes_relation": "no_prior"}, "decision": "QUARANTINE"},
+   {"when": {"kind": "redelivery", "bytes_relation": "identical", "proof": ["stipulated_synthetic", "independently_verified"]}, "decision": "DELIVERY_ONLY"},
+   {"when": {"kind": "redelivery", "bytes_relation": "identical", "proof": "none"}, "decision": "DELIVERY_ONLY_UNPROVED"},
+   {"when": {"kind": "unsolicited", "representable": true, "evidence_complete": true}, "decision": "ROW_UNRESOLVED"},
+   {"when": {"kind": "unsolicited"}, "decision": "QUARANTINE"},
+   {"when": {"kind": "dispatched", "evidence_complete": true}, "decision": "ROW"},
+   {"when": {"kind": "dispatched", "evidence_complete": false}, "decision": "BUNDLE_NO_ROW"}
+  ],
+  "slot_level": [
+   {"when": "dispatched attempt (verified) with no delivery_retained", "decision": "BUNDLE_NO_ROW"},
+   {"when": "slot referenced only by unverified or unacknowledged events", "decision": "NONE"}
+  ],
+  "stipulated_synthetic_proof": "only exercises the positive branch in synthetic traces. A real DELIVERY_ONLY needs independently_verified proof of delivery-only duplication and no second provider execution; the ledger cannot confer it and equal response text never suffices.",
+  "invalid_input_no_decision": "a delivery for an unknown or mismatching slot identity is not representable and is quarantined"
+ },
+ "handoff_outputs": {
+  "ROW": {"envelope_row": "one attempt row in a synthetic-attempt-evidence/1 candidate; legacy_record attached only if unchanged legacy validation accepts, else null", "ledger": "delivery and interpretation events", "completion": "may enter structural completion only if closure is attempted_eligible"},
+  "ROW_UNRESOLVED": {"envelope_row": "representable extra row; attempt_selection stays unresolved", "completion": "slot ineligible, unresolved; comparison zero"},
+  "DELIVERY_ONLY": {"envelope_row": "none (additional delivery of an existing attempt)", "completion": "no new attempt and no new charge"},
+  "DELIVERY_ONLY_UNPROVED": {"envelope_row": "none", "completion": "slot unresolved; hard evidence stop; both deliveries retained"},
+  "QUARANTINE": {"envelope_row": "none; no valid row is manufactured", "storage": "rejection ledger with raw bytes", "completion": "affected slot unresolved when it concerns a planned slot attempt"},
+  "BUNDLE_NO_ROW": {"envelope_row": "none; bytes and explicit gap retained", "completion": "slot unresolved and ineligible"},
+  "NONE": {"envelope_row": "none", "completion": "slot indeterminate, ineligible and unresolved"},
+  "never": ["a manufactured response, replaced bytes, imputed arm, selected attempt or invented interrupted event"]
+ },
+ "validation_rules": {
+  "note": "Checks over a ledger. V02-V06 define integrity breaks and the verified prefix; the others reject an event as illegal (retained, unverified, contributes nothing) or flag a derived-value mismatch. All checks are data predicates, none grants authority.",
+  "V01": "ledger_id equals the receipt ledger_id and receipt_sha256 equals the hash of the cited receipt bytes; an unverified or null receipt means no dispatch event is legal",
+  "V02": "seq contiguous from 1 with no gap or duplicate",
+  "V03": "prev_event_sha256 equals the previous event_sha256 (null only at seq 1)",
+  "V04": "event_sha256 equals the recomputed canonical hash",
+  "V05": "event_utc not earlier than the previous event in the main segment",
+  "V06": "persistence is acknowledged",
+  "V07": "dispatch_recorded and reservation_made name the next slot in the frozen order",
+  "V08": "no slot is open (reserved, dispatched or delivered but not closed) when a reservation or dispatch begins",
+  "V09": "dispatch_recorded is preceded by reservation_made for the same slot with all gate fields true",
+  "V10": "attempt_id is unique per dispatched or unsolicited attempt and attempt_order is strictly increasing across the ledger",
+  "V11": "delivery_interpreted cites an earlier delivery_retained (lower seq) of the same delivery_id",
+  "V12": "delivery_retained size and sha256 equal the carried response bytes; payload retained before any interpretation",
+  "V13": "recovery segment contains only recovery_opened, evidence_gap_recorded, stop_recorded, plan_terminal stopped_hard_failure, final_audit and submission_quarantined",
+  "V14": "plan_terminal.state equals terminal_derivation",
+  "V15": "slot_closed.classification equals slot_closure_rule applied to retained events",
+  "V16": "plan_terminal in the main segment has no open slot",
+  "V17": "after plan_terminal only submission_quarantined, evidence_gap_recorded, delivery_retained of kind unsolicited or redelivery, final_audit and audit_revision are legal",
+  "V18": "no reservation_made or dispatch_recorded after stop_recorded",
+  "V19": "final_audit and audit_revision inventories equal inventories recomputed from the verified events they cite",
+  "V20": "plan_terminal appears exactly once",
+  "V21": "recovery_opened.last_verified_seq equals the computed last verified main seq",
+  "V22": "an independently_verified claim whose verifier is absent from the external registry is counted as a rejected claim and downgraded to declared",
+  "V23": "delivery_retained of kind dispatched only while that slot is open",
+  "V24": "usage_reconciled at most once per distinct attempt_id",
+  "V25": "delivery_interpreted.decision equals the decision_table result",
+  "V26": "stop_recorded at most once",
+  "V27": "stop_recorded.primary equals the highest-precedence cause listed",
+  "V28": "usage_known false when usage is needed for a ceiling requires stop_recorded with hard_evidence_failure before the next reservation"
+ },
+ "slot_closure_rule": "attempted_eligible only if the single dispatched attempt has decision ROW, answer_class ok (complete success, no truncation, interruption, exhaustion, error or failed tool call), legacy_valid true, postdispatch checks pass and no extra attempt, conflicting or unproved delivery exists at closure time; unresolved for multiple attempts, unproved/conflicting deliveries, BUNDLE_NO_ROW or an evidence gap; otherwise attempted_ineligible. Later evidence never edits the closure; it is applied by audit_revision.",
+ "inventories": {
+  "planned": "slots in the receipt",
+  "authorized_dispatches": "verified dispatch_recorded events",
+  "dispatched": "slots with a verified dispatch_recorded",
+  "retained_attempts": "distinct attempt_id from verified dispatch_recorded and delivery_retained kinds dispatched/unsolicited",
+  "deliveries": "verified delivery_retained events of every kind",
+  "missing": "planned slots referenced by no retained attempt",
+  "unstarted": "planned slots without a verified dispatch_recorded that are not indeterminate",
+  "indeterminate": "slots referenced by unverified events and lacking a verified eligible closure",
+  "ineligible": "unresolved slots, attempted_ineligible closures",
+  "unresolved": "indeterminate, closed unresolved, two or more attempts, any attempt without authorized dispatch, unproved or conflicting delivery, dispatched slot unclosed at terminal, recorded evidence gap",
+  "structural_comparisons": "comparisons whose two explicitly mapped slots are attempted_eligible and neither unresolved nor indeterminate, at terminal (final_audit) and at head (latest audit)",
+  "unchanged": "planned slots and comparison denominators never shrink; no imputation"
+ },
+ "reservation_usage": {
+  "before_dispatch": "reservation_made records whole-slot worst case and remaining ceiling",
+  "after_response": "usage_reconciled once per distinct attempt_id including unsolicited extras",
+  "unknown_usage": "usage_known false keeps usage and cost null, cannot satisfy a required ceiling, and requires a stop with hard_evidence_failure (V28)",
+  "unknown_price": "cost stays null; never zero",
+  "redelivery": "no second charge without independent usage evidence of a second execution",
+  "overrun": "usage above reservation is an unreconciled resource failure, not an authorization to spend"
+ },
+ "crash_and_interruption": [
+  "C1 write-ahead: dispatch_recorded persisted and acknowledged and request bytes retained before any request is sent",
+  "C2 dispatch persistence unacknowledged or unverifiable at recovery: send cannot be excluded; slot indeterminate; no resume, retry or reinterpretation",
+  "C3 acknowledged dispatch with no delivery: BUNDLE_NO_ROW, slot unresolved; no interrupted event is invented; absence is not a declared absent response",
+  "C4 any V02-V06 break: suffix unverified; no terminal is claimed unless a recovery segment records one",
+  "C5 forked or duplicate sequence: both branches retained; first break governs",
+  "C6 recovery may only stop, record gaps, quarantine and terminate with stopped_hard_failure; it cannot reserve, dispatch, close slots or change verified classifications",
+  "C7 post-terminal arrivals: retention events and audit revisions only; terminal state and earlier audits are immutable",
+  "C8 a response whose attempt cannot be tied to a verified dispatch: retained via submission_quarantined, never a row, slot unresolved at audit"
+ ],
+ "audit": {
+  "operational_history": "events through plan_terminal in the verified prefix are immutable",
+  "final_audit": "revision 0 at terminal",
+  "late_changes": "audit_revision n>=1 recomputes inventories from all verified events; completion can only fall; prior audits stay visible",
+  "irrecoverable_gaps": "reported by evidence_gap_recorded and in audit inventories; never hidden by dropping planned coverage"
+ },
+ "external_authority_required_fail_closed": [
+  {"check": "freeze receipt verification and verifier registry", "state": "unavailable", "consequence": "preflight blocked"},
+  {"check": "ledger append-only and immutability (storage-enforced)", "state": "unavailable", "consequence": "chain is locally_computed only; no trusted provenance"},
+  {"check": "trusted clock for freeze_utc and event_utc", "state": "unavailable", "consequence": "UTC declared only"},
+  {"check": "persistence acknowledgement authority", "state": "unavailable", "consequence": "persistence is declared; real runs would block"},
+  {"check": "provider usage, price and returned model identity", "state": "unavailable", "consequence": "usage unknown; stop"},
+  {"check": "delivery-only and no-second-execution proof", "state": "unavailable", "consequence": "DELIVERY_ONLY_UNPROVED"},
+  {"check": "isolation, routing and restricted storage", "state": "unavailable", "consequence": "preflight blocked"},
+  {"check": "owner precision, quota and acceptance records", "state": "unavailable", "consequence": "preflight blocked"}
+ ],
+ "policy_rule_crosswalk": {
+  "R02": "freeze_receipt.fail_closed, gate_inputs.preflight",
+  "R03": "event_envelope identities, receipt comparisons",
+  "R04": "receipt slots_ordered, predispatch next-slot precondition",
+  "R05": "no resume/retry (C2, C6); one dispatch per slot",
+  "R06": "delivery_retained before delivery_interpreted; QUARANTINE and BUNDLE_NO_ROW",
+  "R07": "slot_closure_rule, structural_comparisons",
+  "R08": "answer_class ineligible continues order with no stop",
+  "R09": "decision_table redelivery rows",
+  "R10": "ROW_UNRESOLVED and late audit_revision",
+  "R11": "failure_to_cause.hard_evidence_failure",
+  "R12": "failure_to_cause.settings_drift, postdispatch check",
+  "R13": "reservation_usage",
+  "R14": "terminal_derivation, final_audit versus audit_revision",
+  "R15": "inventories",
+  "R16": "unchanged; no count or target chosen"
+ },
+ "legacy_compatibility": {
+  "unchanged": ["run and manifest schema_version 1", "template null reasons", "synthetic-attempt-evidence/1 fields and enums", "legacy validators and grouping checker", "scoring denominators D1-D4 = 4", "preparation index", "0148 and 0143 files"],
+  "multiple_attempts": "selection stays unresolved with zero completion",
+  "no_new": ["envelope enum", "schema field", "scoring denominator", "caller boundary or wrapper interface"]
+ },
+ "unavailable_real_prerequisites": ["freeze receipt and its independent verification", "verifier registry", "trusted append-only storage and clock", "reader, runner, scorer, probes and native references", "trusted model/usage/isolation/routing evidence", "verified quota, accepted precision targets and counts", "owner acceptance and whole-method independent review", "separately scoped and reviewed wrapper implementation"],
+ "actual_counts": {"admissions": 0, "model_executions": 0, "reader_executions": 0, "native_executions": 0, "scored_runs": 0, "semantic_passes": 0, "real_comparisons": 0},
+ "actual_costs": {"provider": null, "infrastructure": null, "probes": null},
+ "real_envelope_admission": "blocked",
+ "benchmark_ready": false,
+ "author_check_findings": [
+  {"id": "F-A1", "subject": "V20 versus V17", "observation": "In the author application a second plan_terminal is reported as V17 (not a legal post-terminal event) and never as V20. V20 is therefore subsumed by V17 for any second terminal, in either segment; a reviewer should decide whether to keep V20 as a redundant statement or delete it. The saved negative that expected V20 was retained as a mismatch, not edited."},
+  {"id": "F-A2", "subject": "slot-level NONE versus saved seam expectation S-X23", "observation": "Saved expectation S-X23 lists decisions [ROW, ROW] while this contract's decision_table.slot_level also yields NONE for the slot referenced only by unverified events. The application output shows [ROW, ROW, NONE]. The inventory expectation (B-N indeterminate) agrees; only the decision list differs. Retained as a mismatch; a reviewer should decide whether NONE is a decision or only an inventory state."}
+ ],
+ "review_handoff": "A later separate reviewer should judge these two files against the pinned sources, .session/artifacts/attempt-ledger-expectations-0150.json (saved before this file) and the application/check artifact; this author does not approve its own contract."
+}
