@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "reviewed_commit": "8f5ae4c48581459aa09b3f5e56f79db56188b86c",
+  "files": {
+    "docs/research/poc/pair/pair_diff.py": "47d27dee98f1642dc401195482fbf43c536cef8a160aa399444d2e3a2d3578cb",
+    "docs/research/poc/pair/protocol.md": "49255283f2814891ad7e0040e1f2ba4f54f6837bb8754769d7627ef84c374409",
+    "docs/research/poc/pair/owner-instructions.md": "55c1ed5ec72fe37b817afedeecb7abefad5b7577349683d9cbcbc69dcf78242b",
+    "docs/research/poc/pair/selfcheck.json": "9b76ed047caf417db5f87f7ea66f682354c84b91f231492d6603ef33ff57f79c"
+  },
+  "verdict": "closed",
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "minor",
+      "file": "docs/research/poc/pair/pair_diff.py:229-237; docs/research/poc/pair/protocol.md:53",
+      "claim": "The documented self-check rewrites tracked selfcheck.json rather than verifying a separate result. Use a separate output path or restore committed bytes after replay.",
+      "evidence": "self_check.save calls target.write_text repeatedly. The exact requested subprocess invocation exited 0 with three passed controls. Replay bytes matched committed SHA256 9b76ed047caf417db5f87f7ea66f682354c84b91f231492d6603ef33ff57f79c exactly; no JSON value differed. Committed bytes remain unchanged. This records the required rewrite finding, not a result mismatch."
+    }
+  ],
+  "probes": [
+    {"name":"raw_nonheap_byte","expected":"Only RTSG raw offset 9 differs","observed":"RTSG/0/0 offset 9 length 1, 05 to 45; no decompressed field","status":"passed"},
+    {"name":"FPHb_recompressed_byte","expected":"One FPHb decompressed byte and compressed raw differences","observed":"FPHb/0/0 offset 1384 length 1, 04 to 24; raw differs","status":"passed"},
+    {"name":"payload_long_tail","expected":"Changed offset 7 plus all 81 appended bytes, bounded spans","observed":"82 differing bytes; ranges (7,1), (25,32), (57,32), (89,17); absent left tails empty","status":"passed"},
+    {"name":"empty_resource_one_side","expected":"Added empty resource explicitly right-only and different","observed":"TEST/777/0 right-only, different true, raw different false","status":"passed"},
+    {"name":"vers_and_LVSR_fields","expected":"Version byte 3 explicitly changes in both resources","observed":"Both raw version fields 21008000 to 21008001; tuples [21,0,0,4,0] to [21,0,0,4,1]; raw offset 3 only","status":"passed"},
+    {"name":"BDPW_boundary_chunks","expected":"Changes at offsets 15,16,63 mark chunks 0,1,3 only","observed":"Four chunks; changed indices [0,1,3], alignment valid","status":"passed"},
+    {"name":"pin_manifest_mismatch","expected":"CLI main emits blocked JSON and returns nonzero before load","observed":"Virtual in-memory pins/settings/input; exit 1, schema_version 1, status blocked, ValueError: pair SHA256 mismatch: left.vi","status":"passed"},
+    {"name":"virtual_file_actual_loader","expected":"Actual pinned loader localizes one resource byte and absolute file byte","observed":"RTSG/0/0 raw offset 9 (05 to 45), whole-file offset 209, one differing resource; virtual file never written","status":"passed"},
+    {"name":"protocol_blocks_virtual_execution","expected":"Pin block and replay block match actual CLI, eight inputs and eight outputs","observed":"Both Python bodies compiled/executed with in-memory I/O. pins.json uses schema_version/files/authoring; authoring.md hash; exclusive creation. Eight subprocess calls use -I, --pins fixtures/pins.json, check=True; all input names occur in manifest and owner instructions. Output list matches four logic and four save-setting pairs.","status":"passed"}
+  ],
+  "limitations": [
+    "No LabVIEW or real owner pair; no behavior, valid edit, native compatibility, or general goal completion is established.",
+    "LabVIEW menu wording cannot be verified here; owner instructions checked only for internal consistency and multiple intended changes.",
+    "All fixture mutations and synthetic inputs were in memory; only pinned add.vi was parsed and no VI was written.",
+    "Sampled controls cannot prove correctness for every VI; unsupported known heaps deliberately block.",
+    "Role path guard rejected both requested repository output paths. This session artifact preserves the review but does not satisfy existence of docs/research/poc/pair/review-0102.json."
+  ],
+  "standards": "No documented naming, duplication, abstraction, or scattering violation found in the four scoped files; git tracked AGENTS.md search returned no files.",
+  "spec": "No major finding in independent probes or manual protocol/owner consistency review. Eight names, folder, authoring record, --pins, manifest layout and eight replay output names agree. Owner instructions preserve wiring, representation and settings and require unintended changes to be recorded. Minor R1 concerns self-check output mutation.",
+  "provenance": "Task 53816a08feeb89a2747bf63ce8338ea315e06518 added the scoped files; git diff 53816a0 HEAD -- docs/research/poc/pair was empty. Working tree stayed clean after verification.",
+  "recommendation": "Review closed for the recorded commit under the issue's no-major-findings definition. Acceptance remains incomplete until the role output path is admitted and this record is placed at the requested repository path and structurally verified. No merge or goal completion is implied."
+}
