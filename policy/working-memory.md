@@ -1024,6 +1024,16 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   script under split (max_turns >= 25). #430 pending; do not wait. Reader implementation gated.
   Memory ~107 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0085 (#448, wake false)
+- Considered record 0084, report #446 (.github/loop/data/session-reports/446/e74db3cf….json).
+- #446 DONE, merged 298727a (codex GPT 270k input, 14 turns, routine accept): check() returns completed-control count,
+  main() requires exactly 8 (1 reason self-test + 7 mutations). Probes b/b2/a/c exit 1. Verified on main: split_allocate.py
+  55c236ad…, allocation.synthetic.json 70d94d28… (unchanged), preparation 99069d8d…, status 8f64e982… (allocator not pinned).
+- Order `rereview-split-completion-446` (reviewer, medium, 40/30, main, no exports): finding 1 only, 4 new probes, model family.
+- Next: accept -> hash-gated pin script adding both allocator files under split + one review sentence (max_turns >= 25).
+  Revise -> fix round 2 as Policymaker script; a further blocking finding -> re-scope. #430 pending; do not wait.
+  Reader implementation gated. Memory ~108 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
