@@ -709,6 +709,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   record review. v4 revise -> fix file myself. If lineage review crashes again WITHOUT exports, investigate engine/profile
   (do not order a 4th time). Lineage accept -> bounded next triage batch; delete the proposal copy after landing.
 
+## Iteration 0064 (#378, wake false)
+- Considered record 0063, reports #374/#375/#376 (.session/history/sessions/37N/*.md). Startup ok, 29,640 tokens.
+- #376 ACCEPT of store workflow revision 4 (sha 27b365ec…), codex GPT reviewer vs Claude author -> cross-family.
+  Filed Owner `question` (revision 4): install rev 4, new scorer token, run initial, revoke, run revoked, commit
+  replacement record + .sha256 at benchmark/split/store-readiness-268.redacted.json(.sha256).
+- #374 lineage review (no exports, no crash -> export staging was the likely crash cause) REVISE: (1) candidate-0124/0227
+  XML URLs resolve to absent archive members -> not verified; (2) no inventory pin. All other checks passed (coverage 13
+  groups exact, pylavi hashes/LVSR offsets, six R3 groups); do not repeat. Rules R1-R3 may guide MANUAL public triage only.
+- Wrote policy/proposals/lineage-pilot-359.json revision 2 (sha 57c558df…): both overlapping decisions R3/undecidable,
+  top-level inventory pin lineage.json 52f3d2ea…. Result 5 same-lineage, 8 undecidable, 0 independent.
+- #375 pin-runner CRASHED at 0 turns (no models). Main unchanged (status bcd2881b…, preparation 315d83a4…).
+- Orders (parallel, main): pin-runner-contract-369-retry (benchmark, low, 20/25), recheck-lineage-pilot-374 (reviewer,
+  medium, 30/25, diff rev1 vs rev2 only).
+- Next: verify main 65 refs + status 85b0f719…, delete execution/scripts/pin_runner_369.py. If #375 retry crashes at 0
+  turns again, investigate profile/runner; no 3rd identical order. Lineage accept -> hash-gated landing script writing
+  the 13 adjudications into benchmark/lineage.json (re-pin; lineage.py --check needs env), then delete proposal copy;
+  next bounded manual triage batch. Owner record arrives -> one independent record review (cross-family if possible).
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.

@@ -1,2827 +1,2833 @@
 {
-  "rules": [
+ "revision": 2,
+ "inventory": {
+  "path": "benchmark/lineage.json",
+  "sha256": "52f3d2eafcbbda6695e30fb73d3a8b4f6f891b13acaf129d4ea1b091ad83d077",
+  "note": "Pinned by the Policymaker after review #374 finding 2; the #359 report gave no inventory pin."
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "label": "same-lineage",
+   "requires": "For conservative public leakage grouping: same pinned repository, same fixture path after removing only an explicit save-version directory, matching basename and LVSR versions matching those directories; alternatively identical XML-declared library/class/member chain plus matching class-relative path in copies of the same test harness. Cite every member location and save field, and XML declaration containers/lines for the second route.",
+   "meaning": "Keep together as public variants; no claim of identical behavior, native ownership, direction of derivation or proven resave history."
+  },
+  {
+   "id": "R2",
+   "label": "independent",
+   "requires": "Positive, cited provenance establishing separately authored origins and excluding shared templates/derivation, supported by member paths, repository identities and XML or binary name evidence. Different hashes, save versions, paths, owners or repositories alone never suffice.",
+   "meaning": "Do not assign merely because basename collisions or different class methods exist; no pilot group meets this rule."
+  },
+  {
+   "id": "R3",
+   "label": "undecidable",
+   "requires": "Use when R1 or R2 evidence is incomplete, conflicting, or only covers a subset of the group. Retain all member locations and available save/name clues, and state the missing provenance or structural evidence.",
+   "meaning": "Visible unresolved gap; do not merge the entire candidate or infer independence. Overlapping groups must receive consistent decisions."
+  }
+ ],
+ "decisions": [
+  {
+   "candidate_id": "candidate-0003",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/3",
+   "matching_name": "AF PPL.lvproj",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Similar AF PPL project names and dependency/build names, but different archive roots and destinations do not establish shared derivation. XML root line 2 records 15 versus 14; obtain provenance or structural comparison.",
+   "evidence": [
     {
-      "id": "R1",
-      "label": "same-lineage",
-      "requires": "For conservative public leakage grouping: same pinned repository, same fixture path after removing only an explicit save-version directory, matching basename and LVSR versions matching those directories; alternatively identical XML-declared library/class/member chain plus matching class-relative path in copies of the same test harness. Cite every member location and save field, and XML declaration containers/lines for the second route.",
-      "meaning": "Keep together as public variants; no claim of identical behavior, native ownership, direction of derivation or proven resave history."
+     "artifact": "artifact-0700",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/700",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "PPL Test/AF PPL.lvproj",
+     "archive": "actor-framework/Documentation/Test Plan/PPL Test.zip",
+     "member_index": 2,
+     "sha256": "7ecf560d8a3d43568a02882feb8a9c646a5c3093a9d200dee451974d14628feb",
+     "save_fields": [
+      {
+       "decoded": "15.0.0f0",
+       "field": "XML root @LVVersion",
+       "raw_hex": "15008000"
+      }
+     ],
+     "xml_declared_names": []
     },
     {
-      "id": "R2",
-      "label": "independent",
-      "requires": "Positive, cited provenance establishing separately authored origins and excluding shared templates/derivation, supported by member paths, repository identities and XML or binary name evidence. Different hashes, save versions, paths, owners or repositories alone never suffice.",
-      "meaning": "Do not assign merely because basename collisions or different class methods exist; no pilot group meets this rule."
-    },
-    {
-      "id": "R3",
-      "label": "undecidable",
-      "requires": "Use when R1 or R2 evidence is incomplete, conflicting, or only covers a subset of the group. Retain all member locations and available save/name clues, and state the missing provenance or structural evidence.",
-      "meaning": "Visible unresolved gap; do not merge the entire candidate or infer independence. Overlapping groups must receive consistent decisions."
+     "artifact": "artifact-0712",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/712",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "PPL/AF PPL.lvproj",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 38,
+     "sha256": "6ec581abd38a8109fcfc51246d46f984a463580969a8e6cab1bd07c8ef7fc5e7",
+     "save_fields": [
+      {
+       "decoded": "14.0.0f0",
+       "field": "XML root @LVVersion",
+       "raw_hex": "14008000"
+      }
+     ],
+     "xml_declared_names": []
     }
-  ],
-  "decisions": [
+   ]
+  },
+  {
+   "candidate_id": "candidate-0007",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/7",
+   "matching_name": "Actor Core.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Framework source/package pair coexists with Actor with Nesteds and Van Caller overrides. Basename and differing save versions cannot decide lineage for all four members; distinguish copy relations from template/override derivation.",
+   "evidence": [
     {
-      "candidate_id": "candidate-0003",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/3",
-      "matching_name": "AF PPL.lvproj",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "Similar AF PPL project names and dependency/build names, but different archive roots and destinations do not establish shared derivation. XML root line 2 records 15 versus 14; obtain provenance or structural comparison.",
-      "evidence": [
-        {
-          "artifact": "artifact-0700",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/700",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "PPL Test/AF PPL.lvproj",
-          "archive": "actor-framework/Documentation/Test Plan/PPL Test.zip",
-          "member_index": 2,
-          "sha256": "7ecf560d8a3d43568a02882feb8a9c646a5c3093a9d200dee451974d14628feb",
-          "save_fields": [
-            {
-              "decoded": "15.0.0f0",
-              "field": "XML root @LVVersion",
-              "raw_hex": "15008000"
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0712",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/712",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "PPL/AF PPL.lvproj",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 38,
-          "sha256": "6ec581abd38a8109fcfc51246d46f984a463580969a8e6cab1bd07c8ef7fc5e7",
-          "save_fields": [
-            {
-              "decoded": "14.0.0f0",
-              "field": "XML root @LVVersion",
-              "raw_hex": "14008000"
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
+     "artifact": "artifact-0028",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/28",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Actor/Actor Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 264,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
     },
     {
-      "candidate_id": "candidate-0007",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/7",
-      "matching_name": "Actor Core.vi",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "Framework source/package pair coexists with Actor with Nesteds and Van Caller overrides. Basename and differing save versions cannot decide lineage for all four members; distinguish copy relations from template/override derivation.",
-      "evidence": [
-        {
-          "artifact": "artifact-0028",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/28",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Actor/Actor Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 264,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0188",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/188",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/Testing/Test Harness/Actor with Nesteds/Actor with Nesteds/Actor Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "3e9f94f3470814b745567ff97ce46bd053b1c7822893923a5ff1260376f94acc",
-          "save_fields": [
-            {
-              "byte_offset": 96,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 280,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Actor with Nesteds.lvlib:Actor with Nesteds.lvclass:Actor Core.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0527",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/527",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Actor/Actor Core.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 123,
-          "sha256": "8bbee41c366c626c25ea4876f0a4be5620bbcc2b0414b149685ff457d2e63a14",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 264,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0688",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/688",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Debug AF VAN Test/Van Caller/Van Caller/Actor Core.vi",
-          "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
-          "member_index": 17,
-          "sha256": "f9e5867f3c3624e58e0596a8d9409478b66e34cf1f8eafb1f0e23c5b1e836795",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "15.0.0b0",
-              "field": "LVSR",
-              "raw_hex": "15006000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "15.0.0b11",
-              "field": "vers",
-              "raw_hex": "15006011",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Van Caller.lvlib:Van Caller.lvclass:Actor Core.vi"
-          ]
-        }
-      ]
+     "artifact": "artifact-0188",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/188",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/Testing/Test Harness/Actor with Nesteds/Actor with Nesteds/Actor Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "3e9f94f3470814b745567ff97ce46bd053b1c7822893923a5ff1260376f94acc",
+     "save_fields": [
+      {
+       "byte_offset": 96,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 280,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Actor with Nesteds.lvlib:Actor with Nesteds.lvclass:Actor Core.vi"
+     ]
     },
     {
-      "candidate_id": "candidate-0035",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/35",
-      "matching_name": "Do.vi",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "38 Do.vi methods span framework messages, templates and test harness messages; distinct declared owners are evidence of distinct methods, not independently authored lineage. Some source/package pairs may be related; whole-group merge is unsupported.",
-      "evidence": [
-        {
-          "artifact": "artifact-0020",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/20",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/AFDebug/Register Actor Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "ede05d5104f9edf945db2102b83bed962cd43c7fc0ee85ca207431651efc1f8e",
-          "save_fields": [
-            {
-              "byte_offset": 88,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 272,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Debug.lvlib:Register Actor Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0057",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/57",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Batch Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "02b37cde15ce1136b439dc0cb3cb13c9197c876a794299d0466abb71778422aa",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Batch Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0064",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/64",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Inspection API/Ping msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "0f74d4634886875f067d9dbf7c92a28d730465f058eca02b37a93d2eaf36ed03",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0076",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/76",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/LastAck/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "3634c22793a0e7ce50dfb7bd1a3da39a9ccc35e64ed766cb24a84b3c71d37c9f",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 452,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 468,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 484,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 500,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 516,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0082",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/82",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Launch Nested Actor Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "3d7b6309163ee947deca21f779ae0d9050265084e9290ea79d60bc65a7856592",
-          "save_fields": [
-            {
-              "byte_offset": 100,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 484,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 500,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 516,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 532,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 548,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0109",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/109",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Message/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "4743cff3f3fcc473ed3dd523bd72b38475ef1a1f0e601411f5db96aedf23c18a",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 452,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 468,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 484,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 500,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 516,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0118",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/118",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Reply Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "704eba4de4051e03eb006e78d05f580fc60eb6f605896a846ae8428e905baad6",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Reply Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0122",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/122",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Report Error Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "78c586d4370e724b455f096b7ad89ea92d40bb3342273528ce7f45be8866ceea",
-          "save_fields": [
-            {
-              "byte_offset": 72,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 256,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Report Error Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0126",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/126",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Self-Addressed Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "45b85d6c74c961b20c9438e79b119fafee82be129814f7c26ac271f94c0eec08",
-          "save_fields": [
-            {
-              "byte_offset": 72,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 256,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Self-Addressed Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0130",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/130",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Specialty Messages/Batch Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "92675e32d4a7fca1e119c9fa18412003d48ae0f7017fd19c69683ecb4c0e418b",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Batch Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0133",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/133",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Specialty Messages/Reply Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "88e8896fff151f5155f7ee9e732c05c7857ac4a1ad752b1b4ea282ba679f4b8b",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Reply Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0137",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/137",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Specialty Messages/Report Error Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "971271eec792fdee417191449a2bb56de7f7ec0f99984d6f9f4674db3737665c",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0141",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/141",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Specialty Messages/Self-Addressed Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "163bd57e549b19b72229816af99742275c379e86d99b6b20e0856dd298100baa",
-          "save_fields": [
-            {
-              "byte_offset": 96,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 280,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0144",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/144",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Stop Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "45731acf277a8ceb3736321a784ae241d38809a2d69a27f40f9202d49c2d4754",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 452,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 468,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 484,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 500,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 516,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0184",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/184",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/Testing/Test Harness/Actor with Nesteds/Actor with Nesteds Messages/Stop Nested Actors Msg/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "132ff1c94e101c1b57de5ad4c9b11f1d9e7c0a4f18225183250625519f8d23c4",
-          "save_fields": [
-            {
-              "byte_offset": 100,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 284,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Actor with Nesteds.lvlib:Stop Nested Actors Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0417",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/417",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Concrete Message Template/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "6a2a5d25c7d64ca46e7c1ef4a89c15d80acc204011533ed0bba518f75c72d078",
-          "save_fields": [
-            {
-              "byte_offset": 8876,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 9416,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 9432,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 9448,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 9464,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 9480,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Concrete Message Template.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0419",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/419",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Message Template/Do.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "5b23e9d75732961d269a68c47778820525f3b25b9d621bed5741f386863376ef",
-          "save_fields": [
-            {
-              "byte_offset": 8856,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 9360,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 9376,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 9392,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 9408,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 9424,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Message Template.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0522",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/522",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/resource/AFDebug/Register Actor Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 155,
-          "sha256": "77d2140aff6d24637e99f0bb152adde176fd1e6d8e7ff9fdc4243fab54de3b97",
-          "save_fields": [
-            {
-              "byte_offset": 88,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 272,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Debug.lvlib:Register Actor Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0556",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/556",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Batch Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 121,
-          "sha256": "ae53fd733b780603b73cf5f26f07876f93392b62afb6e7556eaa94479be209b7",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Batch Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0563",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/563",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Inspection API/Ping msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 113,
-          "sha256": "37ce05b2b993a86a7aa31fb51a809258d08d8a9fc6d5ec3f4fad839f208fc0d7",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0580",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/580",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/LastAck/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 92,
-          "sha256": "a6f42ed1862855c90dc38ed014e37f95fa819fd2eb864611d1aad01e9fa17e7a",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0586",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/586",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Launch Nested Actor Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 89,
-          "sha256": "f7eec77fa1f846129c0f0599f7d1717e7643fefdc3c014162e53f934380949df",
-          "save_fields": [
-            {
-              "byte_offset": 100,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 284,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0613",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/613",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Message/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 85,
-          "sha256": "e4ede8be61ddbba6fc1f4c4a1e10130cbdff657567c772e5adfa2cbfc100a827",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0622",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/622",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Reply Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 53,
-          "sha256": "2822e7c5eb32a3d830e66c4a06353212e6e29cbb9c94a954dced83f68fc1f07a",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Reply Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0626",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/626",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Report Error Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 49,
-          "sha256": "00b9dac029a39aa016e680b412d5f596a1154351d375f29d62ee57f15f9b1f2d",
-          "save_fields": [
-            {
-              "byte_offset": 72,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 256,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Report Error Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0630",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/630",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Self-Addressed Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 46,
-          "sha256": "21f5c8da59ebff5c867a003836ba3fe5355226d1bd58e444669a092b3b6b39c8",
-          "save_fields": [
-            {
-              "byte_offset": 72,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 256,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Self-Addressed Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0634",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/634",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Batch Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 43,
-          "sha256": "4f2fe6e3359e05a2368920dd3f7ebc91f37e006c6e74cce94ac48d3029fd79f2",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Batch Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0637",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/637",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Reply Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 38,
-          "sha256": "d7369ec4598259a98e23532e2f5aaa72005bf5cece67cfabfea2edf94f238954",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Reply Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0641",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/641",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Report Error Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 34,
-          "sha256": "5247514eecaf2a0282ba4312abe47e3767947dc8a0e350550a448287837523c8",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0645",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/645",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Self-Addressed Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 31,
-          "sha256": "c8310b4864216dc5c5f0a8cbf5cc431e6b4d593ac0157c5004dcc7ed0dac2f64",
-          "save_fields": [
-            {
-              "byte_offset": 96,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 280,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0648",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/648",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Stop Msg/Do.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 25,
-          "sha256": "02bc36e05033e2e01772899eb2a2411ea3ff3f75544705b40418cde7c4602a91",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0681",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/681",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Amplify Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
-          "member_index": 8,
-          "sha256": "616da74e341a608343e8438ef1d65e4d72c3683c7c4d1a532446cf0e0a1de447",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "15.0.0b0",
-              "field": "LVSR",
-              "raw_hex": "15006000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 252,
-              "decoded": "15.0.0b11",
-              "field": "vers",
-              "raw_hex": "15006011",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Van Caller.lvlib:Amplify Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0684",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/684",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Baffle Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
-          "member_index": 12,
-          "sha256": "8b4c531608deecd3a526aab2acb71fe3d99204fd41c1b439da5b4595fda2f76d",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "15.0.0b0",
-              "field": "LVSR",
-              "raw_hex": "15006000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "15.0.0b11",
-              "field": "vers",
-              "raw_hex": "15006011",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Van Caller.lvlib:Baffle Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0693",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/693",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Debug AF VAN Test/Van Nested/Van Nested Messages/Chuckle Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
-          "member_index": 25,
-          "sha256": "6b248aff80f5728b0364f7c3c90bc7112b9c0e03a7eb6a387c2f9e44601ac3a9",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "15.0.0b0",
-              "field": "LVSR",
-              "raw_hex": "15006000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 252,
-              "decoded": "15.0.0b11",
-              "field": "vers",
-              "raw_hex": "15006011",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Van Nested.lvlib:Chuckle Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0727",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/727",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Rescript Target/Rescript Target Messages/Alpha Msg Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 62,
-          "sha256": "9258c3f64c935e3863ee6bf7625419cdf95a0b7d81de2e35db1b0b1e6a4f512d",
-          "save_fields": [
-            {
-              "byte_offset": 88,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 3252,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 3268,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 3284,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 3300,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 3316,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Rescript Target.lvlib:Alpha Msg Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0730",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/730",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Rescript Target/Rescript Target Messages/Bravo Msg Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 66,
-          "sha256": "2bb31b052e95f05a9e3bff5836a87a0f80aa34828adfd163228b90a4ecec8ecc",
-          "save_fields": [
-            {
-              "byte_offset": 88,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 3260,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 3276,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 3292,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 3308,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 3324,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Rescript Target.lvlib:Bravo Msg Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0742",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/742",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Test Target/Test Target Messages/Concrete Target Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 84,
-          "sha256": "43f47bcad26c8039344754bb87644e3fb39617894d3090df53e8ee7f4559d01d",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 3956,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 3972,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 3988,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 4004,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 4020,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Concrete Target Msg.lvclass:Do.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0743",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/743",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Test Target/Test Target Messages/Write Data Set Msg/Do.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 86,
-          "sha256": "cafa68d34a1e94fddac9974b1b32bd3a8181d606e0c56441972cf8a4e14fdf65",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 636,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 652,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 668,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 684,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 700,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Write Data Set Msg.lvclass:Do.vi"
-          ]
-        }
-      ]
+     "artifact": "artifact-0527",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/527",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Actor/Actor Core.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 123,
+     "sha256": "8bbee41c366c626c25ea4876f0a4be5620bbcc2b0414b149685ff457d2e63a14",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 264,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
     },
     {
-      "candidate_id": "candidate-0036",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/36",
-      "matching_name": "Drop Message Core.vi",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "Nine methods include framework source/package pairs and Baffle Msg override. Different qualified owners do not exclude shared derivation; resolve pairs before whole-group adjudication.",
-      "evidence": [
-        {
-          "artifact": "artifact-0065",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/65",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Inspection API/Ping msg/Drop Message Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "4d84cce57449b64a9d51022d3a9be20cfa58bf30d79f2c40dfb9c5d1a7ade2c0",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0110",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/110",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Message/Drop Message Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "6d72aa8d1cae345f3bfdfba48e45ad73994e76be2a0e69e2c67c45703fef47c5",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 452,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 468,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 484,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 500,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 516,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0119",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/119",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Reply Msg/Drop Message Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "a143576b7e02994b774ff79408f2794f4fdada47f4ed22951bdfc100885b2da7",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Reply Msg.lvclass:Drop Message Core.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0134",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/134",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Core/ActorFramework/Specialty Messages/Reply Msg/Drop Message Core.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "d2a4d17ea129e6c69cb4cc5dabbf2f197cb089fd03ee39dd7a3fbf3de2701ba5",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Reply Msg.lvclass:Drop Message Core.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0564",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/564",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Inspection API/Ping msg/Drop Message Core.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 114,
-          "sha256": "4ee3a3bb8df27626213e8317ed78d2702b07ed393416ce454cd9403a3fa26a5f",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0614",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/614",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Message/Drop Message Core.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 86,
-          "sha256": "c5abf6934db58d3bbc6a0e3f74faa443452943d74684da305a99bf5dfb19c0f2",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0623",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/623",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Reply Msg/Drop Message Core.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 54,
-          "sha256": "b68bca909dcdc67aafc3dae95dbbc93d03078179f54567331d704a81b76f420b",
-          "save_fields": [
-            {
-              "byte_offset": 64,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Reply Msg.lvclass:Drop Message Core.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0638",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/638",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Reply Msg/Drop Message Core.vi",
-          "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
-          "member_index": 39,
-          "sha256": "3ff5e6663f40383feb69ccdd8078a9511a2169a74b534200c2514edd6a8d3a6d",
-          "save_fields": [
-            {
-              "byte_offset": 92,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 276,
-              "decoded": "20.0.1f7",
-              "field": "vers",
-              "raw_hex": "20018007",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "AF Specialty Messages.lvlib:Reply Msg.lvclass:Drop Message Core.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0685",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/685",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Baffle Msg/Drop Message Core.vi",
-          "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
-          "member_index": 13,
-          "sha256": "e1547177ae7da96b71b5f59c0fc1408da012ca46f6f0f3fd71ff83251eda0fb2",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "15.0.0b0",
-              "field": "LVSR",
-              "raw_hex": "15006000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 248,
-              "decoded": "15.0.0b11",
-              "field": "vers",
-              "raw_hex": "15006011",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Van Caller.lvlib:Baffle Msg.lvclass:Drop Message Core.vi"
-          ]
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0071",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/71",
-      "matching_name": "Inline - preallocate.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
-      "evidence": [
-        {
-          "artifact": "artifact-0818",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/818",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/23.0/Inline - preallocate.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "c0dec14e89ab1e0fc305be64ec0ec6e9e7586467e75495d8ae3ed06e7d073dea",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "23.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "23008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 360,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 376,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 392,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 408,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 424,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0823",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/823",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/26.0/Inline - preallocate.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "51584424621474f62eabc83489e5bbbe7a2250132af45e79943b754d1b7ffd4b",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "26.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "26008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 220,
-              "decoded": "26.3.0f0",
-              "field": "vers",
-              "raw_hex": "26308000",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0072",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/72",
-      "matching_name": "Inline.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
-      "evidence": [
-        {
-          "artifact": "artifact-0819",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/819",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/23.0/Inline.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "dc22df033d2c966c60c9e11f93a9636e59d0681db72e3c1f3749c19eb051b6f2",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "23.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "23008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 360,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 376,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 392,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 408,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 424,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0824",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/824",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/26.0/Inline.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "518ed0a3ccadb40d10e42da58758988aac9c0a06e07d4760def1fa4a088e2539",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "26.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "26008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 220,
-              "decoded": "26.3.0f0",
-              "field": "vers",
-              "raw_hex": "26308000",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0095",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/95",
-      "matching_name": "Non-Reentrant.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
-      "evidence": [
-        {
-          "artifact": "artifact-0820",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/820",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/23.0/Non-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "3882c1cb9dc37f6665e7219d77f58ecd01e491675a55505c40ad62d74fc15ee9",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "23.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "23008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 356,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 372,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 388,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 404,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 420,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0825",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/825",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/26.0/Non-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "7888de4aaf73052cce7a470a1f13c6e866df7709851087f32d74f2594f886132",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "26.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "26008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 220,
-              "decoded": "26.3.0f0",
-              "field": "vers",
-              "raw_hex": "26308000",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0108",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/108",
-      "matching_name": "Preallocate-Reentrant.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
-      "evidence": [
-        {
-          "artifact": "artifact-0821",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/821",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/23.0/Preallocate-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "90461085d6aa47148a53c251fc28c17579f8229e4fe0148d7db955b2d62ff15e",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "23.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "23008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 360,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 376,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 392,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 408,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 424,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0826",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/826",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/26.0/Preallocate-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "9e7e1c1a17ade573589159cf6e8073908b4fe120d03a5488676cc97b10b59db6",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "26.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "26008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 220,
-              "decoded": "26.3.0f0",
-              "field": "vers",
-              "raw_hex": "26308000",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0120",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/120",
-      "matching_name": "Read Attributes.vi",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "Abstract Message Template and Abstract with Data Msg declare different owners. Template instantiation remains plausible; no positive independent-origin evidence or documented derivation.",
-      "evidence": [
-        {
-          "artifact": "artifact-0414",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/414",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Abstract Message Template/Read Attributes.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "fd4c147f23cc0bd65ac23ff622b104824b80f9040f3c3ccb3ff4ec1cd008670a",
-          "save_fields": [
-            {
-              "byte_offset": 80,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 620,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 636,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 652,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 668,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 684,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Abstract Message Template.lvclass:Read Attributes.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0739",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/739",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Test Target/Test Target Messages/Abstract with Data Msg/Read Attributes.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 80,
-          "sha256": "2c68341dc51736a05e36793d96e8dceb81ae21114640eae4f1fb611af90eab0b",
-          "save_fields": [
-            {
-              "byte_offset": 96,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 2172,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 2188,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 2204,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 2220,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 2236,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Abstract with Data Msg.lvclass:Read Attributes.vi"
-          ]
-        }
-      ],
-      "xml_evidence": [
-        {
-          "artifact": "artifact-0413",
-          "line": 39,
-          "target": "artifact-0414"
-        },
-        {
-          "artifact": "artifact-0738",
-          "line": 42,
-          "target": "artifact-0739"
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0124",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/124",
-      "matching_name": "Read Data Set.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Identical Test Target.lvlib:Test Target.lvclass:Read Data Set.vi XML membership chain and class-relative path across harness copies; LVSR at byte 84 records 14 versus 16. Same conservative lineage decision for overlapping candidate-0124 and candidate-0227.",
-      "evidence": [
-        {
-          "artifact": "artifact-0754",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/754",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Test Target/Test Target/Read Data Set.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 98,
-          "sha256": "de316ee765c94f8a7c1883ccc74da569dbdfb68c365aea1ca839eca6c7ec80c2",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 2428,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 2444,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 2460,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 2476,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 2492,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0785",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/785",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Test Harness/Test Target/Test Target/Read Data Set.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 26,
-          "sha256": "375c62f1e3110ab6185a505b11deacae6872510e2e07832c64a99692b837649d",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "16.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "16008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "16.0.0f10",
-              "field": "vers",
-              "raw_hex": "16008010",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
-          ]
-        }
-      ],
-      "xml_evidence": [
-        {
-          "artifact": "artifact-0756",
-          "path": "Rescripter Test Harness/Test Target/Test Target/Test Target.lvclass",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 100,
-          "line": 88,
-          "item_ordinal": 8,
-          "target": "artifact-0754"
-        },
-        {
-          "artifact": "artifact-0787",
-          "path": "Test Harness/Test Target/Test Target/Test Target.lvclass",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 28,
-          "line": 88,
-          "item_ordinal": 8,
-          "target": "artifact-0785"
-        },
-        {
-          "artifact": "artifact-0746",
-          "path": "Rescripter Test Harness/Test Target/Test Target.lvlib",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 89,
-          "line": 14,
-          "declares": "Test Target.lvclass"
-        },
-        {
-          "artifact": "artifact-0777",
-          "path": "Test Harness/Test Target/Test Target.lvlib",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 17,
-          "line": 8,
-          "declares": "Test Target.lvclass"
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0154",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/154",
-      "matching_name": "Shared-Reentrant.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
-      "evidence": [
-        {
-          "artifact": "artifact-0822",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/822",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/23.0/Shared-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "4d1803839f21242de9e1e5045516ffc0c8225ec3a830b76370ad2e881f8ab4e4",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "23.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "23008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 360,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 376,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 392,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 408,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 424,
-              "decoded": "23.0.0f0",
-              "field": "vers",
-              "raw_hex": "23008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0827",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/827",
-          "repository": "pylavi",
-          "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
-          "path": "tests/reentrancy/26.0/Shared-Reentrant.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "02779a91fc87645a7068d42650902358af84872d5d30f538730f3bc3a3376f51",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "26.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "26008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 220,
-              "decoded": "26.3.0f0",
-              "field": "vers",
-              "raw_hex": "26308000",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0172",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/172",
-      "matching_name": "VIP_Post-Install Custom Action.vi",
-      "label": "undecidable",
-      "rule": "R3",
-      "reason": "Tooling and Tooling/deployment copies have 24 versus 20 LVSR. CI CD.lvproj line 33 selects the deployment copy, but this does not establish the relationship to the other file; obtain packaging provenance.",
-      "evidence": [
-        {
-          "artifact": "artifact-0478",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/478",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Tooling/VIP_Post-Install Custom Action.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "72725793768c4d1f2daf7c10c8e98345fb597801fa239932d12b8a2436c3cf0c",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "24.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "24008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 3488,
-              "decoded": "24.3.1f1",
-              "field": "vers",
-              "raw_hex": "24318001",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 3508,
-              "decoded": "24.0.0f0",
-              "field": "vers",
-              "raw_hex": "24008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 3524,
-              "decoded": "24.3.1f1",
-              "field": "vers",
-              "raw_hex": "24318001",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 3544,
-              "decoded": "24.0.0f0",
-              "field": "vers",
-              "raw_hex": "24008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 3560,
-              "decoded": "24.3.1f1",
-              "field": "vers",
-              "raw_hex": "24318001",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        },
-        {
-          "artifact": "artifact-0489",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/489",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Tooling/deployment/VIP_Post-Install Custom Action.vi",
-          "archive": null,
-          "member_index": null,
-          "sha256": "28e281e518b7d1f69539bf23195b2f5f48b1f4f26158ef32fe65e1dd96923019",
-          "save_fields": [
-            {
-              "byte_offset": 36,
-              "decoded": "20.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "20008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 2656,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 2672,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 2688,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 2704,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 2720,
-              "decoded": "20.0.0f0",
-              "field": "vers",
-              "raw_hex": "20008000",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": []
-        }
-      ]
-    },
-    {
-      "candidate_id": "candidate-0227",
-      "candidate_pointer": "benchmark/lineage.json#/candidate_variants/227",
-      "matching_name": "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi",
-      "label": "same-lineage",
-      "rule": "R1",
-      "reason": "Identical Test Target.lvlib:Test Target.lvclass:Read Data Set.vi XML membership chain and class-relative path across harness copies; LVSR at byte 84 records 14 versus 16. Same conservative lineage decision for overlapping candidate-0124 and candidate-0227.",
-      "evidence": [
-        {
-          "artifact": "artifact-0754",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/754",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Rescripter Test Harness/Test Target/Test Target/Read Data Set.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 98,
-          "sha256": "de316ee765c94f8a7c1883ccc74da569dbdfb68c365aea1ca839eca6c7ec80c2",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "14.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "14008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 2428,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 4
-            },
-            {
-              "byte_offset": 2444,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 7
-            },
-            {
-              "byte_offset": 2460,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 8
-            },
-            {
-              "byte_offset": 2476,
-              "decoded": "14.0.0f0",
-              "field": "vers",
-              "raw_hex": "14008000",
-              "resource_id": 9
-            },
-            {
-              "byte_offset": 2492,
-              "decoded": "14.0.0f36",
-              "field": "vers",
-              "raw_hex": "14008036",
-              "resource_id": 10
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
-          ]
-        },
-        {
-          "artifact": "artifact-0785",
-          "inventory_pointer": "benchmark/lineage.json#/artifacts/785",
-          "repository": "actor-framework",
-          "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
-          "path": "Test Harness/Test Target/Test Target/Read Data Set.vi",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 26,
-          "sha256": "375c62f1e3110ab6185a505b11deacae6872510e2e07832c64a99692b837649d",
-          "save_fields": [
-            {
-              "byte_offset": 84,
-              "decoded": "16.0.0f0",
-              "field": "LVSR",
-              "raw_hex": "16008000",
-              "resource_id": 0
-            },
-            {
-              "byte_offset": 268,
-              "decoded": "16.0.0f10",
-              "field": "vers",
-              "raw_hex": "16008010",
-              "resource_id": 4
-            }
-          ],
-          "xml_declared_names": [
-            "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
-          ]
-        }
-      ],
-      "xml_evidence": [
-        {
-          "artifact": "artifact-0756",
-          "path": "Rescripter Test Harness/Test Target/Test Target/Test Target.lvclass",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 100,
-          "line": 88,
-          "item_ordinal": 8,
-          "target": "artifact-0754"
-        },
-        {
-          "artifact": "artifact-0787",
-          "path": "Test Harness/Test Target/Test Target/Test Target.lvclass",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 28,
-          "line": 88,
-          "item_ordinal": 8,
-          "target": "artifact-0785"
-        },
-        {
-          "artifact": "artifact-0746",
-          "path": "Rescripter Test Harness/Test Target/Test Target.lvlib",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 89,
-          "line": 14,
-          "declares": "Test Target.lvclass"
-        },
-        {
-          "artifact": "artifact-0777",
-          "path": "Test Harness/Test Target/Test Target.lvlib",
-          "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
-          "member_index": 17,
-          "line": 8,
-          "declares": "Test Target.lvclass"
-        }
-      ]
+     "artifact": "artifact-0688",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/688",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Debug AF VAN Test/Van Caller/Van Caller/Actor Core.vi",
+     "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
+     "member_index": 17,
+     "sha256": "f9e5867f3c3624e58e0596a8d9409478b66e34cf1f8eafb1f0e23c5b1e836795",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "15.0.0b0",
+       "field": "LVSR",
+       "raw_hex": "15006000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "15.0.0b11",
+       "field": "vers",
+       "raw_hex": "15006011",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Van Caller.lvlib:Van Caller.lvclass:Actor Core.vi"
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "candidate_id": "candidate-0035",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/35",
+   "matching_name": "Do.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "38 Do.vi methods span framework messages, templates and test harness messages; distinct declared owners are evidence of distinct methods, not independently authored lineage. Some source/package pairs may be related; whole-group merge is unsupported.",
+   "evidence": [
+    {
+     "artifact": "artifact-0020",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/20",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/AFDebug/Register Actor Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "ede05d5104f9edf945db2102b83bed962cd43c7fc0ee85ca207431651efc1f8e",
+     "save_fields": [
+      {
+       "byte_offset": 88,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 272,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Debug.lvlib:Register Actor Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0057",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/57",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Batch Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "02b37cde15ce1136b439dc0cb3cb13c9197c876a794299d0466abb71778422aa",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Batch Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0064",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/64",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Inspection API/Ping msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "0f74d4634886875f067d9dbf7c92a28d730465f058eca02b37a93d2eaf36ed03",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0076",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/76",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/LastAck/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "3634c22793a0e7ce50dfb7bd1a3da39a9ccc35e64ed766cb24a84b3c71d37c9f",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 452,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 468,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 484,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 500,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 516,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0082",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/82",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Launch Nested Actor Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "3d7b6309163ee947deca21f779ae0d9050265084e9290ea79d60bc65a7856592",
+     "save_fields": [
+      {
+       "byte_offset": 100,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 484,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 500,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 516,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 532,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 548,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0109",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/109",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Message/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "4743cff3f3fcc473ed3dd523bd72b38475ef1a1f0e601411f5db96aedf23c18a",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 452,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 468,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 484,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 500,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 516,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0118",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/118",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Reply Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "704eba4de4051e03eb006e78d05f580fc60eb6f605896a846ae8428e905baad6",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Reply Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0122",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/122",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Report Error Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "78c586d4370e724b455f096b7ad89ea92d40bb3342273528ce7f45be8866ceea",
+     "save_fields": [
+      {
+       "byte_offset": 72,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 256,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Report Error Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0126",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/126",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Self-Addressed Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "45b85d6c74c961b20c9438e79b119fafee82be129814f7c26ac271f94c0eec08",
+     "save_fields": [
+      {
+       "byte_offset": 72,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 256,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Self-Addressed Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0130",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/130",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Specialty Messages/Batch Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "92675e32d4a7fca1e119c9fa18412003d48ae0f7017fd19c69683ecb4c0e418b",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Batch Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0133",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/133",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Specialty Messages/Reply Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "88e8896fff151f5155f7ee9e732c05c7857ac4a1ad752b1b4ea282ba679f4b8b",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Reply Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0137",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/137",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Specialty Messages/Report Error Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "971271eec792fdee417191449a2bb56de7f7ec0f99984d6f9f4674db3737665c",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0141",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/141",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Specialty Messages/Self-Addressed Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "163bd57e549b19b72229816af99742275c379e86d99b6b20e0856dd298100baa",
+     "save_fields": [
+      {
+       "byte_offset": 96,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 280,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0144",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/144",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Stop Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "45731acf277a8ceb3736321a784ae241d38809a2d69a27f40f9202d49c2d4754",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 452,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 468,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 484,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 500,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 516,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0184",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/184",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/Testing/Test Harness/Actor with Nesteds/Actor with Nesteds Messages/Stop Nested Actors Msg/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "132ff1c94e101c1b57de5ad4c9b11f1d9e7c0a4f18225183250625519f8d23c4",
+     "save_fields": [
+      {
+       "byte_offset": 100,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 284,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Actor with Nesteds.lvlib:Stop Nested Actors Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0417",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/417",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Concrete Message Template/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "6a2a5d25c7d64ca46e7c1ef4a89c15d80acc204011533ed0bba518f75c72d078",
+     "save_fields": [
+      {
+       "byte_offset": 8876,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 9416,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 9432,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 9448,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 9464,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 9480,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Concrete Message Template.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0419",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/419",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Message Template/Do.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "5b23e9d75732961d269a68c47778820525f3b25b9d621bed5741f386863376ef",
+     "save_fields": [
+      {
+       "byte_offset": 8856,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 9360,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 9376,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 9392,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 9408,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 9424,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Message Template.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0522",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/522",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/resource/AFDebug/Register Actor Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 155,
+     "sha256": "77d2140aff6d24637e99f0bb152adde176fd1e6d8e7ff9fdc4243fab54de3b97",
+     "save_fields": [
+      {
+       "byte_offset": 88,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 272,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Debug.lvlib:Register Actor Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0556",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/556",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Batch Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 121,
+     "sha256": "ae53fd733b780603b73cf5f26f07876f93392b62afb6e7556eaa94479be209b7",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Batch Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0563",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/563",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Inspection API/Ping msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 113,
+     "sha256": "37ce05b2b993a86a7aa31fb51a809258d08d8a9fc6d5ec3f4fad839f208fc0d7",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0580",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/580",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/LastAck/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 92,
+     "sha256": "a6f42ed1862855c90dc38ed014e37f95fa819fd2eb864611d1aad01e9fa17e7a",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0586",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/586",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Launch Nested Actor Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 89,
+     "sha256": "f7eec77fa1f846129c0f0599f7d1717e7643fefdc3c014162e53f934380949df",
+     "save_fields": [
+      {
+       "byte_offset": 100,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 284,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0613",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/613",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Message/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 85,
+     "sha256": "e4ede8be61ddbba6fc1f4c4a1e10130cbdff657567c772e5adfa2cbfc100a827",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0622",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/622",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Reply Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 53,
+     "sha256": "2822e7c5eb32a3d830e66c4a06353212e6e29cbb9c94a954dced83f68fc1f07a",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Reply Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0626",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/626",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Report Error Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 49,
+     "sha256": "00b9dac029a39aa016e680b412d5f596a1154351d375f29d62ee57f15f9b1f2d",
+     "save_fields": [
+      {
+       "byte_offset": 72,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 256,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Report Error Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0630",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/630",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Self-Addressed Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 46,
+     "sha256": "21f5c8da59ebff5c867a003836ba3fe5355226d1bd58e444669a092b3b6b39c8",
+     "save_fields": [
+      {
+       "byte_offset": 72,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 256,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Self-Addressed Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0634",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/634",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Batch Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 43,
+     "sha256": "4f2fe6e3359e05a2368920dd3f7ebc91f37e006c6e74cce94ac48d3029fd79f2",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Batch Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0637",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/637",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Reply Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 38,
+     "sha256": "d7369ec4598259a98e23532e2f5aaa72005bf5cece67cfabfea2edf94f238954",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Reply Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0641",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/641",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Report Error Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 34,
+     "sha256": "5247514eecaf2a0282ba4312abe47e3767947dc8a0e350550a448287837523c8",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0645",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/645",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Self-Addressed Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 31,
+     "sha256": "c8310b4864216dc5c5f0a8cbf5cc431e6b4d593ac0157c5004dcc7ed0dac2f64",
+     "save_fields": [
+      {
+       "byte_offset": 96,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 280,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0648",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/648",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Stop Msg/Do.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 25,
+     "sha256": "02bc36e05033e2e01772899eb2a2411ea3ff3f75544705b40418cde7c4602a91",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0681",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/681",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Amplify Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
+     "member_index": 8,
+     "sha256": "616da74e341a608343e8438ef1d65e4d72c3683c7c4d1a532446cf0e0a1de447",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "15.0.0b0",
+       "field": "LVSR",
+       "raw_hex": "15006000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 252,
+       "decoded": "15.0.0b11",
+       "field": "vers",
+       "raw_hex": "15006011",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Van Caller.lvlib:Amplify Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0684",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/684",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Baffle Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
+     "member_index": 12,
+     "sha256": "8b4c531608deecd3a526aab2acb71fe3d99204fd41c1b439da5b4595fda2f76d",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "15.0.0b0",
+       "field": "LVSR",
+       "raw_hex": "15006000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "15.0.0b11",
+       "field": "vers",
+       "raw_hex": "15006011",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Van Caller.lvlib:Baffle Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0693",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/693",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Debug AF VAN Test/Van Nested/Van Nested Messages/Chuckle Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
+     "member_index": 25,
+     "sha256": "6b248aff80f5728b0364f7c3c90bc7112b9c0e03a7eb6a387c2f9e44601ac3a9",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "15.0.0b0",
+       "field": "LVSR",
+       "raw_hex": "15006000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 252,
+       "decoded": "15.0.0b11",
+       "field": "vers",
+       "raw_hex": "15006011",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Van Nested.lvlib:Chuckle Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0727",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/727",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Rescript Target/Rescript Target Messages/Alpha Msg Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 62,
+     "sha256": "9258c3f64c935e3863ee6bf7625419cdf95a0b7d81de2e35db1b0b1e6a4f512d",
+     "save_fields": [
+      {
+       "byte_offset": 88,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 3252,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 3268,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 3284,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 3300,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 3316,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Rescript Target.lvlib:Alpha Msg Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0730",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/730",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Rescript Target/Rescript Target Messages/Bravo Msg Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 66,
+     "sha256": "2bb31b052e95f05a9e3bff5836a87a0f80aa34828adfd163228b90a4ecec8ecc",
+     "save_fields": [
+      {
+       "byte_offset": 88,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 3260,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 3276,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 3292,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 3308,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 3324,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Rescript Target.lvlib:Bravo Msg Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0742",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/742",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Test Target/Test Target Messages/Concrete Target Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 84,
+     "sha256": "43f47bcad26c8039344754bb87644e3fb39617894d3090df53e8ee7f4559d01d",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 3956,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 3972,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 3988,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 4004,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 4020,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Concrete Target Msg.lvclass:Do.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0743",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/743",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Test Target/Test Target Messages/Write Data Set Msg/Do.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 86,
+     "sha256": "cafa68d34a1e94fddac9974b1b32bd3a8181d606e0c56441972cf8a4e14fdf65",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 636,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 652,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 668,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 684,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 700,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Write Data Set Msg.lvclass:Do.vi"
+     ]
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0036",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/36",
+   "matching_name": "Drop Message Core.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Nine methods include framework source/package pairs and Baffle Msg override. Different qualified owners do not exclude shared derivation; resolve pairs before whole-group adjudication.",
+   "evidence": [
+    {
+     "artifact": "artifact-0065",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/65",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Inspection API/Ping msg/Drop Message Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "4d84cce57449b64a9d51022d3a9be20cfa58bf30d79f2c40dfb9c5d1a7ade2c0",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0110",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/110",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Message/Drop Message Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "6d72aa8d1cae345f3bfdfba48e45ad73994e76be2a0e69e2c67c45703fef47c5",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 452,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 468,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 484,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 500,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 516,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0119",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/119",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Reply Msg/Drop Message Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "a143576b7e02994b774ff79408f2794f4fdada47f4ed22951bdfc100885b2da7",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Reply Msg.lvclass:Drop Message Core.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0134",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/134",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Core/ActorFramework/Specialty Messages/Reply Msg/Drop Message Core.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "d2a4d17ea129e6c69cb4cc5dabbf2f197cb089fd03ee39dd7a3fbf3de2701ba5",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Reply Msg.lvclass:Drop Message Core.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0564",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/564",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Inspection API/Ping msg/Drop Message Core.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 114,
+     "sha256": "4ee3a3bb8df27626213e8317ed78d2702b07ed393416ce454cd9403a3fa26a5f",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0614",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/614",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Message/Drop Message Core.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 86,
+     "sha256": "c5abf6934db58d3bbc6a0e3f74faa443452943d74684da305a99bf5dfb19c0f2",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0623",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/623",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Reply Msg/Drop Message Core.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 54,
+     "sha256": "b68bca909dcdc67aafc3dae95dbbc93d03078179f54567331d704a81b76f420b",
+     "save_fields": [
+      {
+       "byte_offset": 64,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Reply Msg.lvclass:Drop Message Core.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0638",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/638",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "File Group 0/vi.lib/ActorFramework/Specialty Messages/Reply Msg/Drop Message Core.vi",
+     "archive": "actor-framework/Builds/actor_framework_2024_for_2020-2.0.0.23.vip",
+     "member_index": 39,
+     "sha256": "3ff5e6663f40383feb69ccdd8078a9511a2169a74b534200c2514edd6a8d3a6d",
+     "save_fields": [
+      {
+       "byte_offset": 92,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 276,
+       "decoded": "20.0.1f7",
+       "field": "vers",
+       "raw_hex": "20018007",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "AF Specialty Messages.lvlib:Reply Msg.lvclass:Drop Message Core.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0685",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/685",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Debug AF VAN Test/Van Caller/Van Caller Messages/Baffle Msg/Drop Message Core.vi",
+     "archive": "actor-framework/Documentation/Test Plan/AF Debug VAN Test Harness.zip",
+     "member_index": 13,
+     "sha256": "e1547177ae7da96b71b5f59c0fc1408da012ca46f6f0f3fd71ff83251eda0fb2",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "15.0.0b0",
+       "field": "LVSR",
+       "raw_hex": "15006000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 248,
+       "decoded": "15.0.0b11",
+       "field": "vers",
+       "raw_hex": "15006011",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Van Caller.lvlib:Baffle Msg.lvclass:Drop Message Core.vi"
+     ]
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0071",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/71",
+   "matching_name": "Inline - preallocate.vi",
+   "label": "same-lineage",
+   "rule": "R1",
+   "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
+   "evidence": [
+    {
+     "artifact": "artifact-0818",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/818",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/23.0/Inline - preallocate.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "c0dec14e89ab1e0fc305be64ec0ec6e9e7586467e75495d8ae3ed06e7d073dea",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "23.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "23008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 360,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 376,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 392,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 408,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 424,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0823",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/823",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/26.0/Inline - preallocate.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "51584424621474f62eabc83489e5bbbe7a2250132af45e79943b754d1b7ffd4b",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "26.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "26008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 220,
+       "decoded": "26.3.0f0",
+       "field": "vers",
+       "raw_hex": "26308000",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0072",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/72",
+   "matching_name": "Inline.vi",
+   "label": "same-lineage",
+   "rule": "R1",
+   "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
+   "evidence": [
+    {
+     "artifact": "artifact-0819",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/819",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/23.0/Inline.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "dc22df033d2c966c60c9e11f93a9636e59d0681db72e3c1f3749c19eb051b6f2",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "23.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "23008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 360,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 376,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 392,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 408,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 424,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0824",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/824",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/26.0/Inline.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "518ed0a3ccadb40d10e42da58758988aac9c0a06e07d4760def1fa4a088e2539",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "26.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "26008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 220,
+       "decoded": "26.3.0f0",
+       "field": "vers",
+       "raw_hex": "26308000",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0095",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/95",
+   "matching_name": "Non-Reentrant.vi",
+   "label": "same-lineage",
+   "rule": "R1",
+   "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
+   "evidence": [
+    {
+     "artifact": "artifact-0820",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/820",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/23.0/Non-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "3882c1cb9dc37f6665e7219d77f58ecd01e491675a55505c40ad62d74fc15ee9",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "23.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "23008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 356,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 372,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 388,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 404,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 420,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0825",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/825",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/26.0/Non-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "7888de4aaf73052cce7a470a1f13c6e866df7709851087f32d74f2594f886132",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "26.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "26008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 220,
+       "decoded": "26.3.0f0",
+       "field": "vers",
+       "raw_hex": "26308000",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0108",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/108",
+   "matching_name": "Preallocate-Reentrant.vi",
+   "label": "same-lineage",
+   "rule": "R1",
+   "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
+   "evidence": [
+    {
+     "artifact": "artifact-0821",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/821",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/23.0/Preallocate-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "90461085d6aa47148a53c251fc28c17579f8229e4fe0148d7db955b2d62ff15e",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "23.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "23008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 360,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 376,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 392,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 408,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 424,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0826",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/826",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/26.0/Preallocate-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "9e7e1c1a17ade573589159cf6e8073908b4fe120d03a5488676cc97b10b59db6",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "26.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "26008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 220,
+       "decoded": "26.3.0f0",
+       "field": "vers",
+       "raw_hex": "26308000",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0120",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/120",
+   "matching_name": "Read Attributes.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Abstract Message Template and Abstract with Data Msg declare different owners. Template instantiation remains plausible; no positive independent-origin evidence or documented derivation.",
+   "evidence": [
+    {
+     "artifact": "artifact-0414",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/414",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Providers/MessageMakerProvider/_Message Maker/_templates/Abstract Message Template/Read Attributes.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "fd4c147f23cc0bd65ac23ff622b104824b80f9040f3c3ccb3ff4ec1cd008670a",
+     "save_fields": [
+      {
+       "byte_offset": 80,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 620,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 636,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 652,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 668,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 684,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Abstract Message Template.lvclass:Read Attributes.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0739",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/739",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Test Target/Test Target Messages/Abstract with Data Msg/Read Attributes.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 80,
+     "sha256": "2c68341dc51736a05e36793d96e8dceb81ae21114640eae4f1fb611af90eab0b",
+     "save_fields": [
+      {
+       "byte_offset": 96,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 2172,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 2188,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 2204,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 2220,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 2236,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Abstract with Data Msg.lvclass:Read Attributes.vi"
+     ]
+    }
+   ],
+   "xml_evidence": [
+    {
+     "artifact": "artifact-0413",
+     "line": 39,
+     "target": "artifact-0414"
+    },
+    {
+     "artifact": "artifact-0738",
+     "line": 42,
+     "target": "artifact-0739"
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0124",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/124",
+   "matching_name": "Read Data Set.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Review #374 finding 1: the cited XML item URLs in artifact-0756/0787 line 88 and artifact-0746/0777 lines 14/8, resolved relative to their containing members, target absent archive members. Identical declared names and layout support a suspicion of shared lineage but do not verify the membership chain to artifact-0754/0785. Overlapping candidate-0124 and candidate-0227 stay R3 together until a verified resolution mapping or provenance exists.",
+   "evidence": [
+    {
+     "artifact": "artifact-0754",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/754",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Test Target/Test Target/Read Data Set.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 98,
+     "sha256": "de316ee765c94f8a7c1883ccc74da569dbdfb68c365aea1ca839eca6c7ec80c2",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 2428,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 2444,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 2460,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 2476,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 2492,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0785",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/785",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Test Harness/Test Target/Test Target/Read Data Set.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 26,
+     "sha256": "375c62f1e3110ab6185a505b11deacae6872510e2e07832c64a99692b837649d",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "16.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "16008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "16.0.0f10",
+       "field": "vers",
+       "raw_hex": "16008010",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
+     ]
+    }
+   ],
+   "xml_evidence": [
+    {
+     "artifact": "artifact-0756",
+     "path": "Rescripter Test Harness/Test Target/Test Target/Test Target.lvclass",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 100,
+     "line": 88,
+     "item_ordinal": 8,
+     "target": "artifact-0754"
+    },
+    {
+     "artifact": "artifact-0787",
+     "path": "Test Harness/Test Target/Test Target/Test Target.lvclass",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 28,
+     "line": 88,
+     "item_ordinal": 8,
+     "target": "artifact-0785"
+    },
+    {
+     "artifact": "artifact-0746",
+     "path": "Rescripter Test Harness/Test Target/Test Target.lvlib",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 89,
+     "line": 14,
+     "declares": "Test Target.lvclass"
+    },
+    {
+     "artifact": "artifact-0777",
+     "path": "Test Harness/Test Target/Test Target.lvlib",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 17,
+     "line": 8,
+     "declares": "Test Target.lvclass"
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0154",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/154",
+   "matching_name": "Shared-Reentrant.vi",
+   "label": "same-lineage",
+   "rule": "R1",
+   "reason": "Same pylavi tests/reentrancy fixture-relative path under 23.0 and 26.0; LVSR at byte 36 agrees with directory version. Conservative variant grouping; direct resave history remains unproven.",
+   "evidence": [
+    {
+     "artifact": "artifact-0822",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/822",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/23.0/Shared-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "4d1803839f21242de9e1e5045516ffc0c8225ec3a830b76370ad2e881f8ab4e4",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "23.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "23008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 360,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 376,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 392,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 408,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 424,
+       "decoded": "23.0.0f0",
+       "field": "vers",
+       "raw_hex": "23008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0827",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/827",
+     "repository": "pylavi",
+     "repository_commit": "35d2a0318f71dcb87bb9c431dc00700ee6b9fb75",
+     "path": "tests/reentrancy/26.0/Shared-Reentrant.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "02779a91fc87645a7068d42650902358af84872d5d30f538730f3bc3a3376f51",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "26.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "26008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 220,
+       "decoded": "26.3.0f0",
+       "field": "vers",
+       "raw_hex": "26308000",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0172",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/172",
+   "matching_name": "VIP_Post-Install Custom Action.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Tooling and Tooling/deployment copies have 24 versus 20 LVSR. CI CD.lvproj line 33 selects the deployment copy, but this does not establish the relationship to the other file; obtain packaging provenance.",
+   "evidence": [
+    {
+     "artifact": "artifact-0478",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/478",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Tooling/VIP_Post-Install Custom Action.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "72725793768c4d1f2daf7c10c8e98345fb597801fa239932d12b8a2436c3cf0c",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "24.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "24008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 3488,
+       "decoded": "24.3.1f1",
+       "field": "vers",
+       "raw_hex": "24318001",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 3508,
+       "decoded": "24.0.0f0",
+       "field": "vers",
+       "raw_hex": "24008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 3524,
+       "decoded": "24.3.1f1",
+       "field": "vers",
+       "raw_hex": "24318001",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 3544,
+       "decoded": "24.0.0f0",
+       "field": "vers",
+       "raw_hex": "24008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 3560,
+       "decoded": "24.3.1f1",
+       "field": "vers",
+       "raw_hex": "24318001",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    },
+    {
+     "artifact": "artifact-0489",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/489",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Tooling/deployment/VIP_Post-Install Custom Action.vi",
+     "archive": null,
+     "member_index": null,
+     "sha256": "28e281e518b7d1f69539bf23195b2f5f48b1f4f26158ef32fe65e1dd96923019",
+     "save_fields": [
+      {
+       "byte_offset": 36,
+       "decoded": "20.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "20008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 2656,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 2672,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 2688,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 2704,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 2720,
+       "decoded": "20.0.0f0",
+       "field": "vers",
+       "raw_hex": "20008000",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": []
+    }
+   ]
+  },
+  {
+   "candidate_id": "candidate-0227",
+   "candidate_pointer": "benchmark/lineage.json#/candidate_variants/227",
+   "matching_name": "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi",
+   "label": "undecidable",
+   "rule": "R3",
+   "reason": "Review #374 finding 1: the cited XML item URLs in artifact-0756/0787 line 88 and artifact-0746/0777 lines 14/8, resolved relative to their containing members, target absent archive members. Identical declared names and layout support a suspicion of shared lineage but do not verify the membership chain to artifact-0754/0785. Overlapping candidate-0124 and candidate-0227 stay R3 together until a verified resolution mapping or provenance exists.",
+   "evidence": [
+    {
+     "artifact": "artifact-0754",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/754",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Rescripter Test Harness/Test Target/Test Target/Read Data Set.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 98,
+     "sha256": "de316ee765c94f8a7c1883ccc74da569dbdfb68c365aea1ca839eca6c7ec80c2",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "14.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "14008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 2428,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 4
+      },
+      {
+       "byte_offset": 2444,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 7
+      },
+      {
+       "byte_offset": 2460,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 8
+      },
+      {
+       "byte_offset": 2476,
+       "decoded": "14.0.0f0",
+       "field": "vers",
+       "raw_hex": "14008000",
+       "resource_id": 9
+      },
+      {
+       "byte_offset": 2492,
+       "decoded": "14.0.0f36",
+       "field": "vers",
+       "raw_hex": "14008036",
+       "resource_id": 10
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
+     ]
+    },
+    {
+     "artifact": "artifact-0785",
+     "inventory_pointer": "benchmark/lineage.json#/artifacts/785",
+     "repository": "actor-framework",
+     "repository_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+     "path": "Test Harness/Test Target/Test Target/Read Data Set.vi",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 26,
+     "sha256": "375c62f1e3110ab6185a505b11deacae6872510e2e07832c64a99692b837649d",
+     "save_fields": [
+      {
+       "byte_offset": 84,
+       "decoded": "16.0.0f0",
+       "field": "LVSR",
+       "raw_hex": "16008000",
+       "resource_id": 0
+      },
+      {
+       "byte_offset": 268,
+       "decoded": "16.0.0f10",
+       "field": "vers",
+       "raw_hex": "16008010",
+       "resource_id": 4
+      }
+     ],
+     "xml_declared_names": [
+      "Test Target.lvlib:Test Target.lvclass:Read Data Set.vi"
+     ]
+    }
+   ],
+   "xml_evidence": [
+    {
+     "artifact": "artifact-0756",
+     "path": "Rescripter Test Harness/Test Target/Test Target/Test Target.lvclass",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 100,
+     "line": 88,
+     "item_ordinal": 8,
+     "target": "artifact-0754"
+    },
+    {
+     "artifact": "artifact-0787",
+     "path": "Test Harness/Test Target/Test Target/Test Target.lvclass",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 28,
+     "line": 88,
+     "item_ordinal": 8,
+     "target": "artifact-0785"
+    },
+    {
+     "artifact": "artifact-0746",
+     "path": "Rescripter Test Harness/Test Target/Test Target.lvlib",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 89,
+     "line": 14,
+     "declares": "Test Target.lvclass"
+    },
+    {
+     "artifact": "artifact-0777",
+     "path": "Test Harness/Test Target/Test Target.lvlib",
+     "archive": "actor-framework/Documentation/Test Plan/Test Harness Master.zip",
+     "member_index": 17,
+     "line": 8,
+     "declares": "Test Target.lvclass"
+    }
+   ]
+  }
+ ]
 }
