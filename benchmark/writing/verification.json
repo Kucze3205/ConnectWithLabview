@@ -1,0 +1,84 @@
+{
+  "checker_sha256": "3c2252d0fd8020b6a88b5a1e1ce90c9828a913d7a2e7e6c40369def4f54967b0",
+  "command": "python3 -I benchmark/writing/verify_method.py",
+  "exit_code": 0,
+  "isolated_repeat": {
+    "audit": "deny file writes, filesystem mutation and .session reads",
+    "cwd": "/",
+    "environment": {},
+    "exit_code": 0,
+    "stdout_identical": true
+  },
+  "limits": "Author-run synthetic design checks only; separate independent review pending; no native or agent run.",
+  "preparation_check": {
+    "command": "python3 policy/evaluator/evaluate.py --check",
+    "exit_code": 0,
+    "result": {
+      "benchmark_executed": false,
+      "benchmark_ready": false,
+      "errors": [],
+      "evidence_references": 74,
+      "manifest": "indexed",
+      "missing": [],
+      "tool_quality": null
+    }
+  },
+  "python": "3.12.3",
+  "result": {
+    "agent_runs": 0,
+    "benchmark_ready": false,
+    "independent_review": "pending",
+    "inputs_sha256": {
+      "controls.json": "1c929ad4efdd8c8ef4c1a5338d6a9492b69588c43add42b198aa2f722a151db3",
+      "method.json": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1"
+    },
+    "meaning": "design consistency only",
+    "native_executions": 0,
+    "positive_controls": {
+      "method": "method-consistent;native-unavailable",
+      "pair": "synthetic-pair-consistent;zero-agent-runs",
+      "synthetic-create": "synthetic-consistent;native-unexecuted",
+      "synthetic-modify": "synthetic-consistent;native-unexecuted",
+      "synthetic-source-rebuild": "synthetic-source-consistent;build-unexecuted"
+    },
+    "rejected_controls": {
+      "changed-bytes-only": "no-op-edit",
+      "compiled-without-source": "missing-source",
+      "constant-writer-on-two": "no-op-edit",
+      "correct-answer-wrong-artifact": "wrong-behavior",
+      "correct-artifact-wrong-answer": "answer-incorrect",
+      "creation-overwrite": "creation-destination-exists",
+      "extra-false-claim": "extra-answer-claim",
+      "extra-file": "output-file-set",
+      "invented-native-pass": "native-unexecuted",
+      "invented-rebuild": "build-unexecuted",
+      "lost-failure-accounting": "failure-accounting-missing",
+      "lost-output-accounting": "output-accounting-missing",
+      "method-invented-key": "native-key-unavailable",
+      "method-missing-anchor": "task-source-anchor",
+      "method-missing-preservation": "task-preservation-ids",
+      "method-native-claim": "method-overclaim",
+      "missing-arm": "planned-arm-missing",
+      "missing-artifact": "output-file-set",
+      "no-op": "no-op-edit",
+      "original-overwritten": "original-not-preserved",
+      "shared-session": "session-reused",
+      "unintended-file-edit": "unintended-edits",
+      "unintended-object-edit": "unintended-edits",
+      "unknown-version": "save-version-unverified",
+      "unmatched-budget": "pair-budgets-mismatch",
+      "unmatched-inputs": "pair-allowed_inputs-mismatch",
+      "unmatched-originals": "pair-originals-mismatch",
+      "unmatched-request": "pair-request-mismatch",
+      "unsupported-artifact": "unsupported-artifact",
+      "version-drift": "version-drift",
+      "wrong-behavior": "wrong-behavior",
+      "wrong-original-citation": "source-unsupported",
+      "wrong-output-citation": "source-unsupported",
+      "wrong-source-build-link": "source-build-link",
+      "wrong-type": "wrong-type"
+    },
+    "rejected_count": 35,
+    "status": "design-consistent"
+  }
+}

@@ -1,0 +1,48 @@
+# Writing method extension
+
+Design only, unreviewed. No artifact has been edited, no agent comparison or LabVIEW job has run, and no native key or benchmark readiness is established. [method.json](method.json) extends the [existing protocol](../protocol.md), [typedef-impact](../change-cases/typedef-impact.spec.json) and [diagram-difference](../change-cases/diagram-difference.spec.json) specifications. The [evaluation contract](../../docs/perpetua/evaluation.md), [role sequence](../../docs/perpetua/roles.md) and [writing goal](../../goal/goal.md#pisanie) remain authoritative. Previously reviewed files, preparation index and milestone status stay at their original bytes.
+
+The [bounded unsuccessful POC](../../docs/research/poc/delivery.md) supplied no executable semantic edit, changed VI, save-version demonstration or runtime check. It is evidence of those limits, never an editor implementation or oracle. Parsing, changed bytes, a successful process, matching selected outputs alone, and owner silence cannot establish writing success.
+
+## Existing obligations and additions
+
+`existing_requirements` E1–E8 records exactly what is inherited, with source lines/anchors: task/provenance records; independent keys and original preservation; derived-copy change recipes; separate answer/grounding/reading measurements; public/private lineage boundaries; paired baselines; positive/rejecting controls; resource and acceptance sequence. `new_requirements` W1–W8 maps each addition back to those obligations: actual artifact outputs, absent creation destinations, frozen semantic/preservation IDs, preserved save versions, separate artifact/native judgments, compiled source/rebuild chains, writing output accounting and artifact-level rejection controls. This extension supplies no replacement protocol or executable scoring policy.
+
+## Task contracts
+
+| Task | Requested artifact result | Independent expected result and current gap |
+|---|---|---|
+| WC1 | Create `Increment.vi` with I32 `x + 1 -> y`, target save version `21008000`, no state or extra operations | Exact arithmetic vectors and graph obligation derive from the request. Native reference, connector map, documentation pins and separate checking are unavailable. |
+| WM1 | Insert one Boolean NOT immediately before the selected output in the original pinned VI from DD-E1 | False/true inversion is specified; original computation, native locators, save version and controlled reference results remain unavailable. DD-E2 is a separate presentation preservation control, not a behavior edit. |
+| WM2 | Wrap the pinned typedef root as `original_value` plus Boolean `impact_probe=false`, retaining defaults and typedef mode | Requested cluster semantics are specified. Confirmed consumers, propagation save set, save versions and effects remain unavailable; broken consumers must be reported, never repaired silently. |
+| WB1 | Change matched source increment 1 to 2 and rebuild a packed library, retaining exported API and source versions | Exact arithmetic and API obligations are specified. Matching source/build originals, toolchain and native evidence are absent. Source-only work and unexecuted build remain separate; binary patching is excluded. |
+
+Every contract records source/requirement anchors, preconditions, output paths, original hashes where available, semantic IDs, unrelated-content/version invariants, answer IDs and independent oracle provenance requirements. Requirement-derived values are independent of candidate output; they are not claimed as observed LabVIEW results. Before exposure, a separate preparer/checker must freeze original/native object maps, dependency closure, typed fixtures, resets, bounded timeouts, exact comparisons, evidence hashes and per-ID agreement. Unknown locators or versions block eligibility; they cannot be filled from the evaluated agent's output. Native disagreement blocks the affected key.
+
+Artifact fidelity checks the complete output file set, typed objects and relations, intended delta, unrelated objects/files and per-file save version. Correct prose does not rescue a wrong artifact. Answer correctness and original/output source support follow the existing required-ID, extra-claim and contradiction rules separately. Native load, compile/build, controlled execution and hardware/target execution each require their own actual evidence; editing without LabVIEW can produce an artifact while all native outcomes remain unexecuted. No blanket exception permits conversion or unrelated resave changes.
+
+## Paired writing comparison
+
+Reuse the [runner contract](../baseline/runner-contract.md) and [precision plan](../precision/README.md). Freeze a hashed writing addendum to the existing manifest: identical requests, original copies, allowed documentation/images, common prompts, ordinary editing facilities, model/settings and total token/context/output/artifact-byte/wall-time budgets. Only evaluated-tool access differs; its output/time/cost counts against the shared totals. Neither arm receives LabVIEW access in this stratum. Any later native validation is a separate trusted job after both outputs are frozen.
+
+Each repetition uses fresh sessions and dependency-isolated workspaces, deterministic randomized arm order and frozen keys. Four development pilot repetitions is the existing design allocation, conditional on quota; evaluation repetitions remain undecided. Retain every planned slot, failed call, retry, absent/invalid output, actual artifact bytes/hash and unexecuted attempt. Report artifact semantic and preservation results, answers, grounding and native results separately, with fixed denominators and planned/attempted/produced/native-executed/scored/complete-pair counts. The inherited paired lineage-cluster uncertainty procedure and missing-pair bounds extend to separate artifact semantic and preservation fractions; no owner threshold or completed comparison is implied.
+
+Public originals, fixtures and derivatives stay in development lineage groups. None is withheld or demonstrably model-unseen. Future restricted writing cases and keys require commissioned sources, a custodian, actual allocation, tested runner isolation and independent review; store readiness alone supplies none of those. `coverage` lists uncovered families and versions explicitly. All writing runtime counts are zero; 2024 is unverified and no fallback or family reduction is selected.
+
+## Reproducible design check
+
+Run from the repository root:
+
+```text
+python3 -I benchmark/writing/verify_method.py
+```
+
+The stdlib checker reads only adjacent `method.json` and [controls.json](controls.json), accepts no external input and writes no files. Neither `LABVIEW_ENVIRONMENT` nor `.session/` is needed. It checks fixed task/requirement inventories, required fields, arithmetic/inversion consistency and dimension/coverage declarations, then checks hand-authored fictional graph snapshots against separately stated requirements. There is no LabVIEW parser, writer, benchmark runner or production evaluator.
+
+Positive controls retain creation, modification, source-only modification with unavailable rebuild, and a matched but unexecuted pair. A valid fictional `x+1` graph passes its own request but fails the `x+2` request, exposing a constant writer. Thirty-five in-memory mutations must reject for exact asserted reasons: no-op/changed-bytes-only, wrong graph/type, unintended edits/files, missing output, version drift/unknown version, unsupported artifact, wrong answers/citations/extras, invented native success, overwritten originals, creation overwrite, mismatched pair inputs/budgets, missing arm/accounting, method overclaims and missing fields, missing compiled source, invented rebuild and mismatched source/build linkage. The fixed control inventory prevents silently dropping a rejecting test. This is a bounded contract check, not a complete semantic checker; coordinated edits to fixtures and checker still need independent review.
+
+[verification.json](verification.json) records the actual check and input hashes; [input-pins.json](input-pins.json) records baseline identity and preserved evidence hashes. Passing means design consistency only. Synthetic graph fields are not decoded LabVIEW objects, `SYNTHETIC-v1` is not a real save version, and none of these controls produces native evidence or authorizes measurement.
+
+## Next review and decisions
+
+Give a separate reviewer the parent's pinned candidate commit/tree, baseline `486030b461e57ca0f322a17a5b7853e83e9655e3` / tree `cf75cf6892de2f9410fa09ee2589dcba47d825a4`, output hashes and original-source evidence. Review requirement coverage, expected-result independence, control discrimination and all unavailable outcomes. This task does not seek method acceptance. Later owner/resource decisions remain native authoring/validation capability and grants (#169), matching sources/build tools, independently authored/checked fixtures, restricted allocation and run isolation, model quota/precision targets, and all-version writing effort/compatibility estimates before any fallback. Only after separate review can the owner consider method acceptance before product writing implementation. Executable benchmark scoring belongs to a Policymaker-ordered evaluator change and its separate verifier.

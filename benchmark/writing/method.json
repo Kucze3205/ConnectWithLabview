@@ -1,0 +1,578 @@
+{
+  "schema_version": 1,
+  "revision": "writing-design-1",
+  "status": "design-only-unreviewed",
+  "authority": [
+    "goal/goal.md#pisanie",
+    "docs/perpetua/evaluation.md",
+    "docs/perpetua/roles.md"
+  ],
+  "extends": [
+    "benchmark/protocol.md",
+    "benchmark/change-cases/typedef-impact.spec.json",
+    "benchmark/change-cases/diagram-difference.spec.json",
+    "benchmark/baseline/runner-contract.md",
+    "benchmark/precision/README.md"
+  ],
+  "baseline": {
+    "commit": "486030b461e57ca0f322a17a5b7853e83e9655e3",
+    "tree": "cf75cf6892de2f9410fa09ee2589dcba47d825a4"
+  },
+  "claims": {
+    "native_executions": 0,
+    "artifact_edits": 0,
+    "benchmark_runs": 0,
+    "key_established": false,
+    "benchmark_ready": false,
+    "method_accepted": false,
+    "model_unseen": false
+  },
+  "existing_requirements": [
+    {
+      "id": "E1",
+      "source": "benchmark/protocol.md:9-28",
+      "covers": "Case preconditions, original identity, dependencies, source anchors and fixed claim/observation inventories already apply to writing."
+    },
+    {
+      "id": "E2",
+      "source": "benchmark/protocol.md:47-62",
+      "covers": "Independent keys, preserved originals, version separation, controlled I/O, tolerances and unavailable keys already apply."
+    },
+    {
+      "id": "E3",
+      "source": "benchmark/protocol.md:55; benchmark/change-cases/typedef-impact.spec.json#edit_recipes; benchmark/change-cases/diagram-difference.spec.json#edit_recipes",
+      "covers": "Derived-copy typedef and diagram changes, affected/unaffected checks and native comparisons already exist as unexecuted observation recipes, not agent writing tasks."
+    },
+    {
+      "id": "E4",
+      "source": "benchmark/protocol.md:26-42",
+      "covers": "Answer correctness, grounding, omissions, extras, contradictions and fixed denominators remain unchanged; reading fidelity remains a separate probe result."
+    },
+    {
+      "id": "E5",
+      "source": "benchmark/protocol.md:67-74",
+      "covers": "Whole-lineage split, private keys, actual isolation tests and public-development restrictions already apply."
+    },
+    {
+      "id": "E6",
+      "source": "benchmark/protocol.md:79-89; benchmark/baseline/runner-contract.md; benchmark/precision/README.md",
+      "covers": "Paired arms, common model/prompt/inputs/budgets, fresh sessions, frozen repetitions, missing pairs and uncertainty already apply."
+    },
+    {
+      "id": "E7",
+      "source": "benchmark/protocol.md:94-110",
+      "covers": "Positive controls and wrong-answer/citation/constant/unsupported/missing-execution controls already apply."
+    },
+    {
+      "id": "E8",
+      "source": "benchmark/protocol.md:119-130; docs/perpetua/roles.md#work-sequence",
+      "covers": "Resource readiness, separate review, owner acceptance and evaluator-only executable scoring authority already apply."
+    }
+  ],
+  "new_requirements": [
+    {
+      "id": "W1",
+      "extends": [
+        "E1",
+        "E3"
+      ],
+      "requirement": "Agent creation and modification prompts must name required output artifact paths and semantic deltas, not merely ask for an explanation of changes."
+    },
+    {
+      "id": "W2",
+      "extends": [
+        "E1",
+        "E2"
+      ],
+      "requirement": "Creation uses an explicitly absent destination and frozen workspace/dependency manifest; modification pins every original and exact native locator before exposure. Preserve originals outside writable workspace."
+    },
+    {
+      "id": "W3",
+      "extends": [
+        "E2",
+        "E3"
+      ],
+      "requirement": "Freeze required artifact semantic IDs, allowed changes, unrelated-object/file invariants and allowed automatic metadata differences independently of candidate output. Reject extra edits and no-op results."
+    },
+    {
+      "id": "W4",
+      "extends": [
+        "E2"
+      ],
+      "requirement": "Modification preserves each artifact's save version; unknown evidence remains unverified and conversion is a version-drift failure. Creation declares a target save version. Native reader version is separate."
+    },
+    {
+      "id": "W5",
+      "extends": [
+        "E2",
+        "E4"
+      ],
+      "requirement": "Report artifact fidelity separately from answer correctness, source support and native open/compile/run results. Successful editing without LabVIEW cannot imply native validation."
+    },
+    {
+      "id": "W6",
+      "extends": [
+        "E1",
+        "E2"
+      ],
+      "requirement": "Compiled outputs require available matching sources, dependency/build pins and a source edit plus authorized rebuild. Never prescribe binary patching; absent source or builder remains an explicit gap."
+    },
+    {
+      "id": "W7",
+      "extends": [
+        "E6"
+      ],
+      "requirement": "Pair writing requests and writable original copies identically; retain artifact manifests, hashes, actual bytes and all failed/missing outputs for both arms. Budget editing, output bytes and retries symmetrically."
+    },
+    {
+      "id": "W8",
+      "extends": [
+        "E7"
+      ],
+      "requirement": "Add artifact-level rejecting controls for no-op, unintended edits, wrong behavior, version drift and unsupported output. Syntactic parsing, changed bytes and owner silence never establish success."
+    }
+  ],
+  "common": {
+    "visibility": "public-development-only; all public sources, fixtures and derivatives are familiar-possible and never withheld/model-unseen evidence",
+    "execution_state": "specification only; no session can run LabVIEW",
+    "preflight": [
+      "Freeze case revision, prompt, original/dependency manifest hashes, save-version evidence, target/module and output paths before agent exposure.",
+      "Independent preparer and separate checker freeze semantic IDs, object maps, I/O vectors, error/state/reset/timeout conditions, invariants, allowed metadata deltas and documentation version/location/hash. Unknown native locators block case eligibility.",
+      "Record license/grant and capability readiness for any future native authoring, edits or rebuilds per existing protocol; this specification requests no execution or acceptance.",
+      "Use isolated derived dependency trees. Reject dependency resolution into preserved originals, the other arm or another variant. Hash preserved originals before and after."
+    ],
+    "oracle_provenance_fields": [
+      "case_revision",
+      "preparer_identity_and_session",
+      "derivation_method",
+      "original_hashes_and_locators",
+      "documentation_version_location_hash",
+      "fixture_inputs_state_outputs_errors_tolerances",
+      "native_evidence_hashes_and_environment",
+      "checker_identity_and_session",
+      "per_id_agreement_and_disagreement",
+      "uncertainties"
+    ],
+    "oracle_rule": "Requested results are requirement-derived specifications, not observed native answers. Independently establish keys from preserved originals, native authored references and discriminating runs, with a separate checker before either arm. Neither the evaluated tool, its writer/export, agent answer, POC nor a candidate artifact may establish its own expected result. Disagreement blocks affected IDs.",
+    "artifact_record": [
+      "case_pair_repeat_arm",
+      "requested_change_hash",
+      "original_manifest_hash",
+      "output_manifest_with_paths_sizes_sha256_and_raw_bytes",
+      "missing_and_unexpected_paths",
+      "per_artifact_save_version_evidence",
+      "resolved_dependency_paths",
+      "semantic_id_results_and_original_to_output_object_map",
+      "preservation_invariant_results",
+      "errors_truncation_budget_and_retry_records"
+    ],
+    "dimensions": [
+      "artifact-fidelity",
+      "answer-correctness",
+      "source-grounding",
+      "native-execution"
+    ],
+    "artifact_fidelity_rule": "Check every fixed semantic ID, path, type, graph relation and unrelated-content invariant against independent references, plus source version and full file-set diff. Unexplained extra object/file changes are incorrect; missing reference/version evidence is unverified; no-op behavior change is incorrect. Byte identity is required for unrelated files unless frozen exceptions explicitly allow changes; within changed binaries use independent native object/property maps, not byte equality alone. No blanket resave-noise exception.",
+    "answer_rule": "Reuse protocol required claims, extras and contradiction rules. Writing claims cite original hash/locator plus corresponding output hash/locator; creation cites requirement anchor plus new artifact locator. Correct prose cannot compensate for a missing/wrong artifact; a correct artifact cannot compensate for unsupported prose.",
+    "native_rule": "Separate load-without-broken-arrow, compile/build, controlled behavior and target execution records, each with actual environment, version, inputs/errors and hashed logs. No runtime means unexecuted, never passed. A load is not a run; simulation is not hardware validation.",
+    "outcomes": [
+      "correct",
+      "incorrect",
+      "partial",
+      "missing",
+      "unverified",
+      "unsupported",
+      "error",
+      "unexecuted"
+    ],
+    "limitation_codes": [
+      "missing-runtime",
+      "missing-dependency",
+      "missing-license",
+      "protected-or-removed-diagram",
+      "unknown-save-version",
+      "missing-source",
+      "missing-builder",
+      "missing-independent-key",
+      "unsupported-family-or-version"
+    ],
+    "denominators": "Freeze artifact semantic IDs and preservation IDs separately from answer IDs and reading probe IDs; retain every ID and planned case under all limitations. Report planned/attempted/artifact-produced/inspected/native-executed/scored/complete-pair counts separately, plus unexpected edits and extras. No combined quality score or new threshold."
+  },
+  "tasks": [
+    {
+      "id": "WC1-create-vi",
+      "operation": "create",
+      "family": ".vi",
+      "source_anchors": [
+        {
+          "path": "benchmark/writing/method.json",
+          "locator": "/tasks/0/request",
+          "kind": "requirement; no original VI exists"
+        }
+      ],
+      "originals": [],
+      "preconditions": [
+        "Owned destination workspace with frozen manifest and unrelated sentinel; Increment.vi absent; no overwrite permitted.",
+        "New native reference and stable connector/diagram locators independently authored and checked before exposure; no reference fixture is currently available.",
+        "Proposed target save version 21008000 (21.0.0 final build 0), independently checked on the future reference; not a selected fallback or compatibility claim."
+      ],
+      "request": "Create Increment.vi, a desktop non-reentrant stateless VI with one I32 input x and one I32 output y. Wire x plus an I32 constant 1 to y; use no hidden state, external dependency or additional executable operation. Domain x is -2147483648 through 2147483646; behavior outside that domain is unspecified. Use a frozen connector pattern/terminal map supplied before exposure and preserve the workspace's unrelated sentinel file.",
+      "semantic_ids": [
+        "WC1-file-and-connector",
+        "WC1-i32-plus-one-graph",
+        "WC1-domain-results"
+      ],
+      "expected_semantics": {
+        "relation": "y=x+1 on the stated domain",
+        "vectors": [
+          [
+            -2147483648,
+            -2147483647
+          ],
+          [
+            -2,
+            -1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            2147483646,
+            2147483647
+          ]
+        ],
+        "comparison": "exact I32 outputs; reset fresh state each run, no error or timeout; freeze bounded timeout before exposure"
+      },
+      "preservation_ids": [
+        "WC1-unrelated-workspace",
+        "WC1-no-extra-files",
+        "WC1-target-save-version"
+      ],
+      "preservation": "Only Increment.vi may be added; preserve sentinel bytes and pre-existing file inventory. Check connector/types/graph, no extra state and target save version independently.",
+      "answer_ids": [
+        "WC1-explain-graph",
+        "WC1-report-validation-limits"
+      ],
+      "oracle": {
+        "method": "Arithmetic results derived manually from this request, independently of any writer. Future independently authored native reference plus diagram/connector inspection and controlled I/O must establish LabVIEW evidence; separate checker resolves each ID.",
+        "provenance": "requirement /tasks/0/request; author role benchmark issue #481; separate native preparer/checker not yet assigned",
+        "native_key": "unavailable",
+        "missing": [
+          "authored-reference",
+          "connector-map",
+          "native-results",
+          "documentation-pins",
+          "separate-check"
+        ]
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; no VI created",
+      "output_paths": [
+        "Increment.vi"
+      ],
+      "output_manifest_rule": "Paths are relative to the isolated output root. Return an artifact manifest, original/output source map and validation-limits answer. List missing or unexpected files explicitly; freeze any allowed propagated consumer paths before exposure."
+    },
+    {
+      "id": "WM1-diagram-not",
+      "operation": "modify",
+      "family": ".vi",
+      "source_anchors": [
+        {
+          "path": "benchmark/change-cases/diagram-difference.spec.json",
+          "locator": "/edit_recipes/0 (DD-E1); /source; DD-01 and DD-O1-original-dataflow",
+          "kind": "existing original and native-locator prerequisites"
+        }
+      ],
+      "originals": [
+        {
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+          "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+          "save_version": "unavailable"
+        }
+      ],
+      "preconditions": [
+        "Inherit DD-E1 scalar Boolean output/native wiring and valid/invalid isolated-reference preconditions. Filename is no oracle.",
+        "Freeze native object map, original output values exercising false and true, dependency closure and original save version; if any fails, retain blocked case rather than substitute a VI."
+      ],
+      "request": "Return a modified derived copy inserting exactly one Boolean NOT immediately before the selected output terminal, preserving the source branch and all other sinks. Make no other functional or presentation changes. Return the changed artifact and an original/output source map with honest validation limits.",
+      "semantic_ids": [
+        "WM1-selected-output-inverted",
+        "WM1-single-not-rewire"
+      ],
+      "expected_semantics": {
+        "selected_boolean_relation": [
+          [
+            false,
+            true
+          ],
+          [
+            true,
+            false
+          ]
+        ],
+        "other_outputs_and_errors": "identical to independently established original under the same valid/invalid-reference fixtures",
+        "comparison": "exact typed values; reset/release queue each fixture, identical bounded timeout; native values remain unavailable"
+      },
+      "preservation_ids": [
+        "WM1-other-sinks-and-connector",
+        "WM1-settings-labels-dependencies",
+        "WM1-other-files",
+        "WM1-original-save-version"
+      ],
+      "preservation": "Preserve connector, input terminals, other wires/sinks, labels/layout outside the necessary insertion, execution settings and dependency bindings. No repairs or automatic conversions permitted; freeze narrow layout allowance around the inserted node before exposure. Hash all unrelated files unchanged.",
+      "answer_ids": [
+        "WM1-explain-original-and-edit",
+        "WM1-cite-original-output-map",
+        "WM1-report-validation-limits"
+      ],
+      "oracle": {
+        "method": "Extend DD independent native before/after maps, valid/invalid fixtures and separate per-ID review. Boolean inversion truth table is requirement-derived, not proof of what the original VI computes. DD-E2 is a separate presentation-equivalence preservation control, never the requested behavior edit.",
+        "provenance": "existing DD source hash and DD-E1; benchmark issue #481 adds artifact obligations; native checker absent",
+        "native_key": "unavailable",
+        "missing": [
+          "original-save-version",
+          "native-object-map",
+          "frozen-io",
+          "native-results",
+          "documentation-pins",
+          "separate-check"
+        ]
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; DD claims remain unavailable",
+      "output_paths": [
+        "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi"
+      ],
+      "output_manifest_rule": "Paths are relative to the isolated output root. Return an artifact manifest, original/output source map and validation-limits answer. List missing or unexpected files explicitly; freeze any allowed propagated consumer paths before exposure."
+    },
+    {
+      "id": "WM2-typedef-cluster",
+      "operation": "modify",
+      "family": ".ctl and consumer .vi",
+      "source_anchors": [
+        {
+          "path": "benchmark/change-cases/typedef-impact.spec.json",
+          "locator": "/source; /edit_recipes/0 (TI-E1); /consumer_candidates",
+          "kind": "existing originals; candidate bindings unconfirmed"
+        }
+      ],
+      "originals": [
+        {
+          "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl",
+          "sha256": "4a291d5d18c372ab0221bfc84a16b56fb7e97f736329a393c047a4c84bfc4ea9",
+          "save_version": "unavailable"
+        }
+      ],
+      "preconditions": [
+        "Inherit TI-E1 typedef/strictness and isolated dependency-tree preconditions; establish full original type/defaults and confirmed consumer bindings independently.",
+        "Pin consumer hashes and native locators from the existing specification before exposure; static candidates are not confirmed affected/unaffected cases. Freeze which propagation saves are allowed, or retain blocked status."
+      ],
+      "request": "Return the derived CTL with root cluster containing the complete original root control named original_value and a Boolean impact_probe default false. Preserve original_value defaults and typedef/strictness mode. Do not repair consumers or disconnect typedefs. Return all saved artifacts, including any pre-authorized native propagation changes, and report broken consumers as such.",
+      "semantic_ids": [
+        "WM2-cluster-members-and-defaults",
+        "WM2-typedef-mode",
+        "WM2-consumer-impact-accounted"
+      ],
+      "expected_semantics": {
+        "root": "cluster(original_value: exact original type/default, impact_probe: Boolean false)",
+        "consumer_behavior": "unavailable until native bindings and fixtures are independently checked; propagation/coercion/breakage are observations, not invented expected behavior",
+        "comparison": "exact types/defaults/properties and native relations; inherit TI controlled queue/error/reset fixtures"
+      },
+      "preservation_ids": [
+        "WM2-original-value-properties",
+        "WM2-no-consumer-repairs",
+        "WM2-unrelated-files",
+        "WM2-per-file-save-version"
+      ],
+      "preservation": "Preserve original_value full type/default/properties, typedef mode and unrelated CTL metadata. Freeze allowed propagation deltas per confirmed consumer; any unlisted change is unintended. Record all dirty/saved files and preserve each original save version; never silently save other consumers.",
+      "answer_ids": [
+        "WM2-explain-type-change",
+        "WM2-cite-consumer-effects",
+        "WM2-report-validation-limits"
+      ],
+      "oracle": {
+        "method": "Extend TI-01..TI-04 and TI-O1..TI-O4 independent inspection. Key the root-cluster request independently; leave every particular consumer result unavailable until native evidence and separate checking exist.",
+        "provenance": "TI source pins and TI-E1; benchmark issue #481 adds output/preservation obligations; no native checker yet",
+        "native_key": "unavailable",
+        "missing": [
+          "original-save-versions",
+          "confirmed-consumer-bindings",
+          "frozen-io",
+          "native-results",
+          "documentation-pins",
+          "separate-check"
+        ]
+      },
+      "native_outcome": "unexecuted: missing-runtime and missing-independent-key; broken consumers cannot count as successful execution",
+      "output_paths": [
+        "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue Priority.ctl"
+      ],
+      "output_manifest_rule": "Paths are relative to the isolated output root. Return an artifact manifest, original/output source map and validation-limits answer. List missing or unexpected files explicitly; freeze any allowed propagated consumer paths before exposure.",
+      "consumer_source_pins": [
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Dequeue.vi",
+          "sha256": "656c0cff6cfadbe3a918728d03a5634423a26b0e55605cc29de50481c8072fbc",
+          "status": "unconfirmed"
+        },
+        {
+          "path": "actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi",
+          "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
+          "status": "unconfirmed"
+        }
+      ]
+    },
+    {
+      "id": "WB1-source-rebuild",
+      "operation": "source-edit-and-rebuild",
+      "family": ".lvlibp compiled distribution plus source .vi/.lvlib/.lvproj/build specification",
+      "source_anchors": [
+        {
+          "path": "benchmark/writing/method.json",
+          "locator": "/tasks/0/request and /tasks/3/request",
+          "kind": "prospective owned WC1 reference lineage; source/build originals not available"
+        }
+      ],
+      "originals": [],
+      "preconditions": [
+        "Obtain owned WC1 source reference, library/project/build specifications, dependencies and matched compiled baseline; freeze source/member hashes and native object/API locators before exposure. None is currently available; no prepared LVLIBP is assumed to have matching source.",
+        "Freeze exported Increment(x:I32)->y:I32 interface, desktop target, build toolchain/modules/licenses, source save versions, output format/version and reproducible source-to-build provenance. Authorized builder is unavailable."
+      ],
+      "request": "In the matched source Increment.vi change the I32 increment constant from 1 to 2, preserve the exported API, and rebuild the packed library from source using the frozen build specification. Return modified source and source/build manifest. If a builder is unavailable, return any legitimately produced source separately and report the compiled result unexecuted; do not patch the compiled binary.",
+      "semantic_ids": [
+        "WB1-source-plus-two",
+        "WB1-source-build-link",
+        "WB1-exported-api-behavior"
+      ],
+      "expected_semantics": {
+        "domain": "-2147483648 through 2147483645",
+        "vectors": [
+          [
+            -2,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            2147483645,
+            2147483647
+          ]
+        ],
+        "api": "Increment(x:I32)->y:I32 unchanged",
+        "comparison": "exact values from freshly loaded rebuilt library, reset per vector; source inspection alone does not establish compiled behavior"
+      },
+      "preservation_ids": [
+        "WB1-source-save-versions",
+        "WB1-api-and-other-members",
+        "WB1-target-build-dependencies",
+        "WB1-unrelated-files"
+      ],
+      "preservation": "Preserve per-file source save versions, API, other source/library members, target and build/dependency settings. Record compiled format/version separately; reject unexplained version drift. Build timestamps may differ only if predeclared; changed bytes or nonreproducible hashes do not excuse semantic differences.",
+      "answer_ids": [
+        "WB1-explain-source-build-chain",
+        "WB1-cite-source-and-export",
+        "WB1-report-unexecuted-build"
+      ],
+      "oracle": {
+        "method": "Manual arithmetic expectations plus independently authored and checked baseline/modified source, build records linking exact source hashes and native API execution. No independent build evidence exists; synthetic records cannot replace it.",
+        "provenance": "requirement anchors /tasks/0/request and /tasks/3/request; prospective owned lineage, author/checker assignment missing",
+        "native_key": "unavailable",
+        "missing": [
+          "matching-source-and-build-originals",
+          "save-versions",
+          "builder",
+          "build-provenance",
+          "native-api-results",
+          "documentation-pins",
+          "separate-check"
+        ]
+      },
+      "native_outcome": "unexecuted: missing-source, missing-builder, missing-runtime and missing-independent-key; compiled output unsupported until those gaps close",
+      "output_paths": [
+        "source/Increment.vi",
+        "build/Increment.lvlibp"
+      ],
+      "output_manifest_rule": "Paths are relative to the isolated output root. Return an artifact manifest, original/output source map and validation-limits answer. List missing or unexpected files explicitly; freeze any allowed propagated consumer paths before exposure."
+    }
+  ],
+  "comparison": {
+    "contract": "benchmark/baseline/runner-contract.md",
+    "precision": "benchmark/precision/README.md",
+    "arms": [
+      "no-tool",
+      "tool"
+    ],
+    "matched_fields": [
+      "requested_change_hash",
+      "original_manifest_hash",
+      "allowed_inputs_hash",
+      "common_prompt_hash",
+      "model_snapshot_and_generation",
+      "total_token_budget",
+      "context_budget",
+      "output_token_and_artifact_byte_budget",
+      "wall_time_budget",
+      "ordinary_editing_capabilities",
+      "native_access_policy",
+      "case_key_revision",
+      "repetition_count",
+      "retry_policy"
+    ],
+    "tool_difference": "Only evaluated-tool access and its minimal instruction differ. Both arms have the same ordinary file editing facilities; no-tool has no substitute semantic writer/exporter. Text, binaries, permitted documentation and any native images are identical. Tool responses count against context/time/cost; output artifact bytes count against identical artifact-byte ceilings.",
+    "native_access_policy": "Both paired writing arms edit without LabVIEW. Trusted native validation, when provisioned, occurs after outputs are frozen in a separate job under identical conditions; native results are not fed back for one arm alone. Any future iterative native-assisted experiment is a separately labeled matched stratum.",
+    "freeze": "Bind an addendum hash containing writing prompts, originals, output schema, oracle/invariant IDs, expected results and writing budgets to the existing manifest without editing its reviewed templates. Freeze before either arm. Missing required pins or budgets block a real comparison.",
+    "repetitions": "Use existing development precision plan: four pilot repeats per case/arm only after quota readiness; evaluation count remains null pending development variance, owner targets and quota. Fresh sessions/workspaces each repeat; no cross-arm answers, artifacts, keys, caches or memory. Randomized deterministic arm order follows existing runner contract; no evaluation-based stopping.",
+    "accounting": "Retain exact requests/responses, tool calls, output artifacts including empty/invalid/missing files, hashes, usage/time/cost, retries, errors and all planned run slots. Missing arms/keys/runtime remain incomplete. Record produced artifact and native execution separately. Complete-pair statistics are conditional and cannot erase failed/unexecuted cases.",
+    "uncertainty": "Extend the existing 95 percent paired lineage-cluster percentile bootstrap (10000 resamples, seed 40502; fewer than two complete lineages gives no interval). For artifact semantic IDs and preservation IDs separately, compare tool minus no-tool correct fractions over fixed IDs, average repeats then cases within lineage then independent lineages, retaining full outcome categories and extras. Apply the same predeclared missing-pair conditional estimates and planned-weight bounds as the precision plan; do not count repeats as independent lineages. Report answer correctness and grounding separately. Reading fidelity remains separate probes with no paired no-tool gain. Owner targets and evaluation repeat count remain undecided; no threshold or resource grant."
+  },
+  "coverage": {
+    "inventory": "benchmark/coverage.md; inventory occurrences are not semantic coverage",
+    "matrix_rule": "Retain one planned/unexecuted row per task x family x original save-version x validation version x target/module, plus explicit uncovered family/version rows. Unknown is a distinct row, never inferred from an extension. All writing native counts are zero.",
+    "designed_families": [
+      ".vi creation and modification",
+      ".ctl modification with consumer .vi",
+      ".lvlibp source/rebuild (missing source and builder)"
+    ],
+    "uncovered_families": [
+      ".vim specialization",
+      "custom/strict controls beyond WM2",
+      ".lvclass inheritance/dispatch",
+      ".lvlib and .lvproj direct creation/modification",
+      "build specs beyond WB1",
+      "menus/resources/.mnu",
+      ".aliases/.lvlps/.viancfg",
+      "packages .vip/.vipb/.vipc/.vsix/.zip",
+      "templates .vit/.ctt",
+      "globals .gbl/.glb",
+      "LLB",
+      "shared libraries/executables",
+      "tests .lvtest",
+      "XControls .xctl",
+      "XNodes .xnode",
+      ".lsb/.lvsc/.rtexe/.rtm/.uir",
+      "RT/FPGA/hardware/module/target resources",
+      "future/unknown families"
+    ],
+    "versions": "All versions remain in goal scope. Proposed WC1 target 21008000 is not validated. WM1/WM2 original save versions unknown; WB1 sources absent. Prepared inventory includes older versions and 2024/2026 declarations, none proves writing support. Native 2024 unverified; no fallback chosen. All-version effort and writing compatibility estimate required before owner chooses fallback.",
+    "gaps": [
+      "No native authoring/validation capability (#169)",
+      "No independently established native writing keys",
+      "No source/build originals for WB1",
+      "Public development fixtures cannot establish withholding or unfamiliarity",
+      "Restricted store readiness is not case allocation or evaluated-run isolation",
+      "Model quota, repetitions for evaluation, owner precision targets and writing effort estimates unresolved"
+    ]
+  },
+  "controls": "benchmark/writing/controls.json",
+  "next_review": "Separate reviewer session must inspect this exact tree, baseline pins, requirement mapping, synthetic control outputs and remaining native gaps. Only thereafter may owner assess method acceptance; do not seek acceptance in this task. Executable benchmark scoring, if needed, requires Policymaker-ordered evaluator work and separate evaluator-verifier approval."
+}

@@ -1,0 +1,931 @@
+{
+  "schema_version": 1,
+  "visibility": "public-development-synthetic-only",
+  "provenance": "Hand-authored issue #481 contract examples. Frozen expectations are derived from the separate requested arithmetic/type/preservation rules, not from candidate outputs. No evaluated tool or POC contributes an oracle. Author and separate reviewer are not interchangeable: independent review is pending. These snapshots are a fictional JSON artifact family, never LabVIEW binaries or native reference evidence.",
+  "frozen": {
+    "request": "Create or change a fictional I32 graph to add exactly 1 to x, preserve label and sentinel, save as SYNTHETIC-v1. No other files or graph operations.",
+    "version": "SYNTHETIC-v1",
+    "graph": {
+      "input": "x",
+      "output": "y",
+      "type": "I32",
+      "operation": "add",
+      "constant": 1
+    },
+    "vectors": [
+      [
+        -2,
+        -1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        7,
+        8
+      ]
+    ],
+    "label": "keep this label",
+    "sentinel": "unchanged unrelated bytes",
+    "native": {
+      "load": "unexecuted",
+      "compile": "unexecuted",
+      "run": "unexecuted",
+      "reason": "missing-runtime"
+    }
+  },
+  "examples": [
+    {
+      "id": "synthetic-create",
+      "operation": "create",
+      "original": {
+        "sentinel.txt": "unchanged unrelated bytes"
+      },
+      "candidate": {
+        "files": {
+          "result.synth": {
+            "version": "SYNTHETIC-v1",
+            "graph": {
+              "input": "x",
+              "output": "y",
+              "type": "I32",
+              "operation": "add",
+              "constant": 1
+            },
+            "label": "keep this label"
+          },
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "answer": {
+          "relation": "y=x+1",
+          "vectors": [
+            [
+              -2,
+              -1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "source": "controls.json#/frozen/request",
+          "output_source": "result.synth#/graph"
+        },
+        "original_after": {
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "support": "synthetic-supported",
+        "native": {
+          "load": "unexecuted",
+          "compile": "unexecuted",
+          "run": "unexecuted",
+          "reason": "missing-runtime"
+        }
+      },
+      "expected": "synthetic-consistent;native-unexecuted"
+    },
+    {
+      "id": "synthetic-modify",
+      "operation": "modify",
+      "original": {
+        "result.synth": {
+          "version": "SYNTHETIC-v1",
+          "graph": {
+            "input": "x",
+            "output": "y",
+            "type": "I32",
+            "operation": "add",
+            "constant": 0
+          },
+          "label": "keep this label"
+        },
+        "sentinel.txt": "unchanged unrelated bytes"
+      },
+      "candidate": {
+        "files": {
+          "result.synth": {
+            "version": "SYNTHETIC-v1",
+            "graph": {
+              "input": "x",
+              "output": "y",
+              "type": "I32",
+              "operation": "add",
+              "constant": 1
+            },
+            "label": "keep this label"
+          },
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "answer": {
+          "relation": "y=x+1",
+          "vectors": [
+            [
+              -2,
+              -1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "source": "controls.json#/examples/1/original/result.synth/graph",
+          "output_source": "result.synth#/graph"
+        },
+        "original_after": {
+          "result.synth": {
+            "version": "SYNTHETIC-v1",
+            "graph": {
+              "input": "x",
+              "output": "y",
+              "type": "I32",
+              "operation": "add",
+              "constant": 0
+            },
+            "label": "keep this label"
+          },
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "support": "synthetic-supported",
+        "native": {
+          "load": "unexecuted",
+          "compile": "unexecuted",
+          "run": "unexecuted",
+          "reason": "missing-runtime"
+        }
+      },
+      "expected": "synthetic-consistent;native-unexecuted"
+    },
+    {
+      "id": "synthetic-source-rebuild",
+      "operation": "modify",
+      "original": {
+        "result.synth": {
+          "version": "SYNTHETIC-v1",
+          "graph": {
+            "input": "x",
+            "output": "y",
+            "type": "I32",
+            "operation": "add",
+            "constant": 1
+          },
+          "label": "keep this label"
+        },
+        "sentinel.txt": "unchanged unrelated bytes"
+      },
+      "candidate": {
+        "files": {
+          "result.synth": {
+            "version": "SYNTHETIC-v1",
+            "graph": {
+              "input": "x",
+              "output": "y",
+              "type": "I32",
+              "operation": "add",
+              "constant": 2
+            },
+            "label": "keep this label"
+          },
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "answer": {
+          "relation": "y=x+2",
+          "vectors": [
+            [
+              -2,
+              0
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              7,
+              9
+            ]
+          ],
+          "source": "controls.json#/examples/2/original/result.synth/graph",
+          "output_source": "result.synth#/graph"
+        },
+        "original_after": {
+          "result.synth": {
+            "version": "SYNTHETIC-v1",
+            "graph": {
+              "input": "x",
+              "output": "y",
+              "type": "I32",
+              "operation": "add",
+              "constant": 1
+            },
+            "label": "keep this label"
+          },
+          "sentinel.txt": "unchanged unrelated bytes"
+        },
+        "support": "synthetic-supported",
+        "native": {
+          "load": "unexecuted",
+          "compile": "unexecuted",
+          "run": "unexecuted",
+          "reason": "missing-runtime"
+        },
+        "build": {
+          "source_available": true,
+          "builder_available": false,
+          "source_graph": {
+            "input": "x",
+            "output": "y",
+            "type": "I32",
+            "operation": "add",
+            "constant": 2
+          },
+          "compiled_outputs": [],
+          "status": "unexecuted"
+        }
+      },
+      "expected": "synthetic-source-consistent;build-unexecuted",
+      "requirement": "source-rebuild"
+    }
+  ],
+  "pair": {
+    "frozen": {
+      "request": "SYNTHETIC increment edit",
+      "originals": [
+        "synthetic-original-1"
+      ],
+      "allowed_inputs": [
+        "synthetic-original-1",
+        "synthetic-image-1"
+      ],
+      "model": "SYNTHETIC-MODEL",
+      "budgets": {
+        "total_tokens": 1000,
+        "context_tokens": 800,
+        "output_tokens": 200,
+        "artifact_bytes": 2048,
+        "wall_seconds": 60
+      },
+      "key_revision": "SYNTHETIC-KEY-1",
+      "repetitions": 1
+    },
+    "arms": [
+      {
+        "arm": "no-tool",
+        "session": "SYNTHETIC-FRESH-A",
+        "settings": {
+          "request": "SYNTHETIC increment edit",
+          "originals": [
+            "synthetic-original-1"
+          ],
+          "allowed_inputs": [
+            "synthetic-original-1",
+            "synthetic-image-1"
+          ],
+          "model": "SYNTHETIC-MODEL",
+          "budgets": {
+            "total_tokens": 1000,
+            "context_tokens": 800,
+            "output_tokens": 200,
+            "artifact_bytes": 2048,
+            "wall_seconds": 60
+          },
+          "key_revision": "SYNTHETIC-KEY-1",
+          "repetitions": 1
+        },
+        "attempt_status": "unexecuted",
+        "output_artifacts": [],
+        "failure_reason": "synthetic only; no agent run"
+      },
+      {
+        "arm": "tool",
+        "session": "SYNTHETIC-FRESH-B",
+        "settings": {
+          "request": "SYNTHETIC increment edit",
+          "originals": [
+            "synthetic-original-1"
+          ],
+          "allowed_inputs": [
+            "synthetic-original-1",
+            "synthetic-image-1"
+          ],
+          "model": "SYNTHETIC-MODEL",
+          "budgets": {
+            "total_tokens": 1000,
+            "context_tokens": 800,
+            "output_tokens": 200,
+            "artifact_bytes": 2048,
+            "wall_seconds": 60
+          },
+          "key_revision": "SYNTHETIC-KEY-1",
+          "repetitions": 1
+        },
+        "attempt_status": "unexecuted",
+        "output_artifacts": [],
+        "failure_reason": "synthetic only; no agent run"
+      }
+    ],
+    "expected": "synthetic-pair-consistent;zero-agent-runs"
+  },
+  "rejecting_controls": [
+    {
+      "id": "no-op",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 0
+        }
+      ],
+      "reason": "no-op-edit"
+    },
+    {
+      "id": "changed-bytes-only",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "layout_noise"
+          ],
+          "value": "new bytes"
+        }
+      ],
+      "reason": "no-op-edit"
+    },
+    {
+      "id": "wrong-behavior",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 2
+        }
+      ],
+      "reason": "wrong-behavior"
+    },
+    {
+      "id": "wrong-type",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "type"
+          ],
+          "value": "DBL"
+        }
+      ],
+      "reason": "wrong-type"
+    },
+    {
+      "id": "unintended-object-edit",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "label"
+          ],
+          "value": "deleted label"
+        }
+      ],
+      "reason": "unintended-edits"
+    },
+    {
+      "id": "unintended-file-edit",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "sentinel.txt"
+          ],
+          "value": "changed"
+        }
+      ],
+      "reason": "unintended-edits"
+    },
+    {
+      "id": "extra-file",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "unexpected.synth"
+          ],
+          "value": "extra"
+        }
+      ],
+      "reason": "output-file-set"
+    },
+    {
+      "id": "missing-artifact",
+      "example": "synthetic-create",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "output-file-set"
+    },
+    {
+      "id": "version-drift",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "version"
+          ],
+          "value": "SYNTHETIC-v2"
+        }
+      ],
+      "reason": "version-drift"
+    },
+    {
+      "id": "unknown-version",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "version"
+          ],
+          "value": null
+        }
+      ],
+      "reason": "save-version-unverified"
+    },
+    {
+      "id": "unsupported-artifact",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "support"
+          ],
+          "value": "unsupported-family"
+        }
+      ],
+      "reason": "unsupported-artifact"
+    },
+    {
+      "id": "correct-answer-wrong-artifact",
+      "example": "synthetic-create",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 2
+        }
+      ],
+      "reason": "wrong-behavior"
+    },
+    {
+      "id": "correct-artifact-wrong-answer",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "answer",
+            "vectors",
+            2,
+            1
+          ],
+          "value": 9
+        }
+      ],
+      "reason": "answer-incorrect"
+    },
+    {
+      "id": "wrong-original-citation",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "answer",
+            "source"
+          ],
+          "value": "controls.json#/examples/1/original/result.synth/label"
+        }
+      ],
+      "reason": "source-unsupported"
+    },
+    {
+      "id": "wrong-output-citation",
+      "example": "synthetic-create",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "answer",
+            "output_source"
+          ],
+          "value": "result.synth#/label"
+        }
+      ],
+      "reason": "source-unsupported"
+    },
+    {
+      "id": "extra-false-claim",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "answer",
+            "extra"
+          ],
+          "value": "natively tested"
+        }
+      ],
+      "reason": "extra-answer-claim"
+    },
+    {
+      "id": "invented-native-pass",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "native",
+            "run"
+          ],
+          "value": "passed"
+        }
+      ],
+      "reason": "native-unexecuted"
+    },
+    {
+      "id": "original-overwritten",
+      "example": "synthetic-modify",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "original_after",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 1
+        }
+      ],
+      "reason": "original-not-preserved"
+    },
+    {
+      "id": "creation-overwrite",
+      "example": "synthetic-create",
+      "target": "original",
+      "changes": [
+        {
+          "path": [
+            "result.synth"
+          ],
+          "value": "already exists"
+        }
+      ],
+      "reason": "creation-destination-exists"
+    },
+    {
+      "id": "missing-arm",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "planned-arm-missing"
+    },
+    {
+      "id": "unmatched-request",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "request"
+          ],
+          "value": "different edit"
+        }
+      ],
+      "reason": "pair-request-mismatch"
+    },
+    {
+      "id": "unmatched-originals",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "originals"
+          ],
+          "value": [
+            "different-original"
+          ]
+        }
+      ],
+      "reason": "pair-originals-mismatch"
+    },
+    {
+      "id": "unmatched-inputs",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "allowed_inputs"
+          ],
+          "value": []
+        }
+      ],
+      "reason": "pair-allowed_inputs-mismatch"
+    },
+    {
+      "id": "unmatched-budget",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "settings",
+            "budgets",
+            "total_tokens"
+          ],
+          "value": 2000
+        }
+      ],
+      "reason": "pair-budgets-mismatch"
+    },
+    {
+      "id": "shared-session",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "session"
+          ],
+          "value": "SYNTHETIC-FRESH-A"
+        }
+      ],
+      "reason": "session-reused"
+    },
+    {
+      "id": "lost-output-accounting",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "output_artifacts"
+          ],
+          "delete": true
+        }
+      ],
+      "reason": "output-accounting-missing"
+    },
+    {
+      "id": "lost-failure-accounting",
+      "target": "pair",
+      "changes": [
+        {
+          "path": [
+            "arms",
+            1,
+            "failure_reason"
+          ],
+          "value": ""
+        }
+      ],
+      "reason": "failure-accounting-missing"
+    },
+    {
+      "id": "method-native-claim",
+      "target": "method",
+      "changes": [
+        {
+          "path": [
+            "claims",
+            "native_executions"
+          ],
+          "value": 1
+        }
+      ],
+      "reason": "method-overclaim"
+    },
+    {
+      "id": "method-missing-preservation",
+      "target": "method",
+      "changes": [
+        {
+          "path": [
+            "tasks",
+            0,
+            "preservation_ids"
+          ],
+          "value": []
+        }
+      ],
+      "reason": "task-preservation-ids"
+    },
+    {
+      "id": "method-invented-key",
+      "target": "method",
+      "changes": [
+        {
+          "path": [
+            "tasks",
+            1,
+            "oracle",
+            "native_key"
+          ],
+          "value": "established"
+        }
+      ],
+      "reason": "native-key-unavailable"
+    },
+    {
+      "id": "method-missing-anchor",
+      "target": "method",
+      "changes": [
+        {
+          "path": [
+            "tasks",
+            1,
+            "source_anchors"
+          ],
+          "value": []
+        }
+      ],
+      "reason": "task-source-anchor"
+    },
+    {
+      "id": "constant-writer-on-two",
+      "example": "synthetic-source-rebuild",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "files",
+            "result.synth",
+            "graph",
+            "constant"
+          ],
+          "value": 1
+        }
+      ],
+      "reason": "no-op-edit"
+    },
+    {
+      "id": "compiled-without-source",
+      "example": "synthetic-source-rebuild",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "build",
+            "source_available"
+          ],
+          "value": false
+        }
+      ],
+      "reason": "missing-source"
+    },
+    {
+      "id": "invented-rebuild",
+      "example": "synthetic-source-rebuild",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "build",
+            "compiled_outputs"
+          ],
+          "value": [
+            "patched.lvlibp"
+          ]
+        }
+      ],
+      "reason": "build-unexecuted"
+    },
+    {
+      "id": "wrong-source-build-link",
+      "example": "synthetic-source-rebuild",
+      "target": "candidate",
+      "changes": [
+        {
+          "path": [
+            "build",
+            "source_graph"
+          ],
+          "value": {
+            "constant": 1
+          }
+        }
+      ],
+      "reason": "source-build-link"
+    }
+  ],
+  "frozen_source_rebuild": {
+    "request": "Change fictional source increment from 1 to 2. Builder unavailable: retain source but report no compiled output.",
+    "version": "SYNTHETIC-v1",
+    "graph": {
+      "input": "x",
+      "output": "y",
+      "type": "I32",
+      "operation": "add",
+      "constant": 2
+    },
+    "vectors": [
+      [
+        -2,
+        0
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        7,
+        9
+      ]
+    ],
+    "label": "keep this label",
+    "sentinel": "unchanged unrelated bytes",
+    "native": {
+      "load": "unexecuted",
+      "compile": "unexecuted",
+      "run": "unexecuted",
+      "reason": "missing-runtime"
+    }
+  }
+}
