@@ -933,7 +933,24 @@
             "sha256": "656c0cff6cfadbe3a918728d03a5634423a26b0e55605cc29de50481c8072fbc",
             "artifact_id": "artifact-0086",
             "artifact_path": "Core/ActorFramework/Message Dequeuer/Dequeue.vi",
-            "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants"
+            "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants",
+            "candidate_variants": [
+              {
+                "id": "candidate-0033",
+                "members": ["artifact-0086", "artifact-0590"],
+                "rule": "same-basename",
+                "status": "candidate-unadjudicated",
+                "source": "benchmark/lineage.json:32612 (candidate-0033); artifact-0086 at :2921, artifact-0590 at :23663"
+              }
+            ],
+            "variant_member_artifacts": [
+              {
+                "sha256": "599e587534b4b2e9f828a3e13d240a38a996613e64d615ad4221642c093f6e44",
+                "artifact_id": "artifact-0590",
+                "artifact_path": "File Group 0/vi.lib/ActorFramework/Message Dequeuer/Dequeue.vi",
+                "lineage_group_id": "public-ni-actor-framework-all-projects-copies-variants"
+              }
+            ]
           },
           {
             "sha256": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c",
