@@ -562,6 +562,30 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   decision: if request-acceptance-now, draft the method-acceptance request (STE) incl. 0002 estimate presentation and
   #169 readiness-case note; else order the listed now-doable items.
 
+## Iteration 0056 (#340, wake false)
+- Considered record 0055 and reports #330-#337 (snapshots .github/loop/data/session-reports/33N/*.json).
+- WASTE FOUND: 0055 used wake true; passes 2-4 re-ran the SAME two orders (8 tasks, 2.7M input) with near-identical
+  results. Lesson: use wake false unless the next pass orders different work; on a wake pass never re-submit
+  finished orders.
+- Gap delta (#330/#332/#334/#336): all say do-first. Owner method-acceptance request is premature. Now-doable per #330:
+  N1 manifest-content binding (run_record.py:134, #318 finding 4), N2 public lineage adjudication (230 candidate
+  groups / 1,244 pairs, lineage.md:10-21), N3 populated-manifest/runner contract. Then #169/#268 evidence.
+  Do not re-order the gap delta.
+- Workflow reviews #331/#333/#335/#337: all revise. Consolidated F1 git grep/log silent zero; F2 positive controls
+  for every search; F3 Actions `bash -e` aborts on grep status 1; F4 local permission -> write-denied; F5 remote
+  diagnostic text + literal STORE env; F6 nonzero hits / wrong outcomes still exit 0.
+- Revised policy/proposals/store-readiness.yml (rev 2): set +e, trap cleanup, cnt() (status > no-match -> error),
+  qp() only GitHub remote denial/403 texts, no `first`, STORE from secret EVAL_STORE_REPO (owner must add it),
+  controls for tree/history/issues/logs/artifacts, per-step expected-outcome gates, result line. Measured: bash -n 0;
+  helper harness under bash -e -o pipefail: hits 1, misses 0, errors `error`, qp deny/403 write-denied, local
+  permission `other`, script reached end.
+- Orders (parallel, main): `manifest-binding-n1` (benchmark, medium, 60/45, re-pin) and `review-store-workflow-v2`
+  (reviewer, medium, 45/35, exports #331/#337).
+- Next: if v2 accept -> owner request: copy proposal to .github/workflows/store-readiness.yml, add secret
+  EVAL_STORE_REPO, run initial, revoke scorer, run revoked, commit replacement redacted record + sha256; then order
+  independent record review. If revise -> fix the file myself (no blind re-review). Verify N1 on main (evaluator 0,
+  new run_record.py sha pinned), then order its review and N2 lineage adjudication (bounded; split by case family).
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
