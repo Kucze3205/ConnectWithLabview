@@ -1,20 +1,20 @@
 # Execution working memory
 
 ## Considered
-- Iteration 0183 / #799: startup documents read once. no_progress=0 (0182 accepted, improved). Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
-- Record 0182 (.session/history/records/0182.json): #797 constant-export-finish-0182 done, accepted, merged 0ce5e643, 10 turns.
-- benchmark/challenges/constant-export-design.md now on main (read whole this iteration).
-- Grep `constant|"id":` on benchmark/challenges/library-icon-tests.json returned no matches (the "id" part also missed, so the pattern may not have matched as intended; the probe task re-checks).
+- Iteration 0184 / #802: startup documents read once. no_progress=1 (0183 not improved: its only task #800 paused). Outbox 787 pending; no open requests; goal gate unaccepted. Rollback streak 1 (old, 2026-11-17).
+- Record 0183 (.session/history/records/0183.json): one task keyed-literal-probe-0183 = #800.
+- #800 snapshot .session/history/sessions/800/e00391fc15d6524c0d5694f382b811c9c693dd0646942a3bc82693ec0226f681.md: status paused, cause providers:unavailable, 12 turns, checkpoint commit 2dd3b3fd on task/800. Content of the checkpoint not inspected (no git in shaper).
+- benchmark/challenges/keyed-literal-probe-0183.md absent on main (Glob, 0184).
 - Final .session/tasks.json validated by the direct Python JSON/heading check, exit 0.
 
 ## State
 - OPEN challenges row (evaluation.md, row `challenges`). gap-0160 (#725): all five kinds `partial`, author-written synthetic fixtures only; results/challenges.json self-comparison (quality_measured false).
-- Constant/empty-export detection: CLOSED for empty (DETECTED score.py:203-204), non-keyed constant (DETECTED score.py:207-208), vi-actor-core-native-gap NOT-APPLICABLE (score.py:199-200); merged by #797. Open: keyed-literal constant (probe ordered 0183) and whether existing `constant` controls / `regression_self_test` exist.
-- Next after the 0183 probe: if SAFE, order the `constant-keyed-literal-export` control addition (fixtures + regression assertion, all pins updated) and its changed-scope review in one graph; if UNSAFE, order the scorer correction plus review in one graph.
+- Constant/empty-export detection: CLOSED for empty (DETECTED score.py:203-204), non-keyed constant (DETECTED score.py:207-208), vi-actor-core-native-gap NOT-APPLICABLE (score.py:199-200); merged by #797. Open: keyed-literal constant (probe #800 paused, resumed 0184) and whether `constant` controls / `regression_self_test` exist.
+- Next after the probe lands: if SAFE, order the `constant-keyed-literal-export` control addition (fixtures + regression assertion, all pins updated) and its changed-scope review in one graph; if UNSAFE, order the scorer correction plus review in one graph.
 - Zero-execution scorer scope: CLOSED (#779 CLEAR; #785 mutation check CLEAR, merge refused for .pyc only). Do not re-run.
 - #763 finding 4 (minor, no `correct`-path/citation-grounding control) and finding 6 (minor, null native_run cases do not assert extras_ledger): carried.
 - Bytecode trap: any task importing benchmark/scripts/*.py must use `python3 -B` and `sys.dont_write_bytecode = True` and check `git status --porcelain` (#785).
-- Sessions with 0 turns (#794) or runtime interruption (#788) recur; if a task gets 0 turns again, file a suggestion to the Policymaker instead of re-ordering.
+- Sessions with 0 turns (#794), runtime interruption (#788) or provider unavailability pause (#800) recur; if the resume of #800 also pauses/gets 0 turns, file a suggestion to the Policymaker instead of re-ordering a third time.
 - Tool loss mid-session recurs: #718/#722/#754/#758/#779/#788/#791. Short limits, save files first.
 - CLOSED: matched comparison #722 CLEAR 81d309e5; attempt-ledger seam #703 CLEAR 48f2715e (F-A1, F-A2 open for owner); attempt policy #685 CLEAR cf0c84e5.
 - Real-envelope authority, legacy multiple-attempt selection: unresolved; no retrospective selection.
@@ -23,15 +23,16 @@
 - Owner #618 declined human C1; #532 approved metadata only; #430 declined. #533 source-blocked.
 
 ## This iteration
-- keyed-literal-probe-0183 (benchmark/default/medium, 45 min/30 turns): in-memory score.compute probe of a uniform keyed-literal export on library-icon-tests and library-specialty; report existing constant controls and regression_self_test presence. Report, do not fix. Check: Glob benchmark/challenges/keyed-literal-probe-0183.md on main; read its SAFE/UNSAFE verdicts and `## Existing controls`.
+- keyed-literal-probe-resume-0184 (benchmark/default/medium, start_branch task/800, 45 min/25 turns): finish #800's probe; report what the branch held first. Report, do not fix. Check: Glob benchmark/challenges/keyed-literal-probe-0183.md on main; read its SAFE/UNSAFE verdicts and `## Existing controls`.
 
 ## Tried, do not repeat
+- Keyed-literal probe: ordered 0183 (#800 paused, providers unavailable), resumed 0184 from task/800. Do not order a fresh full probe; resume from the saved branch at most once more.
 - Constant-export probe (empty, non-keyed): done by #791, merged by #797. Do not re-probe.
 - Mutation check of the positive guard: done by #785 (CLEAR). Do not order again.
 - #779 derived the independent expectation and checked all pins; do not repeat.
 - #766/#778 fix and re-pin done and merged; do not redo fix, main() or pins.
-- Write the graph by ~10th call (0177 at 11, 0178 at 9, 0179 at 11, 0180 at 12, 0181 at 13, 0182 at 10, 0183 at 11).
-- Before calling a task "no report", Glob .session/history/sessions/<issue>/ for a snapshot other than task.md and read it (0181 shaper missed #791's).
+- Write the graph by ~10th call (0177 at 11, 0178 at 9, 0179 at 11, 0180 at 12, 0181 at 13, 0182 at 10, 0183 at 11, 0184 at 10).
+- Before calling a task "no report", Glob .session/history/sessions/<issue>/ for a snapshot other than task.md and read it (0181 shaper missed #791's; brace Glob patterns returned nothing in 0184, use `sessions/80*/**`-style patterns).
 - Session report snapshots: .session/history/sessions/<issue>/<sha>.md and .github/loop/data/session-reports/<issue>/.
 - #763 findings 1-3 closed; do not re-review logic, old pins or the 558 fixture leaves.
 - #758: real change is d46236b6 / iter/0165/739. #762 finished checks; do not rerun.
