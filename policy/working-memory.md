@@ -1,60 +1,59 @@
 # Policy working memory
 
-Considered: iteration records 0000–0015; reviews #146/#147; #150 report and acceptance #151; #157 report and
-acceptance #161; re-review #166 (iteration 0015); engine code `run_policy_script` (.github/loop/iteration.py:511-548).
-Updated by Policymaker #168, iteration 0016.
-Historical inputs: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json` (4-digit);
-reports `.github/loop/data/session-reports/<issue>/*.json` and `.session/history/sessions/<issue>/`.
+Considered: iteration records 0000–0017; reviews #146/#147; #150 and acceptance #151; #157 and acceptance #161;
+re-review #166; reports #170/#172; saved commit d0e14f68458acfe7bab0327ad33d15529480ce44.
+Updated by Policymaker #174, iteration 0018.
+History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
+selected reports `.session/history/sessions/<issue>/`.
 
 ## Current organization and state
-- `shaper: null`: always write `.session/orders.json`; it supplies the iteration's work.
-- Protocol design: re-review #166 (codex/gpt-6.1-sol, report d35c2aac) closed F1 and F2 at 2669ec4, overall
-  **accept**. Caveat: author #150 was also codex, so not a different family; reviewer routing is Claude-first but the
-  session fell back to codex (Claude spent only ~5k out tokens). Accept as design review; a later cross-family review
-  of the case evidence should prefer Claude.
-- Milestones (preparation-status.json): sources, coverage prepared-not-reviewed; tasks, oracle, split, baseline,
-  challenges not-started. Evaluator --check exit 0, benchmark_ready=false. Coverage incomplete; quality unmeasured.
-- Owner question on accepting the method deliberately NOT filed yet: evaluation.md needs evidence (tasks/oracle/split/
-  baseline/challenges) before owner acceptance; asking on a design-only protocol would be premature.
-- Engine-change #165 (missing stdout.txt -> TokenlessUnavailable) pending. Iteration 0015 ran without a repeat of the
-  0014 failure.
+- `shaper: null`: always write `.session/orders.json`; without valid orders the iteration fails. Iteration 0017
+  failed for this reason after #172 exhausted its input budget before ordering work.
+- Protocol re-review #166 (codex/gpt-6.1-sol, report d35c2aac) closed F1/F2 at 2669ec4, overall accept.
+  Author #150 also used codex; this is a design review without model-family diversity. Prefer Claude for case review,
+  but report actual fallback models rather than claiming independence from routing alone.
+- Main still has sources/coverage prepared-not-reviewed; tasks/oracle/split/baseline/challenges not-started.
+  Benchmark readiness remains false, coverage incomplete, product quality unmeasured.
+- Owner acceptance of the method has NOT been requested: evaluation.md requires substantive tasks/oracle/split/
+  baseline/challenge evidence first. Accepted design changes do not accept the method or authorize product work.
 
-## Orders and requests for iteration 0016
-- `order-168-dev-case-specs` (benchmark, default model, high, 90 min/60 turns): first public development cases from
-  XML-readable families (.lvproj/.lvclass/.lvlib) plus one .vi case with native oracle `unavailable`; generator
-  `benchmark/scripts/dev_cases.py` with `--check`; pin under tasks/oracle; status prepared-not-reviewed.
-- `capability` request filed: resources-proposal row 2 (bounded native inspection on the existing NI 2026 Q1
-  container path, public development artifacts only, no spending, providers Anthropic/OpenAI/Copilot for public
-  outputs). Row 1 (restricted store) not filed: needs owner answers (which store, custodian) — ask as a question
-  when split work is next.
-- No wake.
+## Saved work and recovery order
+- #170 (iteration 0016) ended partial on input_budget: 904,013 input tokens, 22 turns; most input was codex fallback.
+  Its report is stale: it says preparation remains to be implemented, but commit d0e14f6 contains a 332-line generator,
+  11 JSON cases, README and updated preparation manifests. The commit is available but not merged; no branch currently
+  contains it (`git branch -a --contains d0e14f6` returned empty). Do not assume task/170 still resolves.
+- Saved cases: 3 .lvproj, 3 .lvclass, 4 .lvlib, 1 .vi native-gap. README declares 1,053 XML slots and 23 native-required
+  slots; these are author-reported inventories, not independently verified results. Every native reference is unavailable.
+  Files are 12–544 KB, total roughly 2.4 MB; do not print whole JSON files.
+- #172 (iteration 0017) also ended partial on input_budget (866,953 input tokens, 22 turns), with no orders or policy changes.
+- Iteration 0018 order `order-174-land-dev-cases`: benchmark restores only the saved benchmark paths from d0e14f6,
+  runs generator --check and evaluator --check, fixes concrete failures within budget, and reports exit codes plus
+  bounded spot-checks. Expected gain: verified development evidence available for independent review without rebuilding it.
+  No wake requested. Tasks/oracle remain prepared-not-reviewed; do not claim readiness from passing checks.
+- Startup #174: 12,285 estimated tokens against 100,000 warning, status ok. Later reads and cumulative provider input
+  caused previous failures; startup diagnostics alone do not measure those costs.
 
 ## Next Policymaker
-- Read the benchmark report: case counts per family, native-unavailable items, --check result. done -> order an
-  independent review (prefer Claude family; author model is in the record) of the cases against protocol `## tasks`.
-  partial -> let the successor run; do not reorder the same work.
-- Check the capability request decision; only after `capability-ready` order native-reference work.
-- Next public preparation candidates (no new access): challenge fixtures (constant/empty/wrong-citation outputs)
-  against the dev cases; lineage/duplicate analysis for split; native-job input/output schema.
-- All-version effort estimate is still needed before any LabVIEW 2024 fallback choice; not started.
+- Read the recovery report and accepted commit. If complete, order independent review of generator, cases and original
+  evidence against protocol tasks/oracle, preferably a different model family from the actual author.
+- If partial, inspect saved commit and actual continuation state before ordering only unfinished work. A partial label
+  does not prove a successor is running or that files were not written.
+- Verify capability #169 readiness before any native-reference work. Request remains pending; do not duplicate it or
+  hold the iteration open. Engine-change #165 (tokenless policy-script failures) also remains pending.
+- Ready later preparation: challenge fixtures, lineage/duplicate analysis for split, native-job input/output schema.
+  Restricted-store proposal needs owner answers on store/custodian before private split work.
+- All-version effort estimate remains outstanding before any LabVIEW 2024 fallback choice.
 
-## Milestone evidence
-- sources: review #134 revise -> fix #139 -> re-review #140 accept at d588fa9. Coverage review #133 accept at
-  6933e17 as limited inventory. Both stay prepared-not-reviewed; owner gate decides.
-- protocol: reviews #146/#147 revise -> #150 -> re-review #166 accept at 2669ec4.
-
-## Mechanisms to preserve
-- Input ceiling 800k unique input; codex counts all non-cached input (#166: 320k in for 19 turns). Never read
-  sources.json/coverage.json directly; bounded Python summaries. Keep sessions short.
-- Task Verification runs in-session and again offline over committed files.
-- Rebase runs evaluator --check; changed pinned files need preparation.json re-pinning.
-- Missing git identity: leave changes staged; parent engine commits.
-- Requests: `.session/requests.json`, format `.github/loop/session-protocol.md` ("Three additional kinds").
-  Orders: `.github/loop/task-graph.md`; order ids must not repeat ids used in the same iteration.
-- Read docs/perpetua/evaluation.md before product planning; accepted-limits.md before private data or spending.
-
-## Open questions
-- Notice #92 pending for the owner. Do not reinstate the crashed script shaper without contract review.
-- Duplicate sessions per order seen in 0012 and 0014; not in 0015. Collect engine evidence before an engine-change.
-- Claude availability: 0011-0015 sessions mostly finished on codex; review-family diversity is therefore weak.
-- How a commit-bound review recommendation becomes milestone `reviewed` status: unresolved; owner gate decides.
+## Evidence and mechanisms to preserve
+- Sources: #134 revise → #139 fix → #140 accept at d588fa9. Coverage: #133 accept at 6933e17 as limited inventory.
+  Milestones stay prepared-not-reviewed; method acceptance still requires the owner's existing change gate.
+- Input ceiling 800k: codex counts all non-cached input. Keep sessions short; bounded Python summaries for case JSON,
+  sources.json and coverage.json. Reports should be written early and updated with verification results immediately.
+- Task Verification runs in-session and offline over committed files; rebase runs evaluator --check.
+  Changed pinned evidence requires preparation.json re-pinning. Parent commits accepted changes.
+- Orders: `.github/loop/task-graph.md`; ids unique within an iteration. Requests: `.github/loop/session-protocol.md`.
+  Export availability comes from `.session/exports/manifest.json`; absence is not evidence of no historical work.
+- Read evaluation.md before reader planning/implementation; accepted-limits.md before private data, disclosure,
+  publication or new spending. Optional access must not block ready work.
+- Do not reinstate the crashed script shaper without contract review. Duplicate sessions occurred in 0012/0014;
+  collect fresh evidence before proposing an engine change. Notices #92/#100/#158 are approved in current loop state.
