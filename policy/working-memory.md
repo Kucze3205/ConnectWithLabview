@@ -1011,6 +1011,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Revise -> narrow fix (fix round 1). Check reviewer `models` (author GPT; Claude preferred). #430 pending; do not wait.
   Reader implementation gated. Memory ~105 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0084 (#445, wake false)
+- Considered record 0083, review #443 (.github/loop/data/session-reports/443/77fb4e8e….json; artifact iter-0083/443-review-443.json).
+- #443 (codex GPT 364k, 14 turns; author #440 also GPT -> same family) verdict REVISE. Finding 1 blocking: split_allocate.py
+  main() (~:288) ignores check() result; `return` before actual_reason() (~:222) exits 0. Findings 2-5 pass: probes a/c/d exit 1,
+  whole groups, template field names, F3 infeasible (0 of 243 whole-group assignments), deterministic incl. reordered input.
+  Do not repeat the spec review or F3 enumeration.
+- Orders written FIRST and parse-checked: `split-allocator-completion-443` (benchmark, medium, 40/35, main): completed-control
+  count returned by check() and compared in main() (#418 pattern); only split_allocate.py changes; allocation output identical;
+  4 temp-copy probes. Fix round 1.
+- Next: verify --check 0 on main + new sha; ONE re-review of finding 1 + probes (non-GPT if possible); accept -> hash-gated pin
+  script under split (max_turns >= 25). #430 pending; do not wait. Reader implementation gated.
+  Memory ~107 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
