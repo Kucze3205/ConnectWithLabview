@@ -1,0 +1,2230 @@
+{
+  "schema_version": 1,
+  "kind": "case-specific-data-supplement-to-existing-baseline-template",
+  "status": "draft-real-admission-blocked",
+  "starting_commit": "1df1f1e2541b0e344bb69010e6af59521c0de0d7",
+  "starting_tree": "ce62baafff58a3304bef79b76deb1b9161d8d4df",
+  "case_id": "project-declarations-D1-D4",
+  "fields": {
+    "provider": {
+      "value": null,
+      "reason": "No permitted provider and data routing have been selected."
+    },
+    "exact_model_snapshot": {
+      "value": null,
+      "reason": "Model selection and snapshot pinning capability await quota verification."
+    },
+    "snapshot_pinning_limitations_and_run_window": {
+      "value": null,
+      "reason": "Provider pinning limitations and a bounded run window must be established after selection."
+    },
+    "model_image_capabilities": {
+      "value": null,
+      "reason": "Required modalities must be checked against the selected model."
+    },
+    "generation_settings": {
+      "value": null,
+      "reason": "Settings must be selected and frozen using development pilots."
+    },
+    "generation_seeds_and_support": {
+      "value": null,
+      "reason": "Seed support and limitations depend on the selected model interface."
+    },
+    "common_prompt_and_hash": {
+      "value": {
+        "text": "Answer the assigned declaration question using only the supplied original text and permitted documentation. Return case_id, status, atomic claims with claim_id, answer, conditions and citations, and limitations. Do not infer native resolution, build success, behavior or preservation.\nFor the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.",
+        "sha256": "ecaa13636de4bf60c3d80c4d34e99fbb8b930afe41383496350630a450b25148",
+        "encoding": "UTF-8; no terminal newline"
+      },
+      "reason": null
+    },
+    "question_input_hashes": {
+      "value": {
+        "text": "For the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.",
+        "sha256": "daa3b71f5c8b21e23d2dc395e3ec0d070ebaf89bb646847c6671ab2e513e9af4",
+        "encoding": "UTF-8; no terminal newline"
+      },
+      "reason": null
+    },
+    "original_artifact_set_and_hashes": {
+      "value": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+        }
+      ],
+      "reason": null
+    },
+    "permitted_documentation_and_hashes": {
+      "value": {
+        "files": [],
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "encoding": "UTF-8 canonical empty JSON list, no newline",
+        "reason": "No documentation needed for literal XML declarations; identical empty set in both arms."
+      },
+      "reason": null
+    },
+    "native_images_and_unavailable_modalities": {
+      "value": {
+        "images": [],
+        "available": false,
+        "reason": "No native captures supplied. Full original XML text is identical in both arms, preserving bytes/hash; no alternative semantic exporter in no-tool arm."
+      },
+      "reason": null
+    },
+    "arm_specific_tool_instructions": {
+      "value": null,
+      "reason": "Minimal instructions for both arms must be reviewed after the reader interface is fixed."
+    },
+    "reader_commit": {
+      "value": null,
+      "reason": "No reader revision is selected for a comparison."
+    },
+    "reader_configuration": {
+      "value": null,
+      "reason": "Reader configuration awaits an accepted reader and probe interface."
+    },
+    "tool_schema": {
+      "value": null,
+      "reason": "The complete tool schema and its hash await a fixed reader interface."
+    },
+    "runner_version": {
+      "value": null,
+      "reason": "An implemented and reviewed paired runner is unavailable."
+    },
+    "scorer_version": {
+      "value": null,
+      "reason": "An independently reviewed executable scorer is unavailable."
+    },
+    "split_revision": {
+      "value": null,
+      "reason": "An accepted lineage allocation and restricted split are unavailable."
+    },
+    "case_key_revision": {
+      "value": {
+        "path": "benchmark/real-project-0107.json",
+        "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+        "locator": "/claims/0 through /claims/3; /limitations/raw_value_convention",
+        "independent_review": "exported #541 body / Spec; scoped CLEAR, not method approval"
+      },
+      "reason": null
+    },
+    "native_evidence_versions": {
+      "value": null,
+      "reason": "Native evidence hashes, save versions, reading builds and environment strata await checked observations."
+    },
+    "matched_total_token_budget": {
+      "value": null,
+      "reason": "A matched accounting rule and affordable total token allocation await development pilots."
+    },
+    "matched_context_budget": {
+      "value": null,
+      "reason": "A matched context allocation including reader output awaits model capability checks."
+    },
+    "matched_output_budget": {
+      "value": null,
+      "reason": "A shared output allocation awaits development pilot accounting."
+    },
+    "matched_wall_time_budget": {
+      "value": null,
+      "reason": "A shared elapsed-time allocation awaits development pilot timing."
+    },
+    "tool_call_limits_and_accounting": {
+      "value": null,
+      "reason": "Call limits and tool time, token and cost accounting await reader pilots."
+    },
+    "truncation_and_exhaustion_recording": {
+      "value": "Preserve raw partial/empty/error records and affected IDs; never silently truncate inputs or exports. Budget/context exhaustion invalidates completion; retain attempted run and stop the pair. No semantic pass from absent content.",
+      "reason": null
+    },
+    "independent_repetitions_per_case_arm": {
+      "value": null,
+      "reason": "A development-only precision/cost plan has not been executed or accepted."
+    },
+    "sampling_order": {
+      "value": "Single case project-declarations-D1-D4; ascending repetition ID only after count is frozen.",
+      "reason": null
+    },
+    "paired_arm_randomization": {
+      "value": {
+        "algorithm": "Reuse runner-contract: sort arms by sha256(seed:pair_id:arm)",
+        "seed": 40501,
+        "seed_provenance": "Existing precision README design seed, not a sampled execution",
+        "pair_id": "project-declarations-D1-D4:rep-1",
+        "arms": [
+          "no-tool",
+          "tool"
+        ],
+        "order": [
+          "tool",
+          "no-tool"
+        ]
+      },
+      "reason": null
+    },
+    "stopping_rule": {
+      "value": null,
+      "reason": "A stopping rule must be frozen without observing evaluation gains."
+    },
+    "affordable_run_ceiling": {
+      "value": null,
+      "reason": "Verified existing quota and development pilot resource estimates are unavailable."
+    },
+    "precision_cost_plan_revision": {
+      "value": null,
+      "reason": "Only a design method exists; no executed pilot plan is frozen."
+    },
+    "fresh_session_and_memory_isolation": {
+      "value": null,
+      "reason": "Fresh-session, cache and cross-run memory isolation require executed checks."
+    },
+    "restricted_access_evidence": {
+      "value": null,
+      "reason": "No tested restricted boundary or approved case routing is established."
+    },
+    "data_recipients_retention_and_grant": {
+      "value": null,
+      "reason": "Concrete recipients, retention settings and material-specific permissions remain unspecified."
+    },
+    "raw_run_record_schema_and_storage": {
+      "value": null,
+      "reason": "Restricted preservation of requests, responses, images, tool calls, errors, timestamps, usage and scores awaits the runner and boundary."
+    },
+    "task_reference_inventory_revision": {
+      "value": {
+        "path": "benchmark/real-project-0107.json",
+        "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+        "locator": "/claims",
+        "required_ids": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "observations_inventory": null
+      },
+      "reason": null
+    },
+    "claim_mapping_and_adjudication_revision": {
+      "value": {
+        "path": "benchmark/protocol.md",
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+        "locator": "tasks: Account for every required ID ... through Freeze these mapping/adjudication rules ..."
+      },
+      "reason": null
+    },
+    "dimension_outcome_rules_revision": {
+      "value": {
+        "path": "benchmark/protocol.md",
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+        "locator": "tasks: dimension table; Apply the following case-assessment rules in order ...",
+        "executable_scorer": null
+      },
+      "reason": null
+    },
+    "fixed_denominators": {
+      "value": {
+        "correctness": {
+          "ids": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "total": 4
+        },
+        "grounding": {
+          "ids": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "total": 4
+        },
+        "fidelity": null,
+        "planned_case_total": 1,
+        "planned_pair_slots": 1,
+        "reason": "One candidate declaration-only pair slot; repetition plan not yet funded/frozen. No run scheduled."
+      },
+      "reason": null
+    },
+    "probe_suite_revision": {
+      "value": null,
+      "reason": "Independently selected required reader probes have not been prepared."
+    },
+    "probe_native_reference_revision": {
+      "value": null,
+      "reason": "Checked native references and probe alignment rules are unavailable."
+    },
+    "separate_probe_session_limits": {
+      "value": null,
+      "reason": "Probe order, adaptive rules, limits and isolation from answer sessions await review."
+    },
+    "probe_raw_alignment_and_outcome_records": {
+      "value": null,
+      "reason": "Raw response preservation, alignment ledgers and incomplete-scope records await the probe runner."
+    },
+    "no_reader_fidelity_not_applicable_record": {
+      "value": {
+        "no-tool": "not-applicable",
+        "fidelity_pass": false,
+        "paired_fidelity_gain": null
+      },
+      "reason": null
+    },
+    "coverage_strata_and_pair_accounting": {
+      "value": {
+        "family": "LVPROJ textual declarations",
+        "source_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+        "save_metadata": "D1 declaration only, no native version authority",
+        "native_reading_version": null,
+        "target": "My Computer declaration only",
+        "module": null,
+        "counts": {
+          "planned_case_slots": 1,
+          "planned_pair_slots": 1,
+          "scheduled_runs": 0,
+          "attempted_runs": 0,
+          "executed_runs": 0,
+          "scored_runs": 0,
+          "complete_pairs": 0
+        },
+        "scores": null
+      },
+      "reason": null
+    },
+    "required_item_and_extra_claim_reporting": {
+      "value": {
+        "rules": {
+          "path": "benchmark/protocol.md",
+          "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+          "locator": "tasks: atomic assertion mapping; fixed denominators; ordered case-assessment rules"
+        },
+        "required_outcomes": [
+          "correct",
+          "partial",
+          "incorrect",
+          "missing",
+          "unverified",
+          "unsupported",
+          "error"
+        ],
+        "ledger": "Retain original answer text, all atomic/implicit claims, ID mappings, conditions and exact citations; omissions keep slots, duplicates earn once, contradictions keep both and invalidate affected dimension. Independent checking of true/false/unverified extras; no replacement credit."
+      },
+      "reason": null
+    },
+    "elapsed_and_tool_time_accounting": {
+      "value": null,
+      "reason": "End-to-end, tool and separate probe timing must be verified in development pilots."
+    },
+    "input_output_token_accounting": {
+      "value": null,
+      "reason": "Provider usage fields and reader context accounting must be verified in development pilots."
+    },
+    "provider_cost_basis": {
+      "value": null,
+      "reason": "No provider is selected; dated price basis and reported-versus-estimated accounting remain unresolved."
+    },
+    "infrastructure_cost_basis": {
+      "value": null,
+      "reason": "Infrastructure resources and any unpriced components have not been identified."
+    },
+    "cache_retry_queue_and_unpriced_accounting": {
+      "value": "Disable answer/response reuse and cross-arm memory; log provider cache hits separately from fresh computation. No automatic retry in this draft. A future frozen retry policy must retain every attempt, charge all time/tokens/cost, avoid selecting favorable responses and invalidate contaminated pairs. Unknown costs remain null, not zero.",
+      "reason": null
+    },
+    "separate_probe_time_and_cost_accounting": {
+      "value": null,
+      "reason": "Probe resource use must be measured separately from paired answer sessions."
+    },
+    "per_case_tolerances_and_nondeterminism": {
+      "value": {
+        "source": {
+          "path": "benchmark/real-project-0107.json",
+          "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+          "locator": "/limitations/raw_value_convention"
+        },
+        "rule": "Exact parsed attribute/text equality; no trimming, numeric conversion or numerical tolerance; preserve D2 entity spelling separately. Answer phrasing may vary only if the complete atomic fact and conditions remain unchanged; adjudicate independently. D4 Type Int is citation context, not an added denominator slot."
+      },
+      "reason": null
+    },
+    "uncertainty_procedure": {
+      "value": null,
+      "reason": "Paired-difference estimation and independent-lineage resampling must be specified before evaluation."
+    },
+    "confidence_level": {
+      "value": null,
+      "reason": "The uncertainty reporting level awaits the development precision plan and review."
+    },
+    "resampling_seed_and_count": {
+      "value": null,
+      "reason": "Resampling settings must be fixed using development pilots before evaluation."
+    },
+    "independent_lineage_units_and_repeat_preservation": {
+      "value": {
+        "group": "public NI Actor Framework project and all its variants/dependencies stay development",
+        "groups": 1,
+        "duplicate_boundary": "Reuse original hash/source provenance; no claim of new lineage independence. Related files/repeats cannot multiply independent n."
+      },
+      "reason": null
+    },
+    "missing_pair_treatment": {
+      "value": "No imputation or favorable replacement. Retain planned denominator and failure reason; zero complete pairs cannot yield a comparison. Any complete-pair summary must identify its conditional denominator.",
+      "reason": null
+    },
+    "exclusions_and_aggregation_weights": {
+      "value": null,
+      "reason": "Any exclusions or within-dimension weighting must be reviewed and frozen before results."
+    },
+    "small_sample_and_unavailable_scope_reporting": {
+      "value": {
+        "lineages": 1,
+        "inference": "No inferential interval or gain claim from one public project; repeats are nested, never independent lineages. Full family/version gaps remain."
+      },
+      "reason": null
+    },
+    "owner_precision_target_and_acceptance_record": {
+      "value": null,
+      "reason": "No acceptable uncertainty target or quality threshold is accepted; these remain owner decisions."
+    }
+  },
+  "pins": [
+    {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    {
+      "path": "benchmark/real-project-0107.json",
+      "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53"
+    },
+    {
+      "path": "benchmark/protocol.md",
+      "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+    },
+    {
+      "path": ".session/exports/manifest.json",
+      "sha256": "a6240ece17042845d68fde77bf9e41d238c6b55db847ac81e0a4fe07d4efa1ad"
+    },
+    {
+      "path": ".session/exports/reports/537.json",
+      "sha256": "0b9fd2ad0297fcaaf27aaf965fde4756c8780b7d52e0f54b55253f5d9da0bb04"
+    },
+    {
+      "path": ".session/exports/reports/541.json",
+      "sha256": "ce547267b4e0dab4d6cd426f80a1fe600f4c47eebbf7dd079d8782437462e113"
+    },
+    {
+      "path": ".session/exports/reports/633.json",
+      "sha256": "5b49c47b14c225a8e7218bf3e1315dd8f4dd603f25f975e25fefc5b95bc778dc"
+    },
+    {
+      "path": "benchmark/real-project-0107.md",
+      "sha256": "0c5df64c7d06c61e512e94d1949275c24eaacec2ed6a7f7938b7025dbde9b673"
+    },
+    {
+      "path": "benchmark/real-project-0107/LICENSE.txt",
+      "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+    },
+    {
+      "path": "benchmark/sources.md",
+      "sha256": "43eafe9c348eba4516871f508121b29147e7c07677e6a6ca9b0d63bfc23babb2"
+    },
+    {
+      "path": "benchmark/baseline/run-manifest.template.json",
+      "sha256": "fcb458e4ee289a01a372805564b0f1578b5dcfebfe16bb7dba11e4d2ba2c84d1"
+    },
+    {
+      "path": "benchmark/baseline/runner-contract.md",
+      "sha256": "b9e47205b0ef3f479a77bd3b4dd06e89c3521923e6b316bef14f624cbbcaa5c0"
+    },
+    {
+      "path": "benchmark/precision/README.md",
+      "sha256": "f94ba74b1c22e551b3cf8eabafdb5868705baa889e17ad5f301fb08cbe18824b"
+    },
+    {
+      "path": "docs/perpetua/evaluation.md",
+      "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+    },
+    {
+      "path": "docs/perpetua/accepted-limits.md",
+      "sha256": "cefd61348701c36691b1cb75eb0b590e8cc9edf78ec54f5151766dc69997a1b2"
+    },
+    {
+      "path": "docs/perpetua/roles.md",
+      "sha256": "d55ebb50e4ca83b74c2261549856493233b3c072294066281259fce33cbdb40a"
+    },
+    {
+      "path": "goal/goal.md",
+      "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+    }
+  ],
+  "availability": {
+    "exports": "537, 541, 633 downloaded; all report bodies read; review artifacts referenced by those reports were not staged/read in this task",
+    "search": "One bounded filename/content search under benchmark; 5 filename hits, 30 content hits; first 40/45 output limits; text candidates .md/.json under 200000 bytes. Existing baseline template, synthetic manifest and runner design found; no substantive paired results in those hits. Not a global absence claim.",
+    "baseline_records_read": [
+      "benchmark/baseline/run-manifest.template.json",
+      "benchmark/baseline/runner-contract.md",
+      "benchmark/precision/README.md"
+    ],
+    "exposure": "This preparation session read public original/key, exports and prior continuation; not fresh, withheld or model-unseen. Startup names claude-sonnet-5-5, parent action annotations codex/gpt-6.1-sol; neither identifies a future measured model or immutable snapshot. Public history remains a contamination risk even with future denied access."
+  },
+  "review_scope": {
+    "537": "Original and D1-D4 preparation; old metadata pending independent review remains frozen.",
+    "541": "Scoped CLEAR for independently resolved original declarations, source identity and blocker only; exported report supersedes pending narrative for this supplement, not the frozen record. C1 narrative checker weakness retained; hashes do not certify prose.",
+    "633": "CLEAR dependency-byte scope only at 8d824c68eb6c2f9674cbc69ba5f1b451d6452224; no native or method clearance. Do not reopen U01/inventory."
+  },
+  "declaration_binding": {
+    "original": {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    "key": {
+      "path": "benchmark/real-project-0107.json",
+      "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53"
+    },
+    "inventory_locator": "/claims/0 through /claims/3; /limitations/raw_value_convention",
+    "review_locator": ".session/exports/reports/541.json /body Spec: Independent Expat byte-bound probes plus ElementTree",
+    "checks": [
+      {
+        "id": "D1",
+        "key_locator": "/claims/0",
+        "original_line": 2,
+        "unique_match": true,
+        "value_matches_existing_key": true,
+        "lexical_matches": true
+      },
+      {
+        "id": "D2",
+        "key_locator": "/claims/1",
+        "original_line": 19,
+        "unique_match": true,
+        "value_matches_existing_key": true,
+        "lexical_matches": true
+      },
+      {
+        "id": "D3",
+        "key_locator": "/claims/2",
+        "original_line": 32,
+        "unique_match": true,
+        "value_matches_existing_key": true,
+        "lexical_matches": true
+      },
+      {
+        "id": "D4",
+        "key_locator": "/claims/3",
+        "original_line": 42,
+        "unique_match": true,
+        "value_matches_existing_key": true,
+        "lexical_matches": true
+      }
+    ],
+    "method": "This session resolved every saved ElementTree path exactly once against original bytes, checked exact parsed/lexical value and line, plus D4 Type Int; no replacement answer key created. Independent establishment inherited from #541, not this author self-approval.",
+    "original_size": 5806,
+    "upstream_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "outside_scope": [
+      "native-resolution",
+      "VI-diagrams",
+      "dependency-closure",
+      "writing-outcomes",
+      "save-version-behavior",
+      "native-load-build-behavior"
+    ],
+    "reviewed_task_commit": "fc02ca678f3b244169b2789df8a37b8034d60e04",
+    "reviewed_task_tree": "bcef66d8baf6c72eeb2953e96b4bc9552c66a62b",
+    "inherited_source_pins": {
+      "readiness_sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413",
+      "license_sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+      "status": "From frozen source_provenance and exported reviews; license snapshot hashed locally, prepared cache not revisited."
+    }
+  },
+  "arm_parity": {
+    "shared": "Question, original bytes, empty documentation set and common prompt above identical, including presentation order. No keys/review reports supplied to either evaluated session.",
+    "minimal_instruction_draft": {
+      "no-tool": "Use the supplied original text; no reader is available.",
+      "tool": "Use the supplied original text; the pinned reader is available only through the frozen allowed calls."
+    },
+    "instruction_status": "Candidate strings only; admission requires pinning both byte hashes and reviewing minimal change after schema/config/calls exist.",
+    "reader_representation": null,
+    "allowed_calls": null,
+    "reason": "No reader revision, export representation, configuration or complete call schema staged for this pair; reader fidelity and tool-arm admission blocked.",
+    "images": "No images; record unsupported modalities explicitly; future supplied images require identical bytes/hashes in both arms."
+  },
+  "plan_limits": {
+    "one_pair": "One matched pair is the minimum unit tested by this admission design, not a statistical repetition choice.",
+    "repetitions": null,
+    "stopping_rule": null,
+    "reason": "Reuse precision README four-pair pilot design and runner ordering, but no pilot/quota evidence justifies freezing a numerical count or run ceiling here. Future plan stops at the frozen count or first hard quota/budget/evidence failure, with no result-driven extensions.",
+    "budgets": {
+      "total_tokens": null,
+      "context_tokens": null,
+      "output_tokens": null,
+      "wall_seconds": null,
+      "tool_calls": null
+    },
+    "accounting": "Total tokens include every request, response and repeated context across all calls; context includes tool output and images at actual interface accounting, output is bounded separately. Count all tool calls and elapsed tool time within end-to-end wall limit. No-tool permitted reader calls zero; tool cap must be fixed and costs charged within equal total resources.",
+    "cost": null,
+    "cost_reason": "Existing subscription quota/routing, dated price basis, unpriced infrastructure and queue overhead unverified; missing cost is not zero and no spending authorized.",
+    "inference": "One independent public lineage cannot support cross-lineage precision. Existing 95%/10000/40502 design may be bound after independent plan review; no interval generated now. No quality threshold selected."
+  },
+  "fidelity": {
+    "required": true,
+    "suite": null,
+    "native_alignment": null,
+    "limits": null,
+    "raw_evidence": null,
+    "status": "unavailable",
+    "reason": "Independent required-observation inventory, reader entry points/config/allowed calls, original/native references and separate frozen probe session/alignment are absent. Agent-selected calls cannot replace required probes.",
+    "no_tool": "not-applicable; no pass or fidelity gain"
+  },
+  "raw_evidence_contract": {
+    "status": "design-only supplementary inventory; not a replacement for existing run-record.template.json/run_record.py",
+    "existing_binding": "runner-contract.md Inputs and Audit steps 1-6; exact per-run field integration not inspected in this bounded task and blocks trusted execution until independently reconciled",
+    "identities": "For each pair/repetition/arm/attempt: immutable manifest/plan/request/response/transcript bytes, original/tool inputs, image files or explicit empty image inventory, tool schema/requests/raw outputs, usage, errors including empty success log, timestamps, model returned IDs and scorer/mapping ledger. Each real identity needs path/storage URI, sha256, byte size, encoding/content type, producer/version, attempt ID, UTC times and independently verified existence/content. Fake rehearsal identities are not files.",
+    "scoring": "No score before substantive independent key and citation resolution. Correctness and grounding denominators fixed 4 each; categories and extra/duplicate/contradiction counts separate. Reader fidelity separate required inventory remains unavailable.",
+    "controls": "Fresh evaluated sessions denied keys, repo/history, other arms, caches, shared workspace and memory. Trusted runner/scorer alone reads keys; execute allowed/denied sentinel and leak probes and independent review with actual identities. Public prior knowledge cannot be undone; development only. Record routing/retention and provider limitation.",
+    "failure": "Retain every attempted request/error/partial response/retry/cache/queue/truncation/exhaustion with costs; no retry or substitution without frozen policy. Missing arm prevents complete pair; absent run or synthetic data never receives semantic pass."
+  },
+  "real_admission_rule": {
+    "decision_now": "blocked",
+    "pre_run": "Resolve every applicable null with immutable real evidence or independently accepted explicit scope exclusion, verify all byte pins and #541 linkage, reconcile existing run-record schema, select and verify provider/model/modalities/settings/window, match inputs/budgets, freeze repetitions/stopping/cost ceiling/order and reader config/calls, establish independent probe suite and native references, execute and independently review fresh-session/key-access boundaries and permitted routing. No numerical quality threshold is supplied by admission.",
+    "post_run": "Trusted runner verifies returned actual model identities or disclosed bounded-window limitation, all attempted raw evidence bytes, budget/usage/time/cost accounting and both completed arms for each frozen repetition; scorer independently resolves key facts/citations and ledger without changing inventories. Execute separate required probes and record unavailable scope. Only independent substantive verification can admit a real complete comparison record; consistency alone cannot.",
+    "rehearsal_boundary": "The local predicate below checks selected record consistency only. It always blocks real admission: synthetic records => blocked-synthetic; non-synthetic => blocked-pending-trusted-validation. Merely replacing synthetic labels/booleans cannot authorize admission."
+  },
+  "rehearsal": {
+    "kind": "local-Python/data-only; no model/reader/evaluator/builder/benchmark execution",
+    "checks": [
+      {
+        "id": "required_manifest_fields",
+        "op": "fields_complete"
+      },
+      {
+        "id": "common_input_mismatch",
+        "op": "same",
+        "keys": [
+          "question_hash",
+          "artifact_hash",
+          "documentation_hash",
+          "prompt_hash"
+        ]
+      },
+      {
+        "id": "budget_mismatch",
+        "op": "same",
+        "keys": [
+          "total_tokens",
+          "context_tokens",
+          "output_tokens",
+          "wall_seconds"
+        ]
+      },
+      {
+        "id": "missing_repetition_or_stopping_plan",
+        "op": "plan"
+      },
+      {
+        "id": "missing_or_mismatched_actual_model",
+        "op": "model"
+      },
+      {
+        "id": "incomplete_pair",
+        "op": "pair"
+      },
+      {
+        "id": "missing_or_unverified_key_evidence",
+        "op": "evidence",
+        "key": "key"
+      },
+      {
+        "id": "missing_or_unverified_isolation_evidence",
+        "op": "evidence",
+        "key": "isolation"
+      },
+      {
+        "id": "missing_raw_evidence",
+        "op": "raw"
+      }
+    ],
+    "raw_required": [
+      "request",
+      "response",
+      "transcript",
+      "images",
+      "tools",
+      "usage",
+      "errors",
+      "timestamps",
+      "scorer"
+    ],
+    "fixtures": {
+      "draft": {
+        "synthetic": false,
+        "pair_id": "project-declarations-D1-D4:rep-1",
+        "fields": {
+          "provider": {
+            "value": null,
+            "reason": "No permitted provider and data routing have been selected."
+          },
+          "exact_model_snapshot": {
+            "value": null,
+            "reason": "Model selection and snapshot pinning capability await quota verification."
+          },
+          "snapshot_pinning_limitations_and_run_window": {
+            "value": null,
+            "reason": "Provider pinning limitations and a bounded run window must be established after selection."
+          },
+          "model_image_capabilities": {
+            "value": null,
+            "reason": "Required modalities must be checked against the selected model."
+          },
+          "generation_settings": {
+            "value": null,
+            "reason": "Settings must be selected and frozen using development pilots."
+          },
+          "generation_seeds_and_support": {
+            "value": null,
+            "reason": "Seed support and limitations depend on the selected model interface."
+          },
+          "common_prompt_and_hash": {
+            "value": {
+              "text": "Answer the assigned declaration question using only the supplied original text and permitted documentation. Return case_id, status, atomic claims with claim_id, answer, conditions and citations, and limitations. Do not infer native resolution, build success, behavior or preservation.\nFor the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.",
+              "sha256": "ecaa13636de4bf60c3d80c4d34e99fbb8b930afe41383496350630a450b25148",
+              "encoding": "UTF-8; no terminal newline"
+            },
+            "reason": null
+          },
+          "question_input_hashes": {
+            "value": {
+              "text": "For the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.",
+              "sha256": "daa3b71f5c8b21e23d2dc395e3ec0d070ebaf89bb646847c6671ab2e513e9af4",
+              "encoding": "UTF-8; no terminal newline"
+            },
+            "reason": null
+          },
+          "original_artifact_set_and_hashes": {
+            "value": [
+              {
+                "path": "benchmark/real-project-0107/original.lvproj",
+                "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+              }
+            ],
+            "reason": null
+          },
+          "permitted_documentation_and_hashes": {
+            "value": {
+              "files": [],
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "encoding": "UTF-8 canonical empty JSON list, no newline",
+              "reason": "No documentation needed for literal XML declarations; identical empty set in both arms."
+            },
+            "reason": null
+          },
+          "native_images_and_unavailable_modalities": {
+            "value": {
+              "images": [],
+              "available": false,
+              "reason": "No native captures supplied. Full original XML text is identical in both arms, preserving bytes/hash; no alternative semantic exporter in no-tool arm."
+            },
+            "reason": null
+          },
+          "arm_specific_tool_instructions": {
+            "value": null,
+            "reason": "Minimal instructions for both arms must be reviewed after the reader interface is fixed."
+          },
+          "reader_commit": {
+            "value": null,
+            "reason": "No reader revision is selected for a comparison."
+          },
+          "reader_configuration": {
+            "value": null,
+            "reason": "Reader configuration awaits an accepted reader and probe interface."
+          },
+          "tool_schema": {
+            "value": null,
+            "reason": "The complete tool schema and its hash await a fixed reader interface."
+          },
+          "runner_version": {
+            "value": null,
+            "reason": "An implemented and reviewed paired runner is unavailable."
+          },
+          "scorer_version": {
+            "value": null,
+            "reason": "An independently reviewed executable scorer is unavailable."
+          },
+          "split_revision": {
+            "value": null,
+            "reason": "An accepted lineage allocation and restricted split are unavailable."
+          },
+          "case_key_revision": {
+            "value": {
+              "path": "benchmark/real-project-0107.json",
+              "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+              "locator": "/claims/0 through /claims/3; /limitations/raw_value_convention",
+              "independent_review": "exported #541 body / Spec; scoped CLEAR, not method approval"
+            },
+            "reason": null
+          },
+          "native_evidence_versions": {
+            "value": null,
+            "reason": "Native evidence hashes, save versions, reading builds and environment strata await checked observations."
+          },
+          "matched_total_token_budget": {
+            "value": null,
+            "reason": "A matched accounting rule and affordable total token allocation await development pilots."
+          },
+          "matched_context_budget": {
+            "value": null,
+            "reason": "A matched context allocation including reader output awaits model capability checks."
+          },
+          "matched_output_budget": {
+            "value": null,
+            "reason": "A shared output allocation awaits development pilot accounting."
+          },
+          "matched_wall_time_budget": {
+            "value": null,
+            "reason": "A shared elapsed-time allocation awaits development pilot timing."
+          },
+          "tool_call_limits_and_accounting": {
+            "value": null,
+            "reason": "Call limits and tool time, token and cost accounting await reader pilots."
+          },
+          "truncation_and_exhaustion_recording": {
+            "value": "Preserve raw partial/empty/error records and affected IDs; never silently truncate inputs or exports. Budget/context exhaustion invalidates completion; retain attempted run and stop the pair. No semantic pass from absent content.",
+            "reason": null
+          },
+          "independent_repetitions_per_case_arm": {
+            "value": null,
+            "reason": "A development-only precision/cost plan has not been executed or accepted."
+          },
+          "sampling_order": {
+            "value": "Single case project-declarations-D1-D4; ascending repetition ID only after count is frozen.",
+            "reason": null
+          },
+          "paired_arm_randomization": {
+            "value": {
+              "algorithm": "Reuse runner-contract: sort arms by sha256(seed:pair_id:arm)",
+              "seed": 40501,
+              "seed_provenance": "Existing precision README design seed, not a sampled execution",
+              "pair_id": "project-declarations-D1-D4:rep-1",
+              "arms": [
+                "no-tool",
+                "tool"
+              ],
+              "order": [
+                "tool",
+                "no-tool"
+              ]
+            },
+            "reason": null
+          },
+          "stopping_rule": {
+            "value": null,
+            "reason": "A stopping rule must be frozen without observing evaluation gains."
+          },
+          "affordable_run_ceiling": {
+            "value": null,
+            "reason": "Verified existing quota and development pilot resource estimates are unavailable."
+          },
+          "precision_cost_plan_revision": {
+            "value": null,
+            "reason": "Only a design method exists; no executed pilot plan is frozen."
+          },
+          "fresh_session_and_memory_isolation": {
+            "value": null,
+            "reason": "Fresh-session, cache and cross-run memory isolation require executed checks."
+          },
+          "restricted_access_evidence": {
+            "value": null,
+            "reason": "No tested restricted boundary or approved case routing is established."
+          },
+          "data_recipients_retention_and_grant": {
+            "value": null,
+            "reason": "Concrete recipients, retention settings and material-specific permissions remain unspecified."
+          },
+          "raw_run_record_schema_and_storage": {
+            "value": null,
+            "reason": "Restricted preservation of requests, responses, images, tool calls, errors, timestamps, usage and scores awaits the runner and boundary."
+          },
+          "task_reference_inventory_revision": {
+            "value": {
+              "path": "benchmark/real-project-0107.json",
+              "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+              "locator": "/claims",
+              "required_ids": [
+                "D1",
+                "D2",
+                "D3",
+                "D4"
+              ],
+              "observations_inventory": null
+            },
+            "reason": null
+          },
+          "claim_mapping_and_adjudication_revision": {
+            "value": {
+              "path": "benchmark/protocol.md",
+              "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+              "locator": "tasks: Account for every required ID ... through Freeze these mapping/adjudication rules ..."
+            },
+            "reason": null
+          },
+          "dimension_outcome_rules_revision": {
+            "value": {
+              "path": "benchmark/protocol.md",
+              "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+              "locator": "tasks: dimension table; Apply the following case-assessment rules in order ...",
+              "executable_scorer": null
+            },
+            "reason": null
+          },
+          "fixed_denominators": {
+            "value": {
+              "correctness": {
+                "ids": [
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4"
+                ],
+                "total": 4
+              },
+              "grounding": {
+                "ids": [
+                  "D1",
+                  "D2",
+                  "D3",
+                  "D4"
+                ],
+                "total": 4
+              },
+              "fidelity": null,
+              "planned_case_total": 1,
+              "planned_pair_slots": 1,
+              "reason": "One candidate declaration-only pair slot; repetition plan not yet funded/frozen. No run scheduled."
+            },
+            "reason": null
+          },
+          "probe_suite_revision": {
+            "value": null,
+            "reason": "Independently selected required reader probes have not been prepared."
+          },
+          "probe_native_reference_revision": {
+            "value": null,
+            "reason": "Checked native references and probe alignment rules are unavailable."
+          },
+          "separate_probe_session_limits": {
+            "value": null,
+            "reason": "Probe order, adaptive rules, limits and isolation from answer sessions await review."
+          },
+          "probe_raw_alignment_and_outcome_records": {
+            "value": null,
+            "reason": "Raw response preservation, alignment ledgers and incomplete-scope records await the probe runner."
+          },
+          "no_reader_fidelity_not_applicable_record": {
+            "value": {
+              "no-tool": "not-applicable",
+              "fidelity_pass": false,
+              "paired_fidelity_gain": null
+            },
+            "reason": null
+          },
+          "coverage_strata_and_pair_accounting": {
+            "value": {
+              "family": "LVPROJ textual declarations",
+              "source_commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "save_metadata": "D1 declaration only, no native version authority",
+              "native_reading_version": null,
+              "target": "My Computer declaration only",
+              "module": null,
+              "counts": {
+                "planned_case_slots": 1,
+                "planned_pair_slots": 1,
+                "scheduled_runs": 0,
+                "attempted_runs": 0,
+                "executed_runs": 0,
+                "scored_runs": 0,
+                "complete_pairs": 0
+              },
+              "scores": null
+            },
+            "reason": null
+          },
+          "required_item_and_extra_claim_reporting": {
+            "value": {
+              "rules": {
+                "path": "benchmark/protocol.md",
+                "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+                "locator": "tasks: atomic assertion mapping; fixed denominators; ordered case-assessment rules"
+              },
+              "required_outcomes": [
+                "correct",
+                "partial",
+                "incorrect",
+                "missing",
+                "unverified",
+                "unsupported",
+                "error"
+              ],
+              "ledger": "Retain original answer text, all atomic/implicit claims, ID mappings, conditions and exact citations; omissions keep slots, duplicates earn once, contradictions keep both and invalidate affected dimension. Independent checking of true/false/unverified extras; no replacement credit."
+            },
+            "reason": null
+          },
+          "elapsed_and_tool_time_accounting": {
+            "value": null,
+            "reason": "End-to-end, tool and separate probe timing must be verified in development pilots."
+          },
+          "input_output_token_accounting": {
+            "value": null,
+            "reason": "Provider usage fields and reader context accounting must be verified in development pilots."
+          },
+          "provider_cost_basis": {
+            "value": null,
+            "reason": "No provider is selected; dated price basis and reported-versus-estimated accounting remain unresolved."
+          },
+          "infrastructure_cost_basis": {
+            "value": null,
+            "reason": "Infrastructure resources and any unpriced components have not been identified."
+          },
+          "cache_retry_queue_and_unpriced_accounting": {
+            "value": "Disable answer/response reuse and cross-arm memory; log provider cache hits separately from fresh computation. No automatic retry in this draft. A future frozen retry policy must retain every attempt, charge all time/tokens/cost, avoid selecting favorable responses and invalidate contaminated pairs. Unknown costs remain null, not zero.",
+            "reason": null
+          },
+          "separate_probe_time_and_cost_accounting": {
+            "value": null,
+            "reason": "Probe resource use must be measured separately from paired answer sessions."
+          },
+          "per_case_tolerances_and_nondeterminism": {
+            "value": {
+              "source": {
+                "path": "benchmark/real-project-0107.json",
+                "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+                "locator": "/limitations/raw_value_convention"
+              },
+              "rule": "Exact parsed attribute/text equality; no trimming, numeric conversion or numerical tolerance; preserve D2 entity spelling separately. Answer phrasing may vary only if the complete atomic fact and conditions remain unchanged; adjudicate independently. D4 Type Int is citation context, not an added denominator slot."
+            },
+            "reason": null
+          },
+          "uncertainty_procedure": {
+            "value": null,
+            "reason": "Paired-difference estimation and independent-lineage resampling must be specified before evaluation."
+          },
+          "confidence_level": {
+            "value": null,
+            "reason": "The uncertainty reporting level awaits the development precision plan and review."
+          },
+          "resampling_seed_and_count": {
+            "value": null,
+            "reason": "Resampling settings must be fixed using development pilots before evaluation."
+          },
+          "independent_lineage_units_and_repeat_preservation": {
+            "value": {
+              "group": "public NI Actor Framework project and all its variants/dependencies stay development",
+              "groups": 1,
+              "duplicate_boundary": "Reuse original hash/source provenance; no claim of new lineage independence. Related files/repeats cannot multiply independent n."
+            },
+            "reason": null
+          },
+          "missing_pair_treatment": {
+            "value": "No imputation or favorable replacement. Retain planned denominator and failure reason; zero complete pairs cannot yield a comparison. Any complete-pair summary must identify its conditional denominator.",
+            "reason": null
+          },
+          "exclusions_and_aggregation_weights": {
+            "value": null,
+            "reason": "Any exclusions or within-dimension weighting must be reviewed and frozen before results."
+          },
+          "small_sample_and_unavailable_scope_reporting": {
+            "value": {
+              "lineages": 1,
+              "inference": "No inferential interval or gain claim from one public project; repeats are nested, never independent lineages. Full family/version gaps remain."
+            },
+            "reason": null
+          },
+          "owner_precision_target_and_acceptance_record": {
+            "value": null,
+            "reason": "No acceptable uncertainty target or quality threshold is accepted; these remain owner decisions."
+          }
+        },
+        "arms": [],
+        "planned_model": null,
+        "repetitions": null,
+        "stopping_rule": null,
+        "key": {
+          "status": "review-export-available-not-run-bound",
+          "identity": {
+            "path": "benchmark/real-project-0107.json",
+            "sha256": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53"
+          }
+        },
+        "isolation": null
+      },
+      "synthetic_full": {
+        "synthetic": true,
+        "pair_id": "SYNTHETIC:pair",
+        "fields": {
+          "provider": {
+            "value": "SYNTHETIC:offline-no-provider",
+            "reason": null
+          },
+          "exact_model_snapshot": {
+            "value": "SYNTHETIC:model",
+            "reason": null
+          },
+          "snapshot_pinning_limitations_and_run_window": {
+            "value": {
+              "snapshot": "SYNTHETIC:model",
+              "start_utc": "2000-01-01T00:00:00Z",
+              "end_utc": "2000-01-01T00:00:10Z",
+              "executed": false
+            },
+            "reason": null
+          },
+          "model_image_capabilities": {
+            "value": {
+              "input": [
+                "text"
+              ],
+              "output": [
+                "text"
+              ],
+              "images": "unavailable-synthetic"
+            },
+            "reason": null
+          },
+          "generation_settings": {
+            "value": {
+              "temperature": 0,
+              "top_p": 1,
+              "max_output_tokens": 20,
+              "reasoning": "SYNTHETIC:disabled",
+              "other_settings": "SYNTHETIC:none"
+            },
+            "reason": null
+          },
+          "generation_seeds_and_support": {
+            "value": {
+              "supported": false,
+              "seed": null,
+              "reason": "SYNTHETIC interface has no sampling seed"
+            },
+            "reason": null
+          },
+          "common_prompt_and_hash": {
+            "value": {
+              "text": "SYNTHETIC:prompt",
+              "sha256": "58578a5437ff4a93bcc23c0dabefc69d6c678adc72eda28fd3a2e1397fd50a21"
+            },
+            "reason": null
+          },
+          "question_input_hashes": {
+            "value": {
+              "text": "SYNTHETIC:question",
+              "sha256": "c4f0c1e8f81a2f2c5f69d66c1157d8a2bfe87b35416e9feca1222c872d71423f"
+            },
+            "reason": null
+          },
+          "original_artifact_set_and_hashes": {
+            "value": [
+              {
+                "identity": "SYNTHETIC:artifact",
+                "sha256": "cac782439ca2c3a09636a0e5f9e9620d0920c313f7b00096e4b8304007689969",
+                "exists": false
+              }
+            ],
+            "reason": null
+          },
+          "permitted_documentation_and_hashes": {
+            "value": {
+              "files": [],
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "reason": null
+          },
+          "native_images_and_unavailable_modalities": {
+            "value": {
+              "images": [],
+              "reason": "SYNTHETIC:no images"
+            },
+            "reason": null
+          },
+          "arm_specific_tool_instructions": {
+            "value": {
+              "no-tool": "SYNTHETIC:no reader",
+              "tool": "SYNTHETIC:allow mock.inspect only"
+            },
+            "reason": null
+          },
+          "reader_commit": {
+            "value": "SYNTHETIC:reader_commit",
+            "reason": null
+          },
+          "reader_configuration": {
+            "value": {
+              "representation": "SYNTHETIC:literal-XML",
+              "config": {
+                "identity": "SYNTHETIC:reader-config",
+                "sha256": "6b4f9353fc01e7e21d10d4313b018bc738ce67c1786835d53fc344324a8ba1d0",
+                "exists": false
+              },
+              "allowed_calls": [
+                {
+                  "name": "SYNTHETIC:mock.inspect",
+                  "arguments": {
+                    "artifact": "SYNTHETIC:artifact"
+                  }
+                }
+              ]
+            },
+            "reason": null
+          },
+          "tool_schema": {
+            "value": {
+              "name": "SYNTHETIC:mock.inspect",
+              "input": {
+                "artifact": "string"
+              },
+              "output": "SYNTHETIC:literal text",
+              "pin": {
+                "identity": "SYNTHETIC:tool-schema",
+                "sha256": "92aecdc8d3490b233f8fb4633a28cc7853fb8a82f2eeb0b5e8fd14d0761d8c54",
+                "exists": false
+              }
+            },
+            "reason": null
+          },
+          "runner_version": {
+            "value": "SYNTHETIC:runner_version",
+            "reason": null
+          },
+          "scorer_version": {
+            "value": "SYNTHETIC:scorer_version",
+            "reason": null
+          },
+          "split_revision": {
+            "value": "SYNTHETIC:split_revision",
+            "reason": null
+          },
+          "case_key_revision": {
+            "value": "SYNTHETIC:case_key_revision",
+            "reason": null
+          },
+          "native_evidence_versions": {
+            "value": "SYNTHETIC:native_evidence_versions",
+            "reason": null
+          },
+          "matched_total_token_budget": {
+            "value": 100,
+            "reason": null
+          },
+          "matched_context_budget": {
+            "value": 80,
+            "reason": null
+          },
+          "matched_output_budget": {
+            "value": 20,
+            "reason": null
+          },
+          "matched_wall_time_budget": {
+            "value": 10,
+            "reason": null
+          },
+          "tool_call_limits_and_accounting": {
+            "value": {
+              "no-tool": 0,
+              "tool": 1,
+              "tool_outputs_in_context": true,
+              "all_attempts_charged": true
+            },
+            "reason": null
+          },
+          "truncation_and_exhaustion_recording": {
+            "value": "SYNTHETIC:truncation_and_exhaustion_recording",
+            "reason": null
+          },
+          "independent_repetitions_per_case_arm": {
+            "value": 1,
+            "reason": null
+          },
+          "sampling_order": {
+            "value": [
+              "SYNTHETIC:pair:rep-1"
+            ],
+            "reason": null
+          },
+          "paired_arm_randomization": {
+            "value": {
+              "seed": 40501,
+              "algorithm": "sha256(seed:pair_id:arm)",
+              "order": [
+                "no-tool",
+                "tool"
+              ]
+            },
+            "reason": null
+          },
+          "stopping_rule": {
+            "value": "SYNTHETIC: stop after one pair; no retries",
+            "reason": null
+          },
+          "affordable_run_ceiling": {
+            "value": {
+              "pairs": 1,
+              "runs": 2,
+              "total_tokens": 200,
+              "wall_seconds": 20,
+              "extra_spending": false,
+              "quota_evidence": {
+                "identity": "SYNTHETIC:quota-not-real",
+                "sha256": "40aac7ec600b18c0ac078ed68df65a12c7cd952fb0566deb2d1ca07c6b54fad5",
+                "exists": false
+              }
+            },
+            "reason": null
+          },
+          "precision_cost_plan_revision": {
+            "value": "SYNTHETIC:precision_cost_plan_revision",
+            "reason": null
+          },
+          "fresh_session_and_memory_isolation": {
+            "value": {
+              "identity": "SYNTHETIC:fresh-sessions-not-executed",
+              "sha256": "e2b66953abaaa0f980f1cd910a0e97d6e26228f19ff436ff6cfa9f072dc3783e",
+              "exists": false
+            },
+            "reason": null
+          },
+          "restricted_access_evidence": {
+            "value": {
+              "identity": "SYNTHETIC:isolation-not-executed",
+              "sha256": "924540bd9c5f6a0cacce9554aee0d794eb861aa2af8b792af8a927201e379a35",
+              "exists": false
+            },
+            "reason": null
+          },
+          "data_recipients_retention_and_grant": {
+            "value": "SYNTHETIC:data_recipients_retention_and_grant",
+            "reason": null
+          },
+          "raw_run_record_schema_and_storage": {
+            "value": "SYNTHETIC:raw_run_record_schema_and_storage",
+            "reason": null
+          },
+          "task_reference_inventory_revision": {
+            "value": "SYNTHETIC:task_reference_inventory_revision",
+            "reason": null
+          },
+          "claim_mapping_and_adjudication_revision": {
+            "value": "SYNTHETIC:claim_mapping_and_adjudication_revision",
+            "reason": null
+          },
+          "dimension_outcome_rules_revision": {
+            "value": "SYNTHETIC:dimension_outcome_rules_revision",
+            "reason": null
+          },
+          "fixed_denominators": {
+            "value": {
+              "correctness": 4,
+              "grounding": 4,
+              "fidelity": 4,
+              "ids": [
+                "SYNTHETIC:D1",
+                "SYNTHETIC:D2",
+                "SYNTHETIC:D3",
+                "SYNTHETIC:D4"
+              ]
+            },
+            "reason": null
+          },
+          "probe_suite_revision": {
+            "value": "SYNTHETIC:probe_suite_revision",
+            "reason": null
+          },
+          "probe_native_reference_revision": {
+            "value": "SYNTHETIC:probe_native_reference_revision",
+            "reason": null
+          },
+          "separate_probe_session_limits": {
+            "value": "SYNTHETIC:separate_probe_session_limits",
+            "reason": null
+          },
+          "probe_raw_alignment_and_outcome_records": {
+            "value": "SYNTHETIC:probe_raw_alignment_and_outcome_records",
+            "reason": null
+          },
+          "no_reader_fidelity_not_applicable_record": {
+            "value": {
+              "no-tool": "not-applicable",
+              "gain": null
+            },
+            "reason": null
+          },
+          "coverage_strata_and_pair_accounting": {
+            "value": "SYNTHETIC:coverage_strata_and_pair_accounting",
+            "reason": null
+          },
+          "required_item_and_extra_claim_reporting": {
+            "value": "SYNTHETIC:required_item_and_extra_claim_reporting",
+            "reason": null
+          },
+          "elapsed_and_tool_time_accounting": {
+            "value": "SYNTHETIC:elapsed_and_tool_time_accounting",
+            "reason": null
+          },
+          "input_output_token_accounting": {
+            "value": "SYNTHETIC:input_output_token_accounting",
+            "reason": null
+          },
+          "provider_cost_basis": {
+            "value": {
+              "currency": "SYNTHETIC",
+              "price_basis": {
+                "identity": "SYNTHETIC:price-not-real",
+                "sha256": "4843fde062dff2ecb2d9ac3e437248f385320aba843f085b2bcfdf3f5b6ffc9e",
+                "exists": false
+              },
+              "cost": null,
+              "reason": "Synthetic data, no charge or real price"
+            },
+            "reason": null
+          },
+          "infrastructure_cost_basis": {
+            "value": "SYNTHETIC:infrastructure_cost_basis",
+            "reason": null
+          },
+          "cache_retry_queue_and_unpriced_accounting": {
+            "value": "SYNTHETIC:cache_retry_queue_and_unpriced_accounting",
+            "reason": null
+          },
+          "separate_probe_time_and_cost_accounting": {
+            "value": "SYNTHETIC:separate_probe_time_and_cost_accounting",
+            "reason": null
+          },
+          "per_case_tolerances_and_nondeterminism": {
+            "value": "SYNTHETIC:per_case_tolerances_and_nondeterminism",
+            "reason": null
+          },
+          "uncertainty_procedure": {
+            "value": "SYNTHETIC:descriptive single-lineage only, no interval",
+            "reason": null
+          },
+          "confidence_level": {
+            "value": {
+              "value": null,
+              "reason": "SYNTHETIC:single lineage; no interval"
+            },
+            "reason": null
+          },
+          "resampling_seed_and_count": {
+            "value": {
+              "seed": 40502,
+              "count": 0,
+              "reason": "SYNTHETIC:no inference executed"
+            },
+            "reason": null
+          },
+          "independent_lineage_units_and_repeat_preservation": {
+            "value": "SYNTHETIC:independent_lineage_units_and_repeat_preservation",
+            "reason": null
+          },
+          "missing_pair_treatment": {
+            "value": "SYNTHETIC:missing_pair_treatment",
+            "reason": null
+          },
+          "exclusions_and_aggregation_weights": {
+            "value": "SYNTHETIC:exclusions_and_aggregation_weights",
+            "reason": null
+          },
+          "small_sample_and_unavailable_scope_reporting": {
+            "value": "SYNTHETIC:small_sample_and_unavailable_scope_reporting",
+            "reason": null
+          },
+          "owner_precision_target_and_acceptance_record": {
+            "value": {
+              "threshold": null,
+              "acceptance": null,
+              "reason": "SYNTHETIC consistency fixture makes no quality or owner-acceptance claim"
+            },
+            "reason": null
+          }
+        },
+        "arms": [
+          {
+            "arm": "no-tool",
+            "pair_id": "SYNTHETIC:pair",
+            "repetition": 1,
+            "question_hash": "c4f0c1e8f81a2f2c5f69d66c1157d8a2bfe87b35416e9feca1222c872d71423f",
+            "artifact_hash": "cac782439ca2c3a09636a0e5f9e9620d0920c313f7b00096e4b8304007689969",
+            "documentation_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "prompt_hash": "58578a5437ff4a93bcc23c0dabefc69d6c678adc72eda28fd3a2e1397fd50a21",
+            "total_tokens": 100,
+            "context_tokens": 80,
+            "output_tokens": 20,
+            "wall_seconds": 10,
+            "actual_model": "SYNTHETIC:model",
+            "execution_status": "complete",
+            "raw": {
+              "request": {
+                "identity": "SYNTHETIC:no-tool:request",
+                "sha256": "5675ccce203c805d411a99de5d887829b521b7ce88786a3954d00dd5bb3b0b59",
+                "exists": false
+              },
+              "response": {
+                "identity": "SYNTHETIC:no-tool:response",
+                "sha256": "87fbde45ba301f87a658eb2c44f4efb796644410ac50ff8886224ba768b07bb4",
+                "exists": false
+              },
+              "transcript": {
+                "identity": "SYNTHETIC:no-tool:transcript",
+                "sha256": "ff5ca68c4640d995d39350ab60464327ff756e7c6951f41721df4d2f575b0fe8",
+                "exists": false
+              },
+              "images": {
+                "identity": "SYNTHETIC:no-tool:images",
+                "sha256": "2a43570405d262a288aae92efcb9a9514270dc4a9301f2c4b994938f44921a13",
+                "exists": false
+              },
+              "tools": {
+                "identity": "SYNTHETIC:no-tool:tools",
+                "sha256": "4effa472c917ad57ab9f6351f87ea31a23b8e5339c24893df1da548818e7615d",
+                "exists": false
+              },
+              "usage": {
+                "identity": "SYNTHETIC:no-tool:usage",
+                "sha256": "e8cea1565ae629fa61f56dc15e6cc95b5211588ce278982bb96e9c8a87ee1eab",
+                "exists": false
+              },
+              "errors": {
+                "identity": "SYNTHETIC:no-tool:errors",
+                "sha256": "e4748882ccdaa20e02502257586c0fe1aa75add3b0088a24f8b3e94f307e54d0",
+                "exists": false
+              },
+              "timestamps": {
+                "identity": "SYNTHETIC:no-tool:timestamps",
+                "sha256": "6f71777bb64137f89d5ed97292dce11e131db4910895aec78d1788c7b0067dbf",
+                "exists": false
+              },
+              "scorer": {
+                "identity": "SYNTHETIC:no-tool:scorer",
+                "sha256": "d514e56c225300a4272048534958bd347eebd07d102423b73c2bc5b26f66e37a",
+                "exists": false
+              }
+            },
+            "simulated_usage": {
+              "input_tokens": 40,
+              "output_tokens": 10,
+              "total_tokens": 50,
+              "peak_context_tokens": 40,
+              "elapsed_seconds": 2,
+              "tool_calls": 0,
+              "tool_seconds": 0,
+              "cost": null,
+              "real_execution": false
+            },
+            "prompt_settings_binding": "SYNTHETIC:identical settings above; only arm instruction and reader access differ"
+          },
+          {
+            "arm": "tool",
+            "pair_id": "SYNTHETIC:pair",
+            "repetition": 1,
+            "question_hash": "c4f0c1e8f81a2f2c5f69d66c1157d8a2bfe87b35416e9feca1222c872d71423f",
+            "artifact_hash": "cac782439ca2c3a09636a0e5f9e9620d0920c313f7b00096e4b8304007689969",
+            "documentation_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "prompt_hash": "58578a5437ff4a93bcc23c0dabefc69d6c678adc72eda28fd3a2e1397fd50a21",
+            "total_tokens": 100,
+            "context_tokens": 80,
+            "output_tokens": 20,
+            "wall_seconds": 10,
+            "actual_model": "SYNTHETIC:model",
+            "execution_status": "complete",
+            "raw": {
+              "request": {
+                "identity": "SYNTHETIC:tool:request",
+                "sha256": "75dd57ee6cf4aba721e1506f6b7f9379d25e6c0a4ced6db5fa6ef8a0847ea52f",
+                "exists": false
+              },
+              "response": {
+                "identity": "SYNTHETIC:tool:response",
+                "sha256": "522169be7a0f63b7f827b5837672daaaf605db9b7fa92bd540c597409a4bc606",
+                "exists": false
+              },
+              "transcript": {
+                "identity": "SYNTHETIC:tool:transcript",
+                "sha256": "ef05db2e3c212ad069c0fc5704f619a8db4e14396fe771e3314982b5da80c5b0",
+                "exists": false
+              },
+              "images": {
+                "identity": "SYNTHETIC:tool:images",
+                "sha256": "f239879852798a60c21fb969139b9013f0ec86a12f5178800b341f30de63d59d",
+                "exists": false
+              },
+              "tools": {
+                "identity": "SYNTHETIC:tool:tools",
+                "sha256": "ba1d0ee6889d82a0b650ad851c1e41c686661263381af5b33921c455a4a0df65",
+                "exists": false
+              },
+              "usage": {
+                "identity": "SYNTHETIC:tool:usage",
+                "sha256": "3570d4a0e585d201e5a68499705c0778b06aa9a59fd06896e3b461c14b9048ec",
+                "exists": false
+              },
+              "errors": {
+                "identity": "SYNTHETIC:tool:errors",
+                "sha256": "f74965b1006cf0440a3c89308fb88a5d7c9b7c91d32f45bc5c52e8a376ac4df3",
+                "exists": false
+              },
+              "timestamps": {
+                "identity": "SYNTHETIC:tool:timestamps",
+                "sha256": "52cb9338467a3588256065c9276d80317694184cef7ac40e40f0a1cc11d4ed50",
+                "exists": false
+              },
+              "scorer": {
+                "identity": "SYNTHETIC:tool:scorer",
+                "sha256": "1cb4a6d5a8756d141f5479332fbc0a24def244bb9a733363ba58d726829f3035",
+                "exists": false
+              }
+            },
+            "simulated_usage": {
+              "input_tokens": 40,
+              "output_tokens": 10,
+              "total_tokens": 50,
+              "peak_context_tokens": 40,
+              "elapsed_seconds": 2,
+              "tool_calls": 1,
+              "tool_seconds": 1,
+              "cost": null,
+              "real_execution": false
+            },
+            "prompt_settings_binding": "SYNTHETIC:identical settings above; only arm instruction and reader access differ"
+          }
+        ],
+        "planned_model": "SYNTHETIC:model",
+        "repetitions": 1,
+        "stopping_rule": "SYNTHETIC: stop after one pair; no retries",
+        "key": {
+          "status": "verified",
+          "identity": "SYNTHETIC:key-not-real"
+        },
+        "isolation": {
+          "status": "verified",
+          "identity": "SYNTHETIC:isolation-not-executed"
+        }
+      }
+    },
+    "cases": [
+      {
+        "id": "incomplete-real-draft",
+        "fixture": "draft",
+        "changes": [],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "required_manifest_fields",
+            "common_input_mismatch",
+            "budget_mismatch",
+            "missing_repetition_or_stopping_plan",
+            "missing_or_mismatched_actual_model",
+            "incomplete_pair",
+            "missing_or_unverified_key_evidence",
+            "missing_or_unverified_isolation_evidence",
+            "missing_raw_evidence"
+          ],
+          "real_admission": "blocked-pending-trusted-validation",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "fully-specified-synthetic-pair",
+        "fixture": "synthetic_full",
+        "changes": [],
+        "expected": {
+          "record_consistency": "consistent",
+          "errors": [],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "mismatched-common-input",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "arms",
+              1,
+              "question_hash"
+            ],
+            "value": "0901a073201c08f03926f3adbc15378e945f877232e764636a8d287d2ee9ca18"
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "common_input_mismatch"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unequal-budget",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "arms",
+              1,
+              "total_tokens"
+            ],
+            "value": 101
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "budget_mismatch"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-repetition-stopping",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "repetitions"
+            ],
+            "value": null
+          },
+          {
+            "path": [
+              "stopping_rule"
+            ],
+            "value": null
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_repetition_or_stopping_plan"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-actual-model",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "arms",
+              1,
+              "actual_model"
+            ],
+            "value": null
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_mismatched_actual_model"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "incomplete-pair",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "arms",
+              1,
+              "execution_status"
+            ],
+            "value": "not-executed"
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "incomplete_pair"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-key",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "key"
+            ],
+            "value": null
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_key_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unverified-key",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "key",
+              "status"
+            ],
+            "value": "unverified"
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_key_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-isolation",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "isolation"
+            ],
+            "value": null
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_isolation_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unverified-isolation",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "isolation",
+              "status"
+            ],
+            "value": "unverified"
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_isolation_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-raw-usage",
+        "fixture": "synthetic_full",
+        "changes": [
+          {
+            "path": [
+              "arms",
+              1,
+              "raw",
+              "usage"
+            ],
+            "value": null
+          }
+        ],
+        "expected": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_raw_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      }
+    ],
+    "reproduction_python": "import json,copy,hashlib\nfrom pathlib import Path\nd=json.loads(Path('benchmark/project-paired-0136.json').read_text())\nr=d['rehearsal']\ndef inspect(x):\n errors=[]\n arms=x.get('arms',[])\n for c in r['checks']:\n  op=c['op']; bad=False\n  if op=='fields_complete': bad=set(x.get('fields',{}))!=set(d['fields']) or any(v.get('value') is None for v in x.get('fields',{}).values())\n  elif op=='same': bad=len(arms)!=2 or any(arms[0].get(k) is None or arms[0].get(k)!=arms[1].get(k) for k in c['keys'])\n  elif op=='plan': bad=not isinstance(x.get('repetitions'),int) or isinstance(x.get('repetitions'),bool) or x.get('repetitions',0)<1 or not x.get('stopping_rule')\n  elif op=='model': bad=len(arms)!=2 or any(not a.get('actual_model') or a.get('actual_model')!=x.get('planned_model') for a in arms)\n  elif op=='pair': bad=len(arms)!=2 or {a.get('arm') for a in arms}!={'no-tool','tool'} or any(a.get('execution_status')!='complete' or a.get('repetition')!=1 or a.get('pair_id')!=x.get('pair_id') for a in arms)\n  elif op=='evidence':\n   e=x.get(c['key']); bad=not isinstance(e,dict) or e.get('status')!='verified' or not e.get('identity')\n  elif op=='raw': bad=len(arms)!=2 or any(not all(a.get('raw',{}).get(k) for k in r['raw_required']) for a in arms)\n  if bad: errors.append(c['id'])\n return {'record_consistency':'reject' if errors else 'consistent','errors':errors,'real_admission':'blocked-synthetic' if x.get('synthetic') else 'blocked-pending-trusted-validation','semantic_assessment':None}\nobserved=[]\nfor case in r['cases']:\n x=copy.deepcopy(r['fixtures'][case['fixture']])\n for change in case['changes']:\n  target=x\n  for k in change['path'][:-1]: target=target[k]\n  target[change['path'][-1]]=change['value']\n result=inspect(x)\n assert result==case['expected'], (case['id'],result,case['expected'])\n observed.append({'id':case['id'],'observed':result})\nif 'observed' in r: assert observed==r['observed']\nprint(json.dumps({'cases':len(observed),'expected_equal_observed':True,'real_admissions':0,'semantic_passes':0,'observed':observed},indent=2))\n",
+    "limitations": "Synthetic resource/evidence identities are visibly synthetic; hashes cover label bytes, not existing evidence files. Concrete synthetic settings/budgets specify a simulated pair; remaining SYNTHETIC field tokens stand for unavailable reference records. Predicate checks selected record consistency and field presence, not full value types, usage accuracy, provider capability, native/scoring truth, isolation or existing run-record schema. Simulated complete status is never an executed/scored run. Trusted substantive checks remain mandatory even when this predicate is consistent.",
+    "observed": [
+      {
+        "id": "incomplete-real-draft",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "required_manifest_fields",
+            "common_input_mismatch",
+            "budget_mismatch",
+            "missing_repetition_or_stopping_plan",
+            "missing_or_mismatched_actual_model",
+            "incomplete_pair",
+            "missing_or_unverified_key_evidence",
+            "missing_or_unverified_isolation_evidence",
+            "missing_raw_evidence"
+          ],
+          "real_admission": "blocked-pending-trusted-validation",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "fully-specified-synthetic-pair",
+        "observed": {
+          "record_consistency": "consistent",
+          "errors": [],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "mismatched-common-input",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "common_input_mismatch"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unequal-budget",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "budget_mismatch"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-repetition-stopping",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_repetition_or_stopping_plan"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-actual-model",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_mismatched_actual_model"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "incomplete-pair",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "incomplete_pair"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-key",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_key_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unverified-key",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_key_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-isolation",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_isolation_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "unverified-isolation",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_or_unverified_isolation_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      },
+      {
+        "id": "missing-raw-usage",
+        "observed": {
+          "record_consistency": "reject",
+          "errors": [
+            "missing_raw_evidence"
+          ],
+          "real_admission": "blocked-synthetic",
+          "semantic_assessment": null
+        }
+      }
+    ],
+    "execution_summary": {
+      "cases": 12,
+      "expected_equal_observed": true,
+      "real_admissions": 0,
+      "semantic_passes": 0
+    },
+    "reproduction_python_sha256": "7fbbda93e81a7e143197839b0cbb7e8eb5200547d7898deba4efe0565dfb491f"
+  },
+  "admission_blockers": [
+    {
+      "field": "provider",
+      "reason": "No permitted provider and data routing have been selected."
+    },
+    {
+      "field": "exact_model_snapshot",
+      "reason": "Model selection and snapshot pinning capability await quota verification."
+    },
+    {
+      "field": "snapshot_pinning_limitations_and_run_window",
+      "reason": "Provider pinning limitations and a bounded run window must be established after selection."
+    },
+    {
+      "field": "model_image_capabilities",
+      "reason": "Required modalities must be checked against the selected model."
+    },
+    {
+      "field": "generation_settings",
+      "reason": "Settings must be selected and frozen using development pilots."
+    },
+    {
+      "field": "generation_seeds_and_support",
+      "reason": "Seed support and limitations depend on the selected model interface."
+    },
+    {
+      "field": "arm_specific_tool_instructions",
+      "reason": "Minimal instructions for both arms must be reviewed after the reader interface is fixed."
+    },
+    {
+      "field": "reader_commit",
+      "reason": "No reader revision is selected for a comparison."
+    },
+    {
+      "field": "reader_configuration",
+      "reason": "Reader configuration awaits an accepted reader and probe interface."
+    },
+    {
+      "field": "tool_schema",
+      "reason": "The complete tool schema and its hash await a fixed reader interface."
+    },
+    {
+      "field": "runner_version",
+      "reason": "An implemented and reviewed paired runner is unavailable."
+    },
+    {
+      "field": "scorer_version",
+      "reason": "An independently reviewed executable scorer is unavailable."
+    },
+    {
+      "field": "split_revision",
+      "reason": "An accepted lineage allocation and restricted split are unavailable."
+    },
+    {
+      "field": "native_evidence_versions",
+      "reason": "Native evidence hashes, save versions, reading builds and environment strata await checked observations."
+    },
+    {
+      "field": "matched_total_token_budget",
+      "reason": "A matched accounting rule and affordable total token allocation await development pilots."
+    },
+    {
+      "field": "matched_context_budget",
+      "reason": "A matched context allocation including reader output awaits model capability checks."
+    },
+    {
+      "field": "matched_output_budget",
+      "reason": "A shared output allocation awaits development pilot accounting."
+    },
+    {
+      "field": "matched_wall_time_budget",
+      "reason": "A shared elapsed-time allocation awaits development pilot timing."
+    },
+    {
+      "field": "tool_call_limits_and_accounting",
+      "reason": "Call limits and tool time, token and cost accounting await reader pilots."
+    },
+    {
+      "field": "independent_repetitions_per_case_arm",
+      "reason": "A development-only precision/cost plan has not been executed or accepted."
+    },
+    {
+      "field": "stopping_rule",
+      "reason": "A stopping rule must be frozen without observing evaluation gains."
+    },
+    {
+      "field": "affordable_run_ceiling",
+      "reason": "Verified existing quota and development pilot resource estimates are unavailable."
+    },
+    {
+      "field": "precision_cost_plan_revision",
+      "reason": "Only a design method exists; no executed pilot plan is frozen."
+    },
+    {
+      "field": "fresh_session_and_memory_isolation",
+      "reason": "Fresh-session, cache and cross-run memory isolation require executed checks."
+    },
+    {
+      "field": "restricted_access_evidence",
+      "reason": "No tested restricted boundary or approved case routing is established."
+    },
+    {
+      "field": "data_recipients_retention_and_grant",
+      "reason": "Concrete recipients, retention settings and material-specific permissions remain unspecified."
+    },
+    {
+      "field": "raw_run_record_schema_and_storage",
+      "reason": "Restricted preservation of requests, responses, images, tool calls, errors, timestamps, usage and scores awaits the runner and boundary."
+    },
+    {
+      "field": "probe_suite_revision",
+      "reason": "Independently selected required reader probes have not been prepared."
+    },
+    {
+      "field": "probe_native_reference_revision",
+      "reason": "Checked native references and probe alignment rules are unavailable."
+    },
+    {
+      "field": "separate_probe_session_limits",
+      "reason": "Probe order, adaptive rules, limits and isolation from answer sessions await review."
+    },
+    {
+      "field": "probe_raw_alignment_and_outcome_records",
+      "reason": "Raw response preservation, alignment ledgers and incomplete-scope records await the probe runner."
+    },
+    {
+      "field": "elapsed_and_tool_time_accounting",
+      "reason": "End-to-end, tool and separate probe timing must be verified in development pilots."
+    },
+    {
+      "field": "input_output_token_accounting",
+      "reason": "Provider usage fields and reader context accounting must be verified in development pilots."
+    },
+    {
+      "field": "provider_cost_basis",
+      "reason": "No provider is selected; dated price basis and reported-versus-estimated accounting remain unresolved."
+    },
+    {
+      "field": "infrastructure_cost_basis",
+      "reason": "Infrastructure resources and any unpriced components have not been identified."
+    },
+    {
+      "field": "separate_probe_time_and_cost_accounting",
+      "reason": "Probe resource use must be measured separately from paired answer sessions."
+    },
+    {
+      "field": "uncertainty_procedure",
+      "reason": "Paired-difference estimation and independent-lineage resampling must be specified before evaluation."
+    },
+    {
+      "field": "confidence_level",
+      "reason": "The uncertainty reporting level awaits the development precision plan and review."
+    },
+    {
+      "field": "resampling_seed_and_count",
+      "reason": "Resampling settings must be fixed using development pilots before evaluation."
+    },
+    {
+      "field": "exclusions_and_aggregation_weights",
+      "reason": "Any exclusions or within-dimension weighting must be reviewed and frozen before results."
+    },
+    {
+      "field": "owner_precision_target_and_acceptance_record",
+      "reason": "No acceptable uncertainty target or quality threshold is accepted; these remain owner decisions."
+    }
+  ],
+  "exported_review_inputs": [
+    {
+      "issue": 537,
+      "path": ".session/exports/reports/537.json",
+      "availability": "downloaded",
+      "export_snapshot": "055a20baef5ef050c34b42b35d7f1b293b6b5a2718953b185d296daa7d3ba79d",
+      "scope": "report only; referenced artifact bodies not inspected"
+    },
+    {
+      "issue": 541,
+      "path": ".session/exports/reports/541.json",
+      "availability": "downloaded",
+      "export_snapshot": "76ff7a20024053285dc2a1d0dfb018249e33cc13017ebcdba5ad0828e1ad5afc",
+      "scope": "report only; referenced artifact bodies not inspected"
+    },
+    {
+      "issue": 633,
+      "path": ".session/exports/reports/633.json",
+      "availability": "downloaded",
+      "export_snapshot": "ad4b0f59840780d26185d33f23e783c6d35d42c6242808a578fa526b39a8bd19",
+      "scope": "report only; referenced artifact bodies not inspected"
+    }
+  ],
+  "verification": {
+    "issue_structural_command": {
+      "exit": 0,
+      "stdout": "paired preparation files and original identity: OK",
+      "scope": "files present, JSON object, original identity only"
+    },
+    "local_replay": {
+      "exit": 0,
+      "cases": 12,
+      "expected_equal_observed": true,
+      "real_admissions": 0,
+      "semantic_passes": 0,
+      "pins_checked": 17,
+      "template_field_names_exact": 62,
+      "null_fields_with_reasons": 41
+    },
+    "not_run": [
+      "models",
+      "reader",
+      "native LabVIEW",
+      "evaluator",
+      "existing historical builders/checkers",
+      "benchmark comparison"
+    ],
+    "preparation_index": "unchanged; no newly indexed milestone or pinned-file edit"
+  }
+}
