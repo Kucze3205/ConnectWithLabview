@@ -999,6 +999,18 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   hash-gated pin script under split (max_turns >= 25). #430 pending; do not wait. Reader implementation gated.
   Memory ~104 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0083 (#442, wake false)
+- Considered record 0082, report #440 (.github/loop/data/session-reports/440/84e5985f….json), main files.
+- #440 DONE, merged 9dff90a (codex GPT 452k input, 16 turns, routine accept): benchmark/split/allocation.synthetic.json
+  70d94d28…, benchmark/scripts/split_allocate.py 79ffbdff…; seed 440; 7 reason-compared mutations; infeasible_strata
+  SYN-F3/eval-held-out-family; undecided key_revision_hashes, access_configuration_hash. Verified on main: --check 0,
+  evaluator 0, errors [], missing [], 74 refs; preparation 99069d8d…, status 8f64e982… (allocator not pinned).
+- Orders written FIRST and parse-checked: `review-split-allocator-440` (reviewer, medium, 45/35, main, no exports):
+  hashes, spec vs protocol ## split, SYN-F3 infeasibility proof, 4 revert probes, determinism with reordered input.
+- Next: accept -> hash-gated pin script adding both files under split + one review limitation sentence (max_turns >= 25).
+  Revise -> narrow fix (fix round 1). Check reviewer `models` (author GPT; Claude preferred). #430 pending; do not wait.
+  Reader implementation gated. Memory ~105 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
