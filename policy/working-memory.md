@@ -1048,6 +1048,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   instruction). no -> owner report with evidence and exits. Pause split/allocator re-review (#446 accept pending) unless POC
   needs it.
 
+## Iteration 0091 (#467, wake false)
+- Considered record 0090 and #465 output (tag iter/0090/465, commit 2708534, only docs/research/poc/README.md).
+- #465 POC step 1 `partial` input_budget (codex GPT 864k input, 15 turns). Measured: add.vi sha cf4b1f56…, save version
+  21008000 (LVSR + vers), BDHb payload 477 B at offset 4032, zlib from payload offset 4 -> 842 B heap (leading UInt32 838).
+  Heap NOT decoded (no nodes/primitives/wires); no patch specified; inspect_vi.py NOT written. `poc-feasibility: partial`.
+  Prepared environment has only actor-framework, pylavi, readiness.json (no pylabview copy).
+- Order `poc-heap-decode-step2` (researcher, high, 120/60, start_branch task/465 -> tag): write inspect_vi.py, parse heap as
+  tag tree (LVheap hypothesis), compare with other pylavi VIs, one candidate byte change; README `heap-decode:` line.
+  Tight budget (<350k, <=128 B hex / 80 lines per command). Orders written first and parse-checked.
+- Next: heap-decode yes/partial with a concrete field -> order edit step (patched copy + re-encode + save version kept +
+  owner check instruction). no -> owner POC report with evidence and exits. If partial on input again with no script, split
+  into a smaller task (parser only). Split allocator re-review (#446) stays paused until POC is delivered.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
