@@ -263,13 +263,19 @@ def check():
     wrong = deepcopy(bound)
     wrong['fields']['manifest_sha256']['value'] = sha('SYNTHETIC other manifest')
     changed = manifest_bytes[:-2] + b'X' + manifest_bytes[-1:]
-    for name, candidate, data in (('wrong content with well-formed hash', wrong, manifest_bytes),
-                                  ('one changed manifest byte', bound, changed)):
-        validate(candidate, manifest)
+    validate(wrong, manifest)
+    # Review #347 finding 1: case normalization and text input must also fail.
+    upper = deepcopy(bound)
+    upper['fields']['manifest_sha256']['value'] = upper['fields']['manifest_sha256']['value'].upper()
+    for name, candidate, data, reason in (
+            ('wrong content with well-formed hash', wrong, manifest_bytes, BINDING_REASON),
+            ('one changed manifest byte', bound, changed, BINDING_REASON),
+            ('uppercase hash of the right bytes', upper, manifest_bytes, BINDING_REASON),
+            ('text instead of bytes', bound, manifest_bytes.decode(), 'manifest bytes required')):
         try:
             bind_manifest(candidate, data)
         except ValueError as exc:
-            require(str(exc) == BINDING_REASON, name + ': failed for unexpected reason: ' + str(exc))
+            require(str(exc) == reason, name + ': failed for unexpected reason: ' + str(exc))
             binding.append({'control': name, 'result': 'rejected', 'reason': str(exc)})
         else:
             raise ValueError(name + ': mismatched manifest accepted')
