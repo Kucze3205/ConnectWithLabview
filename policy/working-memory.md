@@ -301,6 +301,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   format first. Deferred twice now (#260, #264); do it first next session. Remaining gaps: split, native evidence
   (#169 waiting), typedef-impact/diagram-difference cases.
 
+## Iteration 0039 (#267, wake false)
+- Result of 0038: #265 pin DONE, merged e33073e (copilot 8k input, 8 turns). Verified on main: preparation-status.json
+  sha 5c972a14…, preparation.json d4a37c5f…, evaluator exit 0, errors [], missing [], 55 refs. Deleted
+  execution/scripts/pin_native_262.py (execution/scripts now empty). Milestones: split not-started, baseline
+  design-reviewed, challenges scorer-reviewed, others prepared-not-reviewed (oracle includes the reviewed native design).
+- Filed Row 1 `capability` (.session/requests.json): private repo in owner's existing GitHub account, custodian = owner,
+  secret NAMES EVAL_STORE_CUSTODIAN_TOKEN (rw) / EVAL_STORE_SCORER_TOKEN (ro), synthetic sentinels only, model providers
+  none; readiness steps (a)-(e): custodian clone+push, scorer push rejected, tokenless ls-remote denied, sentinel grep
+  zero hits, revoked token denied; independent review of the record. No real cases/keys/private projects requested.
+- Order `split-boundary-design` (benchmark, medium, 75/45, main): design-only benchmark/split/ (README, allocation
+  manifest template, isolation-record template mirroring steps a-e) + stdlib split_boundary.py --check with >=4
+  mutations; no preparation.json edits.
+- Next: read the split design report; if done/merged, order ONE review (reviewer from main, Verification
+  split_boundary.py --check, not .session/report.md); if partial near input ceiling, verify the tag and write a landing
+  script (max_turns >= 25). After accept, pin under split milestone (label e.g. design-reviewed). Read the capability's
+  decision from loop state; do not wait on it. Remaining: native evidence (#169 waiting), typedef-impact/diagram-
+  difference cases (need native evidence + paired revisions), owner presentation of the 0002 estimate.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
