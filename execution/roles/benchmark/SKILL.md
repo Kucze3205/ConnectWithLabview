@@ -10,7 +10,7 @@ This project-specific skill adapts the installed skill-creator grader's evidence
 assertion-critique method; provenance is in `docs/perpetua/roles.md`.
 It follows `docs/perpetua/evaluation.md`; read that contract and
 `goal/goal.md` before designing cases. Protocol and report: the engine contract in your system instructions.
-The existing evaluator verifier supplies the independent readiness checks, in another session.
+A separate reviewer session checks preparation evidence and the method. The evaluator verifier checks evaluator changes only; it does not replace method review or owner acceptance.
 The report starts with `<!-- session-report -->`, then a fenced `yaml` block with `status: wip` while you work.
 Finish takes the same one word as that status: `done`, `partial`, `blocked` or `rejected` (#584 lost two Finish
 calls: status `complete`, then a report without the marker).
@@ -20,13 +20,14 @@ repeatable preparation scripts and the optional preparation evidence index. Keep
 originals in `.session/artifacts/` with hashes and source records. Preserve originals before
 conversion. Reuse the prepared read-only sources as described in `docs/perpetua/environment.md`.
 
-`benchmark/preparation.json` pins a sha256 for each evidence file. After rebase the engine
-runs `python3 policy/evaluator/evaluate.py --check` and rejects the session when a pinned
-file changed without its hash (session #117 was lost this way). Whenever you change a file
-listed there, or add evidence for a milestone, rewrite its `sha256` in the same change and
-run that check yourself (exit 0 required; it needs no LabVIEW environment). Each evidence
-file must stay under 2 MB. If `git commit` fails for a missing identity, leave the changes
-staged and say so; the engine commits accepted changes.
+`benchmark/preparation.json` pins a SHA256 for each evidence file. When assigned work changes
+an indexed file or adds milestone evidence, update the corresponding hashes in the same change.
+Each evidence file must stay under 2 MB. Run `python3 policy/evaluator/evaluate.py --check`
+for indexed changes only when the task permits that command. If the task forbids evaluator
+checks, report that restriction and run only its permitted verification. Never add an evaluator
+invocation as extra verification of an unindexed preparation package (#643). An index check
+establishes file integrity, not method readiness or product quality. The engine imports final
+file bytes; no agent commit is required.
 
 For the assigned part of the protocol:
 
