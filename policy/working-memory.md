@@ -836,7 +836,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   .github/loop/data/session-reports/400/0473f3e7….json). Output: `verdict:` + corrected STE draft naming current main.
 - On wake: verdict accept -> file one `question` request (method only; all gaps visible; no readiness/threshold/gate/
   fallback). revise -> order only the listed now-doable items. Check the reviewer `models` block (Claude preferred).
-  Do not repeat the #400 map or the hash checks. Memory ~86 KB: compress sections 0024-0050 in a quiet session.
+- Wake pass: #403 review (codex GPT 615k, 16 turns; same family as #400 author -> limit recorded) verdict REVISE at main
+  dacb5fb. All 19 rows cite indexed evidence with correct labels; index hash and 0002 figures (:123,:153) confirmed.
+  Findings: typedef-impact and diagram-difference public specs are not-met-now-doable (protocol.md:15,18,55,127);
+  map omits repetition/precision plan + model quota (protocol.md:90); add edit/build grant (:120) and pinned semantic
+  documentation (:59). Corrected STE draft is in the #403 report (snapshot 1aec5844….md); evidence asset
+  iter-0071/403-review-evidence.md. Do not repeat the #400 map or the #403 review.
+- Wake orders (wake false, parallel, main): `change-case-specs-403` (benchmark, medium, 75/45: new benchmark/change-cases/
+  + scripts/change_cases.py --check, native answers unavailable #169, no pinned-file edits) and `precision-quota-plan-403`
+  (benchmark, medium, 50/35: new benchmark/precision/ + scripts/precision_plan.py --check; quota = owner-decision).
+- Next: verify both checks on main; one independent review of both designs (Claude reviewer if possible); then pin by
+  script (max_turns >= 25); then submit the #403 corrected draft as a `question` with updated commit + index hash.
+- INCIDENT: .session/orders.json and report.md vanished twice in #402 (provider pause/resume across codex/claude).
+  Re-check both files immediately before Finish. Memory ~87 KB: compress sections 0024-0050 in a quiet session.
 
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
