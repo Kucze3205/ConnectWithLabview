@@ -17,6 +17,14 @@ repeatable preparation scripts and the optional preparation evidence index. Keep
 originals in `.session/artifacts/` with hashes and source records. Preserve originals before
 conversion. Reuse the prepared read-only sources as described in `docs/perpetua/environment.md`.
 
+`benchmark/preparation.json` pins a sha256 for each evidence file. After rebase the engine
+runs `python3 policy/evaluator/evaluate.py --check` and rejects the session when a pinned
+file changed without its hash (session #117 was lost this way). Whenever you change a file
+listed there, or add evidence for a milestone, rewrite its `sha256` in the same change and
+run that check yourself (exit 0 required; it needs no LabVIEW environment). Each evidence
+file must stay under 2 MB. If `git commit` fails for a missing identity, leave the changes
+staged and say so; the engine commits accepted changes.
+
 For the assigned part of the protocol:
 
 1. State the question, expected observable behavior and verifiable location in the original
