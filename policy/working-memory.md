@@ -1034,6 +1034,20 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Revise -> fix round 2 as Policymaker script; a further blocking finding -> re-scope. #430 pending; do not wait.
   Reader implementation gated. Memory ~108 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0086 (#451, wake false)
+- Considered record 0085, review #449 (.github/loop/data/session-reports/449/a1566c0b….json; artifact iter-0085/449-review449-probes.md).
+- #449 (codex GPT 235k, 14 turns; author #446 also GPT -> same family) verdict REVISE. Finding 1 blocking: self-test reasons
+  'expected reason' vs 'actual reason' differ in the first character, so a first-character-only comparison at
+  split_allocate.py:192 passes. Probes return-before-self-test, return-after-first-mutation, remove-one-mutation exit 1. Do not repeat.
+- Fix round 2 as Policymaker script: execution/scripts/fix_split_reason_449.py (hash-gated 55c236ad… -> 3ba01f03…, idempotent):
+  wrong reason 'actual reason [deliberately wrong suffix]' (#418 pattern). Dry run twice on a copy: --check 0, evaluator 0, 74 refs,
+  allocation.synthetic.json 70d94d28… unchanged; first-char and prefix probes exit 1; no pyc.
+- Orders (parallel, main, wake false): `apply-split-reason-449` (benchmark, low, 25/30) and `rereview-split-reason-449`
+  (reviewer, medium, 40/30, runs the script in a temp copy, 4 probes).
+- Next: verify main split_allocate.py 3ba01f03…, delete the fix script. Accept -> hash-gated pin script adding both allocator
+  files under split + one review sentence (max_turns >= 25). Revise -> fix_rounds exhausted: re-scope (e.g. pin with the finding
+  recorded as a limit), no 3rd blind fix. #430 pending; do not wait. Reader implementation gated.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
