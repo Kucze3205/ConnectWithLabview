@@ -76,6 +76,16 @@ def is_hash(value):
     return isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) is not None
 
 
+def validate_manifest_binding(manifest_bytes, record):
+    """Reject a record unless its manifest digest binds the supplied bytes."""
+    require(isinstance(manifest_bytes, bytes), 'manifest bytes required')
+    require(isinstance(record, dict) and isinstance(record.get('fields'), dict),
+            'record fields absent')
+    actual = record['fields'].get('manifest_sha256', {}).get('value')
+    expected = hashlib.sha256(manifest_bytes).hexdigest()
+    require(actual == expected, 'manifest sha256 does not match supplied manifest bytes')
+
+
 def strict_pairs(pairs):
     result = {}
     for key, value in pairs:
