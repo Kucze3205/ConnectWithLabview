@@ -138,7 +138,7 @@
         "independent_repetitions_per_case_arm"
       ],
       "representation": "design-only-linkage",
-      "boundary": "No attempt_id. Future sidecar must join each attempt to one record and plan slot without overloading repetition_id."
+      "boundary": "No attempt_id. The synthetic sidecar joins each attempt to its unique record and same-case/same-pair comparison slot, enforcing its explicitly declared arm-to-repetition_id mapping without overloading repetition identity."
     },
     {
       "id": "identities-2",
@@ -504,7 +504,7 @@
         "fixed_denominators"
       ],
       "representation": "design-only-linkage",
-      "boundary": "Per-record validate does not enforce complete pairs or plan coverage. Sidecar plan keeps missing slots; incomplete arms prevent complete comparison; absent/synthetic attempts cannot earn semantic passes."
+      "boundary": "Per-record validate does not enforce complete pairs or plan coverage. Sidecar completion derives from valid same-case/same-pair opposite-arm groups at the declared repetition mapping and their unique records/attempts; missing, duplicate, mismatched, failed or interrupted arms and invalid plans yield zero complete comparisons. Absent/synthetic attempts cannot earn semantic passes."
     }
   ],
   "future_extension": {
@@ -516,7 +516,7 @@
       "all request/response/transcript/tool/usage/errors/time/cost/scorer/mapping/isolation objects with URI, hash, size, content type, encoding, producer/version, attempt and UTC identity",
       "independent verifier identity, method, evidence scope and immutable verification receipt; labels alone insufficient"
     ],
-    "failure_accounting": "Keep all planned slots, every attempt, failed/partial/empty/unsupported content, retries/cache/queue/truncation/exhaustion and unknown null costs. No automatic retry, substitution or response reuse. Completion joins both planned arms at frozen repetition; absent/failed arm blocks comparison. Preserve conditional eligible denominator alongside planned coverage. Preserve empty/malformed/non-JSON bytes independently of parsed answers; existing validate rejects them even for error/interrupted outcomes.",
+    "failure_accounting": "Keep all planned slots, every attempt, failed/partial/empty/unsupported content, retries/cache/queue/truncation/exhaustion and unknown null costs. No automatic retry, substitution or response reuse. Completion joins both planned arms at frozen repetition; absent/failed arm blocks comparison. Preserve conditional eligible denominator alongside planned coverage. Preserve empty/malformed/non-JSON bytes independently of parsed answers; existing validate rejects them even for error/interrupted outcomes. A valid comparison requires same case_id and pair_id with an explicit per-arm repetition_id mapping, unique planned slots/records/attempts and two complete opposite arms; global record totals or outcome flags alone cannot complete it. The local design-only plan declaration is not a trusted frozen-plan receipt.",
     "scores": "Manifest required IDs D1-D4, correctness 4 and grounding 4 separately; no submitted-claim denominator. Independent ledger retains implicit/extras/duplicates/contradictions; no semantic score here. Fidelity required separate unavailable probes; no-tool not_applicable, tool not_measured.",
     "unavailable": "Trusted storage/existence/content/usage/model/isolation verification and substantive scoring remain blocked; sidecar design and hashes cannot provide them."
   },
@@ -526,7 +526,7 @@
     "fixture": {
       "synthetic": true,
       "manifest_text": "{\"fields\":{\"affordable_run_ceiling\":{\"reason\":\"Verified existing quota and development pilot resource estimates are unavailable.\",\"value\":null},\"arm_specific_tool_instructions\":{\"reason\":\"Minimal instructions for both arms must be reviewed after the reader interface is fixed.\",\"value\":null},\"cache_retry_queue_and_unpriced_accounting\":{\"reason\":null,\"value\":\"Disable answer/response reuse and cross-arm memory; log provider cache hits separately from fresh computation. No automatic retry in this draft. A future frozen retry policy must retain every attempt, charge all time/tokens/cost, avoid selecting favorable responses and invalidate contaminated pairs. Unknown costs remain null, not zero.\"},\"case_key_revision\":{\"reason\":null,\"value\":{\"independent_review\":\"exported #541 body / Spec; scoped CLEAR, not method approval\",\"locator\":\"/claims/0 through /claims/3; /limitations/raw_value_convention\",\"path\":\"benchmark/real-project-0107.json\",\"sha256\":\"7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53\"}},\"claim_mapping_and_adjudication_revision\":{\"reason\":null,\"value\":{\"locator\":\"tasks: Account for every required ID ... through Freeze these mapping/adjudication rules ...\",\"path\":\"benchmark/protocol.md\",\"sha256\":\"1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f\"}},\"common_prompt_and_hash\":{\"reason\":null,\"value\":{\"encoding\":\"UTF-8; no terminal newline\",\"sha256\":\"ecaa13636de4bf60c3d80c4d34e99fbb8b930afe41383496350630a450b25148\",\"text\":\"Answer the assigned declaration question using only the supplied original text and permitted documentation. Return case_id, status, atomic claims with claim_id, answer, conditions and citations, and limitations. Do not infer native resolution, build success, behavior or preservation.\\nFor the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.\"}},\"confidence_level\":{\"reason\":\"The uncertainty reporting level awaits the development precision plan and review.\",\"value\":null},\"coverage_strata_and_pair_accounting\":{\"reason\":null,\"value\":{\"counts\":{\"attempted_runs\":0,\"complete_pairs\":0,\"executed_runs\":0,\"planned_case_slots\":1,\"planned_pair_slots\":1,\"scheduled_runs\":0,\"scored_runs\":0},\"family\":\"LVPROJ textual declarations\",\"module\":null,\"native_reading_version\":null,\"save_metadata\":\"D1 declaration only, no native version authority\",\"scores\":null,\"source_commit\":\"371c631c16155d88f02be11a953e4964d7452fd8\",\"target\":\"My Computer declaration only\"}},\"data_recipients_retention_and_grant\":{\"reason\":\"Concrete recipients, retention settings and material-specific permissions remain unspecified.\",\"value\":null},\"dimension_outcome_rules_revision\":{\"reason\":null,\"value\":{\"executable_scorer\":null,\"locator\":\"tasks: dimension table; Apply the following case-assessment rules in order ...\",\"path\":\"benchmark/protocol.md\",\"sha256\":\"1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f\"}},\"elapsed_and_tool_time_accounting\":{\"reason\":\"End-to-end, tool and separate probe timing must be verified in development pilots.\",\"value\":null},\"exact_model_snapshot\":{\"reason\":null,\"value\":\"synthetic:provider/model/snapshot\"},\"exclusions_and_aggregation_weights\":{\"reason\":\"Any exclusions or within-dimension weighting must be reviewed and frozen before results.\",\"value\":null},\"fixed_denominators\":{\"reason\":null,\"value\":{\"correctness\":{\"ids\":[\"D1\",\"D2\",\"D3\",\"D4\"],\"total\":4},\"fidelity\":null,\"grounding\":{\"ids\":[\"D1\",\"D2\",\"D3\",\"D4\"],\"total\":4},\"planned_case_total\":1,\"planned_pair_slots\":1,\"reason\":\"One candidate declaration-only pair slot; repetition plan not yet funded/frozen. No run scheduled.\"}},\"fresh_session_and_memory_isolation\":{\"reason\":\"Fresh-session, cache and cross-run memory isolation require executed checks.\",\"value\":null},\"generation_seeds_and_support\":{\"reason\":\"Seed support and limitations depend on the selected model interface.\",\"value\":null},\"generation_settings\":{\"reason\":null,\"value\":{\"fixture\":\"SYNTHETIC settings A; no actual generation parameters selected\"}},\"independent_lineage_units_and_repeat_preservation\":{\"reason\":null,\"value\":{\"duplicate_boundary\":\"Reuse original hash/source provenance; no claim of new lineage independence. Related files/repeats cannot multiply independent n.\",\"group\":\"public NI Actor Framework project and all its variants/dependencies stay development\",\"groups\":1}},\"independent_repetitions_per_case_arm\":{\"reason\":\"A development-only precision/cost plan has not been executed or accepted.\",\"value\":null},\"infrastructure_cost_basis\":{\"reason\":\"Infrastructure resources and any unpriced components have not been identified.\",\"value\":null},\"input_output_token_accounting\":{\"reason\":\"Provider usage fields and reader context accounting must be verified in development pilots.\",\"value\":null},\"matched_context_budget\":{\"reason\":\"A matched context allocation including reader output awaits model capability checks.\",\"value\":null},\"matched_output_budget\":{\"reason\":\"A shared output allocation awaits development pilot accounting.\",\"value\":null},\"matched_total_token_budget\":{\"reason\":\"A matched accounting rule and affordable total token allocation await development pilots.\",\"value\":null},\"matched_wall_time_budget\":{\"reason\":\"A shared elapsed-time allocation awaits development pilot timing.\",\"value\":null},\"missing_pair_treatment\":{\"reason\":null,\"value\":\"No imputation or favorable replacement. Retain planned denominator and failure reason; zero complete pairs cannot yield a comparison. Any complete-pair summary must identify its conditional denominator.\"},\"model_image_capabilities\":{\"reason\":\"Required modalities must be checked against the selected model.\",\"value\":null},\"native_evidence_versions\":{\"reason\":\"Native evidence hashes, save versions, reading builds and environment strata await checked observations.\",\"value\":null},\"native_images_and_unavailable_modalities\":{\"reason\":null,\"value\":{\"available\":false,\"images\":[],\"reason\":\"No native captures supplied. Full original XML text is identical in both arms, preserving bytes/hash; no alternative semantic exporter in no-tool arm.\"}},\"no_reader_fidelity_not_applicable_record\":{\"reason\":null,\"value\":{\"fidelity_pass\":false,\"no-tool\":\"not-applicable\",\"paired_fidelity_gain\":null}},\"original_artifact_set_and_hashes\":{\"reason\":null,\"value\":[{\"path\":\"benchmark/real-project-0107/original.lvproj\",\"sha256\":\"1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf\"}]},\"owner_precision_target_and_acceptance_record\":{\"reason\":\"No acceptable uncertainty target or quality threshold is accepted; these remain owner decisions.\",\"value\":null},\"paired_arm_randomization\":{\"reason\":null,\"value\":{\"algorithm\":\"Reuse runner-contract: sort arms by sha256(seed:pair_id:arm)\",\"arms\":[\"no-tool\",\"tool\"],\"order\":[\"tool\",\"no-tool\"],\"pair_id\":\"project-declarations-D1-D4:rep-1\",\"seed\":40501,\"seed_provenance\":\"Existing precision README design seed, not a sampled execution\"}},\"per_case_tolerances_and_nondeterminism\":{\"reason\":null,\"value\":{\"rule\":\"Exact parsed attribute/text equality; no trimming, numeric conversion or numerical tolerance; preserve D2 entity spelling separately. Answer phrasing may vary only if the complete atomic fact and conditions remain unchanged; adjudicate independently. D4 Type Int is citation context, not an added denominator slot.\",\"source\":{\"locator\":\"/limitations/raw_value_convention\",\"path\":\"benchmark/real-project-0107.json\",\"sha256\":\"7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53\"}}},\"permitted_documentation_and_hashes\":{\"reason\":null,\"value\":{\"encoding\":\"UTF-8 canonical empty JSON list, no newline\",\"files\":[],\"reason\":\"No documentation needed for literal XML declarations; identical empty set in both arms.\",\"sha256\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\"}},\"precision_cost_plan_revision\":{\"reason\":\"Only a design method exists; no executed pilot plan is frozen.\",\"value\":null},\"probe_native_reference_revision\":{\"reason\":\"Checked native references and probe alignment rules are unavailable.\",\"value\":null},\"probe_raw_alignment_and_outcome_records\":{\"reason\":\"Raw response preservation, alignment ledgers and incomplete-scope records await the probe runner.\",\"value\":null},\"probe_suite_revision\":{\"reason\":\"Independently selected required reader probes have not been prepared.\",\"value\":null},\"provider\":{\"reason\":\"No permitted provider and data routing have been selected.\",\"value\":null},\"provider_cost_basis\":{\"reason\":\"No provider is selected; dated price basis and reported-versus-estimated accounting remain unresolved.\",\"value\":null},\"question_input_hashes\":{\"reason\":null,\"value\":{\"encoding\":\"UTF-8; no terminal newline\",\"sha256\":\"daa3b71f5c8b21e23d2dc395e3ec0d070ebaf89bb646847c6671ab2e513e9af4\",\"text\":\"For the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.\"}},\"raw_run_record_schema_and_storage\":{\"reason\":\"Restricted preservation of requests, responses, images, tool calls, errors, timestamps, usage and scores awaits the runner and boundary.\",\"value\":null},\"reader_commit\":{\"reason\":\"No reader revision is selected for a comparison.\",\"value\":null},\"reader_configuration\":{\"reason\":\"Reader configuration awaits an accepted reader and probe interface.\",\"value\":null},\"required_item_and_extra_claim_reporting\":{\"reason\":null,\"value\":{\"ledger\":\"Retain original answer text, all atomic/implicit claims, ID mappings, conditions and exact citations; omissions keep slots, duplicates earn once, contradictions keep both and invalidate affected dimension. Independent checking of true/false/unverified extras; no replacement credit.\",\"required_outcomes\":[\"correct\",\"partial\",\"incorrect\",\"missing\",\"unverified\",\"unsupported\",\"error\"],\"rules\":{\"locator\":\"tasks: atomic assertion mapping; fixed denominators; ordered case-assessment rules\",\"path\":\"benchmark/protocol.md\",\"sha256\":\"1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f\"}}},\"resampling_seed_and_count\":{\"reason\":\"Resampling settings must be fixed using development pilots before evaluation.\",\"value\":null},\"restricted_access_evidence\":{\"reason\":\"No tested restricted boundary or approved case routing is established.\",\"value\":null},\"runner_version\":{\"reason\":\"An implemented and reviewed paired runner is unavailable.\",\"value\":null},\"sampling_order\":{\"reason\":null,\"value\":\"Single case project-declarations-D1-D4; ascending repetition ID only after count is frozen.\"},\"scorer_version\":{\"reason\":\"An independently reviewed executable scorer is unavailable.\",\"value\":null},\"separate_probe_session_limits\":{\"reason\":\"Probe order, adaptive rules, limits and isolation from answer sessions await review.\",\"value\":null},\"separate_probe_time_and_cost_accounting\":{\"reason\":\"Probe resource use must be measured separately from paired answer sessions.\",\"value\":null},\"small_sample_and_unavailable_scope_reporting\":{\"reason\":null,\"value\":{\"inference\":\"No inferential interval or gain claim from one public project; repeats are nested, never independent lineages. Full family/version gaps remain.\",\"lineages\":1}},\"snapshot_pinning_limitations_and_run_window\":{\"reason\":\"Provider pinning limitations and a bounded run window must be established after selection.\",\"value\":null},\"split_revision\":{\"reason\":\"An accepted lineage allocation and restricted split are unavailable.\",\"value\":null},\"stopping_rule\":{\"reason\":\"A stopping rule must be frozen without observing evaluation gains.\",\"value\":null},\"task_reference_inventory_revision\":{\"reason\":null,\"value\":{\"locator\":\"/claims\",\"observations_inventory\":null,\"path\":\"benchmark/real-project-0107.json\",\"required_ids\":[\"D1\",\"D2\",\"D3\",\"D4\"],\"sha256\":\"7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53\"}},\"tool_call_limits_and_accounting\":{\"reason\":\"Call limits and tool time, token and cost accounting await reader pilots.\",\"value\":null},\"tool_schema\":{\"reason\":\"The complete tool schema and its hash await a fixed reader interface.\",\"value\":null},\"truncation_and_exhaustion_recording\":{\"reason\":null,\"value\":\"Preserve raw partial/empty/error records and affected IDs; never silently truncate inputs or exports. Budget/context exhaustion invalidates completion; retain attempted run and stop the pair. No semantic pass from absent content.\"},\"uncertainty_procedure\":{\"reason\":\"Paired-difference estimation and independent-lineage resampling must be specified before evaluation.\",\"value\":null}},\"schema_version\":1}",
-      "plan_text": "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
+      "plan_text": "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
       "source_inventory": {
         "common_prompt_and_hash": {
           "text": "Answer the assigned declaration question using only the supplied original text and permitted documentation. Return case_id, status, atomic claims with claim_id, answer, conditions and citations, and limitations. Do not infer native resolution, build success, behavior or preservation.\nFor the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.",
@@ -1045,7 +1045,7 @@
           "repetition_id": "synthetic:binding-rep-1",
           "arm": "no-tool",
           "manifest_sha256": "de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b",
-          "plan_sha256": "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c",
+          "plan_sha256": "55a6db37b5c98ab2e8bf2c151c9d7116a9e0cc95c7bcfe9cb687021b33c574b4",
           "settings_sha256": "898c8d7330f2f7b2735be54a41aae6b174029a76e1aeaffb9e3d34d7ad464de7",
           "evidence": [
             {
@@ -1063,9 +1063,9 @@
             },
             {
               "kind": "plan",
-              "text": "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
-              "sha256": "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c",
-              "byte_size": 479,
+              "text": "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
+              "sha256": "55a6db37b5c98ab2e8bf2c151c9d7116a9e0cc95c7bcfe9cb687021b33c574b4",
+              "byte_size": 668,
               "location": "synthetic://synthetic:attempt-1/plan",
               "encoding": "UTF-8",
               "content_type": "text/plain",
@@ -1357,7 +1357,7 @@
           "repetition_id": "synthetic:binding-rep-1",
           "arm": "tool",
           "manifest_sha256": "de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b",
-          "plan_sha256": "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c",
+          "plan_sha256": "55a6db37b5c98ab2e8bf2c151c9d7116a9e0cc95c7bcfe9cb687021b33c574b4",
           "settings_sha256": "898c8d7330f2f7b2735be54a41aae6b174029a76e1aeaffb9e3d34d7ad464de7",
           "evidence": [
             {
@@ -1375,9 +1375,9 @@
             },
             {
               "kind": "plan",
-              "text": "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
-              "sha256": "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c",
-              "byte_size": 479,
+              "text": "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}",
+              "sha256": "55a6db37b5c98ab2e8bf2c151c9d7116a9e0cc95c7bcfe9cb687021b33c574b4",
+              "byte_size": 668,
               "location": "synthetic://synthetic:attempt-2/plan",
               "encoding": "UTF-8",
               "content_type": "text/plain",
@@ -1721,6 +1721,13 @@
           "linkage": "manifest binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1737,6 +1744,13 @@
           "linkage": "settings binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1755,6 +1769,13 @@
           "linkage": "settings manifest identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1771,6 +1792,13 @@
           "linkage": "source inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1787,6 +1815,13 @@
           "linkage": "input inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1803,6 +1838,13 @@
           "linkage": "planned records",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 1,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1844,6 +1886,13 @@
           "linkage": "slot identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1860,6 +1909,13 @@
           "linkage": "attempt identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1876,6 +1932,13 @@
           "linkage": "attempt identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1892,6 +1955,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1908,6 +1978,13 @@
           "linkage": "evidence byte identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1924,6 +2001,13 @@
           "linkage": "evidence attempt identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1940,6 +2024,13 @@
           "linkage": "verification unavailable",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1956,6 +2047,13 @@
           "linkage": "verification unavailable",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1974,6 +2072,13 @@
           "linkage": "legacy rejected",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -1993,6 +2098,13 @@
           "linkage": "legacy rejected",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2021,6 +2133,13 @@
           "linkage": "evidence content binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 1,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2087,6 +2206,13 @@
           "linkage": "attempt inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 1,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2095,7 +2221,7 @@
           [
             "set",
             "/plan_text",
-            "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true} "
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true} "
           ]
         ],
         "expected": {
@@ -2103,6 +2229,13 @@
           "linkage": "attempt manifest/plan binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2119,6 +2252,13 @@
           "linkage": "common prompt binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2135,6 +2275,13 @@
           "linkage": "model manifest identity",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2174,6 +2321,13 @@
           "linkage": "request pinned input binding",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2190,6 +2344,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2206,6 +2367,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2222,6 +2390,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2238,6 +2413,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2254,6 +2436,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2270,6 +2459,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2286,6 +2482,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2302,6 +2505,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2318,6 +2528,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2334,6 +2551,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2350,6 +2574,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2366,6 +2597,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2382,6 +2620,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2398,6 +2643,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2414,6 +2666,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2430,6 +2689,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2446,6 +2712,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2462,6 +2735,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2478,6 +2758,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2494,6 +2781,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2510,6 +2804,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2526,6 +2827,13 @@
           "linkage": "evidence inventory",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2578,6 +2886,13 @@
           "linkage": "legacy rejected",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 1,
+          "synthetic_structurally_complete_pairs": 0
         }
       },
       {
@@ -2607,6 +2922,756 @@
           "linkage": "legacy rejected",
           "real_admission": "blocked",
           "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 1,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "coordinated split case_id",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:unmatched-case_id\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/records/1/fields/case_id/value",
+            "synthetic:unmatched-case_id"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "6cda6c40f89989ab6561631125361f749d8b88c363d68088a95dd139b2c4483f"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:unmatched-case_id\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "6cda6c40f89989ab6561631125361f749d8b88c363d68088a95dd139b2c4483f"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            659
+          ],
+          [
+            "set",
+            "/attempts/1/case_id",
+            "synthetic:unmatched-case_id"
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "6cda6c40f89989ab6561631125361f749d8b88c363d68088a95dd139b2c4483f"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:unmatched-case_id\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "6cda6c40f89989ab6561631125361f749d8b88c363d68088a95dd139b2c4483f"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            659
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "comparison group identity",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "coordinated split pair_id",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:unmatched-pair_id\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/records/1/fields/pair_id/value",
+            "synthetic:unmatched-pair_id"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "7a0dac85837b41d122b3263d68c5321920712afdc6bfc5cb7dc929295e012600"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:unmatched-pair_id\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "7a0dac85837b41d122b3263d68c5321920712afdc6bfc5cb7dc929295e012600"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            671
+          ],
+          [
+            "set",
+            "/attempts/1/pair_id",
+            "synthetic:unmatched-pair_id"
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "7a0dac85837b41d122b3263d68c5321920712afdc6bfc5cb7dc929295e012600"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:unmatched-pair_id\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "7a0dac85837b41d122b3263d68c5321920712afdc6bfc5cb7dc929295e012600"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            671
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "comparison group identity",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "coordinated repetition outside declared mapping",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/records/1/fields/repetition_id/value",
+            "synthetic:unmapped-tool-repetition"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "54b030cf132f4ec1e627cfe8d8f112e62d187f98064c475b81e5a8c0c33f731b"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "54b030cf132f4ec1e627cfe8d8f112e62d187f98064c475b81e5a8c0c33f731b"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            679
+          ],
+          [
+            "set",
+            "/attempts/1/repetition_id",
+            "synthetic:unmapped-tool-repetition"
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "54b030cf132f4ec1e627cfe8d8f112e62d187f98064c475b81e5a8c0c33f731b"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "54b030cf132f4ec1e627cfe8d8f112e62d187f98064c475b81e5a8c0c33f731b"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            679
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "comparison repetition mapping",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "declared arm-specific repetition mapping",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:unmapped-tool-repetition\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/records/1/fields/repetition_id/value",
+            "synthetic:unmapped-tool-repetition"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "52ee215657bdee70442e7f3979bf544fd516b3019411bd539e4bd3a8dc47f3c5"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:unmapped-tool-repetition\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "52ee215657bdee70442e7f3979bf544fd516b3019411bd539e4bd3a8dc47f3c5"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            690
+          ],
+          [
+            "set",
+            "/attempts/1/repetition_id",
+            "synthetic:unmapped-tool-repetition"
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "52ee215657bdee70442e7f3979bf544fd516b3019411bd539e4bd3a8dc47f3c5"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:unmapped-tool-repetition\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:unmapped-tool-repetition\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "52ee215657bdee70442e7f3979bf544fd516b3019411bd539e4bd3a8dc47f3c5"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            690
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 1
+        }
+      },
+      {
+        "name": "valid alternative group identities",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/records/0/fields/case_id/value",
+            "synthetic:alternate-case"
+          ],
+          [
+            "set",
+            "/records/0/fields/pair_id/value",
+            "synthetic:alternate-pair"
+          ],
+          [
+            "set",
+            "/records/1/fields/case_id/value",
+            "synthetic:alternate-case"
+          ],
+          [
+            "set",
+            "/records/1/fields/pair_id/value",
+            "synthetic:alternate-pair"
+          ],
+          [
+            "set",
+            "/attempts/0/case_id",
+            "synthetic:alternate-case"
+          ],
+          [
+            "set",
+            "/attempts/0/pair_id",
+            "synthetic:alternate-pair"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "63c02e77b6263606c565cc04265d64a9c21c53d0c2ab0a8feba789ce2d56d372"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "63c02e77b6263606c565cc04265d64a9c21c53d0c2ab0a8feba789ce2d56d372"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            632
+          ],
+          [
+            "set",
+            "/attempts/1/case_id",
+            "synthetic:alternate-case"
+          ],
+          [
+            "set",
+            "/attempts/1/pair_id",
+            "synthetic:alternate-pair"
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "63c02e77b6263606c565cc04265d64a9c21c53d0c2ab0a8feba789ce2d56d372"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:alternate-case\",\"pair_id\":\"synthetic:alternate-pair\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "63c02e77b6263606c565cc04265d64a9c21c53d0c2ab0a8feba789ce2d56d372"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            632
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 1
+        }
+      },
+      {
+        "name": "duplicate planned record slot",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "e1419634bf2436d412766d00d6755375bdaa4902ece88e1ff504caac0763ae4c"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "e1419634bf2436d412766d00d6755375bdaa4902ece88e1ff504caac0763ae4c"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            671
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "e1419634bf2436d412766d00d6755375bdaa4902ece88e1ff504caac0763ae4c"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "e1419634bf2436d412766d00d6755375bdaa4902ece88e1ff504caac0763ae4c"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            671
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "duplicate plan slot",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "duplicate planned arm",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "8d1fdeea802b8835b5f74f400d9f7557b81b476ec5e2e63ae46f2faab683facb"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "8d1fdeea802b8835b5f74f400d9f7557b81b476ec5e2e63ae46f2faab683facb"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            671
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "8d1fdeea802b8835b5f74f400d9f7557b81b476ec5e2e63ae46f2faab683facb"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "8d1fdeea802b8835b5f74f400d9f7557b81b476ec5e2e63ae46f2faab683facb"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            671
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "synthetic plan inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "duplicate record at unchanged global count",
+        "mutations": [
+          [
+            "set",
+            "/records/1/fields/record_id/value",
+            "synthetic:binding-no-tool"
+          ],
+          [
+            "set",
+            "/records/1/fields/arm/value",
+            "no-tool"
+          ],
+          [
+            "set",
+            "/records/1/fields/effective_prompt_sha256/value",
+            "9da28bd1e70b0f6f386da0815226038e1673a6291a8b798c6c2a78f390d225b6"
+          ],
+          [
+            "set",
+            "/records/1/fields/session_id/value",
+            "synthetic:fresh-no-tool"
+          ],
+          [
+            "set",
+            "/records/1/fields/tool_time_ms/value",
+            0
+          ],
+          [
+            "set",
+            "/records/1/fields/reader_context_tokens/value",
+            0
+          ],
+          [
+            "set",
+            "/records/1/fields/tool_call_count/value",
+            0
+          ],
+          [
+            "set",
+            "/records/1/fields/tool_calls/value",
+            []
+          ],
+          [
+            "set",
+            "/records/1/fields/raw_request/value/text",
+            "SYNTHETIC data-only request; no model call.\n{\"arm_instruction\":\"Use the supplied original text; no reader is available.\",\"common_prompt\":\"Answer the assigned declaration question using only the supplied original text and permitted documentation. Return case_id, status, atomic claims with claim_id, answer, conditions and citations, and limitations. Do not infer native resolution, build success, behavior or preservation.\\nFor the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.\",\"documentation_inventory\":{\"encoding\":\"UTF-8 canonical empty JSON list, no newline\",\"files\":[],\"reason\":\"No documentation needed for literal XML declarations; identical empty set in both arms.\",\"sha256\":\"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\"},\"image_inventory\":{\"available\":false,\"images\":[],\"reason\":\"No native captures supplied. Full original XML text is identical in both arms, preserving bytes/hash; no alternative semantic exporter in no-tool arm.\"},\"original_sha256\":\"1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf\",\"original_text\":\"﻿<?xml version='1.0' encoding='UTF-8'?>\\n<Project Type=\\\"Project\\\" LVVersion=\\\"20008000\\\">\\n\\t<Property Name=\\\"CCSymbols\\\" Type=\\\"Str\\\">AF_Debug_Trace,TRUE;</Property>\\n\\t<Property Name=\\\"NI.LV.All.SourceOnly\\\" Type=\\\"Bool\\\">false</Property>\\n\\t<Property Name=\\\"NI.Project.Description\\\" Type=\\\"Str\\\"></Property>\\n\\t<Item Name=\\\"My Computer\\\" Type=\\\"My Computer\\\">\\n\\t\\t<Property Name=\\\"server.app.propertiesEnabled\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t<Property Name=\\\"server.control.propertiesEnabled\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t<Property Name=\\\"server.tcp.enabled\\\" Type=\\\"Bool\\\">false</Property>\\n\\t\\t<Property Name=\\\"server.tcp.port\\\" Type=\\\"Int\\\">0</Property>\\n\\t\\t<Property Name=\\\"server.tcp.serviceName\\\" Type=\\\"Str\\\">My Computer/VI Server</Property>\\n\\t\\t<Property Name=\\\"server.tcp.serviceName.default\\\" Type=\\\"Str\\\">My Computer/VI Server</Property>\\n\\t\\t<Property Name=\\\"server.vi.callsEnabled\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t<Property Name=\\\"server.vi.propertiesEnabled\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t<Property Name=\\\"specify.custom.address\\\" Type=\\\"Bool\\\">false</Property>\\n\\t\\t<Item Name=\\\"Actor Framework.lvlib\\\" Type=\\\"Library\\\" URL=\\\"/&lt;vilib&gt;/ActorFramework/Actor Framework.lvlib\\\"/>\\n\\t\\t<Item Name=\\\"Dependencies\\\" Type=\\\"Dependencies\\\">\\n\\t\\t\\t<Item Name=\\\"vi.lib\\\" Type=\\\"Folder\\\">\\n\\t\\t\\t\\t<Item Name=\\\"Error Cluster From Error Code.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi\\\"/>\\n\\t\\t\\t\\t<Item Name=\\\"Get LV Class Default Value.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;vilib&gt;/Utility/LVClass/Get LV Class Default Value.vi\\\"/>\\n\\t\\t\\t\\t<Item Name=\\\"Get LV Class Name.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;vilib&gt;/Utility/LVClass/Get LV Class Name.vi\\\"/>\\n\\t\\t\\t\\t<Item Name=\\\"High Resolution Relative Seconds.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;vilib&gt;/Utility/High Resolution Relative Seconds.vi\\\"/>\\n\\t\\t\\t</Item>\\n\\t\\t\\t<Item Name=\\\"LV Config Read Boolean.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Boolean.vi\\\"/>\\n\\t\\t\\t<Item Name=\\\"LV Config Read Color.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Color.vi\\\"/>\\n\\t\\t\\t<Item Name=\\\"LV Config Read Numeric (I32).vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Numeric (I32).vi\\\"/>\\n\\t\\t\\t<Item Name=\\\"LV Config Read Pathlist.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read Pathlist.vi\\\"/>\\n\\t\\t\\t<Item Name=\\\"LV Config Read String.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read String.vi\\\"/>\\n\\t\\t\\t<Item Name=\\\"LV Config Read.vi\\\" Type=\\\"VI\\\" URL=\\\"/&lt;resource&gt;/dialog/lvconfig.llb/LV Config Read.vi\\\"/>\\n\\t\\t</Item>\\n\\t\\t<Item Name=\\\"Build Specifications\\\" Type=\\\"Build\\\">\\n\\t\\t\\t<Item Name=\\\"AF PPL\\\" Type=\\\"Packed Library\\\">\\n\\t\\t\\t\\t<Property Name=\\\"Bld_autoIncrement\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_buildCacheID\\\" Type=\\\"Str\\\">{4E55965F-062C-40CC-AB27-5289BABC1C6B}</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_buildSpecName\\\" Type=\\\"Str\\\">AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_excludeLibraryItems\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_excludePolymorphicVIs\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_localDestDir\\\" Type=\\\"Path\\\">../builds/NI_AB_PROJECTNAME/AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_localDestDirType\\\" Type=\\\"Str\\\">relativeToProject</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_modifyLibraryFile\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_previewCacheID\\\" Type=\\\"Str\\\">{18DE409D-C3A6-4694-84D7-5758D11CE668}</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_version.build\\\" Type=\\\"Int\\\">2</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Bld_version.major\\\" Type=\\\"Int\\\">1</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[0].destName\\\" Type=\\\"Str\\\">Actor Framework.lvlibp</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[0].path\\\" Type=\\\"Path\\\">../builds/NI_AB_PROJECTNAME/AF PPL/Actor Framework.lvlibp</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[0].path.type\\\" Type=\\\"Str\\\">relativeToProject</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[0].preserveHierarchy\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[0].type\\\" Type=\\\"Str\\\">App</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[1].destName\\\" Type=\\\"Str\\\">Support Directory</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[1].path\\\" Type=\\\"Path\\\">../builds/NI_AB_PROJECTNAME/AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Destination[1].path.type\\\" Type=\\\"Str\\\">relativeToProject</Property>\\n\\t\\t\\t\\t<Property Name=\\\"DestinationCount\\\" Type=\\\"Int\\\">2</Property>\\n\\t\\t\\t\\t<Property Name=\\\"PackedLib_callersAdapt\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[0].itemID\\\" Type=\\\"Str\\\">{227B7CA2-8506-464F-A2B4-8D428F106ED0}</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[0].type\\\" Type=\\\"Str\\\">Container</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].destinationIndex\\\" Type=\\\"Int\\\">0</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].itemID\\\" Type=\\\"Ref\\\">/My Computer/Actor Framework.lvlib</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].Library.allowMissingMembers\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].Library.atomicCopy\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].Library.LVLIBPtopLevel\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].preventRename\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].sourceInclusion\\\" Type=\\\"Str\\\">TopLevel</Property>\\n\\t\\t\\t\\t<Property Name=\\\"Source[1].type\\\" Type=\\\"Str\\\">Library</Property>\\n\\t\\t\\t\\t<Property Name=\\\"SourceCount\\\" Type=\\\"Int\\\">2</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_companyName\\\" Type=\\\"Str\\\">Allen C Smith</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_fileDescription\\\" Type=\\\"Str\\\">AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_internalName\\\" Type=\\\"Str\\\">AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_legalCopyright\\\" Type=\\\"Str\\\">Copyright © 2024 Allen C Smith</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_productName\\\" Type=\\\"Str\\\">AF PPL</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_targetfileGUID\\\" Type=\\\"Str\\\">{5005FA88-3709-48DA-8AF7-7E00C2455FBB}</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_targetfileName\\\" Type=\\\"Str\\\">Actor Framework.lvlibp</Property>\\n\\t\\t\\t\\t<Property Name=\\\"TgtF_versionIndependent\\\" Type=\\\"Bool\\\">true</Property>\\n\\t\\t\\t</Item>\\n\\t\\t</Item>\\n\\t</Item>\\n</Project>\\n\",\"question\":\"For the supplied original AF project, report only these textual declarations: D1 root LVVersion; D2 URL of My Computer / Dependencies / vi.lib / Error Cluster From Error Code.vi; D3 Type of My Computer / Build Specifications / AF PPL; D4 exact text of its Bld_version.build property. Give each claim an original-file hash and exact XML locator. Distinguish XML declarations from native outcomes; state unavailable evidence.\"}"
+          ],
+          [
+            "set",
+            "/records/1/fields/raw_request/value/sha256",
+            "9da28bd1e70b0f6f386da0815226038e1673a6291a8b798c6c2a78f390d225b6"
+          ],
+          [
+            "set",
+            "/records/1/fields/reader_fidelity/value",
+            "not_applicable"
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "planned records",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "missing planned opposite arm",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "1e18f62eb1c3d2a92ec7a72decd927c9be2b0b38da90ca70ef5983c5e255c3f2"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "1e18f62eb1c3d2a92ec7a72decd927c9be2b0b38da90ca70ef5983c5e255c3f2"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            488
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "1e18f62eb1c3d2a92ec7a72decd927c9be2b0b38da90ca70ef5983c5e255c3f2"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"comparisons\":[{\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"repetitions\":{\"no-tool\":\"synthetic:binding-rep-1\",\"tool\":\"synthetic:binding-rep-1\"}}],\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "1e18f62eb1c3d2a92ec7a72decd927c9be2b0b38da90ca70ef5983c5e255c3f2"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            488
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "synthetic plan inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 1,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "missing explicit comparison mapping",
+        "mutations": [
+          [
+            "set",
+            "/plan_text",
+            "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/plan_sha256",
+            "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/text",
+            "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/sha256",
+            "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c"
+          ],
+          [
+            "set",
+            "/attempts/0/evidence/1/byte_size",
+            479
+          ],
+          [
+            "set",
+            "/attempts/1/plan_sha256",
+            "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/text",
+            "{\"manifest_sha256\":\"de9643550e90005ea122277c3a4fd2f5a1105da68b5eae7e09d561a0f009c08b\",\"slots\":[{\"arm\":\"no-tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-no-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"},{\"arm\":\"tool\",\"case_id\":\"synthetic:project-declarations-D1-D4\",\"pair_id\":\"synthetic:binding-pair-1\",\"record_id\":\"synthetic:binding-tool\",\"repetition_id\":\"synthetic:binding-rep-1\"}],\"synthetic\":true}"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/sha256",
+            "931ff173af36f4bd8fdd7e747c11734e0ccb913910897f18504b0fcce3c2868c"
+          ],
+          [
+            "set",
+            "/attempts/1/evidence/1/byte_size",
+            479
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "synthetic comparison inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
+        }
+      },
+      {
+        "name": "failed attempted arm retained",
+        "mutations": [
+          [
+            "set",
+            "/records/1/fields/outcome/value",
+            "error"
+          ]
+        ],
+        "expected": {
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0
+        },
+        "expected_accounting": {
+          "planned_slots": 2,
+          "present_records": 2,
+          "attempts_retained": 2,
+          "interrupted_records": 0,
+          "synthetic_structurally_complete_pairs": 0
         }
       }
     ],
@@ -2618,7 +3683,7 @@
         "fragments": 24,
         "covered_utf8_bytes": 1631
       },
-      "controls_matched": 49,
+      "controls_matched": 60,
       "observed": [
         {
           "name": "positive mapping",
@@ -2639,119 +3704,238 @@
           "legacy": "manifest_sha256 does not match supplied manifest bytes",
           "linkage": "manifest binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "stale settings binding",
           "legacy": "pass",
           "linkage": "settings binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "coordinated detached settings",
           "legacy": "pass",
           "linkage": "settings manifest identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "detached pinned inventory",
           "legacy": "pass",
           "linkage": "source inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "detached record evidence",
           "legacy": "pass",
           "linkage": "input inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing arm",
           "legacy": "pass",
           "linkage": "planned records",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 1,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "duplicate arm",
           "legacy": "pass",
           "linkage": "slot identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing attempt identity",
           "legacy": "pass",
           "linkage": "attempt identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "duplicate attempt identity",
           "legacy": "pass",
           "linkage": "attempt identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing raw evidence",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "wrong raw evidence bytes",
           "legacy": "pass",
           "linkage": "evidence byte identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "detached evidence attempt",
           "legacy": "pass",
           "linkage": "evidence attempt identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "fabricated verification label",
           "legacy": "pass",
           "linkage": "verification unavailable",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "fabricated top-level verification",
           "legacy": "pass",
           "linkage": "verification unavailable",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "populate mandatory null",
           "legacy": "isolation_evidence: null with reason required",
           "linkage": "legacy rejected",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "add attempt to old envelope",
           "legacy": "record field list: fields",
           "linkage": "legacy rejected",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "stale partial failure log",
           "legacy": "pass",
           "linkage": "evidence content binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 1,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "interruption flag with intact payload retained",
@@ -2772,189 +3956,378 @@
           "legacy": "pass",
           "linkage": "attempt inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 1,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "stale plan bytes",
           "legacy": "pass",
           "linkage": "attempt manifest/plan binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "stale common prompt",
           "legacy": "pass",
           "linkage": "common prompt binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "wrong returned model",
           "legacy": "pass",
           "linkage": "model manifest identity",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "mutually matching detached request",
           "legacy": "pass",
           "linkage": "request pinned input binding",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence manifest",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence plan",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence settings",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence common_prompt",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence question",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence original_inventory",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence documentation_inventory",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence image_inventory",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence tool_schema",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence raw_response",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence transcript",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence tool_inventory",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence usage",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence errors",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence timestamps",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence returned_model",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence scorer_ledger",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence mapping_ledger",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence isolation",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence routing_retention",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence cost",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "missing evidence probe_unavailable",
           "legacy": "pass",
           "linkage": "evidence inventory",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "unsupported attempted arm retained",
@@ -2975,14 +4348,182 @@
           "legacy": "Expecting value: line 1 column 1 (char 0)",
           "linkage": "legacy rejected",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 1,
+            "synthetic_structurally_complete_pairs": 0
+          }
         },
         {
           "name": "truncated raw response boundary",
           "legacy": "Expecting value: line 1 column 11 (char 10)",
           "linkage": "legacy rejected",
           "real_admission": "blocked",
-          "semantic_passes": 0
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 1,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "coordinated split case_id",
+          "legacy": "pass",
+          "linkage": "comparison group identity",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "coordinated split pair_id",
+          "legacy": "pass",
+          "linkage": "comparison group identity",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "coordinated repetition outside declared mapping",
+          "legacy": "pass",
+          "linkage": "comparison repetition mapping",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "declared arm-specific repetition mapping",
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 1
+          }
+        },
+        {
+          "name": "valid alternative group identities",
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 1
+          }
+        },
+        {
+          "name": "duplicate planned record slot",
+          "legacy": "pass",
+          "linkage": "duplicate plan slot",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "duplicate planned arm",
+          "legacy": "pass",
+          "linkage": "synthetic plan inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "duplicate record at unchanged global count",
+          "legacy": "pass",
+          "linkage": "planned records",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "missing planned opposite arm",
+          "legacy": "pass",
+          "linkage": "synthetic plan inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 1,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "missing explicit comparison mapping",
+          "legacy": "pass",
+          "linkage": "synthetic comparison inventory",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
+        },
+        {
+          "name": "failed attempted arm retained",
+          "legacy": "pass",
+          "linkage": "pass",
+          "real_admission": "blocked",
+          "semantic_passes": 0,
+          "synthetic_accounting": {
+            "planned_slots": 2,
+            "present_records": 2,
+            "attempts_retained": 2,
+            "interrupted_records": 0,
+            "synthetic_structurally_complete_pairs": 0
+          }
         }
       ],
       "actual_counts": {
@@ -3389,6 +4930,15 @@
       "trusted_substantive_verification": "blocked",
       "method_accepted": false,
       "benchmark_ready": false
+    },
+    "grouping_expectations": {
+      "predeclared": true,
+      "original_controls_preserved": 49,
+      "added_controls": 11,
+      "contract": "One synthetic comparison keyed by case_id and pair_id, exactly one slot for each opposite arm, with explicit arm-to-repetition_id mapping in plan.comparisons. Repetition IDs are not attempt IDs and need not be equal across arms; slots/records/attempts must match the declared mapping. No identifier spelling is hardcoded.",
+      "timing": "All 60 expected linkage decisions and accounting inventories/completions were saved before the corrected rehearsal. Existing 49 linkage expectations and three accounting expectations remain unchanged; every control now requires explicit accounting.",
+      "counterexamples": "The saved #649 case_id and pair_id counterexamples supply the coordinated slot/record/attempt changes. Only the comparison declaration copied from the valid base plan and dependent plan byte hashes/evidence are added for the corrected format; originals are preserved.",
+      "repetition_boundary": "A tool repetition changed across slot/record/attempt but outside the declared arm map rejects with zero completion. Updating the declaration as well is a valid distinct arm-specific mapping; matching strings are not required. This is plan consistency only, not authority to change a frozen real plan."
     }
   },
   "actual_counts": {
@@ -3400,16 +4950,17 @@
     "semantic_passes": 0,
     "complete_pairs": 0
   },
-  "next_review": "Only project-run-binding-0138.md/.json and verify_project_run_binding_0138.py, against pinned inputs. No preparation-index promotion, thresholds, owner request or full readiness audit.",
+  "next_review": "Separate independent review of only project-run-binding-0138.md/.json and verify_project_run_binding_0138.py for #649 F1: grouping/repetition mapping, unique slots/records/attempts, predeclared unchanged and added controls, original counterexamples, before/after accounting, refreshed scoped pins and preserved admission/schema boundaries. No self-awarded CLEAR, method acceptance, readiness, product improvement, index promotion or full review replay.",
   "binding_design": {
     "status": "proposed design-only sidecar joins; exact old record envelopes unchanged",
     "manifest": "fields.manifest_sha256.value equals sha256(fixture.manifest_text UTF-8); attempt and plan manifest_sha256 must match. Synthetic manifest copies all source fields except explicit synthetic generation_settings/exact_model_snapshot labels; not a populated executable manifest.",
-    "plan": "fields.case_id/pair_id/repetition_id/arm/record_id joined exactly to plan slots; attempt_id is sidecar-only. One synthetic slot per arm does not choose actual repetitions.",
+    "plan": "Case_id and pair_id identify the single synthetic comparison. plan.comparisons declares those identities and the exact arm-to-repetition_id mapping; plan.slots has exactly one no-tool and one tool slot, with unique record_ids. Every record and attempt must match all five existing identity fields of its slot. Repetition IDs may be shared or arm-specific as explicitly declared; they are never attempt IDs. No identifier parsing or fixture-specific equality substitutes for grouping; one synthetic comparison does not choose real repetitions.",
     "inputs": "fields.common_prompt_sha256.value equals source fields.common_prompt_and_hash.value.sha256. fields.effective_prompt_sha256.value equals raw_request.value.sha256; synthetic request JSON contains exact common/question/original bytes and documentation/image inventories plus source candidate arm instruction. input_evidence.value original hash joins source original_artifact_set_and_hashes, whose file bytes are pinned. This demonstrates identity and serialization, not provider delivery.",
     "settings": "Sidecar settings_sha256 and settings evidence bytes join exact manifest generation_settings value; record model_identity joins synthetic manifest exact_model_snapshot. Real returned IDs/settings/seed/window/runner/scorer validation unavailable.",
     "raw_evidence": "Every attempt requires the exact evidence-kind inventory, each byte hash/size, attempt/producer/time/location identity and request/response/tool/error/model content joins. Usage/cost/scorer/isolation/transcript placeholders explicitly have no real substantive authority.",
     "costs": "provider_cost, infrastructure_cost and provider_usage_mapping remain old mandatory nulls with exact reasons. No actual price/usage/cost estimate is manufactured.",
-    "scoring_isolation": "claim_mapping_revision, manifest_binding_evidence, isolation_evidence and restricted_storage remain old mandatory nulls. Manifest pins key/protocol/denominators but no scorer, semantic verification or isolation evidence is supplied."
+    "scoring_isolation": "claim_mapping_revision, manifest_binding_evidence, isolation_evidence and restricted_storage remain old mandatory nulls. Manifest pins key/protocol/denominators but no scorer, semantic verification or isolation evidence is supplied.",
+    "completion": "Validate the comparison declaration, same-case/same-pair opposite-arm slots, unique records and unique attempts before counting. A group completes only when each declared slot has its corresponding record and attempt, old validation and proposed linkage pass, and both records/answers are complete without errors, failed tool calls, interruption, truncation or exhausted budgets. Invalid grouping yields explicit zero completion while inventory/retained-attempt/interruption counts remain visible. Counts never establish real admission."
   },
   "verification": {
     "command": "python3 -I benchmark/verify_project_run_binding_0138.py",
@@ -3419,11 +4970,11 @@
   "output_pins": [
     {
       "path": "benchmark/project-run-binding-0138.md",
-      "sha256": "5e4960c477c1a46fd610f494c20ada41307de116ab7b527f9f3fb3bd34eac3dd"
+      "sha256": "42843f8270901e4c6564493b2958057f1f66f3d9e32608980bd22e8d58d21853"
     },
     {
       "path": "benchmark/verify_project_run_binding_0138.py",
-      "sha256": "7ae987c5193e99b1ff2eca6d5434d88360acb3589eecfdc18de84f2120bd7ecc"
+      "sha256": "eb6c525716b116a769948db139eec7f66935ec63a4ee585d41b5801654291394"
     }
   ],
   "session_scope_deviation": {

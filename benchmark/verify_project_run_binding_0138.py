@@ -153,6 +153,43 @@ def legacy_decision(fixture, legacy):
     return 'pass'
 
 
+def planned_groups(plan):
+    """One design-only comparison; repetition identities use an explicit arm map.
+
+    Legacy runner repetitions may be arm-specific. Do not infer a comparison
+    from equal repetition strings, parse identifier spellings or use attempts
+    as independent repetitions. No real repetition allocation is selected here.
+    """
+    slots = plan['slots']
+    arms = {'no-tool', 'tool'}
+    require(isinstance(slots, list) and len(slots) == 2 and
+            all(isinstance(s, dict) for s in slots) and
+            {s.get('arm') for s in slots} == arms, 'synthetic plan inventory')
+    for slot in slots:
+        require(set(slot) == set(IDENTITY) and all(
+            isinstance(slot[k], str) and slot[k].startswith('synthetic:')
+            and len(slot[k]) > 10 for k in IDENTITY if k != 'arm'),
+            'synthetic slot identity')
+    require(len({s['record_id'] for s in slots}) == len(slots), 'duplicate plan slot')
+    groups = {}
+    for slot in slots:
+        groups.setdefault((slot['case_id'], slot['pair_id']), []).append(slot)
+    require(len(groups) == 1, 'comparison group identity')
+    comparisons = plan.get('comparisons')
+    require(isinstance(comparisons, list) and len(comparisons) == len(groups)
+            and all(isinstance(c, dict) and
+                    set(c) == {'case_id', 'pair_id', 'repetitions'}
+                    for c in comparisons), 'synthetic comparison inventory')
+    for comparison in comparisons:
+        key = (comparison['case_id'], comparison['pair_id'])
+        require(key in groups, 'comparison group identity')
+        repetitions = comparison['repetitions']
+        require(isinstance(repetitions, dict) and set(repetitions) == arms and
+                all(s['repetition_id'] == repetitions[s['arm']] for s in groups[key]),
+                'comparison repetition mapping')
+    return list(groups.values())
+
+
 def linkage(fixture, source):
     """Proposed sidecar joins; never trusted verification or real admission."""
     require(fixture['synthetic'] is True, 'synthetic fixture required')
@@ -176,10 +213,8 @@ def linkage(fixture, source):
     plan = parse(fixture['plan_text'])
     require(plan['synthetic'] is True and plan['manifest_sha256'] == mh,
             'manifest binding')
+    planned_groups(plan)
     slots = plan['slots']
-    require(len(slots) == 2 and {s['arm'] for s in slots} == {'no-tool', 'tool'},
-            'synthetic plan inventory')
-    require(len({s['record_id'] for s in slots}) == len(slots), 'duplicate plan slot')
     records = [values(r) for r in fixture['records']]
     require(len(records) == len(slots) and
             {r['record_id'] for r in records} == {s['record_id'] for s in slots},
@@ -272,19 +307,47 @@ def mutate(fixture, operations):
 
 
 def synthetic_accounting(fixture, old, joined):
-    """Structural fixture counts only, explicitly separate from actual run counts."""
-    plan = parse(fixture['plan_text'])
+    """Count only valid groups with their unique records and retained attempts."""
     records = [values(r) for r in fixture['records']]
-    full = old == joined == 'pass' and len(records) == len(plan['slots'])
-    full = full and all(
-        r['outcome'] == r['answer_status'] == 'complete' and not r['errors']
-        and not r['truncated'] and not r['exhausted_budgets'] for r in records)
-    return {
-        'planned_slots': len(plan['slots']), 'present_records': len(records),
-        'attempts_retained': len(fixture['attempts']),
+    attempts = fixture['attempts']
+    counts = {
+        'planned_slots': 0, 'present_records': len(records),
+        'attempts_retained': len(attempts),
         'interrupted_records': sum(r['outcome'] == 'interrupted' for r in records),
-        'synthetic_structurally_complete_pairs': int(full),
+        'synthetic_structurally_complete_pairs': 0,
     }
+    try:
+        plan = parse(fixture['plan_text'])
+        if isinstance(plan.get('slots'), list):
+            counts['planned_slots'] = len(plan['slots'])
+        groups = planned_groups(plan)
+        if old != 'pass' or joined != 'pass':
+            return counts
+        slots = plan['slots']
+        record_ids = {s['record_id'] for s in slots}
+        require(len(records) == len(attempts) == len(record_ids) and
+                {r['record_id'] for r in records} == record_ids and
+                {a['record_id'] for a in attempts} == record_ids and
+                len({a['attempt_id'] for a in attempts}) == len(attempts),
+                'accounting inventory')
+        for group in groups:
+            group_records = []
+            for slot in group:
+                record = next(r for r in records if r['record_id'] == slot['record_id'])
+                attempt = next(a for a in attempts if a['record_id'] == slot['record_id'])
+                require(all(record[k] == attempt[k] == slot[k] for k in IDENTITY),
+                        'accounting slot identity')
+                group_records.append(record)
+            complete = all(
+                r['outcome'] == r['answer_status'] == 'complete' and not r['errors']
+                and not r['truncated'] and not r['exhausted_budgets']
+                and all(c['error'] is None for c in r['tool_calls'])
+                for r in group_records)
+            counts['synthetic_structurally_complete_pairs'] += int(complete)
+    except (ValueError, KeyError, TypeError, StopIteration):
+        # Invalid plans/joins retain inventory counts but can never complete.
+        counts['synthetic_structurally_complete_pairs'] = 0
+    return counts
 
 
 def main():
@@ -337,11 +400,10 @@ def main():
                 control['name'] + ': expected ' + repr(control['expected']) +
                 ', observed ' + repr(result))
         item = {'name': control['name'], **result}
-        if 'expected_accounting' in control:
-            accounting = synthetic_accounting(fixture, old, new)
-            require(accounting == control['expected_accounting'],
-                    control['name'] + ': accounting mismatch')
-            item['synthetic_accounting'] = accounting
+        accounting = synthetic_accounting(fixture, old, new)
+        require(accounting == control['expected_accounting'],
+                control['name'] + ': accounting mismatch')
+        item['synthetic_accounting'] = accounting
         observed.append(item)
     require(any(x['legacy'] == x['linkage'] == 'pass' for x in observed),
             'positive consistency control missing')
