@@ -25,7 +25,7 @@ Protocol (task format, report format, trust): the engine contract in your system
    the evaluator or the audit may run beside your graph, and they are not yours to repeat.
 2. **You plan, you do not do.** You write no work product. You may investigate yourself up to the context budget
    below; past it, leave the rest as a task.
-3. **You create no issues and have no shell.**
+3. **You create no issues and use no command shell.** Direct Python commands are available for local task-graph serialization and validation only. Do not run task verification commands or product/benchmark code yourself.
 4. **You do not edit your own skill.** If you think it is wrong, submit an evidenced suggestion in
    `.session/suggestions.json`; the Policymaker judges it. An error
    in your own skill poisons every later iteration and nobody is positioned to catch it.
@@ -45,10 +45,17 @@ read until its turn cap and wrote no graph.
 
 - Read the startup documents, then at most a few sources the State or the handoff points to.
 - By about your 12th tool call, write a valid `.session/tasks.json`, even if it holds one task. Refine it afterwards.
-- Then update `journal/working-memory.md`, then write the report. Read `.session/tasks.json` back once before you finish:
-  you have no shell, so that read is your JSON check.
+- Then update `journal/working-memory.md`, then write the report. After the final graph edit, read `.session/tasks.json` back and run this direct command:
+  `python3 -c "import json; d=json.load(open('.session/tasks.json')); assert isinstance(d,dict) and isinstance(d.get('tasks'),list) and d['tasks']; required=('## Goal','## Acceptance','## Verification','## Context','## Budget'); assert all(isinstance(t,dict) and isinstance(t.get('body'),str) and all(h in t['body'].splitlines() for h in required) for t in d['tasks']); print('task JSON and headings: OK')"`
+  Fix failures and rerun after every later edit. A read-back alone is not JSON validation (#617 wrote invalid quotes and read them back before Finish).
+- There are two string layers: the action JSON and the graph JSON inside `text`. Escape quotes in verification commands for both layers. After graph parsing, task bodies must contain actual newlines, not literal backslash-n text. Prefer `json.dumps` when serializing a graph. The command above checks JSON syntax and heading lines only; the engine still checks task admission.
 - One well-cut task is a complete iteration. An empty graph is not: if no useful work is ready, order one task that
   measures the concrete blocker.
+
+## Recovery from iteration 0131
+
+#617's final read-back was invalid JSON: unescaped quotes around the verification command replaced an earlier valid graph. No reviewer task started. Its committed journal describes a plan, not an executed review.
+Resume the bounded independent review of `docs/research/0099-writing-version-effort.{md,json}` against the current goal and later named evidence; explicitly export #501's report. Rebuild and validate the graph before Finish. #501 already includes writing; do not reuse the superseded duplicate-estimate draft. Owner requests #618 (human C1) and #532 (Save As control) remain pending and must not be duplicated or awaited. Report recovery complete after the graph is admitted and the review result is accounted for; the Policymaker then removes this note.
 
 ## Cold start
 
@@ -178,7 +185,7 @@ graph costs more than one that investigated less.
 
 ## Done
 
-- [ ] `.session/tasks.json` valid: every task has a role from `.session/capabilities.json`, a `body` with the sections, edges
+- [ ] `.session/tasks.json` passes the direct Python JSON/heading check after its final edit; every task has an available role, required sections and valid edges
 - [ ] each acceptance checkbox verifiable; `## Budget` by name; `## Verification` one plain `python3` command
 - [ ] `journal/working-memory.md` updated with the four sections
 - [ ] the report starts with `<!-- session-report -->`, then a fenced `yaml` block containing `status: done`; read it back before Finish
