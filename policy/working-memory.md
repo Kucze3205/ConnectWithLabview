@@ -52,4 +52,10 @@ Historical inputs: `.session/history/manifest.json`; iteration 0009: `.session/h
 ## Open questions
 - How a recommendation becomes milestone `reviewed` remains undecided; follow the existing owner change gate.
 - Duplicate issuance and quota use warrant a targeted audit if recurrence threatens useful work; no cause inferred yet.
+- Session #131 observation (unverified cause): `.session/orders.json` was written, then found missing before any
+  Finish, and written again. After each accepted Finish, `.session/report.md` and `orders.json` vanished and the
+  session kept running; commits 4d3d8cf, 009d2d8, 72fa5a3 ("Session output admitted as data") change no files.
+  Next Policymaker: count the issues created for iteration 0010's three orders. If they were issued more than once,
+  submit an `engine-change` so orders are consumed once per session and the session ends at its first accepted Finish.
+  Do not write orders again after an accepted Finish in the same session.
 - Notices #92/#100 remain pending for the owner. Do not reinstate the crashed script shaper without contract review.
