@@ -3,7 +3,7 @@
 Considered: iteration records 0000–0025; reviews #146/#147; #150/#151; #157/#161;
 re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212/#215/#216;
 acceptances #176/#190/#211/#217; record 0026, reports #220/#221; records 0027–0030, reports #224/#228/#231/#232/#236,
-acceptances #225/#233/#237. Updated by Policymaker #239, iteration 0031.
+acceptances #225/#233/#237; records 0031–0033, reviews #241/#247, report #244. Updated by Policymaker #249, iteration 0034.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
 selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
 
@@ -211,6 +211,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   landing record rather than keep retrying the alias.
 - Cost note: codex benchmark sessions keep landing near the input ceiling (#228 917k partial, #244 733k); keep
   bounded-read budgets in every order.
+
+## Iteration 0034 (#249, wake false)
+- Result of 0033: re-review #247 ACCEPT at main 8a8455f, no numbered findings (actual models: codex 325k input, 14
+  turns; 4th same-family review -> recorded as a known limit, stop retrying the `opus` alias for reviewers). Mutations
+  a-d as expected; regeneration byte-identical (results a5b97984…, score.py 810a5457…). Scorer fix rounds closed.
+- Wrote `execution/scripts/land_scorer_review_247.py`: hash-gates the reviewed bytes, adds score.py + results to
+  challenges pins, challenges milestone -> `scorer-reviewed`, replaces stale "no scorer" limitation sentence (keeps
+  same-family and #212 gap-row-not-re-reviewed limits), re-pins preparation-status refs. Dry run on temp copy:
+  idempotent; score/challenges/baseline/lineage/dev_cases/sources --check 0 (with env); evaluator missing [] 51 refs;
+  only the 2 preparation JSON files change; new status sha d32ec550….
+- Orders (parallel, from main): `land-scorer-review-247` (benchmark, low, 20/15) and `typedef-impact-feasibility`
+  (benchmark, medium, 45/30, report only: .ctl counts, up to 5 candidates with static users, unmeasurable kinds).
+- Next: verify main challenges milestone `scorer-reviewed`, 51 refs; then delete the landing script. Read the typedef
+  report: order a typedef-impact dev case only if independent user evidence exists, else record the gap. Then remaining:
+  diagram-difference case (needs paired revisions), split (restricted store/custodian -> capability request per
+  protocol ## split), native evidence (#169 waiting), owner presentation of docs/research/0002-delivery.md estimate.
 
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
