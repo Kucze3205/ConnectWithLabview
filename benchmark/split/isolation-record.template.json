@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "fields": {
+    "identity_label": {
+      "value": null,
+      "reason": "Store identities are not provisioned; readiness must use actual custodian, scorer, and tokenless identities."
+    },
+    "operation": {
+      "value": null,
+      "reason": "The concrete store operations and least-privilege boundary are not yet provisioned."
+    },
+    "expected": {
+      "value": null,
+      "reason": "Expected allow or deny outcomes await the approved store and identity configuration."
+    },
+    "actual": {
+      "value": null,
+      "reason": "No isolation check has been executed."
+    },
+    "evidence_sha256": {
+      "value": null,
+      "reason": "No readiness evidence exists until the boundary is provisioned and tested."
+    },
+    "reviewer_session": {
+      "value": null,
+      "reason": "Independent review has not occurred."
+    }
+  },
+  "steps": [
+    {
+      "step_id": "custodian_clone_push",
+      "identity_label": "custodian",
+      "operation": "clone restricted store and push synthetic readiness record",
+      "expected": "clone and push allowed",
+      "actual": null,
+      "evidence_sha256": null,
+      "reviewer_session": null
+    },
+    {
+      "step_id": "scorer_clone_push_rejected",
+      "identity_label": "scorer",
+      "operation": "clone restricted store and attempt push",
+      "expected": "clone allowed and push rejected",
+      "actual": null,
+      "evidence_sha256": null,
+      "reviewer_session": null
+    },
+    {
+      "step_id": "tokenless_ls_remote_denied",
+      "identity_label": "tokenless",
+      "operation": "run ls-remote without credentials",
+      "expected": "access denied",
+      "actual": null,
+      "evidence_sha256": null,
+      "reviewer_session": null
+    },
+    {
+      "step_id": "sentinel_grep_zero_hits",
+      "identity_label": "independent-audit",
+      "operation": "grep synthetic sentinel in logs, artifacts, and public repository",
+      "expected": "zero hits",
+      "actual": null,
+      "evidence_sha256": null,
+      "reviewer_session": null
+    },
+    {
+      "step_id": "revoked_scorer_token_clone_denied",
+      "identity_label": "revoked-scorer",
+      "operation": "clone restricted store after scorer token revocation",
+      "expected": "access denied",
+      "actual": null,
+      "evidence_sha256": null,
+      "reviewer_session": null
+    }
+  ]
+}
