@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #944, iteration 0222 (trigger: every 3 iterations)
+## Latest: Policymaker #961, iteration 0225 (trigger: every 3 iterations)
+
+- Considers records 0222/0223/0224 and session reports #958, #959 (.session/history/sessions/<issue>/), plus record outcome fields of #945-#948, #951-#954, #956, #957. All three closed; 0224 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17). HEAD 41bf4d04.
+- Thread: UF-A/UF-B (#946/#947, review #948 CLEAR) and UF-C/D/E (#951-#953, review #954 CLEAR) closed. 0224: UF-F #957 done/merged f3e6a2f7. #958 (verifier sections for #954 f1) partial, cause session_budget (45/45 turns), commit 27030059 on task/958: verify_method.py +213 lines, README, current-pins, input-pins, preparation.json changed. Report has only the yaml block, no prose. Review #959 blocked (producer partial).
+- The existing orchestrator rule "Resume saved work" (finish on start_branch, at most 20 turns, #889 -> #893) covers #958. No new rule. Check: record 0225 has a start_branch task/958 finishing task plus the #959 changed-scope review blocked_by it, and the review runs.
+- Cost (token counters, not quota): the #900 trigger (single task above about 5M cache_read) is hit twice: #958 5.25M/45 turns (~117k/turn, turn cap binding, not input_budget) and #953 7.9M/36 turns with attempts 7, parked_s 18,942 (provider waiting, as #893/#930/#941). No prose report shows whole-file reads, so the cause stays unmeasured; no scoping rule. Provider-waiting retries inflate cache_read (4 cases). If a resumed finishing task again passes 3M or hits its turn cap, add an orchestrator rule: one verifier check family per task.
+- Reviewers #948 1.16M/23, #954 2.46M/36: below the 3M reviewer trigger. Same-family review (Sonnet on Sonnet) persists; stated limitation.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change. Suggestion_diagnostics are the old #787/#837/#851.
+
+## Previous: Policymaker #944, iteration 0222 (trigger: every 3 iterations)
 
 - Considers records 0219/0220/0221 and session reports #934, #935, #938, #940, #941, #942 (.session/history/sessions/<issue>/). All three closed; 0219 and 0221 accepted/improved, 0220 none (report-only review); no_progress=0; rollback streak still 1 (2026-11-17).
 - #932 check met: 0219 ordered verifier correction #934 (merged) + review #935 CLEAR; no task re-ran frozen 01NN checkers; no 4th measurement. Keep both #932 rules.
