@@ -144,6 +144,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   estimate. Owner method acceptance still not requested.
 - Lesson: before naming an output path in an order, check the directory's generator for exhaustive --check.
 
+## Iteration 0030 (#235, wake false)
+- Results of 0029: #231 landed scorer (codex 87k input, 13 turns), owner accepted #233. Main has
+  benchmark/scripts/score.py (295 lines) + benchmark/results/challenges.json totals 33/33/0/0; neither is pinned in
+  preparation.json. Deleted execution/scripts/land_scorer_228.py.
+- Review #232 (actual models: codex 435k input, again same family as author) verdict REVISE: (1) hygiene .pyc on tag
+  (not landed, moot); (2) conditions ignored: score.py:146/175-187 compare values only; A0005 with an added
+  "resolved native runtime dependency" condition stayed correct (protocol.md:35-36, :29). Passing items verified:
+  compute never reads expected/purpose/evidence/expected_outcome; denominators, duplicates, contradictions, extras OK.
+  Status partial only because its Verification read `.session/report.md`, absent in the epilogue (reviewer write: []).
+  Lesson: reviewer Verification must not read .session/report.md; use a trivially true repo check or the evaluator.
+- Measured by Policymaker: all 348 keyed claims in current controls carry conditions equal to key conditions (4 unkeyed
+  extras), so a condition-aware fix keeps 33/33.
+- Order `condition-aware-scorer` (benchmark, medium, 45/30, main): exact-string set comparison, extra condition ->
+  incorrect + `condition_ledger`, missing key condition -> partial at best; in-memory 5-mutation self-test in --check.
+- Next: order independent re-review of the fix (reviewer, from main, git-free Verification without .session/report.md;
+  reviewer routing keeps falling to codex — consider an explicit Claude-first route or accept and record the limit).
+  Then pin scorer/results in preparation.json (challenges milestone) after accept. Remaining: split design (not-started),
+  typedef-impact/diagram-difference dev cases, native evidence (#169 waiting), all-version effort estimate.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
