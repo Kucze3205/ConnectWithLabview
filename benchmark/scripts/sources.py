@@ -129,6 +129,74 @@ def save_version(data):
     return {'status': 'unavailable', 'reason': 'No supported RSRC or XML version header; archive contents not inspected'}
 
 
+def dependency_record(directory, all_files):
+    """Extract declarations from text/XML containers; do not decode binary VIs."""
+    declared = []
+    unknown = []
+    for record in all_files:
+        relative = record['path']
+        suffix = Path(relative).suffix.lower()
+        if suffix not in {'.lvproj', '.vipb', '.vipc'}:
+            continue
+        data = regular_file(directory, relative)
+        if suffix == '.vipc':
+            unknown.append({'reason': 'VIPC is not XML/text; package configuration was not decoded',
+                            'source_path': relative})
+            continue
+        try:
+            root = ET.fromstring(data)
+        except ET.ParseError as error:
+            unknown.append({'reason': 'XML parse failed; declaration not determinable: ' + str(error),
+                            'source_path': relative})
+            continue
+        if suffix == '.lvproj':
+            # Root LVVersion is artifact save metadata, not a dependency constraint.
+            for parent in root.iter('Item'):
+                if parent.attrib.get('Name') != 'Dependencies':
+                    continue
+                for item in parent.iter('Item'):
+                    name = item.attrib.get('Name')
+                    if name and item is not parent and item.attrib.get('Type') != 'Folder':
+                        declared.append({'identity': name, 'version_constraint': 'unknown',
+                                         'source_path': relative, 'kind': 'project dependency item',
+                                         'path': item.attrib.get('URL', 'unknown')})
+        else:
+            # Library_Version describes this package, not a required dependency.
+            fields = {'Package_LabVIEW_Version': 'LabVIEW'}
+            for element in root.iter():
+                identity = fields.get(element.tag)
+                if identity and (element.text or '').strip():
+                    declared.append({'identity': identity,
+                                     'version_constraint': element.text.strip(),
+                                     'source_path': relative, 'kind': 'VIPB declaration'})
+                if element.tag == 'Package_Conflicts' and (element.text or '').strip():
+                    declared.append({'identity': 'package conflict',
+                                     'version_constraint': element.text.strip(),
+                                     'source_path': relative, 'kind': 'VIPB declaration'})
+    unknown.append({'reason': 'Binary VI/container linkage was not decoded; native LabVIEW was not executed',
+                    'source_path': 'repository-wide'})
+    # Consolidate identities at the same declared URL while retaining each distinct
+    # source/kind/constraint tuple. Differing URLs remain distinct dependencies.
+    grouped = {}
+    for declaration in declared:
+        key = (declaration['identity'], declaration.get('path', 'unknown'))
+        evidence = {field: declaration[field]
+                    for field in ('source_path', 'kind', 'version_constraint')}
+        entry = grouped.setdefault(key, {'identity': key[0], 'path': key[1],
+                                         'declarations': []})
+        if evidence not in entry['declarations']:
+            entry['declarations'].append(evidence)
+    consolidated = []
+    for key in sorted(grouped):
+        entry = grouped[key]
+        entry['declarations'].sort(key=lambda value: (value['source_path'],
+                                                     value['kind'],
+                                                     value['version_constraint']))
+        consolidated.append(entry)
+    return {'declared': consolidated, 'unknown': unknown,
+            'method': 'text/XML dependency declarations only; project LVVersion and package Library_Version are not dependency constraints; binary VIs and package binaries not decoded'}
+
+
 def inventory(environment):
     require(environment.is_dir() and not environment.is_symlink(), 'Invalid LABVIEW_ENVIRONMENT directory')
     readiness_bytes = regular_file(environment, 'readiness.json')
@@ -174,6 +242,7 @@ def inventory(environment):
             'license_file': {'path': license_path, 'sha256': sha256(license_data), 'size': len(license_data)},
             'tracked_file_count': len(all_files), 'tracked_files_sha256': sha256(encoded(all_files)),
             'artifacts': artifacts,
+            'dependencies': dependency_record(directory, all_files),
         })
     fixture = regular_file(environment / 'actor-framework', FIXTURE)
     require(sha256(fixture) == FIXTURE_SHA256, 'Prepared fixture hash differs')
