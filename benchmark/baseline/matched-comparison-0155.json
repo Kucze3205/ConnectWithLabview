@@ -79,7 +79,7 @@
   "M06": "Stopping uses only the ledger phases and terminals above; the first detected stop prevents all later dispatch and nothing resumes.",
   "M07": "Budget exhaustion maps to stop_recorded budget and terminal stopped_budget; an exhausted or truncated attempt is ineligible.",
   "M08": "Interruption is recorded as answer_class interrupted and stays ineligible; it is never replaced by a rerun.",
-  "M09": "Unsupported cases or arms are recorded as answer_class unsupported and stay visible in the inventory; they are neither dropped nor scored as wrong.",
+  "M09": "(a) An arm unavailable before dispatch is an unstarted slot (no dispatch, no delivery_interpreted, no answer_class); (b) a dispatched attempt classed answer_class unsupported is ineligible; both stay visible and are neither dropped nor scored as wrong. `unsupported -> finished_incomplete` is only the plan-end derivation.",
   "M10": "An incomplete pair (a missing or ineligible slot in any required arm) prevents a completed comparison for that case.",
   "M11": "Cost and time come only from usage_reconciled; cost is null without a verified price; budget overrun is reported.",
   "M12": "The uncertainty procedure and what is fixed versus reported as an interval are frozen before any comparison; changing them afterwards rejects the report.",
