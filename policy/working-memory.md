@@ -1,8 +1,8 @@
 # Policy working memory
 
-Considered: iteration records 0000–0023; reviews #146/#147; #150/#151; #157/#161;
-re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201; acceptances #176/#190.
-Updated by Policymaker #205, iteration 0024.
+Considered: iteration records 0000–0024; reviews #146/#147; #150/#151; #157/#161;
+re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212; acceptances #176/#190/#211.
+Updated by Policymaker #214, iteration 0025.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
 selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
 
@@ -59,13 +59,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   consider an engine-change or reviewer profile fix. If revise: order fixes (benchmark role). If accept: scorer
   design via evaluator role + evaluator-verifier. Check the reviewer's actual `models` (author was codex).
 
+## Iteration 0025 (#214, wake false)
+- Review #212 (from main) DONE: reviewer start-from-main fix confirmed (#208/#210 blocked from task branches).
+  Actual models: codex gpt-6.1-sol 631k input, same family as author #195 -> no family diversity. Verdict revise,
+  one finding: README.md:15 / challenges.py:345 omit the explicit diagram-difference gap. All 33 controls, 1,080
+  slots, 23 pointers, 20 XML literals verified; do not repeat. Evidence artifact iter-0024/212-challenge-review-evidence.md.
+- Orders (parallel, disjoint files, both start from main):
+  - `fix-diagram-gap-disclosure` (benchmark, low, 25/15): README text in challenges.py, regenerate, re-pin.
+    Check: Verification exit 0, README mentions diagram-difference gap, preparation pins updated.
+  - `draft-baseline-manifest` (benchmark, medium, 60/40): new benchmark/baseline/ README + run-manifest template +
+    scripts/baseline.py --check; no preparation.json edits (pin after review). Check: baseline.py --check 0,
+    unresolved-field list in report.
+- Next: after both merge, order ONE reviewer task (from main) covering the README fix and the baseline design;
+  try to get a non-GPT reviewer (codex took #212). Then pin baseline (baseline milestone) only after accept.
+  Then scorer via evaluator role + evaluator-verifier (policy orders). Owner method acceptance still not requested.
+
 ## Next Policymaker
-- Wake: read the landing report, actual `models` block, Verification and `git diff --stat origin/main`.
-- If landed: order independent substantive review of challenge fixtures (reviewer role, prefer non-GPT family if
-  routing permits; verify actual model usage), and remove the one-off script. Scorer work only via evaluator role
-  plus separate evaluator-verifier on policy-layer orders.
-- If it failed again: read the exact output; consider having the Policymaker-written script run under policy layer,
-  not repeated manual merges.
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
 - Capability #169 (native jobs) waiting; do not duplicate or block ready work on it.
