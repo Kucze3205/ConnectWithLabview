@@ -1,0 +1,2005 @@
+{
+  "schema_version": 1,
+  "issue": 567,
+  "review_id": "wp1-key-review-0116",
+  "reviewer": {
+    "role": "reviewer",
+    "identity": "Codex gpt-6.1-sol",
+    "session": "issue-567/.session in /tmp/model-transport-zyf6ksls; continuation of the staged claude-sonnet-5-5 operations, not a second independent checker",
+    "skill": ".session/role/SKILL.md",
+    "key_revision": "wp1-key-0115-v1"
+  },
+  "reviewed_revision": {
+    "commit": "7f480824a8fe64ac5082ce021a85ba7879c4b991",
+    "tree": "aa0f52d802f2f453d4826fe8f06dca941b937b05",
+    "author_start_commit": "e57b1c0fa9c88be18eadf4ed0cdc3f92665e1f4d",
+    "author_start_tree_actual": "354b36e13ea0953207d8e1d02fcdd8c4bd6b3b3b",
+    "author_start_tree_recorded": "354b36e13ea0953207d8e1d02fcdd8c4bd6b3b3b",
+    "note": "HEAD commit differed between two reads in this session (0fd77357093e2a2cb897dadc09b82853a2ef91c2 earlier, then 7f480824a8fe64ac5082ce021a85ba7879c4b991); HEAD^{tree} was identical (aa0f52d8...), so reviewed file content is the same. The recorded commit is the one read when the artifact was built."
+  },
+  "scope": "Key correctness for public-development preparation only; report, do not fix. No trial readiness, method/owner acceptance, native load/build/behavior/save-version or product clearance.",
+  "pins": [
+    {
+      "path": "benchmark/writing/wp1-key-0115.json",
+      "bytes": 262592,
+      "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0115.md",
+      "bytes": 9337,
+      "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_key_0115.py",
+      "bytes": 19779,
+      "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0115-verification.json",
+      "bytes": 17358,
+      "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+    },
+    {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "bytes": 5806,
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    {
+      "path": "benchmark/writing/method.json",
+      "bytes": 45705,
+      "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+    },
+    {
+      "path": "benchmark/protocol.md",
+      "bytes": 38342,
+      "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+    },
+    {
+      "path": "benchmark/real-project-0107/LICENSE.txt",
+      "bytes": 1060,
+      "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+    }
+  ],
+  "source_pin_comparison": {
+    "mismatches": [],
+    "read_input_manifest_entries_checked": 36,
+    "comparisons": [
+      {
+        "path": ".github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json",
+        "matches": true
+      },
+      {
+        "path": ".github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json",
+        "matches": true
+      },
+      {
+        "path": ".github/loop/data/session-reports/547/ba754b9a0cc86b2d1cd17aa6287c05ad71696775c9e2c92a22f9db02415d6861.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/baseline/runner-contract.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/precision/README.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/preparation.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/project-text-writing-0109.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/project-text-writing-0109.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/project-text-writing-0109/review-0110-provenance.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/project-text-writing-0109/review-0110.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/project-text-writing-0109/verification.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/review-0108.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/verification.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/scripts/check_project_text_writing_0109.py",
+        "matches": true
+      },
+      {
+        "path": "benchmark/scripts/check_real_project_0107.py",
+        "matches": true
+      },
+      {
+        "path": "benchmark/sources.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/sources.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/README.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/controls.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/input-pins.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/integration-0112-provenance.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/integration-0112-provenance.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/review-0113-provenance.md",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/review-0113.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/review-corrections.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/verification.json",
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/verify_method.py",
+        "matches": true
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "matches": true
+      },
+      {
+        "path": "docs/perpetua/roles.md",
+        "matches": true
+      },
+      {
+        "path": "goal/goal.md",
+        "matches": true
+      }
+    ],
+    "original_and_license_match_upstream_and_original_manifests": true,
+    "source_revision_matches": true
+  },
+  "derivation": {
+    "blind_independent_derivation": false,
+    "procedural_limitation": "P1",
+    "procedure": [
+      "Read request and original bytes; requested value 3 comes from the operation, not an emitted artifact.",
+      "Resolve the method source-anchor XML locator; verify root, unique childless Int property with exact original text 2.",
+      "Find the unique literal opening property tag in the original bytes; the next byte is the value. Count preceding LF bytes plus one for the line.",
+      "Construct original[:offset] + ASCII 3 + original[offset+1:] entirely in memory. Compare length and changed offsets; SHA256 the in-memory bytes. Never serialize XML or write an edited project."
+    ],
+    "request": "In the isolated writable Core/AF PPL Build.lvproj copy, require the pinned original hash and unique WP1 locator/precondition. Change only its exact property text from 2 to 3. Return the complete edited project, artifact manifest, original/output source map and honest validation-limits answer. Preserve every other byte and file, including root LVVersion 20008000. Stop and report any failed precondition; do not build or resolve dependencies.",
+    "original_locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+    "root_tag": "Project",
+    "root_attributes": {
+      "Type": "Project",
+      "LVVersion": "20008000"
+    },
+    "match_count": 1,
+    "property_attributes": {
+      "Name": "Bld_version.build",
+      "Type": "Int"
+    },
+    "property_children": 0,
+    "original_value": "2",
+    "requested_value": "3",
+    "offset_zero_based": 3347,
+    "line_one_based": 42,
+    "original_size": 5806,
+    "output_size": 5806,
+    "removed_hex": "32",
+    "inserted_hex": "33",
+    "changed_offsets": [
+      3347
+    ],
+    "requirement_derived_output_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+    "comparison_with_key": "All recalculated fields and output hash agree; no blind-derivation claim."
+  },
+  "per_id_verdicts": [
+    {
+      "id": "WP1-property-text",
+      "dimension": "semantic",
+      "verdict": "blocked",
+      "evidence_locator": "Original L42 and method#/tasks/4/request, /source_anchors/0, /preconditions/0",
+      "rationale": "Unique childless Int property is 2; request supplies 3; in-memory recalculation matches all eight delta fields and expected output hash. Blind derivation ordering failed (P1), so numerical agreement is not independent clearance.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Exact complete-byte comparison and separate XML resolution are reproducible.",
+      "remaining_uncertainty": "Needs a fresh cold derivation before viewing key expectations.",
+      "rule_ids": [
+        "R-preflight",
+        "R-text"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-other-project-bytes",
+      "dimension": "preservation",
+      "verdict": "agree",
+      "evidence_locator": "Original complete bytes, L1, L33, L42, final newline; method#/tasks/4/preservation",
+      "rationale": "Complement of offset 3347 must remain byte-identical, including BOM, LF, tabs, entities and Bld_autoIncrement=true; no metadata exception.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Compare full length and both complement slices; reproduce without author reasoning.",
+      "remaining_uncertainty": "Actual trial output has not been supplied.",
+      "rule_ids": [
+        "R-bytes"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-file-set-and-unrelated-files",
+      "dimension": "preservation",
+      "verdict": "agree",
+      "evidence_locator": "method#/tasks/4/output_paths, /output_manifest_rule, /preservation; protocol L48",
+      "rationale": "Only the named project can differ; file set and unrelated bytes stay identical. Inventories and raw bytes are required, not a patch alone.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Procedure is executable given frozen pre/post inventories; reject missing/unexpected paths and cross-root links.",
+      "remaining_uncertainty": "No allocated workspace or dependency closure exists; comparison cannot run now.",
+      "rule_ids": [
+        "R-files",
+        "R-account"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-root-version-declaration",
+      "dimension": "preservation",
+      "verdict": "agree",
+      "evidence_locator": "Original L2; method#/tasks/4/preservation/root_version_authority; protocol L48,L53,L62",
+      "rationale": "Root Project Type=Project and LVVersion=20008000 are unchanged declarations. No native save-version result follows.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Exact root attributes plus complete-byte comparison are executable.",
+      "remaining_uncertainty": "Native save-version authority remains unavailable.",
+      "rule_ids": [
+        "R-root",
+        "R-native"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-original-and-license",
+      "dimension": "preservation",
+      "verdict": "agree",
+      "evidence_locator": "Original complete bytes; LICENSE.txt complete notice; method#/tasks/4/preservation; protocol L48",
+      "rationale": "Original and MIT notice pins match; immutable originals outside writable arms and inclusion of the notice follow the preservation requirement and license.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Before/after hashes and bytes plus actual root-boundary inspection are executable when arms exist.",
+      "remaining_uncertainty": "No trial delivery or mutable workspace boundaries have been observed.",
+      "rule_ids": [
+        "R-preserve"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-describe-text-delta",
+      "dimension": "answer",
+      "verdict": "agree",
+      "evidence_locator": "Original L42; method#/tasks/4/request and /answer_ids; protocol L26,L29,L35",
+      "rationale": "Answer must identify the selected AF PPL property, 2 to 3, exact one-byte change, and avoid inferring native outcomes.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Human atomization and semantic equivalence can apply without author reasoning; see six explicitly conditioned C1 cases.",
+      "remaining_uncertainty": "Actual prose and output are absent; no automatic narrative scorer is established.",
+      "rule_ids": [
+        "R-answer",
+        "R-mapping",
+        "R-dimensions"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-original-output-grounding",
+      "dimension": "answer",
+      "verdict": "blocked",
+      "evidence_locator": "method#/common/answer_rule; protocol L26,L36,L99; original L2,L42",
+      "rationale": "Every writing claim needs original and actual-output support; wrong-existing citations are incorrect grounding independently of truth.",
+      "executable_as_written_by_new_adjudicator": false,
+      "procedure_assessment": "Resolve full claim content, path, hash and locator in both files; limitations instead cite method/protocol and absence of native evidence.",
+      "remaining_uncertainty": "F2: wrong-existing citations unambiguously fail grounding, but the rules do not freeze whether this answer ID also fails correctness. No actual output hash may be replaced by the requirement-derived hash.",
+      "rule_ids": [
+        "R-citations",
+        "R-mapping"
+      ],
+      "numeric_or_content_agreement": "agree"
+    },
+    {
+      "id": "WP1-honest-limits",
+      "dimension": "answer",
+      "verdict": "agree",
+      "evidence_locator": "method#/tasks/4/oracle, /planned_results, /result_rule, /reading_fidelity; protocol L10,L35,L48,L56,L62",
+      "rationale": "Current text/root trial results are unexecuted; native load/dependencies/build/behavior unexecuted; save version and overall writing unverified; reader fidelity unmeasured. Honesty can earn the limits answer ID, never an artifact/native/fidelity pass.",
+      "executable_as_written_by_new_adjudicator": true,
+      "procedure_assessment": "Inspect explicit and implicit factual assertions and evidence. A later actual byte comparison may establish its text result, as R-limits states.",
+      "remaining_uncertainty": "No LabVIEW session, native key or native semantic documentation is available.",
+      "rule_ids": [
+        "R-limits",
+        "R-native",
+        "R-mapping"
+      ],
+      "numeric_or_content_agreement": "agree"
+    }
+  ],
+  "per_rule_verdicts": [
+    {
+      "id": "R-preflight",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L9",
+          "text": "Method: create a case specification before testing any reader: question, original artifact identity, family/save version, required dependencies/environment, expected observable, oracle procedure, source locator and explicit uncertainty. Start with public development cases; create withheld cases only inside an approved restricted boundary."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L28",
+          "text": "Before reader exposure, freeze an independently checked reference inventory per task: stable required-claim IDs, atomic facts/relations, conditions, acceptable alternatives, numerical tolerances, original/native reference locators and hashes, and disallowed inferences. Identify separately the required answer claims and required reader observations; neither inventory may be inferred from submitted answers or exports. Record inventory/key revisions and unresolved references. Development keys may be public; withheld keys, case details and revealing evidence must never enter this repository or its history."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/preconditions",
+      "rationale": "Pinned original and exact unique XML precondition refine protocol L9/L28; failure stops editing.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-text",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L53",
+          "text": "| Structure, types and properties | Inspect preserved originals in native LabVIEW; use native properties/diagrams and a reviewer-readable capture/object map. Compare text declarations directly with original XML/configuration where applicable. | Original hash and resolvable locator, native property values/captures, inspection method and any inaccessible object. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/request",
+      "rationale": "Literal comparison is allowed by L53; exact requested substitution is supplied by method, not a native inference.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-bytes",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L48",
+          "text": "Preserve and hash original bytes before conversion. Trusted preparation jobs operate on separately hashed working copies; record original save-version evidence separately from native LabVIEW version/build, OS, target, installed modules, licenses and dependency resolution. A successful load in one environment does not establish compatibility elsewhere."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L53",
+          "text": "| Structure, types and properties | Inspect preserved originals in native LabVIEW; use native properties/diagrams and a reviewer-readable capture/object map. Compare text declarations directly with original XML/configuration where applicable. | Original hash and resolvable locator, native property values/captures, inspection method and any inaccessible object. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/preservation",
+      "rationale": "L48 preservation plus method exact-byte contract justify the complement-of-offset invariant.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-files",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L17",
+          "text": "| Projects and build specifications | Find declared and resolved dependencies, missing items, target settings and build inclusion/exclusion; separate declarations from successful resolution/build. | LVPROJ XML item/property paths and native project/build property views; dependent original files. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L48",
+          "text": "Preserve and hash original bytes before conversion. Trusted preparation jobs operate on separately hashed working copies; record original save-version evidence separately from native LabVIEW version/build, OS, target, installed modules, licenses and dependency resolution. A successful load in one environment does not establish compatibility elsewhere."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/output_manifest_rule",
+      "rationale": "L17/L48 and method require full artifact bytes and isolated, unchanged unrelated files.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-root",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L48",
+          "text": "Preserve and hash original bytes before conversion. Trusted preparation jobs operate on separately hashed working copies; record original save-version evidence separately from native LabVIEW version/build, OS, target, installed modules, licenses and dependency resolution. A successful load in one environment does not establish compatibility elsewhere."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L53",
+          "text": "| Structure, types and properties | Inspect preserved originals in native LabVIEW; use native properties/diagrams and a reviewer-readable capture/object map. Compare text declarations directly with original XML/configuration where applicable. | Original hash and resolvable locator, native property values/captures, inspection method and any inaccessible object. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/preservation",
+      "rationale": "Root text preservation does not assert original/native save version; consistent with L48/L53.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-preserve",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L48",
+          "text": "Preserve and hash original bytes before conversion. Trusted preparation jobs operate on separately hashed working copies; record original save-version evidence separately from native LabVIEW version/build, OS, target, installed modules, licenses and dependency resolution. A successful load in one environment does not establish compatibility elsewhere."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/preservation",
+      "rationale": "L48 requires preserved originals; method and MIT notice establish license delivery and immutability.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-answer",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L26",
+          "text": "Gradeable answer record: `case_id`, `status`, `claims[{claim_id, answer, conditions, citations[]}]`, `limitations`. Citations contain original SHA256, repository-relative path, archive/member chain when applicable, and a native object/property locator or exact XML/key/byte location appropriate to the claim."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L35",
+          "text": "| Answer correctness | Each required answer claim matches an independently established expected claim under its conditions and tolerances. | Incomplete content is partial; false claims or contradictions are incorrect; omitted claims are missing; claims without sufficient independent evidence are unverified. An unsupported-case declaration remains unsupported, not correct. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/request",
+      "rationale": "L26/L35 require gradeable claims; method supplies property and one-byte specificity, without mandatory wording.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-citations",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L26",
+          "text": "Gradeable answer record: `case_id`, `status`, `claims[{claim_id, answer, conditions, citations[]}]`, `limitations`. Citations contain original SHA256, repository-relative path, archive/member chain when applicable, and a native object/property locator or exact XML/key/byte location appropriate to the claim."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L36",
+          "text": "| Source grounding | Each required answer claim has resolvable original-artifact citations supporting its complete asserted content and conditions. | Support for only part is partial; a wrong or non-supporting citation is incorrect; absent claims/citations are missing; inaccessible evidence is unverified. A correct answer with a wrong citation is incorrect in grounding independently of correctness. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L99",
+          "text": "| Wrong citation | Keep a correct answer but cite a different existing object, case branch, member or revision that does not support it; also test an unresolvable locator. | Grounding rejects the unsupported citation independently of answer correctness. Checking only that the file exists or has a valid hash must fail this challenge. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/answer_rule",
+      "rationale": "L26/L36/L99 require full claim support, reject wrong-existing citations and separate grounding from truth.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-limits",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L10",
+          "text": "Each case asks for concrete claims whose correctness and source grounding can be checked individually. A statement about execution must identify its inputs, state, target and conditions; structural evidence alone cannot establish hardware behavior."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L35",
+          "text": "| Answer correctness | Each required answer claim matches an independently established expected claim under its conditions and tolerances. | Incomplete content is partial; false claims or contradictions are incorrect; omitted claims are missing; claims without sufficient independent evidence are unverified. An unsupported-case declaration remains unsupported, not correct. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L62",
+          "text": "Predeclare numeric precision, units, comparison rules, nondeterministic behavior and allowed variation per case. Missing runtime, dependencies, licenses, native diagram access or independent check yields an unavailable/unverified key and an unexecuted or limited case, never a passing semantic result."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L105",
+          "text": "| Unsupported or inaccessible case | Use a declared unsupported family and controlled missing-runtime/dependency/license or inaccessible-diagram conditions. | Preserve the exact limitation and planned/attempted/executed counts. Honest abstention may be recorded separately but never becomes full reading fidelity or demonstrated behavior. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L109",
+          "text": "Inspect actual outputs for implicit claims: loading is not execution; structural inspection is not hardware behavior; export success is not semantic fidelity; a matching answer is not grounded unless its original location supports it. Record unchecked outcomes and any assertion that would also accept the deliberately wrong output."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/planned_results",
+      "rationale": "L10/L35/L62/L105/L109 prohibit native or fidelity promotion; current package state remains distinct from a later inspected text result.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-independent",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L28",
+          "text": "Before reader exposure, freeze an independently checked reference inventory per task: stable required-claim IDs, atomic facts/relations, conditions, acceptable alternatives, numerical tolerances, original/native reference locators and hashes, and disallowed inferences. Identify separately the required answer claims and required reader observations; neither inventory may be inferred from submitted answers or exports. Record inventory/key revisions and unresolved references. Development keys may be public; withheld keys, case details and revealing evidence must never enter this repository or its history."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L47",
+          "text": "Establish and freeze expected claims before exposing the case to the evaluated reader. The reader's export, reconstructed diagram or answer is never an answer key or the sole evidence for a claim."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L60",
+          "text": "An independent checker must resolve each expected claim and citation against original/native evidence without using the reader's output to derive the answer. Record case/key revision, evidence hashes, checker identity/role and session, procedure, claim-level agreement/disagreement and unresolved uncertainty. Disagreement blocks that claim's use as an established key until adjudicated and rechecked."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/oracle_rule",
+      "rationale": "L28/L47/L60 require independent source-derived expectations, checker provenance and blocking disagreements. This session fails the requested pre-exposure order; the rule itself is correct.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-mapping",
+      "verdict": "blocked",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L29",
+          "text": "Account for every required ID and every submitted factual assertion, including implicit assertions in prose and limitations. Preserve the submitted text and its mapping to reference IDs; split compound assertions into atomic claims under frozen rules. Repeated equivalent assertions earn credit once; omissions retain their required slots. An assertion and its negation are a contradiction even when one matches the key: mark the affected item incorrect and retain both assertions. Unmatched assertions enter a separate extra-claim ledger and require independent checking; true extras cannot replace omissions, and false or unverified extras cannot disappear from scoring. Freeze these mapping/adjudication rules before runs and retain scorer/checker decisions."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L101",
+          "text": "| Extra false claim | Add an independently falsified assertion outside the required inventory to an otherwise correct answer and, separately, to a reader response; include an existing but non-supporting citation for the answer assertion. | The extra ledger retains the false assertion; answer correctness and grounding, or fidelity respectively, becomes incorrect despite all required IDs matching. Required denominators remain unchanged. Also test a true extra and an unverified extra: neither adds required credit, and the unverified extra prevents a correct case assessment. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L102",
+          "text": "| Duplicate and contradiction | Repeat a correct assertion, then separately add its negation while retaining the original, in answers and reader responses. | Duplicates earn credit once and are counted separately; contradictions retain both raw assertions and make the affected item and dimension incorrect. Repetition cannot increase the denominator or conceal a missing ID. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L109",
+          "text": "Inspect actual outputs for implicit claims: loading is not execution; structural inspection is not hardware behavior; export success is not semantic fidelity; a matching answer is not grounded unless its original location supports it. Record unchecked outcomes and any assertion that would also accept the deliberately wrong output."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/answer_rule",
+      "rationale": "L29/L101/L102/L109 support atomic ledgers, fixed slots, duplicates once, contradictions incorrect, extras retained and no substring truth certification. F2: truth/grounding cross-ID assignment is underspecified for the required source-map answer ID.",
+      "executable_for_current_preparation_scope": false,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-dimensions",
+      "verdict": "blocked",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L30",
+          "text": "Score reading fidelity, answer correctness and source grounding separately using the following item rules; faithful extraction alone does not establish correct reasoning, and answer correctness cannot establish fidelity."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L34",
+          "text": "| Reading fidelity | Each fixed required reader observation matches its independently checked native reference, including required types, properties and relations under declared tolerances. | Partially represented compound content is partial; a conflicting value/relation is incorrect; absent content is missing. Unsupported access, inaccessible diagrams, tool errors and unverified native references retain their explicit outcomes and never earn correct credit. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L35",
+          "text": "| Answer correctness | Each required answer claim matches an independently established expected claim under its conditions and tolerances. | Incomplete content is partial; false claims or contradictions are incorrect; omitted claims are missing; claims without sufficient independent evidence are unverified. An unsupported-case declaration remains unsupported, not correct. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L36",
+          "text": "| Source grounding | Each required answer claim has resolvable original-artifact citations supporting its complete asserted content and conditions. | Support for only part is partial; a wrong or non-supporting citation is incorrect; absent claims/citations are missing; inaccessible evidence is unverified. A correct answer with a wrong citation is incorrect in grounding independently of correctness. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/dimensions",
+      "rationale": "L30/L34/L35/L36 keep artifact, correctness, grounding, fidelity and native outcomes separate. F2: truth/grounding cross-ID assignment is underspecified for the required source-map answer ID.",
+      "executable_for_current_preparation_scope": false,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-assessment",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L40",
+          "text": "Freeze denominators per task and dimension: all required answer IDs for correctness and grounding, and all required observation IDs for fidelity. Report counts in every item-outcome category over those fixed totals, plus separate extra-claim counts by outcome and contradiction/duplicate counts; do not enlarge denominators with submitted claims or remove unavailable items. Report all planned cases as the coverage denominator alongside attempted/executed/scored counts. Any conditional summary must also show its eligible denominator and excluded/unavailable counts; no single aggregate merges the three dimensions."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L41",
+          "text": "Apply the following case-assessment rules in order, separately for each dimension. An absent or empty required reference inventory is unverified, never vacuously correct. With an established inventory, any incorrect required item or extra assertion, including a false assertion, contradiction or non-supporting citation in grounding, makes that dimension incorrect. Otherwise, any unverified required item or extra makes it unverified. Otherwise, every required item and extra must be correct (fully supported for grounding) for a correct assessment. Of the remaining cases, any correct/partial required item or extra makes the assessment partial; otherwise any tool error makes it error; otherwise all required items unsupported makes it unsupported; all other combinations of missing/unsupported items make it missing. Keep operational limitations and their affected IDs alongside this assessment; partial, missing, unsupported, unverified and error outcomes never become full passes. These are accounting rules, not owner quality thresholds."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/outcomes",
+      "rationale": "L40/L41 precedence is reproduced in order, including empty inventories, false/unverified extras and no owner threshold.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-reader",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L27",
+          "text": "For diagrams, record owning VI, nested structure/case, object/terminal/wire identity and native view region; attach a hashed native capture and object map when identifiers are unstable. A screenshot or exported node ID alone is insufficient: the reviewer must resolve the claim back into the preserved original."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L34",
+          "text": "| Reading fidelity | Each fixed required reader observation matches its independently checked native reference, including required types, properties and relations under declared tolerances. | Partially represented compound content is partial; a conflicting value/relation is incorrect; absent content is missing. Unsupported access, inaccessible diagrams, tool errors and unverified native references retain their explicit outcomes and never earn correct credit. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L38",
+          "text": "Reader-observation contract: before exposure, an independent preparer freezes probe IDs, artifact/member hashes, reader entry points and arguments, observation scope, required observation IDs and native-reference alignment rules. Choose probes from the task/native inventories, independently of agent answers and reader outputs; include the types, objects, wires, properties and relationships needed by the task. Pin ordering, limits, any adaptive branches and their selection rules; record unprobed scope as missing coverage. No favorable agent-selected calls may substitute for required probes."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L39",
+          "text": "For every probe, preserve the exact request, reader/configuration revision, environment, raw response bytes or files and hashes, timestamps, exit/error records and any truncation. Preserve empty responses and failed calls. A separate alignment record maps raw-output locations to required native-reference IDs and records absent, extra, duplicate and contradictory assertions; normalization must retain raw evidence and cannot invent missing facts. Unsupported operations, missing dependencies/licenses/environment, protected/removed diagrams, empty or truncated required content, errors and unverified references never count as matching observations. A successful call or valid wrapper alone earns no fidelity credit."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L85",
+          "text": "Measure reader fidelity through the frozen reader-observation contract in tasks, independently of agent answers. Pin probe-suite and native-reference revisions in the manifest and execute every required probe in a separate recorded reader session under predeclared limits, isolated from the paired answer sessions. Preserve raw requests/responses and the complete alignment/outcome ledger; agent-selected calls provide supplementary evidence only. Report probe time/cost separately from paired answer-session time/cost. Do not invent a reader-fidelity result for a no-tool arm that produces no reader representation: mark it not applicable, without a fidelity pass or a paired fidelity-gain estimate."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/reading_fidelity",
+      "rationale": "L27/L34/L38/L39/L85 require separate frozen probes and native references; no-tool fidelity is not applicable, without a pass.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-native",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L49",
+          "text": "Request bounded native cloud jobs with declared artifact hashes, permitted operations, required LabVIEW versions and staged output schemas. Roles receive results, not Docker daemon access. Existing NI 2026 Q1 readiness is environment evidence only; inventory inspection, VI Scripting, other versions and especially native 2024 need their own readiness checks."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L53",
+          "text": "| Structure, types and properties | Inspect preserved originals in native LabVIEW; use native properties/diagrams and a reviewer-readable capture/object map. Compare text declarations directly with original XML/configuration where applicable. | Original hash and resolvable locator, native property values/captures, inspection method and any inaccessible object. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L54",
+          "text": "| Computation and execution dependencies | Choose controlled inputs and initial state; record outputs, errors and relevant execution observations. Inspect dataflow/structures to explain dependencies; one observed schedule cannot prove an ordering guarantee. | Input/output vectors, reset procedure, actual run logs, relevant diagrams and version-specific documentation for semantics. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L56",
+          "text": "| Projects, packages and builds | Inspect native project/package properties and original declarations; explicitly check resolution and, where authorized, installation/build behavior in an isolated job. | Declared versus resolved dependency lists, member identities, build settings/results and unresolved items. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L57",
+          "text": "| Targets, hardware and compiled artifacts | Inspect available native interfaces and run only with the required runtime, target and hardware or declared simulator. | Actual execution environment and observed scope; simulation or structural inspection cannot certify hardware behavior or recover removed diagrams. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L62",
+          "text": "Predeclare numeric precision, units, comparison rules, nondeterministic behavior and allowed variation per case. Missing runtime, dependencies, licenses, native diagram access or independent check yields an unavailable/unverified key and an unexecuted or limited case, never a passing semantic result."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L120",
+          "text": "| Bounded native LabVIEW cloud inspection and experiment jobs | tasks, oracle, fidelity and challenge evidence | Extend the established trusted cloud-job path through a concrete capability proposal: hashed inputs, allowed properties/diagram capture, controlled I/O, dependency inspection and separately authorized edits/builds. Trusted runner receives only required sources and licenses; roles receive staged results, no daemon. Name cloud/NI operators and permitted model recipients of outputs. | Public development outputs only where licensing permits; private/withheld outputs remain restricted. Revoke job dispatch, source mounts and credentials; expire working copies and staged outputs under the grant. | Test one known discriminating case end to end: original preservation, native properties/capture, controlled I/O, bounded operations, output hashes and independent substantive check. Existing compile readiness alone is insufficient. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L121",
+          "text": "| Native versions, modules, targets, dependencies and licenses | oracle and coverage for each environment stratum | Inventory available licensed versions first; request named builds/modules/targets for specific missing strata, including an explicit native 2024 check. Record save version separately. Use existing entitlements only; any purchase needs service, purpose and ceiling. Name hosting and license providers; no implied right to redistribute dependencies. | Publish permitted environment metadata and redacted results, never license secrets or restricted binaries. Revoke runner/license access and remove temporary installations/data as required. | Per requested environment, verify activation, native loading, dependency resolution, required inspection APIs and a controlled execution; hardware claims require the actual target. Record failures and conversion limits. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/native_rule",
+      "rationale": "L49/L53/L54/L56/L57/L62/L120/L121 require actual separate bounded native evidence and environment; none exists here. Future fixtures must still be independently frozen.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-docs",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L59",
+          "text": "Documentation supports semantic interpretation only when pinned by version, section/location and content hash or preserved permitted excerpt; it does not establish what a particular original diagram contains. Unavailable documentation remains a gap."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/preflight/1",
+      "rationale": "L59 requires version, section and content pin for semantic interpretation; literal bytes need no native semantic interpretation.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-split",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L67",
+          "text": "Treat all prepared public sources, their history and derivatives as development material. Public availability prevents a credible claim of withholding or model unfamiliarity; placing cases or keys under an obscure repository path, release asset or evaluator directory provides no isolation."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L68",
+          "text": "Before allocation, group whole projects with shared dependencies, copied components and related revisions into lineage groups. Detect exact copies by original/member hashes; investigate renamed files, resaved versions, archive duplicates and edited variants using provenance, native structural comparisons and manual review. Hash inequality alone does not establish independence. Record the method, candidate matches, adjudications and remaining uncertainty."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L69",
+          "text": "Allocate entire connected lineage groups to one partition; never split a project into development and evaluation files or permit a shared answer-bearing dependency to bridge partitions. Resolve ambiguous relationships conservatively before measurement. Deduplicate reporting while preserving an inventory-to-group map and visible coverage gaps."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L70",
+          "text": "Use two declared evaluation strata: unseen project lineages within represented families, and whole held-out families with all their related projects/components excluded from development. Assign mixed-family projects as complete groups; if this makes a family holdout infeasible, report the missing stratum rather than leaking components across it. Publish only nonrevealing aggregate split descriptions."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L71",
+          "text": "Commission new owner-authorized cases in the restricted environment, with fresh computations, dependencies and controlled changes designed independently of the reader. Keep originals, authoring history, native captures and keys restricted; record ownership/license and check for overlap with public/development material. New cases reduce public-example familiarity risk but cannot prove absence from every model's training data."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L72",
+          "text": "A trusted custodian maintains the restricted allocation manifest, hashes, lineage decisions, key revisions and access audit. Development sessions receive development inputs only. Evaluation runners release only the assigned question and permitted artifact views to a fresh evaluated session; keys and oracle evidence remain accessible only to the scorer/checker. Evaluation inputs necessarily revealed during a run must not return to development contexts."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L73",
+          "text": "Before any measurement, test the actual boundary with representative development and evaluated-session identities: deny access to withheld storage, keys, other cases, repository history containing restricted material, caches, mounts, credentials, logs and artifacts. Check allowed access works; use synthetic sentinel material to test denial and output/log leakage without exposing real keys. Record identities, operations, results and independent review. A declared ACL without executed checks is insufficient."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L74",
+          "text": "Pin split revision, case/key hashes and access configuration before runs. Disable cross-run memory and shared workspaces; audit provider retention and training settings against the concrete data grant. Restrict transcripts and detailed scores that reveal cases; a leak invalidates the affected holdout and requires replacement and renewed isolation checks before measurement resumes."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L75",
+          "text": "Deliverable: restricted lineage/allocation manifest and executed access-boundary evidence, with a redacted public summary. Missing now: a concrete restricted store/runner, custodian, private/new cases, variant analysis and tested isolation. Public sources can support development specifications and duplicate-method preparation now, not withheld evaluation."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L119",
+          "text": "| Restricted evidence store with isolated execution | split; withheld oracle, baseline and challenges | Owner selects an existing resource or proposes a named service within an explicit budget. Custodian writes cases/keys; checker/scorer reads keys; evaluated sessions read only assigned inputs; development sessions have no access. Name storage/execution operators and any model recipients. | Keep originals, keys, manifests, captures, transcripts and revealing scores restricted. Publish only approved redacted summaries. Revoke identities/tokens/mounts and remove retained copies according to the grant, including backups and logs. | Execute allowed/denied access and synthetic leakage probes from actual role identities, inspect logs/caches, test revocation and have the boundary independently reviewed. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L122",
+          "text": "| Owner-authorized private projects | realistic tasks, oracle and project/family holdouts | Identify exact materials, owner/license, processing location, custodian and minimum read access. Explicitly name every permitted model provider and operator; permission to read alone permits no model upload. No private grant currently exists. | Specify publishable categories in advance; default to restricted source, keys and revealing outputs. Specify withdrawal, provider retention/deletion, backups and replacement of affected evaluation cases. | Confirm exact grant and provisioning, provenance/license, permitted provider routing and denied development access before ingestion; perform independent native checks before key use. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L123",
+          "text": "| Newly authored restricted cases, including missing families/versions | independent oracle, split and discriminating challenges | Commission a named author/custodian using approved native environments and owned or licensed inputs; keep creation and checking separate from evaluated sessions. Name authoring/model providers and require permission before sending material to them. | Keep case content, authoring history and keys restricted; publish only approved aggregates. Revoke author/runner access and retire leaked or withdrawn cases with lineage tracking. | Verify ownership, fresh provenance, duplicate/variant checks, whole-group allocation, native discriminating evidence and independent claim/key review. Unavailable families stay visible. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/tasks/4/lineage",
+      "rationale": "L67-L75 and resource rows preserve public-development status, whole connected lineages, custodian and executed boundaries; no withholding claim is made.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-paired",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L79",
+          "text": "Compare paired runs of each eligible task without and with the reader. Both arms receive the same question, original artifact set, permitted documentation and native panel/diagram images where available; only reader access differs. Record unavailable images and unsupported modalities explicitly. Give text artifacts directly in both arms; do not silently equip the no-tool arm with another semantic exporter."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L80",
+          "text": "Pin a run manifest before comparison: provider and exact model snapshot, model/image capabilities, generation settings and seeds where supported, full common prompt and input hashes, the minimal arm-specific tool instruction, reader commit/configuration, tool schema, runner/scorer versions, split/key revision and native evidence versions. If the provider cannot pin a snapshot, disclose that limitation and bound the run window; do not claim exact reproducibility."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L81",
+          "text": "Use identical total token, context, output and wall-time budgets, including reader output in the tool arm's context budget. Declare tool-call limits and count their time/cost. Context truncation and budget exhaustion remain recorded outcomes. Keep case inputs, presentation order and scoring rules matched; randomize paired arm order to reduce time/provider effects."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L82",
+          "text": "Before seeing comparative results, freeze the number of independent repetitions per case/arm, sampling order, stopping rule and affordable run ceiling in the manifest. Choose these through a documented precision/cost plan using development pilots only; no numerical repetition count or spending grant is established by this draft. A missing count, exhausted quota or incomplete pair prevents a completed comparison and must be reported."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L83",
+          "text": "Run each repetition in a fresh session without prior answers, key access or shared memory. Preserve actual requests, responses, tool calls, images, model identifiers, timestamps, token usage, errors and scorer records in the appropriate restricted boundary. Reuse the same assigned case/key revision across the pair; do not tune prompts or select favorable repeats using evaluation results."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L84",
+          "text": "Pin the task reference inventories, claim-mapping/adjudication rules, dimension-level outcome rules and fixed denominators in the run manifest before either arm runs. Measure answer correctness and source grounding separately for both arms using the same required answer IDs; retain omissions, extras, duplicates and contradictions in each arm's scoring records."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L90",
+          "text": "Deliverable: frozen run manifest, reproducible paired runner/scoring procedure, substantive run evidence and separate uncertainty/cost/time reports. Missing now: accepted cases/keys/split, tested isolation, concrete model/provider quota, repetition/precision plan and an independently reviewed executable scorer. No matched runs have been executed by this draft."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L124",
+          "text": "| Existing model access, reproducible runner and quota | paired baseline and uncertainty/cost reports | Select an available provider/model with required image support and pinning limits; name permitted data recipients and retention settings. Allocate only existing subscription quota; propose an explicit ceiling before any extra spending. Runner reads assigned cases, scorer alone reads keys. | Restrict revealing prompts, responses and usage logs; publish approved aggregates/configuration only. Revoke API/session credentials and clear cross-run caches/memory under provider terms. | Verify model identity/modalities, data routing, budget accounting, fresh sessions and a complete development pair with recorded tokens, time and cost; freeze repetition and uncertainty plans before evaluation. |"
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/comparison",
+      "rationale": "L79-L84/L90/L124 plus method require matched fresh paired sessions and predeclared budgets/repetitions. Rule text is sound; task-local mapping omits this rule (F1).",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-account",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L40",
+          "text": "Freeze denominators per task and dimension: all required answer IDs for correctness and grounding, and all required observation IDs for fidelity. Report counts in every item-outcome category over those fixed totals, plus separate extra-claim counts by outcome and contradiction/duplicate counts; do not enlarge denominators with submitted claims or remove unavailable items. Report all planned cases as the coverage denominator alongside attempted/executed/scored counts. Any conditional summary must also show its eligible denominator and excluded/unavailable counts; no single aggregate merges the three dimensions."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L42",
+          "text": "Report planned and executed counts and separate dimension-level outcomes, retaining missing dependency/license/environment, protected/removed diagram and tool-error records. Preserve gaps by family, save version, native reading version and target/module; no unavailable case becomes a full-read pass."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L86",
+          "text": "Report paired case-level results and distributions by family, original save version, native reading version and target/module. Publish planned, attempted, executed, scored and complete-pair counts, including missing keys/runtime, unsupported cases and failures. Show required-item outcome counts over each frozen dimension denominator and the separate extra-claim ledger; disclose incomplete probe suites and unprobed scope. Do not drop unavailable cases from coverage or treat them as successful observations."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L87",
+          "text": "Record elapsed end-to-end and tool time, input/output tokens, provider-reported or explicitly estimated cost with pinned price basis, and infrastructure cost where applicable. Disclose cached requests, retries, queue time and unpriced resources rather than equating missing cost data with zero. Existing subscription limits do not authorize extra spending."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/common/denominators",
+      "rationale": "L40/L42/L86/L87 retain fixed denominators, failure slots, raw evidence and nonzero-or-unknown costs. Rule text is sound; composite task-local mappings omit it (F1).",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-uncertainty",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L61",
+          "text": "Use more than one observable when necessary to distinguish plausible wrong answers: selected inputs must separate intended computation from known alternatives, and native structural evidence must support dependencies not distinguishable by outputs alone. Record any underdetermined behavior explicitly."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L62",
+          "text": "Predeclare numeric precision, units, comparison rules, nondeterministic behavior and allowed variation per case. Missing runtime, dependencies, licenses, native diagram access or independent check yields an unavailable/unverified key and an unexecuted or limited case, never a passing semantic result."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L88",
+          "text": "Predeclare per-case numeric tolerances and nondeterminism handling from the oracle evidence. Separately predeclare an uncertainty procedure for comparative estimates: use paired differences and resampling at independent project/lineage level, preserving repetitions within each group; record confidence level, resampling seed/count and treatment of missing pairs before evaluation. Report small-sample limitations and avoid treating related files or repeats as independent projects."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L89",
+          "text": "Do not select comparison tolerances, exclusions, aggregation weights or uncertainty settings after observing which arm wins. Show separate dimensions and coverage strata; any quality threshold, acceptable uncertainty target or claim that a gain satisfies the goal requires owner acceptance."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/comparison/uncertainty",
+      "rationale": "L61/L62/L88/L89 plus method give zero literal tolerance, frozen paired lineage bootstrap 95%, 10000 resamples, seed 40502, no interval below two complete lineages and unresolved owner targets.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-controls",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L94",
+          "text": "Exercise the proposed scoring method on independently keyed development cases before evaluation. Freeze the expected challenge outcomes first; retain exact submitted answers/exports, original evidence, scorer output and an independent claim-level review. Valid filenames, hashes and successful process exit alone do not establish that the method detects wrong content."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L98",
+          "text": "| Wrong answer | Start from a checked correct response; change a substantive computation, dependency or typedef-impact claim while retaining its valid source locator. Use controlled inputs/native evidence that distinguish the replacement claim. | Correctness detects the false claim; citation resolution alone cannot make it correct. Retain the true and false claims and evidence explaining the difference. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L99",
+          "text": "| Wrong citation | Keep a correct answer but cite a different existing object, case branch, member or revision that does not support it; also test an unresolvable locator. | Grounding rejects the unsupported citation independently of answer correctness. Checking only that the file exists or has a valid hash must fail this challenge. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L100",
+          "text": "| Selective omission | Remove one required answer claim and, separately, one required reader observation from otherwise checked complete submissions containing at least two required IDs in the affected dimension; retain the remaining correct content and citations. | The omitted ID remains missing in its frozen denominator; correctness/grounding or fidelity respectively becomes partial, never complete. True extra claims cannot replace the omitted ID. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L101",
+          "text": "| Extra false claim | Add an independently falsified assertion outside the required inventory to an otherwise correct answer and, separately, to a reader response; include an existing but non-supporting citation for the answer assertion. | The extra ledger retains the false assertion; answer correctness and grounding, or fidelity respectively, becomes incorrect despite all required IDs matching. Required denominators remain unchanged. Also test a true extra and an unverified extra: neither adds required credit, and the unverified extra prevents a correct case assessment. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L102",
+          "text": "| Duplicate and contradiction | Repeat a correct assertion, then separately add its negation while retaining the original, in answers and reader responses. | Duplicates earn credit once and are counted separately; contradictions retain both raw assertions and make the affected item and dimension incorrect. Repetition cannot increase the denominator or conceal a missing ID. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L103",
+          "text": "| Constant export | Feed one fixed plausible export to the frozen probes for at least two cases with independently established incompatible facts, such as different types or computations. Preserve raw probe requests/responses and native-reference alignments. | Fidelity detects the contradicted/missing required observations on the discriminating case using the frozen denominator; plausible formatting and generic facts cannot earn full fidelity. Inspect both substantive comparisons independently of agent answers. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L104",
+          "text": "| Empty, truncated or failed probe | Submit empty content and a syntactically valid wrapper containing no facts; separately truncate required content, return an unsupported response and cause a controlled reader error. | Raw requests, responses and failures remain recorded against every required probe/observation ID. Absent facts remain missing; unsupported/error conditions retain their explicit records and never pass. Neither process success, schema validity nor a correct agent answer supplies fidelity. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L105",
+          "text": "| Unsupported or inaccessible case | Use a declared unsupported family and controlled missing-runtime/dependency/license or inaccessible-diagram conditions. | Preserve the exact limitation and planned/attempted/executed counts. Honest abstention may be recorded separately but never becomes full reading fidelity or demonstrated behavior. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L106",
+          "text": "| Missing evidence or execution | Remove the independent key, omit the native run, or supply a report listing zero executed tests. | Results remain unverified/unexecuted; the scorer cannot award a semantic pass, infer a key from the reader, or count a planned test as executed. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L108",
+          "text": "Include positive controls: independently checked correct claims and correct locators must receive their expected dimension-level assessments. Otherwise a scorer that rejects everything could appear to detect every deliberate error. Challenge expectations concern discriminating facts and evidence, not owner quality thresholds."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L109",
+          "text": "Inspect actual outputs for implicit claims: loading is not execution; structural inspection is not hardware behavior; export success is not semantic fidelity; a matching answer is not grounded unless its original location supports it. Record unchecked outcomes and any assertion that would also accept the deliberately wrong output."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L110",
+          "text": "A failed challenge blocks use of the affected scoring claim until the method is revised and independently rechecked. Keep failed outputs and explanations; do not relabel absent runtime/key as a passing challenge. This draft executes no challenges and supplies no challenge results."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/new_requirements/7/requirement",
+      "rationale": "L94/L98-L106/L108-L110 require positive and discriminating negative evidence; package controls are explicitly bounded and future narrative challenges remain required.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-owner",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L111",
+          "text": "Deliverable: repeatable development challenge fixtures, expected outcomes established independently, executed substantive comparisons and separate reviewer findings. Missing now: checked development keys/native evidence, an executable scoring method and independent review. Only the evaluator role, on Policymaker order and with its separate verifier, may change `policy/evaluator/`; benchmark preparation does not grant that authority."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L115",
+          "text": "This table specifies missing resources and the terms a concrete owner request must supply under [accepted limits](../docs/perpetua/accepted-limits.md). It grants no access, spending or publication rights. No restricted store or private project is currently identified; service names, actual materials and recipient identities must be filled in before requesting approval. Never put credentials, withheld content or private material in the public request."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L125",
+          "text": "| Independent method reviewer, key checker and authorized executable scorer work | reviewed tasks/oracle/split/baseline/challenges | Policymaker orders separate review against this draft and evidence. Give reviewers minimum original/native evidence access within each data grant. Only evaluator role changes executable evaluator policy, followed by its separate verifier. Name any reviewing model provider before private access. | Keep restricted review evidence out of public issues; publish redacted findings. Revoke review/scorer access after assignment and preserve approved audit records. | Reviewer checks substantive claims and challenge discrimination; evaluator verifier must pass the exact changed tree. Owner then assesses the pinned protocol/evidence; preparation author cannot self-approve readiness. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L127",
+          "text": "Public work available now: design development case specifications and answer/citation schemas, prepare duplicate/lineage analysis and controlled-edit recipes, define native-job inputs/output records, and draft challenge fixtures from the prepared read-only public sources. Preserve originals; do not execute prepared source code or expand network/native capabilities without authorization. These activities cannot establish native answers, private holdouts or completed model comparisons by themselves."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L128",
+          "text": "Next Policymaker: order an independent review of this unpinned design, then turn each needed row into a concrete capability proposal with actual resources, materials, providers, least access, publication/deletion terms, revocation and readiness evidence. Optional access requests do not block independent public preparation. Approval alone provisions nothing: wait for manual provisioning and proposal-specific capability-ready confirmation before dependent work."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L129",
+          "text": "After review, prepare substantive development evidence, independently checked keys, tested split isolation and executed challenges; request authorized scoring work where needed. Pin evidence and obtain owner acceptance of the verification method before product implementation. This issue intentionally changes no preparation index or milestone status."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L130",
+          "text": "Owner decisions remain: concrete access and publication grants; any additional spending; acceptance of the reviewed method and evidence; quality thresholds and final goal gate; and any version fallback only after an all-version effort/compatibility comparison. No quality threshold, scope reduction or benchmark-ready claim is introduced here."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/authority",
+      "rationale": "L111/L115/L125/L127-L130 and evaluation contract preserve independent review, protected evaluator authority, manual readiness and owner method/threshold decisions.",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    },
+    {
+      "id": "R-scope",
+      "verdict": "agree",
+      "cited_protocol_lines_read": [
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L3",
+          "text": "Unpinned, unreviewed design for issue #141; no tasks, keys, split, runs or challenge results are established by this document. No benchmark readiness or product quality is claimed."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L4",
+          "text": "Authority: [evaluation contract](../docs/perpetua/evaluation.md), [goal](../goal/goal.md), [accepted limits](../docs/perpetua/accepted-limits.md). Current evidence: [sources](sources.md) and [coverage](coverage.md); native semantic inspection of that inventory has not run."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L5",
+          "text": "Public sources are development material, including their copies and variants. Missing families and versions remain gaps in the full goal; the 2024 fallback is not selected."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L14",
+          "text": "| VI and VIM | Explain computation, types, structures, dataflow and execution dependencies for controlled inputs; distinguish wired order from scheduling assumptions and specialization. | Panel terminals, diagram nodes/wires, structure/case paths and connector pane; VIM call-site specialization. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L15",
+          "text": "| CTL, typedefs and custom controls | Identify type/defaults, strictness and consumers; predict which consumers change or break after a controlled typedef edit. | Control/type properties and original consumer terminals; before/after native observations on derived copies. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L16",
+          "text": "| Classes and libraries | Explain membership, scope, inheritance, dispatch and dependency resolution. | LVCLASS/LVLIB item/property paths plus relevant method VI diagrams and native properties. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L18",
+          "text": "| Diagram changes | Explain semantic effects of a controlled pair: behavior-changing edits, presentation-only edits and uncertain effects. | Both original revision hashes and corresponding nodes/wires/cases; native comparison and controlled I/O evidence. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L19",
+          "text": "| Menus and resources | Explain menu hierarchy, tags, actions and resource references, including missing resources. | MNU item hierarchy/native properties and referring VI event/handling locations; original resource entries. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L20",
+          "text": "| Aliases, project state and configuration | Identify alias mappings and relevant configuration/analysis settings; establish whether a setting is runtime, editor or machine-specific before claiming an effect. | ALIASES, LVLPS and VIANCFG original keys/XML paths plus native interpretation where necessary. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L21",
+          "text": "| Packages and archives | Explain dependency constraints, installation contents and contained artifact relationships; identify unresolved or nested members. | VIP/VIPB/VIPC/VSIX/ZIP original manifest/member paths and member hashes; native/package-manager evidence for installation claims. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L22",
+          "text": "| Packed libraries and compiled distributions | Identify exposed APIs, linkage and execution requirements; state when diagrams are absent and semantic reading is unavailable. | LVLIBP/native exports and original distribution metadata; controlled API calls where executable. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L23",
+          "text": "| Missing and future families | Design dedicated cases for templates, globals, LLBs, shared libraries, tests, XControls/XNodes, executables, real-time/FPGA targets and hardware/module resources; classify CTT/GBL/GLB/LSB/LVSC/LVTEST/RTEXE/RTM/UIR/VIT/XCTL/XNODE by native evidence. | Original family-specific objects/properties, test definitions, target/build settings and observable behavior; unknown formats remain unresolved. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L25",
+          "text": "Archive members inherit their semantic family tasks as well as container/linkage tasks; archive counts do not demonstrate readability. Extension/magic inventory is not an exhaustive family definition."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L43",
+          "text": "Deliverable: reviewed development case specifications and a restricted case-schema equivalent, with provenance and coverage mapping. Missing now: native semantic observations, independently checked answers and dedicated cases for uncovered families/versions."
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L55",
+          "text": "| Typedef and diagram changes | Preserve both original revisions; apply a documented edit to derived copies, inspect affected consumers/native differences and run discriminating controlled inputs. | Before/after hashes, edit recipe, affected/unaffected checks, native difference evidence and observed behavior. |"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L63",
+          "text": "Deliverable: independently checked claim/key records, native job recipes and substantive evidence, public only for development cases. Missing now: approved native inspection/experiment capability, version/module coverage, completed native jobs and independent checker records; this draft supplies no oracle answers."
+        }
+      ],
+      "additional_evidence": "benchmark/writing/method.json#/coverage",
+      "rationale": "L3-L5, family rows, L25/L43/L63 retain full-goal gaps; method W6 excludes compiled/rebuild claims. Rule text is valid, but cannot substitute for pairing/accounting mappings (F1).",
+      "executable_for_current_preparation_scope": true,
+      "remaining_uncertainty": "Human adjudication remains required; unavailable trial/native inputs do not become evidence. Mapping approval is separate from rule-text agreement."
+    }
+  ],
+  "denominators": {
+    "from_json_id_list": {
+      "semantic": 1,
+      "preservation": 4,
+      "answer_correctness": 3,
+      "source_grounding": 3,
+      "reading_fidelity": null
+    },
+    "verdict": "agree",
+    "rationale": "Eight unique JSON IDs: 1 semantic, 4 preservation, 3 answer; correctness and grounding reuse the same three answer IDs. No reader inventory exists. Extras/duplicates do not enlarge any total."
+  },
+  "mapping_review": {
+    "total_obligations": 429,
+    "method_leaves": 334,
+    "protocol_lines": 95,
+    "not_applicable_review": [
+      {
+        "id": "protocol#L14",
+        "source_line": "| VI and VIM | Explain computation, types, structures, dataflow and execution dependencies for controlled inputs; distinguish wired order from scheduling assumptions and specialization. | Panel terminals, diagram nodes/wires, structure/case paths and connector pane; VIM call-site specialization. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L15",
+        "source_line": "| CTL, typedefs and custom controls | Identify type/defaults, strictness and consumers; predict which consumers change or break after a controlled typedef edit. | Control/type properties and original consumer terminals; before/after native observations on derived copies. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L16",
+        "source_line": "| Classes and libraries | Explain membership, scope, inheritance, dispatch and dependency resolution. | LVCLASS/LVLIB item/property paths plus relevant method VI diagrams and native properties. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L18",
+        "source_line": "| Diagram changes | Explain semantic effects of a controlled pair: behavior-changing edits, presentation-only edits and uncertain effects. | Both original revision hashes and corresponding nodes/wires/cases; native comparison and controlled I/O evidence. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L19",
+        "source_line": "| Menus and resources | Explain menu hierarchy, tags, actions and resource references, including missing resources. | MNU item hierarchy/native properties and referring VI event/handling locations; original resource entries. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L20",
+        "source_line": "| Aliases, project state and configuration | Identify alias mappings and relevant configuration/analysis settings; establish whether a setting is runtime, editor or machine-specific before claiming an effect. | ALIASES, LVLPS and VIANCFG original keys/XML paths plus native interpretation where necessary. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L21",
+        "source_line": "| Packages and archives | Explain dependency constraints, installation contents and contained artifact relationships; identify unresolved or nested members. | VIP/VIPB/VIPC/VSIX/ZIP original manifest/member paths and member hashes; native/package-manager evidence for installation claims. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L22",
+        "source_line": "| Packed libraries and compiled distributions | Identify exposed APIs, linkage and execution requirements; state when diagrams are absent and semantic reading is unavailable. | LVLIBP/native exports and original distribution metadata; controlled API calls where executable. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L23",
+        "source_line": "| Missing and future families | Design dedicated cases for templates, globals, LLBs, shared libraries, tests, XControls/XNodes, executables, real-time/FPGA targets and hardware/module resources; classify CTT/GBL/GLB/LSB/LVSC/LVTEST/RTEXE/RTM/UIR/VIT/XCTL/XNODE by native evidence. | Original family-specific objects/properties, test definitions, target/build settings and observable behavior; unknown formats remain unresolved. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This family-specific observable is outside WP1 literal LVPROJ text scope; R-scope retains the corresponding full-goal gap."
+      },
+      {
+        "id": "protocol#L27",
+        "source_line": "For diagrams, record owning VI, nested structure/case, object/terminal/wire identity and native view region; attach a hashed native capture and object map when identifiers are unstable. A screenshot or exported node ID alone is insufficient: the reviewer must resolve the claim back into the preserved original.",
+        "mapped_rules": [
+          "R-reader"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This line concerns native diagram identities/captures, absent from an XML property-text task."
+      },
+      {
+        "id": "protocol#L55",
+        "source_line": "| Typedef and diagram changes | Preserve both original revisions; apply a documented edit to derived copies, inspect affected consumers/native differences and run discriminating controlled inputs. | Before/after hashes, edit recipe, affected/unaffected checks, native difference evidence and observed behavior. |",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "author_reason": "Other family/native diagram operation absent from this literal project task; retain full-goal coverage gap.",
+        "verdict": "agree",
+        "rationale": "This line requires controlled typedef/diagram derived-copy observations, neither requested nor performed by WP1."
+      }
+    ],
+    "applicable_population": 418,
+    "sample_rule": "Sort all applicable obligation IDs lexicographically; select indices 0,17,34,... (Python applicable[::17]). No favorable substitution.",
+    "sample_size": 25,
+    "sample_results": [
+      {
+        "id": "method#/authority/0",
+        "source_value": "goal/goal.md#pisanie",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/common/artifact_record/5",
+        "source_value": "per_artifact_save_version_evidence",
+        "mapped_rules": [
+          "R-account"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/common/limitation_codes/6",
+        "source_value": "missing-builder",
+        "mapped_rules": [
+          "R-limits"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/common/outcomes/2",
+        "source_value": "partial",
+        "mapped_rules": [
+          "R-dimensions",
+          "R-assessment"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/comparison/matched_fields/1",
+        "source_value": "original_manifest_hash",
+        "mapped_rules": [
+          "R-paired",
+          "R-account",
+          "R-uncertainty"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/comparison/uncertainty",
+        "source_value": "Extend the existing 95 percent paired lineage-cluster percentile bootstrap (10000 resamples, seed 40502; fewer than two complete lineages gives no interval). For artifact semantic IDs and preservation IDs separately, compare tool minus no-tool correct fractions over fixed IDs, average repeats then cases within lineage then independent lineages, retaining full outcome categories and extras. Apply the same predeclared missing-pair conditional estimates and planned-weight bounds as the precision plan; do not count repeats as independent lineages. Report answer correctness and grounding separately. Reading fidelity remains separate probes with no paired no-tool gain. Owner targets and evaluation repeat count remain undecided; no threshold or resource grant.",
+        "mapped_rules": [
+          "R-paired",
+          "R-account",
+          "R-uncertainty"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/coverage/project_text_preparation/remaining",
+        "source_value": "Direct creation, LVLIB, other XML properties/projects, native semantics and all untested versions/families stay uncovered. Existing inventory and contracts unchanged.",
+        "mapped_rules": [
+          "R-scope",
+          "R-split",
+          "R-native"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/coverage/uncovered_families/6",
+        "source_value": ".aliases/.lvlps/.viancfg",
+        "mapped_rules": [
+          "R-scope",
+          "R-split",
+          "R-native"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/existing_requirements/4/covers",
+        "source_value": "Whole-lineage split, private keys, actual isolation tests and public-development restrictions already apply.",
+        "mapped_rules": [
+          "R-split"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/new_requirements/1/extends/1",
+        "source_value": "E2",
+        "mapped_rules": [
+          "R-preflight",
+          "R-preserve",
+          "R-native"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/new_requirements/5/requirement",
+        "source_value": "Compiled outputs require available matching sources, dependency/build pins and a source edit plus authorized rebuild. Never prescribe binary patching; absent source or builder remains an explicit gap.",
+        "mapped_rules": [
+          "R-scope",
+          "R-native"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/11",
+        "source_value": "case_key_revision",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree",
+        "rationale": "F1: scope/independence do not enforce pair equality or symmetric artifact/retry accounting."
+      },
+      {
+        "id": "method#/tasks/4/expected_semantics/delta/after",
+        "source_value": "3",
+        "mapped_rules": [
+          "R-text"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/lineage/withheld",
+        "source_value": false,
+        "mapped_rules": [
+          "R-split"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/originals/0/sha256",
+        "source_value": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+        "mapped_rules": [
+          "R-preflight",
+          "R-preserve"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/preconditions/0/root_attributes/LVVersion",
+        "source_value": "20008000",
+        "mapped_rules": [
+          "R-preflight",
+          "R-independent"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/preservation_ids/1",
+        "source_value": "WP1-file-set-and-unrelated-files",
+        "mapped_rules": [
+          "R-bytes",
+          "R-files",
+          "R-root",
+          "R-preserve"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/requirements_mapping/W7/contract",
+        "source_value": "comparison; trial_artifacts",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree",
+        "rationale": "F1: scope/independence do not enforce pair equality or symmetric artifact/retry accounting."
+      },
+      {
+        "id": "method#/tasks/4/text_contract/delta/line_one_based",
+        "source_value": 42,
+        "mapped_rules": [
+          "R-text",
+          "R-bytes"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "method#/tasks/4/trial_artifacts/required/10",
+        "source_value": "time-cost-budget-records",
+        "mapped_rules": [
+          "R-account",
+          "R-files"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "protocol#L105",
+        "source_value": "| Unsupported or inaccessible case | Use a declared unsupported family and controlled missing-runtime/dependency/license or inaccessible-diagram conditions. | Preserve the exact limitation and planned/attempted/executed counts. Honest abstention may be recorded separately but never becomes full reading fidelity or demonstrated behavior. |",
+        "mapped_rules": [
+          "R-limits",
+          "R-controls"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "protocol#L128",
+        "source_value": "Next Policymaker: order an independent review of this unpinned design, then turn each needed row into a concrete capability proposal with actual resources, materials, providers, least access, publication/deletion terms, revocation and readiness evidence. Optional access requests do not block independent public preparation. Approval alone provisions nothing: wait for manual provisioning and proposal-specific capability-ready confirmation before dependent work.",
+        "mapped_rules": [
+          "R-owner"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "protocol#L40",
+        "source_value": "Freeze denominators per task and dimension: all required answer IDs for correctness and grounding, and all required observation IDs for fidelity. Report counts in every item-outcome category over those fixed totals, plus separate extra-claim counts by outcome and contradiction/duplicate counts; do not enlarge denominators with submitted claims or remove unavailable items. Report all planned cases as the coverage denominator alongside attempted/executed/scored counts. Any conditional summary must also show its eligible denominator and excluded/unavailable counts; no single aggregate merges the three dimensions.",
+        "mapped_rules": [
+          "R-assessment",
+          "R-account"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "protocol#L63",
+        "source_value": "Deliverable: independently checked claim/key records, native job recipes and substantive evidence, public only for development cases. Missing now: approved native inspection/experiment capability, version/module coverage, completed native jobs and independent checker records; this draft supplies no oracle answers.",
+        "mapped_rules": [
+          "R-scope"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      },
+      {
+        "id": "protocol#L86",
+        "source_value": "Report paired case-level results and distributions by family, original save version, native reading version and target/module. Publish planned, attempted, executed, scored and complete-pair counts, including missing keys/runtime, unsupported cases and failures. Show required-item outcome counts over each frozen dimension denominator and the separate extra-claim ledger; disclose incomplete probe suites and unprobed scope. Do not drop unavailable cases from coverage or treat them as successful observations.",
+        "mapped_rules": [
+          "R-account"
+        ],
+        "verdict": "agree",
+        "rationale": "Mapped rule(s) preserve this source obligation in WP1 preparation scope; unavailable native resources stay explicit."
+      }
+    ],
+    "targeted_expansion_reason": "Expand sampled pairing/W7 defects to task-local matched_fields, composite rule and W7 mapping leaves.",
+    "expanded_disagreements": [
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/0",
+        "source_value": "requested_change_hash",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/1",
+        "source_value": "original_manifest_hash",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/2",
+        "source_value": "allowed_inputs_hash",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/3",
+        "source_value": "common_prompt_hash",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/4",
+        "source_value": "model_snapshot_and_generation",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/5",
+        "source_value": "total_token_budget",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/6",
+        "source_value": "context_budget",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/7",
+        "source_value": "output_token_and_artifact_byte_budget",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/8",
+        "source_value": "wall_time_budget",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/9",
+        "source_value": "ordinary_editing_capabilities",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/10",
+        "source_value": "native_access_policy",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/11",
+        "source_value": "case_key_revision",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/12",
+        "source_value": "repetition_count",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/matched_fields/13",
+        "source_value": "retry_policy",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/comparison/rule",
+        "source_value": "Freeze hashed writing addendum, model/settings, prompts, inputs, key revision, budgets, retry policy, repetitions and arm order before either arm; only evaluated-tool access differs. Both arms receive same XML/ordinary editing capabilities. Fresh sessions/workspaces and no cross-arm memory/cache/key/artifact access. Retain every planned/failed/missing slot, raw bytes and accounting. Four conditional development pilots is existing design only; evaluation count/quota unresolved. Inherit paired lineage uncertainty/missing-pair rules, no interval for one lineage.",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/requirements_mapping/W7/contract",
+        "source_value": "comparison; trial_artifacts",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      },
+      {
+        "id": "method#/tasks/4/requirements_mapping/W7/review",
+        "source_value": "Identical copies/requests/budgets, symmetric output/retry accounting and isolated arms.",
+        "mapped_rules": [
+          "R-scope",
+          "R-independent"
+        ],
+        "verdict": "disagree"
+      }
+    ],
+    "limitation": "Other applicable mappings were not all semantically sampled; the integrity checker re-derives the full inventory but does not prove the semantic mapping."
+  },
+  "c1_tests": {
+    "kind": "Six human-adjudication thought experiments, not executed agent trials or an executable semantic scorer.",
+    "shared_context": "Frozen three-answer-ID reference inventory and evidence defined in this artifact; full original bytes and the in-memory derived hypothetical output are available and inspected. Original/output hashes below name those actual hypothetical bytes. No LabVIEW exists. Except abstention, assume complete delivered output; abstention stipulates truthful failure and no output. Item-order is describe-text-delta, original-output-grounding, honest-limits. No keyword/flag detection was used.",
+    "cases": [
+      {
+        "id": "C1-correct",
+        "kind": "correct",
+        "answer": "I changed only the childless Int Bld_version.build property under My Computer / Build Specifications / AF PPL from exact text 2 to 3. Complete-byte comparison shows one ASCII substitution at zero-based byte 3347, line 42, with size 5806 unchanged. Original: benchmark/real-project-0107/original.lvproj SHA256 1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf, entire file and that property locator; actual hypothetical output: Core/AF PPL Build.lvproj SHA256 8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42, entire file and the same locator. This establishes the text result only. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified, and reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity; no native logs exist in this hypothetical record.",
+        "answer_item_outcomes": [
+          "correct",
+          "correct",
+          "correct"
+        ],
+        "grounding_item_outcomes": [
+          "correct",
+          "correct",
+          "correct"
+        ],
+        "extras": [],
+        "answer_assessment": "correct",
+        "grounding_assessment": "correct",
+        "unambiguous": true,
+        "reason": "All three fixed answer IDs and their complete supporting citations match the conditioned evidence. Native/artifact/fidelity assessments are separate; this is no overall writing pass."
+      },
+      {
+        "id": "C1-unverified-extra",
+        "kind": "correct with unsupported extra claim",
+        "answer": "I changed only the childless Int Bld_version.build property under My Computer / Build Specifications / AF PPL from exact text 2 to 3. Complete-byte comparison shows one ASCII substitution at zero-based byte 3347, line 42, with size 5806 unchanged. Original: benchmark/real-project-0107/original.lvproj SHA256 1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf, entire file and that property locator; actual hypothetical output: Core/AF PPL Build.lvproj SHA256 8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42, entire file and the same locator. This establishes the text result only. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified, and reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity; no native logs exist in this hypothetical record. This setting will reduce application startup time by 10 percent.",
+        "answer_item_outcomes": [
+          "correct",
+          "correct",
+          "correct"
+        ],
+        "grounding_item_outcomes": [
+          "correct",
+          "correct",
+          "correct"
+        ],
+        "extras": [
+          {
+            "assertion": "Startup time will decrease 10 percent",
+            "correctness": "unverified",
+            "grounding": "missing",
+            "evidence": "No measurement, native semantic key or citation supplies this extra."
+          }
+        ],
+        "answer_assessment": "unverified",
+        "grounding_assessment": "partial",
+        "unambiguous": true,
+        "reason": "R-mapping retains the extra and R-assessment/L41 make any unverified truth extra unverified. Its absent citation is missing grounding (L36); the other correct required claims then make grounding partial. No extra enters the denominator."
+      },
+      {
+        "id": "C1-contradiction",
+        "kind": "self-contradicting",
+        "answer": "I changed only the childless Int Bld_version.build property under My Computer / Build Specifications / AF PPL from exact text 2 to 3. Complete-byte comparison shows one ASCII substitution at zero-based byte 3347, line 42, with size 5806 unchanged. Original: benchmark/real-project-0107/original.lvproj SHA256 1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf, entire file and that property locator; actual hypothetical output: Core/AF PPL Build.lvproj SHA256 8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42, entire file and the same locator. This establishes the text result only. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified, and reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity; no native logs exist in this hypothetical record. The selected property in that output remains exact text 2, not 3; see the same output property citation.",
+        "answer_item_outcomes": [
+          "incorrect",
+          "correct",
+          "correct"
+        ],
+        "grounding_item_outcomes": [
+          "incorrect",
+          "correct",
+          "correct"
+        ],
+        "extras": [
+          {
+            "assertion": "Selected output property remains 2",
+            "contradicts": "WP1-describe-text-delta",
+            "retain_both": true
+          }
+        ],
+        "answer_assessment": "incorrect",
+        "grounding_assessment": "incorrect",
+        "unambiguous": true,
+        "reason": "L29/L102 and R-mapping retain both assertions and mark the affected item incorrect; the actual hypothetical output citation does not support 2. Other required-item classifications do not change either dimension assessment."
+      },
+      {
+        "id": "C1-wrong-existing-citation",
+        "kind": "right text with wrong-but-existing citation",
+        "answer": "I changed only the childless Int Bld_version.build property under My Computer / Build Specifications / AF PPL from exact text 2 to 3. Complete-byte comparison shows one ASCII substitution at zero-based byte 3347, line 42, with size 5806 unchanged. Original: benchmark/real-project-0107/original.lvproj SHA256 1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf, entire file and that property locator; actual hypothetical output: Core/AF PPL Build.lvproj SHA256 8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42, entire file and the same locator. This establishes the text result only. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified, and reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity; no native logs exist in this hypothetical record. Correction to the evidence locator for the claimed 2-to-3 change: use only line 43, Property Bld_version.major, in those same two files. Do not use the previously stated build-property locator for that claim.",
+        "answer_item_outcomes": null,
+        "grounding_item_outcomes": [
+          "incorrect",
+          "incorrect",
+          "correct"
+        ],
+        "extras": [],
+        "answer_assessment": "ambiguous",
+        "grounding_assessment": "incorrect",
+        "unambiguous": false,
+        "competing_readings": [
+          {
+            "reading": "Keep factual answer correctness separate from source support under R-dimensions/L36; the delta is true and the map names existing original/output locations.",
+            "answer_assessment": "correct"
+          },
+          {
+            "reading": "Treat full support as part of WP1-original-output-grounding, which is itself an answer-correctness ID; mark that ID incorrect for the wrong-existing citation.",
+            "answer_assessment": "incorrect"
+          }
+        ],
+        "reason": "F2: Line 43 exists but contains unchanged major-version text 1, so grounding is decisively incorrect. The key does not specify which correctness proposition the source-map ID grades or whether its bad citation changes that answer ID independently of grounding. R-mapping supplies no precedence between these readings; R-assessment cannot resolve the item assignment. The reviewer must not choose a preferred interpretation."
+      },
+      {
+        "id": "C1-native-overclaim",
+        "kind": "native-outcome overclaim",
+        "answer": "I changed only the childless Int Bld_version.build property under My Computer / Build Specifications / AF PPL from exact text 2 to 3. Complete-byte comparison shows one ASCII substitution at zero-based byte 3347, line 42, with size 5806 unchanged. Original: benchmark/real-project-0107/original.lvproj SHA256 1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf, entire file and that property locator; actual hypothetical output: Core/AF PPL Build.lvproj SHA256 8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42, entire file and the same locator. This establishes the text result only. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified, and reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity; no native logs exist in this hypothetical record. I also ran a native LabVIEW build in this session and it passed; root LVVersion=20008000 at line 2 of the cited files proves it.",
+        "answer_item_outcomes": [
+          "correct",
+          "incorrect",
+          "incorrect"
+        ],
+        "grounding_item_outcomes": [
+          "correct",
+          "incorrect",
+          "incorrect"
+        ],
+        "extras": [
+          {
+            "assertion": "Ran a native LabVIEW build here and it passed",
+            "correctness": "incorrect",
+            "grounding": "incorrect",
+            "evidence": "The hypothetical context explicitly provides no LabVIEW runtime or native execution; line 2 is only a declaration."
+          }
+        ],
+        "answer_assessment": "incorrect",
+        "grounding_assessment": "incorrect",
+        "unambiguous": true,
+        "reason": "This is a false execution claim in the expressly runtime-free context and contradicts the retained no-build assertion; it is not merely an unknowable prediction. R-limits/R-native/R-mapping reject it, and the existing XML citation supplies no native support."
+      },
+      {
+        "id": "C1-abstention",
+        "kind": "honest abstention",
+        "answer": "I could not perform the requested edit and return no output or source map. No native load, dependency resolution, build or behavior was executed; native save version and overall writing remain unverified; reader fidelity was not measured. Limits evidence: benchmark/writing/method.json SHA256 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac #/tasks/4/oracle, #/tasks/4/planned_results, #/tasks/4/reading_fidelity, and the supplied empty native-log inventory.",
+        "answer_item_outcomes": [
+          "missing",
+          "missing",
+          "correct"
+        ],
+        "grounding_item_outcomes": [
+          "missing",
+          "missing",
+          "correct"
+        ],
+        "extras": [],
+        "answer_assessment": "partial",
+        "grounding_assessment": "partial",
+        "unambiguous": true,
+        "reason": "The failure is stipulated true for this case. Honest limits earn only their answer ID; the other two IDs remain missing under fixed denominators. L41 yields partial, with no artifact/native/fidelity pass."
+      }
+    ],
+    "case_assessment_conclusion": "Five cases have determinate dimension assessments; the wrong-existing-citation case has ambiguous answer correctness (F2), with incorrect grounding under both readings. C1 remains open. These are human review examples, not an executable arbitrary-prose scorer."
+  },
+  "checker_review": {
+    "path": "benchmark/writing/check_wp1_key_0115.py",
+    "read_whole": true,
+    "rederives_current_source_inventory": true,
+    "evidence": "derive() traverses selected current method scalar/empty-container leaves plus WP1 and every nonblank nonheading nonseparator protocol line; check_key() compares exact identities, locators and value hashes. This is not just two author lists. original_facts() resolves XML and computes the delta in memory.",
+    "counterexamples_actually_reject": "Observed 30/30; each deep-copied mutated key is passed back through check_key and its expected rejection code must occur.",
+    "writes_nothing_by_code_inspection": true,
+    "write_analysis": "Only repository read_bytes/read_text and printing; no file opens in write mode, file mutations, subprocess, native operations or local project outputs. Mutations are deep-copy in memory. Read-only command execution exited 0 and repository status remains clean.",
+    "limits": "Hardcoded critical rule links and NA whitelist are syntactic checks, not semantic approval; F1 passes. Git blob checks hash actual content and compare recorded blob IDs, not independent upstream network provenance. No narrative truth or C1 certification."
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "phase": "startup"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD",
+        "HEAD^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout": "0fd77357093e2a2cb897dadc09b82853a2ef91c2\naa0f52d802f2f453d4826fe8f06dca941b937b05\n"
+    },
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "benchmark/writing/verify_method.py"
+      ],
+      "times_run_in_this_session": 1,
+      "exit_code": 0,
+      "observed_result": {
+        "status": "design-consistent",
+        "meaning": "design consistency only",
+        "benchmark_ready": false,
+        "independent_review": "pending",
+        "native_executions": 0,
+        "agent_runs": 0,
+        "rejected_count": 44,
+        "project_text_rejected_count": 30,
+        "project_files_written": 0
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "benchmark/writing/check_wp1_key_0115.py"
+      ],
+      "times_run_in_this_session": 1,
+      "exit_code": 0,
+      "observed_result": {
+        "status": "package-integrity-consistent",
+        "package_errors": [],
+        "counterexamples_rejected": 30,
+        "counterexamples_total": 30,
+        "method_pointers": 334,
+        "protocol_lines": 95,
+        "key_obligations": 429,
+        "read_inputs": 36,
+        "rules": 23,
+        "independent_approval": "pending",
+        "trial_readiness": "pending",
+        "native_executions": 0,
+        "agent_runs": 0
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "e57b1c0fa9c88be18eadf4ed0cdc3f92665e1f4d",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "observed_result": "Four key paths added; additional administrative report/iteration/working-memory paths also differ. No content of journal/history or those administrative paths was read."
+    }
+  ],
+  "forbidden_probes": {
+    "historical_review_0113_script_run": false,
+    "pair_diff_self_check_run": false,
+    "native_executions": 0,
+    "changed_projects_written": 0
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "category": "Spec",
+      "severity": "medium",
+      "locator": "benchmark/writing/wp1-key-0115.json#/source_obligations; benchmark/writing/method.json#/tasks/4/comparison and #/tasks/4/requirements_mapping/W7",
+      "evidence": "All 14 task-local matched_fields, the composite comparison/rule and both W7 mapping leaves point only to R-scope/R-independent. Those rules do not impose pair equality, symmetric artifact/retry accounting or lineage uncertainty. Two defects were selected by the reproducible 25-obligation sample; expansion confirms 17 affected leaves. The corresponding R-paired/R-account/R-uncertainty rule texts are present and correct elsewhere, so this is an inaccurate traceability mapping, not absence of the overall requirements.",
+      "affected_obligation_ids": [
+        "method#/tasks/4/comparison/matched_fields/0",
+        "method#/tasks/4/comparison/matched_fields/1",
+        "method#/tasks/4/comparison/matched_fields/2",
+        "method#/tasks/4/comparison/matched_fields/3",
+        "method#/tasks/4/comparison/matched_fields/4",
+        "method#/tasks/4/comparison/matched_fields/5",
+        "method#/tasks/4/comparison/matched_fields/6",
+        "method#/tasks/4/comparison/matched_fields/7",
+        "method#/tasks/4/comparison/matched_fields/8",
+        "method#/tasks/4/comparison/matched_fields/9",
+        "method#/tasks/4/comparison/matched_fields/10",
+        "method#/tasks/4/comparison/matched_fields/11",
+        "method#/tasks/4/comparison/matched_fields/12",
+        "method#/tasks/4/comparison/matched_fields/13",
+        "method#/tasks/4/comparison/rule",
+        "method#/tasks/4/requirements_mapping/W7/contract",
+        "method#/tasks/4/requirements_mapping/W7/review"
+      ],
+      "impact": "The advertised semantic obligation-to-rule mapping cannot receive independent approval; enumeration and passing integrity checks conceal these unjustified links.",
+      "smallest_correction": "Revise only the key mapping: link matched-field leaves to R-paired, and composite comparison/W7 obligations to R-paired plus R-account and R-uncertainty where their clauses require them. Recheck each changed mapping independently; do not change method/protocol or claim trial readiness."
+    },
+    {
+      "id": "F2",
+      "category": "Spec",
+      "severity": "high",
+      "locator": "benchmark/writing/wp1-key-0115.json#/required_ids (WP1-original-output-grounding), #/rules (R-mapping,R-dimensions)",
+      "evidence": "The source-map ID has dimension answer and requires complete original/output support, while R-dimensions/L36 separate correctness from wrong-citation grounding. C1-wrong-existing-citation preserves correct delta text but replaces its source locator with existing, non-supporting Bld_version.major at line 43. Grounding must be incorrect, but the key leaves correctness of its source-map answer ID unspecified: an adjudicator can retain factual correctness or fail that answer ID for deficient support. The frozen atom-to-ID rules do not decide between those assessments.",
+      "impact": "A required C1 challenge lacks one unambiguous answer-correctness grade for a new human adjudicator; WP1-original-output-grounding and the affected mapping/dimension rules remain blocked.",
+      "smallest_correction": "Freeze separate correctness propositions and grounding tests for each answer ID, explicitly resolve the source-map ID interaction without merging the dimensions, and provide the wrong-existing-citation case with one prescribed item ledger and dimension assessment for independent recheck."
+    },
+    {
+      "id": "P1",
+      "category": "Review-process limitation, not a defect attributed to the key",
+      "severity": "high",
+      "locator": ".session/issue.md Acceptance 2; supplied continuation Read wp1-key-0115.md before the original/request derivation",
+      "evidence": "The supplied actual-operation continuation reads the markdown key and its expected delta/hash before reading the original and before the first byte/hash calculation; it queries key precondition/delta/prompt before querying the WP1 task request. Later source-only recalculation reproduces 3347/L42/5806/8d984c2e...0e42 but cannot undo this exposure.",
+      "impact": "The required blind expectation cannot be certified by this session; WP1-property-text remains blocked for independent clearance despite numerical agreement.",
+      "smallest_correction": "Use a new separate cold checker session. Before reading either key file or verification output, read only original and method WP1 request/locator, freeze its independently derived expectation in an artifact, then reveal and compare the key."
+    }
+  ],
+  "standards_findings": [],
+  "spec_findings": [
+    "F1",
+    "F2"
+  ],
+  "review_process_limitations": [
+    "P1"
+  ],
+  "overall_verdict": "NOT-CLEAR",
+  "verdict_scope": "Key correctness for preparation only. Six ID expectations agree; property-text independent clearance is blocked by P1 and the source-map answer ID by F2. Two rule interpretations remain blocked; semantic mapping approval fails F1.",
+  "what_next": "Keep the report/artifact. Shaper should request a key revision resolving F1 mappings and F2 answer-ID adjudication, followed by a separate cold reviewer who freezes source/request derivation before viewing any key expectations (P1). Reuse these pins and bounded findings as leads only after that blind step. Do not rerun historical probes, promote integration approval, repair repository files in this reviewer role or claim native/trial readiness.",
+  "repository_status_before_session_artifact_write": ""
+}

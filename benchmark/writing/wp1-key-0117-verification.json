@@ -1,0 +1,856 @@
+{
+  "issue": 571,
+  "revision": "wp1-key-0117-v1",
+  "scope": "Author package verification only; no independent approval, narrative probe replay, agent arm or native execution.",
+  "benchmark_ready": false,
+  "P1": "open",
+  "C1": "open",
+  "key_checker": {
+    "command": [
+      "python3",
+      "-I",
+      "benchmark/writing/check_wp1_key_0117.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"C1\": \"open\",\n  \"P1\": \"open\",\n  \"agent_runs\": 0,\n  \"assessment_checks\": {\n    \"absent-inventory\": {\n      \"actual\": \"unverified\",\n      \"expected\": \"unverified\",\n      \"ok\": true\n    },\n    \"all-missing\": {\n      \"actual\": \"missing\",\n      \"expected\": \"missing\",\n      \"ok\": true\n    },\n    \"complete\": {\n      \"actual\": \"correct\",\n      \"expected\": \"correct\",\n      \"ok\": true\n    },\n    \"empty-inventory\": {\n      \"actual\": \"unverified\",\n      \"expected\": \"unverified\",\n      \"ok\": true\n    },\n    \"error\": {\n      \"actual\": \"error\",\n      \"expected\": \"error\",\n      \"ok\": true\n    },\n    \"false-extra\": {\n      \"actual\": \"incorrect\",\n      \"expected\": \"incorrect\",\n      \"ok\": true\n    },\n    \"honest-unsupported\": {\n      \"actual\": \"unsupported\",\n      \"expected\": \"unsupported\",\n      \"ok\": true\n    },\n    \"incorrect-before-unverified\": {\n      \"actual\": \"incorrect\",\n      \"expected\": \"incorrect\",\n      \"ok\": true\n    },\n    \"missing-extra-citation\": {\n      \"actual\": \"partial\",\n      \"expected\": \"partial\",\n      \"ok\": true\n    },\n    \"mixed-missing-unsupported\": {\n      \"actual\": \"missing\",\n      \"expected\": \"missing\",\n      \"ok\": true\n    },\n    \"partial-before-error\": {\n      \"actual\": \"partial\",\n      \"expected\": \"partial\",\n      \"ok\": true\n    },\n    \"true-extra-no-required-credit\": {\n      \"actual\": \"partial\",\n      \"expected\": \"partial\",\n      \"ok\": true\n    },\n    \"unverified-extra\": {\n      \"actual\": \"unverified\",\n      \"expected\": \"unverified\",\n      \"ok\": true\n    }\n  },\n  \"benchmark_ready\": false,\n  \"checker_sha256\": \"f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d\",\n  \"counterexamples\": {\n    \"allocation-invented\": {\n      \"expected\": \"allocation-invented\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"allocation-invented\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"alter-unrelated-link\": {\n      \"expected\": \"unrelated-mapping-drift\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"approval-promoted\": {\n      \"expected\": \"approval-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"approval-promotion\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"bad-delta-offset\": {\n      \"expected\": \"delta-mismatch\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"delta-mismatch\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"bad-input-blob\": {\n      \"expected\": \"input-blob\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"input-blob\",\n        \"source-manifest-drift\"\n      ]\n    },\n    \"bad-input-sha\": {\n      \"expected\": \"input-hash\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"input-hash\",\n        \"source-manifest-drift\"\n      ]\n    },\n    \"bad-method-locator\": {\n      \"expected\": \"obligation-locator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"obligation-locator\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"bad-obligation-pin\": {\n      \"expected\": \"obligation-pin\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"obligation-pin\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"bad-original-pin\": {\n      \"expected\": \"original-pin\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"original-pin\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"bad-protocol-locator\": {\n      \"expected\": \"obligation-locator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"obligation-locator\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"bad-starting-tree\": {\n      \"expected\": \"starting-revision\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"starting-revision\"\n      ]\n    },\n    \"benchmark-ready-claimed\": {\n      \"expected\": \"readiness-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"readiness-promotion\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"c1-settled-by-flags\": {\n      \"expected\": \"c1-limit\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"c1-limit\"\n      ]\n    },\n    \"cold-review-limitation-closed\": {\n      \"expected\": \"limitation-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"limitation-promotion\"\n      ]\n    },\n    \"contradiction-erased\": {\n      \"expected\": \"ledger-contradiction\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-contradiction\"\n      ]\n    },\n    \"critical-mapping-dropped\": {\n      \"expected\": \"critical-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"critical-mapping\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"denominator-shrunk\": {\n      \"expected\": \"denominator-mismatch\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"denominator-mismatch\"\n      ]\n    },\n    \"dropped-input\": {\n      \"expected\": \"input-missing\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"input-missing\",\n        \"source-manifest-drift\"\n      ]\n    },\n    \"duplicated-obligation\": {\n      \"expected\": \"obligation-duplicate\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"obligation-duplicate\"\n      ]\n    },\n    \"duplicated-required-id\": {\n      \"expected\": \"required-id-duplicate\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"required-id-duplicate\"\n      ]\n    },\n    \"existing-citation-accepted\": {\n      \"expected\": \"ledger-item-outcome\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"extra-credited\": {\n      \"expected\": \"ledger-extra\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-assessment\",\n        \"ledger-extra\"\n      ]\n    },\n    \"extra-erased\": {\n      \"expected\": \"ledger-extra\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-assessment\",\n        \"ledger-extra\"\n      ]\n    },\n    \"extra-required-id\": {\n      \"expected\": \"required-id-extra\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"required-id-extra\"\n      ]\n    },\n    \"f1-record-missing\": {\n      \"expected\": \"f1-disposition\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-disposition\"\n      ]\n    },\n    \"honest-abstention-promoted\": {\n      \"expected\": \"ledger-assessment\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-assessment\"\n      ]\n    },\n    \"id-approved\": {\n      \"expected\": \"status-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"status-promotion\",\n        \"unrelated-id-drift\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-abstention\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-assessment\",\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-contradiction\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-correct\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-native-overclaim\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-unverified-extra\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"ledger-required-slot-dropped:C1-wrong-existing-citation\": {\n      \"expected\": \"ledger-denominator\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-denominator\",\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"md-missing-id\": {\n      \"expected\": \"md-incomplete\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"md-incomplete\"\n      ]\n    },\n    \"missing-obligation\": {\n      \"expected\": \"obligation-missing\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"obligation-missing\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"missing-required-id\": {\n      \"expected\": \"required-id-missing\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"required-id-missing\",\n        \"separate-dimension-tests\"\n      ]\n    },\n    \"native-gap-dropped\": {\n      \"expected\": \"native-gap-mismatch\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"native-gap-mismatch\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"native-key-promoted\": {\n      \"expected\": \"native-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"native-promotion\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"native-overclaim-accepted\": {\n      \"expected\": \"ledger-item-outcome\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"native-result-promoted\": {\n      \"expected\": \"native-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"native-promotion\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"predecessor-pin-forged\": {\n      \"expected\": \"predecessor-provenance\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"predecessor-provenance\"\n      ]\n    },\n    \"prompt-drift\": {\n      \"expected\": \"prompt-pin\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"prompt-pin\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"readiness-promoted\": {\n      \"expected\": \"readiness-promotion\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"readiness-promotion\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/0\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/1\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/10\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/11\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/12\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/13\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/2\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/3\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/4\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/5\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/6\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/7\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/8\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/matched_fields/9\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/comparison/rule\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/requirements_mapping/W7/contract\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"restore-bad-link:method#/tasks/4/requirements_mapping/W7/review\": {\n      \"expected\": \"f1-mapping\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"f1-mapping\"\n      ]\n    },\n    \"review-pin-forged\": {\n      \"expected\": \"review-provenance\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"review-provenance\"\n      ]\n    },\n    \"review-size-forged\": {\n      \"expected\": \"review-provenance\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"review-provenance\"\n      ]\n    },\n    \"separate-test-dropped\": {\n      \"expected\": \"separate-dimension-tests\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"separate-dimension-tests\"\n      ]\n    },\n    \"unknown-rule\": {\n      \"expected\": \"rule-unknown\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"critical-mapping\",\n        \"rule-unknown\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"unsupported-not-applicable\": {\n      \"expected\": \"na-unsupported\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"na-unsupported\",\n        \"unrelated-mapping-drift\"\n      ]\n    },\n    \"workspace-allocated\": {\n      \"expected\": \"allocation-invented\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"allocation-invented\",\n        \"unrelated-policy-drift\"\n      ]\n    },\n    \"wrong-citation-delta-truth-downgraded\": {\n      \"expected\": \"ledger-item-outcome\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-item-outcome\"\n      ]\n    },\n    \"wrong-citation-map-correct\": {\n      \"expected\": \"ledger-item-outcome\",\n      \"ok\": true,\n      \"rejected_for\": [\n        \"ledger-assessment\",\n        \"ledger-item-outcome\"\n      ]\n    }\n  },\n  \"counterexamples_rejected\": 68,\n  \"counterexamples_total\": 68,\n  \"derived_obligations\": {\n    \"key_obligations\": 429,\n    \"method_pointers\": 334,\n    \"protocol_lines\": 95\n  },\n  \"file_sha256\": {\n    \"benchmark/writing/check_wp1_key_0115.py\": \"e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb\",\n    \"benchmark/writing/wp1-key-0115-verification.json\": \"bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497\",\n    \"benchmark/writing/wp1-key-0115.json\": \"960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24\",\n    \"benchmark/writing/wp1-key-0115.md\": \"eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720\",\n    \"benchmark/writing/wp1-key-0117.json\": \"008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982\",\n    \"benchmark/writing/wp1-key-0117.md\": \"ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3\",\n    \"benchmark/writing/wp1-key-review-0116.json\": \"2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e\"\n  },\n  \"independent_approval\": \"pending\",\n  \"limits\": \"Author integrity/source-mapping and prescribed-ledger checks only. No review probe replay, narrative truth certification, native evidence, isolation or independent approval.\",\n  \"mapping_counts\": {\n    \"corrected\": 17,\n    \"new_links\": 845,\n    \"predecessor_links\": 857,\n    \"unchanged\": 412\n  },\n  \"native_executions\": 0,\n  \"package_errors\": [],\n  \"predecessor_package_unchanged\": true,\n  \"prescribed_ledgers_checked\": 6,\n  \"read_inputs\": 36,\n  \"required_ids\": [\n    \"WP1-property-text\",\n    \"WP1-other-project-bytes\",\n    \"WP1-file-set-and-unrelated-files\",\n    \"WP1-root-version-declaration\",\n    \"WP1-original-and-license\",\n    \"WP1-describe-text-delta\",\n    \"WP1-original-output-grounding\",\n    \"WP1-honest-limits\"\n  ],\n  \"review\": {\n    \"bytes\": 135476,\n    \"mismatches\": [],\n    \"path\": \"benchmark/writing/wp1-key-review-0116.json\",\n    \"sha256\": \"2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e\",\n    \"source_pins_checked\": 8\n  },\n  \"rules\": 23,\n  \"status\": \"package-integrity-consistent\",\n  \"trial_readiness\": \"pending\"\n}\n",
+    "stderr": "",
+    "result": {
+      "C1": "open",
+      "P1": "open",
+      "agent_runs": 0,
+      "assessment_checks": {
+        "absent-inventory": {
+          "actual": "unverified",
+          "expected": "unverified",
+          "ok": true
+        },
+        "all-missing": {
+          "actual": "missing",
+          "expected": "missing",
+          "ok": true
+        },
+        "complete": {
+          "actual": "correct",
+          "expected": "correct",
+          "ok": true
+        },
+        "empty-inventory": {
+          "actual": "unverified",
+          "expected": "unverified",
+          "ok": true
+        },
+        "error": {
+          "actual": "error",
+          "expected": "error",
+          "ok": true
+        },
+        "false-extra": {
+          "actual": "incorrect",
+          "expected": "incorrect",
+          "ok": true
+        },
+        "honest-unsupported": {
+          "actual": "unsupported",
+          "expected": "unsupported",
+          "ok": true
+        },
+        "incorrect-before-unverified": {
+          "actual": "incorrect",
+          "expected": "incorrect",
+          "ok": true
+        },
+        "missing-extra-citation": {
+          "actual": "partial",
+          "expected": "partial",
+          "ok": true
+        },
+        "mixed-missing-unsupported": {
+          "actual": "missing",
+          "expected": "missing",
+          "ok": true
+        },
+        "partial-before-error": {
+          "actual": "partial",
+          "expected": "partial",
+          "ok": true
+        },
+        "true-extra-no-required-credit": {
+          "actual": "partial",
+          "expected": "partial",
+          "ok": true
+        },
+        "unverified-extra": {
+          "actual": "unverified",
+          "expected": "unverified",
+          "ok": true
+        }
+      },
+      "benchmark_ready": false,
+      "checker_sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d",
+      "counterexamples": {
+        "allocation-invented": {
+          "expected": "allocation-invented",
+          "ok": true,
+          "rejected_for": [
+            "allocation-invented",
+            "unrelated-policy-drift"
+          ]
+        },
+        "alter-unrelated-link": {
+          "expected": "unrelated-mapping-drift",
+          "ok": true,
+          "rejected_for": [
+            "unrelated-mapping-drift"
+          ]
+        },
+        "approval-promoted": {
+          "expected": "approval-promotion",
+          "ok": true,
+          "rejected_for": [
+            "approval-promotion",
+            "unrelated-policy-drift"
+          ]
+        },
+        "bad-delta-offset": {
+          "expected": "delta-mismatch",
+          "ok": true,
+          "rejected_for": [
+            "delta-mismatch",
+            "unrelated-policy-drift"
+          ]
+        },
+        "bad-input-blob": {
+          "expected": "input-blob",
+          "ok": true,
+          "rejected_for": [
+            "input-blob",
+            "source-manifest-drift"
+          ]
+        },
+        "bad-input-sha": {
+          "expected": "input-hash",
+          "ok": true,
+          "rejected_for": [
+            "input-hash",
+            "source-manifest-drift"
+          ]
+        },
+        "bad-method-locator": {
+          "expected": "obligation-locator",
+          "ok": true,
+          "rejected_for": [
+            "obligation-locator",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "bad-obligation-pin": {
+          "expected": "obligation-pin",
+          "ok": true,
+          "rejected_for": [
+            "obligation-pin",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "bad-original-pin": {
+          "expected": "original-pin",
+          "ok": true,
+          "rejected_for": [
+            "original-pin",
+            "unrelated-policy-drift"
+          ]
+        },
+        "bad-protocol-locator": {
+          "expected": "obligation-locator",
+          "ok": true,
+          "rejected_for": [
+            "obligation-locator",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "bad-starting-tree": {
+          "expected": "starting-revision",
+          "ok": true,
+          "rejected_for": [
+            "starting-revision"
+          ]
+        },
+        "benchmark-ready-claimed": {
+          "expected": "readiness-promotion",
+          "ok": true,
+          "rejected_for": [
+            "readiness-promotion",
+            "unrelated-policy-drift"
+          ]
+        },
+        "c1-settled-by-flags": {
+          "expected": "c1-limit",
+          "ok": true,
+          "rejected_for": [
+            "c1-limit"
+          ]
+        },
+        "cold-review-limitation-closed": {
+          "expected": "limitation-promotion",
+          "ok": true,
+          "rejected_for": [
+            "limitation-promotion"
+          ]
+        },
+        "contradiction-erased": {
+          "expected": "ledger-contradiction",
+          "ok": true,
+          "rejected_for": [
+            "ledger-contradiction"
+          ]
+        },
+        "critical-mapping-dropped": {
+          "expected": "critical-mapping",
+          "ok": true,
+          "rejected_for": [
+            "critical-mapping",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "denominator-shrunk": {
+          "expected": "denominator-mismatch",
+          "ok": true,
+          "rejected_for": [
+            "denominator-mismatch"
+          ]
+        },
+        "dropped-input": {
+          "expected": "input-missing",
+          "ok": true,
+          "rejected_for": [
+            "input-missing",
+            "source-manifest-drift"
+          ]
+        },
+        "duplicated-obligation": {
+          "expected": "obligation-duplicate",
+          "ok": true,
+          "rejected_for": [
+            "obligation-duplicate"
+          ]
+        },
+        "duplicated-required-id": {
+          "expected": "required-id-duplicate",
+          "ok": true,
+          "rejected_for": [
+            "required-id-duplicate"
+          ]
+        },
+        "existing-citation-accepted": {
+          "expected": "ledger-item-outcome",
+          "ok": true,
+          "rejected_for": [
+            "ledger-item-outcome"
+          ]
+        },
+        "extra-credited": {
+          "expected": "ledger-extra",
+          "ok": true,
+          "rejected_for": [
+            "ledger-assessment",
+            "ledger-extra"
+          ]
+        },
+        "extra-erased": {
+          "expected": "ledger-extra",
+          "ok": true,
+          "rejected_for": [
+            "ledger-assessment",
+            "ledger-extra"
+          ]
+        },
+        "extra-required-id": {
+          "expected": "required-id-extra",
+          "ok": true,
+          "rejected_for": [
+            "required-id-extra"
+          ]
+        },
+        "f1-record-missing": {
+          "expected": "f1-disposition",
+          "ok": true,
+          "rejected_for": [
+            "f1-disposition"
+          ]
+        },
+        "honest-abstention-promoted": {
+          "expected": "ledger-assessment",
+          "ok": true,
+          "rejected_for": [
+            "ledger-assessment"
+          ]
+        },
+        "id-approved": {
+          "expected": "status-promotion",
+          "ok": true,
+          "rejected_for": [
+            "status-promotion",
+            "unrelated-id-drift"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-abstention": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-assessment",
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-contradiction": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-correct": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-native-overclaim": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-unverified-extra": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "ledger-required-slot-dropped:C1-wrong-existing-citation": {
+          "expected": "ledger-denominator",
+          "ok": true,
+          "rejected_for": [
+            "ledger-denominator",
+            "ledger-item-outcome"
+          ]
+        },
+        "md-missing-id": {
+          "expected": "md-incomplete",
+          "ok": true,
+          "rejected_for": [
+            "md-incomplete"
+          ]
+        },
+        "missing-obligation": {
+          "expected": "obligation-missing",
+          "ok": true,
+          "rejected_for": [
+            "obligation-missing",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "missing-required-id": {
+          "expected": "required-id-missing",
+          "ok": true,
+          "rejected_for": [
+            "required-id-missing",
+            "separate-dimension-tests"
+          ]
+        },
+        "native-gap-dropped": {
+          "expected": "native-gap-mismatch",
+          "ok": true,
+          "rejected_for": [
+            "native-gap-mismatch",
+            "unrelated-policy-drift"
+          ]
+        },
+        "native-key-promoted": {
+          "expected": "native-promotion",
+          "ok": true,
+          "rejected_for": [
+            "native-promotion",
+            "unrelated-policy-drift"
+          ]
+        },
+        "native-overclaim-accepted": {
+          "expected": "ledger-item-outcome",
+          "ok": true,
+          "rejected_for": [
+            "ledger-item-outcome"
+          ]
+        },
+        "native-result-promoted": {
+          "expected": "native-promotion",
+          "ok": true,
+          "rejected_for": [
+            "native-promotion",
+            "unrelated-policy-drift"
+          ]
+        },
+        "predecessor-pin-forged": {
+          "expected": "predecessor-provenance",
+          "ok": true,
+          "rejected_for": [
+            "predecessor-provenance"
+          ]
+        },
+        "prompt-drift": {
+          "expected": "prompt-pin",
+          "ok": true,
+          "rejected_for": [
+            "prompt-pin",
+            "unrelated-policy-drift"
+          ]
+        },
+        "readiness-promoted": {
+          "expected": "readiness-promotion",
+          "ok": true,
+          "rejected_for": [
+            "readiness-promotion",
+            "unrelated-policy-drift"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/0": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/1": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/10": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/11": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/12": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/13": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/2": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/3": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/4": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/5": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/6": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/7": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/8": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/matched_fields/9": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/comparison/rule": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/requirements_mapping/W7/contract": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "restore-bad-link:method#/tasks/4/requirements_mapping/W7/review": {
+          "expected": "f1-mapping",
+          "ok": true,
+          "rejected_for": [
+            "f1-mapping"
+          ]
+        },
+        "review-pin-forged": {
+          "expected": "review-provenance",
+          "ok": true,
+          "rejected_for": [
+            "review-provenance"
+          ]
+        },
+        "review-size-forged": {
+          "expected": "review-provenance",
+          "ok": true,
+          "rejected_for": [
+            "review-provenance"
+          ]
+        },
+        "separate-test-dropped": {
+          "expected": "separate-dimension-tests",
+          "ok": true,
+          "rejected_for": [
+            "separate-dimension-tests"
+          ]
+        },
+        "unknown-rule": {
+          "expected": "rule-unknown",
+          "ok": true,
+          "rejected_for": [
+            "critical-mapping",
+            "rule-unknown",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "unsupported-not-applicable": {
+          "expected": "na-unsupported",
+          "ok": true,
+          "rejected_for": [
+            "na-unsupported",
+            "unrelated-mapping-drift"
+          ]
+        },
+        "workspace-allocated": {
+          "expected": "allocation-invented",
+          "ok": true,
+          "rejected_for": [
+            "allocation-invented",
+            "unrelated-policy-drift"
+          ]
+        },
+        "wrong-citation-delta-truth-downgraded": {
+          "expected": "ledger-item-outcome",
+          "ok": true,
+          "rejected_for": [
+            "ledger-item-outcome"
+          ]
+        },
+        "wrong-citation-map-correct": {
+          "expected": "ledger-item-outcome",
+          "ok": true,
+          "rejected_for": [
+            "ledger-assessment",
+            "ledger-item-outcome"
+          ]
+        }
+      },
+      "counterexamples_rejected": 68,
+      "counterexamples_total": 68,
+      "derived_obligations": {
+        "key_obligations": 429,
+        "method_pointers": 334,
+        "protocol_lines": 95
+      },
+      "file_sha256": {
+        "benchmark/writing/check_wp1_key_0115.py": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb",
+        "benchmark/writing/wp1-key-0115-verification.json": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497",
+        "benchmark/writing/wp1-key-0115.json": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24",
+        "benchmark/writing/wp1-key-0115.md": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720",
+        "benchmark/writing/wp1-key-0117.json": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982",
+        "benchmark/writing/wp1-key-0117.md": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3",
+        "benchmark/writing/wp1-key-review-0116.json": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+      },
+      "independent_approval": "pending",
+      "limits": "Author integrity/source-mapping and prescribed-ledger checks only. No review probe replay, narrative truth certification, native evidence, isolation or independent approval.",
+      "mapping_counts": {
+        "corrected": 17,
+        "new_links": 845,
+        "predecessor_links": 857,
+        "unchanged": 412
+      },
+      "native_executions": 0,
+      "package_errors": [],
+      "predecessor_package_unchanged": true,
+      "prescribed_ledgers_checked": 6,
+      "read_inputs": 36,
+      "required_ids": [
+        "WP1-property-text",
+        "WP1-other-project-bytes",
+        "WP1-file-set-and-unrelated-files",
+        "WP1-root-version-declaration",
+        "WP1-original-and-license",
+        "WP1-describe-text-delta",
+        "WP1-original-output-grounding",
+        "WP1-honest-limits"
+      ],
+      "review": {
+        "bytes": 135476,
+        "mismatches": [],
+        "path": "benchmark/writing/wp1-key-review-0116.json",
+        "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e",
+        "source_pins_checked": 8
+      },
+      "rules": 23,
+      "status": "package-integrity-consistent",
+      "trial_readiness": "pending"
+    }
+  },
+  "method_verifier": {
+    "command": [
+      "python3",
+      "-I",
+      "benchmark/writing/verify_method.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"agent_runs\": 0, \"benchmark_ready\": false, \"checker_sha256\": \"da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d\", \"independent_review\": \"pending\", \"inputs_sha256\": {\".github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json\": \"fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d\", \".github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json\": \"4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e\", \".github/loop/data/session-reports/547/ba754b9a0cc86b2d1cd17aa6287c05ad71696775c9e2c92a22f9db02415d6861.json\": \"ba754b9a0cc86b2d1cd17aa6287c05ad71696775c9e2c92a22f9db02415d6861\", \"benchmark/baseline/runner-contract.md\": \"b9e47205b0ef3f479a77bd3b4dd06e89c3521923e6b316bef14f624cbbcaa5c0\", \"benchmark/precision/README.md\": \"f94ba74b1c22e551b3cf8eabafdb5868705baa889e17ad5f301fb08cbe18824b\", \"benchmark/preparation.json\": \"b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25\", \"benchmark/project-text-writing-0109.json\": \"74b6346cb646a8caa10a90462edee266832260d26c6f3685d7fd461cb56abdf8\", \"benchmark/project-text-writing-0109.md\": \"fd84b4d10a33fa2c32bb1b1f4a07cde5c35272620cdccd45599fd8dfbb21835e\", \"benchmark/project-text-writing-0109/review-0110-provenance.md\": \"b36c4b56aaad03c93fb3cca444367c8525b492e8e0a31868f0727f2718623364\", \"benchmark/project-text-writing-0109/review-0110.json\": \"2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf\", \"benchmark/project-text-writing-0109/verification.json\": \"71eadececba5619d8f4582b106e49a9ca137daeaff2773f13a56ba9d39596704\", \"benchmark/protocol.md\": \"1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f\", \"benchmark/real-project-0107.json\": \"7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53\", \"benchmark/real-project-0107.md\": \"0c5df64c7d06c61e512e94d1949275c24eaacec2ed6a7f7938b7025dbde9b673\", \"benchmark/real-project-0107/LICENSE.txt\": \"529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2\", \"benchmark/real-project-0107/original.lvproj\": \"1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf\", \"benchmark/real-project-0107/review-0108.json\": \"6ad9596c1c5e05f08ee3647ae3af1596f1882944e2397ac9efcd79383aa78894\", \"benchmark/real-project-0107/verification.json\": \"1e8bb8961ceb861c596a4169c41f6b4a85f946a3b7c88f9bf089e6de94ed8490\", \"benchmark/scripts/check_project_text_writing_0109.py\": \"35ab8c6725fb7affc7f38075f906c798f3278b5c894d812223df06425b120596\", \"benchmark/scripts/check_real_project_0107.py\": \"96f1b695e24086010e36e6667cfada33686ccf17c231e3cbacaf93bf509f96be\", \"benchmark/sources.json\": \"e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a\", \"benchmark/sources.md\": \"43eafe9c348eba4516871f508121b29147e7c07677e6a6ca9b0d63bfc23babb2\", \"benchmark/writing/README.md\": \"8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9\", \"benchmark/writing/controls.json\": \"f477bcd1fbb836d0d9d65835cdccbdc53d499e4c675da6465618778229f7f82f\", \"benchmark/writing/input-pins.json\": \"d6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44\", \"benchmark/writing/integration-0112-provenance.json\": \"8c33e52ea10885dbe6eb2b052443ae128c9e87407f839f0ae6f47a6fa1c1fff2\", \"benchmark/writing/integration-0112-provenance.md\": \"1f48715ec049c8de8707676031a1758a49ad9340a9f40034eb78f6e5d2a256b7\", \"benchmark/writing/method.json\": \"276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac\", \"benchmark/writing/review-corrections.json\": \"3c92d3e102bb3976ee267ea74393855e520461e2e5f4869fa9d5a864ff17430e\", \"benchmark/writing/verify_method.py\": \"da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d\", \"docs/perpetua/evaluation.md\": \"d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8\", \"docs/perpetua/roles.md\": \"d55ebb50e4ca83b74c2261549856493233b3c072294066281259fce33cbdb40a\", \"goal/goal.md\": \"5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb\"}, \"integration\": {\"current_output_pins\": 5, \"hash_graph\": \"provenance pins method/controls/README/verifier/documentation; stdout pins provenance; verification records stdout; no self-hashes\", \"historical_checker\": \"not-run; historical-tree-only\", \"historical_unchanged_count\": 27, \"review_sha256\": \"2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf\", \"status\": \"integration-pins-consistent\"}, \"meaning\": \"design consistency only\", \"native_executions\": 0, \"positive_controls\": {\"method\": \"method-consistent;native-unavailable\", \"pair\": \"synthetic-pair-consistent;zero-agent-runs\", \"synthetic-create\": \"synthetic-consistent;native-unexecuted\", \"synthetic-modify\": \"synthetic-consistent;native-unexecuted\", \"synthetic-source-rebuild\": \"synthetic-source-consistent;build-unexecuted\"}, \"project_text_preparation\": {\"fixture_output_sha256\": \"8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42\", \"independent_key_approval\": \"pending\", \"meaning\": \"public-development text preparation only; C1 semantic/extra/contradiction/citation review remains required\", \"native_executions\": 0, \"native_save_version\": \"unverified\", \"overall_writing\": \"unverified\", \"positive_controls\": {\"project-text-positive\": \"project-text-consistent;native-unexecuted;save-version-unverified\"}, \"project_files_written\": 0, \"rejected_controls\": {\"project-bom-removed\": \"project-serialization\", \"project-duplicate-property\": \"project-locator-count\", \"project-entity-rewrite\": \"project-byte-delta\", \"project-extra-file\": \"project-file-set\", \"project-false-behavior\": \"project-unsupported-pass\", \"project-false-build\": \"project-unsupported-pass\", \"project-false-dependency_resolution\": \"project-unsupported-pass\", \"project-false-native_validity\": \"project-unsupported-pass\", \"project-false-overall_writing\": \"project-unsupported-pass\", \"project-false-save_version\": \"project-unsupported-pass\", \"project-final-newline\": \"project-serialization\", \"project-line-endings\": \"project-serialization\", \"project-method-invented-save-version\": \"invented-original-version\", \"project-method-missing-task\": \"task-inventory\", \"project-method-native-key\": \"native-key-unavailable\", \"project-method-overall-pass\": \"project-task-planned_results\", \"project-missing-file\": \"project-file-set\", \"project-no-op\": \"project-no-op\", \"project-original-overwritten\": \"project-original-not-preserved\", \"project-property-type\": \"project-property-precondition\", \"project-unrelated-byte\": \"project-byte-delta\", \"project-unrelated-file\": \"project-unrelated-file\", \"project-version-drift\": \"project-version-declaration\", \"project-wrong-allowance\": \"project-delta-contract\", \"project-wrong-location-edit\": \"project-value\", \"project-wrong-locator\": \"project-locator\", \"project-wrong-original\": \"project-original-hash\", \"project-wrong-precondition\": \"project-precondition\", \"project-wrong-value\": \"project-value\", \"project-xml-declaration\": \"project-serialization\"}, \"rejected_count\": 30, \"trial_executed\": false}, \"rejected_controls\": {\"changed-bytes-only\": \"no-op-edit\", \"compiled-without-source\": \"missing-source\", \"constant-writer-on-two\": \"no-op-edit\", \"correct-answer-wrong-artifact\": \"wrong-behavior\", \"correct-artifact-wrong-answer\": \"answer-incorrect\", \"creation-overwrite\": \"creation-destination-exists\", \"extra-false-claim\": \"extra-answer-claim\", \"extra-file\": \"output-file-set\", \"invented-native-pass\": \"native-unexecuted\", \"invented-rebuild\": \"build-unexecuted\", \"lost-failure-accounting\": \"failure-accounting-missing\", \"lost-output-accounting\": \"output-accounting-missing\", \"method-invented-key\": \"native-key-unavailable\", \"method-missing-anchor\": \"task-source-anchor\", \"method-missing-preservation\": \"task-preservation-ids\", \"method-native-claim\": \"method-overclaim\", \"missing-arm\": \"planned-arm-missing\", \"missing-artifact\": \"output-file-set\", \"missing-pair-allowed_inputs\": \"pair-setting-required\", \"missing-pair-budgets\": \"pair-setting-required\", \"missing-pair-key_revision\": \"pair-setting-required\", \"missing-pair-model\": \"pair-setting-required\", \"missing-pair-originals\": \"pair-setting-required\", \"missing-pair-repetitions\": \"pair-setting-required\", \"missing-pair-request\": \"pair-setting-required\", \"no-op\": \"no-op-edit\", \"original-output-version-drift\": \"version-drift\", \"original-overwritten\": \"original-not-preserved\", \"shared-session\": \"session-reused\", \"source-original-output-version-drift\": \"version-drift\", \"unintended-file-edit\": \"unintended-edits\", \"unintended-object-edit\": \"unintended-edits\", \"unknown-version\": \"save-version-unverified\", \"unmatched-budget\": \"pair-budgets-mismatch\", \"unmatched-inputs\": \"pair-allowed_inputs-mismatch\", \"unmatched-originals\": \"pair-originals-mismatch\", \"unmatched-request\": \"pair-request-mismatch\", \"unsupported-artifact\": \"unsupported-artifact\", \"version-drift\": \"version-drift\", \"wrong-behavior\": \"wrong-behavior\", \"wrong-original-citation\": \"source-unsupported\", \"wrong-output-citation\": \"source-unsupported\", \"wrong-source-build-link\": \"source-build-link\", \"wrong-type\": \"wrong-type\"}, \"rejected_count\": 44, \"status\": \"design-consistent\"}\n",
+    "stderr": "",
+    "result": {
+      "agent_runs": 0,
+      "benchmark_ready": false,
+      "checker_sha256": "da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d",
+      "independent_review": "pending",
+      "inputs_sha256": {
+        ".github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json": "fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d",
+        ".github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json": "4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e",
+        ".github/loop/data/session-reports/547/ba754b9a0cc86b2d1cd17aa6287c05ad71696775c9e2c92a22f9db02415d6861.json": "ba754b9a0cc86b2d1cd17aa6287c05ad71696775c9e2c92a22f9db02415d6861",
+        "benchmark/baseline/runner-contract.md": "b9e47205b0ef3f479a77bd3b4dd06e89c3521923e6b316bef14f624cbbcaa5c0",
+        "benchmark/precision/README.md": "f94ba74b1c22e551b3cf8eabafdb5868705baa889e17ad5f301fb08cbe18824b",
+        "benchmark/preparation.json": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25",
+        "benchmark/project-text-writing-0109.json": "74b6346cb646a8caa10a90462edee266832260d26c6f3685d7fd461cb56abdf8",
+        "benchmark/project-text-writing-0109.md": "fd84b4d10a33fa2c32bb1b1f4a07cde5c35272620cdccd45599fd8dfbb21835e",
+        "benchmark/project-text-writing-0109/review-0110-provenance.md": "b36c4b56aaad03c93fb3cca444367c8525b492e8e0a31868f0727f2718623364",
+        "benchmark/project-text-writing-0109/review-0110.json": "2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf",
+        "benchmark/project-text-writing-0109/verification.json": "71eadececba5619d8f4582b106e49a9ca137daeaff2773f13a56ba9d39596704",
+        "benchmark/protocol.md": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+        "benchmark/real-project-0107.json": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+        "benchmark/real-project-0107.md": "0c5df64c7d06c61e512e94d1949275c24eaacec2ed6a7f7938b7025dbde9b673",
+        "benchmark/real-project-0107/LICENSE.txt": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+        "benchmark/real-project-0107/original.lvproj": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+        "benchmark/real-project-0107/review-0108.json": "6ad9596c1c5e05f08ee3647ae3af1596f1882944e2397ac9efcd79383aa78894",
+        "benchmark/real-project-0107/verification.json": "1e8bb8961ceb861c596a4169c41f6b4a85f946a3b7c88f9bf089e6de94ed8490",
+        "benchmark/scripts/check_project_text_writing_0109.py": "35ab8c6725fb7affc7f38075f906c798f3278b5c894d812223df06425b120596",
+        "benchmark/scripts/check_real_project_0107.py": "96f1b695e24086010e36e6667cfada33686ccf17c231e3cbacaf93bf509f96be",
+        "benchmark/sources.json": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+        "benchmark/sources.md": "43eafe9c348eba4516871f508121b29147e7c07677e6a6ca9b0d63bfc23babb2",
+        "benchmark/writing/README.md": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9",
+        "benchmark/writing/controls.json": "f477bcd1fbb836d0d9d65835cdccbdc53d499e4c675da6465618778229f7f82f",
+        "benchmark/writing/input-pins.json": "d6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44",
+        "benchmark/writing/integration-0112-provenance.json": "8c33e52ea10885dbe6eb2b052443ae128c9e87407f839f0ae6f47a6fa1c1fff2",
+        "benchmark/writing/integration-0112-provenance.md": "1f48715ec049c8de8707676031a1758a49ad9340a9f40034eb78f6e5d2a256b7",
+        "benchmark/writing/method.json": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+        "benchmark/writing/review-corrections.json": "3c92d3e102bb3976ee267ea74393855e520461e2e5f4869fa9d5a864ff17430e",
+        "benchmark/writing/verify_method.py": "da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d",
+        "docs/perpetua/evaluation.md": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8",
+        "docs/perpetua/roles.md": "d55ebb50e4ca83b74c2261549856493233b3c072294066281259fce33cbdb40a",
+        "goal/goal.md": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      "integration": {
+        "current_output_pins": 5,
+        "hash_graph": "provenance pins method/controls/README/verifier/documentation; stdout pins provenance; verification records stdout; no self-hashes",
+        "historical_checker": "not-run; historical-tree-only",
+        "historical_unchanged_count": 27,
+        "review_sha256": "2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf",
+        "status": "integration-pins-consistent"
+      },
+      "meaning": "design consistency only",
+      "native_executions": 0,
+      "positive_controls": {
+        "method": "method-consistent;native-unavailable",
+        "pair": "synthetic-pair-consistent;zero-agent-runs",
+        "synthetic-create": "synthetic-consistent;native-unexecuted",
+        "synthetic-modify": "synthetic-consistent;native-unexecuted",
+        "synthetic-source-rebuild": "synthetic-source-consistent;build-unexecuted"
+      },
+      "project_text_preparation": {
+        "fixture_output_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+        "independent_key_approval": "pending",
+        "meaning": "public-development text preparation only; C1 semantic/extra/contradiction/citation review remains required",
+        "native_executions": 0,
+        "native_save_version": "unverified",
+        "overall_writing": "unverified",
+        "positive_controls": {
+          "project-text-positive": "project-text-consistent;native-unexecuted;save-version-unverified"
+        },
+        "project_files_written": 0,
+        "rejected_controls": {
+          "project-bom-removed": "project-serialization",
+          "project-duplicate-property": "project-locator-count",
+          "project-entity-rewrite": "project-byte-delta",
+          "project-extra-file": "project-file-set",
+          "project-false-behavior": "project-unsupported-pass",
+          "project-false-build": "project-unsupported-pass",
+          "project-false-dependency_resolution": "project-unsupported-pass",
+          "project-false-native_validity": "project-unsupported-pass",
+          "project-false-overall_writing": "project-unsupported-pass",
+          "project-false-save_version": "project-unsupported-pass",
+          "project-final-newline": "project-serialization",
+          "project-line-endings": "project-serialization",
+          "project-method-invented-save-version": "invented-original-version",
+          "project-method-missing-task": "task-inventory",
+          "project-method-native-key": "native-key-unavailable",
+          "project-method-overall-pass": "project-task-planned_results",
+          "project-missing-file": "project-file-set",
+          "project-no-op": "project-no-op",
+          "project-original-overwritten": "project-original-not-preserved",
+          "project-property-type": "project-property-precondition",
+          "project-unrelated-byte": "project-byte-delta",
+          "project-unrelated-file": "project-unrelated-file",
+          "project-version-drift": "project-version-declaration",
+          "project-wrong-allowance": "project-delta-contract",
+          "project-wrong-location-edit": "project-value",
+          "project-wrong-locator": "project-locator",
+          "project-wrong-original": "project-original-hash",
+          "project-wrong-precondition": "project-precondition",
+          "project-wrong-value": "project-value",
+          "project-xml-declaration": "project-serialization"
+        },
+        "rejected_count": 30,
+        "trial_executed": false
+      },
+      "rejected_controls": {
+        "changed-bytes-only": "no-op-edit",
+        "compiled-without-source": "missing-source",
+        "constant-writer-on-two": "no-op-edit",
+        "correct-answer-wrong-artifact": "wrong-behavior",
+        "correct-artifact-wrong-answer": "answer-incorrect",
+        "creation-overwrite": "creation-destination-exists",
+        "extra-false-claim": "extra-answer-claim",
+        "extra-file": "output-file-set",
+        "invented-native-pass": "native-unexecuted",
+        "invented-rebuild": "build-unexecuted",
+        "lost-failure-accounting": "failure-accounting-missing",
+        "lost-output-accounting": "output-accounting-missing",
+        "method-invented-key": "native-key-unavailable",
+        "method-missing-anchor": "task-source-anchor",
+        "method-missing-preservation": "task-preservation-ids",
+        "method-native-claim": "method-overclaim",
+        "missing-arm": "planned-arm-missing",
+        "missing-artifact": "output-file-set",
+        "missing-pair-allowed_inputs": "pair-setting-required",
+        "missing-pair-budgets": "pair-setting-required",
+        "missing-pair-key_revision": "pair-setting-required",
+        "missing-pair-model": "pair-setting-required",
+        "missing-pair-originals": "pair-setting-required",
+        "missing-pair-repetitions": "pair-setting-required",
+        "missing-pair-request": "pair-setting-required",
+        "no-op": "no-op-edit",
+        "original-output-version-drift": "version-drift",
+        "original-overwritten": "original-not-preserved",
+        "shared-session": "session-reused",
+        "source-original-output-version-drift": "version-drift",
+        "unintended-file-edit": "unintended-edits",
+        "unintended-object-edit": "unintended-edits",
+        "unknown-version": "save-version-unverified",
+        "unmatched-budget": "pair-budgets-mismatch",
+        "unmatched-inputs": "pair-allowed_inputs-mismatch",
+        "unmatched-originals": "pair-originals-mismatch",
+        "unmatched-request": "pair-request-mismatch",
+        "unsupported-artifact": "unsupported-artifact",
+        "version-drift": "version-drift",
+        "wrong-behavior": "wrong-behavior",
+        "wrong-original-citation": "source-unsupported",
+        "wrong-output-citation": "source-unsupported",
+        "wrong-source-build-link": "source-build-link",
+        "wrong-type": "wrong-type"
+      },
+      "rejected_count": 44,
+      "status": "design-consistent"
+    }
+  },
+  "evidence_index_check": {
+    "command": [
+      "python3",
+      "policy/evaluator/evaluate.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"benchmark_executed\": false, \"benchmark_ready\": false, \"errors\": [], \"evidence_references\": 80, \"manifest\": \"indexed\", \"missing\": [], \"tool_quality\": null}\n",
+    "stderr": "",
+    "result": {
+      "benchmark_executed": false,
+      "benchmark_ready": false,
+      "errors": [],
+      "evidence_references": 80,
+      "manifest": "indexed",
+      "missing": [],
+      "tool_quality": null
+    }
+  },
+  "file_pins": [
+    {
+      "path": "benchmark/writing/wp1-key-0117.json",
+      "bytes": 306601,
+      "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0117.md",
+      "bytes": 11253,
+      "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+    },
+    {
+      "path": "benchmark/writing/check_wp1_key_0117.py",
+      "bytes": 37193,
+      "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-review-0116.json",
+      "bytes": 135476,
+      "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+    }
+  ]
+}
