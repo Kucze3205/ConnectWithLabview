@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "issue": 597,
+  "status": "pass",
+  "benchmark_ready": false,
+  "inspection": "New scripts inspected and AST-parsed; actual raw prose, representative scalar atoms, missing slots, separate dimensions, extras, duplicates and contradictions inspected before the sole checker execution.",
+  "checker_runs": [
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "benchmark/writing/check_c1_challenges_0125.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"answer_denominators\": {\"correctness\": 3, \"grounding\": 3}, \"atoms\": 265, \"benchmark_ready\": false, \"cases\": 8, \"checker_sha256\": \"8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b\", \"package_errors\": [], \"preserved_review_sha256\": \"23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6\", \"protected_files\": 125, \"rejection_checks\": [{\"name\": \"corrupted-raw-UTF8-bytes\", \"reason\": \"raw-answer-hash\", \"rejected\": true}, {\"name\": \"wrong-source-pin\", \"reason\": \"source-pin\", \"rejected\": true}, {\"name\": \"missing-required-item\", \"reason\": \"required-slot-accounting\", \"rejected\": true}, {\"name\": \"missing-required-inventory-slot\", \"reason\": \"required-slot-inventory\", \"rejected\": true}, {\"name\": \"unreported-missing-slot\", \"reason\": \"required-slot-accounting\", \"rejected\": true}, {\"name\": \"merged-whole-dimensions\", \"reason\": \"separate-dimensions\", \"rejected\": true}, {\"name\": \"copied-correctness-into-grounding\", \"reason\": \"required-dimension-accounting\", \"rejected\": true}, {\"name\": \"unsupported-readiness-promotion\", \"reason\": \"readiness-promotion\", \"rejected\": true}, {\"name\": \"invented-native-execution\", \"reason\": \"execution-overclaim\", \"rejected\": true}, {\"name\": \"dropped-unverified-extra\", \"reason\": \"extra-accounting\", \"rejected\": true}, {\"name\": \"dropped-contradiction\", \"reason\": \"contradiction-accounting\", \"rejected\": true}, {\"name\": \"dropped-duplicate\", \"reason\": \"duplicate-accounting\", \"rejected\": true}], \"resolved_unique_references\": 44, \"scope\": \"repository integrity and authored expectation accounting only; no arbitrary prose scoring or human result\", \"status\": \"ok\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "policy/evaluator/evaluate.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "{\"benchmark_executed\": false, \"benchmark_ready\": false, \"errors\": [], \"evidence_references\": 80, \"manifest\": \"indexed\", \"missing\": [], \"tool_quality\": null}\n",
+      "stderr": ""
+    }
+  ],
+  "historical_checkers_builders_audits_executed": false,
+  "current_preparation_index_check": "Current evaluator --check only; no evaluator change, milestone or index modification.",
+  "new_file_manifest": [
+    {
+      "path": "benchmark/writing/wp1-key-review-0124.json",
+      "bytes": 126735,
+      "sha256": "23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-findings.md",
+      "bytes": 2991,
+      "sha256": "a6888f282d1da28258dc460e954d8472d0c997d4f67515a2d7fb5b661782c0a7"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-pins.json",
+      "bytes": 22541,
+      "sha256": "f6476328df20b0c55492b7b5a4a2e4139e8ee010d3315e9f61e846ea2b9e3f10"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-author.py",
+      "bytes": 29330,
+      "sha256": "dd1bbb78f25739c6d66bbfb96db16e358de7c3c88e78f74aa9aa989354ede1b9"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-cases.json",
+      "bytes": 31266,
+      "sha256": "73dfd06532782777d5cc7390fef290c5ef079730ed41ac9bd5786956d2b0a710"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-expectations.json",
+      "bytes": 1110893,
+      "sha256": "5b3761ae2b8e351038b9b2ace8b5a684940009b55e1fbee9d0907ff642864071"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125.md",
+      "bytes": 9775,
+      "sha256": "8cbe9c8c9aa9a4b1fb308e4050df342de079d09b3940dba85ce8b1f6fdb5661f"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-record-template.json",
+      "bytes": 3018,
+      "sha256": "c7902bc5797d4dcde829b28d3c3e17375b5d17fc53f67b26c528e41d9a6a07e2"
+    },
+    {
+      "path": "benchmark/writing/check_c1_challenges_0125.py",
+      "bytes": 18926,
+      "sha256": "8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b"
+    }
+  ],
+  "self_pin": "This file excludes itself from its manifest; exact size/SHA256 are in the session report.",
+  "observed_checkout": {
+    "head": "ab2b41b047b9de07e0a43313d3a06c9f370f360c",
+    "tree": "f1f83d5056c76fac5bc1e345d5451fa89eac4e3e",
+    "note": "Parent commits accepted actions incrementally; final candidate identity must be supplied after final outputs."
+  },
+  "review": {
+    "original_release": "iter-0124/594-wp1-key-review-0124.json",
+    "issue": 594,
+    "bytes": 126735,
+    "sha256": "23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6",
+    "scope": "Standards CLEAR / Spec CLEAR for the exact two conditional 0121 IDs and pinned 0123 incorporation/containment only; scoped source bytes retained, no current-HEAD equality claim."
+  },
+  "author_exposure": {
+    "role": "benchmark",
+    "provider": "codex",
+    "model": "gpt-6.1-sol",
+    "exposed": true,
+    "human": false,
+    "independent": false,
+    "startup_model_label": "claude-sonnet-5-5",
+    "model_continuity": "uncertified"
+  },
+  "pending": {
+    "independent_agent_usability_and_expectations_check": true,
+    "human_C1": "open",
+    "owner_acceptance": "pending",
+    "general_established_key_use": "blocked-F4",
+    "historical_F4_slots": "unchanged and blocked",
+    "full_trial_use": "blocked",
+    "native_validity": "unexecuted",
+    "dependency_resolution": "unexecuted",
+    "build": "unexecuted",
+    "behavior": "unexecuted",
+    "native_save_version": "unverified",
+    "reading_fidelity": "unmeasured"
+  },
+  "next": "Follow c1-challenges-0125.md ordered inputs; independently atomize and save a ledger before reading expectations. Separate agent review is not human adjudication; do not replay historical probes or checkers.",
+  "final_validation": {
+    "protected_file_mismatches": [],
+    "new_manifest_mismatches": [],
+    "scope_argv": [
+      "git",
+      "diff",
+      "--name-status",
+      "9faf73509ecc56bf8da81202037f1aa7551dfd09",
+      "--",
+      "benchmark"
+    ],
+    "scope_stdout": "A\tbenchmark/writing/c1-challenges-0125-author.py\nA\tbenchmark/writing/c1-challenges-0125-cases.json\nA\tbenchmark/writing/c1-challenges-0125-expectations.json\nA\tbenchmark/writing/c1-challenges-0125-findings.md\nA\tbenchmark/writing/c1-challenges-0125-pins.json\nA\tbenchmark/writing/c1-challenges-0125-record-template.json\nA\tbenchmark/writing/c1-challenges-0125-verification.json\nA\tbenchmark/writing/c1-challenges-0125.md\nA\tbenchmark/writing/check_c1_challenges_0125.py\nA\tbenchmark/writing/wp1-key-review-0124.json\n",
+    "all_scope_entries_are_additions": true,
+    "new_paths": [
+      "benchmark/writing/c1-challenges-0125-author.py",
+      "benchmark/writing/c1-challenges-0125-cases.json",
+      "benchmark/writing/c1-challenges-0125-expectations.json",
+      "benchmark/writing/c1-challenges-0125-findings.md",
+      "benchmark/writing/c1-challenges-0125-pins.json",
+      "benchmark/writing/c1-challenges-0125-record-template.json",
+      "benchmark/writing/c1-challenges-0125-verification.json",
+      "benchmark/writing/c1-challenges-0125.md",
+      "benchmark/writing/check_c1_challenges_0125.py",
+      "benchmark/writing/wp1-key-review-0124.json"
+    ],
+    "all_evidence_files_under_2MB": true,
+    "checker_reexecuted": false,
+    "status": "pass"
+  }
+}

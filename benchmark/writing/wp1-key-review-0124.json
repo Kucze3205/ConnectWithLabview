@@ -1,0 +1,2690 @@
+{
+  "schema": "wp1-key-review-0124-v1",
+  "status": "done",
+  "issue": 594,
+  "role": "reviewer",
+  "session": "review-wp1-key-0124",
+  "exposure": "Exposed incorporation review; no cold derivation or historical probe replay.",
+  "startup": {
+    "model": "claude-sonnet-5-5",
+    "limit": 100000,
+    "tokens": 5283,
+    "status": "ok",
+    "detail": "",
+    "documents": [
+      {
+        "path": ".session/issue.md",
+        "bytes": 7761,
+        "sha256": "550eafee464eb740cfe9543aa353e68322c20b1b00ce4608e3cf48f56885eee8"
+      },
+      {
+        "path": ".session/role/SKILL.md",
+        "bytes": 2374,
+        "sha256": "e8d707633435302387a0509e23f1f15e12ba2db096cefbc085b7c6a9fa8c0842"
+      }
+    ],
+    "measurement": "Estimate (4 bytes per token) of the contract, bootstrap and declared documents; excludes this diagnostic output, CLI internals and later reads."
+  },
+  "continued_candidate": {
+    "provider": "codex",
+    "model": "gpt-6.1-sol"
+  },
+  "model_continuity": "Startup model label differs; exact model continuity is not certified.",
+  "verification_manifest": {
+    "path": "benchmark/writing/wp1-key-0123-verification.json",
+    "bytes": 31116,
+    "sha256": "e7546012e046a65d2bc9284e3a1099b0871d9bf441adcbfd5309e04c15696767",
+    "matches_issue_pin": true
+  },
+  "git": {
+    "identity": {
+      "argv": [
+        "git",
+        "log",
+        "-1",
+        "--format=%H%n%T%n%P%n%s"
+      ],
+      "exit": 0,
+      "stdout": "6130581ed904692efc3b4b75f6ec5a66c9bcf855\nf97ab32e9dd03ff273e4ef7fc69c9b60b873bf05\n5f7d0f193502da074ed71477e883f47ce893f7db\nsession #593: freeze report and suggestion outbox\n",
+      "stderr": ""
+    },
+    "status": {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "candidate": {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H%n%T",
+        "8e8b3a2661d05f48ca2c29fa8612e6c955af2d63"
+      ],
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: bad object 8e8b3a2661d05f48ca2c29fa8612e6c955af2d63\n"
+    },
+    "scope": {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "2835358a82775c58aa8860885df8ebb2958ca86f",
+        "8e8b3a2661d05f48ca2c29fa8612e6c955af2d63"
+      ],
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: bad object 8e8b3a2661d05f48ca2c29fa8612e6c955af2d63\n"
+    },
+    "later_scope": {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "8e8b3a2661d05f48ca2c29fa8612e6c955af2d63",
+        "HEAD",
+        "--",
+        "benchmark",
+        "docs/perpetua/evaluation.md",
+        "goal/goal.md"
+      ],
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: bad object 8e8b3a2661d05f48ca2c29fa8612e6c955af2d63\n"
+    }
+  },
+  "identity_checks": [
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "bytes": 26925,
+        "sha256": "306480ec500e70a4d5f868578bf0f3b29565a223401f164aeba6b3c05baaa4b2"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "bytes": 26925,
+        "sha256": "306480ec500e70a4d5f868578bf0f3b29565a223401f164aeba6b3c05baaa4b2"
+      },
+      "match": true
+    },
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-cold-0122.json",
+        "bytes": 6414,
+        "sha256": "e1676c54e3e980f488bbb4dcc9ec8bc981890a22ae5dbcce26a62b02cf8f51e7"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-cold-0122.json",
+        "bytes": 6414,
+        "sha256": "e1676c54e3e980f488bbb4dcc9ec8bc981890a22ae5dbcce26a62b02cf8f51e7"
+      },
+      "match": true
+    },
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-review-0122.json",
+        "bytes": 30049,
+        "sha256": "6c7735d2c53e924075c14d68c83ba2b9c844e708778cfe563943f1c55e0b960b"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-review-0122.json",
+        "bytes": 30049,
+        "sha256": "6c7735d2c53e924075c14d68c83ba2b9c844e708778cfe563943f1c55e0b960b"
+      },
+      "match": true
+    },
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0123-pre-edit.md",
+        "bytes": 49199,
+        "sha256": "0e5fad25ce60e23d79024f899ce59cd0f7a88caadecf6d26a37eb1336cdb67e1"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0123-pre-edit.md",
+        "bytes": 49199,
+        "sha256": "0e5fad25ce60e23d79024f899ce59cd0f7a88caadecf6d26a37eb1336cdb67e1"
+      },
+      "match": true
+    },
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "bytes": 114751,
+        "sha256": "5a76028d90204da48828557797878160fa37504d23348b782e723c2eb70aec7d"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "bytes": 114751,
+        "sha256": "5a76028d90204da48828557797878160fa37504d23348b782e723c2eb70aec7d"
+      },
+      "match": true
+    },
+    {
+      "group": "new_files",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0123.md",
+        "bytes": 11593,
+        "sha256": "75e3ec793d00140e5c75ea782c58cdcdfd5253dfa4254651e6f18cf19192e333"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0123.md",
+        "bytes": 11593,
+        "sha256": "75e3ec793d00140e5c75ea782c58cdcdfd5253dfa4254651e6f18cf19192e333"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/preparation.json",
+        "bytes": 12895,
+        "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+      },
+      "observed": {
+        "path": "benchmark/preparation.json",
+        "bytes": 12895,
+        "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/protocol.md",
+        "bytes": 38342,
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+      },
+      "observed": {
+        "path": "benchmark/protocol.md",
+        "bytes": 38342,
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "bytes": 1060,
+        "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+      },
+      "observed": {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "bytes": 1060,
+        "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "bytes": 5806,
+        "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+      },
+      "observed": {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "bytes": 5806,
+        "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/README.md",
+        "bytes": 15838,
+        "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"
+      },
+      "observed": {
+        "path": "benchmark/writing/README.md",
+        "bytes": 15838,
+        "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_examples_0121.py",
+        "bytes": 40139,
+        "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_examples_0121.py",
+        "bytes": 40139,
+        "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0115.py",
+        "bytes": 19779,
+        "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0115.py",
+        "bytes": 19779,
+        "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0117.py",
+        "bytes": 37193,
+        "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0117.py",
+        "bytes": 37193,
+        "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0119.py",
+        "bytes": 37052,
+        "sha256": "28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0119.py",
+        "bytes": 37052,
+        "sha256": "28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/method.json",
+        "bytes": 45705,
+        "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+      },
+      "observed": {
+        "path": "benchmark/writing/method.json",
+        "bytes": 45705,
+        "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-cold-expectation-0118.json",
+        "bytes": 5036,
+        "sha256": "7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-cold-expectation-0118.json",
+        "bytes": 5036,
+        "sha256": "7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-disposition-review-0120.json",
+        "bytes": 38470,
+        "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-disposition-review-0120.json",
+        "bytes": 38470,
+        "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+        "bytes": 130487,
+        "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+        "bytes": 130487,
+        "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121-verification.json",
+        "bytes": 31841,
+        "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121-verification.json",
+        "bytes": 31841,
+        "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "bytes": 204095,
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "bytes": 204095,
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121.md",
+        "bytes": 7934,
+        "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121.md",
+        "bytes": 7934,
+        "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115-verification.json",
+        "bytes": 17358,
+        "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115-verification.json",
+        "bytes": 17358,
+        "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115.json",
+        "bytes": 262592,
+        "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115.json",
+        "bytes": 262592,
+        "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115.md",
+        "bytes": 9337,
+        "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115.md",
+        "bytes": 9337,
+        "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117-verification.json",
+        "bytes": 57834,
+        "sha256": "e3e7b3da3d354b61a978d6458f7e5e523ba425dcec7ecc5699a7a513e25ea27a"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117-verification.json",
+        "bytes": 57834,
+        "sha256": "e3e7b3da3d354b61a978d6458f7e5e523ba425dcec7ecc5699a7a513e25ea27a"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117.json",
+        "bytes": 306601,
+        "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117.json",
+        "bytes": 306601,
+        "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117.md",
+        "bytes": 11253,
+        "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117.md",
+        "bytes": 11253,
+        "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119-pre-edit-findings.md",
+        "bytes": 3688,
+        "sha256": "c393b7bbfaf7ecb593688b1bbaf1827ce70a720ae7bc5d676430800b1785b3db"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119-pre-edit-findings.md",
+        "bytes": 3688,
+        "sha256": "c393b7bbfaf7ecb593688b1bbaf1827ce70a720ae7bc5d676430800b1785b3db"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119-verification.json",
+        "bytes": 102981,
+        "sha256": "bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119-verification.json",
+        "bytes": 102981,
+        "sha256": "bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "bytes": 327961,
+        "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "bytes": 327961,
+        "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119.md",
+        "bytes": 13447,
+        "sha256": "5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119.md",
+        "bytes": 13447,
+        "sha256": "5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-review-0116.json",
+        "bytes": 135476,
+        "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-review-0116.json",
+        "bytes": 135476,
+        "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-review-0118.json",
+        "bytes": 569049,
+        "sha256": "410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-review-0118.json",
+        "bytes": 569049,
+        "sha256": "410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-review-audit-0118.py",
+        "bytes": 31314,
+        "sha256": "8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-review-audit-0118.py",
+        "bytes": 31314,
+        "sha256": "8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "benchmark/writing/wp1-source-interpretation-0118.json",
+        "bytes": 2257,
+        "sha256": "b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-source-interpretation-0118.json",
+        "bytes": 2257,
+        "sha256": "b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "docs/perpetua/evaluation.md",
+        "bytes": 7552,
+        "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+      },
+      "observed": {
+        "path": "docs/perpetua/evaluation.md",
+        "bytes": 7552,
+        "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+      },
+      "match": true
+    },
+    {
+      "group": "protected_manifest",
+      "expected": {
+        "path": "goal/goal.md",
+        "bytes": 4161,
+        "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      "observed": {
+        "path": "goal/goal.md",
+        "bytes": 4161,
+        "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/preparation.json",
+        "bytes": 12895,
+        "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+      },
+      "observed": {
+        "path": "benchmark/preparation.json",
+        "bytes": 12895,
+        "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/protocol.md",
+        "bytes": 38342,
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+      },
+      "observed": {
+        "path": "benchmark/protocol.md",
+        "bytes": 38342,
+        "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "bytes": 1060,
+        "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+      },
+      "observed": {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "bytes": 1060,
+        "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "bytes": 5806,
+        "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+      },
+      "observed": {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "bytes": 5806,
+        "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/README.md",
+        "bytes": 15838,
+        "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"
+      },
+      "observed": {
+        "path": "benchmark/writing/README.md",
+        "bytes": 15838,
+        "sha256": "8b6dd48d3df0a99be86dd2ab85da805b5fe8a37db49f32efcee35706623facb9"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_examples_0121.py",
+        "bytes": 40139,
+        "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_examples_0121.py",
+        "bytes": 40139,
+        "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0115.py",
+        "bytes": 19779,
+        "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0115.py",
+        "bytes": 19779,
+        "sha256": "e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0117.py",
+        "bytes": 37193,
+        "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0117.py",
+        "bytes": 37193,
+        "sha256": "f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/check_wp1_key_0119.py",
+        "bytes": 37052,
+        "sha256": "28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99"
+      },
+      "observed": {
+        "path": "benchmark/writing/check_wp1_key_0119.py",
+        "bytes": 37052,
+        "sha256": "28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/method.json",
+        "bytes": 45705,
+        "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+      },
+      "observed": {
+        "path": "benchmark/writing/method.json",
+        "bytes": 45705,
+        "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-cold-expectation-0118.json",
+        "bytes": 5036,
+        "sha256": "7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-cold-expectation-0118.json",
+        "bytes": 5036,
+        "sha256": "7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-disposition-review-0120.json",
+        "bytes": 38470,
+        "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-disposition-review-0120.json",
+        "bytes": 38470,
+        "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+        "bytes": 130487,
+        "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+        "bytes": 130487,
+        "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121-verification.json",
+        "bytes": 31841,
+        "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121-verification.json",
+        "bytes": 31841,
+        "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "bytes": 204095,
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "bytes": 204095,
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-examples-0121.md",
+        "bytes": 7934,
+        "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-examples-0121.md",
+        "bytes": 7934,
+        "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115-verification.json",
+        "bytes": 17358,
+        "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115-verification.json",
+        "bytes": 17358,
+        "sha256": "bf131650bf56d136769fd720ce8e24611b4fbd04a811634fef7eb6f48c112497"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115.json",
+        "bytes": 262592,
+        "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115.json",
+        "bytes": 262592,
+        "sha256": "960b72b0aabb3e0d8151ad4fd25452377d6c05e482c76601f99163b246381a24"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0115.md",
+        "bytes": 9337,
+        "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0115.md",
+        "bytes": 9337,
+        "sha256": "eb621c81154ccd537518bc0559e9a1fe8ed87e0e09b8418616fc3a5b52f42720"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117-verification.json",
+        "bytes": 57834,
+        "sha256": "e3e7b3da3d354b61a978d6458f7e5e523ba425dcec7ecc5699a7a513e25ea27a"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117-verification.json",
+        "bytes": 57834,
+        "sha256": "e3e7b3da3d354b61a978d6458f7e5e523ba425dcec7ecc5699a7a513e25ea27a"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117.json",
+        "bytes": 306601,
+        "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117.json",
+        "bytes": 306601,
+        "sha256": "008b4078d7f50610c7eb74e7d880e20602416130398fabf7a7534ae2a6b60982"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0117.md",
+        "bytes": 11253,
+        "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0117.md",
+        "bytes": 11253,
+        "sha256": "ba62fabd3324329447515728d38113185ee7e7702faead0f6ca7f68a5a0a97a3"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119-pre-edit-findings.md",
+        "bytes": 3688,
+        "sha256": "c393b7bbfaf7ecb593688b1bbaf1827ce70a720ae7bc5d676430800b1785b3db"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119-pre-edit-findings.md",
+        "bytes": 3688,
+        "sha256": "c393b7bbfaf7ecb593688b1bbaf1827ce70a720ae7bc5d676430800b1785b3db"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119-verification.json",
+        "bytes": 102981,
+        "sha256": "bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119-verification.json",
+        "bytes": 102981,
+        "sha256": "bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "bytes": 327961,
+        "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "bytes": 327961,
+        "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-0119.md",
+        "bytes": 13447,
+        "sha256": "5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-0119.md",
+        "bytes": 13447,
+        "sha256": "5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-review-0116.json",
+        "bytes": 135476,
+        "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-review-0116.json",
+        "bytes": 135476,
+        "sha256": "2f127a7dad8e9719f6e026e1a1fce5aa1b0509f8503d5994771e0234c83a373e"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-key-review-0118.json",
+        "bytes": 569049,
+        "sha256": "410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-key-review-0118.json",
+        "bytes": 569049,
+        "sha256": "410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-review-audit-0118.py",
+        "bytes": 31314,
+        "sha256": "8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-review-audit-0118.py",
+        "bytes": 31314,
+        "sha256": "8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "benchmark/writing/wp1-source-interpretation-0118.json",
+        "bytes": 2257,
+        "sha256": "b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b"
+      },
+      "observed": {
+        "path": "benchmark/writing/wp1-source-interpretation-0118.json",
+        "bytes": 2257,
+        "sha256": "b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "docs/perpetua/evaluation.md",
+        "bytes": 7552,
+        "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+      },
+      "observed": {
+        "path": "docs/perpetua/evaluation.md",
+        "bytes": 7552,
+        "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+      },
+      "match": true
+    },
+    {
+      "group": "verification_protected",
+      "expected": {
+        "path": "goal/goal.md",
+        "bytes": 4161,
+        "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      "observed": {
+        "path": "goal/goal.md",
+        "bytes": 4161,
+        "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+      },
+      "match": true
+    }
+  ],
+  "pin_mismatches": [],
+  "semantic_review_started": true,
+  "checker_execution": {
+    "inspection_before_run": true,
+    "execution_count": 1,
+    "argv": [
+      "python3",
+      "-I",
+      "benchmark/writing/check_wp1_key_0123.py"
+    ],
+    "exit": 0,
+    "stdout": "{\"benchmark_ready\": false, \"conditional_F4\": \"proposed only; separate review pending\", \"controls\": [{\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-0-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-0\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-2\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\", \"MAP_SOURCE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_COVERAGE\"], \"expected_error\": \"MAP_COVERAGE\", \"name\": \"drop-preservation-map-1-4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\"], \"expected_error\": \"MAP_SOURCE\", \"name\": \"wrong-existing-property-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"OPERATIVE_LINKS\"], \"expected_error\": \"OPERATIVE_LINKS\", \"name\": \"wrong-example-map-link-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"MAP_SOURCE\", \"EVIDENCE_RESOLUTION\"], \"expected_error\": \"EVIDENCE_RESOLUTION\", \"name\": \"unresolvable-map-evidence-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONS\"], \"expected_error\": \"CONDITIONS\", \"name\": \"drop-condition-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NO_HISTORICAL_CREDIT\"], \"expected_error\": \"NO_HISTORICAL_CREDIT\", \"name\": \"historical-credit-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DIMENSION_TESTS\"], \"expected_error\": \"DIMENSION_TESTS\", \"name\": \"weaken-grounding-test-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-correctness-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"REQUIRED_PRESCRIPTIONS\"], \"expected_error\": \"REQUIRED_PRESCRIPTIONS\", \"name\": \"alter-map-grounding-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_LIMITS\"], \"expected_error\": \"DEPENDENCY_LIMITS\", \"name\": \"invent-dependency-hash-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DEPENDENCY_SOURCE\", \"DEPENDENCY_DECLARATIONS\"], \"expected_error\": \"DEPENDENCY_DECLARATIONS\", \"name\": \"drop-dependency-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_ACCOUNTING\", \"TRIAL_UNAVAILABLE\"], \"expected_error\": \"TRIAL_UNAVAILABLE\", \"name\": \"invent-native-log-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXAMPLE_IDENTITIES\", \"NEW_ID\", \"MAP_REVIEW\"], \"expected_error\": \"NEW_ID\", \"name\": \"relabel-historical-1\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"EXTENSION_SCHEMA\"], \"expected_error\": \"EXTENSION_SCHEMA\", \"name\": \"inject-historical-override\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"READINESS\"], \"expected_error\": \"READINESS\", \"name\": \"promote-readiness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"release-conditional-F4\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"CONDITIONAL_F4\"], \"expected_error\": \"CONDITIONAL_F4\", \"name\": \"skip-separate-review\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-general-key\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"GENERAL_RELEASE\"], \"expected_error\": \"GENERAL_RELEASE\", \"name\": \"release-full-trial\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"unblock-historical\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"HISTORICAL_BLOCK\"], \"expected_error\": \"HISTORICAL_BLOCK\", \"name\": \"promote-historical-map\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PROVENANCE\"], \"expected_error\": \"REVIEW_PROVENANCE\", \"name\": \"erase-review-deviations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"AUTHOR_PROVENANCE\"], \"expected_error\": \"AUTHOR_PROVENANCE\", \"name\": \"claim-independent\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"NATIVE_DEPENDENCY_LIMITS\"], \"expected_error\": \"NATIVE_DEPENDENCY_LIMITS\", \"name\": \"native-version-authority\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"TRIAL_READINESS\"], \"expected_error\": \"TRIAL_READINESS\", \"name\": \"trial-evidence-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"UNAVAILABLE_CATEGORIES\"], \"expected_error\": \"UNAVAILABLE_CATEGORIES\", \"name\": \"remove-unavailable-category\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"LIMITS\"], \"expected_error\": \"LIMITS\", \"name\": \"native-validity-promotion\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"EXTRAS\", \"name\": \"remove-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"credit-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"EXTRAS\", \"UNVERIFIED_EXTRA\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"UNVERIFIED_EXTRA\", \"name\": \"support-extra\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_CORRECTNESS\"], \"expected_error\": \"ASSESSMENT_CORRECTNESS\", \"name\": \"promote-extra-correctness\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"PRESCRIPTION_SOURCE\", \"ASSESSMENT_GROUNDING\"], \"expected_error\": \"ASSESSMENT_GROUNDING\", \"name\": \"promote-extra-grounding\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"DENOMINATORS\"], \"expected_error\": \"DENOMINATORS\", \"name\": \"change-denominator\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"SOURCE_REQUIREMENTS\"], \"expected_error\": \"SOURCE_REQUIREMENTS\", \"name\": \"remove-source-requirements\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"F3_REFERENCE\"], \"expected_error\": \"F3_REFERENCE\", \"name\": \"change-F3\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"INHERITANCE\"], \"expected_error\": \"INHERITANCE\", \"name\": \"omit-base-obligations\", \"rejected_as_expected\": true}, {\"actual_errors\": [\"REVIEW_PIN\"], \"expected_error\": \"REVIEW_PIN\", \"name\": \"forge-review-pin\", \"rejected_as_expected\": true}], \"errors\": [], \"failed_controls\": [], \"historical_map_slots\": \"partial/partial; blocked-F4\", \"independent_semantic_approval\": false, \"new_examples\": [\"WP1-0121-positive-map-v1\", \"WP1-0121-unverified-extra-map-v1\"], \"pinned_files_checked\": 35, \"rejecting_controls_passed\": 56, \"rejecting_controls_total\": 56, \"source_requirement_records\": 171, \"status\": \"proposed-key-integrity-with-historical-F4-block-intact\"}\n",
+    "stderr": ""
+  },
+  "reviewer_structural_checks": {
+    "checks": {
+      "all_35_key_pins_match_presemantic_measurements": true,
+      "all_11_preserved_review_pins_match": true,
+      "cold_source_measurements_match": true,
+      "adopted_identity_exact": true,
+      "adopted_review_deviations_exact": true,
+      "adopted_cold_deviations_exact": true,
+      "baseline_tree_to_candidate_tree_exactly_seven_additions": true
+    },
+    "new_examples": [
+      {
+        "id": "WP1-0121-positive-map-v1",
+        "conditions_exact": true,
+        "answer_sha256_measured": "58ee44767d43374fdca77455c6de7a7ecaf266c9b29743258b37a41f934a83a2",
+        "answer_pin_matches": true,
+        "prescriptions_exact": true,
+        "dimension_tests_exact": true,
+        "rows": [
+          {
+            "id": "WP1-property-text",
+            "pointer": "/new_examples/0/operative_map/0",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-other-project-bytes",
+            "pointer": "/new_examples/0/operative_map/1",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-file-set-and-unrelated-files",
+            "pointer": "/new_examples/0/operative_map/2",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-root-version-declaration",
+            "pointer": "/new_examples/0/operative_map/3",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-original-and-license",
+            "pointer": "/new_examples/0/operative_map/4",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          }
+        ]
+      },
+      {
+        "id": "WP1-0121-unverified-extra-map-v1",
+        "conditions_exact": true,
+        "answer_sha256_measured": "ca18d0f9fbfc2684c2cc9566e08e603dd5ae13ef26cc79b2fa7e0ae6c6eb9da5",
+        "answer_pin_matches": true,
+        "prescriptions_exact": true,
+        "dimension_tests_exact": true,
+        "rows": [
+          {
+            "id": "WP1-property-text",
+            "pointer": "/new_examples/1/operative_map/0",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-other-project-bytes",
+            "pointer": "/new_examples/1/operative_map/1",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-file-set-and-unrelated-files",
+            "pointer": "/new_examples/1/operative_map/2",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-root-version-declaration",
+            "pointer": "/new_examples/1/operative_map/3",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          },
+          {
+            "id": "WP1-original-and-license",
+            "pointer": "/new_examples/1/operative_map/4",
+            "matches_reviewed_source": true,
+            "operative_source_exact": true,
+            "review_link_exact": true,
+            "reviewed_id_matches": true
+          }
+        ]
+      }
+    ],
+    "historical_raw_identities": [
+      {
+        "id": "C1-correct",
+        "pointer": "/claim_adjudication/prescribed_ledgers/0",
+        "raw_answer_reference": {
+          "path": "benchmark/writing/wp1-key-review-0116.json",
+          "locator": "/c1_tests/cases/0/answer"
+        },
+        "raw_utf8_bytes": 1022,
+        "raw_sha256_observed": "ab0c07ce725e64042c6ddf716dd6cacbdcf842ec65e9babe79b6cb92c5d8c26f",
+        "matches_pin": true,
+        "map_item": {
+          "id": "WP1-original-output-grounding",
+          "correctness": "partial",
+          "grounding": "partial",
+          "test_reference": "required_ids[id=WP1-original-output-grounding].separate_dimension_tests",
+          "established_key_use": "blocked-F4"
+        },
+        "whole_answer": {
+          "answer_correctness": "partial",
+          "source_grounding": "partial"
+        }
+      },
+      {
+        "id": "C1-unverified-extra",
+        "pointer": "/claim_adjudication/prescribed_ledgers/2",
+        "raw_answer_reference": {
+          "path": "benchmark/writing/wp1-key-review-0116.json",
+          "locator": "/c1_tests/cases/1/answer"
+        },
+        "raw_utf8_bytes": 1087,
+        "raw_sha256_observed": "1499c559c30623bae8d635b4eb65c00d332a49457c46cfa7f47e8606d358956d",
+        "matches_pin": true,
+        "map_item": {
+          "id": "WP1-original-output-grounding",
+          "correctness": "partial",
+          "grounding": "partial",
+          "test_reference": "required_ids[id=WP1-original-output-grounding].separate_dimension_tests",
+          "established_key_use": "blocked-F4"
+        },
+        "whole_answer": {
+          "answer_correctness": "unverified",
+          "source_grounding": "partial"
+        }
+      }
+    ],
+    "no_cold_derivation_or_completed_probe_replay": true,
+    "preserved_review_pin_details": [
+      {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "expected": {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "bytes": 204095,
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "bytes": 204095,
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/wp1-examples-0121.md",
+        "expected": {
+          "path": "benchmark/writing/wp1-examples-0121.md",
+          "bytes": 7934,
+          "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-examples-0121.md",
+          "bytes": 7934,
+          "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/check_wp1_examples_0121.py",
+        "expected": {
+          "path": "benchmark/writing/check_wp1_examples_0121.py",
+          "bytes": 40139,
+          "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+        },
+        "observed": {
+          "path": "benchmark/writing/check_wp1_examples_0121.py",
+          "bytes": 40139,
+          "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/wp1-examples-0121-verification.json",
+        "expected": {
+          "path": "benchmark/writing/wp1-examples-0121-verification.json",
+          "bytes": 31841,
+          "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-examples-0121-verification.json",
+          "bytes": 31841,
+          "sha256": "d7a0bc9caab9e32a265f5645ecb3dbe47c5b05146078ffb63af9f7c667e0bcd3"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+        "expected": {
+          "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+          "bytes": 130487,
+          "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+          "bytes": 130487,
+          "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/wp1-disposition-review-0120.json",
+        "expected": {
+          "path": "benchmark/writing/wp1-disposition-review-0120.json",
+          "bytes": 38470,
+          "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-disposition-review-0120.json",
+          "bytes": 38470,
+          "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "expected": {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "bytes": 327961,
+          "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+        },
+        "observed": {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "bytes": 327961,
+          "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "expected": {
+          "path": "benchmark/writing/method.json",
+          "bytes": 45705,
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+        },
+        "observed": {
+          "path": "benchmark/writing/method.json",
+          "bytes": 45705,
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "expected": {
+          "path": "benchmark/protocol.md",
+          "bytes": 38342,
+          "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+        },
+        "observed": {
+          "path": "benchmark/protocol.md",
+          "bytes": 38342,
+          "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/original.lvproj",
+        "expected": {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "bytes": 5806,
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+        },
+        "observed": {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "bytes": 5806,
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+        },
+        "matches": true
+      },
+      {
+        "path": "benchmark/real-project-0107/LICENSE.txt",
+        "expected": {
+          "path": "benchmark/real-project-0107/LICENSE.txt",
+          "bytes": 1060,
+          "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+        },
+        "observed": {
+          "path": "benchmark/real-project-0107/LICENSE.txt",
+          "bytes": 1060,
+          "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+        },
+        "matches": true
+      }
+    ]
+  },
+  "declared_author_candidate": {
+    "head": "8e8b3a2661d05f48ca2c29fa8612e6c955af2d63",
+    "tree": "8fe17a7e7790e9d7056ebd1a65b1915259248681",
+    "source": "issue #594",
+    "git_object_available": false,
+    "conclusion": "Original author commit object unavailable; its exact declared tree is present at admitted commit 67ec6ec. Full baseline-tree diff confirms seven additions, scoped candidate-to-checkout diff is empty, and all final sizes/hashes match. Commit ancestry is not certified.",
+    "declared_tree_verified_at_accepted_commit": true
+  },
+  "preserved_review": {
+    "review_identity": {
+      "issue": 587,
+      "session_task": "review-wp1-examples-0122",
+      "role": "reviewer",
+      "startup_model": "claude-sonnet-5-5",
+      "continued_parent_candidate": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol"
+      },
+      "model_limitation": "Startup label and continued candidate differ; exact model continuity is not certified. This review has a separate session/task from author #584.",
+      "startup_status": "ok",
+      "issue_bytes": 8862,
+      "issue_sha256": "d572e5d8f08164617143672bd56a65ccd40a81235327fc5b8f035b2821a62942",
+      "role_skill_bytes": 2374,
+      "role_skill_sha256": "e8d707633435302387a0509e23f1f15e12ba2db096cefbc085b7c6a9fa8c0842",
+      "observed_head": "650c282024d073a59710cdb0b2cfe5463f9b4a9d",
+      "observed_tree": "752cb3a6b4010e6af388a1445402679aa564830d",
+      "worktree_porcelain_before_and_after_review": "",
+      "author_start_head": "94374c7a708f32b9d466614aa4c566184ac9165b",
+      "author_start_tree": "74af6b6a919c2df6845e38da89604e80479584d6",
+      "package_merge_commit": "4a0d8b3",
+      "package_revision": "wp1-examples-0121-v1",
+      "baseline_to_observed_scope": "Exactly six new benchmark/writing package files; other differences are administrative session-report, iteration and journal paths. No preexisting repository source changed.",
+      "merge_to_observed_diff": [
+        ".github/loop/data/session-reports/584/7db0922b3dffd6b7bf6f926cc2a18e3111269421a40a55153a22bbbb6623dd07.json",
+        ".github/loop/data/session-reports/586/50e3087515a3965247c84624adbeb5f5488ebba41a2d4a14eb4e6faf0a6bbcc9.json",
+        "iterations/0121.json",
+        "iterations/0122/tasks.json",
+        "journal/working-memory.md"
+      ],
+      "identity_conclusion": "Observed HEAD is later than authoring/merge; git diff and all scoped pins establish the same reviewed package bytes.",
+      "repository_files_written": [],
+      "standards_sources": [
+        ".session/role/SKILL.md",
+        "docs/perpetua/evaluation.md",
+        "benchmark/protocol.md",
+        "benchmark/writing/method.json"
+      ],
+      "tracked_agents_or_contributing_files": []
+    },
+    "cold_provenance": {
+      "artifact": ".session/artifacts/wp1-examples-cold-0122.json",
+      "saved_before_any_later_read": true,
+      "package_blind": true,
+      "later_read_opened_early": false,
+      "source_only_derivation": "Original/license whole, method /common/answer_rule and /tasks/4, protocol source clauses; independently parsed unique property and located and replaced the literal text byte before opening package/checker/pre-edit/review/key.",
+      "procedural_deviations": [
+        "Inherited continuation read protocol.md whole instead of the bounded clauses.",
+        "Inherited continuation recorded HEAD/tree after original/license/protocol reads, rather than before them; clean status and identities were confirmed before the cold record and all Later reads."
+      ],
+      "effect": "The requested startup order was not exact; no package expectation leaked through an early Later read, including the recorded model continuation. Subsequent inspection cannot be described as a new cold derivation."
+    },
+    "cold_record_provenance": {
+      "blind_to_package": true,
+      "opened_files": [
+        ".session/issue.md",
+        ".session/role/SKILL.md",
+        "benchmark/real-project-0107/LICENSE.txt",
+        "benchmark/real-project-0107/original.lvproj",
+        "benchmark/protocol.md",
+        ".session/startup.json",
+        "benchmark/writing/method.json"
+      ],
+      "method_scope": [
+        "/common/answer_rule",
+        "/tasks/4"
+      ],
+      "deviations": [
+        "Inherited continuation read protocol.md whole rather than only lines 26-41 and 60; no Later-read package files opened.",
+        "HEAD/tree were first recorded after original/license/protocol reads; reobserved with clean git status before saving this cold record."
+      ],
+      "startup_model": "claude-sonnet-5-5",
+      "continuation_candidate": "codex / gpt-6.1-sol"
+    },
+    "scope": "Completed #587 evidence for unchanged 0121 conditional preparation examples; neither F4 nor readiness released; not a new independence claim."
+  },
+  "reviewer_diagnostics": [
+    {
+      "operation": "Preserved review pins comparison",
+      "initial_result": false,
+      "cause": "Reviewer compared complete review records, including provenance annotation fields, to three-field identity records. This was a comparison-shape error, not a source pin mismatch.",
+      "correction": "Compare path, bytes and sha256 only; all eleven agree. No source or expected pin was changed."
+    }
+  ],
+  "git_scope_checks": [
+    {
+      "argv": [
+        "git",
+        "show",
+        "--format=%H%n%T",
+        "--name-status",
+        "67ec6ec",
+        "--",
+        "benchmark"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "benchmark/writing/check_wp1_key_0123.py",
+        "benchmark/writing/wp1-examples-cold-0122.json",
+        "benchmark/writing/wp1-examples-review-0122.json",
+        "benchmark/writing/wp1-key-0123-pre-edit.md",
+        "benchmark/writing/wp1-key-0123-verification.json",
+        "benchmark/writing/wp1-key-0123.json",
+        "benchmark/writing/wp1-key-0123.md"
+      ],
+      "exit": 0,
+      "stdout": "100644 blob 6103237456dd4041ff96727bebbf4a8bfd507009\tbenchmark/writing/check_wp1_key_0123.py\n100644 blob e5729c9341581b0358d1bdb7fb02ca80d658fa91\tbenchmark/writing/wp1-examples-cold-0122.json\n100644 blob 919d22a84d6b14b5e605ffe565bd517a0b8463c2\tbenchmark/writing/wp1-examples-review-0122.json\n100644 blob 2547f25880f558242e57cf5d645de8d55a73a404\tbenchmark/writing/wp1-key-0123-pre-edit.md\n100644 blob fc906786f07ce179514850af10084bf5b8aa29b6\tbenchmark/writing/wp1-key-0123-verification.json\n100644 blob ecdf8b8d747583eb69ec1e013b9ee51672e79d82\tbenchmark/writing/wp1-key-0123.json\n100644 blob 2beb4c6a484c6dc07f0f5388926ff5796fe61230\tbenchmark/writing/wp1-key-0123.md\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H%n%T%n%P%n%s",
+        "67ec6ec"
+      ],
+      "exit": 0,
+      "stdout": "67ec6ec97cf52644c6e995cae2e8c788375aec31\n8fe17a7e7790e9d7056ebd1a65b1915259248681\n9a5d5eb4ebd5170121f628cbe6d5e646470d5124\nSession output admitted as data\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "67ec6ec^1",
+        "67ec6ec",
+        "--",
+        "benchmark",
+        "docs/perpetua/evaluation.md",
+        "goal/goal.md"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "67ec6ec",
+        "HEAD",
+        "--",
+        "benchmark",
+        "docs/perpetua/evaluation.md",
+        "goal/goal.md"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--name-status",
+        "f485b05892a3be123048eadae21f2c6852a56488",
+        "8fe17a7e7790e9d7056ebd1a65b1915259248681"
+      ],
+      "exit": 0,
+      "stdout": "A\tbenchmark/writing/check_wp1_key_0123.py\nA\tbenchmark/writing/wp1-examples-cold-0122.json\nA\tbenchmark/writing/wp1-examples-review-0122.json\nA\tbenchmark/writing/wp1-key-0123-pre-edit.md\nA\tbenchmark/writing/wp1-key-0123-verification.json\nA\tbenchmark/writing/wp1-key-0123.json\nA\tbenchmark/writing/wp1-key-0123.md\n",
+      "stderr": ""
+    }
+  ],
+  "line_anchors": {
+    "benchmark/writing/wp1-key-0123.json": {
+      "  \"composition\":": 22,
+      "  \"review_adoption\":": 239,
+      "  \"source_requirements\":": 333,
+      "  \"F3\":": 1197,
+      "  \"F4\":": 1204,
+      "  \"new_examples\":": 1249,
+      "  \"limits\":": 2437
+    },
+    "benchmark/writing/check_wp1_key_0123.py": {
+      "def repository_bytes": 43,
+      "def source_requirements": 71,
+      "def check(": 160,
+      "def source_evidence_checks": 262,
+      "def controls": 305,
+      "def main": 366
+    }
+  },
+  "reviewed_revision": {
+    "key": "wp1-key-0123-v1",
+    "key_identity": {
+      "path": "benchmark/writing/wp1-key-0123.json",
+      "bytes": 114751,
+      "sha256": "5a76028d90204da48828557797878160fa37504d23348b782e723c2eb70aec7d"
+    },
+    "observed_checkout_head": "6130581ed904692efc3b4b75f6ec5a66c9bcf855",
+    "observed_checkout_tree": "f97ab32e9dd03ff273e4ef7fc69c9b60b873bf05",
+    "accepted_commit": "67ec6ec97cf52644c6e995cae2e8c788375aec31",
+    "accepted_tree": "8fe17a7e7790e9d7056ebd1a65b1915259248681",
+    "identity_conclusion": "The original author candidate commit is unavailable, but admitted commit 67ec6ec has exactly its declared tree. Its scoped diff to current HEAD is empty. All scoped file sizes/hashes agree with the final pinned manifest; checkout commit equality is neither required nor claimed.",
+    "diff_limitation": "Original author candidate commit ancestry is unavailable, but the pinned pre-edit baseline tree and declared final candidate tree are both available. Their full tree diff is exactly the seven expected additions and no other change."
+  },
+  "review_procedure": {
+    "startup_documents_read_once": true,
+    "identity_saved_before_semantic_assessment": true,
+    "exposure": "Exposed new-incorporation review, separate reviewer task/session from author #591. No cold or new package-independent derivation claimed; completed #587 evidence reused.",
+    "procedural_deviations": [
+      "Initial pre-edit evidence query printed the whole fenced record instead of only protected_files, exposing historical/source context before the first saved identity artifact. Assessment began after identity artifact save; this was already an exposed review and no cold claim follows.",
+      "An inherited-policy read also printed unchanged F1/F2/F3 disposition context more broadly than needed. No historical checker, builder, audit, probe or F3 semantic recheck was executed."
+    ],
+    "repository_files_written": [],
+    "session_outputs": [
+      ".session/artifacts/wp1-key-review-0124.json",
+      ".session/report.md"
+    ],
+    "old_code_execution_or_import": false,
+    "agent_arms_or_native_execution": false,
+    "tracked_AGENTS_or_CONTRIBUTING_files": []
+  },
+  "source_authority_review": {
+    "evidence": [
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/common/answer_rule"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/request"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/preservation"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/output_manifest_rule"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/trial_artifacts"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/oracle"
+      },
+      {
+        "path": "benchmark/writing/method.json",
+        "locator": "/tasks/4/planned_results"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L26"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L29"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L35"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L36"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L40"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L41"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L48"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L60"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L62"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L59"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L65"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L66"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L68"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L69"
+      }
+    ],
+    "source_bytes": {
+      "original_selected_lines": {
+        "1": "﻿<?xml version='1.0' encoding='UTF-8'?>",
+        "2": "<Project Type=\"Project\" LVVersion=\"20008000\">",
+        "16": "\t\t<Item Name=\"Actor Framework.lvlib\" Type=\"Library\" URL=\"/&lt;vilib&gt;/ActorFramework/Actor Framework.lvlib\"/>",
+        "33": "\t\t\t\t<Property Name=\"Bld_autoIncrement\" Type=\"Bool\">true</Property>",
+        "42": "\t\t\t\t<Property Name=\"Bld_version.build\" Type=\"Int\">2</Property>",
+        "43": "\t\t\t\t<Property Name=\"Bld_version.major\" Type=\"Int\">1</Property>"
+      },
+      "license_full_text": "MIT License\n\nCopyright (c) 2024 NI\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE .\n",
+      "common_answer_rule": "Reuse protocol required claims, extras and contradiction rules. Writing claims cite original hash/locator plus corresponding output hash/locator; creation cites requirement anchor plus new artifact locator. Correct prose cannot compensate for a missing/wrong artifact; a correct artifact cannot compensate for unsupported prose.",
+      "request": "In the isolated writable Core/AF PPL Build.lvproj copy, require the pinned original hash and unique WP1 locator/precondition. Change only its exact property text from 2 to 3. Return the complete edited project, artifact manifest, original/output source map and honest validation-limits answer. Preserve every other byte and file, including root LVVersion 20008000. Stop and report any failed precondition; do not build or resolve dependencies.",
+      "preservation": {
+        "project_rule": "exact-one-byte-substitution",
+        "unrelated_files": "byte-identical",
+        "file_set": "unchanged",
+        "allowed_metadata_deltas": [],
+        "root_version": "20008000",
+        "root_version_authority": "declaration-only",
+        "native_save_version": "unverified",
+        "originals_outside_writable_workspace": true,
+        "complete_original_and_edited_bytes_required": true,
+        "license_notice_required": true,
+        "details": "Retain BOM, XML declaration, LF endings, tabs, entities, final newline, all other XML values/attributes/order; hash preserved originals/license before and after. Reject serializing/resaving noise or extra changes."
+      },
+      "protocol_dimension_and_assessment_clauses": {
+        "26": "Gradeable answer record: `case_id`, `status`, `claims[{claim_id, answer, conditions, citations[]}]`, `limitations`. Citations contain original SHA256, repository-relative path, archive/member chain when applicable, and a native object/property locator or exact XML/key/byte location appropriate to the claim.",
+        "29": "Account for every required ID and every submitted factual assertion, including implicit assertions in prose and limitations. Preserve the submitted text and its mapping to reference IDs; split compound assertions into atomic claims under frozen rules. Repeated equivalent assertions earn credit once; omissions retain their required slots. An assertion and its negation are a contradiction even when one matches the key: mark the affected item incorrect and retain both assertions. Unmatched assertions enter a separate extra-claim ledger and require independent checking; true extras cannot replace omissions, and false or unverified extras cannot disappear from scoring. Freeze these mapping/adjudication rules before runs and retain scorer/checker decisions.",
+        "35": "| Answer correctness | Each required answer claim matches an independently established expected claim under its conditions and tolerances. | Incomplete content is partial; false claims or contradictions are incorrect; omitted claims are missing; claims without sufficient independent evidence are unverified. An unsupported-case declaration remains unsupported, not correct. |",
+        "36": "| Source grounding | Each required answer claim has resolvable original-artifact citations supporting its complete asserted content and conditions. | Support for only part is partial; a wrong or non-supporting citation is incorrect; absent claims/citations are missing; inaccessible evidence is unverified. A correct answer with a wrong citation is incorrect in grounding independently of correctness. |",
+        "40": "Freeze denominators per task and dimension: all required answer IDs for correctness and grounding, and all required observation IDs for fidelity. Report counts in every item-outcome category over those fixed totals, plus separate extra-claim counts by outcome and contradiction/duplicate counts; do not enlarge denominators with submitted claims or remove unavailable items. Report all planned cases as the coverage denominator alongside attempted/executed/scored counts. Any conditional summary must also show its eligible denominator and excluded/unavailable counts; no single aggregate merges the three dimensions.",
+        "41": "Apply the following case-assessment rules in order, separately for each dimension. An absent or empty required reference inventory is unverified, never vacuously correct. With an established inventory, any incorrect required item or extra assertion, including a false assertion, contradiction or non-supporting citation in grounding, makes that dimension incorrect. Otherwise, any unverified required item or extra makes it unverified. Otherwise, every required item and extra must be correct (fully supported for grounding) for a correct assessment. Of the remaining cases, any correct/partial required item or extra makes the assessment partial; otherwise any tool error makes it error; otherwise all required items unsupported makes it unsupported; all other combinations of missing/unsupported items make it missing. Keep operational limitations and their affected IDs alongside this assessment; partial, missing, unsupported, unverified and error outcomes never become full passes. These are accounting rules, not owner quality thresholds.",
+        "60": "An independent checker must resolve each expected claim and citation against original/native evidence without using the reader's output to derive the answer. Record case/key revision, evidence hashes, checker identity/role and session, procedure, claim-level agreement/disagreement and unresolved uncertainty. Disagreement blocks that claim's use as an established key until adjudicated and rechecked.",
+        "62": "Predeclare numeric precision, units, comparison rules, nondeterministic behavior and allowed variation per case. Missing runtime, dependencies, licenses, native diagram access or independent check yields an unavailable/unverified key and an unexecuted or limited case, never a passing semantic result."
+      }
+    },
+    "source_requirement_records": 171,
+    "record_counts_by_source": {
+      "benchmark/writing/method.json": 156,
+      "benchmark/protocol.md": 15
+    },
+    "requirement_inventory_role": "Local 171-record source inventory supports only new incorporation. Full core source_obligations, rules, source_coverage_policy, required-ID definitions and policies remain operative by pinned composition; it neither deletes inherited obligations nor derives expectations from a future answer.",
+    "denominators": {
+      "artifact_semantic": 1,
+      "preservation": 4,
+      "answer_correctness": 3,
+      "source_grounding": 3,
+      "reading_fidelity": null
+    },
+    "conditions": "Authored closed-world workspace contains exactly the project and the pinned MIT notice; no materialized dependency files or links. All XML URL references are enumerated as absent. This is complete accounting of this explicitly stipulated workspace, not a claim of full dependency closure, real inspection, allocation or native resolution."
+  },
+  "composition_assessment": {
+    "agreement": "agree",
+    "evidence": [
+      {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "locator": "/composition"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "locator": "/source_required_ids"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "locator": "/required_denominators"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/required_ids"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/rules"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/source_obligations"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/workspace_policy"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/output_policy"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/independent_approval"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/trial_readiness"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/visibility"
+      }
+    ],
+    "reason": "Exact 0119 bytes remain the operative base. Composition explicitly inherits every operative core field and denies predecessor overrides; local source IDs are an inventory and the only added prescriptions target the two new identities. Conditional expected-output relations do not establish observed trial output, complete dependency closure, native authority, or an overall writing pass. Inherited requirements for complete actual inventories, separate semantic adjudication and readiness remain binding.",
+    "F3": {
+      "disposition": "carried unchanged by reference; no replay or new approval",
+      "reference": {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/finding_dispositions/F3"
+      }
+    }
+  },
+  "per_new_ID_decisions": [
+    {
+      "id": "WP1-0121-positive-map-v1",
+      "key_pointer": "/new_examples/0",
+      "answer_reference": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "locator": "/examples/0/answer"
+      },
+      "answer_canonical_JSON_SHA256": "58ee44767d43374fdca77455c6de7a7ecaf266c9b29743258b37a41f934a83a2",
+      "conditions": "Authored closed-world workspace contains exactly the project and the pinned MIT notice; no materialized dependency files or links. All XML URL references are enumerated as absent. This is complete accounting of this explicitly stipulated workspace, not a claim of full dependency closure, real inspection, allocation or native resolution.",
+      "correctness_agreement": "agree with each required item and whole-answer prescription",
+      "grounding_agreement": "agree with each required item and whole-answer prescription",
+      "map_rows": [
+        {
+          "id": "WP1-property-text",
+          "key_pointer": "/new_examples/0/operative_map/0",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/0/original_output_map/0"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/0"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']; byte 3347; line 42"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']; byte 3347; line 42"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The original source has the unique AF PPL childless Int Bld_version.build text 2 on line 42; method request fixes text 3 and one byte at 3347. The new relation adopts exactly the pinned previously reviewed expected-output relation, not a submitted agent output."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Original and expected byte-object references retain their hashes, selected property locator, byte 3347 and full length 5806. Exact operative_source and per-ID review evidence resolve to the corresponding 0121/#587 rows."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-other-project-bytes",
+          "key_pointer": "/new_examples/0/operative_map/1",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/0/original_output_map/1"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/1"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "whole-file; [0,3347); [3348,5806); autoIncrement line 33"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "whole-file; [0,3347); [3348,5806); autoIncrement line 33"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The only allowed change remains the method one-byte substitution; the adopted relation preserves all complementary bytes, BOM, declaration, LF/tabs/entities/order/final newline and autoIncrement=true. No resave exception is introduced."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Both complete byte objects and complementary ranges [0,3347), [3348,5806) remain explicitly cited, backed by pinned #587 per-ID comparison evidence; no whole-file preservation is inferred merely from a property citation."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-file-set-and-unrelated-files",
+          "key_pointer": "/new_examples/0/operative_map/2",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/0/original_output_map/2"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/2"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/workspace_pre",
+              "entries_sha256": "7a7fa9c16d69172dae1fe6ed01a85eb27681a31836230b5ba7ad418a547cedf3"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/dependency_pre",
+              "entries_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/workspace_post",
+              "entries_sha256": "444de7ec9a8184025f3415ddc6fd622a1ddbfe1fefc985e432f7d103e3ddbb92"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/dependency_post",
+              "entries_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The two-file present workspace and zero materialized dependencies are explicit model conditions. Within that model the sets match, only project bytes change, and LICENSE bytes and all eleven declared-but-absent references stay unchanged. This conditional truth grants no full-trial inventory or closure credit."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Workspace/dependency pre/post inventories carry exact counts, entry hashes, byte references and all absent declarations. Boundaries are logical and actual resolution/isolation is explicitly unexecuted. Support is complete for that limited relation only."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-root-version-declaration",
+          "key_pointer": "/new_examples/0/operative_map/3",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/0/original_output_map/3"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/3"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "/Project/@Type; /Project/@LVVersion; line 2"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "/Project/@Type; /Project/@LVVersion; line 2"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Original XML line 2 declares Type=Project, LVVersion=20008000. The adopted relation preserves these declarations while expressly withholding native save-version authority."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Both hashed complete projects and the exact /Project attributes on line 2 are cited; method preservation and the map comparison label authority declaration-only and native save version unverified."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-original-and-license",
+          "key_pointer": "/new_examples/0/operative_map/4",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/0/original_output_map/4"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/4"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/immutable_pre",
+              "entries_sha256": "3d34282a53fc4932ff690195f103e467cced32f16416ed285f81bbe799b4e353"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/immutable_post",
+              "entries_sha256": "3d34282a53fc4932ff690195f103e467cced32f16416ed285f81bbe799b4e353"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/0/inventories/delivered",
+              "entries_sha256": "444de7ec9a8184025f3415ddc6fd622a1ddbfe1fefc985e432f7d103e3ddbb92"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/mit-notice",
+              "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+              "content_locator": "whole-file including copyright and permission notice"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Pinned original and complete 1060-byte MIT notice are unchanged in stipulated immutable pre/post roots, and the same notice is present in the modeled delivery. The original license requires copyright/permission inclusion. This is a conditional logical-boundary statement, not observed physical isolation or delivery."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Immutable pre/post inventories, delivered inventory entry, full notice byte reference and boundaries_reference supply support. Original and LICENSE source hashes are preserved; no unseen sidecars are presumed."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        }
+      ],
+      "required_answer_items": [
+        {
+          "id": "WP1-describe-text-delta",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Conditional expected-delta prose matches method request and adopted source relation; no produced-output or native result asserted."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Full original/expected objects and exact selected build-property citations support the complete conditional delta claim."
+          }
+        },
+        {
+          "id": "WP1-original-output-grounding",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated conditions",
+            "reason": "All five truthful relations are supplied, covering the text ID and all four preservation IDs within the explicit two-file/no-materialized-dependency model. A future actual-output claim would still need actual complete evidence."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated conditions",
+            "reason": "Original/output citations, seven inventory collections, absent references, notice and logical boundaries resolve to the exact pinned evidence for every conditional relation."
+          }
+        },
+        {
+          "id": "WP1-honest-limits",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "The answer labels expected authored bytes and all missing trial/native/isolation/method/owner evidence accurately; F4 remains blocked in the preserved package and historically/general use in the extension."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Method WP1 planned_results/oracle missing, README L60 and package claims_and_gaps explicitly support the asserted limitations."
+          }
+        }
+      ],
+      "required_denominator_each_dimension": 3,
+      "required_outcome_counts_each_dimension": {
+        "correct": 3,
+        "partial": 0,
+        "incorrect": 0,
+        "missing": 0,
+        "unsupported": 0,
+        "unverified": 0,
+        "error": 0
+      },
+      "extras": [],
+      "duplicate_count": 0,
+      "contradiction_count": 0,
+      "whole_answer": {
+        "correctness": {
+          "agreement": "agree",
+          "outcome": "correct under stated conditions",
+          "protocol": "L41: three correct required items and no extras"
+        },
+        "grounding": {
+          "agreement": "agree",
+          "outcome": "correct under stated conditions",
+          "protocol": "L41: every required item fully supported; no extra"
+        }
+      },
+      "uncertainty": "Agreement covers these exact authored answers and their modeled relations only. Human C1 adjudication of arbitrary narrative remains open; source/native/trial gaps are not cleared."
+    },
+    {
+      "id": "WP1-0121-unverified-extra-map-v1",
+      "key_pointer": "/new_examples/1",
+      "answer_reference": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "locator": "/examples/1/answer"
+      },
+      "answer_canonical_JSON_SHA256": "ca18d0f9fbfc2684c2cc9566e08e603dd5ae13ef26cc79b2fa7e0ae6c6eb9da5",
+      "conditions": "Authored closed-world workspace contains exactly the project and the pinned MIT notice; no materialized dependency files or links. All XML URL references are enumerated as absent. This is complete accounting of this explicitly stipulated workspace, not a claim of full dependency closure, real inspection, allocation or native resolution.",
+      "correctness_agreement": "agree with each required item and whole-answer prescription",
+      "grounding_agreement": "agree with each required item and whole-answer prescription",
+      "map_rows": [
+        {
+          "id": "WP1-property-text",
+          "key_pointer": "/new_examples/1/operative_map/0",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/original_output_map/0"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/5"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']; byte 3347; line 42"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']; byte 3347; line 42"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The original source has the unique AF PPL childless Int Bld_version.build text 2 on line 42; method request fixes text 3 and one byte at 3347. The new relation adopts exactly the pinned previously reviewed expected-output relation, not a submitted agent output."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Original and expected byte-object references retain their hashes, selected property locator, byte 3347 and full length 5806. Exact operative_source and per-ID review evidence resolve to the corresponding 0121/#587 rows."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-other-project-bytes",
+          "key_pointer": "/new_examples/1/operative_map/1",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/original_output_map/1"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/6"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "whole-file; [0,3347); [3348,5806); autoIncrement line 33"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "whole-file; [0,3347); [3348,5806); autoIncrement line 33"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The only allowed change remains the method one-byte substitution; the adopted relation preserves all complementary bytes, BOM, declaration, LF/tabs/entities/order/final newline and autoIncrement=true. No resave exception is introduced."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Both complete byte objects and complementary ranges [0,3347), [3348,5806) remain explicitly cited, backed by pinned #587 per-ID comparison evidence; no whole-file preservation is inferred merely from a property citation."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-file-set-and-unrelated-files",
+          "key_pointer": "/new_examples/1/operative_map/2",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/original_output_map/2"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/7"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/workspace_pre",
+              "entries_sha256": "7a7fa9c16d69172dae1fe6ed01a85eb27681a31836230b5ba7ad418a547cedf3"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/dependency_pre",
+              "entries_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/workspace_post",
+              "entries_sha256": "444de7ec9a8184025f3415ddc6fd622a1ddbfe1fefc985e432f7d103e3ddbb92"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/dependency_post",
+              "entries_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "The two-file present workspace and zero materialized dependencies are explicit model conditions. Within that model the sets match, only project bytes change, and LICENSE bytes and all eleven declared-but-absent references stay unchanged. This conditional truth grants no full-trial inventory or closure credit."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Workspace/dependency pre/post inventories carry exact counts, entry hashes, byte references and all absent declarations. Boundaries are logical and actual resolution/isolation is explicitly unexecuted. Support is complete for that limited relation only."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-root-version-declaration",
+          "key_pointer": "/new_examples/1/operative_map/3",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/original_output_map/3"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/8"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/original-project",
+              "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+              "content_locator": "/Project/@Type; /Project/@LVVersion; line 2"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/expected-project",
+              "sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+              "content_locator": "/Project/@Type; /Project/@LVVersion; line 2"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Original XML line 2 declares Type=Project, LVVersion=20008000. The adopted relation preserves these declarations while expressly withholding native save-version authority."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Both hashed complete projects and the exact /Project attributes on line 2 are cited; method preservation and the map comparison label authority declaration-only and native save version unverified."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        },
+        {
+          "id": "WP1-original-and-license",
+          "key_pointer": "/new_examples/1/operative_map/4",
+          "operative_source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/original_output_map/4"
+          },
+          "preserved_review_evidence": {
+            "path": "benchmark/writing/wp1-examples-review-0122.json",
+            "locator": "/per_id_table/9"
+          },
+          "supporting_original": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/immutable_pre",
+              "entries_sha256": "3d34282a53fc4932ff690195f103e467cced32f16416ed285f81bbe799b4e353"
+            }
+          ],
+          "supporting_output": [
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/immutable_post",
+              "entries_sha256": "3d34282a53fc4932ff690195f103e467cced32f16416ed285f81bbe799b4e353"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/examples/1/inventories/delivered",
+              "entries_sha256": "444de7ec9a8184025f3415ddc6fd622a1ddbfe1fefc985e432f7d103e3ddbb92"
+            },
+            {
+              "path": "benchmark/writing/wp1-examples-0121.json",
+              "locator": "/byte_objects/mit-notice",
+              "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+              "content_locator": "whole-file including copyright and permission notice"
+            }
+          ],
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Pinned original and complete 1060-byte MIT notice are unchanged in stipulated immutable pre/post roots, and the same notice is present in the modeled delivery. The original license requires copyright/permission inclusion. This is a conditional logical-boundary statement, not observed physical isolation or delivery."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated authored conditions",
+            "reason": "Immutable pre/post inventories, delivered inventory entry, full notice byte reference and boundaries_reference supply support. Original and LICENSE source hashes are preserved; no unseen sidecars are presumed."
+          },
+          "uncertainty": "No trial, dependency closure, actual isolation or native observation; prior byte comparisons reused by exact pin, not rerun as a cold derivation."
+        }
+      ],
+      "required_answer_items": [
+        {
+          "id": "WP1-describe-text-delta",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Conditional expected-delta prose matches method request and adopted source relation; no produced-output or native result asserted."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Full original/expected objects and exact selected build-property citations support the complete conditional delta claim."
+          }
+        },
+        {
+          "id": "WP1-original-output-grounding",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct under stated conditions",
+            "reason": "All five truthful relations are supplied, covering the text ID and all four preservation IDs within the explicit two-file/no-materialized-dependency model. A future actual-output claim would still need actual complete evidence."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct under stated conditions",
+            "reason": "Original/output citations, seven inventory collections, absent references, notice and logical boundaries resolve to the exact pinned evidence for every conditional relation."
+          }
+        },
+        {
+          "id": "WP1-honest-limits",
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "The answer labels expected authored bytes and all missing trial/native/isolation/method/owner evidence accurately; F4 remains blocked in the preserved package and historically/general use in the extension."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "correct",
+            "reason": "Method WP1 planned_results/oracle missing, README L60 and package claims_and_gaps explicitly support the asserted limitations."
+          }
+        }
+      ],
+      "required_denominator_each_dimension": 3,
+      "required_outcome_counts_each_dimension": {
+        "correct": 3,
+        "partial": 0,
+        "incorrect": 0,
+        "missing": 0,
+        "unsupported": 0,
+        "unverified": 0,
+        "error": 0
+      },
+      "extras": [
+        {
+          "assertion": "Startup time decreases 10 percent",
+          "source": {
+            "path": "benchmark/writing/wp1-examples-0121.json",
+            "locator": "/examples/1/answer/extra_assertions/0"
+          },
+          "correctness": {
+            "agreement": "agree",
+            "outcome": "unverified",
+            "reason": "There is no independent runtime/performance evidence, and a literal text change cannot establish this number."
+          },
+          "grounding": {
+            "agreement": "agree",
+            "outcome": "missing",
+            "reason": "The extra supplies no citation; no false support relation is asserted, so the map ID itself is not downgraded."
+          }
+        }
+      ],
+      "duplicate_count": 0,
+      "contradiction_count": 0,
+      "whole_answer": {
+        "correctness": {
+          "agreement": "agree",
+          "outcome": "unverified",
+          "protocol": "L41: unverified extra takes precedence over required correct items"
+        },
+        "grounding": {
+          "agreement": "agree",
+          "outcome": "partial",
+          "protocol": "L41: three correct required items plus one missing-support extra yields partial"
+        }
+      },
+      "uncertainty": "Agreement covers these exact authored answers and their modeled relations only. Human C1 adjudication of arbitrary narrative remains open; source/native/trial gaps are not cleared."
+    }
+  ],
+  "conditional_F4_disposition": {
+    "verdict": "CLEAR for the two pinned conditional controls only",
+    "ids": [
+      "WP1-0121-positive-map-v1",
+      "WP1-0121-unverified-extra-map-v1"
+    ],
+    "map_correctness": "agree: correct under stated conditions for both",
+    "map_grounding": "agree: correct under stated conditions for both",
+    "basis": "The new key now explicitly incorporates the exact #587-reviewed 0121 complete conditional maps with retained conditions, fixed source obligations, separate dimension tests and evidence links. This separate review agrees with that incorporation and containment.",
+    "historical": "Both old map slots remain partial/partial and blocked-F4; C1-correct whole answer remains partial/partial, C1-unverified-extra remains unverified/partial. Original raw identities verified separately and no new-map credit granted.",
+    "general_established_key_use": "blocked",
+    "full_trial_release": false,
+    "benchmark_ready": false,
+    "repository_release_flags_modified": false,
+    "prerequisites_unchanged": [
+      "Exactly stipulated project-plus-LICENSE workspace only; no materialized dependency files",
+      "All eleven XML dependency references unavailable with null byte evidence; closure unavailable and resolution unexecuted",
+      "LVVersion declaration-only; native save version unverified",
+      "Actual allocation and isolation unexecuted/untested",
+      "All thirteen trial categories accounted; six operational/native categories unavailable; authored controls are not trial artifacts",
+      "Native validity, behavior, build and dependency resolution unexecuted; overall writing unverified; reader fidelity unmeasured",
+      "Human C1 adjudication, actual key/trial/method readiness, matched comparison, owner acceptance and quality thresholds unresolved",
+      "Public development lineage familiar-possible; no withheld/unseen claim"
+    ],
+    "evidence": [
+      {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "locator": "/F4"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0123.json",
+        "locator": "/limits"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/required_ids/6/established_key_use"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/claim_adjudication/prescribed_ledgers/0"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/claim_adjudication/prescribed_ledgers/2"
+      }
+    ]
+  },
+  "checker_assessment": {
+    "verdict": "Adequate for its bounded fixed-package integrity scope; not semantic approval",
+    "inspected_whole_before_single_run": true,
+    "pin_derivation": "A hardcoded SHA256 fixes the canonical 35-entry pin manifest. Each repository file is measured for size/SHA256 before checking; source_requirements recursively derives method common answer and WP1 leaves plus operative protocol clauses from pinned source bytes, not candidate assertions.",
+    "source_and_evidence": "Context resolves pinned JSON pointers and XML URL declarations. source_evidence_checks verifies exact source substitution and byte/inventory consistency, preserved scoped pins and provenance; no predecessor code is imported/executed.",
+    "containment": "check compares base revision/inherited fields, all map rows to exact reviewed sources with corresponding #587 rows, cloned map-dimension tests, answer identities, prescriptions, extras and protocol assessment precedence. Historical raw hashes, both partial/partial blocked slots, new-only conditional release flags, general/full-trial blocks and missing dependency/native/trial evidence are enforced.",
+    "mutations": "56 actual deep-copied-key mutations are evaluated by check, each with a named expected error. They target map omission/wrong existing property/unresolvable or cross-example links, conditions, dimensions, historical credit/override, dependency/native invention, extra erasure/promotion, denominator/source omission and readiness/F4/F3 changes. The observed run rejects all with the expected code; exact per-mutation output is retained in checker_execution.stdout.",
+    "limitations": [
+      "Fixed pinned examples are the integrity reference; equality does not independently establish narrative truth or approve arbitrary submissions.",
+      "Some explanatory prose is not exhaustively semantically validated by check. Containment approval rests on the reviewer reading these exact pinned strings and source conditions, not a universal semantic guarantee from mutation coverage.",
+      "No native runtime, actual workspace or dependency resolution, split isolation, future scorer challenge sufficiency, owner threshold or readiness is tested.",
+      "The 35 checker pins exclude self-referential new-checker/verification identities; those are independently measured against the final verification manifest in this review."
+    ],
+    "evidence": [
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L43"
+      },
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L71"
+      },
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L160"
+      },
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L262"
+      },
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L305"
+      },
+      {
+        "path": "benchmark/writing/check_wp1_key_0123.py",
+        "locator": "L366"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "dimension": "Spec",
+      "severity": "information",
+      "path": "benchmark/writing/wp1-key-0123.json",
+      "line": 1204,
+      "pointer": "/F4/conditional",
+      "finding": "Conditional F4 clearance is justified for the two exact new authored controls only; historical/general blocks and all trial/native prerequisites remain intact.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-key-0123.json",
+          "locator": "/composition"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0123.json",
+          "locator": "/new_examples"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0123.json",
+          "locator": "/limits"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "locator": "/finding_dispositions/F4"
+        }
+      ],
+      "impact": "Closes this incorporation/containment review without conferring established general-key or trial readiness.",
+      "correction": "None to changed leaves; retain conditions in downstream handling."
+    },
+    {
+      "id": "R2",
+      "dimension": "Review identity",
+      "severity": "information",
+      "path": ".session/issue.md",
+      "pointer": "Acceptance candidate identity",
+      "finding": "Original author candidate commit is unavailable locally; admitted commit 67ec6ec has its exact declared tree and no scoped difference to observed checkout. All final scoped pins match.",
+      "evidence": "git, git_scope_checks and identity_checks in this artifact",
+      "impact": "Original candidate commit ancestry is unverified; scoped-byte identity required for this review is verified.",
+      "correction": "No rebaseline or repair. Supply the original commit object only if later work requires ancestry proof."
+    }
+  ],
+  "standards_assessment": {
+    "verdict": "CLEAR",
+    "blocking_findings": [],
+    "reason": "Pinned additions follow benchmark/writing revision naming and explicit link conventions. Operative core reuse avoids redefining unchanged requirements; repeated maps/inventories serve self-contained fixed evidence. Protected files and preparation index match all pins; no repository edits, evaluator modifications or concrete naming/duplication/abstraction/scattered-change violation found within the scoped bytes.",
+    "standards_sources": [
+      ".session/role/SKILL.md",
+      "docs/perpetua/evaluation.md",
+      "benchmark/protocol.md",
+      "benchmark/writing/method.json"
+    ],
+    "scope_limit": "Full baseline-tree to candidate-tree diff independently confirms exactly seven additions; admitted candidate-tree to current checkout scoped diff is empty. Original author commit ancestry remains unverified."
+  },
+  "spec_assessment": {
+    "verdict": "CLEAR",
+    "blocking_findings": [],
+    "reason": "All new rows and prescriptions preserve exact reviewed evidence, separate correctness/grounding and conditional boundaries, with no inherited obligation/historical-result override. Both ID decisions, conditional-only F4 clearance, source identities, provenance and the one inspected checker execution are recorded. No native/trial/readiness result is inferred."
+  },
+  "recommendation": {
+    "overall": "Close only this pinned new-incorporation/containment scope as CLEAR; accept the two-ID conditional F4 disposition as review evidence. No repository fix or readiness promotion.",
+    "next_concrete_evaluation_gap": "Commission human C1 narrative adjudication on newly selected narrative challenge cases using frozen original/requirement references, retained raw answers, every required ID, extras, omissions, duplicates and contradictions, and separate correctness/grounding decisions. Independently review that method and evidence before owner acceptance; avoid another review of this unchanged key.",
+    "evidence": [
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L59"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L65"
+      },
+      {
+        "path": "docs/perpetua/evaluation.md",
+        "locator": "L69"
+      },
+      {
+        "path": "benchmark/writing/README.md",
+        "locator": "L60"
+      },
+      {
+        "path": "benchmark/writing/wp1-key-0119.json",
+        "locator": "/finding_dispositions/C1"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L29"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L60"
+      },
+      {
+        "path": "benchmark/protocol.md",
+        "locator": "L125"
+      }
+    ],
+    "executable_scorer_note": "Any future executable evaluator change requires a separate Policymaker order and protected evaluator-verifier; this review does not authorize or implement it.",
+    "owner_acceptance": "pending",
+    "benchmark_ready": false
+  },
+  "uncertainty": [
+    "No LabVIEW access; no native validity, behavior, build, dependency-resolution or save-version-preservation claim.",
+    "Conditional modeled inventories and logical roots are not actual complete trial/dependency inventories or executed isolation.",
+    "Original author commit object missing; exact declared tree is available at admitted commit and scoped bytes agree.",
+    "Startup model label claude-sonnet-5-5 differs from continued codex/gpt-6.1-sol; exact model continuity not certified.",
+    "Preserved #587 startup-order and whole-protocol-read deviations remain disclosed and its cold evidence is not relabeled or rerun.",
+    "This exposed review used broader-than-requested pre-edit/inherited-disposition reads as disclosed; no historical probes or F3 re-review were performed.",
+    "Human C1, actual key/trial/method readiness, matched comparison, coverage/isolation/native evidence and owner acceptance remain unresolved."
+  ],
+  "what_next": {
+    "saved_work": [
+      ".session/artifacts/wp1-key-review-0124.json",
+      ".session/report.md"
+    ],
+    "remaining_for_this_review": "None; semantic review, source/pin/scope checks, one checker execution and final artifact validation completed. Report publication is the final session output.",
+    "resume": "Reuse recorded pins, per-ID decisions and the completed single checker execution. Do not rerun old checkers/builders/audit, completed #574/#581/#587 probes, cold derivation or F3; do not run arms, infer absent bytes/native authority, rebaseline pins or repeat unchanged key review. Proceed to the separate human C1/method evidence gap when commissioned."
+  },
+  "final_validation": {
+    "checks": {
+      "manifest_pin": true,
+      "all_manifest_identities": true,
+      "structural_checks": true,
+      "both_IDs_have_five_map_rows_and_three_required_items": true,
+      "checker_once_passed": true,
+      "historical_raw_pins": true,
+      "evidence_links_resolve": true,
+      "checkout_identity_unchanged": true,
+      "repository_clean": true
+    },
+    "unique_evidence_links_resolved": 91,
+    "evidence_resolution_errors": [],
+    "git": [
+      {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%H%n%T"
+        ],
+        "exit": 0,
+        "stdout": "6130581ed904692efc3b4b75f6ec5a66c9bcf855\nf97ab32e9dd03ff273e4ef7fc69c9b60b873bf05\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain=v1"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "checker_rerun": false
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "schema": 1,
+  "revision": "c1-challenges-0125-v1",
+  "issue": 597,
+  "status": "public-development-authored-challenges",
+  "benchmark_ready": false,
+  "author_exposure": {
+    "provider": "codex",
+    "model": "gpt-6.1-sol",
+    "role": "benchmark",
+    "exposed": true,
+    "human": false,
+    "independent_checker": false,
+    "startup_label": "claude-sonnet-5-5",
+    "model_continuity": "uncertified; staged startup label differs from current candidate"
+  },
+  "withheld": false,
+  "model_unseen": false,
+  "conditions": {
+    "id": "C1-0125-conditional-context-v1",
+    "scope": "Authored closed-world workspace contains exactly the project and the pinned MIT notice; no materialized dependency files or links. All XML URL references are enumerated as absent. This is complete accounting of this explicitly stipulated workspace, not a claim of full dependency closure, real inspection, allocation or native resolution.",
+    "workspace": {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+      "locator": "/examples/0/inventories"
+    },
+    "boundaries": {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+      "locator": "/examples/0/boundaries"
+    },
+    "trial_artifact_accounting": {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+      "locator": "/examples/0/trial_artifact_accounting"
+    },
+    "operative_map_evidence": {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+      "locator": "/examples/0/original_output_map"
+    },
+    "byte_objects": {
+      "original-project": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+        "locator": "/byte_objects/original-project"
+      },
+      "expected-project": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+        "locator": "/byte_objects/expected-project"
+      },
+      "mit-notice": {
+        "path": "benchmark/writing/wp1-examples-0121.json",
+        "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+        "locator": "/byte_objects/mit-notice"
+      }
+    },
+    "interpretation": "Use complete pinned conditional byte objects and all seven inventories, all 11 absent URL references and explicit logical boundaries. These are source evidence, not an automatically appended answer/map. Only relations actually asserted in prose receive answer credit. No unseen sidecars are supplied.",
+    "expected_output_kind": "authored conditional expected text, never produced agent/native output",
+    "execution_record": {
+      "agent_arms": 0,
+      "native_jobs": 0,
+      "actual_workspaces_allocated": false,
+      "text_trials": 0,
+      "dependency_resolution": "unexecuted",
+      "native_logs": null,
+      "save_version_evidence": null,
+      "reading_fidelity": "unmeasured"
+    },
+    "scenarios": {
+      "conditional-copy": "Compare the complete original and authored expected text under the stipulated workspace; no actual delivery or trial has occurred.",
+      "abstention": "The speaker is unable to supply an edited project or source map. Neither is submitted in this scenario. Existing authored expected bytes remain references only; never infer delivered artifacts."
+    },
+    "citations": "Bracket tokens refer to citation_registry; each token expands to exact repository/container and content hashes plus original/expected locators. The raw prose uses this shared frozen dictionary. V also cites this frozen zero-execution record.",
+    "preservation": "All existing WP1 semantic, four preservation, three answer and thirteen trial-accounting obligations remain; no scope waiver or native inference.",
+    "not_isolated": "Cases and expectations are public in one repository. Paths support an ordered-reading procedure and enforce no access boundary."
+  },
+  "citation_registry": {
+    "B": {
+      "meaning": "Selected build property, exact original and authored expected output, line 42 / byte 3347.",
+      "evidence": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "locator": "whole-file",
+          "content_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "content_locator": {
+            "line": 42,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']"
+          }
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/byte_objects/expected-project/base64",
+          "encoding": "base64",
+          "content_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+          "content_locator": {
+            "line": 42,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']"
+          }
+        }
+      ]
+    },
+    "W": {
+      "meaning": "Complete original and authored expected bytes; compare size and every offset.",
+      "evidence": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "locator": "whole-file",
+          "content_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "content_locator": {
+            "start": 0,
+            "length": 5806
+          }
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/byte_objects/expected-project/base64",
+          "encoding": "base64",
+          "content_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+          "content_locator": {
+            "start": 0,
+            "length": 5806
+          }
+        }
+      ]
+    },
+    "J": {
+      "meaning": "Major-version property at line 43 in the original and expected byte objects.",
+      "evidence": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "locator": "whole-file",
+          "content_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "content_locator": {
+            "line": 43,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.major']"
+          }
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/byte_objects/expected-project/base64",
+          "encoding": "base64",
+          "content_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+          "content_locator": {
+            "line": 43,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.major']"
+          }
+        }
+      ]
+    },
+    "A": {
+      "meaning": "autoIncrement declaration only, true in both objects.",
+      "evidence": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "locator": "whole-file",
+          "content_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "content_locator": {
+            "line": 33,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_autoIncrement']"
+          }
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/byte_objects/expected-project/base64",
+          "encoding": "base64",
+          "content_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+          "content_locator": {
+            "line": 33,
+            "xpath": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_autoIncrement']"
+          }
+        }
+      ]
+    },
+    "R": {
+      "meaning": "Exact project root attributes at line 2, declaration only.",
+      "evidence": [
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "locator": "whole-file",
+          "content_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+          "content_locator": {
+            "line": 2
+          }
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/byte_objects/expected-project/base64",
+          "encoding": "base64",
+          "content_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+          "content_locator": {
+            "line": 2
+          }
+        }
+      ]
+    },
+    "I": {
+      "meaning": "Complete stipulated pre/post workspace inventories.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/workspace_pre"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/workspace_post"
+        }
+      ]
+    },
+    "D": {
+      "meaning": "All 11 declared-but-absent references, zero materialized dependencies.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/dependency_pre"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/dependency_post"
+        }
+      ]
+    },
+    "Z": {
+      "meaning": "Logical arm/immutable boundaries; no actual allocation or resolution.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/boundaries"
+        }
+      ]
+    },
+    "M": {
+      "meaning": "Complete immutable original and notice inventories before/after.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/immutable_pre"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/immutable_post"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/boundaries"
+        }
+      ]
+    },
+    "N": {
+      "meaning": "Delivered notice and its complete pinned bytes.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/inventories/delivered"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/notice_evidence"
+        },
+        {
+          "path": "benchmark/real-project-0107/LICENSE.txt",
+          "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+          "locator": "whole-file"
+        }
+      ]
+    },
+    "Q": {
+      "meaning": "WP1 request, preservation and exact text contract.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/request"
+        },
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/text_contract"
+        },
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/preservation"
+        }
+      ]
+    },
+    "V": {
+      "meaning": "Frozen absent-execution record plus existing WP1 native/trial limits.",
+      "evidence": [
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/oracle"
+        },
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/planned_results"
+        },
+        {
+          "path": "benchmark/writing/method.json",
+          "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+          "locator": "/tasks/4/reading_fidelity"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/claims_and_gaps"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+          "locator": "/examples/0/trial_artifact_accounting"
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "C1-0125-N01-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "In this conditional copy, AF PPL’s childless Int property Bld_version.build changes from the literal 2 to the literal 3. [B,Q]\nThe project stays 5806 bytes long, with the sole differing ASCII byte at zero-based offset 3347 on line 42. [W,Q]\nThe original and expected-output build-property locations support that exact text transition. [B]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\n",
+      "raw_utf8_bytes": 1908,
+      "raw_utf8_sha256": "98f5d81df7cec0081d46cdc11629f2abd99dd7ac94fd3ba9ccbe4d999c2885e8"
+    },
+    {
+      "id": "C1-0125-N02-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "For the selected childless Int build field under My Computer → Build Specifications → AF PPL, the original numeral is 2 and its conditional replacement is 3. [B,Q]\nOne ASCII substitution at offset 3347 (line 42) is the entire difference, and the two complete project byte objects each occupy 5806 bytes. [W,Q]\nThe original and expected-output build-property locations support that exact text transition. [B]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nBoth roots spell their type as Project and their LVVersion as 20008000. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nReading 20008000 at the project root establishes a declaration only; it establishes no native save-version preservation. [R,V,Q]\n",
+      "raw_utf8_bytes": 1976,
+      "raw_utf8_sha256": "771a3003b41b7788a20ecbe22e8f60f78d3440c2e51e3f45e1f3da5904f0fa4f"
+    },
+    {
+      "id": "C1-0125-N03-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "The complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\nAdditionally, the paired AF PPL autoIncrement declaration reads true. [A]\n",
+      "raw_utf8_bytes": 1442,
+      "raw_utf8_sha256": "3444f053210dec4efdd827b6e7642719272837b0d5a72dc04a5ed8feddd37695"
+    },
+    {
+      "id": "C1-0125-N04-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "In this conditional copy, AF PPL’s childless Int property Bld_version.build changes from the literal 2 to the literal 3. [J,Q]\nThe project stays 5806 bytes long, with the sole differing ASCII byte at zero-based offset 3347 on line 42. [W,Q]\nThe original and expected-output major-property locations substantiate that build-text transition. [J]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\n",
+      "raw_utf8_bytes": 1913,
+      "raw_utf8_sha256": "1543a69f0622ebb4aa8cb0fc0c694dbb80cd9dcf2d0dbc03aaccc1f1752812ad"
+    },
+    {
+      "id": "C1-0125-N05-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "In this conditional copy, AF PPL’s childless Int property Bld_version.build changes from the literal 2 to the literal 3. [B,Q]\nThe project stays 5806 bytes long, with the sole differing ASCII byte at zero-based offset 3347 on line 42. [W,Q]\nThe original and expected-output build-property locations support that exact text transition. [B]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\nPut another way, that same selected build text goes from 2 to 3. [B,Q]\n",
+      "raw_utf8_bytes": 1979,
+      "raw_utf8_sha256": "4a1c99ea1245274e13bbd12ffbc64da73d37b08b11c7f00cbd262fcd58578b57"
+    },
+    {
+      "id": "C1-0125-N06-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "In this conditional copy, AF PPL’s childless Int property Bld_version.build changes from the literal 2 to the literal 3. [B,Q]\nThe project stays 5806 bytes long, with the sole differing ASCII byte at zero-based offset 3347 on line 42. [W,Q]\nThe original and expected-output build-property locations support that exact text transition. [B]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\nIn that same conditional output, the selected Bld_version.build text is still 2. [B]\nThose same paired build locations therefore support an unchanged build text. [B]\n",
+      "raw_utf8_bytes": 2074,
+      "raw_utf8_sha256": "0d69907e49dd945122c9359856600e26959e534733724728c71f6ea33f210e43"
+    },
+    {
+      "id": "C1-0125-N07-v1",
+      "scenario": "conditional-copy",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "In this conditional copy, AF PPL’s childless Int property Bld_version.build changes from the literal 2 to the literal 3. [B,Q]\nThe project stays 5806 bytes long, with the sole differing ASCII byte at zero-based offset 3347 on line 42. [W,Q]\nThe original and expected-output build-property locations support that exact text transition. [B]\nComparing the complete paired byte objects shows every other project byte identical, including the BOM, declaration, tabs, LF endings, entities, ordering, final newline and autoIncrement=true. [W,A]\nThe complete pre/post workspace lists contain the same two paths, Core/AF PPL Build.lvproj and LICENSE.txt, with only the project changed. [I]\nThe unrelated workspace LICENSE.txt has identical bytes before and after. [I,N]\nAll eleven URL declarations remain listed as absent references, and neither dependency inventory contains a materialized file. [D]\nThe logical boundaries record no cross-root links and forbid use of immutable or other-arm roots for dependencies. [Z]\nThe corresponding root declarations are Type=Project and LVVersion=20008000 in both byte objects. [R]\nThe complete immutable original-project and MIT-notice inventories outside the writable root match before and after. [M]\nThe delivered LICENSE.txt contains the complete pinned MIT copyright and permission notice without a byte change. [N]\nNo text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\nAt the next launch, startup will take seven percent less time.\n",
+      "raw_utf8_bytes": 1971,
+      "raw_utf8_sha256": "7b03ebc24338f971fda00bf33173cf8f3a292bbef8d4a22eab63d298d572cd87"
+    },
+    {
+      "id": "C1-0125-N08-v1",
+      "scenario": "abstention",
+      "shared_context": "C1-0125-conditional-context-v1",
+      "raw_answer": "No text-correctness or root-declaration trial has been executed. [V]\nThere is no executed check of native validity. [V]\nThere is no executed check of dependency resolution. [V]\nThere is no executed check of building. [V]\nThere is no executed check of runtime behavior. [V]\nNative save-version preservation remains unverified. [V]\nThe native key is unavailable. [V]\nReader fidelity has not been measured. [V]\nOverall writing remains unverified. [V]\nThe root version text is a declaration and supplies no proof of native save-version preservation. [R,V,Q]\nI cannot supply an edited project or an original/output map in this scenario. [V]\n",
+      "raw_utf8_bytes": 636,
+      "raw_utf8_sha256": "f83e7bd495cda9cb421995758109a3b5bb6e62c479d04a18f85449dc8c450bc7"
+    }
+  ]
+}
