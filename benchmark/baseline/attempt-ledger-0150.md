@@ -36,6 +36,10 @@ Crash rules C1–C8: write-ahead dispatch; unverifiable dispatch persistence lea
 
 Receipt verification and verifier registry; storage-enforced append-only immutability; trusted clock; persistence acknowledgement authority; provider usage, price and returned model identity; delivery-only proof; isolation, routing and restricted storage; owner precision, quota and acceptance records. Each yields a blocked preflight, declared-only provenance, unknown usage or an unproved delivery as listed in JSON `/external_authority_required_fail_closed`. Real-envelope admission remains blocked. Actual admissions, model/reader/native executions, scored runs, semantic passes and real comparisons are **zero**; costs null.
 
+## Author application findings (retained, not fixed)
+
+The author's synthetic application (35 traces, 631 events, 28 negative controls, one accept control; saved as session artifacts) matched the saved seam expectations and the #685 I01–I20 regression inputs except two retained mismatches, recorded in JSON `/author_check_findings`: (F-A1) a second `plan_terminal` is detected as V17, never V20, so V20 is redundant with V17 and unexercised; (F-A2) the slot-level `NONE` decision appears in the decision list for S-X23 although the saved expectation listed only `[ROW, ROW]` (the inventory expectation agrees). These are decisions for the reviewer. The traces are synthetic; no trusted receipt, provider dispatch or real completion exists, and the constant outcomes (no accepted independent claim, zero real comparisons) discriminate nothing.
+
 ## Review handoff
 
 A separate reviewer should judge these two files against the pinned sources, `.session/artifacts/attempt-ledger-expectations-0150.json` (saved before this contract) and the application/check artifact, using the saved #685 expectations as regression inputs. Authoring consistency is separate from that review. Avoid repeating the F2 probes, the policy review, sizing design or historical suites.
