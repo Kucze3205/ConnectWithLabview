@@ -24,7 +24,17 @@
       {
         "answer": "<atomic assertion>",
         "citations": [
-          "original hash/path/member chain and exact original locator"
+          {
+            "archive_member_chain": [],
+            "commit": "<pinned commit>",
+            "locator": {
+              "expression": "<xml-positional-path, e.g. /Library/Property[3]/@Name>",
+              "scheme": "xml-positional-path"
+            },
+            "path": "<artifact path in the repository>",
+            "repository": "<repository name in benchmark/sources.json>",
+            "sha256": "<sha256 of the original artifact bytes>"
+          }
         ],
         "claim_id": "<required ID>",
         "conditions": []
