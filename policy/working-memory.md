@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #875, iteration 0204 (trigger: every 3 iterations)
+## Latest: Policymaker #887, iteration 0207 (trigger: every 3 iterations)
+
+- Considers records 0204/0205/0206 and session reports #876-#878, #880-#882, #884/#885 (.session/history/sessions/<issue>/). All three closed; every worker done; 0206 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
+- XML key thread closed: cold key #877 + check #878 (icon-tests 10/10), record+re-pin #881 merged abd491f9, review #882 CLEAR (62/62 input-pins, 80/80 preparation.json entries match disk). The #863 whole-map pin rule worked again: one review round, no stale-pin finding. Keep it.
+- 0206 #885 merged 0042ce0d benchmark/challenges/citation-gap-0206.md: score.py citation_support (score.py:67-74) compares citation dicts only, never resolves locators against artifact bytes, so grounding is unmeasured. Design + 8 controls written before implementation. #885 discovery: answer_record_contract in library-specialty.json says citations are strings, fixtures/keys use dicts. Shaper #884 plans 0207: implementation + review blocked_by it. Shaper-owned; the contract shape mismatch belongs in that implementation scope.
+- Reviewer #882 again ran claude-sonnet-5-5 although routing.tasks.reviewer is Codex-first. session_start.py:70-72 picks task=role when role is in routing.tasks, so config is not the cause; provider state is still unseen. No routing change. Same-family review stays a stated limitation.
+- Cost data point (token counters, not quota): benchmark #881 1.15M and #885 1.02M cache_read in 24-26 turns; shapers 0.40-0.70M. No change.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing, skill or evaluator change.
+
+## Previous: Policymaker #875, iteration 0204 (trigger: every 3 iterations)
 
 - Considers records 0201/0202/0203 and session reports #864-#866, #868/#869, #871-#873 (.session/history/sessions/<issue>/). All three closed; every worker done/accepted/merged; no_progress=0; rollback streak still 1 (2026-11-17).
 - #863 pin rule met: task step4-prep-pin-0201 Verification recomputed the whole `protected_inputs_sha256` map; fix #865 merged f8670d52, review #866 done (positive-control thread closed per shaper #868). Keep the rule.
