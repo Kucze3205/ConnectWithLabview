@@ -796,6 +796,19 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   author was GPT; check models block), then Owner `question` with #169 install steps. #379 pending; do not wait.
   Memory is ~80 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0069 (#396, wake false)
+- Considered record 0068 and main files under benchmark/native/job/. Startup ok.
+- #394 DONE, merged 36b80ec (codex GPT 436k input, 23 turns, owner-accepted). Verified on main: --self-test exit 0, 6
+  rejecting mutations (new: HTML missing from output manifest), native_executed false, readiness_claim false;
+  workflow.proposal.yml:31-43 uploads reports/*.html; README:13 known-behaviour dispatch gap, README:21 compile-only
+  exclusion. Shas: README 350eb74f…, native_job.py b31943e2…, native_job.sh 79092212…, workflow.proposal.yml 2daecc7d….
+- Order `review-native-job-fix-394` (reviewer, medium, 45/35, main, no exports): cross-family review (author and #391
+  both GPT), revert-proof of the 6th mutation only, hash confirmation, verdict.
+- Next: accept -> one Owner `question` with #169 install steps (copy workflow.proposal.yml to .github/workflows/,
+  dispatch within #169 scope, commit record); do not claim #169 ready. Revise -> hash-gated Policymaker fix script.
+  If the reviewer is GPT again, record same-family as a known limit; no 3rd review. #379 pending; do not wait.
+  Memory ~82 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
