@@ -63,4 +63,5 @@ for fid in score.FIXTURES:
                 label, exn, r['dimensions'], {k: v for k, v in r['counts']['correctness'].items() if v},
                 {k: v for k, v in r['counts']['grounding'].items() if v}, r['cannot_evaluate_reasons']))
             if label != 'baseline' and exn == 'executed':
-                print('    compare-vs-positive mismatches:', len(score.compare(r, pc['expected_positive'])))
+                ref = pc.get('expected_positive') or pc['expected']
+                print('    compare-vs-%s mismatches:' % ('expected_positive' if 'expected_positive' in pc else 'expected'), len(score.compare(r, ref)))
