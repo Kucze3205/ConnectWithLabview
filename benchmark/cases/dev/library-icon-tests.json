@@ -135,10 +135,69 @@
   "lineage_rule": "Keep all NI Actor Framework projects, archive copies and variants together in any later split; public history remains exposed.",
   "oracle": {
     "independent_checker": {
-      "claim_agreements": [],
-      "identity": null,
-      "session": null,
-      "status": "pending"
+      "claim_agreements": [
+        {
+          "claim_id": "A0001",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0002",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0003",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0004",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0005",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0006",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0007",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0008",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0009",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        },
+        {
+          "claim_id": "A0010",
+          "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+          "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+        }
+      ],
+      "identity": {
+        "checker": "benchmark/challenges/check_xml_keys.py",
+        "checker_sha256": "63f01c0ec6b90222c5587f6569a562d8d4bbcff59ee85dd41ffb8c10a4a63de3",
+        "key_file": "benchmark/challenges/positive-control-key-0204-icon-tests.json",
+        "key_sha256": "35d57c9c40fa219bbd99ffea008c95cbe6cf5ace2d04027f452a00f504c88f14"
+      },
+      "session": {
+        "check": 878,
+        "cold_key": 877
+      },
+      "status": "xml-agreed-A0001-A0010-native-pending"
     },
     "method": "Direct stdlib ElementTree inspection of hash-verified original XML; no evaluated reader used.",
     "native_status": "unavailable",

@@ -135,10 +135,69 @@
   "lineage_rule": "Keep all NI Actor Framework projects, archive copies and variants together in any later split; public history remains exposed.",
   "oracle": {
     "independent_checker": {
-      "claim_agreements": [],
-      "identity": null,
-      "session": null,
-      "status": "pending"
+      "claim_agreements": [
+        {
+          "claim_id": "A0001",
+          "key_file": "benchmark/challenges/positive-control-key-0191.json",
+          "key_sha256": "f9f5e1c4e55d956d4bd4cf9f008f739a09eb76023def57fa225d6553ad66d888"
+        },
+        {
+          "claim_id": "A0002",
+          "key_file": "benchmark/challenges/positive-control-key-0191.json",
+          "key_sha256": "f9f5e1c4e55d956d4bd4cf9f008f739a09eb76023def57fa225d6553ad66d888"
+        },
+        {
+          "claim_id": "A0003",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0004",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0005",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0006",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0007",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0008",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0009",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        },
+        {
+          "claim_id": "A0010",
+          "key_file": "benchmark/challenges/positive-control-key-0203.json",
+          "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+        }
+      ],
+      "identity": {
+        "checker": "benchmark/challenges/check_xml_keys.py",
+        "checker_sha256": "63f01c0ec6b90222c5587f6569a562d8d4bbcff59ee85dd41ffb8c10a4a63de3",
+        "key_file": "benchmark/challenges/positive-control-key-0203.json",
+        "key_sha256": "2d141feeec431c0690ead42923d4200d3ba11a5faf0442de6ed74c3200756cbf"
+      },
+      "session": {
+        "check": 873,
+        "cold_key": 872
+      },
+      "status": "xml-agreed-A0001-A0010-native-pending"
     },
     "method": "Direct stdlib ElementTree inspection of hash-verified original XML; no evaluated reader used.",
     "native_status": "unavailable",
