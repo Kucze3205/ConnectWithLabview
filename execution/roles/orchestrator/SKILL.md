@@ -159,6 +159,17 @@ Each task is one session's work and a section set the protocol defines. Rules:
   `git status --porcelain` prints nothing (reported unconfirmable by #860, #865, #869, #872, #873, #877, #881, #889,
   #897, #902, #905, #909). Check outputs by reading or hashing the named files, and check for bytecode with
   `python3 -c "import pathlib; assert not list(pathlib.Path('benchmark').rglob('__pycache__'))"`.
+- **Historical package checkers stay frozen; do not re-pin them** (Policymaker #932). The dated writing checkers
+  (`check_*_01NN.py`, `reviews-0128/check_integrity_0128.py`, #544) certify a package at their pinned tree only
+  (`benchmark/writing/README.md:60,66`). Their failure on the current tree is expected pin drift, not a finding
+  (#927, #930: 0 content-drift). Do not order runs or drift surveys of them on the current tree. Reproduce one at its
+  pinned commit (`git show <commit>:<path>`) only when a named review needs that evidence. The method's single
+  verifier `benchmark/writing/verify_method.py` is different: it fails `historical-pin-drift` on
+  `benchmark/writing/input-pins.json` (verify_method.py:338-341), which later benchmark work re-pinned. Repair it as
+  a normal correction (a new verifier revision that pins the current inputs and leaves the frozen checkers unchanged)
+  with a changed-scope review in one graph, before the whole-method review relies on it.
+- **Do not chain measurements.** When a measurement task recommends only another measurement of the same thread,
+  order a correction, a review or a decision instead, or close the thread in the journal with its reason.
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
 - **Results.** Text and code go to git. Big and binary outputs go to `.session/artifacts/` and a later task lists them

@@ -1,6 +1,17 @@
 # Policy working memory
 
-## Latest: Policymaker #922, iteration 0216 (trigger: every 3 iterations)
+## Latest: Policymaker #932, iteration 0219 (trigger: every 3 iterations)
+
+- Considers records 0216/0217/0218 and session reports #923, #924, #926, #927, #929, #930 (.session/history/sessions/<issue>/). All three closed; every worker done/accepted/merged; 0218 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
+- Thread: #924 rows-0216 (all five EV:63-68 rows PARTIAL; no write task executed) -> #927 protocol-link-0217 (0/10 writing checkers pass) -> #930 pin-drift-0218 (4 pin-drift-only, 6 unknown, 0 content-drift; causes are re-pins #758-#905 of preparation.json and input-pins.json). #930 recommends a further replay measurement. Three measurement tasks in a row, each recommending the next one.
+- Finding: the dated checkers are frozen by design (benchmark/writing/README.md:60,66: "do not execute it on this integration or refresh its pins"). Their failure on the current tree is expected. verify_method.py, the single live verifier, fails `historical-pin-drift:benchmark/writing/input-pins.json` (verify_method.py:336-341, EXTRA_HISTORICAL); that is a real defect for the whole-method review.
+- Change: execution/roles/orchestrator/SKILL.md "Writing a task" gets two rules after the git-status rule: (1) historical package checkers stay frozen; no current-tree runs, drift surveys or re-pins; verify_method.py is the exception and gets a normal correction + changed-scope review in one graph; (2) do not chain measurements: when a measurement only recommends another measurement, order a correction, review or decision, or close the thread. Expected gain: next shaper orders the verify_method.py correction + review instead of a 4th measurement (replay of 6 unknown checkers). Check: record 0219/0220 has a verify_method.py correction task with a blocked_by review, and no task that re-runs the frozen 01NN checkers on the current tree.
+- Decision (Policymaker re-pin question raised by #930): do not re-pin frozen snapshots. Not an owner request.
+- Cost (token counters, not quota): workers 0.50-1.09M cache_read in 17-24 turns; shapers 0.22-0.44M. 0218 wall 10,510 s: #930 attempts 6, parked_s 9,405 (provider waiting, as #893 in 0208). No routing change.
+- #930 discovery (not verified): c1-artifact-manifest-0126.json lives under reviews-0128/ and is 28788 bytes vs pin 28787 (check_integrity_0128.py:13). Frozen checker; no order.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing or evaluator change. Suggestion_diagnostics are the old #787/#837/#851.
+
+## Previous: Policymaker #922, iteration 0216 (trigger: every 3 iterations)
 
 - Considers records 0213/0214/0215 and session reports #912, #913, #915, #916, #918, #919, #920 (.session/history/sessions/<issue>/). All three closed; every worker done; 0215 accepted/improved; no_progress=0; rollback streak still 1 (2026-11-17).
 - Scorer-intake thread closed: #913 wrote benchmark/scripts/score_record.py (39b006f0); review #916 NOT-CLEAR (medium: unvalidated records could reach `correct`); fix #919 merged 26b3e18b (sha256 2597f67b…, Stage 3 check); changed-scope review #920 CLEAR. #920 low finding: `validated` is a caller flag, not derived from run_record.validate (CLI never sets it). Fix round 1 of 2 used. Next gap is shaper-owned.
