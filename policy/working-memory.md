@@ -1,6 +1,13 @@
 # Policy working memory
 
-## Latest: Policymaker #708, iteration 0156 (trigger: every 3 iterations)
+## Latest: Policymaker #720, iteration 0159 (trigger: every 3 iterations)
+
+- Considers records 0156/0157/0158 and session reports #710/#712/#713/#714/#716/#717/#718 (.session/history/sessions/<issue>/). All three iterations closed; 0158 accepted/improved; live no_progress=0.
+- Matched comparison 0155 thread: #710 NOT-CLEAR (F-M1..F-M3) -> #713 fix merged -> #714 NOT-CLEAR (F-N1, json M09 only; md 15d6be1e…, json 04543bda… at HEAD 07dc83f0) -> #717 one Edit merged 37a2a815 (key is /validation_rules/M09, not /rules/M09) -> #718 BLOCKED: Read/Grep/Bash returned "No such tool available", 6 turns, no verdict. F-N1 closure is still unchecked. The next Shaper should rerun the same narrow re-check unchanged (environment failure, not a finding), and fix the pointer to /validation_rules/M09.
+- #708 reviewer route check FAILED: params.yml `reviewer: *review` (Codex first) merged f9952014, but reviewers #710/#714/#718 all ran claude/claude-sonnet-5-5 (task.md `models`). Records show no fallback reason. #714 had parked_s 307 and resume_after 2026-11-17T21:40:36Z, which can mean a cooldown. Cause unknown: Codex unavailability, or routing not applied. session_start.py:70 selects task=role when role is in routing.tasks, so the config looks right. Do not change routing again without provider-state evidence. Review remained same-family (Sonnet authors and reviewers); report this as a limitation of these reviews.
+- .session/orders.json is {"wake":false,"tasks":[]}. No Owner request, audit, evaluator or skill change. Token counters are not quota.
+
+## Previous: Policymaker #708, iteration 0156 (trigger: every 3 iterations)
 
 - Considers records 0153/0154/0155 and session reports #703/#705/#706 (task/result files under .session/history/sessions/). All three iterations closed; 0155 is accepted/improved; live no_progress=0.
 - #694 input_budget rule result: 0153 task attempt-ledger-files-0153 used start_branch task/692 (max_turns 40, not ≤20). #698 done/merged. Review #699 NOT-CLEAR (5 findings). Fix #702 merged bc0dad20. Re-review #703 CLEAR at HEAD 48f2715e (md 8b2b30e6…, json 74c9a47a…). No third full resume and no input_budget. Keep the rule.
