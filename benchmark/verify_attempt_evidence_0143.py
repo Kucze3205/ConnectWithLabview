@@ -134,7 +134,8 @@ def legacy_result(fixture, attempt, source, legacy):
         # every sidecar object to that source. Missing/corrupt sidecar objects
         # still reject without changing rejected-fixture attachment inventories.
         inv = source['base']['source_inventory']
-        old = next(a for a in source['base']['attempts'] if a['arm'] == attempt['arm'])
+        old = next((a for a in source['base']['attempts'] if a['arm'] == attempt['arm']), None)
+        require(old is not None, 'legacy source arm')
         expected = {e['kind']: e['text'].encode('utf-8') for e in old['evidence']}
         require(f['model_identity'] ==
                 source['manifest']['fields']['exact_model_snapshot']['value'] and
