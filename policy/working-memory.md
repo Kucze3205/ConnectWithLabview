@@ -248,6 +248,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: verify main challenges `scorer-reviewed` + 51 refs, then delete the landing script. Then consider the owner
   question/presentation above; remaining preparation gaps: split, native evidence, diagram-difference/typedef cases.
 
+## Iteration 0036 (#256, wake false)
+- Result of 0035: #254 landing DONE, merged c940ed2 (sonnet only, 9 turns, ~54k tokens; 25-turn limit worked).
+  Verified on main: preparation-status.json sha d32ec550…, challenges `scorer-reviewed`, evaluator exit 0, errors [],
+  missing [], 51 refs. Deleted execution/scripts/land_scorer_review_247.py (execution/scripts now empty).
+- Order `native-job-records` (benchmark, medium, 75/45, from main): design-only benchmark/native/ (README, recipes.json,
+  output-record.template.json) + stdlib benchmark/scripts/native_jobs.py --check; maps the 23 native-required dev slots
+  to recipes with input sha256, versions, permitted ops, staged outputs; one recipe matching #169 readiness check.
+  No preparation.json edits (pin after review). Check: --check exit 0, 23/23 mapped or each unmapped named.
+- Request filed: `question` asking whether a private repo in the owner's existing GitHub account (no cost) can be the
+  restricted store, with owner as/naming custodian; also points the owner to docs/research/0002-delivery.md estimate
+  (information only, no fallback choice). Yes -> draft a concrete Row 1 `capability`; No -> record split blocked.
+- Next: read the native-job report; if done, order ONE independent review (reviewer from main, Verification
+  native_jobs.py --check, not .session/report.md), then pin under oracle/tasks via an idempotent landing script
+  (max_turns >= 25). Read the question's decision from loop state. Remaining gaps: split, native evidence (#169),
+  typedef-impact/diagram-difference cases (blocked on native evidence + paired revisions).
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
