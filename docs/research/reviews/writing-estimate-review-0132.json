@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "issue": 622,
+  "task_id": "review-writing-estimate-0132",
+  "role": "reviewer",
+  "status": "done",
+  "reviewed_state": {
+    "commit": "cb4d6ecdd431c20b7846cf5164860f6561c1584f",
+    "tree": "263cb4e12460a24ec8df97876d2cd1387be1ca82",
+    "initial_git_status_short": "",
+    "scope": "Independent document/evidence review of unchanged 0099, not a candidate implementation diff or a new estimate.",
+    "study_identity_verification_exit": 0,
+    "study_identity_result": "reviewed study identity and JSON: OK",
+    "repository_changes_authorized": false
+  },
+  "dispositions": {
+    "Standards": {
+      "verdict": "CLEAR",
+      "finding": "No documented standards violation found in the bounded study: evidence classes, units, unknowns, provenance and full-scope limitations are explicit. No product, evaluator or repository change is proposed by this review.",
+      "basis": [".session/role/SKILL.md:Independent reviewer", "docs/perpetua/evaluation.md:Co musi powstac przed implementacja", "docs/research/0099-writing-version-effort.json:/sources,/assumptions,/comparison/accounting_rule"]
+    },
+    "Spec": {
+      "verdict": "NOT-CLEAR",
+      "scope": "Use of 0099's What next as a current operational handoff; F1 and F2 require correction or an explicit superseding handoff. Its full-goal scope and qualitative cost conclusion are CLEAR.",
+      "finding_ids": ["F1", "F2", "F3"],
+      "conclusion_survives": true,
+      "new_estimate_required_by_this_review": false
+    },
+    "overall": "NOT-CLEAR as a current handoff; retain the substantive conclusion. Close this bounded review with exact documentation corrections, without reopening WM1, WP1 or pair reviews."
+  },
+  "export_and_provenance": {
+    "manifest_inspected_before_study": true,
+    "selector": 0,
+    "export_status": "downloaded",
+    "exported_issue": 501,
+    "manifest_path": ".session/exports/manifest.json",
+    "report_path": ".session/exports/reports/501.json",
+    "manifest_report_snapshot": "eca65fd6a148f17a1e7666a209063d2968260307f6c546ec3a527c5aa28c7ad5",
+    "snapshot_is_not_claimed_as_export_file_sha256": true,
+    "report_url": "https://github.com/Kucze3205/ConnectWithLabview/issues/501#issuecomment-6842657209",
+    "reported_historical_output_commit": "e67bb1a",
+    "reported_historical_start_commit": "058c3abf6be57eca65394a6c2500a95ded2b26e3",
+    "reported_historical_start_tree": "c1e21ef789a7bac6701f01437068fa97a2031237",
+    "historical_status": "Attributed to exported #501 and 0099, not independently reconstructed historical trees. Both reported output SHA256s equal this session's measured current study bytes.",
+    "historical_sources": "0099 /sources identifies its author's inputs. Current session issue, role, startup and export manifest have different bytes by design; their historical pins are not current integrity requirements. Current method.json also differs, explained by its writing-design-2-wp1-integration-0112 revision. No blocking study pin mismatch occurred.",
+    "unavailable_exports": "No #501 export is missing. #493 is not explicitly exported in this manifest; its synthetic-design review remains attributed through 0099, not independently reread or replayed here."
+  },
+  "measured_current_sha256": {
+    ".session/issue.md": "22c4af40fd401936abc0f0f3dae800cda94b36325bdfb0ad9b4b0d1954dafc20",
+    ".session/role/SKILL.md": "368fec15ccd52dbd3b7fc518c1f5e905af96ffa659d4e1d5b863ca036c8bac35",
+    ".session/startup.json": "aec6928e1891c27971561373d62e3b6fdcd6c87fe30ee671de497b6b061aa603",
+    ".session/exports/manifest.json": "fd22515451213367fbfc1e5e3aac7f57753bc6b1ed977b4843cc1debdf805fdd",
+    ".session/exports/reports/501.json": "93f03c187a9069a453efc90fa0e676f2fb2e26bce6d0b94403d797ee5f5dc74b",
+    "goal/goal.md": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb",
+    "docs/perpetua/evaluation.md": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8",
+    "docs/research/0099-writing-version-effort.md": "e444c54a1cdc1f96b55735ef4ca2b06ea6e011087b6fb84e3ed3ea16b0477882",
+    "docs/research/0099-writing-version-effort.json": "992a3b22a690e917a1f144e32adaaa7d8d52ed7afe9223105cfe45746bcb31c4",
+    "docs/research/0100-wm1-version-evidence.md": "88aacac891ffe8a5970277fd3c99e132931c5ee3c21f87e7d5e626e82e6f5554",
+    "docs/research/0100-wm1-version-evidence.json": "9fb1ce567823ea74ad4ec7c346a78b8ea88bc6309de1a40f00d6c44915099edf",
+    "benchmark/project-text-writing-0109.md": "fd84b4d10a33fa2c32bb1b1f4a07cde5c35272620cdccd45599fd8dfbb21835e",
+    "benchmark/project-text-writing-0109.json": "74b6346cb646a8caa10a90462edee266832260d26c6f3685d7fd461cb56abdf8",
+    "benchmark/writing/method.json": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac",
+    "docs/research/poc/delivery.md": "587ee8c113b09d34725437ddf0913b2d6424985f79e2bfdb9e6cea6a26562c6f",
+    "docs/research/poc/edit-readiness.md": "b4400c6964553a4bbb2914395c9312dd89f9db7c59d46447d245cbc59a1971ea",
+    "docs/research/poc/pair/constant-rules-0106.md": "9d21062704888760ada3c1df46478e115a30a505798e8df31e64a5dbf1e2ae44",
+    "docs/research/0002-delivery.md": "df3fb6a17685d74589a8219b26f8ae350d9907fccf51aee510ae696611832cac",
+    "@environment/pylavi/pylavi/file.py": "f3c9d38054291d02bf48e7f2658c2b012e0c0b7a7fb55731710e985d7df2cce9",
+    "@environment/pylavi/pylavi/resource_types.py": "ce333fba1b8dc689197e18e4a1acedf77b786f098f5039e4234c136f73512756",
+    "@environment/actor-framework/Core/Actor Framework Core.lvproj": "0fb1959df4c520ea96536b8f787b4c66b3145673843a995f79b5cfc8c6d64214",
+    "@environment/actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi": "19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c"
+  },
+  "goal_comparison": {
+    "committed_goal_read_in_full": true,
+    "committed_goal_matches_0099_S07_pin": true,
+    "live_loop_state_available": false,
+    "live_state_check": "Python pathlib.Path('.session/loop-state.json').exists() returned False. No direct live-state comparison is claimed, and absence does not require continuation.",
+    "shaper_parity": {
+      "class": "shaper-provided evidence, not this reviewer's independent live-state check",
+      "source": ".session/issue.md:Acceptance, second bullet",
+      "finding": "0132 shaper read the complete committed goal and live goal.text and observed matching requirements."
+    },
+    "requirement_checks": [
+      {"requirement": "Creation and modification without requiring LabVIEW to edit", "disposition": "CLEAR", "evidence": ["goal/goal.md:Pisanie", "0099.json:/comparison/artifact_families/0,/comparison/cost_drivers/2", "method.json:/tasks/0/preconditions,/new_requirements/0,/new_requirements/4"], "finding": "Study includes construction/defaults and semantic changes; offline editing is separate from native checks. Current WC1 target 21008000 is proposed, not validated."},
+      {"requirement": "Compiled artifacts changed through sources and rebuilds", "disposition": "CLEAR", "evidence": ["goal/goal.md:Pisanie", "0099.json:/comparison/cost_drivers/4,/comparison/artifact_families/2", "method.json:/tasks/3/originals,/tasks/3/oracle,/new_requirements/5"], "finding": "No binary-patching shortcut; matched sources, builder and baseline remain missing, not zero-cost."},
+      {"requirement": "All artifact families remain in scope under either version scenario", "disposition": "CLEAR", "evidence": ["goal/goal.md:Cel projektu", "docs/perpetua/evaluation.md:coverage", "0099.json:/comparison/artifact_families,/comparison/fallback/losses", "method.json:/coverage"], "finding": "Native/control/type, textual projects/classes/libraries/build definitions, packages/distributions and module/target variants are retained. Four historical tasks, five current task specifications and observed extensions do not bound the goal."},
+      {"requirement": "Preserve each modified original's save version", "disposition": "CLEAR", "evidence": ["goal/goal.md:Pisanie", "0099.json:/comparison/version_axes", "method.json:/new_requirements/3,/tasks/1/originals/0/save_version,/tasks/3/preservation"], "finding": "Original save version, emitted native format and validation runtime are distinct. Keeping an old original beside a converted edited copy is insufficient. Unknown WM1 authority remains unknown despite agreeing declarations."},
+      {"requirement": "All versions prioritized; conditional 2024 fallback only after difference/limits", "disposition": "CLEAR", "evidence": ["goal/goal.md:Cel projektu", "0099.json:/comparison/historical_read_estimates,/comparison/totals,/comparison/fallback"], "finding": "No numerical substantial-effort threshold exists. Unverified 8.0-2025 endpoints are historical assumptions, not a current scope cap. Strict 2024-format output and 2024-runtime validation are different scenarios; neither is selected."},
+      {"requirement": "Extend benchmark preparation and preserve acceptance boundaries", "disposition": "CLEAR", "evidence": ["goal/goal.md:Pisanie,Proof of concept,Uzgodnione zasady sukcesu", "0099.json:/comparison/cost_drivers/6,/comparison/accounting_rule", "docs/perpetua/evaluation.md:oracle,split,baseline,challenges"], "finding": "Reading infrastructure is reused once; writing adds independent keys, artifact/preservation accounting and native checks. Negative POC delivery is not concept success. No method, threshold, product, final gate or benchmark readiness is accepted."}
+    ],
+    "live_goal_mismatch_found": false,
+    "limit": "No mismatch in requirements is evidenced; direct live parity remains unmeasured by this reviewer."
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "medium",
+      "category": "Spec/current recommendation",
+      "disposition": "NOT-CLEAR",
+      "locator": "docs/research/0099-writing-version-effort.md:28; 0099.json:/next_measurement/ready,/next_measurement/readiness_observed,/next_measurement/resume",
+      "evidence": ["docs/research/0100-wm1-version-evidence.md:What next", "0100.json:/status,/entries,/conclusion,/enumeration", "method.json:/tasks/1/originals/0/save_version,/tasks/1/oracle/missing"],
+      "finding": "The one-original declaration audit recommended as ready in 0099 has already been completed. Saved 0100 retains five vers entries (IDs 4,7,8,9,10) and one LVSR (ID 0), all raw 20008000 and pinned-parser tuple (20,0,0,4,0). It explicitly leaves independent original-save-version authority unavailable; current method correctly still lists that gap.",
+      "impact": "Treating the historical recommendation as current sends another session into a completed audit and can confuse declaration measurement with missing authority. No numerical cost conclusion changes.",
+      "smallest_correction": "Retain the historical measurement proposal and its pins as provenance, but mark its execution completed by 0100 and supersede the current resume direction. Reuse the saved declarations; neither rerun WM1 nor replace unavailable save-version authority with field agreement."
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "category": "Spec/current evidence availability",
+      "disposition": "NOT-CLEAR",
+      "locator": "docs/research/0099-writing-version-effort.md:26; 0099.json:/next_measurement/decisive_uncertainty_and_unavailable_experiment",
+      "evidence": ["docs/research/poc/pair/constant-rules-0106.md:Inputs,Findings,Not established,Verdict"],
+      "finding": "The claim that no controlled pair is staged is historical. Saved normal/separate I32 1-to-2 pairs have already been investigated. 0106 establishes local ConstValue/node/length boundaries and correlated DFDS/LVSR/RTSG changes, but retains unresolved heap typing, BDPW tails, textHair flag and code/data dependencies. Equal BDHb across modes with differing BDPW tails refutes BDHb-only dependence. No unchanged-diagram Save As control separates churn from intended change.",
+      "impact": "Repeating the old pair-acquisition/investigation handoff would duplicate closed work. Pair availability narrows observations but supplies neither a safe encoder nor native validity, version-preservation proof, timing or cross-format reuse counts.",
+      "smallest_correction": "Supersede the no-pair-available statement with the saved 0106 source-blocked result and exact remaining typing/integrity uncertainties. Preserve unavailable native capability. Do not reopen pair probes or treat correlations as an encoding recipe."
+    },
+    {
+      "id": "F3",
+      "severity": "low",
+      "category": "Spec/historical coverage context",
+      "disposition": "qualification-needed",
+      "locator": "0099.json:/comparison/scope_reconciliation/reviewed_writing_scope,/comparison/artifact_families/1/gap,/comparison/cost_drivers/3/uncertainty; 0099.md:9",
+      "evidence": ["benchmark/project-text-writing-0109.md:Proposed instruction and scope,Mapping and integration after review", "project-text-writing-0109.json:/task,/oracle,/planned_results,/coverage,/claims", "method.json:/revision,/tasks/4,/coverage/project_text_preparation,/claims"],
+      "finding": "0109 is a historical proposal, not the current unintegrated state. Current method revision writing-design-2-wp1-integration-0112 appends WP1. It specifies exactly one ASCII byte 2-to-3 at offset 3347 in a pinned .lvproj, preserves root LVVersion 20008000 as a declaration only, and still lacks complete independent trial-key approval and native evidence. Current method records zero artifact edits, native runs and benchmark runs.",
+      "impact": "The historical four-task inventory and blanket XML-preparation absence should not be presented as current. The narrow property-text contract does not establish semantic XML writing, direct creation, LVLIB/class/target coverage, built-output version, independent native authority or a timed writing sample.",
+      "smallest_correction": "Date/qualify the old inventory and acknowledge integrated narrow WP1 text preparation using current method coverage. Retain broader gaps and null C4 costs; do not reintegrate, rerun or reopen WP1."
+    }
+  ],
+  "cost_audit": {
+    "historical_reading": {
+      "evidence": ["docs/research/0002-delivery.md:103-132", "0099.json:/comparison/historical_read_estimates"],
+      "class": "Inherited conditional engineering estimates, not measured elapsed durations or a full-goal work breakdown",
+      "unit": "one Python developer engineer-days, owner review excluded",
+      "assumed_release_range": "8.0-2025, explicitly unverified",
+      "arithmetic_independently_checked": true,
+      "row_sums": {"2024": [33, 99], "all_versions": [89, 264]},
+      "wrapper_ranges": {"library_packaging": [1, 2], "CLI": [1, 3], "MCP": [2, 5], "text_mirror": [2, 6]},
+      "limits": "Eight component sums match. Metadata/path overlap is disclosed; estimates are reading-only, semantic heap feasibility was unmeasured and families/version strata incomplete. Wrapper alternatives are not four compulsory additions. No full-goal ratio, endpoint subtraction or quantified fallback follows. No new numerical range is introduced."
+    },
+    "drivers": [
+      {"id": "C1", "disposition": "CLEAR qualitative decomposition", "evidence": ["0099.json:/comparison/cost_drivers/0", "0002-delivery.md:103-123,169-171", "@environment/pylavi/pylavi/file.py:27,69-75", "poc/edit-readiness.md:Primitive route,Constant route"], "audit": "Count shared semantic reading and evidenced layout adapters once. Container format 3 checks framing, not diagram meaning or a release range. Semantic keys and incompatible layout counts remain missing; current durations are null in both scopes."},
+      {"id": "C2", "disposition": "CLEAR uncertainty retained", "evidence": ["0099.json:/comparison/cost_drivers/1", "@environment/pylavi/pylavi/resource_types.py:54-93", "poc/edit-readiness.md:Integrity/cache,Rebuild requirements", "poc/pair/constant-rules-0106.md:Findings,Not established"], "audit": "Encoding/integrity contracts, relocation and cache/flag rules are writing additions beyond decoding. TypeBDPW only supplies password chunk-0 handling. Later pairs narrow spans, not typed encoding or BDPW-tail rules; no safe cache invalidation, measured effort or contract-reuse count exists. Both ranges remain null."},
+      {"id": "C3", "disposition": "CLEAR", "evidence": ["0099.json:/comparison/cost_drivers/2", "method.json:/tasks/0/preconditions,/tasks/1/preservation,/tasks/2/preservation,/new_requirements"], "audit": "Creation defaults and modification/unrelated-object preservation differ; reuse the reader's consumer/dependency discovery, then charge propagation/save rules once. Required native references, confirmed consumer maps and authoritative per-file version evidence remain missing. WC1's target is proposed, WM1/WM2 authority unknown; no effort range."},
+      {"id": "C4", "disposition": "CLEAR cost conclusion; F3 context qualification", "evidence": ["0099.json:/comparison/cost_drivers/3", "@environment/actor-framework/Core/Actor Framework Core.lvproj:1-45", "project-text-writing-0109.json:/task,/oracle,/coverage", "method.json:/tasks/4,/coverage/project_text_preparation"], "audit": "Reuse XML reading/minimal-diff machinery and add semantic/property/member/target rules once. Original XML exposes declarations and external references, not resolved relationships. WP1 now supplies narrow text preparation but no native semantic writing sample or timing. General schema/target strata and construction costs remain null."},
+      {"id": "C5", "disposition": "CLEAR", "evidence": ["0099.json:/comparison/cost_drivers/4", "goal/goal.md:Pisanie", "method.json:/tasks/3/originals,/tasks/3/oracle,/tasks/3/preservation,/new_requirements/5"], "audit": "Reuse C1-C4 source/XML work and add only package/build adapters and source-to-output linkage. Matched WB1 sources, baseline, builder/toolchain/modules/licenses are absent. Engineer-days, build job-hours and unavailable inputs are different quantities; absence is a blocker, not zero labor or an invented surcharge."},
+      {"id": "C6", "disposition": "CLEAR", "evidence": ["0099.json:/comparison/cost_drivers/5", "docs/perpetua/evaluation.md:coverage", "method.json:/coverage/uncovered_families,/common/native_rule"], "audit": "Charge actual target-specific edit/build/deploy adapters beyond C2-C5 once; do not assume a Cartesian release-module-target multiplier. Hardware/simulation and desktop checks differ. Actual variant set, capabilities and machine/native hours remain missing in either scope."},
+      {"id": "C7", "disposition": "CLEAR", "evidence": ["0099.json:/comparison/cost_drivers/6", "docs/perpetua/evaluation.md:oracle,split,baseline,challenges", "method.json:/common/preflight,/common/oracle_rule,/common/native_rule,/claims", "project-text-writing-0109.md:Later trial and independent keys"], "audit": "Extend existing independent provenance/keys, isolation, paired accounting and controls; charge writing validation increments once. Public expected deltas are development material, not withheld evaluation. Independent full keys, native evidence, actual isolation/allocation/repetitions and timed preparation remain missing. Synthetic checks and local byte contracts cannot stand in for executed native cases."},
+      {"id": "C8", "disposition": "CLEAR", "evidence": ["0099.json:/comparison/cost_drivers/7", "0002-delivery.md:125-132", "method.json:/common/artifact_record"], "audit": "Share one core across selected interfaces; add output/transaction/preservation/error reporting once. MCP does not establish native format support and a text mirror is not a writer. Old delivery figures are conditional reading estimates, with no measured writing-interface increment. Both new ranges remain null."}
+    ],
+    "assumptions_checked": [
+      {"id": "A1", "assessment": "Faithfully inherited and qualified; historical reading scope, units and endpoint assumptions match 0002:103-109."},
+      {"id": "A2", "assessment": "Reasonable bookkeeping assumption, not a measured reuse fraction; shared decoders/dependency models must not be charged twice."},
+      {"id": "A3", "assessment": "Correctly leaves incompatible encoding/schema/module/target strata uncounted. The single WM1 declaration and 2026 pairs do not measure their number."},
+      {"id": "A4", "assessment": "Matches goal preservation requirement: a strict 2024 editing-format scenario loses non-2024 compatibility; emitting original formats reintroduces encoder obligations."},
+      {"id": "A5", "assessment": "Conservative estimation judgement, not a formal impossibility theorem. Present evidence still lacks validated semantic write/rebuild contracts and timed representative work, so no new range is defensible here."},
+      {"id": "A6", "assessment": "Correctly separates engineer-days, job-hours and unavailable dependencies; no calendar wait is converted into labor by assumption."}
+    ],
+    "independent_checks": {"driver_count": 8, "all_driver_2024_and_all_version_ranges_are_null": true, "historical_sums_match": true},
+    "missing_measurements": ["timed semantic encoder/preservation and source-rebuild implementation/validation samples", "independently resolved typing/integrity/cache rules", "counts and reuse of incompatible native/schema/module/target strata", "matched build source/baseline/toolchain evidence", "independent original/output save-version authority", "native load/build/behavior/target checks on frozen outputs"],
+    "supported_result": "No full-goal numerical total, meaningful ratio, substantial-effort finding or 2024 fallback decision. Unknowns stay null. Later evidence narrows declarations and local preparation only."
+  },
+  "additional_source_sections": [
+    {"source_id": "S12", "path": "docs/research/0002-delivery.md", "locator": "101-137: Effort definitions/component/wrapper table", "purpose": "Verify inherited range, units, assumptions and arithmetic; metadata-only tier is historical context, not an accepted scope."},
+    {"source_id": "S12", "path": "docs/research/0002-delivery.md", "locator": "165-179: Open measurements", "purpose": "Check declared layout/semantic/version-authority measurement gaps, without executing them."},
+    {"source_id": "S22", "path": "@environment/pylavi/pylavi/file.py", "locator": "1-80: Header definition/validation", "purpose": "Confirm format VERSION=3 is a framing check."},
+    {"source_id": "S23", "path": "@environment/pylavi/pylavi/resource_types.py", "locator": "45-100: TypeBDPW", "purpose": "Confirm limited password-chunk interpretation and absence of a tail derivation in this class."},
+    {"source_id": "S23", "path": "@environment/pylavi/pylavi/resource_types.py", "locator": "111-138,205-219: TypeLVSR field/flag/from_bytes representation", "purpose": "Confirm separate version/flags representation, not save-version authority."},
+    {"source_id": "S23", "path": "@environment/pylavi/pylavi/resource_types.py", "locator": "221-268: Typevers", "purpose": "Confirm a separate declaration interpretation, not native authority."},
+    {"source_id": "S24", "path": "@environment/actor-framework/Core/Actor Framework Core.lvproj", "locator": "1-45", "purpose": "Ground XML declarations and external member references without inferring semantic writing."}
+  ],
+  "verification_and_limits": {
+    "startup_diagnostic": "ok; diagnostic input hashes independently match current issue/role bytes",
+    "measurement_method": "Allowlisted Bash python3 with pathlib.read_bytes/hashlib.sha256; git rev-parse HEAD, HEAD^{tree}, git status --short via subprocess. Prepared paths resolved through LABVIEW_ENVIRONMENT.",
+    "required_study_verification": "Ran the issue's exact two study-hash assertions and JSON-object assertion, with starting commit/tree/status and optional-loop-state existence printed alongside; exit 0.",
+    "historical_pin_crosschecks": "Current goal, evaluation, 0002, POC delivery/readiness, inspected parser sources, original XML and WM1 original match their corresponding 0099 source pins. Current method evolution is explicitly distinguished from a mismatch in immutable study identity.",
+    "command_failure_preserved": "One initial targeted-excerpt Python invocation exited 1 with SyntaxError: unterminated string literal due to nested newline quoting; no source excerpt or mutation ran. Corrected read-only invocation exited 0 and displayed all seven recorded source sections.",
+    "no_checker_replays": true,
+    "native_executions": 0,
+    "benchmark_executions": 0,
+    "new_edits_or_builds": 0,
+    "closed_reviews_reopened": false,
+    "corpus_searches": 0,
+    "version_authority": "unavailable for WM1 and WP1; declaration equality is not original/output preservation",
+    "pair_evidence_limit": "Saved 0106 findings were read and pinned, not independently reprobed. Reported LabVIEW 2026 authoring is attributed, not this review's native test.",
+    "owner_requests": "Neither human C1 request #618 nor unchanged-diagram Save As control request #532 is answered, duplicated or awaited. This review makes no new owner request.",
+    "acceptance_boundary": "Review completion is not benchmark readiness, full method acceptance, product success, general editing impossibility, save-version proof or a 2024 selection."
+  },
+  "smallest_justified_next_step": {
+    "action": "Policymaker/parent should record this pinned review as a superseding handoff, or order a documentation-only correction of 0099 What next and corresponding JSON status/context. Mark WM1 declaration measurement completed by 0100, recognize WP1's integrated text-only preparation and reuse 0106's source-blocked pair result. Preserve original historical pins and all unknown costs/authority/native limits.",
+    "why": "The bounded compatibility-estimate review is complete; the identified defect is stale operational direction, not evidence for a new effort estimate or implementation.",
+    "research_boundary": "The saved pair handoff names a pinned primary implementation/specification of BDPW chunks 1/2 as a possible bounded input if actually staged, with heap typing and other dependencies still required. This session neither obtains it nor orders/repeats pair work. Existing #618/#532 remain separate and do not hold this review open.",
+    "resume": "Read this ledger and its report first. Apply only the listed handoff qualifications if separately tasked; reuse 0100, current method WP1 and saved 0106. Avoid repeating the startup reads, WM1 audit, closed WM1/WP1/pair reviews, checker/probe replays, corpus discovery, native execution or an unmeasured replacement estimate. No continuation is required solely for absent loop state."
+  }
+}

@@ -1,5 +1,7 @@
 # 0099 — Writing changes the version-effort comparison
 
+**Historical study (Markdown and JSON), 2026-11-14:** Current operational handoff superseded by [0133 — writing-estimate handoff](0133-writing-estimate-handoff.md); original estimates and JSON remain historical evidence.
+
 **A full-goal total, meaningful all-version/2024 effort ratio and fallback decision are not supported by the available evidence.** The historical [0002 study](0002-delivery.md) estimates reading only: 33–99 versus 89–264 engineer-days, assuming an unverified LabVIEW 8.0–2025 range. Those are inherited engineering estimates, not measured durations or the current scope boundary. Creation, modification, preserved-version outputs and source-based rebuilds were omitted.
 
 Starting commit `058c3abf6be57eca65394a6c2500a95ded2b26e3`, tree `c1e21ef789a7bac6701f01437068fa97a2031237`; initial tracked worktree clean. [Evidence JSON](0099-writing-version-effort.json) records SHA256s for all 25 sources actually used, separates direct observations, inherited results and new assumptions, and details costs, dependencies and checks. `.session/loop-state.json` is absent and selected history has zero records: comparison uses the committed [goal](../../goal/goal.md), explicitly without verified live-goal parity.
