@@ -542,6 +542,26 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   owner presentation of docs/research/0002-delivery.md, tell owner #169 has a cited readiness case, method-acceptance
   request once only resource items remain. Product implementation gated.
 
+## Iteration 0055 (#329, wake true)
+- Considered record 0054, report #327, .github/workflows/store-readiness.yml, run_record.py, task-graph.md.
+- #327 store-readiness review DONE (codex 334k, 16 turns, report only): verdict REVISE. Findings: (1) step (d) blocking:
+  workflow masks download/extract/search errors, zero counts unproven -> fail closed, inventories, positive control;
+  (2) step (b) push 128 not classified as authorization denial; (3) step (a)/(b) commit creation not gated/recorded.
+  (c)/(e) match; redaction clean; sha matches. Repeat (e) after any new scorer-token (b) run. Evidence artifact
+  iter-0054/327-store-readiness-review.md. Do not repeat this review.
+- Wrote `policy/proposals/store-readiness.yml` (replacement workflow; bash -n 0; yaml parses): mk() gates commit,
+  qp() classifies write-denied/other, step (d) fails closed (gh api/run list/log zip/artifact count/download/tar checks,
+  per-run inventory, planted positive controls in work/pc), job exits 1 on incomplete, artifact upload if: always().
+  Known gap: no positive control for git grep / git log -S. Workflows are owner-only (.github/workflows/**).
+- Orders (parallel, wake true): `readiness-gap-delta` (benchmark, medium, 50/35, report only, exports #282): update gap
+  map vs main, classify rows, decision line request-acceptance-now | do-first. `review-store-workflow-proposal`
+  (reviewer, medium, 45/35, report only, exports #327): verdict on the proposal.
+- Next (same iteration, on wake): if workflow review accepts -> owner `question`/request: copy the proposal to
+  .github/workflows/store-readiness.yml, rerun initial, then revoke+rerun revoked, commit replacement redacted record +
+  sha256; then order independent review. If revise -> fix the proposal file, not another blind review. Read gap-delta
+  decision: if request-acceptance-now, draft the method-acceptance request (STE) incl. 0002 estimate presentation and
+  #169 readiness-case note; else order the listed now-doable items.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
