@@ -955,6 +955,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   method decision; product implementation stays gated until acceptance. #169 not ready; quality unmeasured.
   Memory ~95 KB: compress sections 0024-0050 in a quiet session.
 
+## Iteration 0080 (#433, wake false)
+- Considered record 0079, review #431 (.github/loop/data/session-reports/431/023fd7eb….json), main preparation files.
+- #431 (codex GPT 635k input, 14 turns) ACCEPT of the #379 replacement store record: sha 019a3e48… = sidecar; workflow
+  27b365ec… (rev 4); steps a-e OK, (c)/(e) access-denied, (d) inventories + 5 positive controls hit, zero sentinel hits;
+  #366 F1/F2 closed; runs 42480130998 (initial) and 42480355765 (revoked) newer than install cbcb70c; redaction clean.
+  Record produced by the owner workflow, so family diversity does not apply. Do not repeat #327/#366/#431.
+- Verified on main: preparation.json 25cf0059…, record not pinned; split pins = 8 files (lineage + split design).
+- Order `pin-store-record-431` (benchmark, low, 30/30, main): add record + .sha256 to split pins, append one limitation
+  sentence (superseding the lineage clause "restricted store ... is not ready"), re-pin status refs; expect >= 73 refs.
+- FOUND: benchmark/scripts/lineage.py:34 generates "the restricted store (capability #268) is not ready" inside the lineage
+  limitation; lineage.py --check regenerates and byte-compares, so status edits must not touch that block. Fix needs a run
+  with LABVIEW_ENVIRONMENT (absent here): update lineage.py text + regenerate + re-pin in one task.
+- Owner request #430 (method assessment) pending; do not wait. Reader implementation gated.
+- Next: verify new pins + ref count; order lineage.py text update (with env); then design-only synthetic split allocation
+  that uses the store. Memory ~98 KB: compress sections 0024-0050 in a quiet session.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
