@@ -1,6 +1,14 @@
 # Policy working memory
 
-## Latest: Policymaker #720, iteration 0159 (trigger: every 3 iterations)
+## Latest: Policymaker #729, iteration 0162 (trigger: iteration 0161 failed)
+
+- Considers loop-state record 0161 only: failed, 0 tasks, 346 s, "policy/session-state.py printed more than 8388608 bytes". History now 198 records, 803 report snapshots.
+- Cause: the budget loop counted characters of path+text (6 MiB). The printed answer is JSON: each history file is a string, so record JSON has every quote escaped, and Polish text is 2 UTF-8 bytes per letter. loop_state was also not counted. Printed bytes passed 8 MiB while the character count stayed under 6 MiB.
+- Change: policy/session-state.py now measures each file as printed bytes (json.dumps + UTF-8), subtracts printed loop_state and a 64 KiB reserve, then drops the oldest files. Regression check policy/checks/session_state_size.py (synthetic quote/Polish-heavy history): printed 6,218,178 bytes, 996 oldest files omitted, newest record kept, OK.
+- Expected gain: iteration 0163 stages sessions again. Check: the next record is not failed for session-state output size; history/manifest.json shows omitted_oldest_files (old files can be missing; read iterations/<n>.json in the checkout instead).
+- Open from #720: the narrow F-N1 re-check (#718 BLOCKED, tool failure) is still pending for the Shaper; reviewer route Codex-first still unexplained. orders.json {"wake":false,"tasks":[]}. No Owner request.
+
+## Previous: Policymaker #720, iteration 0159 (trigger: every 3 iterations)
 
 - Considers records 0156/0157/0158 and session reports #710/#712/#713/#714/#716/#717/#718 (.session/history/sessions/<issue>/). All three iterations closed; 0158 accepted/improved; live no_progress=0.
 - Matched comparison 0155 thread: #710 NOT-CLEAR (F-M1..F-M3) -> #713 fix merged -> #714 NOT-CLEAR (F-N1, json M09 only; md 15d6be1e…, json 04543bda… at HEAD 07dc83f0) -> #717 one Edit merged 37a2a815 (key is /validation_rules/M09, not /rules/M09) -> #718 BLOCKED: Read/Grep/Bash returned "No such tool available", 6 turns, no verdict. F-N1 closure is still unchecked. The next Shaper should rerun the same narrow re-check unchanged (environment failure, not a finding), and fix the pointer to /validation_rules/M09.

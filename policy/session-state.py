@@ -106,16 +106,37 @@ def suggestions():
     return pending, diagnostics
 
 
-# Leave out the oldest history files until the answer fits the budget (the engine's own limit is 8 MiB).
+scope = "all permitted history in the prepared checkout" if full else "task-selected inputs"
+loop_state = None
+if isinstance(facts.get("state"), dict):
+    state = facts["state"]
+    # The previous outcome is current context; the rest is discoverable history.
+    loop_state = dict(state, iterations=state.get("iterations", [])[-1:],
+                      history={"manifest": ".session/history/manifest.json", "records": len(facts.get("records", [])),
+                               "report_snapshots": len(snapshots), "scope": scope})
+    if facts.get("role") == "policymaker":      # execution roles are not shown them
+        loop_state["suggestions"], loop_state["suggestion_diagnostics"] = suggestions()
+
+
+def printed(value):
+    # Bytes as printed below: JSON escaping (a record is JSON inside a JSON string, so every quote doubles) and UTF-8
+    # expansion of Polish text. Counting raw characters undercounted both and let iteration 0161 exceed 8 MiB.
+    return len(json.dumps(value, ensure_ascii=False).encode("utf-8"))
+
+
+# Leave out the oldest history files until the printed answer fits the budget (the engine's own limit is 8 MiB);
+# 64 KiB stay free for the manifest and the enclosing object.
 omitted = 0
-size = sum(len(path) + len(text) for path, text in files.items())
+room = BUDGET - printed(loop_state) - 64 * 1024
+cost = {path: printed(path) + printed(text) + 4 for path, text in files.items()}
+size = sum(cost.values())
 for path in sorted(files, key=lambda p: (age.get(p, 0), p)):
-    if size <= BUDGET:
+    if size <= room:
         break
-    size -= len(path) + len(files.pop(path))
+    size -= cost[path]
+    del files[path]
     omitted += 1
 
-scope = "all permitted history in the prepared checkout" if full else "task-selected inputs"
 manifest = {"scope": scope, "checkout": facts.get("checkout"), "records": len(facts.get("records", [])),
             "report_snapshots": len(snapshots), "omitted_oldest_files": omitted,
             "paths": {"records": "records/<iteration>.json", "sessions": "sessions/<issue>/"},
@@ -124,14 +145,5 @@ manifest = {"scope": scope, "checkout": facts.get("checkout"), "records": len(fa
                       "Current report references and pinned evidence are distinguished in ../reports/index.json."}
 files["history/manifest.json"] = json.dumps(manifest, ensure_ascii=False, indent=1) + "\n"
 
-loop_state = None
-if isinstance(facts.get("state"), dict):
-    state = facts["state"]
-    # The previous outcome is current context; the rest is discoverable history.
-    loop_state = dict(state, iterations=state.get("iterations", [])[-1:],
-                      history={"manifest": ".session/history/manifest.json", "records": manifest["records"],
-                               "report_snapshots": len(snapshots), "scope": scope})
-    if facts.get("role") == "policymaker":      # execution roles are not shown them
-        loop_state["suggestions"], loop_state["suggestion_diagnostics"] = suggestions()
-# Characters are what the engine counts; write UTF-8 bytes directly so the locale cannot break a Polish text.
+# Write UTF-8 bytes directly so the locale cannot break a Polish text.
 sys.stdout.buffer.write(json.dumps({"loop_state": loop_state, "files": files}, ensure_ascii=False).encode("utf-8"))
