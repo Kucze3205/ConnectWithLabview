@@ -30,7 +30,7 @@ def limitation(split):
     detail = (
         " Split is a reviewed design only (benchmark/split/ with benchmark/scripts/split_boundary.py, "
         "review #273 accept, the two non-blocking checker findings of #273 were fixed by #281 "
-        "(not independently re-reviewed)): no allocation exists, no isolation step is executed, "
+        "(re-review #298 confirmed the live mutation checks and exact reasons; its own revert harness was masked, so Policymaker #300 reverted each fix in a temporary copy and --check exited 1 both times)): no allocation exists, no isolation step is executed, "
         "the restricted store (capability #268) is not ready, and no secrecy is claimed; "
         "author (copilot gpt-5.6-luna) and reviewer (codex gpt-6.1-sol) are both GPT-family models."
     ) if split == "design-reviewed" else ""
