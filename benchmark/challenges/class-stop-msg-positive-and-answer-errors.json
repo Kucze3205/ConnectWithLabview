@@ -1,0 +1,146 @@
+{
+  "controls": [
+    {
+      "expected": {
+        "correctness": "correct",
+        "grounding": "correct"
+      },
+      "mutation": "none",
+      "name": "positive-control"
+    },
+    {
+      "expected": {
+        "correctness": "incorrect",
+        "grounding": "correct"
+      },
+      "mutation": {
+        "claim_id": "A0001",
+        "replace_answer": "DELIBERATELY-WRONG-LITERAL",
+        "retain_locator": true
+      },
+      "name": "wrong-answer"
+    },
+    {
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "mutation": {
+        "claim_id": "A0001",
+        "use_locator_from": "A0002"
+      },
+      "name": "wrong-citation-existing"
+    },
+    {
+      "expected": {
+        "correctness": "correct",
+        "grounding": "incorrect"
+      },
+      "mutation": {
+        "claim_id": "A0001",
+        "locator": "/does/not/resolve"
+      },
+      "name": "wrong-citation-unresolvable"
+    }
+  ],
+  "denominators": {
+    "answer_correctness": 50,
+    "reading_fidelity": 50,
+    "source_grounding": 50
+  },
+  "evidence_status": "independently derived from public provisional inventory; native evidence unavailable",
+  "expected": {
+    "contradictions": [],
+    "dimensions": {
+      "correctness": "correct",
+      "fidelity": "unsupported",
+      "grounding": "correct"
+    },
+    "duplicates": [],
+    "extras_ledger": []
+  },
+  "fixture_id": "class-stop-msg-positive-and-answer-errors",
+  "label": "positive controls and answer/citation mutations",
+  "public_development_only": true,
+  "schema_version": 1,
+  "source": {
+    "artifact": {
+      "archive_member_chain": [],
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "identity_manifest": "benchmark/sources.json",
+      "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+      "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+      "repository": "actor-framework",
+      "repository_url": "https://github.com/ni/actor-framework",
+      "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+    },
+    "case_id": "class-stop-msg",
+    "case_revision": 1,
+    "family": ".lvclass",
+    "save_version": {
+      "decoded": "20.0.0f0",
+      "method": "XML root @LVVersion",
+      "raw_hex": "20008000",
+      "status": "recorded"
+    }
+  },
+  "submitted": {
+    "answer_record": {
+      "case_id": "class-stop-msg",
+      "claims": [
+        {
+          "answer": "20008000",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/LVClass/@LVVersion",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+              "repository": "actor-framework",
+              "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+            }
+          ],
+          "claim_id": "A0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "NI.Lib.ContainingLib",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/LVClass/Property[2]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/Stop Msg/Stop Msg.lvclass",
+              "repository": "actor-framework",
+              "sha256": "e2d251a1d751481489ae8c20d4485fb941965d2d5051941882903ba980761339"
+            }
+          ],
+          "claim_id": "A0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        }
+      ],
+      "limitations": "",
+      "status": "complete"
+    },
+    "reader_response": {
+      "limitations": "",
+      "observations": [],
+      "probe_id": "class-stop-msg-probe-1",
+      "status": "not-executed"
+    }
+  }
+}

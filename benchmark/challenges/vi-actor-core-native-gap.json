@@ -1,0 +1,103 @@
+{
+  "controls": [
+    {
+      "expected": {
+        "correctness": "unsupported",
+        "fidelity": "unsupported",
+        "grounding": "unsupported"
+      },
+      "mutation": {
+        "declared_limitation": true
+      },
+      "name": "unsupported-case"
+    },
+    {
+      "expected": {
+        "comparison_required": true,
+        "fidelity": "incorrect"
+      },
+      "mutation": {
+        "compared_cases": [
+          "class-stop-msg",
+          "library-framework"
+        ],
+        "export": "same-plausible-export",
+        "incompatible_facts": "case-specific required observations differ"
+      },
+      "name": "constant-export"
+    }
+  ],
+  "denominators": {
+    "answer_correctness": 3,
+    "reading_fidelity": 3,
+    "source_grounding": 3
+  },
+  "evidence_status": "independently derived from public provisional inventory; native evidence unavailable",
+  "expected": {
+    "contradictions": [],
+    "dimensions": {
+      "correctness": "unsupported",
+      "fidelity": "unsupported",
+      "grounding": "unsupported"
+    },
+    "duplicates": [],
+    "extras_ledger": []
+  },
+  "fixture_id": "vi-actor-core-native-gap",
+  "gaps": [
+    {
+      "id": "N0001",
+      "reason": "native evidence and controlled fixture unavailable",
+      "status": "explicit-gap"
+    },
+    {
+      "id": "N0002",
+      "reason": "native evidence and controlled fixture unavailable",
+      "status": "explicit-gap"
+    },
+    {
+      "id": "N0003",
+      "reason": "native evidence and controlled fixture unavailable",
+      "status": "explicit-gap"
+    }
+  ],
+  "label": "unsupported/native-gap row and constant-export comparison",
+  "public_development_only": true,
+  "schema_version": 1,
+  "source": {
+    "artifact": {
+      "archive_member_chain": [],
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "identity_manifest": "benchmark/sources.json",
+      "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+      "path": "Core/ActorFramework/Actor/Actor Core.vi",
+      "repository": "actor-framework",
+      "repository_url": "https://github.com/ni/actor-framework",
+      "sha256": "135d50e68f002aea9c6a08d0265cc6178b326f1af99353755064c953eaec063c"
+    },
+    "case_id": "vi-actor-core-native-gap",
+    "case_revision": 1,
+    "family": ".vi",
+    "save_version": {
+      "byte_offset": 80,
+      "decoded": "20.0.0f0",
+      "method": "RSRC/LVSR first UInt32",
+      "raw_hex": "20008000",
+      "status": "recorded"
+    }
+  },
+  "submitted": {
+    "answer_record": {
+      "case_id": "vi-actor-core-native-gap",
+      "claims": [],
+      "limitations": "Native connector, diagram and controlled behavior evidence unavailable.",
+      "status": "unsupported"
+    },
+    "reader_response": {
+      "limitations": "",
+      "observations": [],
+      "probe_id": "vi-actor-core-native-gap-probe-1",
+      "status": "unsupported"
+    }
+  }
+}

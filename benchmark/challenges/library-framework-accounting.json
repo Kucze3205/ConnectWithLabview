@@ -1,0 +1,226 @@
+{
+  "controls": [
+    {
+      "expected": {
+        "correctness": "partial",
+        "grounding": "partial"
+      },
+      "mutation": {
+        "remove_claim_id": "A0002"
+      },
+      "name": "selective-omission-answer"
+    },
+    {
+      "expected": {
+        "fidelity": "partial"
+      },
+      "mutation": {
+        "remove_observation_id": "R0002"
+      },
+      "name": "selective-omission-reader"
+    },
+    {
+      "expected": {
+        "correctness": "incorrect",
+        "grounding": "incorrect"
+      },
+      "mutation": {
+        "citation": "existing-non-supporting",
+        "extra": "false assertion"
+      },
+      "name": "extra-false-answer"
+    },
+    {
+      "expected": {
+        "correctness": "correct",
+        "grounding": "correct"
+      },
+      "mutation": {
+        "extra": "true but not required assertion"
+      },
+      "name": "extra-true"
+    },
+    {
+      "expected": {
+        "fidelity": "unverified"
+      },
+      "mutation": {
+        "extra": "unverified observation"
+      },
+      "name": "extra-unverified-reader"
+    },
+    {
+      "expected": {
+        "correctness": "correct",
+        "duplicate_count": 1
+      },
+      "mutation": {
+        "repeat_claim_id": "A0001"
+      },
+      "name": "duplicate"
+    },
+    {
+      "expected": {
+        "contradiction_count": 1,
+        "correctness": "incorrect",
+        "grounding": "incorrect"
+      },
+      "mutation": {
+        "negate_claim_id": "A0001",
+        "retain_original": true
+      },
+      "name": "contradiction"
+    },
+    {
+      "expected": {
+        "fidelity": "missing"
+      },
+      "mutation": {
+        "reader_response": ""
+      },
+      "name": "empty-probe"
+    },
+    {
+      "expected": {
+        "fidelity": "missing"
+      },
+      "mutation": {
+        "reader_response": "prefix-only",
+        "truncated": true
+      },
+      "name": "truncated-probe"
+    },
+    {
+      "expected": {
+        "fidelity": "error"
+      },
+      "mutation": {
+        "executed": false,
+        "reader_error": "controlled reader error"
+      },
+      "name": "failed-probe"
+    },
+    {
+      "expected": {
+        "fidelity": "unsupported"
+      },
+      "mutation": {
+        "reason": "missing runtime/dependency/license",
+        "status": "unsupported"
+      },
+      "name": "unsupported-probe"
+    },
+    {
+      "expected": {
+        "correctness": "unverified",
+        "fidelity": "unverified",
+        "grounding": "unverified"
+      },
+      "mutation": {
+        "executed_tests": 0,
+        "independent_key": null
+      },
+      "name": "missing-key-zero-tests"
+    }
+  ],
+  "denominators": {
+    "answer_correctness": 141,
+    "reading_fidelity": 141,
+    "source_grounding": 141
+  },
+  "evidence_status": "independently derived from public provisional inventory; native evidence unavailable",
+  "expected": {
+    "contradictions": [],
+    "dimensions": {
+      "correctness": "correct",
+      "fidelity": "unsupported",
+      "grounding": "correct"
+    },
+    "duplicates": [],
+    "extras_ledger": []
+  },
+  "fixture_id": "library-framework-accounting",
+  "label": "omissions, extras, duplicates, contradictions and probe failures",
+  "public_development_only": true,
+  "schema_version": 1,
+  "source": {
+    "artifact": {
+      "archive_member_chain": [],
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "identity_manifest": "benchmark/sources.json",
+      "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+      "path": "Core/ActorFramework/Actor Framework.lvlib",
+      "repository": "actor-framework",
+      "repository_url": "https://github.com/ni/actor-framework",
+      "sha256": "23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98"
+    },
+    "case_id": "library-framework",
+    "case_revision": 1,
+    "family": ".lvlib",
+    "save_version": {
+      "decoded": "20.0.0f0",
+      "method": "XML root @LVVersion",
+      "raw_hex": "20008000",
+      "status": "recorded"
+    }
+  },
+  "submitted": {
+    "answer_record": {
+      "case_id": "library-framework",
+      "claims": [
+        {
+          "answer": "20008000",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/@LVVersion",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/Actor Framework.lvlib",
+              "repository": "actor-framework",
+              "sha256": "23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98"
+            }
+          ],
+          "claim_id": "A0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "NI.LV.All.SourceOnly",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[7]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/Actor Framework.lvlib",
+              "repository": "actor-framework",
+              "sha256": "23a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98"
+            }
+          ],
+          "claim_id": "A0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        }
+      ],
+      "limitations": "",
+      "status": "complete"
+    },
+    "reader_response": {
+      "limitations": "",
+      "observations": [],
+      "probe_id": "library-framework-probe-1",
+      "status": "not-executed"
+    }
+  }
+}
