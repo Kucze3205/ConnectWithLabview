@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "issue": 544,
+  "scope": "public-development-preparation-only",
+  "baseline": {
+    "commit": "8b93818c2779be00a2e267a3588eadcdaf665911",
+    "tree": "e5cdbf5a3bf02dce5de55e0b0cd3fc27bb744c31"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "benchmark/scripts/check_project_text_writing_0109.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"benchmark_runs\": 0, \"independent_review\": \"pending\", \"input_hashes_checked\": 24, \"narrative_boundary\": {\"accepted_by_structured_checker\": true, \"control\": \"W5-prose-overclaim\", \"meaning\": \"Requires independent semantic/prose review; no narrative pass.\"}, \"native_executions\": 0, \"overall_writing\": \"unverified\", \"positive_control\": \"text-only-correct;overall-unverified\", \"preserved_review_sha256\": \"6ad9596c1c5e05f08ee3647ae3af1596f1882944e2397ac9efcd79383aa78894\", \"project_artifact_edits\": 0, \"rejecting_controls\": [{\"control\": \"wrong-locator\", \"rejected\": \"wrong-locator\"}, {\"control\": \"precondition-text\", \"rejected\": \"wrong-precondition\"}, {\"control\": \"precondition-match_count\", \"rejected\": \"wrong-precondition\"}, {\"control\": \"precondition-property_attributes\", \"rejected\": \"wrong-precondition\"}, {\"control\": \"delta-after\", \"rejected\": \"wrong-delta\"}, {\"control\": \"delta-before\", \"rejected\": \"wrong-delta\"}, {\"control\": \"delta-offset_zero_based\", \"rejected\": \"wrong-delta\"}, {\"control\": \"delta-allowed_changed_bytes\", \"rejected\": \"wrong-delta\"}, {\"control\": \"metadata-exception\", \"rejected\": \"preservation-contract\"}, {\"control\": \"version-authority\", \"rejected\": \"preservation-contract\"}, {\"control\": \"false-status-text_correctness\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-root_version_declaration\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-native_validity\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-dependency_resolution\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-build\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-behavior\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-save_version\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-status-overall_writing\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-project_artifact_edits\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-native_executions\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-benchmark_runs\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-writing_trial_executed\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-native_oracle_established\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-native_property_semantics_established\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-save_version_preservation_established\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-method_frozen\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-method_accepted\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-benchmark_ready\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-product_quality_measured\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"false-claim-independent_proposal_review\", \"rejected\": \"missing-evidence-boundary\"}, {\"control\": \"candidate-derived-key\", \"rejected\": \"independent-key-boundary\"}, {\"control\": \"key-self-approval\", \"rejected\": \"independent-key-boundary\"}, {\"control\": \"withheld-case\", \"rejected\": \"isolation-boundary\"}, {\"control\": \"incomplete-artifacts\", \"rejected\": \"complete-artifacts\"}, {\"control\": \"unmatched-budget\", \"rejected\": \"comparison-contract\"}, {\"control\": \"missing-pin\", \"rejected\": \"reviewed-input-pins\"}, {\"control\": \"missing-W8\", \"rejected\": \"W1-W8-mapping\"}, {\"control\": \"tampered-benchmark/real-project-0107/review-0108.json\", \"rejected\": \"review-hash\"}, {\"control\": \"tampered-goal/goal.md\", \"rejected\": \"input-hash:goal/goal.md\"}, {\"control\": \"tampered-docs/perpetua/evaluation.md\", \"rejected\": \"input-hash:docs/perpetua/evaluation.md\"}, {\"control\": \"tampered-docs/perpetua/roles.md\", \"rejected\": \"input-hash:docs/perpetua/roles.md\"}, {\"control\": \"tampered-benchmark/protocol.md\", \"rejected\": \"input-hash:benchmark/protocol.md\"}, {\"control\": \"tampered-benchmark/sources.md\", \"rejected\": \"input-hash:benchmark/sources.md\"}, {\"control\": \"tampered-benchmark/sources.json\", \"rejected\": \"input-hash:benchmark/sources.json\"}, {\"control\": \"tampered-benchmark/writing/README.md\", \"rejected\": \"input-hash:benchmark/writing/README.md\"}, {\"control\": \"tampered-benchmark/writing/method.json\", \"rejected\": \"input-hash:benchmark/writing/method.json\"}, {\"control\": \"tampered-benchmark/writing/verify_method.py\", \"rejected\": \"input-hash:benchmark/writing/verify_method.py\"}, {\"control\": \"tampered-benchmark/writing/controls.json\", \"rejected\": \"input-hash:benchmark/writing/controls.json\"}, {\"control\": \"tampered-benchmark/writing/input-pins.json\", \"rejected\": \"input-hash:benchmark/writing/input-pins.json\"}, {\"control\": \"tampered-benchmark/writing/verification.json\", \"rejected\": \"input-hash:benchmark/writing/verification.json\"}, {\"control\": \"tampered-benchmark/writing/review-corrections.json\", \"rejected\": \"input-hash:benchmark/writing/review-corrections.json\"}, {\"control\": \"tampered-.github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json\", \"rejected\": \"input-hash:.github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json\"}, {\"control\": \"tampered-.github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json\", \"rejected\": \"input-hash:.github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json\"}, {\"control\": \"tampered-benchmark/real-project-0107.md\", \"rejected\": \"input-hash:benchmark/real-project-0107.md\"}, {\"control\": \"tampered-benchmark/real-project-0107.json\", \"rejected\": \"input-hash:benchmark/real-project-0107.json\"}, {\"control\": \"tampered-benchmark/real-project-0107/original.lvproj\", \"rejected\": \"input-hash:benchmark/real-project-0107/original.lvproj\"}, {\"control\": \"tampered-benchmark/real-project-0107/LICENSE.txt\", \"rejected\": \"input-hash:benchmark/real-project-0107/LICENSE.txt\"}, {\"control\": \"tampered-benchmark/real-project-0107/verification.json\", \"rejected\": \"input-hash:benchmark/real-project-0107/verification.json\"}, {\"control\": \"tampered-benchmark/scripts/check_real_project_0107.py\", \"rejected\": \"input-hash:benchmark/scripts/check_real_project_0107.py\"}, {\"control\": \"tampered-benchmark/preparation.json\", \"rejected\": \"input-hash:benchmark/preparation.json\"}, {\"control\": \"tampered-benchmark/baseline/runner-contract.md\", \"rejected\": \"input-hash:benchmark/baseline/runner-contract.md\"}, {\"control\": \"tampered-benchmark/precision/README.md\", \"rejected\": \"input-hash:benchmark/precision/README.md\"}, {\"control\": \"missing-original\", \"rejected\": \"missing-evidence:benchmark/real-project-0107/original.lvproj\"}, {\"control\": \"no-op\", \"rejected\": \"no-op\"}, {\"control\": \"wrong-output-value\", \"rejected\": \"wrong-output-property\"}, {\"control\": \"wrong-output-locator\", \"rejected\": \"wrong-output-property\"}, {\"control\": \"output-version-drift\", \"rejected\": \"version-drift\"}, {\"control\": \"unrelated-output-property\", \"rejected\": \"unrelated-XML-change\"}, {\"control\": \"BOM-lost\", \"rejected\": \"unrelated-byte-change\"}, {\"control\": \"unrelated-file\", \"rejected\": \"unrelated-file-change\"}, {\"control\": \"extra-output\", \"rejected\": \"output-file-set\"}, {\"control\": \"missing-output\", \"rejected\": \"output-file-set\"}, {\"control\": \"overwritten-original\", \"rejected\": \"original-overwritten\"}, {\"control\": \"unsupported-output\", \"rejected\": \"unsupported-artifact\"}, {\"control\": \"output-false-native_validity\", \"rejected\": \"false-native-or-overall-pass\"}, {\"control\": \"output-false-dependency_resolution\", \"rejected\": \"false-native-or-overall-pass\"}, {\"control\": \"output-false-build\", \"rejected\": \"false-native-or-overall-pass\"}, {\"control\": \"output-false-behavior\", \"rejected\": \"false-native-or-overall-pass\"}, {\"control\": \"output-false-save_version\", \"rejected\": \"false-native-or-overall-pass\"}, {\"control\": \"output-false-overall_writing\", \"rejected\": \"false-native-or-overall-pass\"}], \"rejection_count\": 80, \"scope\": \"preparation-only\", \"status\": \"proposal-consistent\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "policy/evaluator/evaluate.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "{\"benchmark_executed\": false, \"benchmark_ready\": false, \"errors\": [], \"evidence_references\": 80, \"manifest\": \"indexed\", \"missing\": [], \"tool_quality\": null}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "offline_replay": {
+    "argv": [
+      "/usr/bin/python3",
+      "benchmark/scripts/check_project_text_writing_0109.py"
+    ],
+    "environment": {},
+    "session_inputs_or_artifacts_present": false,
+    "prepared_environment_present": false,
+    "copied_committed_file_count": 28,
+    "exit": 0,
+    "stdout_equal": true,
+    "stderr": "",
+    "cleanup": "temporary verification replay removed"
+  },
+  "new_file_hashes_excluding_this_record": {
+    "benchmark/project-text-writing-0109.md": {
+      "sha256": "fd84b4d10a33fa2c32bb1b1f4a07cde5c35272620cdccd45599fd8dfbb21835e",
+      "size": 11908
+    },
+    "benchmark/project-text-writing-0109.json": {
+      "sha256": "74b6346cb646a8caa10a90462edee266832260d26c6f3685d7fd461cb56abdf8",
+      "size": 20557
+    },
+    "benchmark/real-project-0107/review-0108.json": {
+      "sha256": "6ad9596c1c5e05f08ee3647ae3af1596f1882944e2397ac9efcd79383aa78894",
+      "size": 75758
+    },
+    "benchmark/scripts/check_project_text_writing_0109.py": {
+      "sha256": "35ab8c6725fb7affc7f38075f906c798f3278b5c894d812223df06425b120596",
+      "size": 20719
+    }
+  },
+  "self_hash": "Recorded separately in .session/report.md to avoid a self-referential digest",
+  "reviewed_input_count": 22,
+  "drift": [],
+  "all_reviewed_inputs_size_sha256_match": true,
+  "tracked_status_after_checks": "",
+  "index": "unchanged; proposal awaits independent review before any indexing/integration",
+  "project_artifact_edits": 0,
+  "native_executions": 0,
+  "benchmark_runs": 0,
+  "review_boundary": "Actual stdlib preparation check and isolated replay only. One deliberately false narrative control is accepted by the structured checker, exposing the need for independent prose review; it is not a benchmark or native pass.",
+  "remaining_uncertainties": [
+    "Proposal and requirement-derived text key await separate independent review before a trial or method integration.",
+    "Native load, dependency resolution, build, behavior, property semantics and save-version authority unavailable.",
+    "Public development material is not withheld; no restricted allocation, isolated evaluated run or owner method acceptance.",
+    "Current context-named historical Markdown report is absent; provenance comes from exact preserved staged review."
+  ]
+}
