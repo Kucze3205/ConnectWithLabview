@@ -1,0 +1,452 @@
+{
+  "denominators": {
+    "answer_correctness": 12,
+    "reading_fidelity": 12,
+    "source_grounding": 12
+  },
+  "evidence_status": "public XML literals are independently reproduced; native references remain unavailable and provisional claims remain unverified",
+  "execution": {
+    "attempted": false,
+    "executed": false,
+    "scored": false
+  },
+  "expected": {
+    "contradictions": [],
+    "duplicates": [],
+    "extras_ledger": [],
+    "fixed_denominators": true,
+    "outcomes": {
+      "answer_correctness": {
+        "outcome_by_id": {
+          "A0001": "correct",
+          "A0002": "correct",
+          "A0003": "correct",
+          "A0004": "correct",
+          "A0005": "correct",
+          "A0006": "correct",
+          "A0007": "correct",
+          "A0008": "correct",
+          "A0009": "correct",
+          "A0010": "correct",
+          "N0001": "correct",
+          "N0002": "correct"
+        },
+        "required_ids": [
+          "A0001",
+          "A0002",
+          "A0003",
+          "A0004",
+          "A0005",
+          "A0006",
+          "A0007",
+          "A0008",
+          "A0009",
+          "A0010",
+          "N0001",
+          "N0002"
+        ]
+      },
+      "reading_fidelity": {
+        "outcome_by_id": {
+          "R0001": "unverified",
+          "R0002": "unverified",
+          "R0003": "unverified",
+          "R0004": "unverified",
+          "R0005": "unverified",
+          "R0006": "unverified",
+          "R0007": "unverified",
+          "R0008": "unverified",
+          "R0009": "unverified",
+          "R0010": "unverified",
+          "RN0001": "unverified",
+          "RN0002": "unverified"
+        },
+        "required_ids": [
+          "R0001",
+          "R0002",
+          "R0003",
+          "R0004",
+          "R0005",
+          "R0006",
+          "R0007",
+          "R0008",
+          "R0009",
+          "R0010",
+          "RN0001",
+          "RN0002"
+        ]
+      },
+      "source_grounding": {
+        "outcome_by_id": {
+          "A0001": "correct",
+          "A0002": "correct",
+          "A0003": "correct",
+          "A0004": "correct",
+          "A0005": "correct",
+          "A0006": "correct",
+          "A0007": "correct",
+          "A0008": "correct",
+          "A0009": "correct",
+          "A0010": "correct",
+          "N0001": "correct",
+          "N0002": "correct"
+        },
+        "required_ids": [
+          "A0001",
+          "A0002",
+          "A0003",
+          "A0004",
+          "A0005",
+          "A0006",
+          "A0007",
+          "A0008",
+          "A0009",
+          "A0010",
+          "N0001",
+          "N0002"
+        ]
+      }
+    }
+  },
+  "fixture_id": "library-icon-tests-positive",
+  "label": "complete materialized positive control",
+  "public_development_only": true,
+  "schema_version": 2,
+  "source": {
+    "artifact": {
+      "archive_member_chain": [],
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "identity_manifest": "benchmark/sources.json",
+      "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+      "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+      "repository": "actor-framework",
+      "repository_url": "https://github.com/ni/actor-framework",
+      "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+    },
+    "case_id": "library-icon-tests",
+    "case_revision": 1,
+    "family": ".lvlib",
+    "save_version": {
+      "decoded": "21.0.0f0",
+      "method": "XML root @LVVersion",
+      "raw_hex": "21008000",
+      "status": "recorded"
+    }
+  },
+  "submitted": {
+    "answer_record": {
+      "case_id": "library-icon-tests",
+      "claims": [
+        {
+          "answer": "21008000",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/@LVVersion",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "NI.LV.All.SourceOnly",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[3]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Bool",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[3]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0003",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "true",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[3]/text()",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0004",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Test Caller.vi",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0005",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "VI",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0006",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "../Test Caller.vi",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@URL",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0007",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Split Text into Words.vi",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0008",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "VI",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0009",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "../Split Text into Words.vi",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@URL",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib",
+              "repository": "actor-framework",
+              "sha256": "5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130"
+            }
+          ],
+          "claim_id": "A0010",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": null,
+          "citations": [],
+          "claim_id": "N0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": null,
+          "citations": [],
+          "claim_id": "N0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        }
+      ],
+      "limitations": "",
+      "status": "complete"
+    },
+    "reader_response": {
+      "limitations": "",
+      "observations": [
+        {
+          "observation_id": "R0001",
+          "scope": "/Library/@LVVersion",
+          "value": "21008000"
+        },
+        {
+          "observation_id": "R0002",
+          "scope": "/Library/Property[3]/@Name",
+          "value": "NI.LV.All.SourceOnly"
+        },
+        {
+          "observation_id": "R0003",
+          "scope": "/Library/Property[3]/@Type",
+          "value": "Bool"
+        },
+        {
+          "observation_id": "R0004",
+          "scope": "/Library/Property[3]/text()",
+          "value": "true"
+        },
+        {
+          "observation_id": "R0005",
+          "scope": "/Library/Item[1]/@Name",
+          "value": "Test Caller.vi"
+        },
+        {
+          "observation_id": "R0006",
+          "scope": "/Library/Item[1]/@Type",
+          "value": "VI"
+        },
+        {
+          "observation_id": "R0007",
+          "scope": "/Library/Item[1]/@URL",
+          "value": "../Test Caller.vi"
+        },
+        {
+          "observation_id": "R0008",
+          "scope": "/Library/Item[2]/@Name",
+          "value": "Split Text into Words.vi"
+        },
+        {
+          "observation_id": "R0009",
+          "scope": "/Library/Item[2]/@Type",
+          "value": "VI"
+        },
+        {
+          "observation_id": "R0010",
+          "scope": "/Library/Item[2]/@URL",
+          "value": "../Split Text into Words.vi"
+        },
+        {
+          "observation_id": "RN0001",
+          "scope": "resolved-membership",
+          "value": null
+        },
+        {
+          "observation_id": "RN0002",
+          "scope": "effective-scope",
+          "value": null
+        }
+      ],
+      "probe_id": "library-icon-tests-probe-1",
+      "status": "complete"
+    }
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "denominators": {
+    "answer_correctness": 12,
+    "reading_fidelity": 12,
+    "source_grounding": 12
+  },
+  "evidence_status": "public XML literals are independently reproduced; native references remain unavailable and provisional claims remain unverified",
+  "execution": {
+    "attempted": false,
+    "executed": false,
+    "scored": false
+  },
+  "expected": {
+    "contradictions": [],
+    "duplicates": [],
+    "extras_ledger": [],
+    "fixed_denominators": true,
+    "outcomes": {
+      "answer_correctness": {
+        "outcome_by_id": {
+          "A0001": "unverified",
+          "A0002": "unverified",
+          "A0003": "unverified",
+          "A0004": "unverified",
+          "A0005": "unverified",
+          "A0006": "unverified",
+          "A0007": "unverified",
+          "A0008": "unverified",
+          "A0009": "unverified",
+          "A0010": "unverified",
+          "N0001": "unverified",
+          "N0002": "unverified"
+        },
+        "required_ids": [
+          "A0001",
+          "A0002",
+          "A0003",
+          "A0004",
+          "A0005",
+          "A0006",
+          "A0007",
+          "A0008",
+          "A0009",
+          "A0010",
+          "N0001",
+          "N0002"
+        ]
+      },
+      "reading_fidelity": {
+        "outcome_by_id": {
+          "R0001": "error",
+          "R0002": "error",
+          "R0003": "error",
+          "R0004": "error",
+          "R0005": "error",
+          "R0006": "error",
+          "R0007": "error",
+          "R0008": "error",
+          "R0009": "error",
+          "R0010": "error",
+          "RN0001": "error",
+          "RN0002": "error"
+        },
+        "required_ids": [
+          "R0001",
+          "R0002",
+          "R0003",
+          "R0004",
+          "R0005",
+          "R0006",
+          "R0007",
+          "R0008",
+          "R0009",
+          "R0010",
+          "RN0001",
+          "RN0002"
+        ]
+      },
+      "source_grounding": {
+        "outcome_by_id": {
+          "A0001": "unverified",
+          "A0002": "unverified",
+          "A0003": "unverified",
+          "A0004": "unverified",
+          "A0005": "unverified",
+          "A0006": "unverified",
+          "A0007": "unverified",
+          "A0008": "unverified",
+          "A0009": "unverified",
+          "A0010": "unverified",
+          "N0001": "unverified",
+          "N0002": "unverified"
+        },
+        "required_ids": [
+          "A0001",
+          "A0002",
+          "A0003",
+          "A0004",
+          "A0005",
+          "A0006",
+          "A0007",
+          "A0008",
+          "A0009",
+          "A0010",
+          "N0001",
+          "N0002"
+        ]
+      }
+    }
+  },
+  "fixture_id": "library-specialty-error",
+  "label": "materialized challenge control: error",
+  "public_development_only": true,
+  "schema_version": 2,
+  "source": {
+    "artifact": {
+      "archive_member_chain": [],
+      "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+      "identity_manifest": "benchmark/sources.json",
+      "identity_manifest_sha256": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+      "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+      "repository": "actor-framework",
+      "repository_url": "https://github.com/ni/actor-framework",
+      "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+    },
+    "case_id": "library-specialty",
+    "case_revision": 1,
+    "family": ".lvlib",
+    "save_version": {
+      "decoded": "20.0.0f0",
+      "method": "XML root @LVVersion",
+      "raw_hex": "20008000",
+      "status": "recorded"
+    }
+  },
+  "submitted": {
+    "answer_record": {
+      "case_id": "library-specialty",
+      "claims": [
+        {
+          "answer": "20008000",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/@LVVersion",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "NI.LV.All.SourceOnly",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[4]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Bool",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[4]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0003",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "true",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Property[4]/text()",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0004",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Batch Msg.lvclass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0005",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "LVClass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0006",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "../Specialty Messages/Batch Msg/Batch Msg.lvclass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[1]/@URL",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0007",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "Reply Msg.lvclass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@Name",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0008",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "LVClass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@Type",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0009",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": "../Specialty Messages/Reply Msg/Reply Msg.lvclass",
+          "citations": [
+            {
+              "archive_member_chain": [],
+              "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+              "locator": {
+                "expression": "/Library/Item[2]/@URL",
+                "scheme": "xml-positional-path"
+              },
+              "path": "Core/ActorFramework/AF Specialty Messages.lvlib",
+              "repository": "actor-framework",
+              "sha256": "83bd104933f209b839fa8438fbff3e380f6a5ad2e7289e76cb6c38dd1a6287d0"
+            }
+          ],
+          "claim_id": "A0010",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": null,
+          "citations": [],
+          "claim_id": "N0001",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        },
+        {
+          "answer": null,
+          "citations": [],
+          "claim_id": "N0002",
+          "conditions": [
+            "Preserved original bytes at the pinned commit and SHA256; no conversion.",
+            "Public development evidence; no native LabVIEW inspection or execution in this preparation.",
+            "XML values mean literal declarations only; no URL resolution, enum interpretation or runtime compatibility inference."
+          ]
+        }
+      ],
+      "limitations": "",
+      "status": "complete"
+    },
+    "reader_response": {
+      "error": "controlled reader error",
+      "limitations": "controlled reader error",
+      "observations": [],
+      "probe_id": "library-specialty-probe-1",
+      "status": "error"
+    }
+  }
+}
