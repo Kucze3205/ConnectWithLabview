@@ -170,6 +170,11 @@ def inventory():
         if ext not in LV_EXTS and data[:4] != b"RSRC":
             return
         family, version, details = classify(rel, data, pl_file if nested_in is None else None, pl_types)
+        if nested_in:  # zip members are counted apart: pylavi.Resources.load needs a path on disk
+            family += " (zip member)"
+            details["magic"] = data[:8].hex()
+        elif family.endswith("text/other"):
+            details["magic"] = data[:8].hex()
         fam = families.setdefault(family, {
             "count": 0, "versions": collections.Counter(), "sources": collections.Counter(),
             "pylavi_load": collections.Counter(), "resource_types": collections.Counter(),
