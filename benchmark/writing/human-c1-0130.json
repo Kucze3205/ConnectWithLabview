@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "issue": 615,
+  "revision": "human-c1-0130-v1",
+  "recording_state": "unexecuted-blank-handoff",
+  "benchmark_ready": false,
+  "question": "For each of the eight preserved raw C1 answers, independently identify every explicit and implicit atomic assertion under its conditions, determine correctness from source evidence, determine submitted-citation grounding separately, retain all required slots and extras/duplicates/contradictions, and compare the frozen initial ledger with historical 0125 expectations and the reviewed local 0129 F1 overlay.",
+  "source_finding": {
+    "blocker": "Actual human execution and returned pre-comparison ledger plus subsequent disagreement record remain missing. Existing 0125 procedure and blank ledger are usable.",
+    "missing_handoff_only": [
+      "pinned navigation",
+      "later overlay application",
+      "blank response and return capture"
+    ],
+    "operative_procedure": "benchmark/writing/c1-challenges-0125.md",
+    "reuse_ledger": "benchmark/writing/c1-challenges-0125-record-template.json"
+  },
+  "start": {
+    "commit": "0816229c016e29d887720be996f76c61d9112ad3",
+    "tree": "0c5e94bef9dab7cd7ac289418c5e1c3aa65955ac",
+    "working_tree": "clean before additions"
+  },
+  "source_pins": [
+    {
+      "path": "benchmark/preparation.json",
+      "bytes": 12895,
+      "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+    },
+    {
+      "path": "benchmark/protocol.md",
+      "bytes": 38342,
+      "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+    },
+    {
+      "path": "benchmark/real-project-0107/LICENSE.txt",
+      "bytes": 1060,
+      "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+    },
+    {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "bytes": 5806,
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-author.py",
+      "bytes": 29330,
+      "sha256": "dd1bbb78f25739c6d66bbfb96db16e358de7c3c88e78f74aa9aa989354ede1b9"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-cases.json",
+      "bytes": 31266,
+      "sha256": "73dfd06532782777d5cc7390fef290c5ef079730ed41ac9bd5786956d2b0a710"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-expectations.json",
+      "bytes": 1110893,
+      "sha256": "5b3761ae2b8e351038b9b2ace8b5a684940009b55e1fbee9d0907ff642864071"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-findings.md",
+      "bytes": 2991,
+      "sha256": "a6888f282d1da28258dc460e954d8472d0c997d4f67515a2d7fb5b661782c0a7"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-pins.json",
+      "bytes": 22541,
+      "sha256": "f6476328df20b0c55492b7b5a4a2e4139e8ee010d3315e9f61e846ea2b9e3f10"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-record-template.json",
+      "bytes": 3018,
+      "sha256": "c7902bc5797d4dcde829b28d3c3e17375b5d17fc53f67b26c528e41d9a6a07e2"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-verification.json",
+      "bytes": 7784,
+      "sha256": "ce8642fc2c2b23e826cb24786fbc06c9a3319c978f30e4fdb1c7389a01540fbc"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125.md",
+      "bytes": 9775,
+      "sha256": "8cbe9c8c9aa9a4b1fb308e4050df342de079d09b3940dba85ce8b1f6fdb5661f"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129-verification.json",
+      "bytes": 9543,
+      "sha256": "bcb4cfeda94777d3220142a3fd716cd7a4e0be4fe7c08e610901723f0610682b"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129.json",
+      "bytes": 85742,
+      "sha256": "37d85627c9c8b53b08f5093628a98ae9095072a2f254d98cb6b0aa8fdb12239e"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129.md",
+      "bytes": 7775,
+      "sha256": "b9a6ce67b44962c5c415ad3af39d6e1f6d73730ffbafef667e06c9c4b48a2569"
+    },
+    {
+      "path": "benchmark/writing/check_c1_challenges_0125.py",
+      "bytes": 18926,
+      "sha256": "8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b"
+    },
+    {
+      "path": "benchmark/writing/check_c1_f1_0129.py",
+      "bytes": 16333,
+      "sha256": "e12f11b2ff1ce2860e59c4f4821ac61f6784dc47c8d78245e89c2d18d9467c8c"
+    },
+    {
+      "path": "benchmark/writing/method.json",
+      "bytes": 45705,
+      "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/c1-findings-0126.md",
+      "bytes": 7179,
+      "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/c1-review-completion-0127.json",
+      "bytes": 10038,
+      "sha256": "fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/handoff-0128.md",
+      "bytes": 5106,
+      "sha256": "13c006165e16e6c559e252b470713a3a41e27c1d8d5459888495d54d3f036ff1"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/integrity-0128.json",
+      "bytes": 12665,
+      "sha256": "5e45a9eb16f047ab1eaecfb4dd68e3ed9ee034fb6e11321d9eed6a749ef842b4"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "bytes": 204095,
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119.json",
+      "bytes": 327961,
+      "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-review-0124.json",
+      "bytes": 126735,
+      "sha256": "23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6"
+    },
+    {
+      "path": "docs/perpetua/evaluation.md",
+      "bytes": 7552,
+      "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+    },
+    {
+      "path": "goal/goal.md",
+      "bytes": 4161,
+      "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+    }
+  ],
+  "reading_order": [
+    {
+      "stage": "orientation",
+      "before_initial_save": true,
+      "inputs": [
+        {
+          "path": "benchmark/writing/c1-challenges-0125.md",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-pins.json",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-findings.md",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-record-template.json",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-verification.json",
+          "locator": "/new_file_manifest"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-review-0124.json",
+          "locator": "/reviewed_revision"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-review-0124.json",
+          "locator": "/recommendation"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-review-0124.json",
+          "locator": "/uncertainty"
+        }
+      ]
+    },
+    {
+      "stage": "source_evidence",
+      "before_initial_save": true,
+      "inputs": [
+        {
+          "path": "benchmark/writing/method.json",
+          "locator": "/common/answer_rule"
+        },
+        {
+          "path": "benchmark/writing/method.json",
+          "locator": "/tasks/4"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "locator": "/required_ids/5"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "locator": "/required_ids/6"
+        },
+        {
+          "path": "benchmark/writing/wp1-key-0119.json",
+          "locator": "/required_ids/7"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L29"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L35-L41"
+        },
+        {
+          "path": "benchmark/protocol.md",
+          "locator": "L60-L62"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/conditions"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/citation_registry"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/0"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/1"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/2"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/3"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/4"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/5"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/6"
+        },
+        {
+          "path": "benchmark/writing/c1-challenges-0125-cases.json",
+          "locator": "/cases/7"
+        },
+        {
+          "path": "benchmark/real-project-0107/original.lvproj",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/real-project-0107/LICENSE.txt",
+          "locator": "whole-file"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/byte_objects"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/examples/0/inventories"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/examples/0/boundaries"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/examples/0/notice_evidence"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/examples/0/trial_artifact_accounting"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/examples/0/original_output_map"
+        },
+        {
+          "path": "benchmark/writing/wp1-examples-0121.json",
+          "locator": "/claims_and_gaps"
+        }
+      ]
+    },
+    {
+      "stage": "save_initial",
+      "before_comparison": true,
+      "action": "Save and hash initial.json with actual save time; preserve byte-identically even if prior exposure exists."
+    },
+    {
+      "stage": "comparison",
+      "requires_saved_initial": true,
+      "inputs": [
+        {
+          "path": "benchmark/writing/c1-challenges-0125-expectations.json",
+          "locator": "/cases"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/application"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/local_rule"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/changes"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/revised_n08"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/historical_interpretations"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.json",
+          "locator": "/non_submission_context"
+        },
+        {
+          "path": "benchmark/writing/c1-f1-0129.md",
+          "locator": "whole-file"
+        }
+      ],
+      "handoff_pointer": "/review_receipt",
+      "execution_allowed": false
+    },
+    {
+      "stage": "return",
+      "action": "Return response.json, unchanged initial.json, completed.json, evidence/failed reads and size/SHA256 manifest to the commissioning coordinator using its supplied channel."
+    }
+  ],
+  "exposure_boundary": {
+    "public": true,
+    "enforced_blinding": false,
+    "withheld": false,
+    "model_unseen_demonstrated": false,
+    "familiar_participants": "Disclose prior and accidental exposure; do not relabel exposed work as blind or independent of expectations.",
+    "source_only_means": "No authored case judgments before initial save; operative method/key tests and stipulated source facts are allowed by the existing procedure.",
+    "defer_until_after_initial": [
+      "0125 expectations",
+      "0129 overlay judgments",
+      "review receipt and review findings",
+      "author/checker code",
+      "verification results"
+    ],
+    "no_execution": [
+      "historical checkers",
+      "author scripts",
+      "cold probes",
+      "trial arms",
+      "native jobs"
+    ]
+  },
+  "overlay_application": {
+    "base_path": "benchmark/writing/c1-challenges-0125-expectations.json",
+    "historical_pointer": "/cases/7",
+    "overlay_path": "benchmark/writing/c1-f1-0129.json",
+    "replacement_pointer": "/revised_n08",
+    "historical_F1_atom_pointer": "/cases/7/atoms/11",
+    "active_replacement_atoms": [
+      "/revised_n08/atoms/11",
+      "/revised_n08/atoms/12"
+    ],
+    "inherit_unchanged_cases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "comparison_only_after_initial_save": true,
+    "interpretation": "B, local to the pinned 0129 F1 correction; historical A/B remain attributed and unchanged.",
+    "general_B_rule": false,
+    "raw_answer_or_V_repaired": false,
+    "disagreement": "Preserve disagreement, including interpretation disputes; affected claim remains unavailable for established-key use until adjudicated and independently rechecked."
+  },
+  "review_receipt": {
+    "issue": 612,
+    "transient_input": {
+      "path": ".session/inputs/612-c1-f1-review-0129.json",
+      "bytes": 19785,
+      "sha256": "9dd1a2bd58cb23bd4e43a0fdb93c8cc417aa30dd20c7b3e33e5e9c95809498a6"
+    },
+    "original_release": "iter-0129/612-c1-f1-review-0129.json",
+    "report_source": "https://github.com/Kucze3205/ConnectWithLabview/issues/612#issuecomment-6873712778",
+    "report_snapshot": "2aade738321f86d42818de7bd7d4f50367055b30393e3236d4ad17dd4f89331b",
+    "standards": "CLEAR",
+    "spec": "CLEAR",
+    "scope": "Only the pinned F1 correction under local B; no general key, human-use release, method or owner acceptance.",
+    "measured_package_pins": [
+      {
+        "path": "benchmark/writing/c1-f1-0129.json",
+        "bytes": 85742,
+        "sha256": "37d85627c9c8b53b08f5093628a98ae9095072a2f254d98cb6b0aa8fdb12239e"
+      },
+      {
+        "path": "benchmark/writing/c1-f1-0129.md",
+        "bytes": 7775,
+        "sha256": "b9a6ce67b44962c5c415ad3af39d6e1f6d73730ffbafef667e06c9c4b48a2569"
+      },
+      {
+        "path": "benchmark/writing/c1-f1-0129-verification.json",
+        "bytes": 9543,
+        "sha256": "bcb4cfeda94777d3220142a3fd716cd7a4e0be4fe7c08e610901723f0610682b"
+      },
+      {
+        "path": "benchmark/writing/check_c1_f1_0129.py",
+        "bytes": 16333,
+        "sha256": "e12f11b2ff1ce2860e59c4f4821ac61f6784dc47c8d78245e89c2d18d9467c8c"
+      }
+    ],
+    "protected_pin_matches": 15,
+    "total_pin_matches": 19,
+    "semantic_review_repeated": false,
+    "completed_integrity_accounting_repeated": false
+  },
+  "response_template": {
+    "existing_ledger_copy_path": null,
+    "commissioning_coordinator": null,
+    "return_channel": null,
+    "exposure": {
+      "prior_0125_expectations": null,
+      "prior_0129_overlay": null,
+      "prior_reviews_scripts_checks_history": null,
+      "prior_familiarity_or_unknowns": null,
+      "accidental_early_exposure": null,
+      "read_events": []
+    },
+    "input_freeze": {
+      "candidate_commit": null,
+      "candidate_tree": null,
+      "source_pin_mismatches": [],
+      "failed_reads": []
+    },
+    "initial_record": {
+      "path": null,
+      "bytes": null,
+      "sha256": null,
+      "saved_at_utc": null,
+      "saved_before_comparison": null
+    },
+    "comparison": {
+      "first_0125_expectations_read_at_utc": null,
+      "first_0129_overlay_read_at_utc": null,
+      "first_review_receipt_read_at_utc": null,
+      "local_B_comparison_condition_recorded": null,
+      "historical_0125_disagreements": [],
+      "overlay_0129_disagreements": [],
+      "unresolved_results": [],
+      "revisions_with_evidence": [],
+      "next_resolver": null
+    },
+    "completed_record": {
+      "path": null,
+      "bytes": null,
+      "sha256": null,
+      "saved_at_utc": null
+    },
+    "return_record": {
+      "returned_at_utc": null,
+      "files": [],
+      "manifest": {
+        "path": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "human_result": null,
+      "limitations": null
+    }
+  },
+  "response_contract": {
+    "reuse": "Use the existing 0125 ledger for identity, case/atom rows, all required IDs, denominators, dimension counts and expectations_comparison; do not replace it with this supplementary envelope.",
+    "read_event_fields": [
+      "path_or_pointer",
+      "read_at_utc",
+      "phase",
+      "prior_or_accidental_exposure",
+      "uncertainty"
+    ],
+    "disagreement_row_fields": [
+      "case_id",
+      "atom_or_required_id",
+      "historical_0125_or_overlay_0129_locator",
+      "initial_decision",
+      "comparison_decision",
+      "evidence",
+      "interpretation_source_or_transcription",
+      "revision_and_rationale",
+      "unresolved",
+      "next_resolver"
+    ],
+    "file_identity_fields": [
+      "path",
+      "bytes",
+      "sha256"
+    ],
+    "blank_values": "All human-supplied response fields are null or empty arrays; no human result has been recorded.",
+    "save_order": [
+      "initial.json saved and hashed",
+      "comparison reads with times",
+      "completed.json saved and hashed",
+      "response.json and evidence returned with exact file manifest"
+    ],
+    "unresolved_rule": "Retain all initial decisions and disagreements; do not force agreement. Unattempted/unavailable cases remain explicit."
+  },
+  "logistics": {
+    "status": "proposed, not owner-approved design decisions",
+    "suggested_local_files": [
+      "initial.json",
+      "completed.json",
+      "response.json"
+    ],
+    "working_directory": "Coordinator-selected new local directory outside pinned inputs.",
+    "participant_count": null,
+    "quality_threshold": null,
+    "return_channel": null
+  },
+  "next_owner_action": "Next shaper asks the owner to commission actual human C1 on this pinned entry point, name participant/coordinator and return channel, and obtain initial/completed ledgers, exposure disclosure, disagreements and file identities. This worker sends no owner request.",
+  "limits": {
+    "actual_human_C1": "pending",
+    "historical_F4": "blocked",
+    "general_established_key_release": "blocked",
+    "full_trial_release": "blocked",
+    "independent_method_key_review": "pending",
+    "owner_acceptance": "pending",
+    "native_validity_build_behavior_dependencies": "unexecuted",
+    "native_save_version_and_overall_writing": "unverified",
+    "reading_fidelity": "unmeasured",
+    "human_result": null,
+    "cold_result": null,
+    "native_result": null,
+    "trial_result": null,
+    "quality_result": null
+  },
+  "author_exposure": {
+    "role": "benchmark",
+    "is_human": false,
+    "candidate_label": "codex/gpt-6.1-sol",
+    "startup_label": "claude-sonnet-5-5",
+    "continuity": "uncertified",
+    "expectations_and_reviews_seen": true,
+    "cold_independence": false
+  }
+}

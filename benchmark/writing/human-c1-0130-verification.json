@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "issue": 615,
+  "revision": "human-c1-0130-v1",
+  "status": "packaging-pass",
+  "benchmark_ready": false,
+  "files": [
+    {
+      "path": "benchmark/writing/check_human_c1_0130.py",
+      "bytes": 9171,
+      "sha256": "e90388398e3b97834146a3c501699d37de5fc2f4a47073c162aef6326a3e73a4"
+    },
+    {
+      "path": "benchmark/writing/human-c1-0130.json",
+      "bytes": 19607,
+      "sha256": "e520cd5917ede71b6bf1342cb2ceb9991dd9092c7cff82bc64e4dcd2e10ef45b"
+    },
+    {
+      "path": "benchmark/writing/human-c1-0130.md",
+      "bytes": 8456,
+      "sha256": "ae7e6474b17cdff7e034ebfdaf860599607676b5db635e8149bd9dadc71237b6"
+    }
+  ],
+  "self_pin": "Excluded to avoid a hash cycle; final session report pins this verification file.",
+  "input_receipts": [
+    {
+      "path": ".session/exports/manifest.json",
+      "bytes": 600,
+      "sha256": "18b86dada084060a6912e8766585807e9b5bc76bf661aed91813d0e024c2b2da"
+    },
+    {
+      "path": ".session/exports/reports/611.json",
+      "bytes": 3919,
+      "sha256": "da8737205520804388b2bda626f76e1dcd93f6ca2b6421fde65dbb261ef3e80c"
+    },
+    {
+      "path": ".session/exports/reports/612.json",
+      "bytes": 3654,
+      "sha256": "8103613c59a806be4817d8e578579a6d006d62593ba5b920aa284a7219e3dca4"
+    },
+    {
+      "path": ".session/inputs/612-c1-f1-review-0129.json",
+      "bytes": 19785,
+      "sha256": "9dd1a2bd58cb23bd4e43a0fdb93c8cc417aa30dd20c7b3e33e5e9c95809498a6"
+    }
+  ],
+  "review_receipt": {
+    "review_bytes": 19785,
+    "review_sha256": "9dd1a2bd58cb23bd4e43a0fdb93c8cc417aa30dd20c7b3e33e5e9c95809498a6",
+    "reported_identity_matches_actual": true,
+    "reviewed_pin_count": 19,
+    "all_reviewed_pins_match_actual": true,
+    "verdict_reuse": "Standards CLEAR / Spec CLEAR only for the pinned local-B F1 correction; no semantic re-review or completed integrity-accounting replay."
+  },
+  "source_finding": "The existing procedure and blank ledger support the work, but actual human execution with a frozen initial ledger and returned comparison/disagreements remains missing. Navigation, local overlay application and a supplementary blank response envelope are supplied.",
+  "protected_sources": [
+    {
+      "path": "benchmark/preparation.json",
+      "bytes": 12895,
+      "sha256": "b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25"
+    },
+    {
+      "path": "benchmark/protocol.md",
+      "bytes": 38342,
+      "sha256": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f"
+    },
+    {
+      "path": "benchmark/real-project-0107/LICENSE.txt",
+      "bytes": 1060,
+      "sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+    },
+    {
+      "path": "benchmark/real-project-0107/original.lvproj",
+      "bytes": 5806,
+      "sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-author.py",
+      "bytes": 29330,
+      "sha256": "dd1bbb78f25739c6d66bbfb96db16e358de7c3c88e78f74aa9aa989354ede1b9"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-cases.json",
+      "bytes": 31266,
+      "sha256": "73dfd06532782777d5cc7390fef290c5ef079730ed41ac9bd5786956d2b0a710"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-expectations.json",
+      "bytes": 1110893,
+      "sha256": "5b3761ae2b8e351038b9b2ace8b5a684940009b55e1fbee9d0907ff642864071"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-findings.md",
+      "bytes": 2991,
+      "sha256": "a6888f282d1da28258dc460e954d8472d0c997d4f67515a2d7fb5b661782c0a7"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-pins.json",
+      "bytes": 22541,
+      "sha256": "f6476328df20b0c55492b7b5a4a2e4139e8ee010d3315e9f61e846ea2b9e3f10"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-record-template.json",
+      "bytes": 3018,
+      "sha256": "c7902bc5797d4dcde829b28d3c3e17375b5d17fc53f67b26c528e41d9a6a07e2"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125-verification.json",
+      "bytes": 7784,
+      "sha256": "ce8642fc2c2b23e826cb24786fbc06c9a3319c978f30e4fdb1c7389a01540fbc"
+    },
+    {
+      "path": "benchmark/writing/c1-challenges-0125.md",
+      "bytes": 9775,
+      "sha256": "8cbe9c8c9aa9a4b1fb308e4050df342de079d09b3940dba85ce8b1f6fdb5661f"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129-verification.json",
+      "bytes": 9543,
+      "sha256": "bcb4cfeda94777d3220142a3fd716cd7a4e0be4fe7c08e610901723f0610682b"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129.json",
+      "bytes": 85742,
+      "sha256": "37d85627c9c8b53b08f5093628a98ae9095072a2f254d98cb6b0aa8fdb12239e"
+    },
+    {
+      "path": "benchmark/writing/c1-f1-0129.md",
+      "bytes": 7775,
+      "sha256": "b9a6ce67b44962c5c415ad3af39d6e1f6d73730ffbafef667e06c9c4b48a2569"
+    },
+    {
+      "path": "benchmark/writing/check_c1_challenges_0125.py",
+      "bytes": 18926,
+      "sha256": "8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b"
+    },
+    {
+      "path": "benchmark/writing/check_c1_f1_0129.py",
+      "bytes": 16333,
+      "sha256": "e12f11b2ff1ce2860e59c4f4821ac61f6784dc47c8d78245e89c2d18d9467c8c"
+    },
+    {
+      "path": "benchmark/writing/method.json",
+      "bytes": 45705,
+      "sha256": "276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/c1-findings-0126.md",
+      "bytes": 7179,
+      "sha256": "519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/c1-review-completion-0127.json",
+      "bytes": 10038,
+      "sha256": "fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/handoff-0128.md",
+      "bytes": 5106,
+      "sha256": "13c006165e16e6c559e252b470713a3a41e27c1d8d5459888495d54d3f036ff1"
+    },
+    {
+      "path": "benchmark/writing/reviews-0128/integrity-0128.json",
+      "bytes": 12665,
+      "sha256": "5e45a9eb16f047ab1eaecfb4dd68e3ed9ee034fb6e11321d9eed6a749ef842b4"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "bytes": 204095,
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-0119.json",
+      "bytes": 327961,
+      "sha256": "2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142"
+    },
+    {
+      "path": "benchmark/writing/wp1-key-review-0124.json",
+      "bytes": 126735,
+      "sha256": "23369a95a2c6a847dbe0bf09c9e19dc04c36b7a75269f03018dcbb6e282076a6"
+    },
+    {
+      "path": "docs/perpetua/evaluation.md",
+      "bytes": 7552,
+      "sha256": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8"
+    },
+    {
+      "path": "goal/goal.md",
+      "bytes": 4161,
+      "sha256": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb"
+    }
+  ],
+  "protected_source_mismatches": [],
+  "start": {
+    "commit": "0816229c016e29d887720be996f76c61d9112ad3",
+    "tree": "0c5e94bef9dab7cd7ac289418c5e1c3aa65955ac",
+    "working_tree": "clean before additions"
+  },
+  "changed_paths": [
+    "benchmark/writing/check_human_c1_0130.py",
+    "benchmark/writing/human-c1-0130-verification.json",
+    "benchmark/writing/human-c1-0130.json",
+    "benchmark/writing/human-c1-0130.md"
+  ],
+  "package_changed_paths": [
+    "benchmark/writing/check_human_c1_0130.py",
+    "benchmark/writing/human-c1-0130-verification.json",
+    "benchmark/writing/human-c1-0130.json",
+    "benchmark/writing/human-c1-0130.md"
+  ],
+  "scope_audit": {
+    "diff_argv": [
+      "git",
+      "diff",
+      "--name-status",
+      "0816229c016e29d887720be996f76c61d9112ad3",
+      "--"
+    ],
+    "diff_exit": 0,
+    "diff_stdout": "A\tbenchmark/writing/check_human_c1_0130.py\nA\tbenchmark/writing/human-c1-0130-verification.json\nA\tbenchmark/writing/human-c1-0130.json\nA\tbenchmark/writing/human-c1-0130.md\n",
+    "diff_stderr": "",
+    "untracked_argv": [
+      "git",
+      "ls-files",
+      "--others",
+      "--exclude-standard"
+    ],
+    "untracked_exit": 0,
+    "untracked_stdout": "",
+    "untracked_stderr": "",
+    "parent_report_additions": [],
+    "unexpected_paths": [],
+    "preexisting_path_changes": [],
+    "pass": true,
+    "method": "Combine start-to-current tracked diff with actual untracked additions; do not assume parent index/commit continuity. No role-issued git commit."
+  },
+  "execution": {
+    "argv": [
+      "python3",
+      "-I",
+      "benchmark/writing/check_human_c1_0130.py"
+    ],
+    "count": 1,
+    "exit": 0,
+    "stdout": "{\"benchmark_ready\": false, \"human_result\": null, \"protected_source_pins\": 27, \"result\": \"pass\", \"scope\": \"repository packaging only\"}\n",
+    "stderr": "",
+    "scope": "Repository-only, read-only packaging; no arbitrary-answer scoring, historical code import, subprocess or native execution inside the checker."
+  },
+  "assertions_checked": [
+    "27 actual source pins including original cases/expectations/registry container, existing ledger, prior judgments and preparation index",
+    "repository local paths, linked files, cited JSON pointers and line ranges",
+    "orientation/source evidence before initial save; comparison requires saved initial",
+    "required blank response structure and null/empty human fields",
+    "public exposure boundaries without enforced blinding or withholding",
+    "historical 0125 versus locally reviewed 0129 overlay navigation",
+    "pending/blocked prerequisites and no invented human/native/cold/trial/quality result"
+  ],
+  "helper_failures": [
+    {
+      "operation": "source-read helper",
+      "cause": "A command incorrectly appended a shell-style separator inside Python source and raised SyntaxError before reading or mutating files. Corrected with one Python command."
+    },
+    {
+      "operation": "source-read helper",
+      "cause": "Assumed every byte object used base64; original/license instead reference repository files. KeyError occurred after source-example reading; corrected by byte-object kind, with no file mutation or semantic re-review."
+    }
+  ],
+  "limits": {
+    "actual_human_C1": "pending",
+    "historical_F4": "blocked",
+    "general_established_key_release": "blocked",
+    "full_trial_release": "blocked",
+    "independent_method_key_review": "pending",
+    "owner_acceptance": "pending",
+    "native_validity_build_behavior_dependencies": "unexecuted",
+    "native_save_version_and_overall_writing": "unverified",
+    "reading_fidelity": "unmeasured",
+    "human_result": null,
+    "cold_result": null,
+    "native_result": null,
+    "trial_result": null,
+    "quality_result": null
+  },
+  "not_executed": [
+    "historical checkers",
+    "author scripts",
+    "cold probes",
+    "trial arms",
+    "native jobs",
+    "semantic re-review",
+    "completed 0128 integrity accounting"
+  ],
+  "preparation_index": "Unchanged, pinned as protected input; no preparation milestone added or repinned.",
+  "next": "Next shaper asks the owner to commission actual human C1 on this pinned entry point, name participant/coordinator and return channel, and obtain initial/completed ledgers, exposure disclosure, disagreements and file identities. This worker sends no owner request.",
+  "author_exposure": {
+    "role": "benchmark",
+    "is_human": false,
+    "candidate_label": "codex/gpt-6.1-sol",
+    "startup_label": "claude-sonnet-5-5",
+    "continuity": "uncertified",
+    "expectations_and_reviews_seen": true,
+    "cold_independence": false
+  }
+}
