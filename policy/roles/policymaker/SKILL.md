@@ -93,6 +93,15 @@ busywork: do not place it. Set `"wake": true` when you want to act on the result
 this iteration: you run again after the ordered tasks end. State the same expectations
 for each change in your report.
 
+After a wake or recovery, check the current iteration's recorded orders and their
+results before restoring a saved task graph. Missing `.session/` files do not show
+that orders were never consumed. Read completed audit outputs before deciding the
+next action. Do not submit the same audit again without a new evidence question
+and a stated expected gain. A recovery copy is historical evidence, not a queue.
+When no new policy task is needed, write `{"wake": false, "tasks": []}` to
+`.session/orders.json` and return ordinary work to the shaper. If current order
+state is unavailable, preserve the uncertainty instead of blindly replaying orders.
+
 ## Write for the owner in Simplified Technical English
 
 Write each text that the owner reads in ASD-STE100 Simplified Technical English: the
