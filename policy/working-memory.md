@@ -426,6 +426,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   --check support if needed, pin under oracle), max_turns >= 25. If both re-reviews accept -> pin script replaces the two
   "not independently re-reviewed" limitation sentences. Then: #268 record review, split allocation planning.
 
+## Iteration 0047 (#300, wake false)
+- Results of 0046: #297 review DONE (copilot 141k + codex 128k, 13 turns): ACCEPT of the #292 readiness proposal (all 6
+  sha256 match, line pointers hold, honesty flags false, controlled I/O gap). #298 re-review `partial` input_budget (610k,
+  14 turns) but verdicts written: item A gap row ACCEPT (README:24, challenges.py:354); item B REVISE only because its
+  own revert harness was masked.
+- Measured by Policymaker #300 in temp copies: break TOKEN_VALUE_RE -> exit 1; remove partition check -> exit 1; move
+  token mutation back to `value` -> exit 1; only disabling the reason comparison passes. So #281 fix is revert-proof;
+  item B closed without another fix round.
+- Wrote execution/scripts/pin_readiness_300.py: extracts the #292 JSON block (block sha bb6c4a41…), writes
+  benchmark/native/readiness-case.json (896e3a56…), replaces the two "not re-reviewed" sentences, appends a readiness
+  sentence, pins the case under oracle, re-pins status. Dry run twice on a copy without env: idempotent, status
+  4b0ec6da…, preparation 2daa463f…, evaluator 0 missing [] 60 refs; native/split/challenges/score/baseline --check 0
+  (lineage.py needs env, expected).
+- Order `pin-readiness-and-rereviews-300` (benchmark, low, 20/25, main, <=8 calls).
+- Next: verify main 60 refs + status 4b0ec6da…, delete pin_readiness_300.py. Then: #268 readiness record review
+  (record only in issue #268 comments; ask owner to commit a redacted record or find an export route), tell the owner
+  #169 now has a cited property-readiness case, split allocation planning, owner presentation of 0002 estimate.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
