@@ -74,7 +74,24 @@ def citation_support(citations, key):
     return 'correct' if all(c in key['citations'] for c in citations) else 'incorrect'
 
 
-def extra_outcome(item, channel, keys, key_absent):
+def condition_policy(records, key, identifier, condition_ledger):
+    keyed_conditions = set(key.get("conditions", []))
+    unsupported = missing = False
+    for record, pointer in records:
+        submitted_conditions = record.get("conditions", [])
+        missing |= bool(keyed_conditions - set(submitted_conditions))
+        seen_conditions = set()
+        for index, condition in enumerate(submitted_conditions):
+            if condition not in keyed_conditions:
+                unsupported = True
+                if condition not in seen_conditions:
+                    condition_ledger.append({"claim_id": identifier, "condition": condition,
+                        "raw_json_pointer": pointer + "/conditions/" + str(index)})
+                    seen_conditions.add(condition)
+    return unsupported, missing
+
+
+def extra_outcome(item, channel, keys, key_absent, pointer, condition_ledger):
     value = item.get('answer' if channel == 'answer' else 'value')
     match = re.fullmatch(r'The XML-parsed literal at (.+) has UTF-8 byte length (\d+)\.', value or '')
     key = None
@@ -93,6 +110,13 @@ def extra_outcome(item, channel, keys, key_absent):
                 grounding = citation_support(item.get('citations', []), key)
                 outcomes = {'correctness': 'correct' if correct else 'incorrect',
                             'grounding': grounding if correct else 'incorrect'}
+                unsupported, missing = condition_policy(
+                    [(item, pointer)], key, item["claim_id"], condition_ledger)
+                for dimension, outcome in outcomes.items():
+                    if unsupported:
+                        outcomes[dimension] = "incorrect"
+                    elif missing and outcome == "correct":
+                        outcomes[dimension] = "partial"
             return outcomes, {'actual_byte_length': actual, 'utf8_literal': key['atomic_fact']['value']}
     return ({'fidelity': 'unverified'} if channel == 'reader' else
             {'correctness': 'unverified', 'grounding': 'unverified'}), None
@@ -135,7 +159,8 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
             identifier = item[id_field]
             pointer = prefix + str(index)
             if identifier not in required[dimensions[0]]:
-                outcomes, derivation = extra_outcome(item, channel, keys, key_absent)
+                outcomes, derivation = extra_outcome(
+                    item, channel, keys, key_absent, pointer, condition_ledger)
                 entry = {'channel': channel, 'assertion_id': identifier, 'assertion': item.get(value_field),
                          'raw_json_pointer': pointer, 'outcomes': outcomes, 'required_credit': 0,
                          'derivation': derivation}
@@ -165,18 +190,8 @@ def compute(source, denominators, inventory, submitted, probe, alignment):
                 native = key.get('native_reference', 'unavailable') if key else 'unavailable'
             unsupported_conditions = missing_conditions = False
             if channel == 'answer' and key is not None:
-                keyed_conditions = set(key.get('conditions', []))
-                for record, pointer in records:
-                    submitted_conditions = record.get('conditions', [])
-                    missing_conditions |= bool(keyed_conditions - set(submitted_conditions))
-                    seen_conditions = set()
-                    for index, condition in enumerate(submitted_conditions):
-                        if condition not in keyed_conditions:
-                            unsupported_conditions = True
-                            if condition not in seen_conditions:
-                                condition_ledger.append({'claim_id': identifier, 'condition': condition,
-                                    'raw_json_pointer': pointer + '/conditions/' + str(index)})
-                                seen_conditions.add(condition)
+                unsupported_conditions, missing_conditions = condition_policy(
+                    records, key, identifier, condition_ledger)
             common = None
             if contradiction or unsupported_conditions:
                 common = 'incorrect'
@@ -260,9 +275,10 @@ def compare(computed, expected):
     return mismatches
 
 
-def regression_self_test(fixture, inventory):
+def regression_self_test(fixture, inventory, extra_claim=False):
     # Mutate only in memory; keep preserved raw JSON and its hash consistent.
-    control = next(c for c in fixture['controls'] if c['name'] == 'positive-control')
+    control_name = "extra-true-answer" if extra_claim else "positive-control"
+    control = next(c for c in fixture["controls"] if c["name"] == control_name)
     def score(submitted):
         return compute(fixture['source'], fixture['denominators'], inventory,
                        submitted, control['probe'], control['alignment'])
@@ -270,12 +286,23 @@ def regression_self_test(fixture, inventory):
     if baseline['cannot_evaluate_reasons'] or compare(baseline, control['expected']):
         raise ValueError('regression self-test: positive control does not match')
     results = []
-    for mutation in ('extra-condition', 'missing-condition', 'wrong-literal',
-                     'missing-claim', 'wrong-citation'):
+    mutations = (("extra-claim-condition",) if extra_claim else
+                 ("extra-condition", "missing-condition", "wrong-literal",
+                  "missing-claim", "wrong-citation"))
+    identifier = "X-true" if extra_claim else "A0005"
+    def outcomes_for(computed):
+        if extra_claim:
+            return next(e["outcomes"] for e in computed["extras_ledger"]
+                        if e["assertion_id"] == identifier and e["channel"] == "answer")
+        return {d: computed["per_id"][d][identifier] for d in ("correctness", "grounding")}
+    baseline_outcomes = outcomes_for(baseline)
+    if extra_claim and any(v != "correct" for v in baseline_outcomes.values()):
+        raise ValueError("regression self-test: extra baseline is not correct")
+    for mutation in mutations:
         submitted = deepcopy(control['submitted'])
         claims = submitted['answer_record']['claims']
-        claim = next(c for c in claims if c['claim_id'] == 'A0005')
-        if mutation == 'extra-condition':
+        claim = next(c for c in claims if c["claim_id"] == identifier)
+        if mutation in ("extra-condition", "extra-claim-condition"):
             claim['conditions'].append('Native runtime dependency resolved successfully.')
         elif mutation == 'missing-condition':
             claim['conditions'].pop(0)
@@ -289,8 +316,11 @@ def regression_self_test(fixture, inventory):
         submitted['raw_answer_record']['text'] = text
         submitted['raw_answer_record']['sha256'] = digest(text.encode('utf-8'))
         computed = score(submitted)
-        outcomes = {d: computed['per_id'][d]['A0005'] for d in ('correctness', 'grounding')}
-        changed = any(value != baseline['per_id'][d]['A0005'] for d, value in outcomes.items())
+        outcomes = outcomes_for(computed)
+        changed = any(value != baseline_outcomes[d] for d, value in outcomes.items())
+        if extra_claim and (any(v != "incorrect" for v in outcomes.values()) or
+                            not computed["condition_ledger"]):
+            raise ValueError("regression self-test failed: extra-claim-condition policy")
         mismatches = compare(computed, control['expected'])
         if not changed or not mismatches or computed['cannot_evaluate_reasons']:
             raise ValueError('regression self-test failed: ' + mutation)
@@ -301,7 +331,8 @@ def regression_self_test(fixture, inventory):
 
 def generate():
     fixtures = []
-    regression_results = None
+    regression_results = []
+    extra_regression_results = []
     total = matched = unevaluable = 0
     for fixture_id in FIXTURES:
         path = ROOT / 'benchmark/challenges' / (fixture_id + '.json')
@@ -311,6 +342,8 @@ def generate():
         if digest(inventory_bytes) != fixture['source']['inventory_sha256']:
             raise ValueError(fixture_id + ': inventory SHA256 mismatch')
         inventory = json.loads(inventory_bytes)
+        if fixture_id == "library-icon-tests":
+            extra_regression_results = regression_self_test(fixture, inventory, extra_claim=True)
         if fixture_id == 'library-specialty':
             regression_results = regression_self_test(fixture, inventory)
         controls = []
@@ -336,7 +369,7 @@ def generate():
             'method': 'Conditional provisional XML key comparison; native matches stay unverified. Current-evidence view separately retains pending XML review. Synthetic fixture scoring is not reader execution.',
             'totals': {'fixtures': len(fixtures), 'controls': total, 'matches': matched,
                        'mismatches': total - matched, 'cannot_evaluate': unevaluable},
-            'regression_self_test': regression_results, 'fixtures': fixtures}
+            'regression_self_test': regression_results + extra_regression_results, 'fixtures': fixtures}
 
 
 def main():

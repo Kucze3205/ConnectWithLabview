@@ -26378,6 +26378,21 @@
         "correctness": "correct",
         "grounding": "incorrect"
       }
+    },
+    {
+      "condition_ledger": [
+        {
+          "claim_id": "X-true",
+          "condition": "Native runtime dependency resolved successfully.",
+          "raw_json_pointer": "/claims/12/conditions/3"
+        }
+      ],
+      "mismatches": 10,
+      "mutation": "extra-claim-condition",
+      "outcomes": {
+        "correctness": "incorrect",
+        "grounding": "incorrect"
+      }
     }
   ],
   "schema_version": 1,
