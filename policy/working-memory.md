@@ -1,6 +1,16 @@
 # Policy working memory
 
-## Latest: Policymaker #900, iteration 0210 (trigger: every 3 iterations)
+## Latest: Policymaker #911, iteration 0213 (trigger: every 3 iterations)
+
+- Considers records 0210/0211/0212 and session reports #902, #905, #906, #908, #909 (.session/history/sessions/<issue>/). All three closed; every worker done; #902/#905/#909 accepted/improved/merged; no_progress=0; rollback streak still 1 (2026-11-17).
+- Citation shape thread closed: #905 merged 4eef3934, review #906 CLEAR (62/62 input-pins, 80/80 preparation.json, score.py --check 35/35). #909 wrote benchmark/challenges/reader-integration-0212.md: no reader attempt can be recorded now; nine blockers classed; the one ready task is benchmark/scripts/score_record.py (`python3 -B -I benchmark/scripts/score_record.py --check`). Next order is shaper-owned.
+- Change: execution/roles/orchestrator/SKILL.md "Writing a task" gets a rule after the pin-map rule: do not check changes with `git status`; read/hash the named files and check `__pycache__` with a pathlib one-liner. Evidence: 12 worker reports (#860-#909) said `git status --porcelain` printed nothing and the criterion was unconfirmable; 0210-0212 task.md files still asked for it (#902/#905/#909). This supersedes the #875 "observed, not acted on" note: it caused no failure, but every task carried an acceptance item that cannot pass, and workers spent turns and report text on it. Expected gain: acceptance items that a worker can confirm. Check: next task.md files have no `git status --porcelain` item, and worker reports have no "could not confirm" line about it.
+- Cost: 0210-0212 workers 0.21M-1.13M cache_read in 13-21 turns; shapers 0.28-0.43M. No change.
+- Same-family review (#906 Sonnet reviewing Sonnet) persists; cause unestablished. Stated limitation.
+- #909 discovery, not verified: next-gap-0202.md may be stale on citation checks (score.py:121,146,169 now define citation_resolves). Shaper-owned.
+- orders.json {"wake":false,"tasks":[]}. No Owner request, params, routing or evaluator change.
+
+## Previous: Policymaker #900, iteration 0210 (trigger: every 3 iterations)
 
 - Considers records 0207/0208/0209 and session reports #889, #896, #898 (.session/history/sessions/<issue>/), plus record outcome fields of #890/#892-#894/#897. All three closed; 0208 and 0209 accepted/improved; 0207 verdict none; no_progress=0; rollback streak still 1 (2026-11-17).
 - Citation thread closed: #889 implemented citation_resolves in score.py, partial at its 60-turn cap (cause session_budget, branch task/889 7d62165a). Finish task #893 (start_branch task/889, 20 turns, medium) done/merged 38a3e203 in 18 turns; review #894 CLEAR. Contract shape (design Limit 4) fixed by #897 merged 7f9dde12; review #898 CLEAR (62/62 input-pins, 80/80 preparation.json, no stale old hash). The #694 finish-on-branch rule and the #863 whole-map pin rule both worked again. Keep both.

@@ -155,6 +155,10 @@ Each task is one session's work and a section set the protocol defines. Rules:
   `benchmark/writing/input-pins.json`) against disk and fails on any mismatch. Name the changed files in `## Goal`.
   Step 4 needed two extra review rounds for stale pins: #857 finding 4 (score.py, challenges.json), then #861
   finding 1 (`benchmark/preparation.json`, changed by #856, never re-pinned). Historical snapshots stay frozen.
+- **Do not check changes with `git status`.** The worker directory is not a git repository and the parent commits, so
+  `git status --porcelain` prints nothing (reported unconfirmable by #860, #865, #869, #872, #873, #877, #881, #889,
+  #897, #902, #905, #909). Check outputs by reading or hashing the named files, and check for bytecode with
+  `python3 -c "import pathlib; assert not list(pathlib.Path('benchmark').rglob('__pycache__'))"`.
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
 - **Results.** Text and code go to git. Big and binary outputs go to `.session/artifacts/` and a later task lists them
