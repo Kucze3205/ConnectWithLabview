@@ -1,8 +1,8 @@
 # Policy working memory
 
-Updated by Policymaker #530 for iteration 0106. Considers records 0000-0105, reports #526/#527/#528,
-current journal memory, controlled-pair findings/status, and runtime checkpoints through 2026-11-13T16:04:11Z.
-Startup diagnostic: ok, 15,160 estimated tokens, no notices. No pending suggestions; exports manifest has no results.
+Updated by Policymaker #535 for iteration 0107. Considers records 0000-0106, reports #524/#531/#533,
+current journal memory, constant-rules-0106.md, and loop-state owner decisions. Older runtime evidence remains dated below.
+Startup diagnostic: ok, 15,559 estimated tokens, no notices. No pending suggestions; exports manifest has no results.
 #520 compressed this file from 46,403 bytes. Full predecessor: `git show 29ae339:policy/working-memory.md`
 (sha256 f332799010f475ce09d126438d354c64815653fba89e2bf8fd76662d368b038e).
 Older detail (0024-0091): `git show 2b6f6870:policy/working-memory.md`. Read only for missing pins or reasons.
@@ -10,13 +10,15 @@ History entry: `.session/history/manifest.json`; records `.session/history/recor
 `.session/history/sessions/<issue>/`. List selected report paths with Python. Keep memory below about 16 KB.
 
 ## Organization and current decision
-- Owner commit cfaf996: `shaper: orchestrator`, Fable 5.2 first for shaper and Policymaker, `every_iterations: 1`
-  (`policy/params.yml:75`). #525 remains pending; leave settings unchanged and do not duplicate that request.
+- #535 applies approved/completed Owner request #525 option A: `every_iterations: 3` in policy/params.yml.
+  Keep `no_progress: 3`, shaper, model order and other settings unchanged. Do not duplicate the request.
+  Compare iterations 0107-0109 session-limit events, parked_s and accepted outcomes with the dated baseline below.
+  Expected benefit: about two thirds fewer regularly triggered Policymaker sessions; quota saving is not measured yet.
 - With a shaper, Policymaker orders ONLY evaluator/audit (`.github/loop/task-graph.md:36-37`). The shaper owns
   goal-directed tasks and journal/working-memory.md; it cannot read policy/. Reach it through its skill,
   execution/roles/orchestrator/references/handoff.md or execution/protocol.md when a change is needed.
-- #530: no role, routing, limit, evaluator or skill change. Empty policy orders. Iteration 0105 made an accepted
-  improvement; no new audit question requires a session. Preserve quota by recording results and finishing.
+- #535: cadence change only; no role, routing, evaluator or skill change. Empty policy orders. Iteration 0106
+  made an accepted improvement; no new audit question requires a session. The shaper continues goal work.
 - #526 crashed after three rebase conflicts; its report does not identify conflicting paths or prove a model fault.
   Successor #527 finished and merged a valid graph. This is one failed shaper followed by recovery, not two failures.
   If another shaper fails, inspect its exact conflict/error evidence before changing organization.
@@ -24,37 +26,41 @@ History entry: `.session/history/manifest.json`; records `.session/history/recor
   A permitted writer imports a saved review only if a committed record is useful. Do not broaden reviewer writes.
 - Audits #43/#55 crashed. Order another only for a concrete question with available data; none is open now.
 
-## Iteration 0105: controlled-pair measurement completed
-- Record 0105: closed, accepted (routine change, not method acceptance), improved true, no_progress 0, one task,
-  eight limit hits, wall 5,779 s, critical path 439 s. Task #528 merged commit bba00f7.
-- Owner #516 is approved/completed. Eight public owner-authored VIs, fixtures/authoring.md and pins.json are on main
-  under docs/research/poc/pair/. Authoring record identifies LabVIEW 2026 26.1.1f1, 32-bit. Do not ask for them again.
-- #527 correctly prioritized newly available POC evidence over benchmark preparation. The task checked original
-  fixture/authoring and reviewed-file pins before replay; its count of eight comes from the fixture manifest.
-- #528 (Codex high, 28 turns, 410 agent s, 439 total s, no parking) ran all eight comparisons, exit 0 each.
-  docs/research/poc/pair/findings-0105.md (94 lines) verdict: `edit-attempt-needs-more`.
-  replay-0105-status.json preserves argv, exits, 15 input hashes, limitations and unchanged_inputs_after true.
-  verification-0105.json records preflight/postflight checks; candidates-0105.json records derived byte alignments.
-  These are measurements, not an independently reviewed edit rule or native validation.
-- Candidate constant alignment repeats across save modes: BDHb insertion 44200200 at 312 and 01->02 at 545->549.
-  Candidate primitive-associated transition: 1a->1b at normal BDHb 237; separate aligns left 237/right 232.
-  They establish correlations only; shifted tails are not independent semantic changes.
-- All eight comparisons change BDPW chunks 1/2, including save-setting pairs with identical BDHb.
-  Separate files lack VICD but retain CPC2. Constant normal VICD is unchanged despite BDHb/DFDS changes.
-  BDPW derivation, encoding/length rules, DFDS/VCTP dependencies and code/integrity handling remain unresolved.
-- Raw declarations: every LVSR 26008000, vers/4 26118001. No changed VI, fresh-agent demonstration, LabVIEW run,
-  behavior, unbroken arrow or save-version preservation was established. Coverage and tool quality remain unmeasured.
-- Findings' smallest next measurement needs a new same-version, same-setting unchanged-diagram Save As/re-save
-  control for constant-1-separate. That control is not established as available. Do not schedule its replay before
-  readiness, invent a control, or repeat the eight completed comparisons. The control alone cannot make editing safe.
-- Next shaper reads #528 report, findings, replay status and one comparison JSON. It decides on an exact owner
-  question for the public control plus ready independent work, or another bounded measurement justified by available
-  pinned sources. Any open request must not hold the iteration. If POC work waits, resume benchmark preparation
-  after reading docs/perpetua/roles.md and evaluation.md. No new product work follows from these comparisons.
+## Iterations 0105-0106: controlled-pair result and source blocker
+- 0105 #528 merged bba00f7: eight controlled comparisons, all exit 0, unchanged_inputs_after true.
+  Owner #516 supplied all eight public fixtures; do not request them again. LabVIEW 2026 26.1.1f1 32-bit.
+  findings-0105.md verdict edit-attempt-needs-more; replay-0105-status.json, verification-0105.json and
+  candidates-0105.json save the measurements. No rerun or pin creation is needed.
+- Record 0106: closed, accepted (routine change, not method acceptance), improved true, no_progress 0,
+  one task, zero limit hits, wall 1,898 s, critical path 638 s. #531 shaper and #533 researcher both Codex,
+  parked_s 0 each, 22/27 turns respectively. Totals 3,753,489 input, 28,546 output, 3,476,224 cache-read.
+  These tokens do not establish quota-normalized efficiency or the cause of prior Claude limits.
+- #531 judged the replay as needs-more, ordered bounded source research and opened optional public control
+  request #532. It did not schedule the unavailable control or authorize an edit. Request #532 remains pending.
+  No duplicate request or control comparison before original/control pins and authoring establish readiness.
+- #533 merged fc70efc. docs/research/poc/pair/constant-rules-0106.md verdict source-blocked. Its JSON records
+  38 repository hashes, eight prepared-file pins and ten probes; read only relevant probes before reuse.
+  P1 parses BDHb [312,316) as textHair OF__flags leaf 4420|0200; meaning/necessity remains unknown.
+  P2 places 545/549 inside four-byte ConstValue bodies 00000001->00000002 under DCO UID 118.
+  Typed dispatch remains unresolved. The same BDHb transitions occur in both save modes; normal DFDS
+  also changes at 223. This supports boundaries for these originals, not a safe general editing rule.
+- P4/P6: prepared pylavi production hashes equal the prior source-search hashes; LVblock/LVdatatype/LVrsrc
+  implementations are absent. Reuse prior absence; do not repeat unchanged source searches.
+  P5 tests empty-password MD5 for BDPW chunk 0 only. Chunks 1/2 have no staged recipe.
+  P7 equal BDHb with different BDPW tails refutes BDHb-only dependence. RTSG/LVSR/code/type rules remain open.
+- #533 reports checker exit 0 with empty-environment success and ten rejected malformed/contradictory controls.
+  Policymaker read the report and findings, not checker code, full JSON or prepared sources; no independent
+  review or repeated measurement occurred here. Original fixtures and replay inputs are reported unchanged.
+- No changed VI, fresh-agent demonstration, LabVIEW run, behavior, unbroken arrow or save-version preservation
+  was established. Raw LVSR 26008000 and vers/4 26118001 are declarations, not native authority.
+  Artifact/version coverage remains incomplete; benchmark readiness and tool quality remain unmeasured.
+- Next shaper reads #533 and the source-blocked findings. Only a newly available pinned primary BDPW source
+  or a verified new control justifies bounded POC follow-up; neither supplies a general edit rule by itself.
+  If neither is ready, resume ready benchmark preparation after roles.md/evaluation.md reads. No owner wait,
+  product implementation, repeated replay, corpus discovery or unchanged-source-absence investigation.
 - Exact reports:
-  .session/history/sessions/526/2123e2c05f68dc1404bc6814657b7c6a5d41b6cea87e84fd6031e860eff355fb.md;
-  .session/history/sessions/527/3ec73801272ecbb295a01d5e3ee1ec913897ccb12f365b021d36e0e3b76c44c6.md;
-  .session/history/sessions/528/115b26efbaf53b25a4ef8c66eacbb28ff1c9eda6e8a8dae8e653265d73094e52.md.
+  .session/history/sessions/531/38ea44b7693439c45b723fd125147437d5013d25d0d7930ec914b2448b3893ee.md;
+  .session/history/sessions/533/02493d512ed1055f2034c00d258ea102ee8929d0aa387880df1a4418f2822015.md.
 
 ## Quota evidence and decision rule
 - Owner criterion: accepted-result quality per subscription quota, not fastest elapsed time. Provider status is not
@@ -77,10 +83,10 @@ History entry: `.session/history/manifest.json`; records `.session/history/recor
   Record 0105 totals: 2,402,238 input, 42,977 output, 2,732,518 cache-read, 95,144 cache-write.
   No model attribution for conflict cause or scientific task quality is supported.
 - #524 filed #525: "Decide if the Policymaker runs every 3 iterations to use less Claude quota".
-  Completed means option A: change only every_iterations at policy/params.yml:75 to 3; no_progress stays 3,
-  model order unchanged. Then compare the next three iterations' session-limit events and parked_s with prior events.
-  Declined/pending means change nothing and do not resubmit. A new request needs a new kind of evidence,
-  e.g. an iteration failure caused by quota. Event 3 repeats the existing kind; 0105 ultimately succeeded.
+  #535 sees approved/completed in loop-state and applies option A: only every_iterations becomes 3.
+  no_progress stays 3, model order unchanged. Compare 0107-0109 session-limit events and parked_s with prior events.
+  Request #525 is fulfilled; do not resubmit. A different request needs new evidence, such as an iteration
+  failure caused by quota. Event 3 repeats the existing kind; 0105 and 0106 ultimately succeeded.
 - Cost guide: #499/#503/#507 Codex 17-24 turns, #511 27, #515 40, #520 35, #524 about 19.
   Request bytes grow with turns; aim below 20 actions. Use focused reads, write memory/orders/report, then Finish.
 
@@ -144,9 +150,10 @@ History entry: `.session/history/manifest.json`; records `.session/history/recor
 - Evaluator changes need evaluator order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Read record 0106 and actual reports. Check the shaper judged #528's needs-more verdict without claiming edit readiness.
-2. Check #525 decision and apply the exact cadence rule above; do not submit the same request again.
-3. Verify any new control's readiness before scheduling comparison. Owner silence supplies neither files nor evidence.
-4. If POC work waits, ensure ready benchmark preparation resumes only after roles.md/evaluation.md reads.
-5. Inspect another shaper failure before changing organization. Do not infer conflict paths or model fault from counts.
-6. Keep policy orders to evaluator/audit; avoid duplicate comparisons, audit, review, estimate or gap maps.
+1. Confirm cadence activation from loop-state: every_iterations 3, no_progress 3, other settings unchanged.
+2. Compare 0107-0109 session-limit events, parked_s and accepted results with the dated quota baseline.
+   Read actual runtime summaries if needed; no causal quota-saving claim from fewer sessions alone.
+3. Read intervening records and reports. Check that source-blocked #533 did not become edit readiness.
+4. Verify any new control/source readiness before follow-up. #532 is pending; do not duplicate it or wait.
+5. If no ready POC evidence arrives, ensure benchmark preparation resumes after roles.md/evaluation.md reads.
+6. Keep policy orders to evaluator/audit; no duplicate replay, source-absence search, audit, estimate or gap map.
