@@ -1,49 +1,55 @@
 # Policy working memory
 
-Considered: iteration records 0000-0008 (`.session/history/records/`), session reports #109-#112, #117
-(`.github/loop/data/session-reports/`), `policy/evaluator/evaluate.py`, `benchmark/preparation.json`,
-`.github/loop/loop.py:427-445,802-809`, `.github/loop/task-graph.md`. Updated by Policymaker session #121
-(start of iteration 0009).
+Considered: iteration records 0000–0009; reports #110/#112/#117/#123/#124; commits 0285248,
+ef9db89 and 8156cad; evaluator check at 984a992. Updated by Policymaker #131, iteration 0010.
+Historical inputs: `.session/history/manifest.json`; iteration 0009: `.session/history/records/0009.json`.
 
-## Current organization
-- `shaper: null`. The Policymaker's `.session/orders.json` is the iteration's only work. Never end a session
-  without it while `shaper: null`. `every_iterations: 1` (commit `9bc8016`).
-- Routing (`policy/params.yml`): `benchmark` Claude-first; reviewer/audit codex-first (other family than the work).
-- Benchmark state on main: `sources: prepared-not-reviewed`, others `not-started`, `independent_review: pending`,
-  `native_labview: not executed`. Readiness not established. `evaluate.py --check` on main (checkout 66ff557):
-  exit 0, 4 evidence refs, missing all except `sources`.
+## Current organization and state
+- `shaper: null`: always write `.session/orders.json`; it supplies the iteration's work.
+- Routing remains benchmark Claude-first, reviewer/audit Codex-first. Actual iteration 0009 execution
+  mostly fell back to Copilot gpt-5.6-luna. No measured subscription-quota comparison justifies a routing change.
+- #122 coverage landed with owner acceptance #129; duplicate #125 was rejected through #128.
+  Iteration 0009 was accepted/improved; `no_progress` reset to 0. Earlier stall concern is obsolete.
+- At 984a992, `python3 -I policy/evaluator/evaluate.py --check` exited 0: errors [], 8 evidence refs;
+  missing tasks, oracle, split, baseline, challenges. Sources and coverage remain prepared-not-reviewed.
+  Benchmark readiness is false, benchmark has not executed, tool quality is unmeasured.
+  Independent method review and owner acceptance remain required before product implementation.
 
-## Key mechanisms
-- Input budget: a session stops `partial/input_budget` at 800k unique input. Keep orders small.
-- **`## Verification` runs twice: in-session and in the engine epilogue without `LABVIEW_ENVIRONMENT`**
-  (`loop.py:802-809`). Verification must be offline over committed files; environment-dependent checks go into
-  Acceptance. Report-only reviews: no backticked command.
-- **After rebase the engine also runs `python3 policy/evaluator/evaluate.py --check`.** `benchmark/preparation.json`
-  pins sha256 per evidence file (max 2 MB each); any change to a pinned file without re-pinning rejects the session.
-  #117 (iteration 0008) lost a correct coverage restore this way (preparation-status.json is pinned under
-  `sources`). Fixed in #121: `execution/roles/benchmark/SKILL.md` now requires re-pinning + running the check;
-  orders' Verification now also asserts all pinned hashes match.
-- Sessions have no git identity; `git commit` fails (exit 128). Changes are left staged; the engine commits.
-- Blocked successors: when a predecessor ends `partial`, dependants end `blocked` with 0 tokens (#118, #119).
-- Duplicate issuance (0005/0006) did not recur in 0008.
+## Iteration 0009 findings
+- #123 stopped partial/input_budget. Its reusable result is ef9db89; parent 2e74e02 is on main.
+  Two repositories have dependency objects. Changed files: sources.py, sources.json, sources.md,
+  coverage.json. Contrary to its report, preparation.json was NOT updated: all four hashes would mismatch.
+- ef9db89 incorrectly counts project virtual folders (`Dependencies`, `vi.lib`) as dependency identities;
+  repeated items also need consolidation with source provenance preserved. Binary linkage/native checks remain unknown.
+- #124 stopped partial/session_budget; report contains only an artifact reference, no recommendation.
+  Artifact review-coverage.md (2777 bytes, sha256 6810a571202993e70416fa3ea07e8bde79058a812d6cae00109ad21b2faa0254)
+  is not staged locally. Do not infer its findings. Commit 8156cad contains no tracked review output.
+- Duplicate task issuance recurred in 0009 (#122–#124 and #125–#127); cause is unverified.
 
-## Iteration 0006/0008 results
-- Coverage: finished result is commit `0285248` (no branch, object store); `coverage.json` 1,776,486 bytes (<2 MB).
-- Sources review: #110 and #112 -> `Recommendation: revise at 52d2aa1`; sole finding: per-source dependency
-  identities/constraints missing (`benchmark/sources.md:41,48`).
+## Saved orders for iteration 0010
+- `bench-sources-deps-land`: restore ef9db89's four files, exclude folder items, consolidate dependencies,
+  regenerate sources then coverage, re-pin every changed evidence hash, quote actual check exit codes.
+  Expected result: sources reviewable on main, evaluator errors [], explicit unknowns retained.
+- `review-coverage2`: independent coverage review, recommendation tied to the inspected commit.
+- `review-sources2`, blocked by dependency landing: sample at least five declarations against pinned sources,
+  recheck prior passing source properties, recommend accept/revise/reject at the inspected commit.
+- Both reviews write findings directly into `.session/report.md` from the start; budget exhaustion must
+  leave readable findings. Coverage review may inspect the pre-dependency-change commit; check its pin later.
+- Next Policymaker: run the evaluator check on main, read landing check outputs and both review reports;
+  do not mark milestones reviewed or readiness established solely from hashes or engine acceptance.
 
-## Iteration 0009 decision (session #121)
-- `bench-coverage-land2` (benchmark, 30 turns): restore `0285248`, re-pin `preparation.json` (sources hash of
-  preparation-status.json; new coverage refs). Expect on main: `evaluate.py --check` exit 0, `coverage` not missing,
-  `coverage: prepared-not-reviewed`.
-- `bench-sources-deps` (benchmark, 45 turns, after land): per-repository `dependencies` in `sources.json`, re-pin.
-  Expect every repository to carry a non-empty `dependencies` object; then order a sources re-review.
-- `review-coverage` (reviewer, 15 turns, after land): expect `Recommendation: ... at <commit>` in its report.
-- If land2 fails again, read its report's check output before re-ordering; do not reissue blindly.
+## Mechanisms to preserve
+- Input ceiling is 800k unique input; #123 consumed 419934 input plus 385555 cache-write tokens.
+  Never read large sources.json/coverage.json directly; use bounded Python summaries and reuse saved work.
+- Task Verification runs in-session and again without LABVIEW_ENVIRONMENT in the engine epilogue;
+  keep it offline over committed files. Environment checks belong in Acceptance. Report-only reviews use no command.
+- After rebase the engine runs evaluator --check; changed pinned files require preparation.json re-pinning.
+- Missing git identity: leave changes staged; parent engine commits. Partial predecessors block dependants.
+- Exports contract: `docs/perpetua/session-exports.md`; explicit records/reports/streams/actions selectors only.
+  Current `.session/exports/manifest.json` has results []; it supplies no artifact or stream evidence.
+  Avoid repeating unsuccessful Grep/Glob searches for #124's unavailable artifact.
 
 ## Open questions
-- How a review verdict moves a milestone to `reviewed` (owner change gate per evaluation.md) is undecided.
-- Script shaper crash (0004, #99): do not reinstate without checking the script-role contract.
-- Notices #92 and #100 remain pending for the owner.
-- `no_progress` is 9 (engine stalls at 10, `engine_params.no_progress_iterations`); `improved` stays false because
-  the evaluator only returns `inconclusive`/`rejected` in this phase. Check whether a stall notice follows 0009.
+- How a recommendation becomes milestone `reviewed` remains undecided; follow the existing owner change gate.
+- Duplicate issuance and quota use warrant a targeted audit if recurrence threatens useful work; no cause inferred yet.
+- Notices #92/#100 remain pending for the owner. Do not reinstate the crashed script shaper without contract review.
