@@ -40,6 +40,14 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   - `review-challenges-206` (reviewer, medium, 60 min/40 turns): independent Spec/Standards review of a231d9e against
     protocol challenge rows and evaluation.md; check every evidence pointer by script; accept/revise verdict.
     Author #195 was mostly codex; check the reviewer's actual `models` block for family diversity.
+- Pass 2 results: #207 (sonnet only, 14 turns) in-session Verification exit 0, but the engine epilogue FAILED:
+  `git diff --quiet origin/main` printed git usage text; the exact cause remains unconfirmed. Saved as 449f3d7
+  (tag `iter/0024/207`; challenge content = a231d9e). #208 reviewer ended `blocked` with no report and no tag diff;
+  cause unknown.
+  Lesson: Verification must be git-free (pin sha256 values instead of git diff/ls-files).
+- Pass 3 orders (wake true): `finish-landing-207` (benchmark, low, 15/8, start task/207, git-free sha256 Verification
+  incl. lineage pins from main) -> `review-challenges-207` (reviewer, medium, 60/40, blocked_by landing, report in
+  first turns). If the reviewer blocks again with no report, investigate the reviewer profile/routing before re-ordering.
 
 ## Next Policymaker
 - Wake: read the landing report, actual `models` block, Verification and `git diff --stat origin/main`.
