@@ -1,107 +1,106 @@
 # Policy working memory
 
-Updated by Policymaker #539 for iteration 0108. Considers records 0000-0107, reports #536/#537,
-current journal memory, real-project-0107.md and loop-state decisions; earlier sources remain indexed below.
-Startup diagnostic: ok, 15,704 estimated tokens, no notices. No suggestions; exports manifest has no results.
-#520 compressed this file from 46,403 bytes. Full predecessor: `git show 29ae339:policy/working-memory.md`
+Updated by Policymaker #549 for iteration 0111. Considers records 0000-0110, reports #541/#544/#547,
+current journal memory and loop-state decisions. This session read selected report/record evidence,
+not review artifacts or proposal/checker bodies; no independent review or probe replay occurred.
+Startup: ok, 16,023 estimated tokens, no notices. No suggestions; exports manifest has no results.
+Predecessor memory: prepared checkout 38306c7b4855b1476599ef95bd80eff47023a581, policy/working-memory.md.
+#520 compressed the older file; full predecessor: git show 29ae339:policy/working-memory.md
 (sha256 f332799010f475ce09d126438d354c64815653fba89e2bf8fd76662d368b038e).
-Older detail (0024-0091): `git show 2b6f6870:policy/working-memory.md`. Read only for missing pins or reasons.
-History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`, reports
-`.session/history/sessions/<issue>/`. List selected report paths with Python. Keep memory below about 16 KB.
+Older detail (0024-0091): git show 2b6f6870:policy/working-memory.md. Revisit only missing pins/reasons.
+History: .session/history/manifest.json; records .session/history/records/<nnnn>.json; reports
+.session/history/sessions/<issue>/. Select report snapshots; exclude task.md unless task text is needed.
+Extract relevant record fields with Python; do not print whole records with repeated input_state/task bodies.
+Keep memory below about 16 KB.
 
 ## Organization and current decision
-- #539 confirms #535's approved #525 cadence: every_iterations 3, no_progress 3. Keep organization, routing,
-  evaluator and skills unchanged; empty policy orders. Accepted progress continues; no concrete new audit question.
-  Compare 0107-0109 with the dated baseline after those records exist. Fewer sessions alone proves no quota saving.
-- Policymaker orders only evaluator/audit with a shaper (`.github/loop/task-graph.md:36-37`). The shaper owns
-  goal tasks and journal memory; it cannot read policy/. Use its skill/handoff or execution/protocol.md if needed.
-- #526 failed after three rebase conflicts; #527 recovered. No model fault is established. Inspect exact errors
+- #549 keeps approved #525 cadence: every_iterations 3, no_progress 3. Roles, routing, evaluator and skills
+  stay unchanged; empty policy orders. Progress continues; no concrete new audit/evaluator question.
+- Observation completed: 0101-0106 recorded 33 limit hits and four parked outcome sessions. 0107-0109 and
+  0108-0110 each recorded zero hits/parking; these windows overlap. All six outcome sessions in each later
+  window used Codex. Model mix, tasks and quota availability confound cadence. No quota-saving claim follows.
+  Record outcome.sessions excludes Policymaker usage; final model labels omit routed-attempt histories.
+  Details and exact report links: policy/observations/0111-review-and-cadence.md. No fresh runtime probe
+  or routing change is justified by these observations. Reopen for concrete failures or new measured evidence.
+- Policymaker orders only evaluator/audit with a shaper (.github/loop/task-graph.md:36-37). The shaper owns
+  goal tasks and journal memory; it cannot read policy/. Use its report/handoff or execution/protocol.md as needed.
+- #526 failed after three rebase conflicts; #527 recovered. No model fault established. Inspect exact errors
   before reorganizing on a new failure. Audits #43/#55 crashed; order audits only for concrete available evidence.
 - Reviewer write: [] is deliberate; findings use .session/report.md and .session/artifacts/. A permitted writer
   preserves useful review evidence. Prefer another model family when available; do not broaden reviewer writes.
 
-## Iteration 0107: real-project measurement, writing case absent
-- Record 0107 closed/accepted/improved, no_progress 0; one task, zero limit hits, wall 1,781 s.
-  Codex #536 shaper: 24 turns, parked_s 0; #537 benchmark: 27 turns, parked_s 0, merged fc02ca6.
-  Totals: 3,442,137 input, 26,242 output, 3,228,160 cache-read. No quota-normalized comparison follows.
-- #536 resumed benchmark preparation after delivered negative POC and source-blocked #533. It did not turn
-  boundaries into edit readiness or wait for pending #532. No duplicate request or POC rerun is needed.
-- #537 finding blocked: existing W1-W8 has no direct LVPROJ writing case. Saved benchmark/real-project-0107.*,
-  original snapshot/license and checker. Selected minimum inventory (size,path): Core/AF PPL Build.lvproj,
-  5,806 bytes, upstream 371c631c16155d88f02be11a953e4964d7452fd8, original SHA256
-  1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf. Four XML declaration claims only.
-- #537 reports four passing claims, 16 rejection controls, offline isolation and unchanged seven writing files
-  against #493. Policymaker read reports/findings, not JSON/checker/original or prepared sources; no replay here.
-  Independent review remains pending; no edited artifact, native result, benchmark readiness or quality measured.
-- The shaper already saved the review path. Next: review exact original/license pins, D1-D4 locators/values,
-  selection, prohibited inferences and missing writing case. If confirmed, scope an extension of W1-W8.
-  This is goal work for the shaper; no policy audit/evaluator order or duplicate handoff is needed.
-- Reports: .session/history/sessions/536/f3a8f2fba9009c39e756b142c27f91a42e7cf3bf0df1a6530b295919375f072c.md;
-  .session/history/sessions/537/055a20baef5ef050c34b42b35d7f1b293b6b5a2718953b185d296daa7d3ba79d.md.
+## Iterations 0108-0110: project-text proposal separately reviewed
+- 0108 #541 CLEAR covers #537 original declarations and missing direct-LVPROJ-writing case only.
+  Prepared Actor Framework revision 371c631c16155d88f02be11a953e4964d7452fd8 supplies the 5,806-byte
+  Core/AF PPL Build.lvproj and MIT license; original SHA256
+  1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf. Minimum (size,path) selection.
+  D1-D4 are declarations; root LVVersion and build-property text are not native version authority.
+- #541 C1 low/nonblocking: structured checker accepts injected narrative overclaims; reviewed prose does not
+  contain them. Do not add a standalone cosmetic fix. #544 preserves exact review-0108.json in
+  benchmark/real-project-0107/, SHA256 6ad9596c1c5e05f08ee3647ae3af1596f1882944e2397ac9efcd79383aa78894.
+- 0109 #544 accepted/merged 34cd2b3 adds benchmark/project-text-writing-0109.{md,json}, checker and
+  verification. WP1 proposes one unique Bld_version.build Int property text 2 -> 3, one byte at offset 3347,
+  preserving other bytes/files and root declaration. No edit, native trial or method acceptance follows.
+- 0110 #547 CLEAR is scoped to proposal integration preparation; Spec/Standards have no blocking findings.
+  Its report independently resolves the unique source property/delta and retains independent later key approval.
+  Baseline 8b93818c2779be00a2e267a3588eadcdaf665911 / tree e5cdbf5a3bf02dce5de55e0b0cd3fc27bb744c31;
+  accepted candidate e5165269b5625455ad17bf34a3a8d1be95ee362f / tree 385ea919fc4f7714aa7bbdd29fd48ef60eaa74bb;
+  reviewed checkout 668b9bedb30188100ab1c54e81436d674feea1a8 / tree e9a20bf69df2e366a47a612da6a6d8c80c8eb2c0.
+- #547 evidence project-text-review.json, release iter-0110/547-project-text-review.json, 74,366 bytes,
+  SHA256 2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf. Reports say scoped bytes,
+  22 historical pins and two supplementary inputs match. Control counts remain report claims here; use actual
+  review artifact before downstream assertions. #547 C1 retains the acknowledged false-prose boundary.
+- Next shaper consumes #547, stages exact evidence for a permitted benchmark writer, preserves it, then scopes
+  qualified five-file method integration. Integration intentionally invalidates historical current-input hashes:
+  preserve old pins/checker at reviewed tree; use a new provenance addendum/check, never refresh old evidence.
+  Review the integration tree separately. Independently freeze complete text/preservation keys and full artifact
+  manifests before either candidate arm. This is shaper goal work; no duplicate policy order is needed.
+- No native key, restricted allocation, executed isolation, native validity/build/behavior/save-version result,
+  benchmark readiness or product quality is established. Same-family independent sessions do not prove model diversity.
+- Reports:
+  .session/history/sessions/541/76ff7a20024053285dc2a1d0dfb018249e33cc13017ebcdba5ad0828e1ad5afc.md;
+  .session/history/sessions/544/908fb5d0861e7178ef0b5f2ec23acdaefb5027fea533245950663b4d629a6b96.md;
+  .session/history/sessions/547/d6eb2085115b86ba4e78c52b2307ddf0d700826dc74a4d31043d5e6f9d7303ef.md.
 
-## Iterations 0105-0106: controlled-pair result and source blocker
-- 0105 #528 merged bba00f7: eight controlled comparisons, all exit 0, unchanged_inputs_after true.
-  Owner #516 supplied all eight public fixtures; do not request them again. LabVIEW 2026 26.1.1f1 32-bit.
-  findings-0105.md verdict edit-attempt-needs-more; replay-0105-status.json, verification-0105.json and
-  candidates-0105.json save the measurements. No rerun or pin creation is needed.
-- Record 0106: closed, accepted (routine change, not method acceptance), improved true, no_progress 0,
-  one task, zero limit hits, wall 1,898 s, critical path 638 s. #531 shaper and #533 researcher both Codex,
-  parked_s 0 each, 22/27 turns respectively. Totals 3,753,489 input, 28,546 output, 3,476,224 cache-read.
-  These tokens do not establish quota-normalized efficiency or the cause of prior Claude limits.
-- #531 judged the replay as needs-more, ordered bounded source research and opened optional public control
-  request #532. It did not schedule the unavailable control or authorize an edit. Request #532 remains pending.
-  No duplicate request or control comparison before original/control pins and authoring establish readiness.
-- #533 merged fc70efc. docs/research/poc/pair/constant-rules-0106.md verdict source-blocked. Its JSON records
-  38 repository hashes, eight prepared-file pins and ten probes; read only relevant probes before reuse.
-  P1 parses BDHb [312,316) as textHair OF__flags leaf 4420|0200; meaning/necessity remains unknown.
-  P2 places 545/549 inside four-byte ConstValue bodies 00000001->00000002 under DCO UID 118.
-  Typed dispatch remains unresolved. The same BDHb transitions occur in both save modes; normal DFDS
-  also changes at 223. This supports boundaries for these originals, not a safe general editing rule.
-- P4/P6: prepared pylavi production hashes equal the prior source-search hashes; LVblock/LVdatatype/LVrsrc
-  implementations are absent. Reuse prior absence; do not repeat unchanged source searches.
-  P5 tests empty-password MD5 for BDPW chunk 0 only. Chunks 1/2 have no staged recipe.
-  P7 equal BDHb with different BDPW tails refutes BDHb-only dependence. RTSG/LVSR/code/type rules remain open.
-- #533 reports checker exit 0 with empty-environment success and ten rejected malformed/contradictory controls.
-  Policymaker read the report and findings, not checker code, full JSON or prepared sources; no independent
-  review or repeated measurement occurred here. Original fixtures and replay inputs are reported unchanged.
-- No changed VI, fresh-agent demonstration, LabVIEW run, behavior, unbroken arrow or save-version preservation
-  was established. Raw LVSR 26008000 and vers/4 26118001 are declarations, not native authority.
-  Artifact/version coverage remains incomplete; benchmark readiness and tool quality remain unmeasured.
-- Next shaper reads #533 and the source-blocked findings. Only a newly available pinned primary BDPW source
-  or a verified new control justifies bounded POC follow-up; neither supplies a general edit rule by itself.
-  If neither is ready, resume ready benchmark preparation after roles.md/evaluation.md reads. No owner wait,
-  product implementation, repeated replay, corpus discovery or unchanged-source-absence investigation.
-- Exact reports:
-  .session/history/sessions/531/38ea44b7693439c45b723fd125147437d5013d25d0d7930ec914b2448b3893ee.md;
-  .session/history/sessions/533/02493d512ed1055f2034c00d258ea102ee8929d0aa387880df1a4418f2822015.md.
+## Iterations 0105-0107: POC blocker and resumed preparation
+- #528 completed all eight public owner #516 comparisons, merged bba00f7. findings-0105.md:
+  edit-attempt-needs-more. Replay/verification/candidates records exist; do not rerun them or request fixtures.
+  Controlled originals are owner-reported LabVIEW 2026 26.1.1f1 32-bit, not WM1 or verified 2024 cases.
+- #533 merged fc70efc; docs/research/poc/pair/constant-rules-0106.md: source-blocked. [312,316) parses
+  as textHair flags 4420|0200; 545/549 lie in ConstValue bodies 00000001->00000002 under DCO UID 118.
+  Meaning/necessity, typed dispatch, BDPW chunks 1/2 and RTSG/LVSR/code/type rules remain unresolved.
+  Equal BDHb with different BDPW tails refutes BDHb-only dependence. Boundaries justify no safe edit rule.
+  Prepared production sources lack LVblock/LVdatatype/LVrsrc rules; do not repeat unchanged absence searches.
+- No changed VI/fresh-agent demonstration, native validity/behavior or save-version preservation exists.
+  LVSR 26008000 and vers/4 26118001 are declarations only. No impossibility conclusion follows.
+- #532 optional unchanged Save As control remains pending. Do not duplicate, schedule unavailable work or wait.
+  New control needs authoring/original/control pins; it alone supplies no integrity/type rule. Only new pinned
+  primary source/control evidence addressing blockers warrants bounded POC follow-up.
+- #536/#537 resumed ready benchmark preparation in 0107 after unsuccessful POC delivery and source blocker.
+  #537 real-project-0107 evidence established four declarations and missing writing case; #541 reviewed it.
+  Record 0107 accepted/improved, zero hits/parking. Earlier detailed source evidence remains in predecessor memory.
+- Exact #533 report: .session/history/sessions/533/02493d512ed1055f2034c00d258ea102ee8929d0aa387880df1a4418f2822015.md.
 
 ## Quota evidence and decision rule
-- Owner criterion: accepted-result quality per subscription quota, not fastest elapsed time. Provider status is not
-  billing or a quota-normalized model comparison. Outside subscription use is unknown; do not infer causation.
-- Read actual runtime evidence using `git log origin/loop-runtime`, then selected `git show <commit>:pool.json`
-  or `git show origin/loop-runtime:sessions/<N>.json`. Print only availability, usage and selected error summaries.
-  Never dump histories: they contain whole repeated documents and can truncate away the relevant evidence.
-- Event 1, 2026-11-13: iterations 0101-0103 ran 04:04-04:55Z. Four Fable sessions #508/#511/#512/#515 sent
-  98 requests, 9.3 MB, about 3.96M cache-read, 305k cache-write, 89k output. Policymakers #511/#515 account for
-  about 57% of cache-read. Claude session quota 04:55-12:31Z; #518's 61 s of work waited 7.2 h.
-- Event 2: Policymaker #520 used 35 requests, 4.99 MB, 2.16M cache-read, 116k cache-write, 59k output.
-  Claude session quota from 12:53:47Z; available 14:20:58Z. #521 had 146 s of work, parked 5,073 s (four attempts).
-  In 0104 Policymaker used 80% of 2.68M cache-read; the task used 36k (1%).
-- Event 3 measured by #530: pool 76bd7ca records Claude session quota at 14:46:05Z; 2c910e6 records it at
-  14:46:30Z. Latest pool 3ead7eb (16:04:09Z) still records session quota observed 15:30:22Z, retry_after 16:10:22Z.
-  Codex provider available observed 15:52:32Z; model available 16:03:49Z. Copilot last observed quota 2026-11-08.
-  Provider state takes precedence over stale model-available entries. Do not treat retry_after as proven recovery.
-- 0105 #526/#527 each had four attempts, parked 3,826/3,763 s respectively; these can overlap, do not add them
-  into iteration downtime. Both used Fable and Codex. #528 used Codex without parking and produced accepted evidence.
-  Record 0105 totals: 2,402,238 input, 42,977 output, 2,732,518 cache-read, 95,144 cache-write.
-  No model attribution for conflict cause or scientific task quality is supported.
-- #524 filed #525: "Decide if the Policymaker runs every 3 iterations to use less Claude quota".
-  #535 sees approved/completed in loop-state and applies option A: only every_iterations becomes 3.
-  no_progress stays 3, model order unchanged. Compare 0107-0109 session-limit events and parked_s with prior events.
-  Request #525 is fulfilled; do not resubmit. A different request needs new evidence, such as an iteration
-  failure caused by quota. Event 3 repeats the existing kind; 0105 and 0106 ultimately succeeded.
-- Cost guide: #499/#503/#507 Codex 17-24 turns, #511 27, #515 40, #520 35, #524 about 19.
-  Request bytes grow with turns; aim below 20 actions. Use focused reads, write memory/orders/report, then Finish.
+- Owner criterion: accepted-result quality per subscription quota, not elapsed time. Provider state is not billing
+  or a quota-normalized comparison. Outside subscription use is unknown; do not infer causation.
+- For a new availability question, use git log origin/loop-runtime, then selected pool.json or sessions/<N>.json
+  with git show. Print only availability, usage and relevant error summaries; never dump repeated histories.
+- Dated baseline 2026-11-13: #508/#511/#512/#515 sent 98 requests, about 3.96M cache-read, 305k cache-write,
+  89k output; Policymakers accounted for about 57% of cache-read. Claude quota followed at 04:55Z;
+  #518 parked 25,945 s. #520 later used 35 requests, 2.16M cache-read, 116k cache-write, 59k output;
+  #521 parked 5,073 s. These are observations, not proof of quota causation or model-quality differences.
+- #530 runtime pins: pool 76bd7ca and 2c910e6 record Claude quota at 14:46Z; 3ead7eb still records quota
+  observed 15:30:22Z, retry_after 16:10:22Z. Codex observed available 15:52:32Z, model 16:03:49Z.
+  Copilot last observed quota November 8. These are stale dated facts, not current availability. Provider state
+  overrides stale model entries; retry_after is not proven recovery. Full event details remain in predecessor memory.
+- 0105 #526/#527 each had four attempts, parked 3,826/3,763 s; waits may overlap. Rebase conflict cause is
+  not attributed to a model. #528 produced accepted evidence without parking; #533 also completed without parking.
+- #524 filed #525; approved/completed in #535 loop-state. Only every_iterations changed to 3; no_progress
+  stayed 3 and model order stayed unchanged. Request fulfilled; do not resubmit. New requests need new evidence.
+  The requested 0107-0109 comparison is complete in policy/observations/0111-review-and-cadence.md.
+- Cost guide: earlier Policymakers used 17-40 turns; request bytes grow with turns. Aim below 20 actions.
+  Select evidence, update memory/orders/report, then Finish. Outcome records omit Policymaker usage.
 
 ## Evidence index (pins; read sources before reuse)
 - POC bounded unsuccessful delivery #477, record 0093, commit d616e38: docs/research/poc/delivery.md,
@@ -163,11 +162,10 @@ History: `.session/history/manifest.json`; records `.session/history/records/<nn
 - Evaluator changes need evaluator order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Keep every_iterations 3 and no_progress 3 unless new evidence justifies a change.
-2. Complete the 0107-0109 comparison after those records exist; 0107 alone shows zero limit hits and parking.
-   Read actual runtime summaries only for missing availability evidence; no causal quota-saving claim yet.
-3. Read intervening records/reports. Check whether #537's original claims and missing-case finding received
-   separate review before any LVPROJ writing extension; inherited W1-W8 clearance does not cover that extension.
-4. Check new control/source readiness before POC follow-up. #532 is pending; do not duplicate it or wait.
-   Source-blocked #533 remains insufficient for editing; benchmark preparation already resumed in 0107.
+1. Keep every_iterations 3 and no_progress 3 unless new evidence justifies a change. The requested comparison
+   is complete; do not repeat it or infer quota savings from zero parking. Read selected new records/reports.
+2. Check #547 evidence preservation and qualified integration. A CLEAR proposal does not cover a changed
+   integration tree or establish complete trial keys. Preserve historical checker/pins rather than refresh them.
+3. Read actual artifact/source values before asserting counts or pins; report prose is not a substitute.
+4. Check new control/source readiness before POC follow-up. #532 remains pending; do not duplicate or wait.
 5. Keep policy orders to evaluator/audit; no duplicate replay, source-absence search, audit, estimate or gap map.
