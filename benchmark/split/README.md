@@ -1,6 +1,6 @@
 # Split boundary design
 
-This is a public, design-only contract. No partition is allocated here: no case or key is withheld, and nothing public (including repository history, obscure paths, release assets, or evaluator directories) provides secrecy. The restricted store and isolated runner are not ready; the Row 1 capability request is pending.
+This is a public, design-only contract. No partition is allocated here: no case or key is withheld, and nothing public (including repository history, obscure paths, release assets, or evaluator directories) provides secrecy. The restricted store has an executed readiness record (benchmark/split/store-readiness-268.redacted.json, accepted by review #431) with synthetic sentinels only; it holds no case. The isolated runner is not ready.
 
 ## Lineage allocation
 
@@ -19,4 +19,4 @@ Mixed-family projects remain whole groups. If whole-group allocation makes a fam
 
 The isolation record describes required pre-measurement checks: custodian clone and push; scorer clone with push rejected; tokenless `ls-remote` denied; zero synthetic-sentinel hits in logs, artifacts, and the public repository; and revoked scorer-token clone denied. Actual results and evidence remain null until a real store, identities, custodian, and independent review exist. Synthetic sentinels must be used for boundary testing; real keys and cases are not placed here.
 
-Split remains blocked by store readiness, custodian checks, new/private cases, variant analysis, and native structural comparison. Public sources can support development specifications and duplicate-method preparation only.
+Split remains blocked by new/private cases, variant analysis, and native structural comparison. Public sources can support development specifications and duplicate-method preparation only.
