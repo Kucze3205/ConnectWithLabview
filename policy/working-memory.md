@@ -586,6 +586,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   independent record review. If revise -> fix the file myself (no blind re-review). Verify N1 on main (evaluator 0,
   new run_record.py sha pinned), then order its review and N2 lineage adjudication (bounded; split by case family).
 
+## Iteration 0057 (#344, wake false)
+- Considered record 0056, reports #341/#342, run_record.py on main (bf57224f…), proposal sha 53ac0f9d….
+- #341 manifest binding `partial` input_budget (copilot 429k, 26 turns), NO change made (only read files). Do not resume it.
+- #342 review of workflow proposal rev 2: ACCEPT, F1-F6 closed (actual models: copilot 308k + sonnet 14 -> GPT family;
+  author Policymaker = Claude, so family differs). Non-blocking: (1) issue-control plants raw text, gh JSON escaping may hide
+  quote/non-ASCII markers (fix: jq-decoded grep); (2) qp 403 branch and real local-permission failure untested.
+- Filed `question` request: owner copies proposal to .github/workflows/store-readiness.yml, adds secret EVAL_STORE_REPO, new
+  scorer token, runs initial, revokes, runs revoked, commits replacement redacted record + .sha256 (same path as #308).
+- Wrote `execution/scripts/bind_manifest_n1.py` (hash-gated, idempotent): adds bind_manifest() + 3 controls (matching
+  accepted, wrong-content hash and one changed byte rejected, output key `manifest_binding`) to run_record.py; replaces
+  README finding-4 sentence and status sentence; re-pins. Dry run twice on a copy without env: 4 files change;
+  run_record/baseline/score/evaluator --check 0, 62 refs; shas run_record.py 48404c93…, README 9008a808…, status
+  e225d24c…, preparation 27542683…; revert (equality always true) -> --check exit 1.
+- Orders (parallel, main): `apply-manifest-binding-n1` (benchmark, low, 20/25, <=8 calls) and `review-manifest-binding-n1`
+  (reviewer, medium, 45/35, runs the script in a temp copy, probes uppercase hex/appended newline/str input).
+- Next: verify main run_record.py 48404c93… + 62 refs, delete bind_manifest_n1.py. If review accepts -> pin script updates the
+  "awaits independent review" sentences. If revise -> fix the script myself. Watch the owner's store record; then order one
+  independent record review. Then N2 lineage adjudication (bounded, split by case family) and N3 populated-manifest contract.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
