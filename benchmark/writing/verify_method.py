@@ -13,6 +13,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import re
 import sys
 import types
 import xml.etree.ElementTree as ET
@@ -738,6 +739,11 @@ def check_lineage_map(method, lineage, lineage_sha256):
     candidates = {c['id']: c for c in lineage['candidate_variants']}
     exact = {g['sha256']: g['members'] for g in lineage['exact_copy_groups']}
     cases = {c['artifact_id']: c for c in lineage['development_case_map']}
+    id_lines = {}
+    for number, text in enumerate(read_repository(LINEAGE_PATH).decode().split('\n'), 1):
+        found = re.fullmatch(r'\s*"id": "((?:artifact|candidate)-\d+)",?', text)
+        if found:
+            id_lines.setdefault(found[1], number)
 
     def check_artifact(row, sha256):
         artifact = artifacts.get(row['artifact_id'])
@@ -786,11 +792,21 @@ def check_lineage_map(method, lineage, lineage_sha256):
         for consumer in consumers:
             check_artifact(consumer, consumer['sha256'])
             listed = consumer.get('candidate_variants', [])
-            check_candidates(listed, consumer['artifact_id'], False)
-            for member in consumer.get('variant_member_artifacts', []):
+            check_candidates(listed, consumer['artifact_id'], True)
+            # method.json consumer_artifacts[].variant_member_artifacts: every other member
+            # of each listed candidate, no more and no fewer.
+            variants = consumer.get('variant_member_artifacts', [])
+            need(sorted(m['artifact_id'] for m in variants) ==
+                 sorted({m for row in listed for m in row['members']} - {consumer['artifact_id']}),
+                 'lineage-map-variant-members')
+            for member in variants:
                 check_artifact(member, member['sha256'])
-                need(any(member['artifact_id'] in row['members'] for row in listed),
-                     'lineage-map-candidate')
+            # method.json consumer_artifacts[].candidate_variants[].source: line anchors
+            # recomputed from the "id" lines of benchmark/lineage.json.
+            for row in listed:
+                anchor = ('benchmark/lineage.json:%d (%s); ' % (id_lines[row['id']], row['id'])
+                          + ', '.join('%s at :%d' % (m, id_lines[m]) for m in row['members']))
+                need(row.get('source') == anchor, 'lineage-map-source-anchor')
     need(lmap['gaps'] and all(g['gap'] and g['blocking_row'] for g in lmap['gaps']),
          'lineage-map-gaps')
     return 'lineage-map-consistent'
@@ -856,6 +872,9 @@ def check_coverage_controls(method, lineage, lineage_sha256):
     entry = {e['task']: ['lineage_map', 'entries', i] for i, e in enumerate(method['lineage_map']['entries'])}
     row = {r['id']: ['coverage', 'matrix', 'rows', i] for i, r in enumerate(method['coverage']['matrix']['rows'])}
     wm1, wc1 = entry['WM1-diagram-not'], entry['WC1-create-vi']
+    consumers = {c['artifact_id']: entry['WM2-typedef-cluster'] + ['consumer_artifacts', i] for i, c in enumerate(
+        method['lineage_map']['entries'][2]['consumer_artifacts'])}
+    wm2_0086, wm2_0087 = consumers['artifact-0086'], consumers['artifact-0087']
     wp1 = method['tasks'][4]['originals'][0]['snapshot']
 
     def lineage_case(changes):
@@ -885,6 +904,18 @@ def check_coverage_controls(method, lineage, lineage_sha256):
          lineage_case([{'path': wc1 + ['artifact_id'], 'value': 'artifact-0087'}])),
         ('lineage-map-candidate-dropped', 'lineage-map-candidate',
          lineage_case([{'path': wm1 + ['candidate_variants'], 'value': []}])),
+        ('lineage-map-consumer-candidate-omitted', 'lineage-map-candidate',
+         lineage_case([{'path': wm2_0087 + ['candidate_variants'], 'value': []}])),
+        ('lineage-map-consumer-variant-members-dropped', 'lineage-map-variant-members',
+         lineage_case([{'path': wm2_0086 + ['variant_member_artifacts'], 'value': []}])),
+        ('lineage-map-consumer-source-anchor-wrong-line', 'lineage-map-source-anchor',
+         lineage_case([{'path': wm2_0087 + ['candidate_variants', 0, 'source'],
+                        'value': 'benchmark/lineage.json:32833 (candidate-0043); artifact-0087 at :2976, '
+                                 'artifact-0092 at :3158, artifact-0591 at :23691, artifact-0596 at :23822'}])),
+        ('lineage-map-group-status-wrong', 'lineage-map-group',
+         lineage_case([{'path': ['lineage_map', 'group_status'], 'value': 'adjudicated-independent'}])),
+        ('lineage-map-task-entry-dropped', 'lineage-map-tasks',
+         lineage_case([{'path': ['lineage_map', 'entries', 0], 'delete': True}])),
         ('matrix-task-row-missing', 'matrix-task-rows',
          matrix_case([{'path': row['task-WC1-create-vi'], 'delete': True}])),
         ('matrix-family-row-dropped', 'matrix-family-rows',
