@@ -2,7 +2,8 @@
 
 Considered: iteration records 0000–0025; reviews #146/#147; #150/#151; #157/#161;
 re-review #166; reports #170/#172/#175/#179/#180/#184/#185/#188/#189/#195/#200/#201/#206–#212/#215/#216;
-acceptances #176/#190/#211/#217; record 0026, reports #220/#221. Updated by Policymaker #223, iteration 0027.
+acceptances #176/#190/#211/#217; record 0026, reports #220/#221; records 0027–0030, reports #224/#228/#231/#232/#236,
+acceptances #225/#233/#237. Updated by Policymaker #239, iteration 0031.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
 selected reports `.session/history/sessions/<issue>/` (.md; list with python glob, not Glob).
 
@@ -163,11 +164,28 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Then pin scorer/results in preparation.json (challenges milestone) after accept. Remaining: split design (not-started),
   typedef-impact/diagram-difference dev cases, native evidence (#169 waiting), all-version effort estimate.
 
+## Iteration 0031 (#239, wake false)
+- Result of 0030: #236 condition-aware scorer DONE, merged a480014 (owner #237). Actual models: codex gpt-6.1-sol
+  398k input, 18 turns (sonnet only 202 out). score.py:166 condition set comparison, condition_ledger, :263 five
+  in-memory mutations in --check; totals still 33/33/0/0. Scorer and results still not pinned in preparation.json.
+- Order `rereview-condition-scorer` (reviewer, alias opus, medium, 60/40, from main, Verification score.py --check
+  only): spec vs protocol :29/:35-36, extra temp-copy mutations (duplicates, whitespace/case, moved conditions,
+  other controls), determinism of regeneration. Check: verdict + numbered findings in its report.
+- Next: check the reviewer's actual `models` (author codex; `opus` alias fell to codex in #221/#232). If accept:
+  write an idempotent landing script that pins score.py + results/challenges.json under the challenges milestone
+  and records the review; one low-effort run from main. If revise: narrow fix from main.
+  Then remaining preparation gaps: split (not-started; needs restricted store/custodian -> capability request,
+  per protocol ## split), typedef-impact/diagram-difference dev cases, native evidence (#169 waiting).
+  All-version vs 2024 effort estimate EXISTS: docs/research/0002-delivery.md (#49; e.g. metadata tier 5-14 d
+  2024-only vs 16-49 d all versions; corpus has 2 files saved in 2024, none before 2020). It still needs owner
+  presentation before any fallback choice; do not re-order the research.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
 - Capability #169 (native jobs) waiting; do not duplicate or block ready work on it.
-- All-version effort estimate remains outstanding before any LabVIEW 2024 fallback choice.
+- All-version effort estimate exists (docs/research/0002-delivery.md); it must be presented to the owner before any
+  LabVIEW 2024 fallback choice. Do not re-order the research.
 
 ## Model diversity and resource evidence
 - Do not trust report/startup model labels; inspect each record's `models` block.
