@@ -23228,11 +23228,860 @@
           },
           "match": true,
           "mismatches": []
+        },
+        {
+          "cannot_evaluate": false,
+          "computed": {
+            "cannot_evaluate_reasons": [],
+            "condition_ledger": [],
+            "contradictions_ledger": [],
+            "counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 12
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              }
+            },
+            "current_evidence_dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "current_evidence_per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "declared_execution": {
+              "attempted": 0,
+              "executed": 0,
+              "planned": 1,
+              "scored": 0
+            },
+            "details": {
+              "correctness": {
+                "A0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/0"
+                  ],
+                  "reference_value": "21008000",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/4"
+                  ],
+                  "reference_value": "Test Caller.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/5"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/6"
+                  ],
+                  "reference_value": "../Test Caller.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/7"
+                  ],
+                  "reference_value": "Split Text into Words.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/8"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/9"
+                  ],
+                  "reference_value": "../Split Text into Words.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "N0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "N0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                }
+              },
+              "fidelity": {
+                "R0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/0"
+                  ],
+                  "reference_value": "21008000",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "R0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "NI.LV.All.SourceOnly"
+                  ]
+                },
+                "R0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "Bool"
+                  ]
+                },
+                "R0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "true"
+                  ]
+                },
+                "R0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/4"
+                  ],
+                  "reference_value": "Test Caller.vi",
+                  "submitted_values": [
+                    "Test Caller.vi"
+                  ]
+                },
+                "R0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/5"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "VI"
+                  ]
+                },
+                "R0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/6"
+                  ],
+                  "reference_value": "../Test Caller.vi",
+                  "submitted_values": [
+                    "../Test Caller.vi"
+                  ]
+                },
+                "R0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/7"
+                  ],
+                  "reference_value": "Split Text into Words.vi",
+                  "submitted_values": [
+                    "Split Text into Words.vi"
+                  ]
+                },
+                "R0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/8"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "VI"
+                  ]
+                },
+                "R0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/9"
+                  ],
+                  "reference_value": "../Split Text into Words.vi",
+                  "submitted_values": [
+                    "../Split Text into Words.vi"
+                  ]
+                },
+                "RN0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    null
+                  ]
+                },
+                "RN0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    null
+                  ]
+                }
+              },
+              "grounding": {
+                "A0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/0"
+                  ],
+                  "reference_value": "21008000",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/4"
+                  ],
+                  "reference_value": "Test Caller.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/5"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/6"
+                  ],
+                  "reference_value": "../Test Caller.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/7"
+                  ],
+                  "reference_value": "Split Text into Words.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/8"
+                  ],
+                  "reference_value": "VI",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "A0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/9"
+                  ],
+                  "reference_value": "../Split Text into Words.vi",
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "N0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                },
+                "N0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "21008000"
+                  ]
+                }
+              }
+            },
+            "dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "duplicates_ledger": [],
+            "evidence_record": {},
+            "extra_counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              }
+            },
+            "extras_ledger": [],
+            "fixed_denominators": {
+              "correctness": 12,
+              "fidelity": 12,
+              "grounding": 12
+            },
+            "limitations": {
+              "answer": "Null entries are unavailable answers for N0001, N0002; they assert no native fact and have no supporting native locator.",
+              "reader": "No native alignment is available for R0001, R0002, R0003, R0004, R0005, R0006, R0007, R0008, R0009, R0010, RN0001, RN0002; null entries assert no observation."
+            },
+            "operation": {
+              "error": null,
+              "exit_code": 0,
+              "truncated": false
+            },
+            "per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "required_ids": {
+              "correctness": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ],
+              "fidelity": [
+                "R0001",
+                "R0002",
+                "R0003",
+                "R0004",
+                "R0005",
+                "R0006",
+                "R0007",
+                "R0008",
+                "R0009",
+                "R0010",
+                "RN0001",
+                "RN0002"
+              ],
+              "grounding": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ]
+            }
+          },
+          "control": "constant-keyed-literal-export",
+          "expected": {
+            "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+            "contradictions_ledger": [],
+            "counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 12
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              }
+            },
+            "current_evidence_dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "current_evidence_per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "duplicates_ledger": [],
+            "extra_counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              }
+            },
+            "extras_ledger": [],
+            "fixed_denominators": {
+              "correctness": 12,
+              "fidelity": 12,
+              "grounding": 12
+            },
+            "per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "required_ids": {
+              "correctness": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ],
+              "fidelity": [
+                "R0001",
+                "R0002",
+                "R0003",
+                "R0004",
+                "R0005",
+                "R0006",
+                "R0007",
+                "R0008",
+                "R0009",
+                "R0010",
+                "RN0001",
+                "RN0002"
+              ],
+              "grounding": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ]
+            }
+          },
+          "match": true,
+          "mismatches": []
         }
       ],
       "fixture_id": "library-icon-tests",
       "path": "benchmark/challenges/library-icon-tests.json",
-      "sha256": "e4ef68c4c2f3ce25b9ea1ab50297f13e229b7373b0430a97667de6610c3e13fa"
+      "sha256": "5c1b6873499b08f67c1be60abe73135788b86da5ef70a2696dd57c76c4fc5c57"
     },
     {
       "controls": [
@@ -24893,11 +25742,860 @@
           },
           "match": true,
           "mismatches": []
+        },
+        {
+          "cannot_evaluate": false,
+          "computed": {
+            "cannot_evaluate_reasons": [],
+            "condition_ledger": [],
+            "contradictions_ledger": [],
+            "counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 12
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              }
+            },
+            "current_evidence_dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "current_evidence_per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "declared_execution": {
+              "attempted": 0,
+              "executed": 0,
+              "planned": 1,
+              "scored": 0
+            },
+            "details": {
+              "correctness": {
+                "A0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/0"
+                  ],
+                  "reference_value": "20008000",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/4"
+                  ],
+                  "reference_value": "Batch Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/5"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/6"
+                  ],
+                  "reference_value": "../Specialty Messages/Batch Msg/Batch Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/7"
+                  ],
+                  "reference_value": "Reply Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/8"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/9"
+                  ],
+                  "reference_value": "../Specialty Messages/Reply Msg/Reply Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "N0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "N0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                }
+              },
+              "fidelity": {
+                "R0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/0"
+                  ],
+                  "reference_value": "20008000",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "R0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "NI.LV.All.SourceOnly"
+                  ]
+                },
+                "R0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "Bool"
+                  ]
+                },
+                "R0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "true"
+                  ]
+                },
+                "R0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/4"
+                  ],
+                  "reference_value": "Batch Msg.lvclass",
+                  "submitted_values": [
+                    "Batch Msg.lvclass"
+                  ]
+                },
+                "R0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/5"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "LVClass"
+                  ]
+                },
+                "R0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/6"
+                  ],
+                  "reference_value": "../Specialty Messages/Batch Msg/Batch Msg.lvclass",
+                  "submitted_values": [
+                    "../Specialty Messages/Batch Msg/Batch Msg.lvclass"
+                  ]
+                },
+                "R0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/7"
+                  ],
+                  "reference_value": "Reply Msg.lvclass",
+                  "submitted_values": [
+                    "Reply Msg.lvclass"
+                  ]
+                },
+                "R0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/8"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "LVClass"
+                  ]
+                },
+                "R0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/9"
+                  ],
+                  "reference_value": "../Specialty Messages/Reply Msg/Reply Msg.lvclass",
+                  "submitted_values": [
+                    "../Specialty Messages/Reply Msg/Reply Msg.lvclass"
+                  ]
+                },
+                "RN0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    null
+                  ]
+                },
+                "RN0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/observations/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    null
+                  ]
+                }
+              },
+              "grounding": {
+                "A0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/0"
+                  ],
+                  "reference_value": "20008000",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/1"
+                  ],
+                  "reference_value": "NI.LV.All.SourceOnly",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0003": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/2"
+                  ],
+                  "reference_value": "Bool",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0004": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/3"
+                  ],
+                  "reference_value": "true",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0005": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/4"
+                  ],
+                  "reference_value": "Batch Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0006": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/5"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0007": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/6"
+                  ],
+                  "reference_value": "../Specialty Messages/Batch Msg/Batch Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0008": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/7"
+                  ],
+                  "reference_value": "Reply Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0009": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/8"
+                  ],
+                  "reference_value": "LVClass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "A0010": {
+                  "native_reference": "unavailable",
+                  "outcome": "incorrect",
+                  "raw_json_pointers": [
+                    "/claims/9"
+                  ],
+                  "reference_value": "../Specialty Messages/Reply Msg/Reply Msg.lvclass",
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "N0001": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/10"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                },
+                "N0002": {
+                  "native_reference": "unavailable",
+                  "outcome": "unverified",
+                  "raw_json_pointers": [
+                    "/claims/11"
+                  ],
+                  "reference_value": null,
+                  "submitted_values": [
+                    "20008000"
+                  ]
+                }
+              }
+            },
+            "dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "duplicates_ledger": [],
+            "evidence_record": {},
+            "extra_counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              }
+            },
+            "extras_ledger": [],
+            "fixed_denominators": {
+              "correctness": 12,
+              "fidelity": 12,
+              "grounding": 12
+            },
+            "limitations": {
+              "answer": "Null entries are unavailable answers for N0001, N0002; they assert no native fact and have no supporting native locator.",
+              "reader": "No native alignment is available for R0001, R0002, R0003, R0004, R0005, R0006, R0007, R0008, R0009, R0010, RN0001, RN0002; null entries assert no observation."
+            },
+            "operation": {
+              "error": null,
+              "exit_code": 0,
+              "truncated": false
+            },
+            "per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "required_ids": {
+              "correctness": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ],
+              "fidelity": [
+                "R0001",
+                "R0002",
+                "R0003",
+                "R0004",
+                "R0005",
+                "R0006",
+                "R0007",
+                "R0008",
+                "R0009",
+                "R0010",
+                "RN0001",
+                "RN0002"
+              ],
+              "grounding": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ]
+            }
+          },
+          "control": "constant-keyed-literal-export",
+          "expected": {
+            "assessment_basis": "Authored expected behavior against provisional XML declarations, conditional on their independent confirmation. This is not a scorer result. Native-required answers remain unverified; every otherwise matching reader observation remains unverified without a native reference. Explicit XML contradictions are incorrect. A current independent-evidence assessment remains unverified for XML matches as well until review.",
+            "contradictions_ledger": [],
+            "counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 12
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 9,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 3
+              }
+            },
+            "current_evidence_dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "current_evidence_per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "dimensions": {
+              "correctness": "incorrect",
+              "fidelity": "unverified",
+              "grounding": "incorrect"
+            },
+            "duplicates_ledger": [],
+            "extra_counts": {
+              "correctness": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "fidelity": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              },
+              "grounding": {
+                "correct": 0,
+                "error": 0,
+                "incorrect": 0,
+                "missing": 0,
+                "partial": 0,
+                "unsupported": 0,
+                "unverified": 0
+              }
+            },
+            "extras_ledger": [],
+            "fixed_denominators": {
+              "correctness": 12,
+              "fidelity": 12,
+              "grounding": 12
+            },
+            "per_id": {
+              "correctness": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              },
+              "fidelity": {
+                "R0001": "unverified",
+                "R0002": "unverified",
+                "R0003": "unverified",
+                "R0004": "unverified",
+                "R0005": "unverified",
+                "R0006": "unverified",
+                "R0007": "unverified",
+                "R0008": "unverified",
+                "R0009": "unverified",
+                "R0010": "unverified",
+                "RN0001": "unverified",
+                "RN0002": "unverified"
+              },
+              "grounding": {
+                "A0001": "unverified",
+                "A0002": "incorrect",
+                "A0003": "incorrect",
+                "A0004": "incorrect",
+                "A0005": "incorrect",
+                "A0006": "incorrect",
+                "A0007": "incorrect",
+                "A0008": "incorrect",
+                "A0009": "incorrect",
+                "A0010": "incorrect",
+                "N0001": "unverified",
+                "N0002": "unverified"
+              }
+            },
+            "required_ids": {
+              "correctness": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ],
+              "fidelity": [
+                "R0001",
+                "R0002",
+                "R0003",
+                "R0004",
+                "R0005",
+                "R0006",
+                "R0007",
+                "R0008",
+                "R0009",
+                "R0010",
+                "RN0001",
+                "RN0002"
+              ],
+              "grounding": [
+                "A0001",
+                "A0002",
+                "A0003",
+                "A0004",
+                "A0005",
+                "A0006",
+                "A0007",
+                "A0008",
+                "A0009",
+                "A0010",
+                "N0001",
+                "N0002"
+              ]
+            }
+          },
+          "match": true,
+          "mismatches": []
         }
       ],
       "fixture_id": "library-specialty",
       "path": "benchmark/challenges/library-specialty.json",
-      "sha256": "b62e249554b25fa67ec5726d9751f52bda74a982914ab53df0b5917a68604a2e"
+      "sha256": "42480b8ca50ed3ad3c2b6a3328992b19e230c65fe87e62ba95968411903fab3f"
     },
     {
       "controls": [
@@ -26398,9 +28096,9 @@
   "schema_version": 1,
   "totals": {
     "cannot_evaluate": 0,
-    "controls": 33,
+    "controls": 35,
     "fixtures": 3,
-    "matches": 33,
+    "matches": 35,
     "mismatches": 0
   }
 }
