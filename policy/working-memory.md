@@ -127,6 +127,23 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Still pending after that: split/isolation design, typedef-impact/diagram-difference dev cases, all-version effort
   estimate, reviewer routing diversity (reviewer route list sonnet->codex; `opus` alias did not hold in #221).
 
+## Iteration 0029 (#230, wake false)
+- Result of 0028: #228 scorer `partial` on input_budget (codex gpt-6.1-sol 917k input, 19 turns). Work saved at tag
+  `iter/0028/228` (a9d0b1a): score.py (sha f0a2907…), results.json (sha 4c87180…, 882 KB; 33 controls, 33 matches,
+  0 mismatches, 0 unevaluable), challenges-score-evidence.json, tracked __pycache__. Real defect: my order put
+  results.json inside benchmark/challenges/, which challenges.py --check rejects as an extra entry (my mistake).
+- Wrote `execution/scripts/land_scorer_228.py`: copies score.py from the tag, retargets output to
+  `benchmark/results/challenges.json`, regenerates, requires byte identity with the tag's results, drops bytecode.
+  Dry run on temp copy of main: idempotent; score/challenges/evaluator --check all 0, evaluator missing [] 49 refs.
+  The evidence JSON (benchmark/challenges-score-evidence.json) is intentionally not landed.
+- Orders (parallel): `land-scorer-228` (benchmark, low, 20/15, main); `review-scorer-228` (reviewer, alias opus,
+  medium, 60/40, main, reads tag read-only, mutation checks in temp copy).
+- Next: delete the landing script after merge. Check reviewer `models` block for family diversity (author codex).
+  If revise: order fixes from main. If accept: remaining preparation gaps are split/isolation design (split
+  not-started), typedef-impact/diagram-difference dev cases, native evidence (#169 waiting), all-version effort
+  estimate. Owner method acceptance still not requested.
+- Lesson: before naming an output path in an order, check the directory's generator for exhaustive --check.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
