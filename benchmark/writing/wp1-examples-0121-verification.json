@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "issue": 584,
+  "command": "python3 -I benchmark/writing/check_wp1_examples_0121.py",
+  "argv": [
+    "python3",
+    "-I",
+    "benchmark/writing/check_wp1_examples_0121.py"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"C1\": \"open\",\n  \"F4\": \"blocked; not cleared\",\n  \"actual_project_files_written\": 0,\n  \"agent_runs\": 0,\n  \"benchmark_ready\": false,\n  \"check_status\": \"authored-example-consistency-with-F4-block-intact\",\n  \"checker_exit_code\": 0,\n  \"checker_sha256\": \"2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1\",\n  \"context_pins_checked\": 9,\n  \"declared_dependency_references\": 11,\n  \"dependency_closure\": \"unavailable\",\n  \"errors\": [],\n  \"examples\": [\n    {\n      \"assessment\": {\n        \"answer_correctness\": \"correct\",\n        \"source_grounding\": \"correct\"\n      },\n      \"id\": \"WP1-0121-positive-map-v1\",\n      \"map_relations\": 5,\n      \"preservation_IDs\": [\n        \"WP1-other-project-bytes\",\n        \"WP1-file-set-and-unrelated-files\",\n        \"WP1-root-version-declaration\",\n        \"WP1-original-and-license\"\n      ]\n    },\n    {\n      \"assessment\": {\n        \"answer_correctness\": \"unverified\",\n        \"source_grounding\": \"partial\"\n      },\n      \"id\": \"WP1-0121-unverified-extra-map-v1\",\n      \"map_relations\": 5,\n      \"preservation_IDs\": [\n        \"WP1-other-project-bytes\",\n        \"WP1-file-set-and-unrelated-files\",\n        \"WP1-root-version-declaration\",\n        \"WP1-original-and-license\"\n      ]\n    }\n  ],\n  \"expected_output_sha256\": \"8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42\",\n  \"expected_output_size\": 5806,\n  \"failed_controls\": [],\n  \"file_sha256\": {\n    \"benchmark/writing/wp1-disposition-review-0120.json\": \"bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141\",\n    \"benchmark/writing/wp1-examples-0121-pre-edit.md\": \"649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b\",\n    \"benchmark/writing/wp1-examples-0121.json\": \"8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382\",\n    \"benchmark/writing/wp1-examples-0121.md\": \"b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120\"\n  },\n  \"historical_example_map_slots\": \"blocked-F4; partial/partial\",\n  \"independent_approval\": \"pending\",\n  \"limits\": \"Authored conditional controls only. No actual trial, native evidence, complete dependency closure, tested isolation, narrative adjudication, independent method acceptance or F4 release.\",\n  \"materialized_dependencies\": 0,\n  \"native_executions\": 0,\n  \"package_status\": \"proposed-awaiting-separate-check\",\n  \"rejecting_controls\": {\n    \"0:false-preservation-relation\": {\n      \"expected_error\": \"map-relation-truth\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"map-relation-truth\"\n      ]\n    },\n    \"0:historical-raw-answer-credited\": {\n      \"expected_error\": \"historical-answer-credit-or-provenance\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"historical-answer-credit-or-provenance\"\n      ]\n    },\n    \"0:immutable-license-mutated\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:immutable-original-replaced\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:invented-dependency-hash\": {\n      \"expected_error\": \"invented-dependency-bytes\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"invented-dependency-bytes\"\n      ]\n    },\n    \"0:invented-native-log\": {\n      \"expected_error\": \"unavailable-trial-evidence-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"unavailable-trial-evidence-promotion\"\n      ]\n    },\n    \"0:invented-sidecar\": {\n      \"expected_error\": \"invented-sidecar\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"invented-sidecar\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-dependency-declaration\": {\n      \"expected_error\": \"dependency-inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"dependency-inventory-completeness\"\n      ]\n    },\n    \"0:missing-inventory-entry:delivered\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-inventory-entry:immutable_post\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-inventory-entry:immutable_pre\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-inventory-entry:workspace_post\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-inventory-entry:workspace_pre\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"0:missing-map-ID:WP1-file-set-and-unrelated-files\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"0:missing-map-ID:WP1-original-and-license\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"0:missing-map-ID:WP1-other-project-bytes\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"0:missing-map-ID:WP1-root-version-declaration\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"0:notice-wrong-hash\": {\n      \"expected_error\": \"delivered-notice-evidence\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"delivered-notice-evidence\"\n      ]\n    },\n    \"0:wrong-existing-citation\": {\n      \"expected_error\": \"map-support\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"map-relation-truth\",\n        \"map-support\"\n      ]\n    },\n    \"0:wrong-inventory-hash\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:false-preservation-relation\": {\n      \"expected_error\": \"map-relation-truth\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"map-relation-truth\"\n      ]\n    },\n    \"1:historical-raw-answer-credited\": {\n      \"expected_error\": \"historical-answer-credit-or-provenance\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"historical-answer-credit-or-provenance\"\n      ]\n    },\n    \"1:immutable-license-mutated\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:immutable-original-replaced\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:invented-dependency-hash\": {\n      \"expected_error\": \"invented-dependency-bytes\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"invented-dependency-bytes\"\n      ]\n    },\n    \"1:invented-native-log\": {\n      \"expected_error\": \"unavailable-trial-evidence-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"unavailable-trial-evidence-promotion\"\n      ]\n    },\n    \"1:invented-sidecar\": {\n      \"expected_error\": \"invented-sidecar\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"invented-sidecar\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-dependency-declaration\": {\n      \"expected_error\": \"dependency-inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"dependency-inventory-completeness\"\n      ]\n    },\n    \"1:missing-inventory-entry:delivered\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-inventory-entry:immutable_post\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-inventory-entry:immutable_pre\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-inventory-entry:workspace_post\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-inventory-entry:workspace_pre\": {\n      \"expected_error\": \"inventory-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-completeness\",\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"1:missing-map-ID:WP1-file-set-and-unrelated-files\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"1:missing-map-ID:WP1-original-and-license\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"1:missing-map-ID:WP1-other-project-bytes\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"1:missing-map-ID:WP1-root-version-declaration\": {\n      \"expected_error\": \"preservation-ID-map-completeness\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"preservation-ID-map-completeness\"\n      ]\n    },\n    \"1:notice-wrong-hash\": {\n      \"expected_error\": \"delivered-notice-evidence\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"delivered-notice-evidence\"\n      ]\n    },\n    \"1:wrong-existing-citation\": {\n      \"expected_error\": \"map-support\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"map-relation-truth\",\n        \"map-support\"\n      ]\n    },\n    \"1:wrong-inventory-hash\": {\n      \"expected_error\": \"inventory-entry-bytes-or-reference\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"inventory-entry-bytes-or-reference\"\n      ]\n    },\n    \"F4-release-promotion\": {\n      \"expected_error\": \"status-or-historical-credit-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"status-or-historical-credit-promotion\"\n      ]\n    },\n    \"actual-isolation-invented\": {\n      \"expected_error\": \"boundary-or-isolation-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"boundary-or-isolation-promotion\"\n      ]\n    },\n    \"benchmark-ready-promotion\": {\n      \"expected_error\": \"status-or-historical-credit-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"status-or-historical-credit-promotion\"\n      ]\n    },\n    \"constant-exporter-no-change\": {\n      \"expected_error\": \"expected-output-bytes\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"expected-output-bytes\"\n      ]\n    },\n    \"dependency-closure-invented\": {\n      \"expected_error\": \"dependency-closure-promotion\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"dependency-closure-promotion\"\n      ]\n    },\n    \"extra-assessment-incorrectly-correct\": {\n      \"expected_error\": \"separate-assessment\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"separate-assessment\"\n      ]\n    },\n    \"historical-established-key-unblocked\": {\n      \"expected_error\": \"historical-F4-block\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"historical-F4-block\",\n        \"source-requirement-inventory\"\n      ]\n    },\n    \"historical-ledger-credit:C1-correct\": {\n      \"expected_error\": \"historical-complete-map-credit\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"historical-complete-map-credit\"\n      ]\n    },\n    \"historical-ledger-credit:C1-unverified-extra\": {\n      \"expected_error\": \"historical-complete-map-credit\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"historical-complete-map-credit\"\n      ]\n    },\n    \"mutated-license-bytes\": {\n      \"expected_error\": \"mutated-license\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"mutated-license\"\n      ]\n    },\n    \"mutated-original-bytes\": {\n      \"expected_error\": \"mutated-original\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"mutated-original\"\n      ]\n    },\n    \"source-requirement-dropped\": {\n      \"expected_error\": \"source-requirement-inventory\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"source-requirement-inventory\"\n      ]\n    },\n    \"unverified-extra-disappears\": {\n      \"expected_error\": \"unverified-extra-retention\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"unverified-extra-retention\"\n      ]\n    },\n    \"wrong-output-object-hash\": {\n      \"expected_error\": \"byte-object-hash\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"byte-object-hash\"\n      ]\n    },\n    \"wrong-output-property-value\": {\n      \"expected_error\": \"expected-output-bytes\",\n      \"passed\": true,\n      \"rejected_for\": [\n        \"expected-output-bytes\"\n      ]\n    }\n  },\n  \"rejecting_controls_passed\": 55,\n  \"rejecting_controls_total\": 55,\n  \"requirement_source_records\": 359,\n  \"revision\": \"wp1-examples-0121-v1\",\n  \"unchanged_file_pins_checked\": 42\n}\n",
+  "stderr": "",
+  "stdout_sha256": "ed2e966dbd4a5db8bfb75ed77454fa3188c43218a1115516cda2c2650a66fc63",
+  "summary": {
+    "C1": "open",
+    "F4": "blocked; not cleared",
+    "actual_project_files_written": 0,
+    "agent_runs": 0,
+    "benchmark_ready": false,
+    "check_status": "authored-example-consistency-with-F4-block-intact",
+    "checker_exit_code": 0,
+    "checker_sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1",
+    "context_pins_checked": 9,
+    "declared_dependency_references": 11,
+    "dependency_closure": "unavailable",
+    "errors": [],
+    "examples": [
+      {
+        "assessment": {
+          "answer_correctness": "correct",
+          "source_grounding": "correct"
+        },
+        "id": "WP1-0121-positive-map-v1",
+        "map_relations": 5,
+        "preservation_IDs": [
+          "WP1-other-project-bytes",
+          "WP1-file-set-and-unrelated-files",
+          "WP1-root-version-declaration",
+          "WP1-original-and-license"
+        ]
+      },
+      {
+        "assessment": {
+          "answer_correctness": "unverified",
+          "source_grounding": "partial"
+        },
+        "id": "WP1-0121-unverified-extra-map-v1",
+        "map_relations": 5,
+        "preservation_IDs": [
+          "WP1-other-project-bytes",
+          "WP1-file-set-and-unrelated-files",
+          "WP1-root-version-declaration",
+          "WP1-original-and-license"
+        ]
+      }
+    ],
+    "expected_output_sha256": "8d984c2efd827a7b16f0f44fbaaf89adba0e031e2af743444f09f674c96e0e42",
+    "expected_output_size": 5806,
+    "failed_controls": [],
+    "file_sha256": {
+      "benchmark/writing/wp1-disposition-review-0120.json": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141",
+      "benchmark/writing/wp1-examples-0121-pre-edit.md": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b",
+      "benchmark/writing/wp1-examples-0121.json": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382",
+      "benchmark/writing/wp1-examples-0121.md": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+    },
+    "historical_example_map_slots": "blocked-F4; partial/partial",
+    "independent_approval": "pending",
+    "limits": "Authored conditional controls only. No actual trial, native evidence, complete dependency closure, tested isolation, narrative adjudication, independent method acceptance or F4 release.",
+    "materialized_dependencies": 0,
+    "native_executions": 0,
+    "package_status": "proposed-awaiting-separate-check",
+    "rejecting_controls": {
+      "0:false-preservation-relation": {
+        "expected_error": "map-relation-truth",
+        "passed": true,
+        "rejected_for": [
+          "map-relation-truth"
+        ]
+      },
+      "0:historical-raw-answer-credited": {
+        "expected_error": "historical-answer-credit-or-provenance",
+        "passed": true,
+        "rejected_for": [
+          "historical-answer-credit-or-provenance"
+        ]
+      },
+      "0:immutable-license-mutated": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:immutable-original-replaced": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:invented-dependency-hash": {
+        "expected_error": "invented-dependency-bytes",
+        "passed": true,
+        "rejected_for": [
+          "invented-dependency-bytes"
+        ]
+      },
+      "0:invented-native-log": {
+        "expected_error": "unavailable-trial-evidence-promotion",
+        "passed": true,
+        "rejected_for": [
+          "unavailable-trial-evidence-promotion"
+        ]
+      },
+      "0:invented-sidecar": {
+        "expected_error": "invented-sidecar",
+        "passed": true,
+        "rejected_for": [
+          "invented-sidecar",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-dependency-declaration": {
+        "expected_error": "dependency-inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "dependency-inventory-completeness"
+        ]
+      },
+      "0:missing-inventory-entry:delivered": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-inventory-entry:immutable_post": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-inventory-entry:immutable_pre": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-inventory-entry:workspace_post": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-inventory-entry:workspace_pre": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "0:missing-map-ID:WP1-file-set-and-unrelated-files": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "0:missing-map-ID:WP1-original-and-license": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "0:missing-map-ID:WP1-other-project-bytes": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "0:missing-map-ID:WP1-root-version-declaration": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "0:notice-wrong-hash": {
+        "expected_error": "delivered-notice-evidence",
+        "passed": true,
+        "rejected_for": [
+          "delivered-notice-evidence"
+        ]
+      },
+      "0:wrong-existing-citation": {
+        "expected_error": "map-support",
+        "passed": true,
+        "rejected_for": [
+          "map-relation-truth",
+          "map-support"
+        ]
+      },
+      "0:wrong-inventory-hash": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:false-preservation-relation": {
+        "expected_error": "map-relation-truth",
+        "passed": true,
+        "rejected_for": [
+          "map-relation-truth"
+        ]
+      },
+      "1:historical-raw-answer-credited": {
+        "expected_error": "historical-answer-credit-or-provenance",
+        "passed": true,
+        "rejected_for": [
+          "historical-answer-credit-or-provenance"
+        ]
+      },
+      "1:immutable-license-mutated": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:immutable-original-replaced": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:invented-dependency-hash": {
+        "expected_error": "invented-dependency-bytes",
+        "passed": true,
+        "rejected_for": [
+          "invented-dependency-bytes"
+        ]
+      },
+      "1:invented-native-log": {
+        "expected_error": "unavailable-trial-evidence-promotion",
+        "passed": true,
+        "rejected_for": [
+          "unavailable-trial-evidence-promotion"
+        ]
+      },
+      "1:invented-sidecar": {
+        "expected_error": "invented-sidecar",
+        "passed": true,
+        "rejected_for": [
+          "invented-sidecar",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-dependency-declaration": {
+        "expected_error": "dependency-inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "dependency-inventory-completeness"
+        ]
+      },
+      "1:missing-inventory-entry:delivered": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-inventory-entry:immutable_post": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-inventory-entry:immutable_pre": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-inventory-entry:workspace_post": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-inventory-entry:workspace_pre": {
+        "expected_error": "inventory-completeness",
+        "passed": true,
+        "rejected_for": [
+          "inventory-completeness",
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "1:missing-map-ID:WP1-file-set-and-unrelated-files": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "1:missing-map-ID:WP1-original-and-license": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "1:missing-map-ID:WP1-other-project-bytes": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "1:missing-map-ID:WP1-root-version-declaration": {
+        "expected_error": "preservation-ID-map-completeness",
+        "passed": true,
+        "rejected_for": [
+          "preservation-ID-map-completeness"
+        ]
+      },
+      "1:notice-wrong-hash": {
+        "expected_error": "delivered-notice-evidence",
+        "passed": true,
+        "rejected_for": [
+          "delivered-notice-evidence"
+        ]
+      },
+      "1:wrong-existing-citation": {
+        "expected_error": "map-support",
+        "passed": true,
+        "rejected_for": [
+          "map-relation-truth",
+          "map-support"
+        ]
+      },
+      "1:wrong-inventory-hash": {
+        "expected_error": "inventory-entry-bytes-or-reference",
+        "passed": true,
+        "rejected_for": [
+          "inventory-entry-bytes-or-reference"
+        ]
+      },
+      "F4-release-promotion": {
+        "expected_error": "status-or-historical-credit-promotion",
+        "passed": true,
+        "rejected_for": [
+          "status-or-historical-credit-promotion"
+        ]
+      },
+      "actual-isolation-invented": {
+        "expected_error": "boundary-or-isolation-promotion",
+        "passed": true,
+        "rejected_for": [
+          "boundary-or-isolation-promotion"
+        ]
+      },
+      "benchmark-ready-promotion": {
+        "expected_error": "status-or-historical-credit-promotion",
+        "passed": true,
+        "rejected_for": [
+          "status-or-historical-credit-promotion"
+        ]
+      },
+      "constant-exporter-no-change": {
+        "expected_error": "expected-output-bytes",
+        "passed": true,
+        "rejected_for": [
+          "expected-output-bytes"
+        ]
+      },
+      "dependency-closure-invented": {
+        "expected_error": "dependency-closure-promotion",
+        "passed": true,
+        "rejected_for": [
+          "dependency-closure-promotion"
+        ]
+      },
+      "extra-assessment-incorrectly-correct": {
+        "expected_error": "separate-assessment",
+        "passed": true,
+        "rejected_for": [
+          "separate-assessment"
+        ]
+      },
+      "historical-established-key-unblocked": {
+        "expected_error": "historical-F4-block",
+        "passed": true,
+        "rejected_for": [
+          "historical-F4-block",
+          "source-requirement-inventory"
+        ]
+      },
+      "historical-ledger-credit:C1-correct": {
+        "expected_error": "historical-complete-map-credit",
+        "passed": true,
+        "rejected_for": [
+          "historical-complete-map-credit"
+        ]
+      },
+      "historical-ledger-credit:C1-unverified-extra": {
+        "expected_error": "historical-complete-map-credit",
+        "passed": true,
+        "rejected_for": [
+          "historical-complete-map-credit"
+        ]
+      },
+      "mutated-license-bytes": {
+        "expected_error": "mutated-license",
+        "passed": true,
+        "rejected_for": [
+          "mutated-license"
+        ]
+      },
+      "mutated-original-bytes": {
+        "expected_error": "mutated-original",
+        "passed": true,
+        "rejected_for": [
+          "mutated-original"
+        ]
+      },
+      "source-requirement-dropped": {
+        "expected_error": "source-requirement-inventory",
+        "passed": true,
+        "rejected_for": [
+          "source-requirement-inventory"
+        ]
+      },
+      "unverified-extra-disappears": {
+        "expected_error": "unverified-extra-retention",
+        "passed": true,
+        "rejected_for": [
+          "unverified-extra-retention"
+        ]
+      },
+      "wrong-output-object-hash": {
+        "expected_error": "byte-object-hash",
+        "passed": true,
+        "rejected_for": [
+          "byte-object-hash"
+        ]
+      },
+      "wrong-output-property-value": {
+        "expected_error": "expected-output-bytes",
+        "passed": true,
+        "rejected_for": [
+          "expected-output-bytes"
+        ]
+      }
+    },
+    "rejecting_controls_passed": 55,
+    "rejecting_controls_total": 55,
+    "requirement_source_records": 359,
+    "revision": "wp1-examples-0121-v1",
+    "unchanged_file_pins_checked": 42
+  },
+  "file_pins": [
+    {
+      "path": "benchmark/writing/check_wp1_examples_0121.py",
+      "bytes": 40139,
+      "sha256": "2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.md",
+      "bytes": 7934,
+      "sha256": "b450a9d0b2d5abe9c72a7f16514705b2f72a8c4d835131843f59c2b17c3e0120"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121.json",
+      "bytes": 204095,
+      "sha256": "8c6f6d82e4fdc9db268827fd1cc942daebf84319336bba3e7141a7a110a8e382"
+    },
+    {
+      "path": "benchmark/writing/wp1-examples-0121-pre-edit.md",
+      "bytes": 130487,
+      "sha256": "649b71383e6f0467d41e97db38a3cb660a75d9e631abc411295b05fa0e35fa4b"
+    },
+    {
+      "path": "benchmark/writing/wp1-disposition-review-0120.json",
+      "bytes": 38470,
+      "sha256": "bd2cd46a79bfcaf56a033b631c5b29196545283a547af86c6bcb8e9150c54141"
+    }
+  ],
+  "saved_record_recheck": {
+    "exit_code": 0,
+    "stdout_identical_to_initial_observation": true
+  },
+  "index_check": {
+    "command": "python3 policy/evaluator/evaluate.py --check",
+    "argv": [
+      "python3",
+      "policy/evaluator/evaluate.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"benchmark_executed\": false, \"benchmark_ready\": false, \"errors\": [], \"evidence_references\": 80, \"manifest\": \"indexed\", \"missing\": [], \"tool_quality\": null}\n",
+    "stderr": ""
+  },
+  "scope": "Observed repository-only authored-example checker; no historical checks or native execution."
+}
