@@ -52,10 +52,12 @@ routing:
       - {provider: copilot, model: gpt-5.6-luna}
     review: *review
     # Iteration 0012: the work under review (benchmark/protocol.md, #141) was written by codex/gpt-6.1-sol after
-    # Claude fallback, so reviewer goes Claude-first. Re-check against the author's family when ordering reviews.
+    # Claude fallback, so reviewer went Claude-first. Iteration 0117 (#569): benchmark work is Claude-first again and
+    # key #564 was written mainly by claude-sonnet-5-5, while its reviewer #567 also started on Sonnet. Reviewer goes
+    # Codex-first to get another family when both are available. Re-check when the author route changes.
     reviewer:
-      - {provider: claude, model: claude-sonnet-5-5}
       - {provider: codex, model: gpt-6.1-sol}
+      - {provider: claude, model: claude-sonnet-5-5}
       - {provider: copilot, model: gpt-5.6-luna}
 policymaker_session:                 # model id (not an alias); bounded by engine.yml policymaker_session_ceilings
   model: claude-opus-5-5

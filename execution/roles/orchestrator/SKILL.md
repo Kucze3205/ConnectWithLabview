@@ -120,6 +120,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
   never from a report's summary of it. If you did not read the source, check identity (hash, pins) and leave counts out
   (#518: the check asserted eight probes from #513's summary; the artifact lists nine). A historical input
   `{issue: N, name: X}` is staged flat as `.session/inputs/N-X`, without the release folder.
+- **Keep a cold check cold.** When a checker must derive its own expectation before it sees the author's, make that
+  the first acceptance item, have the result saved in `.session/artifacts/` before any key file is opened, and list
+  the key files in `## Budget` as later reads (#567: the budget listed the key's Markdown to read whole, the session
+  read it at turn 6 and had to report its derivation as not blind, P1). A model fallback inside a session carries
+  the earlier reads with it.
 - **Resume saved work, do not redo it.** A `blocked` or `partial` task keeps its unmerged work at the tag `iter/NNNN/N`.
   Order a task with `start_branch: task/N` that corrects only the failing check or the missing piece, and name what is
   already done so the session does not repeat it (#518: both files were written; only the check was wrong).

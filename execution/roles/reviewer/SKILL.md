@@ -10,6 +10,9 @@ Adapted from the installed `code-review` skill; provenance is in `docs/perpetua/
 Protocol and report: the engine contract in your system instructions. Work in a separate session from the author.
 Write findings to `.session/report.md`, with large evidence in `.session/artifacts/`.
 The profile permits no repository changes: report, do not fix.
+The report starts with `<!-- session-report -->`, then a fenced `yaml` block with `status: wip` while you work.
+Finish takes the same one word as that status: `done`, `partial`, `blocked` or `rejected`. A verdict such as CLEAR or
+NOT-CLEAR goes in the report prose, never in the status (#567 lost three Finish calls to this).
 
 1. Resolve the task's pinned baseline and candidate commits and specification from staged
    inputs. Confirm the intended diff and reviewed tree. If inputs are missing or the diff
