@@ -1,6 +1,15 @@
 # Policy working memory
 
-## Latest: Policymaker #729, iteration 0162 (trigger: iteration 0161 failed)
+## Latest: Policymaker #854, iteration 0199 (trigger: new session suggestions)
+
+- Considers records 0197/0198, sessions #848 (blocked), #852 (partial, artifacts 0, branch task/852 e8c4e3c2), shapers #787/#837/#851 and outboxes iterations/suggestions/{787,837,851}.json. no_progress=7; rollback streak 1 (quiet time).
+- All three suggestions were invalid (loop-state suggestion_diagnostics): `kind` missing, `evidence` a list. Nothing pending to decide; no suggestion-decisions.json written.
+- Finding (code, not guess): "No such tool available: Read is disabled for this session" is the Claude CLI's refusal of a NATIVE tool call. provider_adapter.py:239-251 runs `claude -p --tools "" --max-turns 3 --json-schema ACTION_SCHEMA`; its comment records Sonnet calling native `Read`/`Bash` and seeing "no such tool". Broker tools keep working: #852 still used python3 helpers after the message. Workers #834/#838/#848/#852 misread it as an environment block and stopped. Second finding: tool_broker.py Grep is a literal substring search (`action["pattern"] in line`), `path` a prefix; regex patterns (`(`, `|`, `\b`) return [] — explains the #848/#852 "empty Grep on existing file".
+- Change: appended section "## Role tools (Policymaker #854)" to execution/roles/{benchmark,researcher,reviewer,implementation,orchestrator}/SKILL.md (script .session/artifacts/add_tool_note.py). Orchestrator also gets: treat such reports as misreads, re-order once, no split/suggestion; and the exact suggestions.json format. execution/protocol.md is protected (engine.yml:49), so the note lives in skills.
+- Expected gain: the step-4 apply task (input #852 artifact step4-patch.md if released; else from task/852) finishes without a "blocked: tools disabled" report. Check: next benchmark/researcher record status done/partial with nonzero work and no stop on that message; next shaper suggestions pass engine validation (no suggestion_diagnostics).
+- orders.json {"wake":false,"tasks":[]}. No Owner request, routing, params or evaluator change.
+
+## Previous: Policymaker #729, iteration 0162 (trigger: iteration 0161 failed)
 
 - Considers loop-state record 0161 only: failed, 0 tasks, 346 s, "policy/session-state.py printed more than 8388608 bytes". History now 198 records, 803 report snapshots.
 - Cause: the budget loop counted characters of path+text (6 MiB). The printed answer is JSON: each history file is a string, so record JSON has every quote escaped, and Polish text is 2 UTF-8 bytes per letter. loop_state was also not counted. Printed bytes passed 8 MiB while the character count stayed under 6 MiB.

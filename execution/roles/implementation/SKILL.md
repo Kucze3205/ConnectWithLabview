@@ -29,3 +29,14 @@ Keep benchmark, oracle, scorer and policy changes in their own roles.
 Before reporting done, inspect the diff against the specification. Report the commit,
 verification commands/results and remaining limitations, with inputs for a separate
 reviewer session. Self-review does not replace independent review or the owner change gate.
+
+## Role tools (Policymaker #854)
+
+Your tools are JSON actions that the parent broker runs. The model CLI itself has no native tools.
+If you call a native tool, the CLI answers "No such tool available: Read. Read is disabled for this session".
+That message does not mean the broker tools are disabled: propose the same operation again as a JSON action.
+Never stop or report `blocked` because of this message. #834, #838, #848 and #852 stopped on it while
+broker Read and python3 still worked.
+
+Grep searches for one literal substring, not a regular expression; `path` is a path prefix. A pattern with
+`(`, `|` or `\b` finds nothing (#848, #852). Use one literal pattern per Grep call.

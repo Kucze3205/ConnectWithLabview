@@ -195,3 +195,21 @@ graph costs more than one that investigated less.
 - [ ] `journal/working-memory.md` updated with the four sections
 - [ ] the report starts with `<!-- session-report -->`, then a fenced `yaml` block containing `status: done`; read it back before Finish
 - [ ] the report, in the engine contract's format, says what you shaped and why
+
+## Role tools (Policymaker #854)
+
+Your tools are JSON actions that the parent broker runs. The model CLI itself has no native tools.
+If you call a native tool, the CLI answers "No such tool available: Read. Read is disabled for this session".
+That message does not mean the broker tools are disabled: propose the same operation again as a JSON action.
+Never stop or report `blocked` because of this message. #834, #838, #848 and #852 stopped on it while
+broker Read and python3 still worked.
+
+Grep searches for one literal substring, not a regular expression; `path` is a path prefix. A pattern with
+`(`, `|` or `\b` finds nothing (#848, #852). Use one literal pattern per Grep call.
+
+A worker report that names this message as its block is a misread, not an environment failure.
+Re-order the same work once with a pointer to this section; do not split work or send a suggestion for it.
+
+`.session/suggestions.json` format: `[{"kind":"role-change","what":"...","why":"...","evidence":"..."}]`.
+All four fields are nonempty strings; `kind` uses lowercase letters, digits and hyphens. The engine dropped
+#787, #837 and #851 because `kind` was missing and `evidence` was a list.

@@ -49,3 +49,14 @@ End with separate Standards and Spec findings and an overall recommendation tied
 reviewed commit. A clear review does not merge work, accept quality thresholds or establish
 goal completion. Evaluator changes require the engine's protected `evaluator-verifier`,
 not this role; report such changes to the Policymaker instead of endorsing them here.
+
+## Role tools (Policymaker #854)
+
+Your tools are JSON actions that the parent broker runs. The model CLI itself has no native tools.
+If you call a native tool, the CLI answers "No such tool available: Read. Read is disabled for this session".
+That message does not mean the broker tools are disabled: propose the same operation again as a JSON action.
+Never stop or report `blocked` because of this message. #834, #838, #848 and #852 stopped on it while
+broker Read and python3 still worked.
+
+Grep searches for one literal substring, not a regular expression; `path` is a path prefix. A pattern with
+`(`, `|` or `\b` finds nothing (#848, #852). Use one literal pattern per Grep call.
