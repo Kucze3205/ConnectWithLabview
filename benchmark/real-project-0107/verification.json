@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "command": "python3 benchmark/scripts/check_real_project_0107.py",
+  "exit_code": 0,
+  "stdout": {
+    "declaration_claims_checked": 4,
+    "independent_review": "pending",
+    "limitation": "No native certification, independent approval or method acceptance.",
+    "native_executions": 0,
+    "rejecting_controls": [
+      {
+        "control": "wrong-raw",
+        "rejected": "unsupported-claim:D1"
+      },
+      {
+        "control": "wrong-locator",
+        "rejected": "unsupported-claim:D2"
+      },
+      {
+        "control": "native-claim-at-valid-locator",
+        "rejected": "unsupported-claim:D3"
+      },
+      {
+        "control": "missing-claim",
+        "rejected": "claim-inventory"
+      },
+      {
+        "control": "extra-claim",
+        "rejected": "claim-inventory"
+      },
+      {
+        "control": "drop-prohibition",
+        "rejected": "unsupported-claim:D1"
+      },
+      {
+        "control": "invent-write-case",
+        "rejected": "mapping-blocker"
+      },
+      {
+        "control": "invent-edit",
+        "rejected": "mapping-blocker"
+      },
+      {
+        "control": "promote-verdict",
+        "rejected": "mapping-blocker"
+      },
+      {
+        "control": "native-success",
+        "rejected": "non-native-limitations"
+      },
+      {
+        "control": "missing-version-gap",
+        "rejected": "native-gaps"
+      },
+      {
+        "control": "missing-input-pin",
+        "rejected": "input-pin-inventory"
+      },
+      {
+        "control": "missing-original",
+        "rejected": "missing-evidence:benchmark/real-project-0107/original.lvproj"
+      },
+      {
+        "control": "altered-original",
+        "rejected": "snapshot-identity"
+      },
+      {
+        "control": "altered-license",
+        "rejected": "license-identity"
+      },
+      {
+        "control": "altered-input",
+        "rejected": "input-hash:benchmark/writing/method.json"
+      }
+    ],
+    "status": "evidence-consistent",
+    "verdict": "blocked"
+  },
+  "stderr": "",
+  "offline_check": {
+    "cwd": "/",
+    "environment": {},
+    "flags": [
+      "-I",
+      "-B"
+    ],
+    "audit_wrapper": "import os,runpy,sys\ndef guard(event,args):\n if event==\"open\":\n  path=args[0]; flags=args[2]\n  if isinstance(path,(str,bytes)):\n   name=os.fsdecode(path)\n   if \"/.session/\" in name or \"/actor-framework/\" in name or \"/resources/environment\" in name: raise RuntimeError(\"forbidden-input:\"+name)\n  if isinstance(flags,int) and flags & (os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC): raise RuntimeError(\"write-denied\")\n if event.startswith((\"socket.\",\"subprocess.\")) or event in (\"os.system\",\"os.remove\",\"os.rename\",\"os.mkdir\",\"os.rmdir\",\"os.link\",\"os.symlink\",\"os.chmod\",\"os.truncate\",\"os.utime\"):\n  raise RuntimeError(\"forbidden-operation:\"+event)\nsys.addaudithook(guard)\nsys.argv=[sys.argv[1]]\nrunpy.run_path(sys.argv[0],run_name=\"__main__\")\n",
+    "audit_denies": [
+      "session/prepared-source reads",
+      "file writes",
+      "filesystem mutations",
+      "network",
+      "subprocesses"
+    ],
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr": ""
+  },
+  "executed_file_sha256": {
+    "benchmark/real-project-0107.json": "7d66f6266f1228affd91b1a62475b924fc998de54766222c80d4ce377bc11a53",
+    "benchmark/real-project-0107.md": "0c5df64c7d06c61e512e94d1949275c24eaacec2ed6a7f7938b7025dbde9b673",
+    "benchmark/scripts/check_real_project_0107.py": "96f1b695e24086010e36e6667cfada33686ccf17c231e3cbacaf93bf509f96be",
+    "benchmark/real-project-0107/original.lvproj": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+    "benchmark/real-project-0107/LICENSE.txt": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2"
+  },
+  "limits": "Author evidence consistency only; independent review pending; no native or writing trial.",
+  "final_checks": {
+    "preparation_check": {
+      "command": "python3 policy/evaluator/evaluate.py --check",
+      "exit_code": 0,
+      "result": {
+        "benchmark_executed": false,
+        "benchmark_ready": false,
+        "errors": [],
+        "evidence_references": 80,
+        "manifest": "indexed",
+        "missing": [],
+        "tool_quality": null
+      }
+    },
+    "scope_check": {
+      "initial_attempt": {
+        "exit_code": 1,
+        "cause": "Compared preparation-index additions to moving HEAD after parent checkpoints; assertion failed because HEAD already contained accepted additions. Evidence check itself exited 0."
+      },
+      "corrected_baseline": "187d71977885d87856da8f4659966dfb95e03888",
+      "exit_code": 0,
+      "changed_paths": [
+        "benchmark/preparation.json",
+        "benchmark/real-project-0107.json",
+        "benchmark/real-project-0107.md",
+        "benchmark/real-project-0107/LICENSE.txt",
+        "benchmark/real-project-0107/original.lvproj",
+        "benchmark/real-project-0107/verification.json",
+        "benchmark/scripts/check_real_project_0107.py"
+      ],
+      "existing_index_references_preserved": 74,
+      "new_index_references": 6,
+      "all_pinned_inputs_unchanged": true,
+      "markdown_lines": 29,
+      "git_diff_check_exit": 0
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "verdict": "blocked",
+  "scope": "public-development-preparation",
+  "review_status": "independent-review-pending",
+  "input_hashes": {
+    "goal/goal.md": "5ee530059fd3efd34280ba632f160bbf37cb4f13c5d3e09cd841966ede5929cb",
+    "docs/perpetua/evaluation.md": "d9eb079a6be4a99aa4697433ce56ac2ef0d05dff15074b24215c8947b6e6e8d8",
+    "docs/perpetua/roles.md": "d55ebb50e4ca83b74c2261549856493233b3c072294066281259fce33cbdb40a",
+    "benchmark/protocol.md": "1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f",
+    "benchmark/sources.md": "43eafe9c348eba4516871f508121b29147e7c07677e6a6ca9b0d63bfc23babb2",
+    "benchmark/sources.json": "e3c53d98c2affe60b399ba7c7c444c91a4607c6fd9120b77a6e7291ac93da92a",
+    "benchmark/writing/README.md": "b842f83b5521dece0970cb0876a372830806fc03cdef87eeca009721f9f2a5e8",
+    "benchmark/writing/method.json": "8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1",
+    "benchmark/writing/verify_method.py": "b24ca4515ab8f7bd3980cd273647114c4f01abffc942a2464390a4d206e40a5f",
+    "benchmark/writing/controls.json": "96d48292fcf2b461b7c8f4af98dc0e894cef8e10eeb6c45edd04bdacad896824",
+    "benchmark/writing/input-pins.json": "d6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44",
+    "benchmark/writing/verification.json": "01e4ad1d72cb8f782e0dcfe3ce5e9b27756520da8a403df41707a1d37f1e1022",
+    "benchmark/writing/review-corrections.json": "3c92d3e102bb3976ee267ea74393855e520461e2e5f4869fa9d5a864ff17430e",
+    ".github/loop/data/session-reports/485/fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d.json": "fc8f1c7702fb7c2057e92b968fae62524d85d654060da71d2d3069e9a4bfb25d",
+    ".github/loop/data/session-reports/493/4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e.json": "4ff9c7cc83b7533020b632b0d20b3e8ad99b230e99a756d876c5aab979b6e17e"
+  },
+  "source_provenance": {
+    "repository": "actor-framework",
+    "upstream_url": "https://github.com/ni/actor-framework",
+    "commit": "371c631c16155d88f02be11a953e4964d7452fd8",
+    "original_path": "Core/AF PPL Build.lvproj",
+    "original_sha256": "1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf",
+    "original_size": 5806,
+    "snapshot_path": "benchmark/real-project-0107/original.lvproj",
+    "snapshot_kind": "complete-byte-identical-original",
+    "license": "MIT",
+    "license_original_path": "LICENSE.txt",
+    "license_snapshot_path": "benchmark/real-project-0107/LICENSE.txt",
+    "license_sha256": "529e65e6fc185d39380efd3957ef1c9acd0aac31ed288bcb9d124840861f03a2",
+    "readiness_sha256": "ac3135ebf530cf4c0acb804eb4f7639e45caf2e4062de366724df34a77438413",
+    "checks_performed_now": [
+      "Prepared readiness SHA256 equals saved inventory pin; Actor Framework HEAD equals inventory commit.",
+      "Before XML inspection, original size/SHA256 equals inventory; original and license bytes equal pinned Git blobs; license SHA256 equals inventory.",
+      "Copied complete original and MIT notice without decoding or serialization; snapshot SHA256 equals original.",
+      "Parsed the original bytes using Python standard-library xml.etree.ElementTree; no prepared source code imported or executed.",
+      "All seven current writing-file SHA256 values equal Git blobs at the accepted commit named in review #493."
+    ]
+  },
+  "selection": {
+    "rule": "Among actor-framework inventory artifacts ending in .lvproj, choose minimum (size, path), then verify pins before inspection; stop at this one project.",
+    "candidate_count": 5,
+    "selected_path": "Core/AF PPL Build.lvproj",
+    "declaration_relevance": "Selected original explicitly contains Dependencies and a Packed Library build item. No dependency files are needed to disambiguate the quoted XML declarations.",
+    "alternatives_inspected": 0
+  },
+  "claims": [
+    {
+      "id": "D1",
+      "statement": "The original Project declares LVVersion 20008000.",
+      "level": "original-text-declaration-only",
+      "review_status": "independent-review-pending",
+      "element": ".",
+      "attribute": "LVVersion",
+      "raw_value": "20008000",
+      "lexical_value": "20008000",
+      "prohibited_inferences": ["native-save-version-preserved", "runtime-compatibility"]
+    },
+    {
+      "id": "D2",
+      "statement": "The named Dependencies VI item declares the quoted URL.",
+      "level": "original-text-declaration-only",
+      "review_status": "independent-review-pending",
+      "element": "./Item[@Name='My Computer']/Item[@Name='Dependencies']/Item[@Name='vi.lib']/Item[@Name='Error Cluster From Error Code.vi']",
+      "attribute": "URL",
+      "raw_value": "/<vilib>/Utility/error.llb/Error Cluster From Error Code.vi",
+      "lexical_value": "/&lt;vilib&gt;/Utility/error.llb/Error Cluster From Error Code.vi",
+      "prohibited_inferences": ["dependency-resolved", "dependency-version-known", "vi-diagram-semantics"]
+    },
+    {
+      "id": "D3",
+      "statement": "The AF PPL build item declares Type Packed Library.",
+      "level": "original-text-declaration-only",
+      "review_status": "independent-review-pending",
+      "element": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']",
+      "attribute": "Type",
+      "raw_value": "Packed Library",
+      "lexical_value": "Packed Library",
+      "prohibited_inferences": ["build-succeeded", "matching-source-build-chain-established"]
+    },
+    {
+      "id": "D4",
+      "statement": "The AF PPL Bld_version.build property has original text 2.",
+      "level": "original-text-declaration-only",
+      "review_status": "independent-review-pending",
+      "element": "./Item[@Name='My Computer']/Item[@Name='Build Specifications']/Item[@Name='AF PPL']/Property[@Name='Bld_version.build']",
+      "attribute": null,
+      "raw_value": "2",
+      "lexical_value": "2",
+      "prohibited_inferences": ["built-output-version", "native-property-effect"]
+    }
+  ],
+  "writing_case_mapping": {
+    "status": "blocked",
+    "existing_case_id": null,
+    "existing_task_ids": ["WC1-create-vi", "WM1-diagram-not", "WM2-typedef-cluster", "WB1-source-rebuild"],
+    "blocker_code": "no-existing-project-xml-writing-case",
+    "blocker": "method.json defines only VI creation, diagram modification, typedef modification and source/rebuild tasks. Direct .lvproj creation/modification is explicitly uncovered; WB1 mentions a project/build source chain but does not specify a project XML edit. Mapping a new property change to an existing task would invent the missing writing case.",
+    "evidence": "benchmark/writing/method.json#/coverage/uncovered_families",
+    "uncovered_entry": ".lvlib and .lvproj direct creation/modification",
+    "checker_contract": {
+      "path": "benchmark/writing/verify_method.py",
+      "locator": "check_method: task-inventory; check_example: fictional result.synth graph and SYNTHETIC version checks",
+      "applicability": "Only fixed synthetic tasks and controls; no project XML writing checker or real LabVIEW artifact oracle. The existing method is preserved unchanged."
+    },
+    "permitted_xml_change": null,
+    "expected_before_after": null,
+    "unchanged_scope": "No edit specified or attempted: prepared original, committed original snapshot, source inventory, protocol, existing writing fixtures/checker and review evidence retain original bytes.",
+    "original_version_check": {"claim_id": "D1", "locator": "/Project/@LVVersion", "expected_raw": "20008000", "native_preservation": "unverified"},
+    "requirements": {
+      "W1": "Blocked: no existing project/XML output and requested delta contract.",
+      "W2": "Original path/hash and XML locators supplied; native locators and eligible writing task remain absent.",
+      "W3": "Declaration claims frozen; intended delta and writing preservation IDs not invented.",
+      "W4": "Original LVVersion declaration frozen; no output version or native save-version preservation evidence.",
+      "W5": "Declaration evidence only; artifact fidelity, answers/grounding and native outcomes remain separate and unmeasured.",
+      "W6": "No compiled output or rebuild specified; a build declaration does not establish matching sources/toolchain.",
+      "W7": "No paired trial, output artifact or accounting run; future comparison must inherit matched inputs/budgets.",
+      "W8": "Evidence checker rejects tampering/unsupported claims; existing fictional writing controls remain unchanged and do not validate XML edits."
+    },
+    "required_native_checks_unavailable": ["project-load", "dependency-resolution", "build", "controlled-behavior", "save-version-preservation"]
+  },
+  "inherited_review": {
+    "481": "Original W1-W8 author preparation; provenance retained in review-corrections.json#/reports/481.",
+    "485": "REVISE: S1 provenance, S2 original/output version linkage and S3 mandatory pair settings.",
+    "489": "Author correction record; 35 original plus nine added synthetic rejection controls; not independent approval.",
+    "493": "CLEAR for scoped S1-S3 synthetic corrections at accepted commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 / tree 689ed2757ca4eb413cd37dc4f0cfcbc2fa90ba14. Inherited review, not repeated independent review or method acceptance.",
+    "current_scope": "This session verified writing-byte identity to that accepted commit; it has not independently replayed the historical 75 probes or reviewed native keys."
+  },
+  "unresolved": [
+    "No corresponding existing project/XML writing case; a separately scoped extension is needed before freezing a controlled edit specification.",
+    "Separate reviewer must check snapshot identity/license, four exact XML locators/raw values, prohibited inferences, deterministic selection and absence of an existing project/XML writing task/checker against the pinned inputs.",
+    "Independent review of these new declaration claims is pending; native project resolution/load/build/behavior/save-version evidence remains unavailable.",
+    "Owner method acceptance, restricted evaluation allocation/isolation and matched run resources remain prerequisites outside this public preparation."
+  ],
+  "limitations": {
+    "declaration_evidence_only": true,
+    "independent_review_pending": true,
+    "native_checks_available": false,
+    "dependency_resolution_established": false,
+    "native_load_established": false,
+    "build_success_established": false,
+    "native_behavior_established": false,
+    "save_version_preservation_established": false,
+    "vi_diagram_semantics_inferred": false,
+    "withheld_case": false,
+    "model_unseen": false,
+    "native_oracle": false,
+    "completed_write_trial": false,
+    "product_quality_result": false,
+    "method_accepted": false,
+    "artifact_edits": 0,
+    "native_executions": 0,
+    "benchmark_runs": 0,
+    "raw_value_convention": "Exact parsed XML attribute/text value without trimming or type conversion; lexical_value retains original entity spelling. Element paths are ElementTree paths relative to Project and must resolve uniquely."
+  }
+}
