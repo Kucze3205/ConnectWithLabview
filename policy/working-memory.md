@@ -479,6 +479,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Other ready work: baseline runner/manifest validation contract from gap map #282; no baseline execution without prerequisites.
   #169 still lacks native readiness; method acceptance and product implementation remain gated. Quality remains unmeasured.
 
+## Iteration 0050 (#311, wake false)
+- Considered record 0049 and gap map #282 (baseline rows). Startup ok, 24,039 tokens.
+- #309 DONE, merged c0e063f (codex 228k input, 12 turns, owner-accepted). Verified on main: evaluator exit 0, errors [],
+  missing [], 60 refs, ready/executed false; status sha eea3c32b…. ALL seven milestones now reviewed-level labels:
+  baseline/split design-reviewed, challenges scorer-reviewed, coverage/oracle/sources/tasks reviewed.
+- Question #308 (commit redacted #268 record) still pending; do not wait on it. #169 still waiting.
+- Order `baseline-run-record-contract` (benchmark, medium, 75/45, main, <=25 calls, <300k): design-only
+  benchmark/baseline/run-record.template.json + benchmark/scripts/run_record.py --check (frozen fields, cross-check
+  manifest field names, in-memory conversion to score.py claim format, >=4 rejecting mutations), README section;
+  no preparation edits. Check: run_record.py --check exit 0 on main; report lists undecided fields.
+- Next: if done -> ONE independent review (reviewer from main, Verification run_record.py --check). If partial near
+  the input ceiling -> verify the tag and land by script (max_turns >= 25). After accept -> pin under baseline.
+  Then: owner presentation of docs/research/0002-delivery.md; tell owner #169 has a cited readiness case; method
+  acceptance request only when the remaining items are resource-dependent (#169/#268). Product implementation gated.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
