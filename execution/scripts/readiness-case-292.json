@@ -1,0 +1,137 @@
+{
+  "capability_169_ready": false,
+  "controlled_io": {
+    "reason": "No independent controlled input/output expectation found within the bounded pylavi text search. Saved flag and version assertions cannot substitute for execution behaviour.",
+    "required_before_execution": [
+      "Independently established connector identities, exact types and dependency hashes",
+      "Discriminating input vectors and independently expected outputs/errors, frozen before execution",
+      "Reset/initial state, comparison rules, timeout and safe stop",
+      "Separate review and an execution-authorized fixture"
+    ],
+    "search_result": "none",
+    "status": "gap",
+    "vectors": null
+  },
+  "execution_boundary": "Design only. Preserve originals read-only; use separately hashed disposable copies; disable container networking and automatic execution/hooks; close without saving. Stop on undeclared dependencies, inaccessible APIs or side effects. Controlled I/O remains blocked pending an independently specified fixture.",
+  "forbidden_operations": [
+    "save",
+    "edit",
+    "build",
+    "network",
+    "uncontrolled VI execution"
+  ],
+  "id": "capability-169-pylavi-saved-properties",
+  "independent_sources": {
+    "args": {
+      "lines": [
+        23,
+        29
+      ],
+      "path": "pylavi/tests/args.yaml",
+      "role": "Test-code scope and version 21.0f corroboration; path_length is not native metadata",
+      "sha256": "008a8ce4d5cfe86659a1a014d99fd008ee2188061d4cb42588384e62f1608e6a"
+    },
+    "interpreter": {
+      "config_path_resolution_lines": [
+        659,
+        691
+      ],
+      "path": "pylavi/pylavi/validate.py",
+      "role": "Meaning of YAML keys; consulted as text only, not executed against VIs",
+      "sha256": "5d6e24ec184bda171189aca504a753aef36a436ced3126e5c68974f757042132"
+    },
+    "readiness": {
+      "line": 8,
+      "path": ".github/loop/request-state/169.json",
+      "sha256": "d2d540ffa951fd456e0983bc408bfabc0142b12a824d882e11cccfed6d207bac"
+    },
+    "test": {
+      "path": "pylavi/tests/test.yaml",
+      "role": "Explicit upstream per-file expected properties",
+      "sha256": "736f589ae730856ec9810375b0ed4521e728c8f5e917c6843c40915fe9b24649"
+    }
+  },
+  "native_executed": false,
+  "pass_rules": {
+    "current_verdict": "Not ready: no native properties, captures, controlled outputs or separate native comparison exist; controlled vectors and native property mapping remain gaps.",
+    "property_check": "A separate session must compare substantive typed native observations and original object locators against each frozen expectation. Reject constant debugging/separate-code observations across these contrasting files, wrong-file citations, missing properties and hash-only assertions.",
+    "source": "readiness:8",
+    "verbatim": "Dispatch the job on one public development VI with independently known behaviour from the prepared sources. Pass only if: the original's sha256 is identical before and after (python3 -I), the job emits native properties and a diagram capture with output sha256 manifest, controlled inputs produce recorded outputs, git status --porcelain shows no source mutation, container networking stays disabled, and a separate session compares the outputs with independently expected values. Compile success alone fails."
+  },
+  "permitted_operations": [
+    "read-only property inspection",
+    "read-only diagram capture",
+    "sha256 hashing"
+  ],
+  "repository_url": "https://github.com/marcpage/pylavi",
+  "schema_version": 1,
+  "scope": "Only the three explicitly listed saved properties per VI are proposed assertions. YAML expectations are independent of VI-byte inspection, but have not been independently confirmed in LabVIEW. Native API names and mapping remain to be established; loading in a newer LabVIEW must not be mistaken for evidence of original save version.",
+  "source_root": "$LABVIEW_ENVIRONMENT/pylavi",
+  "status": "proposal-property-expectations-only",
+  "vis": [
+    {
+      "expected_properties": [
+        {
+          "corroboration_pointer": "args:28",
+          "expectation_pointer": "test:89",
+          "meaning": "Every collected version must equal the supplied version; vers and LVSR version collection is at interpreter:545-561. This is a saved-version expectation, not runtime compatibility.",
+          "meaning_pointer": "interpreter:460-466",
+          "property": "original_saved_version",
+          "value": "21.0f",
+          "yaml_key": "eq"
+        },
+        {
+          "expectation_pointer": "test:96",
+          "meaning": "With no_code greater than code, separate_code() must be true. This does not assert an absent block diagram.",
+          "meaning_pointer": "interpreter:402-409",
+          "property": "separate_compiled_code",
+          "value": true,
+          "yaml_key": "no_code"
+        },
+        {
+          "expectation_pointer": "test:101",
+          "meaning": "With debuggable greater than not_debuggable, debuggable() must be true.",
+          "meaning_pointer": "interpreter:411-415",
+          "property": "debugging_enabled",
+          "value": true,
+          "yaml_key": "debuggable"
+        }
+      ],
+      "path": "pylavi/tests/empty_separate_code.vi",
+      "selection_pointer": "test:86-88",
+      "sha256": "fdb970bf9198e63f0aabf6c7c0f987bcb872173210718081a7faa695555729ba"
+    },
+    {
+      "expected_properties": [
+        {
+          "corroboration_pointer": "args:28",
+          "expectation_pointer": "test:110",
+          "meaning": "Every collected version must equal the supplied version; vers and LVSR version collection is at interpreter:545-561.",
+          "meaning_pointer": "interpreter:460-466",
+          "property": "original_saved_version",
+          "value": "21.0f",
+          "yaml_key": "eq"
+        },
+        {
+          "expectation_pointer": "test:117",
+          "meaning": "With code greater than no_code, separate_code() must be false.",
+          "meaning_pointer": "interpreter:402-409",
+          "property": "separate_compiled_code",
+          "value": false,
+          "yaml_key": "code"
+        },
+        {
+          "expectation_pointer": "test:122",
+          "meaning": "With not_debuggable greater than debuggable, debuggable() must be false.",
+          "meaning_pointer": "interpreter:411-415",
+          "property": "debugging_enabled",
+          "value": false,
+          "yaml_key": "not_debuggable"
+        }
+      ],
+      "path": "pylavi/tests/empty_no_debugging.vi",
+      "selection_pointer": "test:107-109",
+      "sha256": "7ca77f950249046ee08b371efb64e945bb892b494b860a779bf8f305e3916848"
+    }
+  ]
+}

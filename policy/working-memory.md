@@ -409,6 +409,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Next: verify lineage.py --check 0, sources/coverage `reviewed`. Land the readiness case by script after an independent review.
   Find and review the #268 readiness record. Then split allocation planning can use the store.
 
+## Iteration 0046 (#296, wake false)
+- Results of 0045: #291 DONE, merged 4d1890a (codex 446k, 20 turns, routine). Verified on main: lineage.py --check 0,
+  evaluator --check 0, status sha ed298a85…, sources/coverage `reviewed`, split design-reviewed.
+- #292 readiness case DONE, report only (codex 677k, 18 turns). Two VIs: pylavi/tests/empty_separate_code.vi and
+  empty_no_debugging.vi, with opposite flags (version 21.0f, separate code, debugging) from test.yaml:86-125 and
+  validate.py meanings. Controlled I/O: none found -> stays a gap; #169 readiness still unmet (needs controlled outputs).
+  Policymaker saved its JSON in canonical form at execution/scripts/readiness-case-292.json (sha 896e3a56…).
+- #268 readiness record: not found in the checkout (request-state/268.json, session reports, grep for EVAL_STORE/SENTINEL).
+  It is most likely an owner comment on issue #268, which roles cannot read. Open question: how a session gets it.
+  Option: a `question` request asking the owner to commit the redacted record (e.g. benchmark/split/store-readiness.md).
+- Orders (parallel, from main, reviewer): `review-readiness-case-292` (medium, 45/30) and `rereview-gap-row-212`
+  (low, 25/20) to close the "gap row not re-reviewed" sentence in preparation-status.json limitations.
+- Next: if case accept -> landing script copies the JSON to benchmark/native/readiness-case.json, pins it under oracle
+  (max_turns >= 25), deletes execution/scripts/readiness-case-292.json. If gap row accept -> pin script edits that
+  limitation sentence. Then ask the owner for the #268 record location.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
