@@ -48,6 +48,16 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
 - Pass 3 orders (wake true): `finish-landing-207` (benchmark, low, 15/8, start task/207, git-free sha256 Verification
   incl. lineage pins from main) -> `review-challenges-207` (reviewer, medium, 60/40, blocked_by landing, report in
   first turns). If the reviewer blocks again with no report, investigate the reviewer profile/routing before re-ordering.
+- Pass 4 results: #209 (codex only, 91k input, 7 turns) done; owner accepted (#211), merged. Main 2e1422c evaluator:
+  exit 0, errors [], missing [baseline], 45 refs. CHALLENGES LANDED (prepared-not-reviewed).
+  #210 reviewer blocked again, no report, tag diff empty. Likely cause (unconfirmed): reviewer profile has `write: []`
+  and started from a task branch whose benchmark/ changes vs main count as out-of-scope writes -> blocked at merge
+  (session-protocol "Git" section). Reviewer tasks must start from main (start_branch null).
+- Pass 5 (#205): deleted `execution/scripts/land_challenges_195.py`. Ordered `review-challenges-main` (reviewer,
+  medium, 60/40, from main), wake false: the next iteration's Policymaker acts on its verdict.
+- Next: if review blocks again from main, the cause is elsewhere: read its issue comments/record before re-ordering;
+  consider an engine-change or reviewer profile fix. If revise: order fixes (benchmark role). If accept: scorer
+  design via evaluator role + evaluator-verifier. Check the reviewer's actual `models` (author was codex).
 
 ## Next Policymaker
 - Wake: read the landing report, actual `models` block, Verification and `git diff --stat origin/main`.
