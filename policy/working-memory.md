@@ -283,6 +283,24 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   Then file the Row 1 capability. Lesson: codex design tasks keep hitting the 800k input ceiling (#228, #251, #258);
   the Policymaker-verify-tag + landing-script pattern recovers them cheaply.
 
+## Iteration 0038 (#264, wake false)
+- Results of 0037: #261 landing DONE, merged (copilot gpt-5.6-luna 16k input, 10 turns). Verified on main: native files
+  sha native_jobs.py 081040ce…, README 78a54100…, recipes f292d56e…, template 86ba84aa…; native_jobs.py --check 0
+  (23/23 slots, 12 recipes); evaluator 0, missing [], 51 refs (native design not yet pinned).
+  #262 review `partial` on input_budget (copilot 429k input, 21 turns) but its report is complete: verdict ACCEPT,
+  no blocking findings; mutations a-d failed --check as required; README honesty confirmed. Reviewer family GPT
+  (copilot) vs author codex: both GPT family -> same-family limit recorded in the pin sentence.
+- Deleted execution/scripts/land_native_258.py. Wrote execution/scripts/pin_native_262.py (hash-gated, idempotent;
+  adds 4 native files to the oracle milestone, appends a review #262 limitation sentence, re-pins status refs; oracle
+  label unchanged). Dry run twice on a copy of main without env: evaluator missing [] 55 refs, status sha 5c972a14…,
+  preparation.json d4a37c5f…, no __pycache__.
+- Order `pin-native-262` (benchmark, low, 20/25, from main, <=6 calls).
+- Next: verify main 55 refs + status 5c972a14…, then delete pin_native_262.py. Then file the Row 1 `capability`
+  (restricted store = private repo in owner's GitHub account, approved by question #257): read
+  benchmark/resources-proposal.md Row 1, protocol ## split, accepted-limits.md and session-protocol.md request
+  format first. Deferred twice now (#260, #264); do it first next session. Remaining gaps: split, native evidence
+  (#169 waiting), typedef-impact/diagram-difference cases.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
