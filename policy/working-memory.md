@@ -180,6 +180,22 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   2024-only vs 16-49 d all versions; corpus has 2 files saved in 2024, none before 2020). It still needs owner
   presentation before any fallback choice; do not re-order the research.
 
+## Iteration 0032 (#243, wake false)
+- Result of 0031: re-review #241 DONE, verdict REVISE at main f913eb8 (actual models: codex 640k input, same family
+  as author #236 again; `opus` alias fell to codex a 3rd time). Finding 1: derivable extra claims
+  (score.py:77-98 extra_outcome, called :137-142) bypass condition policy (:166-179); X-true + native-runtime
+  condition stays correct, empty ledger. Standards clean; regeneration byte-identical (sha e4bfc5a5…).
+  Verified passing: duplicates/reorder ok, whitespace/case -> incorrect, moved condition -> donor partial, A0008 ok.
+  Evidence artifact iter-0031/241-condition-review.md.
+- Measured by Policymaker: only derivable extras are X-false/X-true(x2) in library-icon-tests, all matched to A0005
+  with equal conditions, expected condition_ledger absent -> fix keeps 33/33.
+- Order `extra-claim-conditions` (benchmark, medium, 45/30, main): shared condition helper for extras, 6th mutation
+  `extra-claim-condition`, regenerate. Check: --check 0, totals 33/33/0/0, six regression_self_test entries.
+- Next: order re-review (reviewer from main; only finding 1 + spot check). Fix rounds: this is round 2 of
+  fix_rounds 2 for the scorer; if the next review revises again, re-scope instead of a 3rd fix. Reviewer
+  diversity: routing `reviewer` list is sonnet->codex but sessions land on codex; record as a known limit or
+  propose a Claude-first `review` route with measured evidence. Then pin scorer/results (landing script).
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
