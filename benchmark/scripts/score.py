@@ -310,13 +310,14 @@ def regression_self_test(fixture, inventory, extra_claim=False):
     results = []
     mutations = (("extra-claim-condition",) if extra_claim else
                  ("extra-condition", "missing-condition", "wrong-literal",
-                  "missing-claim", "wrong-citation"))
+                  "missing-claim", "wrong-citation", "wrong-literal-a0001",
+                  "wrong-locator-a0002"))
     identifier = "X-true" if extra_claim else "A0005"
-    def outcomes_for(computed):
+    def outcomes_for(computed, target=identifier):
         if extra_claim:
             return next(e["outcomes"] for e in computed["extras_ledger"]
-                        if e["assertion_id"] == identifier and e["channel"] == "answer")
-        return {d: computed["per_id"][d][identifier] for d in ("correctness", "grounding")}
+                        if e["assertion_id"] == target and e["channel"] == "answer")
+        return {d: computed["per_id"][d][target] for d in ("correctness", "grounding")}
     baseline_outcomes = outcomes_for(baseline)
     if extra_claim and any(v != "correct" for v in baseline_outcomes.values()):
         raise ValueError("regression self-test: extra baseline is not correct")
@@ -334,8 +335,13 @@ def regression_self_test(fixture, inventory, extra_claim=False):
     for mutation in mutations:
         submitted = deepcopy(control['submitted'])
         claims = submitted['answer_record']['claims']
-        claim = next(c for c in claims if c["claim_id"] == identifier)
-        if mutation in ("extra-condition", "extra-claim-condition"):
+        target = {"wrong-literal-a0001": "A0001", "wrong-locator-a0002": "A0002"}.get(mutation, identifier)
+        claim = next(c for c in claims if c["claim_id"] == target)
+        if mutation == "wrong-literal-a0001":
+            claim['answer'] = '20008001'
+        elif mutation == "wrong-locator-a0002":
+            claim['citations'][0]['locator']['expression'] = '/Library/Property[3]/@Name'
+        elif mutation in ("extra-condition", "extra-claim-condition"):
             claim['conditions'].append('Native runtime dependency resolved successfully.')
         elif mutation == 'missing-condition':
             claim['conditions'].pop(0)
@@ -349,8 +355,8 @@ def regression_self_test(fixture, inventory, extra_claim=False):
         submitted['raw_answer_record']['text'] = text
         submitted['raw_answer_record']['sha256'] = digest(text.encode('utf-8'))
         computed = score(submitted)
-        outcomes = outcomes_for(computed)
-        changed = any(value != baseline_outcomes[d] for d, value in outcomes.items())
+        outcomes = outcomes_for(computed, target)
+        changed = any(value != outcomes_for(baseline, target)[d] for d, value in outcomes.items())
         if extra_claim and (any(v != "incorrect" for v in outcomes.values()) or
                             not computed["condition_ledger"]):
             raise ValueError("regression self-test failed: extra-claim-condition policy")
