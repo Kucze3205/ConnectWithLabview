@@ -170,9 +170,17 @@ def dependency_record(directory, all_files):
                                      'version_constraint': element.text.strip(),
                                      'source_path': relative, 'kind': 'VIPB declaration'})
                 if element.tag == 'Package_Conflicts' and (element.text or '').strip():
-                    declared.append({'identity': 'package conflict',
-                                     'version_constraint': element.text.strip(),
-                                     'source_path': relative, 'kind': 'VIPB declaration'})
+                    # Split only explicit package separators; whitespace separates
+                    # a package identity from its constraint, not two packages.
+                    raw = element.text
+                    for conflict in raw.split(';'):
+                        parts = conflict.strip().split(None, 1)
+                        if not parts:
+                            continue
+                        declared.append({'identity': parts[0],
+                                         'version_constraint': parts[1] if len(parts) > 1 else 'unknown',
+                                         'relationship': 'conflict', 'raw_declaration': raw,
+                                         'source_path': relative, 'kind': 'VIPB declaration'})
     unknown.append({'reason': 'Binary VI/container linkage was not decoded; native LabVIEW was not executed',
                     'source_path': 'repository-wide'})
     # Consolidate identities at the same declared URL while retaining each distinct
@@ -182,6 +190,9 @@ def dependency_record(directory, all_files):
         key = (declaration['identity'], declaration.get('path', 'unknown'))
         evidence = {field: declaration[field]
                     for field in ('source_path', 'kind', 'version_constraint')}
+        evidence['relationship'] = declaration.get('relationship', 'requires')
+        if 'raw_declaration' in declaration:
+            evidence['raw_declaration'] = declaration['raw_declaration']
         entry = grouped.setdefault(key, {'identity': key[0], 'path': key[1],
                                          'declarations': []})
         if evidence not in entry['declarations']:
