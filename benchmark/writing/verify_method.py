@@ -3,6 +3,8 @@
 
 No CLI input, native APIs, environment, session state, subprocesses or file writes.
 Inputs are repository-local method, controls, pinned source and integration evidence only.
+Every file read is checked against benchmark/writing/current-pins.json, the one current
+pin file; historical records (provenance, proposal, review) are compared only with each other.
 These checks deliberately do not implement an artifact reader, writer or evaluator.
 """
 import copy
@@ -288,31 +290,17 @@ PROJECT_REASONS = {
     'project-method-overall-pass': 'project-task-planned_results',
     'project-method-missing-task': 'task-inventory',
 }
-# Re-pins of live inputs changed after the #547/#554 integration (issue #934,
-# measured in benchmark/writing/pin-drift-0218.md, Drift table). Both files are
-# indexes of non-writing pins; the changes re-pin challenge fixtures and
-# scripts/score.py, not writing files. `old` must equal the historical pin
-# carried by the proposal; the historical pin itself stays frozen and is still
-# compared against the provenance addendum below.
-HISTORICAL_REPINS = {
-    # changed by 8cb25137 (#758), f786bc80, 1b61287b (#766), b4011c5b (#778),
-    # 14cbd047 (#808), 86408131 (#812), 83a4c7a8 (#856), abd491f9 (#881),
-    # 05dadc58 (#889), 7f9dde12 (#897), 4eef3934 (#905); first old blob fc02ca67
-    'benchmark/preparation.json': {
-        'old': 'b6f9721c4518e2b9d9ed1be6a962175935f82991fd2e606ee27f5f737be97f25',
-        'new': '1422bb85a3e801e62274f5552d59aada7a302d73c50e25ae014b488134804880',
-        'size': 12895},
-    # same chain plus bcdf8f8c (#762), 6386cd43 (#860), f8670d52 (#865); old blob 2033c33f
-    'benchmark/writing/input-pins.json': {
-        'old': 'd6a9914bb86fa593654da3468396b171ec7769a7bec607157b71cb9442b9af44',
-        'new': '972eb49d11044bbac9e152ddd841c7b06d28b30100006a37ec03f6f0810ca6f2',
-        'size': 7207},
-}
-# The provenance addendum pins this file's own pre-#934 bytes. A file cannot
-# contain its own current hash, so that single output pin is compared with the
-# recorded old value only; its current hash is printed as checker_sha256.
-SELF_PATH = 'benchmark/writing/verify_method.py'
-SELF_PRE_REPIN_SHA256 = 'da9f45e2d575bf0bcace67d6c12a3621548ef2746ba5689179790321a038804d'
+# Current-file validity is decided only by CURRENT_PINS_PATH (issue #941): every
+# repository file read must be listed there and match its size and sha256. A
+# later correction re-pins by editing that one file. Section "current" lists
+# files a correction may change (including the live indexes preparation.json and
+# input-pins.json, whose historical proposal pins stay frozen); section "frozen"
+# lists historical records, which must also equal the pin the frozen proposal,
+# review or provenance recorded. The pin file cannot pin itself; its hash is
+# printed under inputs_sha256.
+CURRENT_PINS_PATH = 'benchmark/writing/current-pins.json'
+PIN_SECTIONS = ('current', 'frozen')
+CURRENT_PINS = None
 READ_INPUTS = {}
 PROPOSAL = None
 
@@ -330,8 +318,78 @@ def read_repository(path):
         (ROOT / Path(*relative.parts[:i])).is_symlink()
         for i in range(1, len(relative.parts) + 1)), 'repository-input-path')
     if path not in READ_INPUTS:
-        READ_INPUTS[path] = location.read_bytes()
+        data = location.read_bytes()
+        if path != CURRENT_PINS_PATH:
+            check_pin(current_pins(), path, data)
+        READ_INPUTS[path] = data
     return READ_INPUTS[path]
+
+
+def parse_pins(data):
+    pins = json.loads(data)
+    need(type(pins) is dict and set(pins) == {'schema_version', 'meaning'} | set(PIN_SECTIONS)
+         and pins['schema_version'] == 1, 'current-pin-file')
+    for section in PIN_SECTIONS:
+        need(type(pins[section]) is dict and pins[section], 'current-pin-file')
+        for path, pin in pins[section].items():
+            need(type(path) is str and type(pin) is dict and set(pin) == {'size', 'sha256'}
+                 and type(pin['size']) is int and type(pin['sha256']) is str
+                 and len(pin['sha256']) == 64 and set(pin['sha256']) <= set('0123456789abcdef'),
+                 'current-pin-file')
+    need(not set(pins['current']) & set(pins['frozen']), 'current-pin-file')
+    need(CURRENT_PINS_PATH not in pins['current'] and CURRENT_PINS_PATH not in pins['frozen'],
+         'current-pin-file')
+    return pins
+
+
+def current_pins():
+    global CURRENT_PINS
+    if CURRENT_PINS is None:
+        CURRENT_PINS = parse_pins(read_repository(CURRENT_PINS_PATH))
+    return CURRENT_PINS
+
+
+def check_pin(pins, path, data):
+    # The single place where the validity of a live repository file is decided.
+    sections = [s for s in PIN_SECTIONS if path in pins[s]]
+    need(len(sections) == 1, 'current-pin-unlisted:' + path)
+    need(same({'size': len(data), 'sha256': hashlib.sha256(data).hexdigest()},
+              pins[sections[0]][path]), 'current-pin-drift:' + path)
+
+
+def check_pin_controls():
+    pins = current_pins()
+    path = 'benchmark/writing/method.json'
+    data = read_repository(path)
+    check_pin(pins, path, data)
+    wrong_hash = copy.deepcopy(pins)
+    wrong_hash['current'][path]['sha256'] = '0' * 64
+    wrong_size = copy.deepcopy(pins)
+    wrong_size['current'][path]['size'] += 1
+    unlisted = copy.deepcopy(pins)
+    del unlisted['current'][path]
+    rejections = {}
+    for name, bad, reason in (('wrong-hash', wrong_hash, 'current-pin-drift:' + path),
+                              ('wrong-size', wrong_size, 'current-pin-drift:' + path),
+                              ('unlisted-file', unlisted, 'current-pin-unlisted:' + path),
+                              ('changed-bytes', pins, 'current-pin-drift:' + path)):
+        try:
+            check_pin(bad, path, data + b' ' if name == 'changed-bytes' else data)
+        except Inconsistent as error:
+            need(str(error) == reason, 'pin-control-wrong-reason:' + name + ':' + str(error))
+            rejections[name] = reason
+        else:
+            raise Inconsistent('pin-control-accepted:' + name)
+    malformed = json.loads(read_repository(CURRENT_PINS_PATH))
+    malformed['current'][path]['sha256'] = 'not-a-hash'
+    try:
+        parse_pins(json.dumps(malformed))
+    except Inconsistent as error:
+        need(str(error) == 'current-pin-file', 'pin-control-wrong-reason:malformed-hash')
+        rejections['malformed-hash'] = 'current-pin-file'
+    else:
+        raise Inconsistent('pin-control-accepted:malformed-hash')
+    return rejections
 
 
 def file_pin(path):
@@ -362,14 +420,13 @@ def check_integration_inputs():
         actual = file_pin(path)
         need(actual['sha256'] == sha256, 'historical-pin-drift:' + path)
         historical[path] = actual
+    live = current_pins()['current']
     for path, expected in historical.items():
-        if path in HISTORICAL_REPINS:
-            # Issue #934: the historical pin stays frozen (compared with the
-            # provenance addendum below); the live file must match the re-pin.
-            repin = HISTORICAL_REPINS[path]
-            need(expected['sha256'] == repin['old'], 'historical-pin-drift:' + path)
-            need(same(file_pin(path), {'size': repin['size'], 'sha256': repin['new']}),
-                 'historical-pin-drift:' + path)
+        if path in live:
+            # The historical pin stays frozen (compared with the provenance
+            # addendum below); the live bytes were already checked against
+            # current-pins.json when read.
+            file_pin(path)
             continue
         need(same(file_pin(path), expected), 'historical-pin-drift:' + path)
     envelope = json.loads(read_repository(ENVELOPE))
@@ -412,10 +469,10 @@ def check_integration_inputs():
     need(same(provenance['mapping'], PROPOSAL['requirements']), 'integration-mapping')
     need(set(provenance['outputs']) == INTEGRATION_OUTPUTS, 'integration-output-inventory')
     for path, expected in provenance['outputs'].items():
-        if path == SELF_PATH:
-            # Issue #934: this file cannot contain its own current hash; the
-            # addendum must still record the pre-#934 bytes it was written for.
-            need(expected['sha256'] == SELF_PRE_REPIN_SHA256, 'integration-output-pin-drift:' + path)
+        if path in live:
+            # Recorded in 0112 for the bytes of that day; later corrections
+            # re-pin in current-pins.json, which file_pin already enforced.
+            file_pin(path)
             continue
         need(same(file_pin(path), expected), 'integration-output-pin-drift:' + path)
     return {'status': 'integration-pins-consistent', 'historical_unchanged_count': len(historical),
@@ -633,8 +690,10 @@ def main():
         else:
             raise Inconsistent("negative-control-accepted:" + row["id"])
     project_text = check_project_controls(controls, method)
+    pin_controls = check_pin_controls()
     print(json.dumps({
         "status": "design-consistent", "positive_controls": positives,
+        "current_pin_controls": pin_controls,
         "rejected_controls": rejections, "rejected_count": len(rejections),
         "project_text_preparation": project_text, "integration": integration,
         "checker_sha256": digest(read_repository("benchmark/writing/verify_method.py")),
