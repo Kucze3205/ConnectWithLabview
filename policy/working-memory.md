@@ -354,6 +354,21 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   (re-pin split_boundary.py via script); then consider review of prepared-not-reviewed milestones (coverage, sources,
   tasks) and the owner presentation of docs/research/0002-delivery.md. Do not repeat #273 probes; do not wait on #169/#268.
 
+## Iteration 0043 (#280, wake false)
+- Result of 0042: #278 pin DONE, merged 3b5bd32 (codex 65k input, 9 turns; 25-turn limit worked). Verified on main:
+  preparation-status.json sha fae1e26d…, split design-reviewed, evaluator exit 0, errors [], missing [], 59 refs,
+  benchmark_ready false. Deleted execution/scripts/pin_split_273.py (execution/scripts now empty).
+- Milestones: baseline/split design-reviewed, challenges scorer-reviewed, coverage/oracle/sources/tasks prepared-not-reviewed.
+- Orders written FIRST and parse-checked (parallel, both from main):
+  - `split-checker-mutations-273` (benchmark, medium, 45/40): fix #273 findings 1-2 (token mutation via TOKEN_VALUE_RE,
+    unknown-partition via validate()), assert specific reasons, revert-proof in temp copy, re-pin split_boundary.py +
+    status in preparation.json. Check: evaluator 0, missing [], 59 refs; new split_boundary.py sha in pins.
+  - `readiness-gap-map` (benchmark, medium, 60/40, report only): table evaluation.md/protocol.md requirement -> evidence ->
+    state -> blocker; #169/#268 dependencies; now-doable vs owner-needed.
+- Next: read the gap map; order only the listed now-doable items (likely reviews of coverage/oracle/sources/tasks
+  milestones). If the checker fix ends partial, verify its tag and land via script (max_turns >= 25). Then prepare the
+  owner presentation of docs/research/0002-delivery.md and, when only resource items remain, the method-acceptance request.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
