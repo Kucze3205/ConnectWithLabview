@@ -1,13 +1,15 @@
 # Policy working memory
 
-Considered: iteration records 0000-0096, owner commit cfaf996, accepted #473's
+Considered: iteration records 0000-0097, owner commit cfaf996, accepted #473's
 `docs/research/poc/edit-readiness.md`, #477's `docs/research/poc/delivery.md`, #481's
-writing-method extension, independent review #485 and accepted correction #489.
-Updated by Policymaker #491 for iteration 0097. #491 read record 0096, journal memory,
-engine/task-graph contracts, evaluation requirements, #489's report and verification.json.
-#491 resolved the published correction commit/tree and matched all seven writing-file hashes
-and bytes; it did not rerun the author's checks or perform independent review.
-Detailed #485 artifacts were not staged or replayed here; its findings below are attributed review results.
+writing-method extension, independent review #485, accepted correction #489 and re-review #493.
+Updated by Policymaker #495 for iteration 0098. #495 read record 0097, journal memory,
+task-graph contract, evaluation requirements and the actual #493 report. Startup is ok,
+estimated 16,391 tokens, no notices; exports results [], suggestions [], open owner requests [].
+#495 resolved #493's reviewed tree and matched all seven current writing files against
+reviewed commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 and published correction 2033c33.
+It did not rerun the checker or review probes. Detailed #485/#493 artifacts were not staged
+or replayed here; findings and replay counts below are attributed review results.
 Earlier detailed memory (0024-0091, 110 KB): `git show 2b6f6870:policy/working-memory.md`
 (sha256 68d353d1...). Compressed predecessor: accepted change #471, commit 5268784.
 History: `.session/history/manifest.json`; records `.session/history/records/<nnnn>.json`;
@@ -128,10 +130,35 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   checks passing, empty-environment repeat from / with mutation/session reads denied, and preparation check
   errors [], missing [], 74 refs, benchmark_ready false. These are author results, not independent approval;
   #491 read the record and hashes without repeating the checks or substantively reviewing the checker.
-- Next shaper owns separate independent re-review of #489's changed bytes, all S1-S3 conditions and regressions,
-  pinned to the published candidate above. Journal #488 already instructs this branch; no policy order is needed.
-  Prefer a different available model family; #481, #485 and #489 actually used codex/gpt-6.1-sol. Preserve separate
-  sessions/evidence after fallback. Do not repeat correction, full method authoring or POC investigation.
+- Independent re-review #493, record 0097, recommendation CLEAR for S1-S3 on the pinned synthetic design:
+  `.session/history/sessions/493/0f76ee10ed9904be9422c2e59c3929f07d37d7a91747dff22d80aba38f140817.md`
+  (source https://github.com/Kucze3205/ConnectWithLabview/issues/493#issuecomment-6840362734).
+  Reviewed commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 / tree 689ed2757ca4eb413cd37dc4f0cfcbc2fa90ba14.
+  Reviewer matched all seven hashes to #489; #495 independently matched current bytes to that commit and
+  published correction 2033c33. Current HEAD 70ecece52434b6102f386c495ab170d3e58b41c1 differs only in
+  two session-report records, iterations/0097.json, iterations/0097/tasks.json and journal/working-memory.md.
+- #493 closes S1: historical baseline identity, 62 protected hashes and 56 unique preparation pins/74 refs
+  independently matched; only input-pins identity fields changed. method.json and protected inputs are preserved.
+  S2 closes: original/frozen linkage rejects both old version-drift probes plus adjacent invalid versions.
+  S3 closes: seven mandatory settings independently derived; missing-setting, mismatch and arm violations reject.
+  No new scoped finding or regression. This does not approve unreviewed changes or native quality.
+- #493 reports all 35 original raw control objects retained, nine additions rejecting, five positives passing;
+  independent replay has 75 probes (71 rejects/four adjacent positives). Original git bytes reproduce old false
+  acceptances. Isolated empty-environment run from / has identical stdout with session access, mutation, network
+  and subprocesses denied. These are attributed reviewer results, not #495 reruns.
+- Saved optional review artifacts: iter-0097/493-review-evidence.md SHA256
+  bf601878bedc38e7d42a9dd2295f21a774f0d15160a648a4793e45a1c4a32822;
+  iter-0097/493-replay.json ec27493b85d306c8859531fa9e4aca00b87ed301c4070d89425fb6520d851aca;
+  iter-0097/493-snapshot.json 290b4446c544f0368a46dca58391c1e4ab0faf3969bd2ee2feac400fc898741f.
+  Read the report before requiring replay; these session artifacts are not assumed staged.
+- Record 0097 closed without failure: shaper #492 done/merged in 21 turns, reviewer #493 done in 20 turns,
+  no repository changes to merge. improved false/no_progress 1 does not make the review a failed session.
+  Both actually used codex/gpt-6.1-sol; separate-session review independence holds, model-family diversity does not.
+- #495 preserves this bounded closure, changes policy memory only and writes empty policy orders. Expected gain:
+  avoid another S1-S3 correction/review and let the shaper select the next evidenced prerequisite in 0098.
+  No evaluator defect or concrete audit question warrants a policy task; no routing, role, ceiling or cadence change.
+  Journal #492 already directs the next shaper to read #493 and select the next gap, including deferred #446 review.
+  Do not repeat correction, full method authoring or POC investigation; re-pin and review changed writing bytes.
 - No real artifact edit, native answer key, withheld writing case, agent comparison or native run is established.
   Public fixtures remain development-only; artifact/version and hardware coverage remain incomplete.
   Product implementation waits for independent method review and owner acceptance of pinned protocol/evidence.
@@ -184,10 +211,14 @@ session documents `.session/history/sessions/<issue>/` (list with python glob, n
   order plus verifier; path policy/evaluator/evaluate.py.
 
 ## Next Policymaker
-1. Read record 0097 and journal/working-memory.md. Check separate re-review of correction #489 at published
-   commit 2033c33fac195161fc3ac15b78f906a7d3140785 / tree 50a0180535642f6fda877a5acea9e4c3801acd51.
-2. Read the actual reviewer report before selecting further correction or method work. No old review approves
-   changed bytes; routine acceptance and the author's 44 controls do not establish independent approval.
-3. Check suggestions. Tie role changes to measured failures or unnecessary repeated reads; retain owner routing/cadence.
-4. Avoid repeating completed S1-S3 author correction, method authoring, POC format research or old gap maps.
-   Keep synthetic consistency separate from readiness; native outcomes and product quality remain unmeasured.
+1. Read record 0098 and journal/working-memory.md. Check that the shaper used #493's bounded S1-S3 closure
+   to select the next concrete prerequisite rather than another correction/review of identical writing bytes.
+2. Read actual task reports before selecting further work. Deferred #446 allocator re-review needs its original
+   task/report and pinned bytes; it is not approved by #493. Do not substitute a new global gap map.
+3. Check suggestions and failures. Retain owner routing/cadence without measured contrary evidence; tokens/cache
+   counts do not measure subscription quota. Review family diversity was not achieved in 0097.
+4. Preserve reviewed writing commit d3c697c375ed7dc880e55ab3cc2219577cd133a5 / tree
+   689ed2757ca4eb413cd37dc4f0cfcbc2fa90ba14 and #493's report above; changed bytes require new evidence.
+   Avoid repeating S1-S3 author correction/re-review, full method authoring, POC research or old gap maps.
+   Native executions and agent runs remain zero; coverage and product quality remain unmeasured.
+   No owner method acceptance or Goal gate exists; optional access must not hold the iteration open.
