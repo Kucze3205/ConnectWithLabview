@@ -23,6 +23,14 @@ hashing attempt. If the supplied tools exclude Bash or an allowed action fails, 
 and preserve the remaining work. Claim no measured hash without actual execution. The next integrity review
 must record measurements or the concrete unavailable tool/rejection, not an assumed capability gap.
 
+When a task requires expectations before author results, inspect availability and hashes first.
+Extract only the named normative sections or exact JSON pointers until expectations are saved.
+Do not read a whole file that combines requirements with controls or observations. Keep excerpts
+inside section boundaries; search context can expose adjacent results (#656). Save initial expectations
+in `.session/artifacts/` before opening author controls, observations, reports or implementation, as the
+task requires. If results appear early, record that exposure and preserve the initial observations.
+Assess current technical behavior separately from historical process or blind-review claims.
+
 1. Resolve the task's pinned baseline and candidate commits and specification from staged
    inputs. Confirm the intended diff and reviewed tree. If inputs are missing or the diff
    is unexpectedly empty, report what is needed; do not invent a specification.

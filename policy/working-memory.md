@@ -1,81 +1,94 @@
 # Policy working memory
 
-Updated by Policymaker #651 for iteration 0141. Considers records 0000–0137 through predecessor memory;
-directly records 0138–0140 and actual reports #643/#646/#649. Startup reads once, 15,106 estimated tokens, no notices.
-Detailed evidence and measured current pins: policy/observations/0141-policy-check.md.
-Earlier investigations: policy/observations/{0138,0135,0132,0129,0126,0123}-policy-check.md.
-Predecessor memory: 13,077 bytes, SHA256 6f085967b9b9fce8e63e3752924b79765db87cb84c8e6dcf2c22850d2335e064;
-retrieve with git show cddbdaf76c37728a697e2e21d1786624508642e4:policy/working-memory.md.
-Starting tree e5f817d623e10adb42491bb4060cd9ea18733258. Read journal memory, orchestrator/benchmark skills,
-both profiles, engine contracts, CONTEXT.md, evaluation.md and roles.md. Export manifest empty; no pending suggestions.
-No checker/probe replay, semantic rereview, cache lookup, evaluator, model/reader/native execution or real trial.
-Artifact identities and prior check results are report-attributed unless explicitly measured here.
-Use memory for continuation; revisit immutable sources for contradictions, missing detail or reconsidered decisions.
+Updated by Policymaker #661 for iteration 0144. Considers records 0000–0140 through predecessor memory;
+directly considers records 0141–0143 and actual reports #653/#656/#659. Startup reads once, 15,441 estimated
+tokens, no notices. Evidence and current byte measurements: policy/observations/0144-policy-check.md.
+Predecessor: 14,416 bytes, SHA256 1f6979b0da0e8bd531da007ec94f86172a2292f3d7aa7a7e6b9b687c7f9a56d9;
+retrieve with git show 3cda79718bd7a776a0532c3da3aaa21ac8e58a09:policy/working-memory.md.
+Earlier detailed investigations: policy/observations/{0141,0138,0135,0132,0129,0126,0123}-policy-check.md.
+Starting HEAD 3cda79718bd7a776a0532c3da3aaa21ac8e58a09. Read journal memory, relevant execution skills,
+both profiles, CONTEXT.md, evaluation.md, roles.md and engine session protocol. Export manifest empty;
+no pending suggestions. Measured sizes/hashes/git-blob equality only; no checker/probe/evaluator/model/reader/
+native execution, semantic rereview, cache lookup or real trial. Counts/verdicts below are report-attributed
+unless stated as measured. Use memory for continuation; revisit exact sources for contradictions or missing detail.
 
-## Current decision: retain organization; clarify benchmark verification and review
+## Current decision: retain organization; protect initial review expectations
 
-- Corrected two paragraphs in execution/roles/benchmark/SKILL.md: separate reviewer checks preparation/method;
-  evaluator verifier checks evaluator changes only. Task verification restrictions override index guidance; no extra
-  evaluator invocation for unindexed packages. Removed obsolete agent-commit advice; engine imports final bytes.
-  #643 attributes a prohibited evaluator invocation to its parent continuation. The skill change reduces ambiguity;
-  no evidence proves that the old skill caused that action. Original deviation artifact remains uninspected/unreconstructed.
-- Expected gain: next benchmark task follows its allowed verification and separate-review boundary. Check its report/commands.
-  Retain shaper, profiles, routing, caps, cadence and evaluator. Empty .session/orders.json; no wake or Owner request.
-  With a shaper, policy orders name only policy-only evaluator/audit roles. Execution correction/review belongs to shaper.
-  No concrete evaluator defect or distinct answerable environment-audit question warrants an order this session.
-- Records0138–0140: admitted one-task graphs, no order refusals, zero limit hits; verdicts none/accepted/none,
-  improved false/true/false. #643partial resumed by accepted#646 without rebuild. Live no_progress=1, not a stall.
-  No normalized subscription-quota/accepted-quality evidence for route reordering or causal savings claims.
-- #649 Standards CLEAR/Spec NOT-CLEAR leaves one bounded structural finding F1 open. Existing shaper rules/journal already
-  require correction then separate review. Do not add temporary handoffs, duplicate reviews or preservation-only tasks.
+- Added one conditional paragraph to execution/roles/reviewer/SKILL.md. For expectations-before-results tasks,
+  inspect availability/hashes first; extract only named normative sections or exact JSON pointers. Keep excerpts
+  inside boundaries, save expectations before author results, record early exposure and separate technical from
+  historical/blind-review claims. Direct evidence: actual #656 reports adjacent observations appeared too early.
+  Expected gain: next applicable review saves expectations before displaying author results; check report/commands.
+  This is an instruction, not enforced isolation; it does not repair #656 exposure or reopen its technical verdict.
+- Retain shaper, profiles, routing, caps, cadence and evaluator. Empty .session/orders.json; no wake or Owner request.
+  With a shaper, policy orders use policy-only evaluator/audit roles; execution correction/review belongs to shaper.
+  No concrete evaluator defect or distinct answerable environment-audit question warrants an order.
+- Records0141–0143: one admitted execution task each, no order refusal, zero limit hits, verdicts accepted/none/accepted,
+  improved true/false/true. Live no_progress=0. Mixed Claude/Codex worker model blocks; no normalized subscription-quota/
+  accepted-quality evidence for route reordering. Top-level model labels cannot certify different-family review.
+- Prior benchmark skill clarification #651: separate reviewer checks preparation/method; protected evaluator verifier
+  checks evaluator changes only. Task verification restrictions override index guidance; no extra evaluator for unindexed
+  packages. #659 reports no evaluator invocation. Consistent behavior is not proof that the skill change caused it.
 
 ## Latest execution results and next ready work
 
-- #643partial saved benchmark/project-run-binding-0138.{md,json} and verify_project_run_binding_0138.py at
-  a59d88d529a705ed62c3c8ea800bc8b39b8fd97c/tree53578af3d8d3835ff3b56e6e6a69891c8dcfc4aa.
-  #646done/accepted/mergedf7066e7 closes that continuation, reports empty scoped diff and49/49local controls.
-  This session measured current files equal saved git blobs: MD11742/SHA256
-  5e4960c477c1a46fd610f494c20ada41307de116ab7b527f9f3fb3bd34eac3dd;
-  JSON240463/5bc672375bfe2cd2c5d355ab3831264459a43162f7df2d1020ab8e38a29e53cb;
-  checker18010/7ae987c5193e99b1ff2eca6d5434d88360acb3589eecfdc18de84f2120bd7ecc.
-  Read MD, boundedJSONkeys/pins and checker150–317; no full mapping/source semantic recertification.
-- Actual#649 review at e98b6c122b78493359bd08c9fabfd5b3341368a9/tree90b62f3022e8031350ceeeced1e1ce8017f3077f:
-  Standards CLEAR, Spec NOT-CLEAR, F1medium/P2 only. Coordinated tool-arm case_id or pair_id changes across
-  plan/record/attempt, with refreshed hashes, pass linkage and count1complete synthetic pair; expected reject/0.
-  Independent probes30/32; author's checker49/49 separately. Current linkage179–189checks per-slot identity;
-  synthetic_accounting274–286never groups cases/pairs. Inspected code agrees with report, no counterexample replay.
-  Zero-real-admission scope block stays intact; this is a structural control weakness, not a real admission.
-- #649ledger iter-0140/649-project-run-binding-review-0140.json58137/SHA256
-  082bec362e95bc547ed1b64b5d292bbeb663cfa14e9d8282fc59cf3c122c43a1, report-attributed/uninspected.
-  Relevant exact artifact names/pins in0141observation: review-binding-probe-0140.py,
-  independent-probe-results-0140.json, counterexample-case_id-0140.json, counterexample-pair_id-0140.json.
-  Stage these as inputs if needed; check availability/pins before use. Reports#643/#646/#649 actual body snapshots
-  measured against supplied hashes; exact hashes and permanent comment URLs in0141observation.
-- Next bounded correction: same-case/same-pair plan grouping, group-derived completion accounting, predeclared
-  coordinated split-case/split-pair controls, affected pins/results within those same3files. Then separate review of diff.
-  Preserve attempts, old contracts/nulls, keys and admission blocks; no runner/sidecar implementation or real trial.
-  #649 otherwise attributes6leaves/24fragments/1631bytes, synthetic-only/eight mandatory nulls, byte-onlymanifest,
-  empty/malformed interrupted-response rejection, correctness/grounding denominators4each, fidelity unavailable/costsnull.
-  These are attributed, not reverified here. No model/quota/budgets/repetitions/trusted isolation/usage/settings/scorer proof.
-- #639Standards/Spec CLEAR closes only project-paired-0136.{md,json} atbb3f531229e1ff87912c8a4ba9eea4f66fdd7b0b/
+- #653 done/accepted/merged corrects #649F1 at 51e672d06c079105a8d9dec23a0b44dc1c7ac5db,
+  tree01c7bf658ad630fdee90cbcad5b7090a09ac79c4. #656 Standards/Spec CLEAR and technical F1 CLEAR closes only
+  that three-file correction. #656 reports51 independent probes/60 saved controls: coordinated case/pair splits reject
+  with zero completion; shared/arm-specific repetition mappings, alternative identities and retained failure inventories
+  behave as required. This session measured current files equal accepted blobs, without replay or semantic recertification:
+  benchmark/project-run-binding-0138.md14754/SHA25642843f8270901e4c6564493b2958057f1f66f3d9e32608980bd22e8d58d21853;
+  JSON318822/2482a9b5ef36c7e0d3fadbe1990f342f2c43c010feb6f82ecbc78442eb6a5f55;
+  verify_project_run_binding_0138.py21063/eb6c525716b116a769948db139eec7f66935ec63a4ee585d41b5801654291394.
+- Preserve #656 historical limits: #653 uploaded0artifacts; linked correction/predeclaration ledgers unavailable to reviewer.
+  Historical before/after/predeclaration uncertified; no reconstruction. Adjacent observations preceded expectations;
+  no blind/model-unseen claim. Initial harness confused linkage with legacy rejection, then separated layers preserving
+  observations. Technical closure is neither historical process certification nor whole-method readiness.
+  #656report https://github.com/Kucze3205/ConnectWithLabview/issues/656#issuecomment-6891045412;
+  snapshot/bodySHA2562670af878ca1127de1f45bc935a4536d9a1447e431b711ee365fa082632f6c55 measured.
+  Ledger iter-0142/656-project-pair-grouping-review-0142.json64026/SHA256
+  ad1f4de33677e4c239d2e2c93a8408b8b9083c245f0015e349201060ecb49dab; results
+  a1320fe837dc83b2b3cecbd74dfef53d7d8e808df5b4a1ccc9823e82c7535e53; expectations
+  ae65ecfcc4bc8e18f511a6d60a20c3014bfc3feb0958769c0a9be57184831167. Artifact pins report-attributed/uninspected.
+- #659 done/accepted/merged at cbe4e00d30d7a4204c853d95bbaa120cb5fde657,
+  tree760cac50b1abc9ba80984db61e27ca96c76ff80b. New synthetic-attempt-evidence/1 retains original request/response/error
+  bytes including zero/binary/malformed, absent versus empty responses, null legacy records and separate attempt inventories.
+  Multiple attempts leave selection unresolved; no retry/selection/stopping policy or trusted authority supplied.
+  Author reports92/92controls, grouping60/60,9byte inspections,18unchanged source pins, no evaluator. Measured current
+  package equals accepted blobs and reported hashes; measured diff from124f9bd7725244fc9acd5fcbbfe5dfd2cda4cb4f
+  names exactly the three new files. Read Markdown only; no new JSON/checker semantic review or execution:
+  benchmark/attempt-evidence-0143.md11825/SHA256a61bc54a41d9a66d65f202a8ad711f1d75848922e7da4ecf0fc86485353074eb;
+  JSON1239974/a8c4d2a1ee0e9bed311c5f002bd4a107ab4784fc9791f35625649ec25fad1a78;
+  verify_attempt_evidence_0143.py22159/582b5c27275d62c5fdaa1e948cc3bb7f08dfd2be8b282b86fbd2cd677480a799.
+- #659report https://github.com/Kucze3205/ConnectWithLabview/issues/659#issuecomment-6891401945;
+  snapshot/bodySHA25642bd3075d08af9ccadc84ff84a2acd3fc3ef7f6ff7630aa22720eb9c36880b2e measured.
+  Artifact attempt-compatibility-0143.json7784/SHA256def2f40e2afe2da7a3d0b4176b55cc2f321b3236ce12f6cc1135323f499fed6c;
+  attempt-evidence-results-0143.json341571/562f8d1ac01155cecb16e51a6cad96125603d2c5d6baed54b94d9ef8abdbf189.
+  Both pins report-attributed/uninspected. Other initial/extended artifact names/hashes in report/0144observation.
+  Compatibility reportedly precedes edits: intact/interrupted-intact accepted, empty/truncated rejected by unchanged legacy.
+  Temporary fourth generator removed after preservation; initial large stdout and corrected checkpoint-scope audit disclosed.
+- Next ready work: shaper arranges separate bounded review of #659 retention contract, exact pins and legacy/grouping
+  preservation. Stage reports and exact artifacts explicitly; check availability/hashes before reliance. Initial expectations
+  precede author observations, using bounded normative excerpts. Review byte recovery, absent/empty distinction, identity/
+  order/linkage, failed attempts, unresolved selection, corruption and accounting. Do not replay closed grouping review,
+  reconstruct #653 artifacts, promote index, create owner request or implement runner/scorer/product.
+- #643partial resumed/closed by accepted#646f7066e7; no remaining rebuild. #649old NOT-CLEAR now resolved within#656scope.
+  Original #643 prohibited evaluator deviation remains uninspected/unreconstructed; no replay to repair it.
+- #639Standards/Spec CLEAR closes project-paired-0136.{md,json} atbb3f531229e1ff87912c8a4ba9eea4f66fdd7b0b/
   tree343000d664ad4b5b5ff146855504c08aa8de432b. #636author561a6271afa0f28befa8b3d258103b77aaac1f2b.
-  Prior0138measured MD12153/d2231d611fd015d141e870c294f1d887cf6c5ae19f3cb8a855bee17fa99c79e1;
-  JSON90448/bd1905ad5d306cdbb964907ea22668ebf2e2c2b7be4d4bd1c5a548c1fedbf716.
-  #639reports62template fields21filled/41reasonednull,12/12stored+97/97independent controls incl91rejections,
-  zero real admissions/semantic passes. Public key/source exposure disclosed; mixed model continuity is not cold/human
-  or different-family certification. #643resolved its schema-mapping preparation gap; only new#649F1remains here.
+  Reports62template fields21filled/41reasonednull,12stored+97independent controls, zero real admissions/semantic passes.
+  Public key/source exposure explicit; mixed continuity is not cold/human certification. Historical pins in0141observation.
 - #633Standards/Spec CLEAR closes dependency-byte scope#629 at8d824c68eb6c2f9674cbc69ba5f1b451d6452224/
   tree96b72324ac9097a79fcba6218144d5484819a3a3. 11Item/@URL declarations:1library,3standalone,7LLBmembers;
-  U01sole candidate among1476paths/319dirs, zero native matches. U01Core/ActorFramework/Actor Framework.lvlib
+  U01sole candidate1476paths/319dirs, zero native matches. U01Core/ActorFramework/Actor Framework.lvlib
   83103/SHA25623a5d5ce36078dee8776d3969a6c11ba4f9efe1f80aeccb21eba79fb653f9d98; native identity unproven.
-  U03Utility/LVClass/Get LV Class Default Value.vi still needs permitted provenance/license, size/hash,
-  installation/build version, actual-vilib mapping and independent linkage. No new readiness or cache/absence search.
-- #5010099-writing-version-effort already covers creation/modification/source rebuild/preservation/families/eight drivers.
-  Only inherited0002ranges33–99engineer-days(2024) vs89–264(all,assumed unverified8.0–2025) exclude writing.
-  Writing costsnull: no timed semantic samples or incompatible strata counts; no full-goal total/ratio/fallback justified.
-  #622conclusion survived, Spec stale handoffF1–F3; #625accepted376a139corrected handoff and preserved ledger;
-  #626Standards/Spec CLEAR closes correction at60a4a7379e7556ab4ea375b493deecd6ff432965/
-  tree51cb9b48da710a4016e15bd7af50d900e2f60acb. No repeated estimate/audit/review/preservation task.
+  U03Utility/LVClass/Get LV Class Default Value.vi needs permitted provenance/license, size/hash, installation/build
+  version, actual-vilib mapping and independent linkage. No repeat lookup/cache absence search.
+- #5010099-writing-version-effort covers creation/modification/source rebuild/preservation/families/eight drivers.
+  Inherited0002ranges33–99engineer-days(2024) vs89–264(all,assumed unverified8.0–2025) exclude writing.
+  Writing costsnull: no timed semantic samples/incompatible strata counts; no full-goal total/ratio/fallback justified.
+  #622conclusion survived stale handoffF1–F3; #625accepted376a139corrected it; #626Standards/Spec CLEAR closes at
+  60a4a7379e7556ab4ea375b493deecd6ff432965/tree51cb9b48da710a4016e15bd7af50d900e2f60acb. No repeated estimate/review.
 
 ## Closed work and retained boundaries
 
@@ -84,7 +97,7 @@ Use memory for continuation; revisit immutable sources for contradictions, missi
   Benchmark preparation resumed. #516public fixtures; #528bba00f7edit-attempt-needs-more; #533fc70efc
   constant-rules-0106.md source-blocked: ConstValue00000001->00000002 at545/549,DCO118; dispatch/BDPW/RTSG/LVSR/code unknown.
   Prepared sources lack LVblock/LVdatatype/LVrsrc/getHeapTD recipes. Reopen only with newly staged pinned applicable primary
-  BDPWchunks1/2evidence. #532approved/completed now, but returned control bytes uninspected; metadata is no recipe/native proof.
+  BDPWchunks1/2evidence. #532approved/completed, returned bytes uninspected; metadata is no recipe/native proof.
   No duplicate request, unavailable task, owner wait or repeat absence search.
 - Pair#509/#513/#522closed. --self-check rewrites tracked selfcheck.json; avoid it. Synthetic writing#481/#485/#489/#493,
   allocator#497 and WM1#505closed. WM1six declarations only, native authoritynull. No survey without a concrete question.
@@ -103,25 +116,25 @@ Use memory for continuation; revisit immutable sources for contradictions, missi
   treeac66a066f7d76520d2205f432c009338bb48db83. LocalB=submitted grounding frozen bracket registry.
   N08raw answer/V unchanged; project/map inability and honest-limits split correct/incorrect; whole answer partial/incorrect
   byL41. Denominator3unchanged,N01–N07fixed,atoms12->13/package265->266. BroaderB/general key/full-trial/historicalF4blocked.
-- #615acceptedabbd70a human-c1-0130.{md,json}/checker/verification is packaging only; #618now declined/not_planned.
-  Human C1 unperformed. No agent substitute, unchanged commissioning request or further packaging. A future human return
-  reuses0125ledger: exposure/identity before keys, source-derived initial judgment saved/hashed BEFORE expectations,
-  then local0129overlay/completed ledger/disagreements. Public files enforce no blinding. Prior pins in predecessor/observations.
+- #615acceptedabbd70a human-c1-0130.{md,json}/checker/verification is packaging only; #618declined/not_planned.
+  Human C1 unperformed. No agent substitute, unchanged request or further packaging. A future human return reuses0125ledger:
+  exposure/identity before keys, source-derived initial judgment saved/hashed BEFORE expectations, then local0129overlay,
+  completed ledger/disagreements. Public files enforce no blinding. Prior pins in predecessor/observations.
 
 ## Organization, resources and safety limits
 
 - Shaper owns journal memory; workers report. Reviewer write:[] deliberate; evidence in report/session artifacts.
-  Permitted writer preserves exact artifacts only if needed; no check replay to repair paths. Execution must not read policy/;
-  communicate new execution instructions through execution/roles/. #569execution/protocol.md edit refused,cause unknown; no retry.
+  Permitted writer preserves exact artifacts only if necessary, without replay. Execution cannot read policy/; communicate
+  instructions through execution/roles/. #569execution/protocol.md edit refused,cause unknown; no retry.
 - Task model values are params aliases(default/opus), not model IDs. Prefer different available family for review;
-  fallback retains exposure. Existing#579routing retained. Records0138–0140mixedClaude/Codex,zero limit hits,
-  cache_read_share.496/.478/.503; tokens/availability are not subscription quota. No fresh pool/credential/runtime/stream audit.
+  fallback retains exposure. Existing#579routing retained. Records0141–0143mixedClaude/Codex,zero limit hits;
+  cache_read_share.498/.484/.497. Tokens/availability are not subscription quota. No fresh pool/credential/runtime/stream audit.
 - Runtime reads only if needed: git show <pin>:sessions/N.json or pool.json, selected fields; never credentials/whole records.
   #617diagnosis closed. No private data, provider disclosure, publication category or new spending authorized.
   Read accepted-limits.md before such actions/proposals. Optional capability requests never block ready work;
   readiness precedes scheduling. #169readiness unknown; no new request here. Live openrequests=[];
-  #618declined/#532approved are current metadata, not new measured human/native evidence.
-- Human C1/agreement, real dependency/native oracles and grants/logs, restricted allocation, executed isolation,
+  #618declined/#532approved metadata is not new measured human/native evidence.
+- Human C1/agreement, real dependency/native oracles/grants/logs, restricted allocation/executed isolation,
   matched settings/budgets/repeats, reader fidelity, scorer integration, independent full-method/key review, owner acceptance
   and thresholds missing. Artifact/version/hardware coverage incomplete. Benchmark_ready=false; product quality unmeasured.
   Preparation index is navigation. #430declined; no unchanged acceptance request. Product needs independently reviewed method
@@ -131,15 +144,18 @@ Use memory for continuation; revisit immutable sources for contradictions, missi
 
 ## Session mechanics and next Policymaker
 
-History manifest counts are integers; records .session/history/records/<nnnn>.json and selected reports
-.session/history/sessions/<issue>/<snapshot>.md. Glob may recurse; use exact paths or immediate-directory Python discovery.
-Grep is literal. Summaries exclude input_state, duplicate outcome.shaper and unrelated task bodies; inspect selected sources.
-Parent commits; writes may not appear in git diff/status. Compare starting commit bytes, read actual outputs, recreate only missing files.
-No rebase/merge/push/commit/shell expansion. PyYAML available. Report starts marker then fenced yaml status matching Finish.
-Write wip early; empty Write truncates. Read required outputs immediately before Finish. Empty orders {"tasks":[]}.
-Wake only for actionable policy results. Evaluator changes require evaluator+protected verifier. Two unfinished Policymakers risk rollback.
+History manifest counts are integers; records .session/history/records/<nnnn>.json, reports
+.session/history/sessions/<issue>/<snapshot>.md. Glob may recurse; prefer exact paths/immediate-directory discovery.
+Grep is literal. Extract selected fields from records; omit input_state, duplicate outcome.shaper and unrelated bodies.
+This session's initial full-record print was unnecessary; do not repeat it. Keep large JSON/base64/control payloads out of output.
+Parent commits; writes may not appear in git diff/status. Compare starting commit bytes, read actual outputs, recreate only
+missing files. No rebase/merge/push/commit/shell expansion. PyYAML available. Report starts marker then fenced yaml status
+matching Finish. Write wip at start; empty Write truncates. Read required outputs immediately before Finish.
+Empty orders {"tasks":[]}. Wake only for actionable policy results. Evaluator changes require evaluator+protected verifier.
+Two unfinished Policymakers risk rollback.
 
-Next: check shaper consumes#649F1, stages exact review evidence, scopes correction and separately reviews the changed3files.
-Do not rebuild#643/#646, replay closed#633/#639or other reviews, or add preservation-only tasks. Keep trusted real admission,
-semantic/native uncertainty and missing coverage explicit. Check benchmark skill verification/review clarification in next applicable task.
-Human#618declined; #532completed but returned bytes uninspected. Avoid stale pending labels or unchanged requests.
+Next: check shaper orders separate pinned#659review with exact exports/inputs and bounded initial normative reads.
+Check reviewer clarification through actual read/exposure evidence; do not promise blinding from public files/model names.
+Close CLEAR scope; correct named NOT-CLEAR findings then review changed scope. Avoid closed#656/#639/#633review replay,
+#653historical reconstruction, preservation-only tasks or benchmark/product readiness claims. Keep trusted real admission,
+semantic/native uncertainty and missing coverage explicit. Human#618declined; #532completed bytes still uninspected.
