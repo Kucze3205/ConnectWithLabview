@@ -264,6 +264,25 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   (max_turns >= 25). Read the question's decision from loop state. Remaining gaps: split, native evidence (#169),
   typedef-impact/diagram-difference cases (blocked on native evidence + paired revisions).
 
+## Iteration 0037 (#260, wake false)
+- Result of 0036: #258 native design `partial` on input_budget (codex 874k input, 15 turns), not merged; saved at tag
+  iter/0036/258 (5056add). Policymaker verified on an extract without LABVIEW_ENVIRONMENT: native_jobs.py --check 0
+  ("23/23 slots mapped; 12 recipes; zero native executions"), evaluator 0, missing [], 51 refs. Hashes: native_jobs.py
+  081040ce…, README 78a54100…, recipes.json f292d56e…, output template 86ba84aa…. README honest: design only,
+  readiness VI candidate pylavi/tests/add.vi lacks independently known behaviour (prerequisite unmet), build slots gaps.
+- Question #257 APPROVED: loop may plan on a private repo in the owner's existing GitHub account (no cost) as the
+  restricted store. Next: draft a concrete Row 1 `capability` (owner steps + readiness check) for split/custodian;
+  read resources-proposal.md Row 1, protocol ## split and accepted-limits.md first. Not done in #260 (kept short).
+- Wrote `execution/scripts/land_native_258.py` (hash-gated, idempotent; dry run twice on a temp copy of main: 4 files,
+  --check 0, evaluator missing [] 51 refs, no __pycache__).
+- Orders (parallel, both from main): `land-native-258` (benchmark, low, 20/25, <=6 calls) and
+  `review-native-design-258` (reviewer, medium, 60/40, reads the tag read-only; spec vs protocol ## oracle + Row 2,
+  4 mutations, slot/sha coverage by script; Verification evaluator --check).
+- Next: verify main recipes.json sha f292d56e… then delete the landing script. Read review verdict: accept -> pin
+  benchmark/native under oracle milestone via landing script (max_turns >= 25); revise -> one narrow fix from main.
+  Then file the Row 1 capability. Lesson: codex design tasks keep hitting the 800k input ceiling (#228, #251, #258);
+  the Policymaker-verify-tag + landing-script pattern recovers them cheaply.
+
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
