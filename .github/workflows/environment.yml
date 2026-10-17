@@ -9,6 +9,7 @@ on:
       - '.github/loop/environment-sources.json'
       - '.github/loop/cloud-providers.json'
       - '.github/loop/cloud_probe.py'
+      - '.github/loop/tests/**'
       - '.github/workflows/environment.yml'
   workflow_dispatch:
 
@@ -16,6 +17,20 @@ permissions:
   contents: read
 
 jobs:
+  engine-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - name: Test engine contracts without provider credentials
+        run: python3 -m unittest discover -s .github/loop/tests -v
+
   public-sources:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

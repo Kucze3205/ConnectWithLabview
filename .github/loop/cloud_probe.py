@@ -14,9 +14,15 @@ import subprocess
 import tempfile
 
 
-def classify(provider, output, returncode):
+def classify_result(provider, output, returncode, now=None):
+    """Availability evidence, not a credential-renewal or session-adapter verdict.
+
+    Only an exact final answer counts as success. HTTP 403 alone cannot distinguish
+    a revoked credential from missing model entitlement; leave it unknown.
+    """
     expected = f"{provider.upper()}_READY"
     answered = provider == "copilot" and output.strip() == expected
+    events = []
     for line in output.splitlines():
         try:
             event = json.loads(line)
@@ -24,6 +30,7 @@ def classify(provider, output, returncode):
             continue
         if not isinstance(event, dict):
             continue
+        events.append(event)
         if provider == "claude" and event.get("type") == "result" and not event.get("is_error"):
             answered = event.get("result", "").strip() == expected
         if provider == "codex" and event.get("type") == "item.completed":
@@ -31,14 +38,63 @@ def classify(provider, output, returncode):
             if item.get("type") == "agent_message":
                 answered = item.get("text", "").strip() == expected
     if answered and returncode == 0:
-        return "available"
+        return {"status": "available", "reason": "model_replied", "scope": "model"}
     text = output.lower()
+    reason, status, scope = "unclassified_failure", "unknown", "provider"
+    if re.search(r"model.{0,80}(?:not found|not available|not supported|not authorized|access denied)|"
+                 r"(?:no access|not have access|not entitled|not authorized).{0,80}model|"
+                 r"model_not_found|model_not_allowed|unsupported_model", text):
+        status, reason, scope = "entitlement_failure", "model_access_denied", "model"
+    elif re.search(r"unauthorized|invalid[ _-]?(?:access[ _-]?)?token|token.{0,30}(?:expired|revoked)|"
+                   r"refresh_token_reused|authentication.{0,30}(?:fail|required)|not logged in|\b401\b", text):
+        status, reason = "auth_failure", "credential_rejected"
     # A generic HTTP 429 may be burst throttling, not exhausted subscription.
-    if re.search(r"hit your .{0,40}limit|usage_limit_reached|quota.exceeded|insufficient_quota|premium requests.*exhaust", text):
-        return "quota"
-    if re.search(r"unauthorized|invalid.token|authentication.*(?:fail|required)|not logged in|401|403", text):
-        return "auth_failure"
-    return "unknown"
+    elif re.search(r"hit your .{0,40}limit|usage_limit_reached|quota.exceeded|insufficient_quota|premium requests.*exhaust", text):
+        status, reason = "quota", "subscription_exhausted"
+        if re.search(r"model[ _-]quota|model.{0,40}limit.{0,20}reached", text):
+            scope = "model"
+    elif re.search(r"\b429\b|too many requests|rate[ _-]limit", text):
+        status, reason = "throttled", "request_throttled"
+    elif re.search(r"econnreset|econnrefused|enotfound|etimedout|network.{0,30}(?:error|unreachable)|"
+                   r"connection.{0,30}(?:failed|refused|reset)|getaddrinfo|could not resolve|dns|tls|certificate verify", text):
+        status, reason = "network_failure", "transport_failed"
+    elif re.search(r"\b(?:500|502|503|504|529)\b|service unavailable|overloaded", text):
+        status, reason = "service_failure", "provider_unavailable"
+    elif re.search(r"\b403\b|forbidden", text):
+        reason = "access_denied_unspecified"
+    report = {"status": status, "reason": reason, "scope": scope}
+    # Preserve only an explicit, future machine-readable reset. A retry delay
+    # and a subscription reset are different facts; never infer one from the other.
+    observed = now or datetime.now(timezone.utc)
+    resets = []
+
+    def collect(value):
+        if isinstance(value, dict):
+            for key, entry in value.items():
+                if key in {"resetsAt", "resetAt", "resets_at", "reset_at"} and type(entry) in (int, float):
+                    try:
+                        reset = datetime.fromtimestamp(entry / 1000 if entry > 10**11 else entry, timezone.utc)
+                        if reset > observed:
+                            resets.append(reset)
+                    except (ValueError, OverflowError, OSError):
+                        pass
+                elif isinstance(entry, (dict, list)):
+                    collect(entry)
+        elif isinstance(value, list):
+            for entry in value:
+                collect(entry)
+
+    for event in events:
+        collect(event)
+    if status == "quota" and resets:
+        report["retry_after"] = max(resets).isoformat()
+        report["reset_source"] = "provider_timestamp"
+    return report
+
+
+def classify(provider, output, returncode):
+    """Compatibility for callers that need only the availability category."""
+    return classify_result(provider, output, returncode)["status"]
 
 
 def probe(provider, timeout):
@@ -81,14 +137,7 @@ def probe(provider, timeout):
                 os.killpg(proc.pid, signal.SIGKILL)
                 proc.communicate()
                 return dict(report, status="unknown", reason="timeout")
-        status = classify(provider, output, proc.returncode)
-        report.update(status=status, reason="model_replied" if status == "available" else "model_unavailable")
-        # Preserve a documented numeric reset when present; never publish raw output.
-        reset = re.search(r'"resets?_?[aA]t"\s*:\s*(\d{10,13})', output)
-        if reset:
-            stamp = int(reset[1])
-            report["retry_after"] = datetime.fromtimestamp(stamp / 1000 if stamp > 10**11 else stamp, timezone.utc).isoformat()
-        # Provider-wide classification is conservative; adapters must refine scope.
+        report.update(classify_result(provider, output, proc.returncode))
         report["returncode"] = proc.returncode
         return report
 

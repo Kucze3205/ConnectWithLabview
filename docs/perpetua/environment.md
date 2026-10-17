@@ -61,6 +61,12 @@ were transferred directly to encrypted repository secrets without printing them.
 They are not a complete unattended credential-renewal system. No API billing mode,
 automatic credit purchase or provider substitution has been enabled.
 
+The [credential prerequisite and proposed private control repository](cloud-authentication.md)
+records the verified renewal requirements, the existing hosted evidence and the
+owner decision still needed. OpenAI's account-auth CI guidance covers trusted
+private automation; the current product repository is public. No visibility,
+credential-storage authority or billing change has been made.
+
 Local diagnostic observations before adopting the cloud-only constraint: Claude
 2.1.292 was authenticated but its real call reported a weekly subscription limit,
 reset 20 October 2026 at 21:00 Europe/Warsaw. Codex 0.162.0-alpha.17.2 and Copilot
