@@ -28,6 +28,14 @@ access, not correctness of diagram interpretation. The public project reports
 LVVersion `20008000`. Broader coverage and independent expected answers belong to
 the evaluator/benchmark work; do not use parser output as its own sole oracle.
 
+Hosted confirmation: [Environment readiness, run 39073653443](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39073653443)
+on 18 October 2026 (Europe/Warsaw) passed public source preparation and its second
+invocation on GitHub-hosted Ubuntu 24.04.
+
+The engine test suite passed on Linux/Python 3.12: 263 tests, 11 skipped
+(template-only and opt-in live checks). This includes the routing and probe
+classification tests. It does not validate unfinished adapter integration.
+
 ## Cloud provider access checks
 
 `.github/workflows/environment.yml` runs on setup-branch changes to environment
@@ -58,6 +66,12 @@ Local diagnostic observations before adopting the cloud-only constraint: Claude
 reset 20 October 2026 at 21:00 Europe/Warsaw. Codex 0.162.0-alpha.17.2 and Copilot
 1.0.98 returned their expected probe answers. Those local observations do not by
 themselves prove cloud access. The hosted workflow's summaries are the cloud evidence.
+
+That hosted run returned `available` with an actual model answer for Codex and
+Copilot, and `quota` for Claude. The overall run therefore correctly failed
+readiness. Claude's cloud call reached the service and reported a subscription
+limit; it did not produce a usable model answer. These observations are point-in-time
+checks, not promises of availability or durable token renewal.
 
 ## Required multi-provider execution
 
