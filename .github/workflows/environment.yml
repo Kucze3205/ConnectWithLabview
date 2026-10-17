@@ -101,6 +101,10 @@ jobs:
         env:
           CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
         run: python3 .github/loop/credential_store.py lease --home "$RUNNER_TEMP/codex-private-auth"
+      - name: Renew through Codex (no model prompt)
+        id: refresh
+        if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
+        run: python3 .github/loop/credential_store.py refresh --home "$RUNNER_TEMP/codex-private-auth"
       - name: Check actual model response
         env:
           PROVIDER: ${{ matrix.provider }}
@@ -117,7 +121,7 @@ jobs:
             python3 .github/loop/cloud_probe.py "$PROVIDER" --output "$RUNNER_TEMP/provider-readiness.json"
           fi
       - name: Persist refreshed credentials even after model failure
-        if: always() && steps.lease.outcome == 'success'
+        if: always() && steps.lease.outcome == 'success' && steps.refresh.outcome == 'success'
         env:
           CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
         run: python3 .github/loop/credential_store.py persist --home "$RUNNER_TEMP/codex-private-auth"

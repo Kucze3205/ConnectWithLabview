@@ -74,6 +74,17 @@ interruption, failed write-back, invalid bundles, symlinks, file permissions and
 store-authority isolation. This is not yet a live proof of renewal, or an
 integration with ordinary task sessions.
 
+Renewal invokes Codex App Server's `account/read` with `refreshToken: true`,
+without a model prompt or a custom OAuth implementation. A successful response
+must change the auth file before write-back is allowed. Failure or an ambiguous
+response keeps the lease marker. The subsequent model probe receives only an
+external-token projection, with an empty refresh token, in a separate scratch
+home. It cannot rotate the maintenance credential. This file format is an
+internal contract of the pinned Codex CLI and needs revalidation before upgrading;
+the future task adapter must preserve this separation. Sources:
+[App Server authentication](https://learn.chatgpt.com/docs/app-server),
+[pinned authentication implementation](https://github.com/openai/codex/blob/rust-v0.162.0-alpha.17.2/codex-rs/login/src/auth/manager.rs).
+
 All three `provider-*` environments are restricted to `main` and
 `perpetua/setup`. The readiness provider jobs additionally require this exact
 repository, its owner as actor, and one of those refs. The Codex job's shared
@@ -89,8 +100,8 @@ The Codex path is opt-in through environment variable
 - `CODEX_CI_AUTH_JSON` (secret), from a dedicated CI login, not the desktop copy.
 
 Before invoking Codex, the trusted writer replaces the secret with a non-secret
-lease marker. After Codex exits, even on model failure, it writes the resulting
-bundle back. Cancellation or storage failure leaves the marker; the next job
+lease marker. After successful renewal, even on model failure, it writes the resulting
+bundle back. Cancellation, ambiguous renewal or storage failure leaves the marker; the next job
 rejects it and requires a fresh dedicated login. This trades automatic recovery
 after an interrupted credential transaction for rejection of stale refresh
 tokens. It does not preserve a lost rotated bundle magically. The credentials
@@ -99,7 +110,8 @@ and is removed in the final cleanup step. Writer errors publish only fixed
 summaries. The model process receives neither the App key nor its writer token.
 
 Without that opt-in, Codex readiness still tests the existing bootstrap snapshot;
-its success does not establish renewal. Parallel task workers must eventually
+it projects that snapshot to access-only credentials and cannot refresh it.
+Its success does not establish renewal. Parallel task workers must eventually
 receive access-only credentials or use the same serialized stream; the current
 task workflow still uses Claude. These integrations remain part of the open task.
 

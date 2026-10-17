@@ -76,6 +76,14 @@ class ClassifyTest(unittest.TestCase):
         self.assertEqual(result["status"], "auth_failure")
         process.assert_not_called()
 
+    def test_corrupt_or_paid_api_bundle_is_not_used_as_subscription_auth(self):
+        for text in ("broken-json", "[]", '{"OPENAI_API_KEY":"synthetic-api-key"}'):
+            with patch.dict(os.environ, {"CODEX_AUTH_JSON": text}), patch("cloud_probe.subprocess.Popen") as process:
+                result = probe("codex", 5)
+            self.assertEqual(result["status"], "auth_failure")
+            self.assertEqual(result["reason"], "invalid_credential_bundle")
+            process.assert_not_called()
+
     def test_codex_probe_keeps_refresh_file_but_never_receives_store_authority(self):
         import credential_store
         seed = json.dumps({"auth_mode": "chatgpt", "tokens": {
@@ -86,6 +94,13 @@ class ClassifyTest(unittest.TestCase):
             with patch.dict(os.environ, {"GITHUB_TOKEN": "runner-token", "CREDENTIAL_STORE_TOKEN": "store-writer",
                                          "CLAUDE_CODE_OAUTH_TOKEN": "other-provider", "CODEX_AUTH_JSON": "stale-seed"}), \
                  patch("cloud_probe.subprocess.Popen") as process:
+                snapshot = {}
+
+                def start(*args, **kwargs):
+                    snapshot["auth"] = json.loads(Path(kwargs["env"]["CODEX_HOME"], "auth.json").read_text())
+                    return process.return_value
+
+                process.side_effect = start
                 child = process.return_value.__enter__.return_value
                 child.returncode = 0
                 child.communicate.return_value = (json.dumps({"type": "item.completed", "item": {
@@ -93,7 +108,9 @@ class ClassifyTest(unittest.TestCase):
                 result = probe("codex", 5, home)
             self.assertEqual(result["status"], "available")
             env = process.call_args.kwargs["env"]
-            self.assertEqual(env["CODEX_HOME"], str(home))
+            self.assertNotEqual(env["CODEX_HOME"], str(home))
+            self.assertEqual(snapshot["auth"]["auth_mode"], "chatgptAuthTokens")
+            self.assertEqual(snapshot["auth"]["tokens"]["refresh_token"], "")
             for secret in ("GITHUB_TOKEN", "CREDENTIAL_STORE_TOKEN", "CODEX_AUTH_JSON", "CLAUDE_CODE_OAUTH_TOKEN"):
                 self.assertNotIn(secret, env)
             self.assertTrue(credential_store.auth_file(home).exists())

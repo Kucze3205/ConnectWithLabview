@@ -59,7 +59,7 @@ secret, exhausted quota or failed response fails that readiness check. Generic
 | Provider | Repository secret | Access semantics |
 |---|---|---|
 | Claude | `CLAUDE_CODE_OAUTH_TOKEN` | Bootstrap access token from the existing Claude subscription. Current snapshot expires 18 October 2026, 04:53 UTC; a durable token from `claude setup-token` is still needed. |
-| Codex | `CODEX_AUTH_JSON` | Existing ChatGPT CLI login snapshot, containing renewable authentication material. Isolated hosted jobs do not persist refreshed tokens back to the secret; durable renewal remains work for the integration. |
+| Codex | Bootstrap `CODEX_AUTH_JSON`; opt-in environment `CODEX_CI_AUTH_JSON` | The existing snapshot proves model access only. The new guarded secret round trip requires a dedicated CI login and the App described in cloud-authentication.md; it is not yet enabled or live-verified. |
 | Copilot | Job `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job now requests `copilot-requests: write` and checks the pinned CLI. Current GitHub documentation supports this in personally owned repositories against the owner's seat. The earlier copied OAuth token remains stored but is no longer passed by this readiness job. |
 
 The owner requested access to these accounts for cloud execution. Bootstrap values

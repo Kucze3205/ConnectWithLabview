@@ -1,11 +1,12 @@
 """Credential rotation transactions use a fake secret store and synthetic values."""
 import json
+import io
 import os
 from pathlib import Path
 import subprocess
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import fakes
 import credential_store as store
@@ -112,6 +113,50 @@ class CredentialStoreTest(unittest.TestCase):
 
         with self.assertRaisesRegex(RuntimeError, "^secret-store write failed$"):
             store.write_secret(SEED, self.repo, self.token, run)
+
+    def test_external_worker_cannot_rotate_the_maintenance_credential(self):
+        original = json.loads(SEED)
+        worker = store.worker_bundle(original)
+        self.assertEqual(worker["auth_mode"], "chatgptAuthTokens")
+        self.assertEqual(worker["tokens"]["refresh_token"], "")
+        self.assertEqual(original["tokens"]["refresh_token"], "fake-refresh")
+        self.assertEqual(worker["tokens"]["access_token"], original["tokens"]["access_token"])
+
+    def test_refresh_uses_account_rpc_without_model_prompt_or_store_authority(self):
+        path = store.restore(self.home, SEED)
+        server = MagicMock()
+        server.__enter__.return_value = server
+        server.stdout = io.StringIO('{"id":1,"result":{}}\n{"id":2,"result":{"account":{"type":"chatgpt"}}}\n')
+        server.stdin = io.StringIO()
+
+        def start(args, **kwargs):
+            self.assertEqual(args[:3], ["codex", "app-server", "--stdio"])
+            self.assertNotIn("CREDENTIAL_STORE_TOKEN", kwargs["env"])
+            self.assertNotIn("GITHUB_TOKEN", kwargs["env"])
+            renewed = json.loads(SEED)
+            renewed["tokens"]["refresh_token"] = "renewed-by-codex"
+            path.write_text(json.dumps(renewed))
+            return server
+
+        with patch.dict(os.environ, {"CREDENTIAL_STORE_TOKEN": "synthetic-writer", "GITHUB_TOKEN": "runner"}), \
+             patch("credential_store.subprocess.Popen", side_effect=start):
+            store.refresh(self.home, timeout=5)
+        messages = [json.loads(line) for line in server.stdin.getvalue().splitlines()]
+        self.assertEqual([m["method"] for m in messages], ["initialize", "initialized", "account/read"])
+        self.assertEqual(messages[-1]["params"], {"refreshToken": True})
+
+    def test_unchanged_or_rejected_refresh_is_not_accepted_as_renewal(self):
+        store.restore(self.home, SEED)
+        for reply in ({"result": {"account": {"type": "chatgpt"}}}, {"error": {"message": SEED}}):
+            server = MagicMock()
+            server.__enter__.return_value = server
+            server.stdout = io.StringIO(json.dumps({"id": 1, "result": {}}) + "\n" +
+                                        json.dumps(dict(reply, id=2)) + "\n")
+            server.stdin = io.StringIO()
+            with patch("credential_store.subprocess.Popen", return_value=server):
+                with self.assertRaises(RuntimeError) as error:
+                    store.refresh(self.home, timeout=5)
+            self.assertNotIn(SEED, str(error.exception))
 
 
 if __name__ == "__main__":

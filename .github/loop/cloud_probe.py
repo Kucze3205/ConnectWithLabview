@@ -107,6 +107,12 @@ def probe(provider, timeout, codex_home=None):
               "status": "auth_failure", "reason": "missing_secret", "scope": "provider"}
     if not value:
         return report
+    if provider == "codex":
+        from credential_store import worker_bundle
+        try:
+            auth = worker_bundle(json.loads(value))
+        except (ValueError, TypeError):
+            return dict(report, reason="invalid_credential_bundle")
     with tempfile.TemporaryDirectory(prefix="provider-probe-") as directory:
         root = Path(directory)
         # No runner GitHub credential, personal config, plugins or repository code.
@@ -120,11 +126,11 @@ def probe(provider, timeout, codex_home=None):
                        "--output-format", "json", "--setting-sources", "",
                        "--strict-mcp-config", "--mcp-config", str(root / "mcp.json")]
         elif provider == "codex":
-            auth = json.loads(value)
-            if codex_home is None:
-                (root / "auth.json").write_text(json.dumps(auth))
-                (root / "auth.json").chmod(0o600)
-            env["CODEX_HOME"] = str(codex_home) if codex_home is not None else directory
+            # Bootstrap snapshots and maintained credentials both become access-
+            # only here. A model probe must never rotate a desktop/shared seed.
+            (root / "auth.json").write_text(json.dumps(auth))
+            (root / "auth.json").chmod(0o600)
+            env["CODEX_HOME"] = directory
             command = ["codex", "exec", "--ignore-user-config", "--ephemeral", "--sandbox", "read-only",
                        "--skip-git-repo-check", "--json", prompt]
         else:
