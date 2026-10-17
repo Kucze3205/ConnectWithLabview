@@ -60,18 +60,20 @@ secret, exhausted quota or failed response fails that readiness check. Generic
 |---|---|---|
 | Claude | `CLAUDE_CODE_OAUTH_TOKEN` | Bootstrap access token from the existing Claude subscription. Current snapshot expires 18 October 2026, 04:53 UTC; a durable token from `claude setup-token` is still needed. |
 | Codex | `CODEX_AUTH_JSON` | Existing ChatGPT CLI login snapshot, containing renewable authentication material. Isolated hosted jobs do not persist refreshed tokens back to the secret; durable renewal remains work for the integration. |
-| Copilot | `COPILOT_GITHUB_TOKEN` | Existing supported GitHub OAuth token, stored encrypted. CLI receives it directly; GitHub's job `GITHUB_TOKEN` is not a Copilot subscription credential. Token revocation/expiry must disable this provider. |
+| Copilot | Job `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job now requests `copilot-requests: write` and checks the pinned CLI. Current GitHub documentation supports this in personally owned repositories against the owner's seat. The earlier copied OAuth token remains stored but is no longer passed by this readiness job. |
 
 The owner requested access to these accounts for cloud execution. Bootstrap values
 were transferred directly to encrypted repository secrets without printing them.
 They are not a complete unattended credential-renewal system. No API billing mode,
 automatic credit purchase or provider substitution has been enabled.
 
-The [credential prerequisite and proposed private control repository](cloud-authentication.md)
-records the verified renewal requirements, the existing hosted evidence and the
-owner decision still needed. OpenAI's account-auth CI guidance covers trusted
-private automation; the current product repository is public. No visibility,
-credential-storage authority or billing change has been made.
+The [credential requirements and accepted public repository](cloud-authentication.md)
+record verified renewal requirements and cloud evidence. The owner explicitly
+retained this public repository on 18 October 2026 and rejected a private control
+repository. OpenAI's account-auth CI deployment recommendation covers private
+automation; that recommendation does not cover the chosen layout. Trusted workflow
+and credential-isolation checks must replace that assumption. No visibility or
+billing change has been made.
 
 Local diagnostic observations before adopting the cloud-only constraint: Claude
 2.1.292 was authenticated but its real call reported a weekly subscription limit,

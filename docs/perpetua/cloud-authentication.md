@@ -1,9 +1,10 @@
 # Cloud authentication: implementation prerequisite
 
-Status: proposed credential architecture, checked 18 October 2026. This is not
-an implemented provider adapter or a completed setup decision. The owner must
-choose the location and access of private automation before credential persistence
-is configured. The product goal and public repository are unchanged.
+Status: credential work in progress, checked 18 October 2026. The owner explicitly
+retained this public repository for GitHub Actions capabilities and rejected a
+private control repository. That is the accepted location; do not reopen the
+visibility question. Provider adapters and the complete credential lifecycle are
+not implemented yet. The product goal is unchanged.
 
 ## Observed cloud evidence
 
@@ -20,8 +21,8 @@ previous environment investigation; this session has not read its value.
 | Provider | Subscription credential | Persistence and recovery |
 |---|---|---|
 | Claude | One-year token from `claude setup-token`, in `CLAUDE_CODE_OAUTH_TOKEN` | Owner authorizes the browser flow, then replaces the secret. Track expiry and request replacement before it; no supported unattended reissuance established. Do not use `--bare` with this auth mode. |
-| Codex | Dedicated CI login bundle in `CODEX_AUTH_JSON` | A serialized private worker restores the latest bundle, lets Codex refresh it, then writes the resulting bundle back to a secret manager, including after a failed model call. Desktop and CI must not rotate copies of the same login concurrently. |
-| Copilot | Existing `COPILOT_GITHUB_TOKEN` initially | Verify its lifetime and replacement procedure. An alternative is Actions' short-lived `GITHUB_TOKEN` with `copilot-requests: write`; probe the pinned CLI before adopting it. In a personally owned repository it draws from the owner's Copilot seat. |
+| Codex | Dedicated CI login bundle in environment secret `CODEX_CI_AUTH_JSON` | A serialized trusted worker restores the latest bundle, lets Codex refresh it, then writes the resulting bundle back to a secret manager, including after a failed model call. Desktop and CI must not rotate copies of the same login concurrently. |
+| Copilot | Actions' short-lived `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job requests `copilot-requests: write` and tests compatibility with the pinned CLI. In this personally owned repository it draws from the owner's Copilot seat. No copied personal token is used by this job. |
 
 Claude's documented CI token requires one browser authorization and expires after
 one year. Source: [Claude authentication](https://code.claude.com/docs/en/authentication#generate-a-long-lived-token).
@@ -38,14 +39,15 @@ billing or automatic extra spending has been authorized. Sources:
 [Copilot in Actions](https://docs.github.com/en/copilot/concepts/agent-capabilities/agent-powered-workflows-and-operations/copilot-cli-in-github-actions),
 [workflow configuration](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-in-actions).
 
-## Concrete proposal awaiting the owner
+## Accepted deployment and replacement checks
 
-Keep this product repository public and create a separate private control
-repository, for example `Kucze3205/ConnectWithLabview-control`, for trusted cloud
-workflows and provider credentials. An alternative is changing this repository's
-visibility. Neither change has been made. The owner chooses the location and
-accepts the necessary access before it is provisioned. Private hosted Actions may
-consume the account's included private-repository minutes; no paid overage or
+Keep product and control workflows in this public repository, as the owner
+decided. OpenAI's private-automation deployment recommendation therefore does not
+cover this layout; do not describe the topology as officially recommended.
+Replace the private-repository assumption with owner-controlled workflow refs,
+no credentialed PR jobs, branch-restricted credential environments, a serialized
+refresh stream and isolation of model/tools from storage-write authority.
+These replacements still need adversarial cloud checks. No paid API, overage or
 cloud VM purchase is authorized.
 
 For ephemeral workers, use a secret store that can return the latest credential
@@ -57,11 +59,49 @@ Source: [When Actions reads secrets](https://docs.github.com/en/actions/referenc
 
 Writing refreshed credentials requires separate trusted authority. The normal
 job token cannot be given arbitrary repository permissions. A narrowly installed
-GitHub App or fine-grained PAT with the required Secrets write permission can
-update the store; neither is present yet. The owner must authorize and provision
-that authority. Never give it to the model or any tool subprocess. Sources:
+GitHub App with repository Environments write permission can update this
+environment-secret store; it is not provisioned yet. Repository-secret updates
+would instead require Secrets write. Never give storage-write authority to the
+model or any tool subprocess. Sources:
 [Additional token permissions](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token#granting-additional-permissions),
-[Secret update API](https://docs.github.com/en/rest/actions/secrets#create-or-update-a-repository-secret).
+[Environment secret update API](https://docs.github.com/en/rest/actions/secrets#create-or-update-an-environment-secret).
+
+## Implemented round trip, awaiting real credential provisioning
+
+`credential_store.py` and the Codex readiness job implement a restore/lease/run/
+persist sequence. Its tests cover refreshed tokens on the next runner,
+interruption, failed write-back, invalid bundles, symlinks, file permissions and
+store-authority isolation. This is not yet a live proof of renewal, or an
+integration with ordinary task sessions.
+
+All three `provider-*` environments are restricted to `main` and
+`perpetua/setup`. The readiness provider jobs additionally require this exact
+repository, its owner as actor, and one of those refs. The Codex job's shared
+`provider-credential-codex` concurrency group must also be used by any future
+workflow that receives a managed refresh credential.
+
+The Codex path is opt-in through environment variable
+`CODEX_CREDENTIAL_STORE_READY=on`. It requires, in environment `provider-codex`:
+
+- `CREDENTIAL_STORE_APP_CLIENT_ID` (variable), identifying an App installed only
+  on this repository with Environments write permission.
+- `CREDENTIAL_STORE_APP_PRIVATE_KEY` (secret), used by the token action only.
+- `CODEX_CI_AUTH_JSON` (secret), from a dedicated CI login, not the desktop copy.
+
+Before invoking Codex, the trusted writer replaces the secret with a non-secret
+lease marker. After Codex exits, even on model failure, it writes the resulting
+bundle back. Cancellation or storage failure leaves the marker; the next job
+rejects it and requires a fresh dedicated login. This trades automatic recovery
+after an interrupted credential transaction for rejection of stale refresh
+tokens. It does not preserve a lost rotated bundle magically. The credentials
+directory is outside the workspace, has private permissions, is never uploaded,
+and is removed in the final cleanup step. Writer errors publish only fixed
+summaries. The model process receives neither the App key nor its writer token.
+
+Without that opt-in, Codex readiness still tests the existing bootstrap snapshot;
+its success does not establish renewal. Parallel task workers must eventually
+receive access-only credentials or use the same serialized stream; the current
+task workflow still uses Claude. These integrations remain part of the open task.
 
 ## Checks required before declaring credentials ready
 

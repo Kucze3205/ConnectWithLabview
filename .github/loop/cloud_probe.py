@@ -97,9 +97,12 @@ def classify(provider, output, returncode):
     return classify_result(provider, output, returncode)["status"]
 
 
-def probe(provider, timeout):
+def probe(provider, timeout, codex_home=None):
     secret = {"claude": "CLAUDE_CODE_OAUTH_TOKEN", "codex": "CODEX_AUTH_JSON", "copilot": "COPILOT_GITHUB_TOKEN"}[provider]
     value = os.environ.get(secret, "")
+    if provider == "codex" and codex_home is not None:
+        from credential_store import auth_file
+        value = auth_file(codex_home).read_text(encoding="utf-8")
     report = {"provider": provider, "observed_at": datetime.now(timezone.utc).isoformat(),
               "status": "auth_failure", "reason": "missing_secret", "scope": "provider"}
     if not value:
@@ -118,9 +121,10 @@ def probe(provider, timeout):
                        "--strict-mcp-config", "--mcp-config", str(root / "mcp.json")]
         elif provider == "codex":
             auth = json.loads(value)
-            (root / "auth.json").write_text(json.dumps(auth))
-            (root / "auth.json").chmod(0o600)
-            env["CODEX_HOME"] = directory
+            if codex_home is None:
+                (root / "auth.json").write_text(json.dumps(auth))
+                (root / "auth.json").chmod(0o600)
+            env["CODEX_HOME"] = str(codex_home) if codex_home is not None else directory
             command = ["codex", "exec", "--ignore-user-config", "--ephemeral", "--sandbox", "read-only",
                        "--skip-git-repo-check", "--json", prompt]
         else:
@@ -147,9 +151,12 @@ if __name__ == "__main__":
     parser.add_argument("provider", choices=["claude", "codex", "copilot"])
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--timeout", default=120, type=int)
+    parser.add_argument("--codex-home", type=Path, help="trusted external credential directory, retained for write-back")
     args = parser.parse_args()
     try:
-        report = probe(args.provider, args.timeout)
+        if args.codex_home is not None and args.provider != "codex":
+            raise ValueError("credential directory is only supported for Codex")
+        report = probe(args.provider, args.timeout, args.codex_home)
     except (OSError, ValueError, subprocess.SubprocessError):
         report = {"provider": args.provider, "status": "unknown", "reason": "probe_failed"}
     args.output.parent.mkdir(parents=True, exist_ok=True)

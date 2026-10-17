@@ -9,6 +9,7 @@ on:
       - '.github/loop/environment-sources.json'
       - '.github/loop/cloud-providers.json'
       - '.github/loop/cloud_probe.py'
+      - '.github/loop/credential_store.py'
       - '.github/loop/tests/**'
       - '.github/workflows/environment.yml'
   workflow_dispatch:
@@ -51,11 +52,21 @@ jobs:
           path: ${{ runner.temp }}/connectwithlabview-environment/readiness.json
 
   providers:
+    # Credentials never reach PR or arbitrary-ref jobs. The owner retained the
+    # public repository; selected-branch environment rules are an additional gate.
+    if: github.repository == 'Kucze3205/ConnectWithLabview' && github.actor == github.repository_owner && (github.ref == 'refs/heads/perpetua/setup' || github.ref_name == github.event.repository.default_branch)
+    permissions:
+      contents: read
+      copilot-requests: write
     strategy:
       fail-fast: false
       matrix:
         provider: [claude, codex, copilot]
     runs-on: ubuntu-24.04
+    environment: provider-${{ matrix.provider }}
+    concurrency:
+      group: provider-credential-${{ matrix.provider }}
+      cancel-in-progress: false
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
@@ -70,13 +81,49 @@ jobs:
         run: |
           PACKAGE=$(python3 -c 'import json,os; p=json.load(open(".github/loop/cloud-providers.json"))[os.environ["PROVIDER"]]; print(p["package"]+"@"+p["version"])')
           npm install --global "$PACKAGE"
+      - name: Store authority (never passed to the model)
+        id: store-token
+        if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.CREDENTIAL_STORE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.CREDENTIAL_STORE_APP_PRIVATE_KEY }}
+          permission-environments: write
+      - name: Restore dedicated CI credentials
+        id: restore
+        if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_CI_AUTH_JSON }}
+        run: python3 .github/loop/credential_store.py restore --home "$RUNNER_TEMP/codex-private-auth"
+      - name: Lease credential before it can rotate
+        id: lease
+        if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
+        env:
+          CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
+        run: python3 .github/loop/credential_store.py lease --home "$RUNNER_TEMP/codex-private-auth"
       - name: Check actual model response
         env:
           PROVIDER: ${{ matrix.provider }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ matrix.provider == 'claude' && secrets.CLAUDE_CODE_OAUTH_TOKEN || '' }}
           CODEX_AUTH_JSON: ${{ matrix.provider == 'codex' && secrets.CODEX_AUTH_JSON || '' }}
-          COPILOT_GITHUB_TOKEN: ${{ matrix.provider == 'copilot' && secrets.COPILOT_GITHUB_TOKEN || '' }}
-        run: python3 .github/loop/cloud_probe.py "$PROVIDER" --output "$RUNNER_TEMP/provider-readiness.json"
+          # This personally owned repository bills the owner's existing seat.
+          # The token expires with the job; no copied personal OAuth token.
+          COPILOT_GITHUB_TOKEN: ${{ matrix.provider == 'copilot' && github.token || '' }}
+          CODEX_CREDENTIAL_STORE_READY: ${{ vars.CODEX_CREDENTIAL_STORE_READY }}
+        run: |
+          if [ "$PROVIDER" = codex ] && [ "$CODEX_CREDENTIAL_STORE_READY" = on ]; then
+            python3 .github/loop/cloud_probe.py codex --codex-home "$RUNNER_TEMP/codex-private-auth" --output "$RUNNER_TEMP/provider-readiness.json"
+          else
+            python3 .github/loop/cloud_probe.py "$PROVIDER" --output "$RUNNER_TEMP/provider-readiness.json"
+          fi
+      - name: Persist refreshed credentials even after model failure
+        if: always() && steps.lease.outcome == 'success'
+        env:
+          CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
+        run: python3 .github/loop/credential_store.py persist --home "$RUNNER_TEMP/codex-private-auth"
+      - name: Remove private credential file
+        if: always() && steps.restore.outcome == 'success'
+        run: python3 .github/loop/credential_store.py remove --home "$RUNNER_TEMP/codex-private-auth"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
