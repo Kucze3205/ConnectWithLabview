@@ -93,7 +93,8 @@ class ClassifyTest(unittest.TestCase):
             credential_store.restore(home, seed)
             with patch.dict(os.environ, {"GITHUB_TOKEN": "runner-token", "CREDENTIAL_STORE_TOKEN": "store-writer",
                                          "CLAUDE_CODE_OAUTH_TOKEN": "other-provider", "CODEX_AUTH_JSON": "stale-seed"}), \
-                 patch("cloud_probe.subprocess.Popen") as process:
+                 patch("cloud_probe.subprocess.Popen") as process, \
+                 patch("cloud_probe.sandbox", side_effect=lambda command, root: command):
                 snapshot = {}
 
                 def start(*args, **kwargs):

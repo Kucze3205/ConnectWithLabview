@@ -13,6 +13,8 @@ import signal
 import subprocess
 import tempfile
 
+from probe_isolation import sandbox
+
 
 def classify_result(provider, output, returncode, now=None):
     """Availability evidence, not a credential-renewal or session-adapter verdict.
@@ -138,7 +140,7 @@ def probe(provider, timeout, codex_home=None):
             command = ["copilot", "-p", prompt, "--silent", "--no-ask-user", "--no-auto-update",
                        "--no-custom-instructions", "--disable-builtin-mcps",
                        "--available-tools", "view", "--deny-tool", "shell", "--deny-tool", "write"]
-        with subprocess.Popen(command, cwd=directory, env=env, stdin=subprocess.DEVNULL,
+        with subprocess.Popen(sandbox(command, directory), cwd=directory, env=env, stdin=subprocess.DEVNULL,
                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                               text=True, start_new_session=True) as proc:
             try:

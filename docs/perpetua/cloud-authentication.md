@@ -108,6 +108,12 @@ tokens. It does not preserve a lost rotated bundle magically. The credentials
 directory is outside the workspace, has private permissions, is never uploaded,
 and is removed in the final cleanup step. Writer errors publish only fixed
 summaries. The model process receives neither the App key nor its writer token.
+`probe_isolation.py` additionally runs each model CLI in a mount/PID namespace
+containing system runtimes and that probe's scratch directory. Other runner
+files and parent process environments are absent. Each provider job checks this
+boundary before making its request. This prevents native tools in a probe from
+reading the maintainer's full bundle or Actions token-output files. Task-workspace
+permissions and offline tool networking still require the separate adapter work.
 
 Without that opt-in, Codex readiness still tests the existing bootstrap snapshot;
 it projects that snapshot to access-only credentials and cannot refresh it.

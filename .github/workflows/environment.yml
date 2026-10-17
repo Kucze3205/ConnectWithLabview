@@ -10,6 +10,7 @@ on:
       - '.github/loop/cloud-providers.json'
       - '.github/loop/cloud_probe.py'
       - '.github/loop/credential_store.py'
+      - '.github/loop/probe_isolation.py'
       - '.github/loop/tests/**'
       - '.github/workflows/environment.yml'
   workflow_dispatch:
@@ -81,6 +82,10 @@ jobs:
         run: |
           PACKAGE=$(python3 -c 'import json,os; p=json.load(open(".github/loop/cloud-providers.json"))[os.environ["PROVIDER"]]; print(p["package"]+"@"+p["version"])')
           npm install --global "$PACKAGE"
+      - name: Verify model-probe isolation
+        run: |
+          bash .github/loop/sandbox.sh
+          python3 .github/loop/probe_isolation.py
       - name: Store authority (never passed to the model)
         id: store-token
         if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
