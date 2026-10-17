@@ -116,10 +116,21 @@ help request. A direct COM probe did not open an example successfully. Neither
 finding proves scripting, activation rights or operation on a cloud machine.
 Directories named for older releases were not counted as installed editors.
 
-NI License Manager metadata contains Community and Professional package records,
-but package dates do not establish current activation or cloud entitlement. The
-owner does not know their license type. No activation was changed and no private
-project, serial number or NI license file was uploaded.
+The owner's expanded NI License Manager screenshot, supplied on 18 October 2026,
+confirms LabVIEW 2026 Q1 Community Edition is Licensed until 27 June 2027.
+Professional Development System is Unlicensed; Base, Full, Continuous Integration
+and Debug Deployment show Evaluation Available, not active licenses. This screenshot
+supersedes the earlier uncertainty from package metadata. It establishes local
+Community activation, not activation of LabVIEW 2024 or a cloud machine. No
+activation was changed and no private project, serial number or NI license file
+was uploaded.
+
+NI's Community usage guidance permits personal, non-commercial, non-industrial
+projects and lists free open-source projects as an example. The owner's actual
+project context is still being clarified; a public repository alone does not
+establish eligibility. The public download page does not confirm authenticated
+access to the 2024 installer. Cloud deployment, account activation and unattended
+operation remain to be checked separately.
 
 NI's published [software license agreement](https://www.ni.com/content/dam/web/pdfs/legal/software_license_agreement_en.pdf)
 and [Community usage guidance](https://www.ni.com/en/support/documentation/supplemental/20/labview-community-edition-usage-details.html)
