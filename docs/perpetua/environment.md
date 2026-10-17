@@ -5,6 +5,12 @@ is not a runner. Public source preparation and model access checks run on GitHub
 hosted Ubuntu; using a full LabVIEW IDE in the cloud remains an explicit access gap.
 The product goal is unchanged and no artifact family has been excluded.
 
+Version requirement clarified by the owner on 18 October 2026: prioritize all
+LabVIEW versions; LabVIEW 2024 is the accepted fallback if investigation shows
+substantially greater time is needed for all versions. Estimate that difference
+before choosing a version scope. No numeric time threshold was agreed. The local
+LabVIEW 2026 observation does not verify LabVIEW 2024 or cross-version compatibility.
+
 ## Reproducible public sources
 
 `.github/loop/prepare.sh` calls `prepare_environment.py`. It needs Python 3.10+
