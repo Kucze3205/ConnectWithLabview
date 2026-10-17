@@ -103,7 +103,7 @@ class WorkflowTest(unittest.TestCase):
             self.assertIn("jobs", doc, f)
             self.assertTrue("on" in doc or True in doc, f)                   # PyYAML reads `on:` as True
             self.assertIn("permissions", doc, f)
-            if f != "watchdog.yml":
+            if f not in ("watchdog.yml", "environment.yml"):
                 self.assertIn("vars.AUTOPILOT == 'on'", text, f)               # the first condition of every loop workflow
         if not IN_LOOP_REPO:
             self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "owner-request.yml"})

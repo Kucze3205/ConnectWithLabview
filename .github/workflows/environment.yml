@@ -1,0 +1,69 @@
+name: Environment readiness
+
+on:
+  push:
+    branches: [perpetua/setup]
+    paths:
+      - '.github/loop/prepare.sh'
+      - '.github/loop/prepare_environment.py'
+      - '.github/loop/environment-sources.json'
+      - '.github/loop/cloud-providers.json'
+      - '.github/loop/cloud_probe.py'
+      - '.github/workflows/environment.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare and check a second invocation
+        run: |
+          bash .github/loop/prepare.sh
+          bash .github/loop/prepare.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-environment-readiness
+          path: ${{ runner.temp }}/connectwithlabview-environment/readiness.json
+
+  providers:
+    strategy:
+      fail-fast: false
+      matrix:
+        provider: [claude, codex, copilot]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install pinned CLI
+        env:
+          PROVIDER: ${{ matrix.provider }}
+        run: |
+          PACKAGE=$(python3 -c 'import json,os; p=json.load(open(".github/loop/cloud-providers.json"))[os.environ["PROVIDER"]]; print(p["package"]+"@"+p["version"])')
+          npm install --global "$PACKAGE"
+      - name: Check actual model response
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ matrix.provider == 'claude' && secrets.CLAUDE_CODE_OAUTH_TOKEN || '' }}
+          CODEX_AUTH_JSON: ${{ matrix.provider == 'codex' && secrets.CODEX_AUTH_JSON || '' }}
+          COPILOT_GITHUB_TOKEN: ${{ matrix.provider == 'copilot' && secrets.COPILOT_GITHUB_TOKEN || '' }}
+        run: python3 .github/loop/cloud_probe.py "$PROVIDER" --output "$RUNNER_TEMP/provider-readiness.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: provider-${{ matrix.provider }}-readiness
+          path: ${{ runner.temp }}/provider-readiness.json

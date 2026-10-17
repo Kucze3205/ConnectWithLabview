@@ -87,6 +87,15 @@ owner's switch; it is the first condition of every workflow and anything but a l
 
 ## Sessions
 
+**This setup's required architecture:** all loop sessions execute in the cloud. The owner requires Claude, Codex
+and GitHub Copilot with model selection by policy and continuation across provider limits. The session path described
+below is still the shipped Claude adapter, not the completed multi-provider integration. That integration is tracked in
+[Cloud model selection and quota management](https://github.com/Kucze3205/ConnectWithLabview/issues/11).
+`provider_pool.py` implements tested selection rules, but adapters, shared availability state, checkpoint continuation
+and watchdog integration remain to be implemented. `environment.yml` checks public sources and actual model responses
+without arming the loop; it does not run iteration work. See [environment readiness](environment.md) for credentials,
+observed limitations and the separate requirement for LabVIEW in the cloud.
+
 A session is one `session.yml` run: `prep` (guard, credential probe, `resolve`) then `session`: two checkouts (the engine
 from the default branch, the agent's own working copy), machine preparation (`.github/loop/prepare.sh`, filled in by the
 setup), `stage`, the agent, the epilogue.

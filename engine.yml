@@ -3,11 +3,11 @@
 # Values set to null have no default on purpose: the setup map decides them per loop, and the engine does nothing
 # for a null parameter.
 
-cli_version: "2.1.284"          # pinned Claude Code CLI; a new model may need a newer pin
+cli_version: "2.1.292"          # matches the locally installed CLI; live call currently reports a weekly limit
 author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
   name: ""
   email: ""
-owner: ""                        # GitHub login owner requests are assigned to; empty = the repository owner
+owner: "Kucze3205"               # GitHub login owner requests are assigned to
 
 # --- the change gate -------------------------------------------------------------------------------------------
 # Nothing enters the default branch without a verdict "not worse than what is accepted".
