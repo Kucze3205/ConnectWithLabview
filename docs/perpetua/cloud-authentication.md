@@ -11,7 +11,13 @@ not implemented yet. The product goal is unchanged.
 [Environment readiness](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39073653443)
 ran on hosted Ubuntu with the pinned CLIs in `cloud-providers.json`.
 The uploaded summaries report Claude subscription exhaustion and actual expected
-answers from Codex and Copilot. These observations establish access at the time
+answers from Codex and Copilot. A [later hosted check](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39074979503)
+also passed the mount/PID boundary checks, Codex's access-only credential format
+and Copilot's short-lived job token. Claude still reported subscription exhaustion.
+The engine suite passed 282 tests, with 11 skips (template-only checks and the
+opt-in live Claude tool-network check), in the same
+[cloud run](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39074979503).
+These observations establish access at the time
 of the check, not credential renewal or task execution. The existing Claude
 bootstrap access token expires on 18 October 2026 at 04:53 UTC, according to the
 previous environment investigation; this session has not read its value.
@@ -105,8 +111,8 @@ bundle back. Cancellation, ambiguous renewal or storage failure leaves the marke
 rejects it and requires a fresh dedicated login. This trades automatic recovery
 after an interrupted credential transaction for rejection of stale refresh
 tokens. It does not preserve a lost rotated bundle magically. The credentials
-directory is outside the workspace, has private permissions, is never uploaded,
-and is removed in the final cleanup step. Writer errors publish only fixed
+directory is outside the workspace, has private permissions and is never uploaded;
+the auth file is removed in the final cleanup step. Writer errors publish only fixed
 summaries. The model process receives neither the App key nor its writer token.
 `probe_isolation.py` additionally runs each model CLI in a mount/PID namespace
 containing system runtimes and that probe's scratch directory. Other runner
