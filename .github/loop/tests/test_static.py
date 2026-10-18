@@ -103,7 +103,7 @@ class WorkflowTest(unittest.TestCase):
             self.assertIn("jobs", doc, f)
             self.assertTrue("on" in doc or True in doc, f)                   # PyYAML reads `on:` as True
             self.assertIn("permissions", doc, f)
-            if f not in ("watchdog.yml", "environment.yml", "labview-runtime.yml"):
+            if f not in ("watchdog.yml", "environment.yml", "labview-runtime.yml", "evaluator-readiness.yml"):
                 self.assertIn("vars.AUTOPILOT == 'on'", text, f)               # the first condition of every loop workflow
         if not IN_LOOP_REPO:
             self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "owner-request.yml"})
@@ -121,6 +121,14 @@ class WorkflowTest(unittest.TestCase):
                             break
                         block.append(nxt)
                     self.assertIn("persist-credentials: false", "\n".join(block), f)
+
+    def test_evaluator_readiness_is_read_only_and_does_not_start_the_loop(self):
+        for f, text, doc in self.workflows():
+            if f == "evaluator-readiness.yml":
+                self.assertEqual(doc["permissions"], {"contents": "read"})
+                self.assertNotIn("secrets.", text)
+                self.assertNotIn("loop.py", "\n".join(
+                    str(step.get("run", "")) for job in doc["jobs"].values() for step in job["steps"]))
 
     def test_every_engine_command_a_workflow_runs_exists(self):
         with open(os.path.join(ENGINE, ".github", "loop", "loop.py"), encoding="utf-8") as fh:
