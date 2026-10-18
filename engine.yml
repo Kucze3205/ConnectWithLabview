@@ -63,9 +63,9 @@ policymaker_session_ceilings:          # effort/time/turn caps apply to every pr
 
 # --- parameters of the setup (null = off) ------------------------------------------------------------------------
 params:
-  no_progress_iterations: null   # open a notice after this many iterations without an improving accepted change
-  quiet_minutes: null            # no iteration closed this long: roll back policy/ and start over
-  owner_wait_counts: null        # does time spent waiting for the owner count toward quiet_minutes
+  no_progress_iterations: 10     # notify the owner; independent work continues
+  quiet_minutes: 1440            # 24 hours without closing: roll back policy/ and retry
+  owner_wait_counts: false       # subtract cumulative blocking owner waits, including completed waits
   stream_retention_iterations: null   # keep raw session streams for this many iterations (null: GitHub's default)
 cadence:
   min_interval_minutes: null     # null: iteration after iteration

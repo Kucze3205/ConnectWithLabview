@@ -34,6 +34,10 @@ for unavailable, expired and failed inputs before drawing conclusions.
 Tune your model, effort, turns and timeout in `policy/params.yml` `policymaker_session`
 within the owner's `engine.yml` `policymaker_session_ceilings`. Engine permissions,
 tools and safeguards remain owner configuration.
+Read `docs/perpetua/operating-parameters.md` when tuning limits or responding to
+stalled work. Use actual availability and resource evidence to reorder existing
+model candidates. Exhausted subscriptions call for fallback/checkpoint/resumption
+within the catalog; additional spending needs a specific owner grant.
 
 Question requirements, delete unnecessary machinery, simplify, then improve speed.
 When progress needs a missing tool, access, secret or configuration, submit a `capability`

@@ -1064,6 +1064,12 @@ def handle_stall():
     the next iteration's Policymaker sees the notice."""
     cur = it.open_iteration()
     reverted = it.revert_policy("the iteration did not close within the quiet time")
+    if not reverted:
+        it.open_request("notice", "Iteration %s stalled" % it.tag(it.iteration_number(cur)),
+                        "The iteration exceeded the configured quiet time. No policy rollback was applied.",
+                        "No iteration closed within the allowed active time.",
+                        "Nothing is blocked. The failed iteration is retried with a new iteration.",
+                        ref="stall-%s" % cur["number"], iteration=it.iteration_number(cur))
     it.fail_iteration(it.iteration_number(cur), "stalled%s" % ("; policy/ rolled back" if reverted else ""))
 
 

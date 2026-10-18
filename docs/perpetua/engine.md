@@ -238,6 +238,15 @@ A plain script (`watchdog.yml`, every 30 minutes and on demand), never an agent:
 - `params.quiet_minutes` (the setup's): an iteration that does not close in time fails, `policy/` is rolled back to the
   state in which the last iteration closed (at the start: the `setup-baseline` tag), and a `notice` is opened for the owner.
   Time spent waiting for the owner counts only when `params.owner_wait_counts` is true.
+  Excluded waits come from frozen blocking consent/merge requests for the active iteration;
+  their intervals are combined so simultaneous waits count once, and completed waits remain
+  excluded after a restart. Optional capability requests and unrelated issue labels do not pause this clock.
+  The policy iteration ceiling also excludes these waits. Provider quota parking is not an owner wait.
+
+This loop's owner-accepted starting thresholds, resource limits and preparation order are
+documented in [operating parameters](operating-parameters.md). The no-progress notice
+informs the owner without stopping independent work; it measures accepted improvements,
+separately from the quiet clock's lack of a closed iteration.
 
 ## The iteration record
 

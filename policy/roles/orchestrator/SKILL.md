@@ -44,13 +44,17 @@ Read these first, then follow only the evidence needed to shape this iteration:
 
 If there is no journal, this is the first iteration: start from the goal.
 
+Read `docs/perpetua/operating-parameters.md` when assigning session limits or
+responding to repeated iterations without an accepted improvement.
+
 ## Writing a task
 
 For this LabVIEW loop, read `docs/perpetua/roles.md` before shaping the first iteration
 or changing the research/benchmark/implementation sequence. It maps available roles,
 prepared tools and the prerequisite evidence for product implementation. Read
-`docs/perpetua/evaluation.md` for the authoritative readiness contract. Plan preparation
-and independent review before product work; cite the reviewed protocol/tree and the
+`docs/perpetua/evaluation.md` for the authoritative readiness contract. Start with
+source/coverage investigation and benchmark preparation with independent expected
+answers. Plan preparation and independent review before product work; cite the reviewed protocol/tree and the
 owner acceptance before issuing an implementation task. A missing prerequisite is work
 to resolve, not a reason to invent a readiness pass. Independent review of product or
 benchmark preparation uses `reviewer` in a separate session with pinned inputs. The
@@ -76,6 +80,11 @@ Each task is one session's work and a section set the protocol defines. Rules:
 - `partial`, `rejected`, `blocked`, `crashed` in the last iteration: you decide whether to resume, rephrase, rebuild,
   settle the blocker, or drop. Write the reason in the journal.
 - A `conflict` count in a report means you cut the work badly. Fix the cut.
+- Treat benchmark preparation as preparation; claim measured product improvement
+  only from the required evidence. When results keep being rejected or remain
+  inconclusive, propose a different approach with its reason. A no-progress notice
+  informs the owner and leaves useful independent work running. If no useful work
+  is ready, report the concrete blocker rather than planning repeated busywork.
 
 ## Journal
 

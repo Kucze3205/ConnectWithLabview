@@ -102,6 +102,22 @@ def open_request(kind, title, what, why, unblocks, ref=None, frozen=None, blocks
         c.ensure_label(l, "FBCA04" if l.startswith(REQ) else "C5DEF5")
     n = c.create_issue(title, body, labels=labels, assignees=owner)
     if proposal:
+        # Freeze timing with the trusted request, not mutable issue labels. Only
+        # decisions that hold work in this iteration pause its active clock.
+        targets = list(blocks)
+        if kind == "merge-acceptance" and ref and ref.startswith("task-"):
+            targets.append(int(ref[5:]))
+        cur = open_iteration()
+        if cur and kind in ("consent", "merge-acceptance"):
+            k = iteration_number(cur)
+            tasks = [c.issue(t) for t in targets]
+            targets = [t["number"] for t in tasks if t["state"] == "open"
+                       and c.iteration_of(c.label_names(t)) == k
+                       and c.roles_of(c.label_names(t))
+                       and c.roles_of(c.label_names(t)) != ["policymaker"]]
+            if targets:
+                proposal["iteration_wait"] = {"iteration": k, "started_at": c.issue(n)["created_at"],
+                                              "tasks": targets}
         requests.freeze(n, proposal, body)
     for t in blocks:
         c.add_blocker(t, n)
@@ -895,18 +911,56 @@ def revert_policy(why):
     return True
 
 
-def waiting_on_owner():
-    open_tasks = [x for x in c.list_issues() if "awaiting:owner" in c.label_names(x)]
-    return bool(open_tasks)
+def owner_wait_intervals(cur):
+    """Union of durable, trusted blocking-request intervals for this iteration.
+
+    Reconstruct from frozen records after every restart. Optional requests and
+    unrelated awaiting labels cannot stop this clock. Overlapping waits count once.
+    """
+    now = c.now()
+    start = c.parse_time(cur["created_at"])
+    intervals = []
+    for path in glob.glob(".github/loop/request-state/*.json"):
+        with open(path, encoding="utf-8") as fh:
+            state = json.load(fh)
+        wait = state.get("iteration_wait")
+        if not wait or wait["iteration"] != iteration_number(cur):
+            continue
+        end = now
+        if state["status"] in ("approved", "declined", "invalid", "conflict"):
+            # The trusted decision is immutable even if an issue is later
+            # reopened. Waiting ends when that decision is applied.
+            end = c.parse_time(state["decided_at"])
+        # A cancelled task no longer requires this decision.
+        tasks = [c.issue(t) for t in wait["tasks"]]
+        if all(t["state"] == "closed" for t in tasks):
+            end = min(end, max(c.parse_time(t["closed_at"]) for t in tasks))
+        begin, end = max(start, c.parse_time(wait["started_at"])), min(now, end)
+        if end > begin:
+            intervals.append((begin, end))
+    merged = []
+    for begin, end in sorted(intervals):
+        if merged and begin <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(end, merged[-1][1]))
+        else:
+            merged.append((begin, end))
+    return merged
+
+
+def iteration_elapsed(cur, count_owner_wait=False):
+    elapsed = (c.now() - c.parse_time(cur["created_at"])).total_seconds()
+    if not count_owner_wait:
+        elapsed -= sum((end - begin).total_seconds() for begin, end in owner_wait_intervals(cur))
+    return elapsed
 
 
 def overdue():
     """The open iteration has run longer than the Policymaker's ceiling for an iteration (waiting for the owner excepted)."""
     m = c.params()["ceilings"].get("iteration_minutes")
     cur = open_iteration()
-    if not (m and cur) or waiting_on_owner():
+    if not (m and cur):
         return False
-    return (c.now() - c.parse_time(cur["created_at"])).total_seconds() > m * 60
+    return iteration_elapsed(cur) > m * 60
 
 
 def stalled():
@@ -916,6 +970,4 @@ def stalled():
     cur = open_iteration()
     if not q or not cur:
         return False
-    if waiting_on_owner() and not c.cfg()["params"].get("owner_wait_counts"):
-        return False
-    return (c.now() - c.parse_time(cur["created_at"])).total_seconds() > q * 60
+    return iteration_elapsed(cur, c.cfg()["params"].get("owner_wait_counts")) > q * 60

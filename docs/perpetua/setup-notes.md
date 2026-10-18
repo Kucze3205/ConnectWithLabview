@@ -28,6 +28,14 @@ Every mode still requires a precise question when a necessary owner decision rem
 
 ## Map rules
 
+**Starting parameters (topic G, 18 October 2026):** The owner accepted a 24-hour
+clock without a closed iteration, excluding cumulative blocking owner waits,
+with policy rollback and retry; ten consecutive iterations without accepted
+improvement produce a notice and independent work continues. Existing
+subscription-only spending limits remain. See
+[operating-parameters.md](operating-parameters.md) for session ceilings,
+model availability, Policymaker triggers and the benchmark-before-product order.
+
 **Accepted limits (topic F, 18 October 2026):** See [accepted-limits.md](accepted-limits.md).
 The owner accepted technical autonomy within the existing tools, offline roles,
 controlled source preparation and trusted native LabVIEW jobs. Private material,

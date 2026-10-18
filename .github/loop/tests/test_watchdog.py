@@ -130,6 +130,19 @@ class JamTest(WatchCase):
 class StallTest(WatchCase):
     YML = SCRIPT_GATE + "params:\n  quiet_minutes: 30\n"
 
+    def owner_request(self, kind="consent", task=None):
+        self.hub.base = c.now()
+        self.hub.tick = 0
+        task = task or self.shaper(0)
+        return it.open_request(kind, "Decision", "what", "why", "unblocks",
+                               iteration=0, blocks=[task] if kind == "consent" else [],
+                               ref="task-%s" % task if kind == "merge-acceptance" else None)
+
+    def decide(self, n):
+        self.hub.answer(n, True)
+        self.hub.issues[n]["closed_at"] = c.iso()
+        it.requests.settle(n, c.issue(n))
+
     def test_an_iteration_that_does_not_close_fails_and_policy_goes_back(self):
         self.run_iteration_zero()                                  # iteration 0 closed; its record marks the good state
         self.w.push_main({"policy/params.yml": "criterion: broken\n"}, "what a Policymaker session merged")
@@ -151,11 +164,60 @@ class StallTest(WatchCase):
         self.assertFalse(it.stalled())
 
     def test_waiting_for_the_owner_does_not_count_unless_the_setup_says_so(self):
+        self.w.push_main({"policy/params.yml": "ceilings:\n  iteration_minutes: 30\n"}, "iteration limit")
+        c.sync_main()
         it.start_iteration()
-        n = self.hub.create_issue("T", "b", labels=["role:worker", "loop:iteration 0", "awaiting:owner"])
+        self.later(10)
+        n = self.owner_request()
         self.later(45)
         self.assertFalse(it.stalled())
-        self.hub.close_issue(n)
+        self.decide(n)
+        # Accepted request stays in git; reconstruct historical wait even after
+        # a fresh checkout, without any in-memory timer or open awaiting label.
+        c.sync_main()
+        self.assertFalse(it.stalled())
+        self.assertFalse(it.overdue())
+        self.later(64)
+        self.assertFalse(it.stalled())
+        self.later(66)
+        self.assertTrue(it.stalled())
+        self.assertTrue(it.overdue())
+
+    def test_overlapping_decisions_count_wait_only_once(self):
+        it.start_iteration()
+        self.later(5)
+        a = self.owner_request()
+        self.later(15)
+        b = self.owner_request("merge-acceptance")
+        self.later(25)
+        self.decide(a)
+        self.later(35)
+        self.decide(b)
+        self.later(59)
+        self.assertFalse(it.stalled())  # 59 - union([5,25], [15,35]) = 29
+        self.later(61)
+        self.assertTrue(it.stalled())
+
+    def test_unrelated_labels_and_optional_capabilities_do_not_pause_clock(self):
+        it.start_iteration()
+        self.hub.create_issue("Unrelated", "", labels=["awaiting:owner"])
+        self.hub.create_issue("Old task", "", labels=["role:worker", "loop:iteration 9", "awaiting:owner"])
+        it.open_request("capability", "Optional", "what", "why", "unblocks", iteration=0,
+                        readiness="owner checks access")
+        self.later(45)
+        self.assertTrue(it.stalled())
+
+    def test_cancelled_task_stops_accumulating_wait(self):
+        it.start_iteration()
+        self.later(5)
+        self.owner_request()
+        self.later(15)
+        t = self.shaper(0)
+        self.hub.close_issue(t)
+        self.hub.issues[t]["closed_at"] = c.iso()
+        self.later(39)
+        self.assertFalse(it.stalled())
+        self.later(41)
         self.assertTrue(it.stalled())
 
     def test_the_setup_can_count_the_wait(self):
@@ -163,7 +225,8 @@ class StallTest(WatchCase):
         saved = c.now
         try:
             it.start_iteration()
-            w2.hub.create_issue("T", "b", labels=["role:worker", "loop:iteration 0", "awaiting:owner"])
+            task = w2.hub.role_issues("orchestrator")[0]["number"]
+            it.open_request("consent", "Decision", "what", "why", "unblocks", iteration=0, blocks=[task])
             base = saved()
             c.now = lambda: base + timedelta(minutes=45)
             self.assertTrue(it.stalled())
@@ -178,6 +241,8 @@ class StallTest(WatchCase):
         loop.drive()
         self.assertEqual(json.loads(self.w.origin_file(it.record_path(0)))["status"], "failed")
         self.assertEqual(it.iteration_number(it.open_iteration()), 1)
+        (notice,) = self.hub.by_label("owner-request:notice")
+        self.assertIn("stalled", notice["title"])
 
 
 class CeilingTest(WatchCase):

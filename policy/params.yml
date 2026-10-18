@@ -1,4 +1,7 @@
 # Parameters the Policymaker owns. Defaults of the engine are in the code; this file overrides them.
+# Starting rationale and owner decisions: docs/perpetua/operating-parameters.md.
+# Use existing subscriptions only; routing checks actual availability and falls back
+# within engine.provider_pool. A configured model is not proof of available quota.
 shaper: orchestrator             # the role that decides what an iteration does and writes its task graph: an LLM role,
                                  # or a script role (a deterministic rule: a profile with `agent: false` and a `command`)
 criterion: "shortest wall-clock time to the goal"
@@ -37,7 +40,7 @@ models:                          # label `model:<alias>` on a task -> model id; 
   opus: claude-opus-5-5
 efforts: [low, medium, high]
 ceilings:                        # a task's limits never exceed these; the engine enforces time and turns hard
-  job_minutes: 240
+  job_minutes: 240               # outer cap; starting ordinary role profiles use at most 120 minutes
   iteration_minutes: null
   max_turns: 150
 policymaker_triggers:                 # the Policymaker runs after an iteration closes when one fires; it never blocks an iteration.
