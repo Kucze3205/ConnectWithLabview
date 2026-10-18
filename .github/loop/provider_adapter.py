@@ -28,9 +28,14 @@ def failure(provider, value):
     return Failure(classify_result(provider, json.dumps(value), 1))
 
 
-def checked(provider, result):
+def checked(provider, result, method="request"):
     if not isinstance(result, dict) or "rpc_error" in result:
-        raise failure(provider, result)
+        error = failure(provider, result)
+        error.observation['operation'] = method
+        code = result.get('rpc_error', {}).get('code') if isinstance(result, dict) else None
+        if type(code) is int:
+            error.observation['rpc_code'] = code
+        raise error
     return result
 
 
@@ -55,7 +60,8 @@ def isolated(provider, credential, timeout):
                        "--disable", "code_mode", "--disable", "view_image"]
             framing = "lines"
         elif provider == "copilot":
-            env.update(COPILOT_SDK_AUTH_TOKEN=credential, COPILOT_DISABLE_KEYTAR="1")
+            env.update(COPILOT_SDK_AUTH_TOKEN=credential, COPILOT_GITHUB_TOKEN=credential,
+                       COPILOT_DISABLE_KEYTAR="1")
             command = ["copilot", "--headless", "--no-auto-update", "--stdio", "--no-auto-login",
                        "--auth-token-env", "COPILOT_SDK_AUTH_TOKEN"]
             framing = "headers"
@@ -79,7 +85,7 @@ def isolated(provider, credential, timeout):
             else:
                 # Pinned 1.0.98 owns a local stdio child, not a remote transport.
                 # Newer SDK connect handshakes are unnecessary for this pin.
-                checked(provider, rpc.call("ping", {"message": "loop-broker"}))
+                checked(provider, rpc.call("ping", {"message": "loop-broker"}), 'ping')
             yield root, env, rpc
 
 
@@ -110,7 +116,8 @@ def models(provider, credential, timeout=90):
             params = {"limit": 100, "includeHidden": False} if provider == "codex" else {}
             if cursor:
                 params["cursor"] = cursor
-            result = checked(provider, rpc.call("model/list" if provider == "codex" else "models.list", params))
+            method = "model/list" if provider == "codex" else "models.list"
+            result = checked(provider, rpc.call(method, params), method)
             entries += result.get("data" if provider == "codex" else "models", [])
             following = result.get("nextCursor") if provider == "codex" else None
             if not following:
