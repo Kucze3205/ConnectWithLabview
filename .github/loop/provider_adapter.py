@@ -60,10 +60,10 @@ def isolated(provider, credential, timeout):
                        "--disable", "code_mode", "--disable", "view_image"]
             framing = "lines"
         elif provider == "copilot":
-            env.update(COPILOT_SDK_AUTH_TOKEN=credential, COPILOT_GITHUB_TOKEN=credential,
-                       COPILOT_DISABLE_KEYTAR="1")
-            command = ["copilot", "--headless", "--no-auto-update", "--stdio", "--no-auto-login",
-                       "--auth-token-env", "COPILOT_SDK_AUTH_TOKEN"]
+            # Actions installation tokens use runtime environment discovery;
+            # --auth-token-env is the SDK's user-token path and is incompatible.
+            env.update(COPILOT_GITHUB_TOKEN=credential, COPILOT_DISABLE_KEYTAR="1")
+            command = ["copilot", "--headless", "--no-auto-update", "--stdio", "--no-auto-login"]
             framing = "headers"
         else:
             raise ValueError("unsupported model provider")
