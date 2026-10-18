@@ -146,3 +146,17 @@ The bounds the owner has accepted for what roles and their profiles may do.
 The policymaker widens roles within them on its own; beyond them, work waits for an
 owner request or for the owner to move the limits.
 _Avoid_: permissions, allowlist
+
+## LabVIEW reading
+
+**Reading fidelity**:
+The agreement between the tool's representation of a LabVIEW artifact and independently established facts about
+its elements, relationships and meaning.
+
+**Grounded answer**:
+An agent's answer supported by a verifiable location in the original LabVIEW artifact, rather than only by a claim
+in the tool's export. Its correctness is assessed separately from reading fidelity.
+
+**Benchmark readiness**:
+The independently checked availability of a repeatable method with trustworthy expected answers, evaluation
+separation, coverage accounting and baseline comparisons. It is not evidence that the tool itself works.

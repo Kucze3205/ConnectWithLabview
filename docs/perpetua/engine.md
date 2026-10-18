@@ -159,6 +159,12 @@ accepted change.
 `result: pass`; until then the old evaluator is the one in force (it lives on the default branch). A failed check goes
 back as a rejected task, visible to the Policymaker.
 
+This loop starts with an owner change gate and an evidence-integrity `check`, not a LabVIEW quality score.
+See [starting evaluation](evaluation.md) before preparing or reviewing benchmark work. The verifier's skill,
+shared role prompt and protocol are protected; `merge_branch` also refuses any change/removal of the
+configured verifier's entry in `policy/profiles.yml`. Other profiles remain policy-controlled. Only the owner
+may change that reviewer contract; evaluator ownership and pinned independent verification remain in force.
+
 ## The goal gate and the end
 
 `goal/goal.md` (the accepted goal text) and `goal/gate.yml` (`command`, `owner_confirms`) exist only when the owner has

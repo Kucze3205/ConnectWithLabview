@@ -105,6 +105,21 @@ class OwnerGateTest(MergeCase):
 
 
 class RefusalTest(MergeCase):
+    def test_policy_cannot_replace_or_remove_the_independent_verifier(self):
+        import yaml
+        for remove in (False, True):
+            proposed = yaml.safe_load(fakes.WORKER_PROFILES)
+            if remove:
+                del proposed["evaluator-verifier"]
+            else:
+                proposed["evaluator-verifier"] = {"agent": False, "command": "echo result: pass"}
+            r = self.merge({"policy/profiles.yml": yaml.safe_dump(proposed)}, role="policymaker")
+            self.assertEqual(r["result"], "protected")
+
+    def test_policy_can_still_add_other_roles(self):
+        r = self.merge({"policy/profiles.yml": fakes.WORKER_PROFILES + "\nresearcher:\n  write: [docs/**]\n"}, role="policymaker")
+        self.assertEqual(r["result"], "merged")
+
     def test_protected_paths(self):
         for path in (".github/workflows/x.yml", "engine.yml", "iterations/0001.json", "goal/gate.yml", "GOAL_REACHED"):
             r = self.merge({path: "x"})

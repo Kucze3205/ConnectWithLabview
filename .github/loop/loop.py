@@ -383,6 +383,15 @@ def merge_branch(n, role, i, override=None, verified=False, checked_commit=None,
             big = [f for f in changed if os.path.isfile(os.path.join(cand, f)) and os.path.getsize(os.path.join(cand, f)) > cfg["large_file_bytes"]]
             if big:
                 return dict(res, result="large", detail=", ".join(big))
+            if "policy/profiles.yml" in changed:
+                import yaml
+                try:
+                    proposed = yaml.safe_load(c.safe_read(cand, "policy/profiles.yml") or "")
+                    reviewer = cfg["verifier_role"]
+                    if not isinstance(proposed, dict) or proposed.get(reviewer) != c.profiles().get(reviewer):
+                        return dict(res, result="protected", detail="The evaluator verifier profile is owner-controlled.")
+                except (ValueError, TypeError, yaml.YAMLError):
+                    return dict(res, result="invalid-policy", detail="Role profiles are not valid YAML.")
             if cfg.get("provider_pool") and "policy/params.yml" in changed:
                 import provider_pool
                 import yaml

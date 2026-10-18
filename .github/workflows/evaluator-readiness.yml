@@ -1,0 +1,40 @@
+name: Evaluator readiness
+
+on:
+  push:
+    branches: [perpetua/setup]
+    paths:
+      - 'policy/evaluator/**'
+      - 'policy/roles/evaluator-verifier/**'
+      - 'engine.yml'
+      - '.github/loop/loop.py'
+      - '.github/loop/tests/test_merge.py'
+      - '.github/workflows/evaluator-readiness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: bash .github/loop/sandbox.sh
+      - name: Engine contracts
+        env:
+          LOOP_BROKER_INTEGRATION: '1'
+        run: python3 -m unittest discover -s .github/loop/tests -v
+      - name: Evidence integrity and false positives (not a LabVIEW benchmark)
+        run: python3 -m unittest discover -s policy/evaluator -p 'test_*.py' -v
+      - name: Explicit unmeasured starting state
+        run: |
+          python3 policy/evaluator/evaluate.py --check
+          python3 policy/evaluator/evaluate.py --baseline . --candidate .
