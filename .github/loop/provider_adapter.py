@@ -131,7 +131,13 @@ def models(provider, credential, timeout=90):
             if isinstance(identifier, str) and identifier:
                 catalog.append({"id": identifier, "default": entry.get("isDefault") is True})
         if not catalog:
-            raise failure(provider, {"message": "empty model catalog"})
+            # Schema metadata is safe to publish; raw values/account errors are
+            # not. A pin can expose a different response wrapper from the SDK.
+            shape = {key: type(value).__name__ for key, value in result.items()
+                     if isinstance(key, str) and key.isidentifier() and len(key) < 80}
+            raise Failure({"status": "unknown", "scope": "provider", "reason": "empty_model_catalog",
+                           "response_shape": shape,
+                           "entry_keys": sorted(entries[0]) if entries and isinstance(entries[0], dict) else []})
         return {"source": "provider_rpc", "models": catalog}
 
 
