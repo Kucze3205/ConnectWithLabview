@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 
@@ -25,7 +26,20 @@ class Failure(RuntimeError):
 
 def failure(provider, value):
     # Classify in memory; never retain raw account/provider diagnostics.
-    return Failure(classify_result(provider, json.dumps(value), 1))
+    text = json.dumps(value)
+    observation = classify_result(provider, text, 1)
+    # Fixed diagnostic vocabulary, never arbitrary provider/account values.
+    vocabulary = {'authentication', 'authorization', 'unauthorized', 'forbidden', 'credentials', 'token', 'tokens',
+                  'github_token', 'github_repository', 'copilot_github_token', 'user', 'installation', 'integration',
+                  'permissions', 'network', 'fetch', 'failed', 'certificate', 'self', 'signed', 'proxy',
+                  'model', 'models', 'default', 'unsupported', 'unavailable', 'configuration', 'undefined',
+                  'internal', 'session', 'billing', 'budget', 'subscription', 'premium', 'requests', 'expired',
+                  '401', '403', '404', '429', '500', '502', '503', 'socket', 'dns', 'timeout', 'connect',
+                  'not', 'found', 'missing', 'invalid', 'access', 'denied', 'null', 'error'}
+    terms = sorted(set(re.findall(r'[a-z0-9_]+', text.lower())) & vocabulary)
+    if terms:
+        observation['diagnostic_terms'] = terms
+    return Failure(observation)
 
 
 def checked(provider, result, method="request"):
@@ -218,7 +232,9 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
                         raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})
                     answer = data.get("content")
                 if kind in {"session.error", "tool.execution_start"}:
-                    raise failure(provider, data)
+                    error = failure(provider, data)
+                    error.observation['operation'] = kind
+                    raise error
                 if kind == "session.idle":
                     break
         return parse_action(provider, answer or "")
