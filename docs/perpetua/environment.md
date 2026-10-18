@@ -126,11 +126,42 @@ activation was changed and no private project, serial number or NI license file
 was uploaded.
 
 NI's Community usage guidance permits personal, non-commercial, non-industrial
-projects and lists free open-source projects as an example. The owner's actual
-project context is still being clarified; a public repository alone does not
-establish eligibility. The public download page does not confirm authenticated
+projects and lists free open-source projects as an example. The owner explicitly
+confirmed a private, non-commercial project on 18 October 2026. The public download page does not confirm authenticated
 access to the 2024 installer. Cloud deployment, account activation and unattended
 operation remain to be checked separately.
+
+## Official NI cloud automation path
+
+[NI's official container project](https://github.com/ni/labview-for-containers)
+and [headless guide](https://github.com/ni/labview-for-containers/blob/2afb30b23bdb144368ee36d5f5ca33c06f800a98/docs/headless-labview.md)
+provide a cloud automation path that does not need desktop activation for supported
+non-development operations. The setup uses the owner's active Community development
+license and confirmed personal use for a bounded analysis/build check. Applying
+the development-license container terms to that combination is an interpretation
+of the published terms, not a specific NI statement about this project. No paid-only
+condition or explicit Community exclusion was found. See the
+[NI agreement](https://www.ni.com/content/dam/web/pdfs/legal/software_license_agreement_en.pdf),
+Addendum F, and [Community guidance](https://www.ni.com/en/support/documentation/supplemental/20/labview-community-edition-usage-details.html).
+
+The container is for automation/analysis/testing; it must not be used to author or
+edit LabVIEW source. No public LabVIEW service or redistributed container image is
+created. The readiness workflow mounts only a disposable fixture directory, has
+no model/account secrets, and disables container networking. It mass-compiles an
+existing public MIT fixture and collects operation logs and package versions.
+Compilation is an environment check, not product development or the benchmark.
+
+Pins and input provenance live in `.github/loop/labview-runtime.json`; the public
+workflow is `.github/workflows/labview-runtime.yml`. The image is NI's LabVIEW
+2026 Q1 Linux release, pinned by digest. Its fixture comes from the pinned pylabview
+LV2014 example and is SHA256-checked before use. Successful processing would prove
+that this runtime can load/compile that input; it would not prove semantic reading,
+all-version compatibility, VI Scripting availability, or native LabVIEW 2024.
+
+The official registry lists no LabVIEW 2024 image as of 18 October 2026. A separate
+2024 installer/activation path remains to be investigated if native 2024 execution
+is needed. Using the newer runtime for this setup check does not select the fallback
+or change the owner's goal of all versions.
 
 NI's published [software license agreement](https://www.ni.com/content/dam/web/pdfs/legal/software_license_agreement_en.pdf)
 and [Community usage guidance](https://www.ni.com/en/support/documentation/supplemental/20/labview-community-edition-usage-details.html)
