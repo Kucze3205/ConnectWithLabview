@@ -649,7 +649,7 @@ def finalize(n, work):
         status, prose, sha = "blocked", "The change touches protected paths: %s. The branch was not published and nothing was merged." % ", ".join(touched), None
         upd["merged"] = "false"
     if sha and status in c.AGENT_STATUSES | {"paused"}:
-        upd["commit"] = f.get("commit", sha)
+        upd["commit"] = sha if routed else f.get("commit", sha)
     if status != "paused":
         upload_artifacts(n, work, k)
     if status == "done" and sha and not script:
