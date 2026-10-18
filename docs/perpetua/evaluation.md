@@ -12,7 +12,12 @@ nie poprawności czytnika, VI Scripting ani obsługi wszystkich wersji. Dostęp 
 Zachowano dostarczoną bramkę `gate.kind: owner`. Każda zmiana pracy czeka na decyzję
 właściciela; nie zaakceptowano progów jakości ani samodzielnego kończenia celu.
 Właściciel ocenia treść dowodów, dopuszcza rozpoczęcie implementacji dopiero po wiarygodnej
-metodzie weryfikacji, akceptuje kryteria sukcesu i ewentualną zmianę zakresu. Zastąpienie
+metodzie weryfikacji, akceptuje progi sukcesu i ewentualną zmianę zakresu. W temacie D
+zaakceptował zasady sukcesu zapisane w `goal/goal.md`: pełny zakres, osobne pomiary
+wierności odczytu i odpowiedzi popartych źródłem oraz niezależny benchmark z porównaniem.
+Progi jakości i wykonywalna bramka celu czekają na wiarygodny benchmark i osobną
+akceptację właściciela; przyszła bramka wymaga `owner_confirms: true`. Plik
+`goal/gate.yml` pozostaje nieobecny, więc pętla nie ogłasza samodzielnie sukcesu. Zastąpienie
 bramki skryptem wymaga jego decyzji oraz niezależnie sprawdzonej metody. Nie jest to
 ograniczenie celu do wersji lub rodzin obecnych w pierwszych przykładach.
 
@@ -87,4 +92,5 @@ Instrukcje weryfikatora, wspólny kontrakt roli i protokół są chronione w `en
 Silnik blokuje też zmianę/usunięcie wpisu `evaluator-verifier` w profilach, zachowując
 możliwość tworzenia pozostałych ról. Zmiana tych zabezpieczeń należy do właściciela.
 Niezależność oznacza osobną sesję i dowody, nie gwarancję bezbłędności modelu; przy
-niepewności weryfikator odmawia `pass`. To nie bramka końcowego sukcesu (temat D).
+niepewności weryfikator odmawia `pass`. To nie bramka końcowego sukcesu; jej odroczenie
+i wymagane potwierdzenie właściciela zapisano w `goal/goal.md` w temacie D.

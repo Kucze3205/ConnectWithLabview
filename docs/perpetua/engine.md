@@ -174,6 +174,12 @@ request; completed writes `GOAL_REACHED`, not planned lets the loop continue and
 without it the engine writes `GOAL_REACHED` itself. **Without an accepted gate the loop never ends by itself**; only
 switching `AUTOPILOT` off stops it.
 
+For this loop the owner accepted the success framework in `goal/goal.md` on 18 October 2026,
+while deferring numeric quality thresholds and an executable gate until a credible benchmark
+and a separate owner decision. `goal/gate.yml` is intentionally absent. A future accepted
+gate must set `owner_confirms: true`; this standing choice does not itself install a command
+or enable automatic completion. See [the evaluation contract](evaluation.md).
+
 ## Owner requests
 
 This is the shipped GitHub issue channel. The owner may replace it during setup by implementing its transport,
