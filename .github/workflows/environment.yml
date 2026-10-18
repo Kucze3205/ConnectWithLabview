@@ -11,6 +11,12 @@ on:
       - '.github/loop/cloud_probe.py'
       - '.github/loop/credential_store.py'
       - '.github/loop/probe_isolation.py'
+      - '.github/loop/provider_adapter.py'
+      - '.github/loop/provider_rpc.py'
+      - '.github/loop/provider_contract.py'
+      - '.github/loop/tool_broker.py'
+      - '.github/loop/runtime_store.py'
+      - '.github/loop/provider_pool.py'
       - '.github/loop/tests/**'
       - '.github/workflows/environment.yml'
   workflow_dispatch:
@@ -30,7 +36,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pyyaml
+      - name: Prepare kernel boundary checks
+        run: bash .github/loop/sandbox.sh
       - name: Test engine contracts without provider credentials
+        env:
+          LOOP_BROKER_INTEGRATION: '1'
         run: python3 -m unittest discover -s .github/loop/tests -v
 
   public-sources:
@@ -111,6 +121,8 @@ jobs:
         if: matrix.provider == 'codex' && vars.CODEX_CREDENTIAL_STORE_READY == 'on'
         run: python3 .github/loop/credential_store.py refresh --home "$RUNNER_TEMP/codex-private-auth"
       - name: Check actual model response
+        id: probe
+        continue-on-error: true
         env:
           PROVIDER: ${{ matrix.provider }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ matrix.provider == 'claude' && secrets.CLAUDE_CODE_OAUTH_TOKEN || '' }}
@@ -125,11 +137,28 @@ jobs:
           else
             python3 .github/loop/cloud_probe.py "$PROVIDER" --output "$RUNNER_TEMP/provider-readiness.json"
           fi
+      - name: Check structured transport and live model catalog
+        env:
+          PROVIDER: ${{ matrix.provider }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ matrix.provider == 'claude' && secrets.CLAUDE_CODE_OAUTH_TOKEN || '' }}
+          COPILOT_GITHUB_TOKEN: ${{ matrix.provider == 'copilot' && github.token || '' }}
+          CODEX_CREDENTIAL_STORE_READY: ${{ vars.CODEX_CREDENTIAL_STORE_READY }}
+        run: |
+          if [ "$PROVIDER" = codex ] && [ "$CODEX_CREDENTIAL_STORE_READY" = on ]; then
+            python3 .github/loop/provider_contract.py codex --codex-home "$RUNNER_TEMP/codex-private-auth" --output "$RUNNER_TEMP/provider-contract.json"
+          else
+            python3 .github/loop/provider_contract.py "$PROVIDER" --output "$RUNNER_TEMP/provider-contract.json"
+          fi
       - name: Persist refreshed credentials even after model failure
         if: always() && steps.lease.outcome == 'success' && steps.refresh.outcome == 'success'
         env:
           CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
         run: python3 .github/loop/credential_store.py persist --home "$RUNNER_TEMP/codex-private-auth"
+      - name: Publish access-only credential for execution (no refresh or store authority)
+        if: always() && steps.lease.outcome == 'success' && steps.refresh.outcome == 'success'
+        env:
+          CREDENTIAL_STORE_TOKEN: ${{ steps.store-token.outputs.token }}
+        run: python3 .github/loop/credential_store.py publish-worker --home "$RUNNER_TEMP/codex-private-auth"
       - name: Remove private credential file
         if: always() && steps.restore.outcome == 'success'
         run: python3 .github/loop/credential_store.py remove --home "$RUNNER_TEMP/codex-private-auth"
@@ -137,4 +166,6 @@ jobs:
         if: always()
         with:
           name: provider-${{ matrix.provider }}-readiness
-          path: ${{ runner.temp }}/provider-readiness.json
+          path: |
+            ${{ runner.temp }}/provider-readiness.json
+            ${{ runner.temp }}/provider-contract.json

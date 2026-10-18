@@ -122,6 +122,18 @@ class CredentialStoreTest(unittest.TestCase):
         self.assertEqual(original["tokens"]["refresh_token"], "fake-refresh")
         self.assertEqual(worker["tokens"]["access_token"], original["tokens"]["access_token"])
 
+    def test_execution_store_receives_only_access_tokens(self):
+        store.restore(self.home, SEED)
+        calls = []
+        store.publish_worker(self.home, self.repo, self.token, lambda *args, **kw: calls.append((args, kw)))
+        args, options = calls[0]
+        value = json.loads(args[0])
+        self.assertEqual(value['auth_mode'], 'chatgptAuthTokens')
+        self.assertEqual(value['tokens']['refresh_token'], '')
+        self.assertEqual(options, {'environment': 'provider-claude', 'secret': 'CODEX_WORKER_AUTH_JSON'})
+        with self.assertRaises(ValueError):
+            store.write_secret(SEED, self.repo, self.token, environment='arbitrary')
+
     def test_refresh_uses_account_rpc_without_model_prompt_or_store_authority(self):
         path = store.restore(self.home, SEED)
         server = MagicMock()

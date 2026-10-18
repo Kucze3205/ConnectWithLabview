@@ -191,6 +191,12 @@ class World:
         self.before_finalize = None         # a callable: something happens on origin while the agent works
         self.origin = os.path.join(self.tmp, "origin.git")
         self.loop = os.path.join(self.tmp, "loop")
+        # Git 2.55 may detach maintenance while a fixture is being removed.
+        # No test needs it, or the developer's global git configuration.
+        config = os.path.join(self.tmp, "gitconfig")
+        with open(config, "w", encoding="utf-8") as fh:
+            fh.write("[gc]\n auto = 0\n[maintenance]\n auto = false\n")
+        os.environ["GIT_CONFIG_GLOBAL"] = config
         sh(self.tmp, "git", "init", "-q", "--bare", "-b", "main", self.origin)
         # hermetic: the engine's code plus a small policy fixture, never whatever policy/ holds in the repository we run in
         shutil.copytree(os.path.join(ENGINE, ".github"), os.path.join(self.loop, ".github"),

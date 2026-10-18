@@ -7,7 +7,9 @@ from datetime import datetime, timedelta, timezone
 import copy
 
 
-STATUSES = {"available", "quota", "auth_failure", "unknown"}
+TRANSIENT = {"quota", "unknown", "throttled", "network_failure", "service_failure", "credential_expired"}
+PERMANENT = {"auth_failure", "entitlement_failure"}
+STATUSES = {"available"} | TRANSIENT | PERMANENT
 
 
 def _time(value, name="now"):
@@ -75,7 +77,7 @@ def _record(owner, record):
         retry = _time(retry, "retry_after")
         if retry <= observed:
             raise ValueError("retry_after must follow observed_at")
-    if record["status"] in {"available", "auth_failure"}:
+    if record["status"] in {"available"} | PERMANENT:
         if retry is not None:
             raise ValueError("available/auth_failure cannot have retry_after")
         return None
@@ -135,9 +137,9 @@ def select_candidate(owner, policy, state, task, now):
                     probe_scope = probe_scope or scope
                 continue
             status = record["status"]
-            if status == "auth_failure":
+            if status in PERMANENT:
                 blocked.append(scope)
-            elif status in {"quota", "unknown"}:
+            elif status in TRANSIENT:
                 retry = _record(owner, record)
                 if retry > now:
                     waits.append(retry)
@@ -178,14 +180,16 @@ def record_outcome(owner, state, provider, model, status, now, retry_after=None,
     target = providers if scope == "provider" else models.setdefault(provider, {})
     key = provider if scope == "provider" else model
     previous = target.get(key, {})
-    attempts = previous.get("attempts", 0) + 1 if previous.get("status") == status and status in {"quota", "unknown"} else 1
+    if previous and _time(previous["observed_at"]) > now:
+        return result  # a late writer must not replace a newer observation
+    attempts = previous.get("attempts", 0) + 1 if previous.get("status") == status and status in TRANSIENT else 1
     record = {"status": status, "observed_at": _iso(now), "attempts": attempts}
     if retry_after is not None:
         retry = _time(retry_after, "retry_after")
-        if status not in {"quota", "unknown"} or retry <= now:
+        if status not in TRANSIENT or retry <= now:
             raise ValueError("retry_after requires quota/unknown and a future timestamp")
         record["retry_after"] = _iso(retry)
-    elif status in {"quota", "unknown"}:
+    elif status in TRANSIENT:
         record["retry_after"] = _iso(now + timedelta(seconds=_delay(owner, attempts)))
     target[key] = record
     return result

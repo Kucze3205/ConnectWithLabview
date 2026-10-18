@@ -151,13 +151,15 @@ def refresh(directory, timeout=90):
         raise RuntimeError("credential renewal was not observed")
 
 
-def write_secret(text, repository, token, run=subprocess.run):
+def write_secret(text, repository, token, run=subprocess.run, environment=ENVIRONMENT, secret=SECRET):
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository or "") or not token:
         raise ValueError("repository and scoped secret-store token required")
     env = {k: os.environ[k] for k in ("PATH", "HOME", "SYSTEMROOT", "SSL_CERT_FILE", "SSL_CERT_DIR") if k in os.environ}
     env.update(GH_TOKEN=token, GH_PROMPT_DISABLED="1")
     # No credential in argv, shell interpolation, stdout, logs or Actions outputs.
-    result = run(["gh", "secret", "set", SECRET, "--env", ENVIRONMENT, "--repo", repository],
+    if (environment, secret) not in {(ENVIRONMENT, SECRET), ("provider-claude", "CODEX_WORKER_AUTH_JSON")}:
+        raise ValueError("credential destination is not an engine store")
+    result = run(["gh", "secret", "set", secret, "--env", environment, "--repo", repository],
                  input=text, env=env, text=True, capture_output=True, check=False, timeout=60)
     if result.returncode:
         raise RuntimeError("secret-store write failed")
@@ -177,9 +179,15 @@ def persist(directory, repository, token, writer=write_secret):
     writer(text, repository, token)
 
 
+def publish_worker(directory, repository, token, writer=write_secret):
+    value = bundle(auth_file(directory).read_text(encoding="utf-8"))
+    writer(json.dumps(worker_bundle(value)), repository, token,
+           environment="provider-claude", secret="CODEX_WORKER_AUTH_JSON")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["check", "restore", "lease", "refresh", "persist", "remove"])
+    parser.add_argument("command", choices=["check", "restore", "lease", "refresh", "persist", "publish-worker", "remove"])
     parser.add_argument("--home", required=True)
     args = parser.parse_args()
     try:
@@ -194,6 +202,8 @@ def main():
             refresh(args.home)
         elif args.command == "persist":
             persist(args.home, os.environ.get("GITHUB_REPOSITORY"), os.environ.get("CREDENTIAL_STORE_TOKEN"))
+        elif args.command == "publish-worker":
+            publish_worker(args.home, os.environ.get("GITHUB_REPOSITORY"), os.environ.get("CREDENTIAL_STORE_TOKEN"))
         else:
             home = home_path(args.home)
             # Never recurse over a computed path or follow a credential symlink.
