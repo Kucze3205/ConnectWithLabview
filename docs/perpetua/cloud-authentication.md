@@ -159,13 +159,29 @@ executed the actual role runtime: Claude hit its real limit, policy selected
 Codex, six accepted role operations completed the file task, source was pushed
 to `task/900039114566066`, and a deleted report was restored from a remote
 checkpoint release asset. This was setup verification, without merging to main
-or arming the loop. Follow-up runs exercise interruption and a new Copilot runner.
+or arming the loop.
+
+[Run 39136473067](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39136473067)
+passed 322 engine tests (11 skipped), credential renewal and both interruption/
+recovery pairs. The ordinary role used Codex `gpt-6.1-sol`; the Policymaker used
+`gpt-6-astra`. Each test stopped after pushing its first source change but before
+saving the continuation, leaving a pending Write intent. Separate fresh runners
+then used Copilot `gpt-5.6-luna` to inspect the accepted file, create/verify the
+report and finish. Both tests confirmed the source commit on the remote task
+branch and restored the report from its release checkpoint. Concurrent updates
+to one state document also survived the real content-SHA race. No pending action
+was blindly replayed. The source refs are `task/900039136473067` and
+`task/900139136473067`; neither enters main.
+
+The complete run remains red solely because Claude's independent readiness call
+reports quota. During an earlier run Codex also reported quota; no capacity was
+invented or spending enabled. A later actual request again proved Codex available.
 
 ## Remaining verification
 
 - Verify a successful structured Claude task after subscription capacity returns.
-- Review final cloud interruption/new-runner and concurrent-state results before
-  resolving the integration issue. Revocation, entitlement, transient errors,
+- Review a successful Claude task before resolving the integration issue.
+  Revocation, entitlement, transient errors,
   all-provider exhaustion and ambiguous command replay are fault-injection tests;
   the owner's live credentials are not deliberately revoked.
 - Cancellation during credential rotation cannot recover a lost rotated bundle.
