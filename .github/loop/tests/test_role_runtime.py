@@ -122,3 +122,15 @@ class RuntimeTest(unittest.TestCase):
         state = runtime.availability()
         self.assertNotIn('copilot', state['providers'])
         self.assertEqual(state['providers']['codex']['status'], 'quota')
+
+    def test_observed_usage_survives_provider_handoff(self):
+        calls = []
+        def request(provider, *args, **kwargs):
+            calls.append(provider)
+            kwargs['metadata']['usage'] = {'in': 10, 'out': 2, 'cache_read': 3, 'cache_write': 0}
+            if provider == 'claude':
+                raise Failure({'status': 'quota', 'scope': 'provider'})
+            return action('Finish', status='done')
+        result = self.runtime(request).run(5, 30)
+        self.assertEqual(result['usage']['claude/allowed']['in'], 10)
+        self.assertEqual(result['usage']['codex/allowed']['out'], 2)

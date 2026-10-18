@@ -80,6 +80,14 @@ class Runtime:
         self.store.update(self.key, lambda _: state)
         return state
 
+    def usage(self, state, candidate, metadata):
+        observed = metadata.get('usage')
+        if not observed:
+            return
+        key = candidate['provider'] + '/' + candidate['model']
+        previous = state.setdefault('usage', {}).setdefault(key, {k: 0 for k in observed})
+        state['usage'][key] = {k: previous.get(k, 0) + value for k, value in observed.items()}
+
     def run(self, max_turns, seconds):
         state = self.store.read(self.key)
         if not state:
@@ -102,6 +110,7 @@ class Runtime:
             choice = pool.select_candidate(self.owner, self.policy, self.availability(), self.task, self.clock())
             if choice["action"] in {"wait", "blocked"}:
                 result = {"status": "paused", "reason": "providers_unavailable", **choice}
+                result['usage'] = state.get('usage', {})
                 # Authentication also waits for new credentials; the watchdog
                 # rechecks with bounded delay without exhausting old park counts.
                 result.setdefault("retry_after", pool._iso(self.clock() + timedelta(
@@ -123,17 +132,20 @@ class Runtime:
                 prompt += ('\nPrepared public sources are read-only under @environment/ in Read/Glob/Grep. '
                            'Commands see them through LABVIEW_ENVIRONMENT=/resources/environment.')
             credential = self.credentials.get(provider, "")
+            metadata = {}
             try:
                 if not credential:
                     raise Failure({"status": "auth_failure", "scope": "provider", "reason": "missing_secret"})
                 action = validate(self.request(provider, candidate["model"], credential, prompt,
-                                               effort=self.effort, timeout=min(180, remaining)))
+                                               effort=self.effort, timeout=min(180, remaining), metadata=metadata))
             except Failure as error:
+                self.usage(state, candidate, metadata)
                 self.observe(candidate, error.observation, observed)
                 continue
             except (OSError, ValueError, TypeError, RuntimeError, subprocess.SubprocessError):
                 self.observe(candidate, {"status": "unknown", "scope": "provider"}, observed)
                 continue
+            self.usage(state, candidate, metadata)
             self.observe(candidate, {"status": "available", "scope": "model"}, observed)
             if choice.get("scope") == "provider":
                 self.observe(candidate, {"status": "available", "scope": "provider"}, observed)
@@ -158,9 +170,9 @@ class Runtime:
                 state["history"].pop(0)
             state = self.save(state, files=True)
             if action["tool"] == "Finish" and "error" not in outcome:
-                result = {"status": outcome["status"], "candidate": candidate, "turns": state["turns"]}
+                result = {"status": outcome["status"], "candidate": candidate, "turns": state["turns"], 'usage': state.get('usage', {})}
                 self.save(dict(state, result=result))
                 return result
-        result = {"status": "partial", "reason": "session_budget", "turns": state["turns"]}
+        result = {"status": "partial", "reason": "session_budget", "turns": state["turns"], 'usage': state.get('usage', {})}
         self.save(dict(state, result=result), files=True)
         return result

@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import time
+from datetime import datetime, timedelta, timezone
 
 from role_runtime import Runtime
 from runtime_checkpoint import Checkpoint
@@ -34,9 +35,13 @@ def main():
                           checkpoint, credentials, (trusted / 'prompt.md').read_text(), options['fingerprint'],
                           effort=os.environ['EFFORT'])
         result = runtime.run(int(os.environ['MAX_TURNS']), int(os.environ['AGENT_TIMEOUT']) * 60)
-    except (OSError, ValueError, KeyError, TypeError, RuntimeError):
-        # Do not echo exceptions from subprocesses or account documents.
-        pass
+    except Exception:
+        # This is the credential-bearing outer boundary. Never echo arbitrary
+        # subprocess exceptions (git argv can contain an encoded auth header).
+        # Preserve pending intent and retry on a fresh runner after interruption.
+        delay = options['owner']['backoff']['initial_seconds']
+        result = {'status': 'paused', 'reason': 'checkpoint_or_execution_interrupted',
+                  'retry_after': (datetime.now(timezone.utc) + timedelta(seconds=delay)).isoformat()}
     finally:
         (output / 'provider-execution-output.json').write_text(json.dumps(result))
         (output / 'agent-exit').write_text('0' if result['status'] != 'crashed' else '1')

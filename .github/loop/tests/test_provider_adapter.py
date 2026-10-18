@@ -1,4 +1,5 @@
 import json
+from contextlib import contextmanager
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -34,6 +35,29 @@ class FakeRPC:
 
 
 class AdapterTest(unittest.TestCase):
+    def test_codex_usage_keeps_latest_total_and_rejects_native_actions(self):
+        rpc = FakeRPC()
+        rpc.call = lambda method, params: {'thread': {'id': 'thread'}} if method == 'thread/start' else {}
+        action = {field: '' for field in FIELDS}
+        action.update(tool='Finish', status='done')
+        rpc.notifications = [
+            {'method': 'thread/tokenUsage/updated', 'params': {'tokenUsage': {'total': {'inputTokens': 3}}}},
+            {'method': 'thread/tokenUsage/updated', 'params': {'tokenUsage': {'total': {
+                'inputTokens': 10, 'outputTokens': 2, 'cachedInputTokens': 4}}}},
+            {'method': 'item/completed', 'params': {'item': {'type': 'agentMessage', 'text': json.dumps(action)}}},
+            {'method': 'turn/completed', 'params': {'turn': {'status': 'completed'}}}]
+        @contextmanager
+        def isolated(*args):
+            yield Path('.'), {}, rpc
+        metadata = {}
+        with patch.object(adapter, 'isolated', isolated):
+            self.assertEqual(adapter.request('codex', 'model', 'access-only', 'task', metadata=metadata), action)
+            self.assertEqual(metadata['usage'], {'in': 10, 'out': 2, 'cache_read': 4, 'cache_write': 0})
+            rpc.notifications = [{'method': 'item/started', 'params': {'item': {'type': 'commandExecution'}}}]
+            with self.assertRaises(adapter.Failure) as error:
+                adapter.request('codex', 'model', 'access-only', 'task')
+            self.assertEqual(error.exception.observation['reason'], 'native_request_denied')
+
     def test_copilot_legacy_handshake_and_catalog_use_explicit_empty_ping(self):
         rpc = FakeRPC()
         with patch.object(adapter, 'RPC', return_value=rpc), patch.object(adapter, 'sandbox', side_effect=lambda c, _: c):

@@ -69,3 +69,11 @@ class RoutedSessionTest(SessionCase):
         result = loop.merge_branch(n, 'policymaker', c.issue(n))
         self.assertEqual(result['result'], 'invalid-policy')
         self.assertEqual(c.head(), before)
+
+    def test_missing_execution_summary_resumes_a_saved_checkpoint(self):
+        n = self.issue()
+        with patch('runtime_store.Store.read', return_value={'pending': {'tool': 'Bash'}}):
+            self.w.session(n, files={'src/accepted.txt': 'accepted'}, report=False, exit_code='124')
+        self.assertEqual(self.hub.report(n)['status'], 'paused')
+        self.assertEqual(self.hub.report(n)['cause'], 'runtime:execution_summary_missing')
+        self.assertEqual(self.hub.issues[n]['state'], 'open')

@@ -70,6 +70,7 @@ def isolated(provider, credential, timeout):
             # tools cannot find an auth file or a token in the process env.
             command = ["codex", "app-server", "--stdio", "-c", 'cli_auth_credentials_store="ephemeral"',
                        "-c", "features.shell_tool=false", "-c", 'web_search="disabled"',
+                       "-c", "tools.update_plan.enabled=false",
                        "--disable", "apps", "--disable", "plugins", "--disable", "multi_agent",
                        "--disable", "code_mode", "--disable", "view_image"]
             framing = "lines"
@@ -164,6 +165,11 @@ def parse_action(provider, text):
         raise Failure({"status": "unknown", "scope": "model", "reason": "invalid_action"}) from None
 
 
+def usage(value, fields):
+    return {target: value.get(source, 0) if type(value.get(source, 0)) is int and value.get(source, 0) >= 0 else 0
+            for target, source in zip(('in', 'out', 'cache_read', 'cache_write'), fields)}
+
+
 def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None):
     metadata = metadata if metadata is not None else {}
     with isolated(provider, credential, timeout) as (root, env, rpc):
@@ -181,6 +187,8 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             if result.returncode or output.get("is_error"):
                 raise failure(provider, output)
             metadata['models'] = list(output.get('modelUsage') or {})
+            metadata['usage'] = usage(output.get('usage') or {},
+                                      ('input_tokens', 'output_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens'))
             structured = output.get("structured_output")
             return validate(structured) if isinstance(structured, dict) else parse_action(provider, output.get("result", ""))
         if provider == "codex":
@@ -216,6 +224,12 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             params = event.get("params") or {}
             method = event.get("method")
             if provider == "codex":
+                if method == 'thread/tokenUsage/updated':
+                    metadata['usage'] = usage((params.get('tokenUsage') or {}).get('total') or {},
+                                              ('inputTokens', 'outputTokens', 'cachedInputTokens', 'cacheWriteInputTokens'))
+                if method == 'item/started' and params.get('item', {}).get('type') not in {
+                    'userMessage', 'agentMessage', 'reasoning', 'contextCompaction'}:
+                    raise Failure({'status': 'unknown', 'scope': 'model', 'reason': 'native_request_denied'})
                 if method == "item/completed":
                     item = params.get("item", {})
                     if item.get("type") == "agentMessage":
@@ -231,6 +245,9 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
                 if kind == 'assistant.usage':
                     if isinstance(data.get('model'), str):
                         metadata['models'] = [data['model']]
+                    observed = usage(data, ('inputTokens', 'outputTokens', 'cacheReadTokens', 'cacheWriteTokens'))
+                    previous = metadata.setdefault('usage', {k: 0 for k in observed})
+                    metadata['usage'] = {k: previous[k] + observed[k] for k in observed}
                 if kind == "assistant.message":
                     if data.get("toolRequests"):
                         raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})

@@ -594,15 +594,37 @@ def finalize(n, work):
                 execution = json.load(fh)
         except (OSError, ValueError):
             execution = {}
+        if not execution:
+            # A killed runner may leave no summary, despite a durable action
+            # intent/commit. Recover that session rather than closing its issue.
+            try:
+                from runtime_store import GitHubBackend, Store
+                checkpoint = Store(GitHubBackend(c.REPO, base=c.default_branch())).read("sessions/%s.json" % n)
+                if checkpoint:
+                    execution = {"status": "paused", "reason": "execution_summary_missing",
+                                 "retry_after": c.iso(c.now() + timedelta(seconds=c.cfg()["provider_pool"]["backoff"]["initial_seconds"]))}
+            except Exception:
+                execution = {"status": "paused", "reason": "checkpoint_store_unavailable",
+                             "retry_after": c.iso(c.now() + timedelta(seconds=c.cfg()["provider_pool"]["backoff"]["initial_seconds"]))}
         status = execution.get("status")
         if status not in c.AGENT_STATUSES | {"paused"}:
             status = "crashed"
         limited = status == "paused"
         reset = c.parse_time(execution["retry_after"]) if execution.get("retry_after") else None
-        upd.update(cause="providers:unavailable" if limited else execution.get("reason"),
+        reason = execution.get("reason")
+        upd.update(cause=("providers:unavailable" if reason == "providers_unavailable" else "runtime:" + str(reason)) if limited else reason,
                    model=(execution.get("candidate") or {}).get("model"), effort=os.environ.get("EFFORT"),
                    turns=execution.get("turns"))
-        prose = "All policy candidates are unavailable; durable checkpoint retained for resume." if limited else ""
+        per = execution.get('usage') or {}
+        if per:
+            upd.update(models=json.dumps(per, separators=(',', ':'), sort_keys=True),
+                       tokens_in=sum(v.get('in', 0) for v in per.values()),
+                       tokens_out=sum(v.get('out', 0) for v in per.values()),
+                       cache_read=sum(v.get('cache_read', 0) for v in per.values()),
+                       cache_write=sum(v.get('cache_write', 0) for v in per.values()))
+        prose = (("All policy candidates are unavailable; durable checkpoint retained for resume."
+                  if reason == "providers_unavailable" else "Trusted execution was interrupted; resume will inspect the durable checkpoint.")
+                 if limited else "")
     else:
         cause, limited, reset = machine_cause(exec_path, exit_code)
         upd["cause"] = cause or None

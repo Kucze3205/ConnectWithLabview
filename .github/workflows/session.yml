@@ -162,7 +162,7 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           CODEX_WORKER_AUTH_JSON: ${{ secrets.CODEX_WORKER_AUTH_JSON }}
           COPILOT_GITHUB_TOKEN: ${{ github.token }}
-        run: python3 "$RUNNER_TEMP/trusted/runtime_entry.py"
+        run: timeout --signal=TERM --kill-after=15s "${AGENT_TIMEOUT}m" python3 "$RUNNER_TEMP/trusted/runtime_entry.py"
       - name: Session
         if: steps.guard.outputs.go == 'true' && needs.prep.outputs.execution != 'routed'
         env:

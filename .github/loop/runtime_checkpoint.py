@@ -37,7 +37,12 @@ class Checkpoint:
         if command[0] == "git":
             command = ["git", "-c", "core.hooksPath=/dev/null", "-c", "core.fsmonitor=false",
                        "-c", "maintenance.auto=false", "-c", "gc.auto=0"] + (c.auth_args() if remote else []) + command[1:]
-        result = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True, timeout=180)
+        try:
+            result = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True, timeout=180)
+        except subprocess.SubprocessError:
+            # TimeoutExpired includes argv, which may contain git's encoded
+            # authorization header. Never propagate that exception to a log.
+            raise RuntimeError('durable checkpoint process failed') from None
         if check and result.returncode:
             raise RuntimeError("durable checkpoint operation failed")
         return result

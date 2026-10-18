@@ -4,6 +4,8 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
+import traceback
 import zipfile
 
 import fakes
@@ -76,3 +78,13 @@ class CheckpointTest(unittest.TestCase):
         with self.assertRaises(PermissionError):
             self.checkpoint.restore({'outputs_asset': asset, 'outputs_digest': 'a' * 64})
         self.assertFalse(Path(self.world.tmp, 'outside').exists())
+
+    def test_timeout_cannot_echo_git_authorization_argv(self):
+        error = subprocess.TimeoutExpired(['git', '-c', 'authorization=synthetic-encoded-authority'], 1)
+        with patch('runtime_checkpoint.subprocess.run', side_effect=error):
+            try:
+                self.checkpoint.git('push', remote=True)
+            except RuntimeError:
+                self.assertNotIn('synthetic-encoded-authority', traceback.format_exc())
+            else:
+                self.fail('timeout was not rejected')
