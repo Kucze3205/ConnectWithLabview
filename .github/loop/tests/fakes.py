@@ -138,6 +138,7 @@ class FakeHub:
     def answer(self, n, yes):
         """The owner closes an issue: completed = yes, not planned = no."""
         self.close_issue(n, "completed" if yes else "not planned")
+        self.issues[int(n)]["closed_by"] = {"login": common.owner_login()[0]}
 
     def finish_runs(self):
         for r in self.runs:

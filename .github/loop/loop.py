@@ -39,15 +39,19 @@ JOB_MAX_MIN = 355               # GitHub kills a job at 360 min; the epilogue mu
 
 # ---------------------------------------------------------------- start of a session
 
-def consent_status(profile, labels):
+def consent_status(profile, labels, task=None):
     """(granted, why-not). A profile beyond the accepted limits runs only for the one session its consent request allows."""
     exceeded = it.limits_exceeded(profile)
-    if not exceeded:
-        return False, None
     req = c.label_value(labels, "consent:")
+    if not exceeded and not req:
+        return False, None
     if req and req.isdigit():
         r = c.issue(int(req))
-        if r["state"] == "closed" and r.get("state_reason") == "completed":
+        snapshot = it.requests.read(int(req))
+        if (it.requests.valid_decision(int(req), r) and r.get("state_reason") == "completed"
+                and snapshot.get("kind") == "consent"
+                and snapshot.get("status") in ("pending", "approved")
+                and snapshot.get("scope") == {"task": task, "profile": profile}):
             return True, None
     return False, "beyond the accepted limits (%s) and no granted consent" % ", ".join(exceeded)
 
@@ -112,7 +116,7 @@ def resolve(n):
     why = security.profile_error(p, c.cfg()["cli_version"]) if p else "no profile for role `%s`" % role
     granted = False
     if not why and role != "policymaker":
-        granted, why = consent_status(p, labels)
+        granted, why = consent_status(p, labels, n)
     if not why and role != "policymaker" and p.get("agent") is not False and not os.path.exists("policy/roles/%s/SKILL.md" % role):
         why = "no skill for role `%s`" % role
     if not why and p.get("agent") is False and not p.get("command"):
@@ -149,7 +153,7 @@ def stage(n, work, trusted):
     if error:
         raise SystemExit("invalid session profile: " + error)
     if role != "policymaker":
-        _, error = consent_status(p, labels)
+        _, error = consent_status(p, labels, n)
         if error:
             raise SystemExit("session profile changed or consent is no longer valid: " + error)
     # Real workflow sessions carry KIND. Test/finalize callers may have unrelated MODEL env values.
@@ -918,7 +922,11 @@ def on_request_closed(n):
     kind = c.marker(x["body"], "request-kind")
     # The trusted snapshot controls the type even if someone edits the issue's markers.
     snapshot = it.requests.read(n)
-    if snapshot or kind in it.requests.KINDS:
+    if not it.requests.owner_closed(x):
+        return
+    if snapshot:
+        kind = snapshot["kind"]
+    if (snapshot and kind in it.requests.KINDS) or not snapshot:
         status = it.requests.settle(n, x)
         if status == "waiting":
             return
@@ -935,8 +943,21 @@ def on_request_closed(n):
         it.advance()
         reconcile()
         return
-    yes = x.get("state_reason") == "completed"
-    ref = c.marker(x["body"], "request-ref") or ""
+    status = it.requests.settle(n, x)
+    if status not in ("approved", "declined"):
+        if status != "waiting":
+            for d in c.blocking(n):
+                if d["state"] == "open":
+                    close_out(d["number"], d, "blocked", {"cause": "owner-request-" + status},
+                              "Owner request #%s ended as %s; submit a fresh proposal." % (n, status))
+            c.edit_labels(n, add=[it.HANDLED])
+            it.advance()
+            reconcile()
+        return
+    if status == "approved" and not it.requests.valid_decision(n, x):
+        return
+    yes = status == "approved"
+    ref = snapshot.get("ref") or ""
     if kind in ("goal-gate", "goal-change") and yes:
         text = it.frozen_text(x["body"])
         if text is None:

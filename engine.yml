@@ -34,7 +34,7 @@ gate:
   env_passthrough: []            # names of secrets the gate command may see (e.g. a judge that calls a model)
 
 # --- zones ------------------------------------------------------------------------------------------------------
-protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md"]
+protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "docs/perpetua/accepted-limits.md"]
 direct_paths: ["policy/", "audit/", "journal/"]   # not work: merged without the change gate (role `write` paths still apply)
 notes_paths: ["journal/"]        # merged even when the session did not finish
 evaluator_paths: ["policy/evaluator/"]            # only a role whose profile has `owns_evaluator`; merged only after the verifier
@@ -45,8 +45,11 @@ large_file_bytes: 5000000        # bigger files go to `.session/artifacts/` (rel
 # --- accepted limits ---------------------------------------------------------------------------------------------
 # What a role's profile may have without asking the owner. Beyond it, each session needs a granted consent request.
 limits:
+  internet: false               # online role profiles require per-session owner consent, including read-only roles
   tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
   internet_write: []             # path prefixes a profile with internet may write
+  # Accepted resource/data/spending boundaries: docs/perpetua/accepted-limits.md.
+  # Optional private access requests never block an iteration; schedule only ready work.
 
 # --- the Policymaker's fixed permissions and owner ceilings -------------------------------------------------------
 policymaker:

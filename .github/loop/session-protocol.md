@@ -110,6 +110,14 @@ counter (`generation:<n>`) stops at 3: a generation-3 task does not delegate, it
 
 ### Requests to the owner
 
+Before requesting private material, provider disclosure, new publication categories,
+additional spending or native LabVIEW capabilities, read
+`docs/perpetua/accepted-limits.md`. Prefer granting concrete access during setup.
+For optional private access, submit a `capability` proposal and continue ready work.
+Defer resource-dependent tasks until readiness is confirmed; do not create waiting
+sessions or attach the optional request as an iteration dependency. An open request
+does not pause the loop. Report missing evidence rather than claiming evaluation passed.
+
 You never create issues. To ask the owner for something the loop may not decide alone, write
 `.session/requests.json` and the engine opens the issue:
 

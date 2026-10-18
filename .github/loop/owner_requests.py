@@ -25,6 +25,17 @@ def read(n):
         return None
 
 
+def owner_closed(issue):
+    return (issue.get("closed_by") or {}).get("login", "").casefold() in {
+        o.casefold() for o in c.owner_login()}
+
+
+def valid_decision(n, issue):
+    state = read(n)
+    return bool(state and owner_closed(issue) and issue.get("state") == "closed"
+                and digest(issue.get("body") or "") == state["body_sha"])
+
+
 def config_text():
     with open("engine.yml", encoding="utf-8", newline="") as fh:
         return fh.read()
@@ -39,6 +50,8 @@ def limits_block(text):
     for key in ("tools", "internet_write"):
         if key not in block or not isinstance(block[key], list) or any(not isinstance(x, str) for x in block[key]):
             raise ValueError("limits.%s must be a list of strings" % key)
+    if "internet" in block and not isinstance(block["internet"], bool):
+        raise ValueError("limits.internet must be a boolean")
     # Bound the shape to plain configuration, including extensions such as owner ceilings.
     json.dumps(block, allow_nan=False)
     return block
@@ -114,6 +127,8 @@ def instructions(proposal):
 
 def freeze(n, proposal, body):
     proposal = dict(proposal, issue=n, body_sha=digest(body))
+    proposal.setdefault("proposal_sha", digest(body))
+    proposal.setdefault("base_commit", c.head())
     c.commit_main({path(n): json.dumps(proposal, indent=2) + "\n"}, "freeze owner request #%s" % n,
                   expected={path(n): None})
 
@@ -135,8 +150,7 @@ def settle(n, issue):
     if state["status"] in ("approved", "declined", "invalid", "conflict"):
         return state["status"]
     before = c.file_digest(path(n))
-    closer = (issue.get("closed_by") or {}).get("login", "").casefold()
-    if closer not in {o.casefold() for o in c.owner_login()}:
+    if not owner_closed(issue):
         # GitHub write access alone is not authority to widen the owner's accepted limits.
         return "waiting"
     accepted = issue.get("state_reason") == "completed"
@@ -146,6 +160,8 @@ def settle(n, issue):
         status, detail = "declined", "The owner declined; configuration was not changed."
     elif digest(issue.get("body") or "") != state["body_sha"]:
         status, detail = "invalid", "Not applied: the request changed after it was frozen. Open a new proposal."
+    elif state["kind"] not in KINDS:
+        status, detail = "approved", "The owner accepted the frozen request."
     elif state["kind"] == "limits-change":
         if c.file_digest("engine.yml") != state["base_engine_sha"]:
             status, detail = "conflict", "Not applied: engine.yml changed since the proposal's base. Open a new proposal."

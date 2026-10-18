@@ -28,6 +28,16 @@ Every mode still requires a precise question when a necessary owner decision rem
 
 ## Map rules
 
+**Accepted limits (topic F, 18 October 2026):** See [accepted-limits.md](accepted-limits.md).
+The owner accepted technical autonomy within the existing tools, offline roles,
+controlled source preparation and trusted native LabVIEW jobs. Private material,
+provider disclosure, new publication categories and additional spending require
+specific grants. Prefer granting concrete private access during setup; none has
+yet been identified. Optional capability requests must leave independent work
+and later iterations running; defer unavailable work instead of creating waiting
+sessions. Existing goal, benchmark, verifier, public repository and owner gate
+decisions remain. GitHub requests are frozen and only the owner may decide them.
+
 **Starting roles (topic E, 18 October 2026):** `policy/profiles.yml` adds offline researcher,
 benchmark, implementation and report-only reviewer roles using copied/adapted installed
 skills. Existing orchestrator, audit, evaluator and protected evaluator verifier remain.

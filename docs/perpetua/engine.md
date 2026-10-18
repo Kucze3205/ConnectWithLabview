@@ -186,6 +186,18 @@ or enable automatic completion. See [the evaluation contract](evaluation.md).
 
 ## Owner requests
 
+Setup topic F's accepted resource, private-data, publication and cost boundaries
+are in [accepted limits](accepted-limits.md). `limits.internet: false` requires
+owner consent for an online role even when its write list is empty; it does not
+disable the trusted model transports. All owner requests have a trusted body
+snapshot and verify the closing owner's login. Consent additionally pins the
+task identity and profile. Pre-snapshot requests cannot grant authority; replace
+them with a newly frozen request.
+
+Optional private-access capability proposals create no iteration/task blocker.
+Continue ready work and schedule resource-dependent work after the grant and
+readiness check, in a later iteration. A pending request does not pause the loop.
+
 This is the shipped GitHub issue channel. The owner may replace it during setup by implementing its transport,
 authority checks and wake-ups. Record which frozen-payload, acceptance/refusal and event-recovery guarantees are
 replaced or lost, and update setup topics and arming tools to match. The Policymaker cannot change this channel itself.

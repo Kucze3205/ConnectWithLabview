@@ -157,6 +157,23 @@ class OwnerRequestsTest(unittest.TestCase):
         after = req.replace_limits(original, self.LIMITS)
         self.assertTrue(after.endswith("# keep\npolicy: {max_turns: 2}\n"))
 
+    def test_goal_change_requires_owner_and_original_body_even_if_hash_is_rewritten(self):
+        n = it.open_request("goal-change", "goal", "what", "why", "unblocks", frozen="Original goal")
+        self.answer(n, owner="collaborator")
+        self.assertIsNone(self.w.origin_file("goal/goal.md"))
+        self.h.issues[n]["body"] = self.h.issues[n]["body"].replace("Original goal", "Different goal").replace(
+            it.sha256("Original goal"), it.sha256("Different goal"))
+        self.answer(n)
+        self.assertEqual(req.read(n)["status"], "invalid")
+        self.assertIsNone(self.w.origin_file("goal/goal.md"))
+
+    def test_nonowner_cannot_suppress_goal_confirmation_by_declining(self):
+        n = it.open_request("result-confirmation", "Confirm result", "what", "why", "unblocks", ref="result-tree")
+        self.answer(n, False, owner="collaborator")
+        self.assertFalse(it.confirmation_declined("result-tree"))
+        self.answer(n, False)
+        self.assertTrue(it.confirmation_declined("result-tree"))
+
 
 if __name__ == "__main__":
     unittest.main()

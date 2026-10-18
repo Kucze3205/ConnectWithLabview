@@ -139,6 +139,7 @@ it when they are rolled back before any iteration has closed.
 A question the loop puts to the owner, answerable only by them: a consent, a
 proposed goal or goal gate, a confirmation of a result. The owner answers by
 closing it; a notice only informs.
+An unanswered optional access request leaves independent work running.
 _Avoid_: ticket for the owner, approval
 
 **Accepted limits**:
@@ -160,3 +161,7 @@ in the tool's export. Its correctness is assessed separately from reading fideli
 **Benchmark readiness**:
 The independently checked availability of a repeatable method with trustworthy expected answers, evaluation
 separation, coverage accounting and baseline comparisons. It is not evidence that the tool itself works.
+
+**Product**:
+The tool enabling AI agents to read LabVIEW code, projects and all artifacts like ordinary code.
+Preparing its environment, examples and verification method precedes product implementation.

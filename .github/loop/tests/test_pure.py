@@ -246,6 +246,12 @@ class LimitsTest(unittest.TestCase):
     def test_tool_beyond(self):
         self.assertEqual(len(it.limits_exceeded({"tools": ["Read", "Bash(rm:*)"]})), 1)
 
+    def test_offline_limit_also_covers_read_only_roles(self):
+        from unittest.mock import patch
+        with patch.object(c, "cfg", return_value={"limits": {"internet": False, "tools": ["Read"], "internet_write": []}}):
+            self.assertIn("online role access", it.limits_exceeded({"tools": ["Read"], "internet": True, "write": []}))
+            self.assertEqual(it.limits_exceeded({"tools": ["Read"], "internet": False, "write": []}), [])
+
     def test_internet_together_with_writing_code(self):
         self.assertEqual(len(it.limits_exceeded({"internet": True, "write": ["src/**"]})), 1)
         self.assertEqual(it.limits_exceeded({"internet": False, "write": ["src/**"]}), [])

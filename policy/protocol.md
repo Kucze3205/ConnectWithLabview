@@ -16,6 +16,11 @@ has checked that method and the owner has accepted the pinned protocol and evide
 An evidence index, a green engine test suite or a functioning export does not establish benchmark readiness.
 Keep missing coverage and unmeasured quality explicit in every evaluation report.
 
+Before private-data use, disclosure, publication or new resource spending, read
+`docs/perpetua/accepted-limits.md`. Request optional private access through a
+`capability` proposal while continuing ready work. Plan resource-dependent tasks
+only after readiness; an open access request must not hold an iteration open.
+
 Aim for about 15 lines of report prose: what changed and why, or exactly what failed.
 Use `## Discoveries` for findings outside the task, one sentence and evidence link each.
 For unfinished work include `## What next`: committed SHA, the next step, and what

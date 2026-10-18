@@ -420,6 +420,25 @@ class OwnerGateTest(Flow):
         self.assertEqual(common_launched, c.LAUNCHED)
 
 
+class OptionalAccessTest(Flow):
+    def test_private_access_request_survives_iteration_and_next_work_starts(self):
+        it.start_iteration()
+        n = it.process_proposals(json.dumps([{
+            "kind": "capability", "title": "Optional private LabVIEW corpus",
+            "what": "Grant specified corpus access only after agreeing disclosure scope",
+            "frozen": "Provision the restricted corpus without publishing its contents",
+            "readiness": "Verify authorized role access and denial to product roles"
+        }]), 0, source=self.session_issue("orchestrator"))[0]
+        self.finish(0)
+        self.assertIsNotNone(self.record(0))
+        self.assertEqual(self.hub.issue(n)["state"], "open")
+        self.assertEqual(self.hub.blocking(n), [])
+        self.assertEqual(it.iteration_number(self.open_iteration()), 1)
+        self.play_shaper(task("public-work"), k=1)
+        worker = self.task_issue("public-work")
+        self.assertIn(worker, {int(i["issue"]) for _, i in self.hub.dispatched})
+
+
 class ConsentTest(Flow):
     def setUp(self):
         super().setUp()
@@ -460,6 +479,34 @@ class ConsentTest(Flow):
             loop.resolve(n)
         self.assertIn("beyond the accepted limits", str(e.exception))
         self.assertEqual(self.hub.report(n)["status"], "blocked")
+
+    def test_nonowner_cannot_grant_consent_even_before_handler_runs(self):
+        n = self.start()
+        (req,) = self.hub.by_label("owner-request:consent")
+        self.hub.answer(req["number"], True)
+        self.hub.issues[req["number"]]["closed_by"] = {"login": "collaborator"}
+        loop.on_request_closed(req["number"])
+        self.assertNotIn(it.HANDLED, c.label_names(c.issue(req["number"])))
+        with self.assertRaises(SystemExit):
+            loop.resolve(n)
+
+    def test_consent_cannot_be_reused_for_changed_profile_or_another_task(self):
+        n = self.start()
+        (req,) = self.hub.by_label("owner-request:consent")
+        self.hub.answer(req["number"], True)
+        labels = c.label_names(c.issue(n))
+        profile = c.profiles()["net"]
+        self.assertTrue(loop.consent_status(profile, labels, n)[0])
+        self.assertFalse(loop.consent_status(dict(profile, write=["private/**"]), labels, n)[0])
+        self.assertFalse(loop.consent_status(profile, labels, n + 1)[0])
+
+    def test_edited_consent_body_cannot_grant_access(self):
+        n = self.start()
+        (req,) = self.hub.by_label("owner-request:consent")
+        self.hub.issues[req["number"]]["body"] += "\nExpanded authority"
+        self.hub.answer(req["number"], True)
+        with self.assertRaises(SystemExit):
+            loop.resolve(n)
 
     def test_consent_declined_closes_the_task_as_blocked(self):
         n = self.start()

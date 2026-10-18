@@ -38,6 +38,9 @@ tools and safeguards remain owner configuration.
 Question requirements, delete unnecessary machinery, simplify, then improve speed.
 When progress needs a missing tool, access, secret or configuration, submit a `capability`
 request with the owner's steps and an explicit readiness check. Never include secret values.
+Follow `docs/perpetua/accepted-limits.md` for private data, provider disclosure,
+publication and spending. Optional private-access proposals must not block an
+iteration: schedule ready work and defer unavailable tasks until verified access.
 Propose wider accepted limits through `limits-change`, containing the entire proposed
 limits mapping. Propose engine or workflow changes through `engine-change`, with a concrete
 diff and application instructions. Say what each request unblocks and why it is needed.

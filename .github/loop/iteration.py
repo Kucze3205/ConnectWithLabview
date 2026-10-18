@@ -75,13 +75,15 @@ def fence_for(text):
     return "`" * max(3, longest + 1)
 
 
-def open_request(kind, title, what, why, unblocks, ref=None, frozen=None, blocks=(), iteration=None, readiness=None):
+def open_request(kind, title, what, why, unblocks, ref=None, frozen=None, blocks=(), iteration=None, readiness=None, scope=None):
     """The only way the loop asks the owner for a decision, a consent or a confirmation. Only engine code calls it.
     The answer is the closing of the issue: completed = yes, not planned = no."""
     assert kind in REQUEST_KINDS, kind
     proposal = requests.prepare(kind, frozen, readiness) if kind in requests.KINDS else None
     if proposal:
         frozen = proposal["frozen"]
+    else:
+        proposal = {"kind": kind, "status": "pending", "scope": scope, "ref": ref}
     owner = c.owner_login()
     body = "%s\n\n## What\n\n%s\n\n## Why\n\n%s\n\n## What it unblocks\n\n%s\n" % (
         " ".join("@" + o for o in owner), what, why, unblocks)
@@ -91,8 +93,10 @@ def open_request(kind, title, what, why, unblocks, ref=None, frozen=None, blocks
     body += "\n<!-- request-kind: %s -->\n" % kind
     if ref:
         body += "<!-- request-ref: %s -->\n" % ref
-    if proposal:
+    if kind in requests.KINDS:
         body += requests.instructions(proposal)
+    elif scope is not None:
+        body += "\n## Session scope\n\n```json\n%s\n```\n" % json.dumps(scope, sort_keys=True, indent=2)
     labels = [REQ, "%s:%s" % (REQ, kind)] + (([c.ITER + str(iteration)]) if iteration is not None else [])
     for l in labels:
         c.ensure_label(l, "FBCA04" if l.startswith(REQ) else "C5DEF5")
@@ -452,6 +456,8 @@ def limits_exceeded(profile):
         if not any(fnmatch.fnmatchcase(t, a) for a in allowed):
             why.append("tool `%s`" % t)
     if profile.get("internet"):
+        if lim.get("internet") is False:
+            why.append("online role access")
         ok = lim.get("internet_write") or []
         for g in profile.get("write", []) or []:
             if not any(g.startswith(p) for p in ok):
@@ -605,7 +611,8 @@ def create_tasks(n, tasks):
                                ask.get("what") or "Run one `%s` session beyond the accepted limits: %s." % (t["role"], ", ".join(why) or "see below"),
                                ask.get("why") or t["title"],
                                "The session starts only when you close this as completed; the wider profile applies to that one session.",
-                               ref="task-%s" % number[t["id"]], blocks=(number[t["id"]],), iteration=n)
+                               ref="task-%s" % number[t["id"]], blocks=(number[t["id"]],), iteration=n,
+                               scope={"task": number[t["id"]], "profile": prof[t["role"]]})
             c.edit_labels(number[t["id"]], add=["consent:%s" % req])
     frozen = (read_json(tasks_path(n)) or []) + [dict(t, issue=number[t["id"]]) for t in tasks]
     c.commit_main({tasks_path(n): json.dumps(frozen, indent=1, ensure_ascii=False) + "\n"}, "iteration %s: task graph" % tag(n))
@@ -819,8 +826,12 @@ def check_goal():
 
 
 def confirmation_declined(ref):
-    return any(c.marker(x["body"], "request-ref") == ref and x.get("state_reason") == "not_planned"
-               for x in c.list_issues(state="closed", labels=(REQ + ":result-confirmation",)))
+    for x in c.list_issues(state="closed", labels=(REQ + ":result-confirmation",)):
+        state = requests.read(x["number"])
+        if (state and state["status"] == "declined" and state["body_sha"] == requests.digest(x["body"])
+                and c.marker(x["body"], "request-ref") == ref):
+            return True
+    return False
 
 
 def parse_verdict(stdout):
