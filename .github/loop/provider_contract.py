@@ -23,9 +23,9 @@ def check(provider, codex_home=None):
         try:
             catalog = models(provider, credential)
         except Failure as error:
-            if provider != 'copilot' or error.observation.get('reason') != 'empty_model_catalog':
+            if provider != 'copilot':
                 raise
-            catalog = {'source': 'provider_rpc', 'models': [], 'reason': 'empty_model_catalog'}
+            catalog = {'source': 'provider_rpc', 'models': [], 'discovery_failure': error.observation}
         result["catalog"] = catalog
         model = "claude-sonnet-5-5" if provider == "claude" else next(
             (m["id"] for m in catalog["models"] if m["default"]),
