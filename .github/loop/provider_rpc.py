@@ -24,9 +24,11 @@ class RPC:
     def _read(self):
         try:
             while True:
-                line = self.process.stdout.readline()
+                line = self.process.stdout.readline(16_000_001)
                 if not line:
                     break
+                if len(line) > 16_000_000:
+                    raise ValueError('provider frame exceeds limit')
                 if self.framing == "headers":
                     if not line.lower().startswith(b"content-length:"):
                         continue

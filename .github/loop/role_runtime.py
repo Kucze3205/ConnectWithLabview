@@ -42,11 +42,11 @@ class Runtime:
                 # New credentials permit a new authentication check. Neither
                 # time nor token renewal clears a quota or model entitlement.
                 record = state.get("providers", {}).get(provider, {})
-                if record.get("status") == "auth_failure":
+                if record.get("status") in {'auth_failure', 'credential_expired'}:
                     state["providers"].pop(provider)
                 models = state.get("models", {}).get(provider, {})
                 for model in list(models):
-                    if models[model].get("status") == "auth_failure":
+                    if models[model].get("status") in {'auth_failure', 'credential_expired'}:
                         models.pop(model)
                 previous[provider] = identity
             return document

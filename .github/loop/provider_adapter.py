@@ -208,6 +208,8 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             if not isinstance(event, dict):
                 continue
             if "method" in event and "id" in event:
+                if provider == 'codex' and event['method'] == 'account/chatgptAuthTokens/refresh':
+                    raise Failure({'status': 'credential_expired', 'scope': 'provider', 'reason': 'worker_access_expired'})
                 # No native tool permission, user interaction or token refresh
                 # callback may cross the boundary. End instead of granting it.
                 raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})

@@ -89,9 +89,21 @@ class BrokerTest(unittest.TestCase):
     def test_command_has_no_network_no_parent_secrets_and_no_trusted_writes(self):
         outside = Path(self.temp.name) / "credential"
         outside.write_text("synthetic credential")
+        resource = Path(self.temp.name, 'prepared')
+        resource.mkdir()
+        (resource / 'example').write_text('public input')
+        self.broker = Broker(self.root, self.profile, self.config, {'environment': resource.resolve()})
         code = """import json, os, pathlib, socket
 assert 'GH_TOKEN' not in os.environ
 assert not pathlib.Path(OUTSIDE).exists()
+prepared = pathlib.Path(os.environ['LABVIEW_ENVIRONMENT']) / 'example'
+assert prepared.read_text() == 'public input'
+try:
+    prepared.write_text('forbidden')
+except OSError:
+    pass
+else:
+    raise RuntimeError('prepared resource write allowed')
 for family in (socket.AF_INET, socket.AF_INET6, socket.AF_UNIX):
     try:
         socket.socket(family)

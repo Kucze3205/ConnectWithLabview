@@ -72,9 +72,16 @@ jobs:
           pip install -q pyyaml
           python3 .github/loop/loop.py resolve "${{ inputs.issue }}"
 
-  session:
+  credentials:
     needs: prep
-    if: needs.prep.outputs.go == 'true'
+    if: needs.prep.outputs.go == 'true' && needs.prep.outputs.execution == 'routed'
+    uses: ./.github/workflows/credential-maintenance.yml
+    secrets: inherit
+
+  session:
+    needs: [prep, credentials]
+    # One provider's credential failure must not block the other providers.
+    if: always() && needs.prep.result == 'success' && needs.prep.outputs.go == 'true'
     runs-on: ubuntu-latest
     environment: provider-claude
     permissions:

@@ -23,6 +23,7 @@ on:
       - '.github/loop/runtime_smoke.py'
       - '.github/loop/tests/**'
       - '.github/workflows/environment.yml'
+      - '.github/workflows/credential-maintenance.yml'
   workflow_dispatch:
 
 permissions:
@@ -176,8 +177,16 @@ jobs:
             ${{ runner.temp }}/provider-readiness.json
             ${{ runner.temp }}/provider-contract.json
 
+  maintenance-proof:
+    needs: engine-tests
+    if: needs.engine-tests.result == 'success' && github.repository == 'Kucze3205/ConnectWithLabview' && github.actor == github.repository_owner && github.ref == 'refs/heads/perpetua/setup'
+    uses: ./.github/workflows/credential-maintenance.yml
+    with:
+      setup_check: true
+    secrets: inherit
+
   runtime-proof:
-    needs: [engine-tests, providers]
+    needs: [engine-tests, providers, maintenance-proof]
     if: always() && needs.engine-tests.result == 'success' && github.repository == 'Kucze3205/ConnectWithLabview' && github.actor == github.repository_owner && github.ref == 'refs/heads/perpetua/setup'
     runs-on: ubuntu-24.04
     environment: provider-claude

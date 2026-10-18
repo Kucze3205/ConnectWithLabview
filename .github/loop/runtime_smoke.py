@@ -5,11 +5,16 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 
 from role_runtime import Runtime
 from runtime_checkpoint import Checkpoint
 from runtime_store import GitHubBackend, Store
 from tool_broker import Broker
+
+
+class InterruptedCheckpoint(RuntimeError):
+    pass
 
 
 def main():
@@ -52,6 +57,17 @@ def main():
                 def update(self, key, change):
                     return store.update('proof-' + os.environ['GITHUB_RUN_ID'] + '/' + key, change)
             durable = SmokeStore()
+            if not resume:
+                # Real GitHub content-SHA contention on one file, separate
+                # from availability. Both concurrent updates must survive.
+                with ThreadPoolExecutor(max_workers=2) as executor:
+                    futures = [executor.submit(durable.update, 'concurrent.json',
+                               lambda current, provider=p: dict(current, **{provider: 'observed'}))
+                               for p in ('claude', 'codex')]
+                    for future in futures:
+                        future.result()
+                if durable.read('concurrent.json') != {'claude': 'observed', 'codex': 'observed'}:
+                    raise RuntimeError('concurrent checkpoint update was lost')
             checkpoint = Checkpoint(broker, repository, issue)
             credentials = {'claude': os.environ.get('CLAUDE_CODE_OAUTH_TOKEN', ''),
                            'codex': os.environ.get('CODEX_WORKER_AUTH_JSON', ''),
@@ -64,10 +80,32 @@ def main():
                 if (work / 'src/provider-proof.txt').read_text().strip() != 'BROKER_TASK_READY':
                     raise RuntimeError('new runner lost accepted code')
                 prompt = ('The previous runner completed the file task. Verify src/provider-proof.txt and '
-                          '.session/report.md using Read, then Finish done. Do not replace existing accepted content.')
+                          '.session/report.md using Read. If the report is missing after interruption, create it '
+                          'with the session report marker and YAML status done, then Finish done. '
+                          'Do not replace the accepted source file.')
+            def durable_checkpoint(state):
+                saved = checkpoint(state)
+                if not resume and (work / 'src/provider-proof.txt').exists():
+                    # Simulate the exact crash window after file push but before
+                    # continuation CAS. The next runner sees pending intent and
+                    # must inspect the remotely saved file, never replay it.
+                    raise InterruptedCheckpoint()
+                return saved
             runtime = Runtime(owner, policy, 'resume' if resume else 'proof', durable, 'sessions/' + issue + '.json', broker,
-                              checkpoint, credentials, prompt, 'smoke-v1')
-            result = runtime.run(12, 240)
+                              durable_checkpoint, credentials, prompt, 'smoke-v1')
+            try:
+                result = runtime.run(12, 240)
+            except InterruptedCheckpoint:
+                state = durable.read('sessions/' + issue + '.json')
+                if not state.get('pending'):
+                    raise RuntimeError('interruption did not retain action intent')
+                report.update(status='success', stage='interrupted_after_push',
+                              checkpoint=checkpoint.git('rev-parse', 'HEAD').stdout.strip(), branch='task/' + issue,
+                              pending_action=state['pending']['tool'],
+                              availability=durable.read('pool.json').get('availability', {}))
+                Path(os.environ['RUNNER_TEMP'], 'runtime-proof.json').write_text(json.dumps(report, indent=2) + '\n')
+                print(json.dumps(report))
+                return 0
             report.update(result)
             state = durable.read('sessions/' + issue + '.json')
             if result['status'] != 'done' or (work / 'src/provider-proof.txt').read_text().strip() != 'BROKER_TASK_READY':
