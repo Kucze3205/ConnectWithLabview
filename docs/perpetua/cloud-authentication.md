@@ -1,11 +1,11 @@
 # Cloud authentication and routed execution
 
-Status: credential work in progress, checked 18 October 2026. The owner explicitly
+Status: integration accepted with an owner exception on 18 October 2026. The owner explicitly
 retained this public repository for GitHub Actions capabilities and rejected a
 private control repository. That is the accepted location; do not reopen the
 visibility question. Provider adapters, shared availability and durable role
 execution are implemented on the setup branch. Cloud verification is described
-below; the integration issue remains open until its remaining checks pass. The
+below; the unverified successful Claude task is deferred by the owner as recorded below. The
 product goal is unchanged and AUTOPILOT remains off.
 
 ## Observed cloud evidence
@@ -182,11 +182,19 @@ Thus the remaining positive Claude task cannot currently be established by
 switching from Sonnet/Opus to that lighter model. No provider reset timestamp was
 invented and no paid API or extra usage was enabled.
 
-## Remaining verification
+## Owner acceptance exception and follow-up verification
 
-- Verify a successful structured Claude task after subscription capacity returns.
-- Review a successful Claude task before resolving the integration issue.
-  Revocation, entitlement, transient errors,
+On 18 October 2026 the owner instructed: "załóż że działa albo odblokuj nastepne issue"
+(assume it works or unblock the next issue). This explicitly removes the positive
+Claude task from the integration ticket's closure requirements. The implementation
+is accepted for continuing setup; a successful Claude task remains unverified,
+and the quota observations above remain unchanged. Runtime routing must continue
+to honor actual provider failures and availability. This exception does not arm
+the loop or establish product quality.
+
+- Verify a successful structured Claude task after subscription capacity returns;
+  this is follow-up verification, not a blocker for subsequent setup topics.
+- Revocation, entitlement, transient errors,
   all-provider exhaustion and ambiguous command replay are fault-injection tests;
   the owner's live credentials are not deliberately revoked.
 - Cancellation during credential rotation cannot recover a lost rotated bundle.

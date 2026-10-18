@@ -201,10 +201,14 @@ The environment baseline records tested public sources, a native cloud runtime,
 account-access observations and known restrictions. It does not accept a new
 product success gate. Shared availability, ordinary task adapters, credential
 lifecycle recovery and continuation across limits belong to the owner-approved
-multi-provider integration topic and remain unfinished. Native 2024 execution,
+multi-provider integration topic; its later implementation and verification are
+recorded in [cloud authentication](cloud-authentication.md). Native 2024 execution,
 all-version compatibility and full semantic reading remain unverified and must
 not be reported as solved by this environment check.
 
 The access/preparation topic was resolved with these explicit boundaries in
 [its resolution](https://github.com/Kucze3205/ConnectWithLabview/issues/2#issuecomment-6248028771).
-The multi-provider integration topic remains open and arming remains blocked.
+The owner accepted the multi-provider integration on 18 October 2026 with the
+successful Claude task deferred because of subscription exhaustion. See the
+explicit exception in [cloud authentication](cloud-authentication.md). Arming
+still belongs to the final setup topic; AUTOPILOT remains off.
