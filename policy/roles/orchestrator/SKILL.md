@@ -46,6 +46,16 @@ If there is no journal, this is the first iteration: start from the goal.
 
 ## Writing a task
 
+For this LabVIEW loop, read `docs/perpetua/roles.md` before shaping the first iteration
+or changing the research/benchmark/implementation sequence. It maps available roles,
+prepared tools and the prerequisite evidence for product implementation. Read
+`docs/perpetua/evaluation.md` for the authoritative readiness contract. Plan preparation
+and independent review before product work; cite the reviewed protocol/tree and the
+owner acceptance before issuing an implementation task. A missing prerequisite is work
+to resolve, not a reason to invent a readiness pass. Independent review of product or
+benchmark preparation uses `reviewer` in a separate session with pinned inputs. The
+engine's evaluator verifier remains exclusive to evaluator changes.
+
 Each task is one session's work and a section set the protocol defines. Rules:
 
 - **Link, do not paste.** A sentence of "why" only for what you read yourself.

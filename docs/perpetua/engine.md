@@ -135,6 +135,10 @@ rules and starting prompts, and enforcement of `internet: false` for tools and s
 
 ## The change gate
 
+For this loop's starting role selection, source provenance, prepared tools and the
+benchmark-before-product sequence, see [starting roles](roles.md). Profiles and bundled
+role folders supply the capabilities; they do not change the owner gate or accepted limits.
+
 Work enters the default branch after a verdict "not worse than what is accepted". After a task ends `done` the
 epilogue, in a throwaway worktree: checks the paths (protected, role `write`, file size), rebases on the default branch,
 runs `## Verification` and `check`, then asks the gate. Paths in `direct_paths` (`policy/`, `audit/`, `journal/`) are not

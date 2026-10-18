@@ -28,6 +28,15 @@ Every mode still requires a precise question when a necessary owner decision rem
 
 ## Map rules
 
+**Starting roles (topic E, 18 October 2026):** `policy/profiles.yml` adds offline researcher,
+benchmark, implementation and report-only reviewer roles using copied/adapted installed
+skills. Existing orchestrator, audit, evaluator and protected evaluator verifier remain.
+Read `docs/perpetua/roles.md` for responsibilities, staged tools, provenance and the route
+from preparation through independent review and owner acceptance to product work. No new
+access or limits are accepted here; withheld evaluation isolation and direct native LabVIEW
+execution from roles are not claimed. Carry these facts into topics F/G and the final setup
+decisions. Product implementation remains blocked on the evaluation contract's prerequisites.
+
 **Client skill calls.** In Claude Code use the Skill tool. In Codex, where wayfinder or its dependencies say to call that tool, read and follow the named skill's `SKILL.md` with the same input in the current conversation. Resolve installed skills by their available paths and plugin-qualified names; filesystem-backed skills also work. Give research subagents the research skill path and the applicable map notes. Continue the map with `/wayfinder <URL>` in Claude Code or `$wayfinder <URL>` / `Use wayfinder for <URL>` in Codex. The setup client does not select the loop's provider; retain the Defaults unless the owner changes them.
 
 **Tracker.** By default the tracker is GitHub issues of `Kucze3205/ConnectWithLabview`, driven with `gh`. The commands below describe that integration; if the owner changes the tracker or substrate, replace them with the implemented equivalents before using them. Do not run `/setup-matt-pocock-skills`.
