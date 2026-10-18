@@ -77,7 +77,9 @@ def isolated(provider, credential, timeout):
             # Actions installation tokens use runtime environment discovery;
             # --auth-token-env is the SDK's user-token path and is incompatible.
             env.update(COPILOT_GITHUB_TOKEN=credential, COPILOT_DISABLE_KEYTAR="1")
-            command = ["copilot", "--headless", "--no-auto-update", "--stdio", "--no-auto-login"]
+            # Scratch HOME contains no logged-in user/keychain fallback. Keep
+            # environment auth on the same path as the verified CLI probe.
+            command = ["copilot", "--headless", "--no-auto-update", "--stdio"]
             framing = "headers"
         else:
             raise ValueError("unsupported model provider")
