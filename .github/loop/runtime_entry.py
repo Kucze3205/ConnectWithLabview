@@ -17,7 +17,7 @@ def main():
     (output / 'agent-start').write_text(str(int(time.time())))
     result = {'status': 'crashed', 'reason': 'runtime_not_ready'}
     try:
-        broker = Broker(os.environ['WORK'], options['profile'], options['config'])
+        broker = Broker(os.environ['WORK'], options['profile'], options['config'], options.get('resources'))
         checkpoint = Checkpoint(broker, os.environ['GITHUB_REPOSITORY'], os.environ['ISSUE'])
         backend = GitHubBackend(os.environ['GITHUB_REPOSITORY'], base=os.environ['DEFAULT_BRANCH'])
         backend.initialize()

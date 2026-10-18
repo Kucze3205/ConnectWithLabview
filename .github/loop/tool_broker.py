@@ -35,10 +35,18 @@ def validate(action):
 
 
 class Broker:
-    def __init__(self, work, profile, config):
+    def __init__(self, work, profile, config, resources=None):
         self.root = Path(work).resolve()
         self.profile, self.config = profile, config
         self.tools = {t.split("(", 1)[0] for t in profile.get("tools", [])}
+        self.resources = {}
+        for name, directory in (resources or {}).items():
+            if name != 'environment':
+                raise ValueError('unknown prepared resource')
+            path = Path(directory)
+            if not path.is_absolute() or not path.is_dir() or path.is_symlink() or path.resolve() != path:
+                raise ValueError('prepared resource must be a canonical directory')
+            self.resources[name] = path
 
     def path(self, relative):
         if not relative or "\\" in relative or "\0" in relative:
@@ -46,18 +54,27 @@ class Broker:
         parts = PurePosixPath(relative)
         if parts.is_absolute() or any(p in {"..", ".git"} or ":" in p for p in parts.parts):
             raise PermissionError("path is outside the role workspace")
-        result = self.root
-        for part in parts.parts:
+        segments = parts.parts
+        base = self.root
+        if segments and segments[0].startswith('@'):
+            base = self.resources.get(segments[0][1:])
+            if base is None:
+                raise PermissionError('unknown prepared resource')
+            segments = segments[1:]
+        result = base
+        for part in segments:
             result /= part
             if result.is_symlink():
                 raise PermissionError("redirected paths are not role tools")
             if result.exists() and result.is_file() and result.stat().st_nlink != 1:
                 raise PermissionError("hardlinked workspace file")
-        if not result.resolve().is_relative_to(self.root):
+        if not result.resolve().is_relative_to(base):
             raise PermissionError("workspace path escaped")
         return result
 
     def writable(self, relative):
+        if relative.startswith('@'):
+            return False
         if relative.startswith(".session/"):
             tail = relative[len(".session/"):]
             return tail in OUTPUTS or tail.startswith("artifacts/")
@@ -74,13 +91,14 @@ class Broker:
         return path
 
     def files(self):
-        for root, dirs, names in os.walk(self.root, followlinks=False):
-            dirs[:] = [d for d in dirs if d != ".git" and not Path(root, d).is_symlink()]
-            for name in names:
-                file = Path(root, name)
-                if file.is_symlink():
-                    continue
-                yield file.relative_to(self.root).as_posix()
+        for prefix, base in [('', self.root)] + [('@' + key + '/', value) for key, value in self.resources.items()]:
+            for root, dirs, names in os.walk(base, followlinks=False):
+                dirs[:] = [d for d in dirs if d != ".git" and not Path(root, d).is_symlink()]
+                for name in names:
+                    file = Path(root, name)
+                    if file.is_symlink():
+                        continue
+                    yield prefix + file.relative_to(base).as_posix()
 
     def execute(self, action, timeout=60):
         validate(action)
@@ -91,6 +109,9 @@ class Broker:
         if tool == "Finish":
             if action["status"] not in {"done", "partial", "blocked", "rejected"}:
                 raise ValueError("Finish requires an agent terminal status")
+            report = self.path('.session/report.md').read_text(encoding='utf-8')
+            if not report.startswith(c.MARK) or c.fields(report).get('status') != action['status']:
+                raise ValueError('Finish requires a matching marked terminal report')
             return {"status": action["status"], "text": action["text"]}
         if tool == "Read":
             path = self.path(relative)
@@ -148,6 +169,8 @@ class Broker:
         with tempfile.TemporaryDirectory(prefix="role-command-") as scratch:
             prefix = sandbox([], scratch)[:-1]
             prefix += ["--ro-bind", str(self.root), "/workspace"]
+            for name, path in self.resources.items():
+                prefix += ['--ro-bind', str(path), '/resources/' + name]
             # A read-only root prevents creation of new protected root paths.
             # Direct Write can create new allowed roots, which later commands see.
             for child in self.root.iterdir():
@@ -182,6 +205,8 @@ class Broker:
                 argv = ["python3", str(helper)] + argv
             env = {"PATH": os.environ["PATH"], "HOME": scratch, "LANG": "C.UTF-8", "CI": "true",
                    "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_TERMINAL_PROMPT": "0"}
+            if 'environment' in self.resources:
+                env['LABVIEW_ENVIRONMENT'] = '/resources/environment'
             with tempfile.TemporaryFile() as output:
                 try:
                     result = subprocess.run(prefix + ["--"] + argv, env=env, stdin=subprocess.DEVNULL,

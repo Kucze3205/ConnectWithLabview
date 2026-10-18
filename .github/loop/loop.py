@@ -218,7 +218,9 @@ def stage(n, work, trusted):
             shutil.copy(".github/loop/" + name, trusted)
         with open(os.path.join(trusted, "runtime.json"), "w", encoding="utf-8") as fh:
             json.dump({"owner": c.cfg()["provider_pool"], "policy": c.params()["routing"], "profile": p,
-                       "config": c.cfg(), "task": options["routing_task"], "fingerprint": options["profile_digest"]}, fh)
+                       "config": c.cfg(), "task": options["routing_task"], "fingerprint": options["profile_digest"],
+                       "resources": {"environment": os.environ["LABVIEW_ENVIRONMENT"]}
+                                    if os.environ.get("LABVIEW_ENVIRONMENT") else {}}, fh)
         prompt_path = os.path.join(trusted, "prompt.md")
         with open(prompt_path, encoding="utf-8") as fh:
             prompt = fh.read().replace("Call the Skill tool with `%s`. " % role,

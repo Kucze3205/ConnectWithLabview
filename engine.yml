@@ -4,6 +4,19 @@
 # for a null parameter.
 
 cli_version: "2.1.292"          # matches the locally installed CLI; live call currently reports a weekly limit
+provider_pool:
+  # Owner catalog. Policy can reorder/subset these IDs, never add another model.
+  # Catalog and execution evidence: docs/perpetua/cloud-authentication.md.
+  providers:
+    claude:
+      models: [claude-sonnet-5-5, claude-opus-5-5, claude-fable-5-1, claude-haiku-4-5-20251001]
+    codex:
+      models: [gpt-6.1-sol, gpt-6-astra, gpt-6-sol, gpt-6-luna, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna]
+    copilot:
+      models: [gpt-5.6-luna]
+  backoff:
+    initial_seconds: 300
+    max_seconds: 21600
 author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
   name: ""
   email: ""
@@ -39,7 +52,7 @@ limits:
 policymaker:
   tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
   write: ["policy/"]
-policymaker_session_ceilings:          # policy/params.yml can tune sessions only within these owner-approved bounds
+policymaker_session_ceilings:          # effort/time/turn caps apply to every provider; models is the legacy alias bound
   models: [claude-opus-5-5, claude-sonnet-5-5]
   efforts: [low, medium, high]
   max_turns: 150

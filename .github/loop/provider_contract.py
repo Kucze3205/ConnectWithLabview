@@ -10,7 +10,7 @@ from provider_adapter import Failure, models, request
 from tool_broker import ACTION_SCHEMA
 
 
-def check(provider, codex_home=None):
+def check(provider, codex_home=None, selected_model=None):
     credential = os.environ.get({"claude": "CLAUDE_CODE_OAUTH_TOKEN", "codex": "CODEX_WORKER_AUTH_JSON",
                                  "copilot": "COPILOT_GITHUB_TOKEN"}[provider], "")
     if codex_home:
@@ -30,6 +30,7 @@ def check(provider, codex_home=None):
         model = "claude-sonnet-5-5" if provider == "claude" else next(
             (m["id"] for m in catalog["models"] if m["default"]),
             catalog["models"][0]["id"] if catalog['models'] else None)
+        model = selected_model or model
         result["model"] = model
         prompt = ('Return a single JSON object matching this schema: ' + json.dumps(ACTION_SCHEMA) +
                   '. Set tool="Finish", status="done", text="BROKER_READY", and every other field to an empty string. '
@@ -51,9 +52,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("provider", choices=["claude", "codex", "copilot"])
     parser.add_argument("--codex-home")
+    parser.add_argument("--model")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    report = check(args.provider, args.codex_home)
+    report = check(args.provider, args.codex_home, args.model)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "catalog"}))

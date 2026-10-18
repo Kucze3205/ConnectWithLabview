@@ -150,6 +150,8 @@ jobs:
         run: |
           if [ "$PROVIDER" = codex ] && [ "$CODEX_CREDENTIAL_STORE_READY" = on ]; then
             python3 .github/loop/provider_contract.py codex --codex-home "$RUNNER_TEMP/codex-private-auth" --output "$RUNNER_TEMP/provider-contract.json"
+          elif [ "$PROVIDER" = copilot ]; then
+            python3 .github/loop/provider_contract.py copilot --model gpt-5.6-luna --output "$RUNNER_TEMP/provider-contract.json"
           else
             python3 .github/loop/provider_contract.py "$PROVIDER" --output "$RUNNER_TEMP/provider-contract.json"
           fi
@@ -206,3 +208,37 @@ jobs:
         with:
           name: runtime-proof
           path: ${{ runner.temp }}/runtime-proof.json
+
+  runtime-resume:
+    needs: runtime-proof
+    if: needs.runtime-proof.result == 'success'
+    runs-on: ubuntu-24.04
+    environment: provider-claude
+    permissions:
+      contents: write
+      copilot-requests: write
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare independent resume runner
+        run: |
+          pip install -q pyyaml
+          PACKAGE=$(python3 -c 'import json; p=json.load(open(".github/loop/cloud-providers.json"))["copilot"]; print(p["package"]+"@"+p["version"])')
+          npm install -g "$PACKAGE"
+          bash .github/loop/sandbox.sh
+      - name: Copilot continues the remotely saved Codex task
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COPILOT_GITHUB_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python3 .github/loop/runtime_smoke.py --resume
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-resume
+          path: ${{ runner.temp }}/runtime-resume.json

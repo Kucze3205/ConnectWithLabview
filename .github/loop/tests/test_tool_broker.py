@@ -52,6 +52,27 @@ class BrokerTest(unittest.TestCase):
             with self.subTest(command=command), self.assertRaises(PermissionError):
                 self.broker.execute(action("Bash", command=command))
 
+    def test_prepared_sources_remain_readable_without_exposing_other_runner_files(self):
+        prepared = Path(self.temp.name, 'prepared')
+        prepared.mkdir()
+        (prepared / 'fixture.txt').write_text('public fixture')
+        broker = Broker(self.root, self.profile, self.config, {'environment': prepared.resolve()})
+        self.assertEqual(broker.execute(action('Read', path='@environment/fixture.txt'))['text'], 'public fixture')
+        self.assertIn('@environment/fixture.txt', broker.execute(action('Glob', pattern='@environment/*'))['paths'])
+        for path in ('@environment/fixture.txt', '@environment/../outside', '@unlisted/secret'):
+            with self.assertRaises(PermissionError):
+                broker.execute(action('Write', path=path, text='overwritten'))
+
+    def test_finish_cannot_replace_a_missing_or_unfinished_report(self):
+        with self.assertRaises(OSError):
+            self.broker.execute(action('Finish', status='done'))
+        report = self.root / '.session/report.md'
+        report.write_text('<!-- session-report -->\n```yaml\nstatus: wip\n```\n')
+        with self.assertRaises(ValueError):
+            self.broker.execute(action('Finish', status='done'))
+        report.write_text('<!-- session-report -->\n```yaml\nstatus: done\n```\n')
+        self.assertEqual(self.broker.execute(action('Finish', status='done'))['status'], 'done')
+
     @unittest.skipIf(os.name == "nt", "Linux symlinks")
     def test_symlink_and_hardlink_cannot_redirect_trusted_parent_operations(self):
         outside = Path(self.temp.name) / "secret"

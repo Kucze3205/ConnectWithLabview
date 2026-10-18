@@ -102,6 +102,9 @@ class Runtime:
                       json.dumps(state["history"], ensure_ascii=False))
             if hasattr(self.broker, 'profile'):
                 prompt += '\nRole profile: ' + json.dumps(self.broker.profile)
+            if getattr(self.broker, 'resources', None):
+                prompt += ('\nPrepared public sources are read-only under @environment/ in Read/Glob/Grep. '
+                           'Commands see them through LABVIEW_ENVIRONMENT=/resources/environment.')
             credential = self.credentials.get(provider, "")
             try:
                 if not credential:
