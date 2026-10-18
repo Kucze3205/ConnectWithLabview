@@ -111,7 +111,8 @@ class Broker:
                 raise ValueError("Finish requires an agent terminal status")
             report = self.path('.session/report.md').read_text(encoding='utf-8')
             if not report.startswith(c.MARK) or c.fields(report).get('status') != action['status']:
-                raise ValueError('Finish requires a matching marked terminal report')
+                raise ValueError('Finish requires .session/report.md beginning with <!-- session-report -->, '
+                                 'then a fenced ```yaml block with status matching Finish.status, then ``` and prose')
             return {"status": action["status"], "text": action["text"]}
         if tool == "Read":
             path = self.path(relative)

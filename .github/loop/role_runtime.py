@@ -5,6 +5,7 @@ tool action becomes accepted only after its files and continuation are remote.
 """
 import hashlib
 import json
+import os
 import subprocess
 import time
 from datetime import datetime, timedelta, timezone
@@ -127,6 +128,11 @@ class Runtime:
                 outcome = self.broker.execute(action, timeout=max(1, min(60, int(deadline - time.monotonic()))))
             except (OSError, ValueError) as error:
                 outcome = {"error": "role tool rejected", "kind": type(error).__name__}
+                # Broker validation errors are fixed engine text, never raw
+                # provider diagnostics. Give the model enough to repair its
+                # operation instead of repeating an unexplained rejection.
+                outcome['detail'] = str(error) if isinstance(error, (ValueError, PermissionError)) else (
+                    os.strerror(error.errno) if error.errno else 'file operation failed')
             state.pop("pending", None)
             state["turns"] += 1
             state["history"].append({"candidate": candidate, "action": action, "outcome": outcome})

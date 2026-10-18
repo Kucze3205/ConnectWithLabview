@@ -123,7 +123,12 @@ def resolve(n):
         close_out(n, i, "blocked", {"cause": "start:" + why.split()[0]}, "The session did not start: " + why + ".")
         reconcile()
         raise SystemExit(why)
-    options = session_options(i, role, p)
+    try:
+        options = session_options(i, role, p)
+    except ValueError as error:
+        close_out(n, i, "blocked", {"cause": "start:routing"}, "Invalid routing policy: " + str(error))
+        reconcile()
+        raise SystemExit(str(error))
     branch = "task/%s" % n
     has = c.git(".", "ls-remote", "--exit-code", "--heads", "origin", branch, check=False, remote=True).returncode == 0
     start = branch if has else (c.marker(i["body"], "start-branch") or c.default_branch())
@@ -378,6 +383,15 @@ def merge_branch(n, role, i, override=None, verified=False, checked_commit=None,
             big = [f for f in changed if os.path.isfile(os.path.join(cand, f)) and os.path.getsize(os.path.join(cand, f)) > cfg["large_file_bytes"]]
             if big:
                 return dict(res, result="large", detail=", ".join(big))
+            if cfg.get("provider_pool") and "policy/params.yml" in changed:
+                import provider_pool
+                import yaml
+                try:
+                    policy = yaml.safe_load(c.safe_read(cand, "policy/params.yml") or "") or {}
+                    routing = policy.get("routing")
+                    provider_pool.select_candidate(cfg["provider_pool"], routing, {}, "policymaker", c.now())
+                except (ValueError, TypeError, AttributeError, yaml.YAMLError):
+                    return dict(res, result="invalid-policy", detail="Routing is missing or exceeds the owner's model catalog.")
             if work_paths:
                 if cfg["check"]:
                     t = c.run_command(cfg["check"], cand)
@@ -453,6 +467,8 @@ def merge_outcome(r):
         return "partial", dict(upd, merged="false"), "The change gate gave no verdict. %s" % detail
     if res == "verification-stale":
         return "blocked", dict(upd, merged="false"), detail
+    if res == "invalid-policy":
+        return "partial", dict(upd, merged="false"), detail
     return "partial", dict(upd, merged="false"), "Rebase on the default branch conflicts."
 
 

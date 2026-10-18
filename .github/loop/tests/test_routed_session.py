@@ -24,6 +24,8 @@ class RoutedSessionTest(SessionCase):
         params['routing'] = {'tasks': {key: [{'provider': 'codex', 'model': 'approved-model'}]
                                       for key in ('default', 'policymaker', 'review')}}
         self.w.write(self.w.loop, 'policy/params.yml', yaml.safe_dump(params))
+        self.w.push_main({'engine.yml': yaml.safe_dump(cfg), 'policy/params.yml': yaml.safe_dump(params)}, 'routing setup')
+        c.sync_main()
 
     def test_role_and_policymaker_route_and_freeze_model_policy_in_trusted_stage(self):
         for role, labels, task in (('worker', ['route:review'], 'review'), ('policymaker', [], 'policymaker')):
@@ -40,8 +42,9 @@ class RoutedSessionTest(SessionCase):
 
     def test_invalid_route_is_refused_before_execution(self):
         n = self.issue(labels=['route:nonexistent'])
-        with self.assertRaisesRegex(ValueError, 'no explicit routing'):
+        with self.assertRaisesRegex(SystemExit, 'no explicit routing'):
             loop.resolve(n)
+        self.assertEqual(self.hub.report(n)['status'], 'blocked')
 
     def test_watchdog_does_not_make_claude_auth_a_global_dependency(self):
         with patch.object(c, 'probe', side_effect=AssertionError('Claude probe must not run')), \
@@ -56,3 +59,13 @@ class RoutedSessionTest(SessionCase):
         self.assertTrue(loop.park(n, c.issue(n), {'attempts': '100'}, {}, 'waiting', None, durable=True))
         self.assertEqual(self.hub.report(n)['status'], 'paused')
         self.assertEqual(self.hub.issues[n]['state'], 'open')
+
+    def test_policy_cannot_merge_models_outside_the_owner_catalog(self):
+        n = self.issue('policymaker')
+        params = c.params()
+        params['routing']['tasks']['policymaker'][0]['model'] = 'outside-owner-catalog'
+        self.w.branch(n, {'policy/params.yml': yaml.safe_dump(params)})
+        before = c.head()
+        result = loop.merge_branch(n, 'policymaker', c.issue(n))
+        self.assertEqual(result['result'], 'invalid-policy')
+        self.assertEqual(c.head(), before)

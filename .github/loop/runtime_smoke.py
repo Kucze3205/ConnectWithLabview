@@ -44,6 +44,7 @@ def main():
             (work / '.session').mkdir()
             (work / '.session/issue.md').write_text('Write src/provider-proof.txt containing exactly BROKER_TASK_READY. '
                 'Read it back to verify. Write .session/report.md with the session report marker and YAML status done. '
+                'Use this exact report format: <!-- session-report -->\n```yaml\nstatus: done\n```\nReport prose.\n'
                 'Then propose Finish with status done. Use only role tools, no native tools.')
             broker = Broker(work, {'tools': ['Read', 'Write', 'Edit', 'Glob', 'Grep'], 'write': ['src/**']},
                             {'protected': ['.github/', 'engine.yml', 'goal/'], 'evaluator_paths': ['policy/evaluator/']})
