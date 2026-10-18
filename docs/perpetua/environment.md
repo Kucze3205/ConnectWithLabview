@@ -2,7 +2,8 @@
 
 The owner requires the entire loop to execute in the cloud. Their Windows machine
 is not a runner. Public source preparation and model access checks run on GitHub
-hosted Ubuntu; using a full LabVIEW IDE in the cloud remains an explicit access gap.
+hosted Ubuntu. Official NI headless automation is now verified in the cloud;
+interactive IDE access is not part of this setup path.
 The product goal is unchanged and no artifact family has been excluded.
 
 Version requirement clarified by the owner on 18 October 2026: prioritize all
@@ -58,7 +59,7 @@ secret, exhausted quota or failed response fails that readiness check. Generic
 
 | Provider | Repository secret | Access semantics |
 |---|---|---|
-| Claude | `CLAUDE_CODE_OAUTH_TOKEN` | Bootstrap access token from the existing Claude subscription. Current snapshot expires 18 October 2026, 04:53 UTC; a durable token from `claude setup-token` is still needed. |
+| Claude | `CLAUDE_CODE_OAUTH_TOKEN` | The owner created a supported long-lived token with `claude setup-token` and replaced the secret on 18 October 2026. Hosted probes reach the service but report subscription exhaustion. Track eventual replacement in the credential lifecycle. |
 | Codex | Bootstrap `CODEX_AUTH_JSON`; opt-in environment `CODEX_CI_AUTH_JSON` | The existing snapshot proves model access only. The new guarded secret round trip requires a dedicated CI login and the App described in cloud-authentication.md; it is not yet enabled or live-verified. |
 | Copilot | Job `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job now requests `copilot-requests: write` and checks the pinned CLI. Current GitHub documentation supports this in personally owned repositories against the owner's seat. The earlier copied OAuth token remains stored but is no longer passed by this readiness job. |
 
@@ -108,12 +109,13 @@ ignored task-branch configuration/hooks, time/turn limits, usage accounting and
 limit/reset parsing. Copilot output redaction alone is not credential isolation.
 Do not arm the loop until these checks and the other setup topics are resolved.
 
-## LabVIEW cloud access remains unverified
+## LabVIEW cloud runtime and version coverage
 
 The local diagnostic found only one actual LabVIEW executable: 32-bit LabVIEW 2026
 26.1.1f1, plus NI LabVIEW CLI. The CLI connected to LabVIEW and completed an operation
-help request. A direct COM probe did not open an example successfully. Neither
-finding proves scripting, activation rights or operation on a cloud machine.
+help request. A direct COM probe did not open an example successfully. These local
+findings alone did not prove scripting or cloud operation; the hosted check below
+now supplies separate cloud runtime evidence.
 Directories named for older releases were not counted as installed editors.
 
 The owner's expanded NI License Manager screenshot, supplied on 18 October 2026,
@@ -128,8 +130,9 @@ was uploaded.
 NI's Community usage guidance permits personal, non-commercial, non-industrial
 projects and lists free open-source projects as an example. The owner explicitly
 confirmed a private, non-commercial project on 18 October 2026. The public download page does not confirm authenticated
-access to the 2024 installer. Cloud deployment, account activation and unattended
-operation remain to be checked separately.
+access to the 2024 installer. Native 2024 activation/execution remains unverified;
+the selected official headless runtime does not require desktop activation for
+its supported automation operations.
 
 ## Official NI cloud automation path
 
@@ -154,8 +157,8 @@ Compilation is an environment check, not product development or the benchmark.
 Pins and input provenance live in `.github/loop/labview-runtime.json`; the public
 workflow is `.github/workflows/labview-runtime.yml`. The image is NI's LabVIEW
 2026 Q1 Linux release, pinned by digest. Its fixture comes from the pinned pylabview
-LV2014 example and is SHA256-checked before use. Successful processing would prove
-that this runtime can load/compile that input; it would not prove semantic reading,
+LV2014 example and is SHA256-checked before use. Successful processing proves
+that this runtime can load/compile that input; it does not prove semantic reading,
 all-version compatibility, VI Scripting availability, or native LabVIEW 2024.
 
 The official registry lists no LabVIEW 2024 image as of 18 October 2026. A separate
@@ -163,14 +166,39 @@ The official registry lists no LabVIEW 2024 image as of 18 October 2026. A separ
 is needed. Using the newer runtime for this setup check does not select the fallback
 or change the owner's goal of all versions.
 
+### Hosted result, 18 October 2026
+
+[LabVIEW cloud runtime run 39113730426](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39113730426)
+passed on hosted Ubuntu 24.04. LabVIEWCLI connected to native LabVIEW, completed
+MassCompile and CloseLabVIEW, and the job exited successfully. The installed core
+package is `26.1.0.49387-0+f235`. The source SHA256 was
+`b6f8934ee58eb3418902b181379064aa77e558cb33f46e45bb179a96b235dd8a`;
+the disposable compiled copy became
+`406813850fb2fd931248f4fb7c997d9d597f6486704d5ebb4f57074cb1124ac9`.
+Only logs/package information and the JSON summary were uploaded, not VI files
+or a container image. No NI login, model secrets or outgoing container network
+was needed. The first attempt exposed an inherited-output pipe waiting after
+compilation; replacing the pipe with file capture resolved it, as the successful
+run verifies.
+
+[Environment readiness run 39113286966](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39113286966)
+also passed 284 engine tests (11 skipped), public-source preparation, isolation,
+Codex and Copilot model probes. Claude correctly remained `quota`; the workflow
+did not call it available. The run included the guarded Codex credential-store
+steps, but full lifecycle failure/recovery and multi-provider task execution still
+belong to the separate integration topic.
+
 NI's published [software license agreement](https://www.ni.com/content/dam/web/pdfs/legal/software_license_agreement_en.pdf)
 and [Community usage guidance](https://www.ni.com/en/support/documentation/supplemental/20/labview-community-edition-usage-details.html)
-must be checked against the owner's actual entitlement and intended cloud use.
-The account/license documents and cloud hosting choice are unresolved. No license
-purchase, cloud VM purchase or license acceptance has been made.
+were used to assess the confirmed Community license and personal use. The cloud
+baseline uses GitHub-hosted Ubuntu and the official headless image for analysis/build
+automation under the interpretation stated above. No license or cloud VM purchase
+was made, and no account activation or licensed local installation was transferred.
 
-To complete the environment topic: verify a permitted LabVIEW cloud installation,
-its activation and unattended read/automation operation; verify durable account
-renewal and real responses from all three cloud providers; then link those results
-in the issue resolution. Until then the environment topic remains open, and the
-public parser checks must not be presented as full LabVIEW readiness.
+The environment baseline records tested public sources, a native cloud runtime,
+account-access observations and known restrictions. It does not accept a new
+product success gate. Shared availability, ordinary task adapters, credential
+lifecycle recovery and continuation across limits belong to the owner-approved
+multi-provider integration topic and remain unfinished. Native 2024 execution,
+all-version compatibility and full semantic reading remain unverified and must
+not be reported as solved by this environment check.
