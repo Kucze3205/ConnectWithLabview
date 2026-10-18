@@ -22,17 +22,18 @@ def main():
     policymaker = '--policymaker' in sys.argv
     role = 'policymaker' if policymaker else 'worker'
     proof_file = 'policy/provider-proof.txt' if policymaker else 'src/provider-proof.txt'
+    source_run = os.environ.get('RESUME_SOURCE_RUN', os.environ['GITHUB_RUN_ID']) if resume else os.environ['GITHUB_RUN_ID']
     repository = os.environ['GITHUB_REPOSITORY']
     # No live issue can have this synthetic number. Separate task ref and state
     # per run, so repeated cloud tests do not rewrite a user's work.
-    issue = ('9001' if policymaker else '9000') + os.environ['GITHUB_RUN_ID']
+    issue = ('9001' if policymaker else '9000') + source_run
     owner = {'providers': {'claude': {'models': ['claude-opus-5-5' if policymaker else 'claude-sonnet-5-5']},
                            'codex': {'models': ['gpt-6-astra' if policymaker else 'gpt-6.1-sol']},
                            'copilot': {'models': ['gpt-5.6-luna']}},
              'backoff': {'initial_seconds': 300, 'max_seconds': 21600}}
     candidates = [{'provider': provider, 'model': entry['models'][0]} for provider, entry in owner['providers'].items()]
     policy = {'tasks': {role: [candidates[2]] if resume else candidates[:2]}}
-    report = {'status': 'failed', 'stage': 'prepare', 'role': role}
+    report = {'status': 'failed', 'stage': 'prepare', 'role': role, 'source_run': source_run}
     try:
         with tempfile.TemporaryDirectory(prefix='runtime-proof-') as directory:
             work = Path(directory, 'work')
@@ -59,9 +60,9 @@ def main():
             # Keep smoke availability distinct from real loop availability.
             class SmokeStore:
                 def read(self, key):
-                    return store.read('proof-' + role + '-' + os.environ['GITHUB_RUN_ID'] + '/' + key)
+                    return store.read('proof-' + role + '-' + source_run + '/' + key)
                 def update(self, key, change):
-                    return store.update('proof-' + role + '-' + os.environ['GITHUB_RUN_ID'] + '/' + key, change)
+                    return store.update('proof-' + role + '-' + source_run + '/' + key, change)
             durable = SmokeStore()
             if not resume:
                 # Real GitHub content-SHA contention on one file, separate

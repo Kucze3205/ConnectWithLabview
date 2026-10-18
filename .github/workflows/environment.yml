@@ -229,13 +229,16 @@ jobs:
           path: ${{ runner.temp }}/runtime-proof.json
 
   runtime-resume:
-    needs: runtime-proof
-    if: always() && needs.runtime-proof.result == 'success'
+    needs: [engine-tests, runtime-proof]
+    if: always() && needs.engine-tests.result == 'success' && github.repository == 'Kucze3205/ConnectWithLabview' && github.actor == github.repository_owner && github.ref == 'refs/heads/perpetua/setup'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         role: [worker, policymaker]
+    concurrency:
+      group: runtime-recovery-${{ matrix.role }}
+      cancel-in-progress: false
     environment: provider-claude
     permissions:
       contents: write
@@ -260,6 +263,9 @@ jobs:
           COPILOT_GITHUB_TOKEN: ${{ github.token }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PROOF_ROLE: ${{ matrix.role }}
+          # This previously verified checkpoint keeps recovery testable when
+          # current subscription capacity prevents creating another fixture.
+          RESUME_SOURCE_RUN: ${{ needs.runtime-proof.result == 'success' && github.run_id || '39115592839' }}
         run: |
           if [ "$PROOF_ROLE" = policymaker ]; then
             python3 .github/loop/runtime_smoke.py --resume --policymaker
