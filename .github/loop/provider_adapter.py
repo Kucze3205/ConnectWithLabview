@@ -77,19 +77,33 @@ def isolated(provider, credential, timeout):
                                                                  "accessToken": tokens["access_token"],
                                                                  "chatgptAccountId": account}))
             else:
-                result = rpc.call("connect", {})
-                error = result.get("rpc_error", {}) if isinstance(result, dict) else {}
-                if error.get("code") == -32601 or "Unhandled method" in str(error.get("message", "")):
-                    result = rpc.call("ping", {"message": "loop-broker"})
-                checked(provider, result)
+                # Pinned 1.0.98 owns a local stdio child, not a remote transport.
+                # Newer SDK connect handshakes are unnecessary for this pin.
+                checked(provider, rpc.call("ping", {"message": "loop-broker"}))
             yield root, env, rpc
 
 
 def models(provider, credential, timeout=90):
     if provider == "claude":
-        # Claude has no supported catalog RPC. These are the pinned engine's
-        # configured IDs, which still require a successful real request.
-        return {"source": "engine_config", "models": []}
+        with isolated(provider, credential, timeout) as (root, env, _):
+            command = ["claude", "-p", "--input-format", "stream-json", "--output-format", "stream-json",
+                       "--verbose", "--tools", "", "--setting-sources", "", "--no-session-persistence",
+                       "--strict-mcp-config", "--mcp-config", str(root / "mcp.json")]
+            with RPC(sandbox(command, root), cwd=root, env=env, timeout=timeout) as rpc:
+                rpc.write({"type": "control_request", "request_id": "catalog",
+                           "request": {"subtype": "initialize", "hooks": None}})
+                while True:
+                    event = rpc.receive()
+                    response = event.get("response", {})
+                    if event.get("type") == "control_response" and response.get("request_id") == "catalog":
+                        if response.get("subtype") != "success":
+                            raise failure(provider, response)
+                        entries = response.get("response", {}).get("models", [])
+                        catalog = [{"id": m.get("resolvedModel") or m["value"], "alias": m["value"],
+                                    "default": m["value"] == "default"} for m in entries]
+                        if not catalog:
+                            raise failure(provider, {"message": "empty model catalog"})
+                        return {"source": "provider_control", "models": catalog}
     with isolated(provider, credential, timeout) as (_, _, rpc):
         entries, cursor = [], None
         while True:
