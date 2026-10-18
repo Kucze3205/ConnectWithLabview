@@ -148,7 +148,8 @@ def parse_action(provider, text):
         raise Failure({"status": "unknown", "scope": "model", "reason": "invalid_action"}) from None
 
 
-def request(provider, model, credential, prompt, effort="medium", timeout=180):
+def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None):
+    metadata = metadata if metadata is not None else {}
     with isolated(provider, credential, timeout) as (root, env, rpc):
         if provider == "claude":
             command = ["claude", "-p", prompt, "--model", model, "--effort", effort,
@@ -163,6 +164,7 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180):
                 raise failure(provider, result.stdout + result.stderr) from None
             if result.returncode or output.get("is_error"):
                 raise failure(provider, output)
+            metadata['models'] = list(output.get('modelUsage') or {})
             structured = output.get("structured_output")
             return validate(structured) if isinstance(structured, dict) else parse_action(provider, output.get("result", ""))
         if provider == "codex":
@@ -173,13 +175,16 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180):
                      "approvalPolicy": "never", "input": [{"type": "text", "text": prompt}],
                      "outputSchema": ACTION_SCHEMA}))
         else:
-            started = checked(provider, rpc.call("session.create", {"model": model, "availableTools": [], "tools": [],
+            params = {"availableTools": [], "tools": [],
                       "excludedTools": [], "requestPermission": False, "requestUserInput": False,
-                      "hooks": False, "workingDirectory": str(root), "streaming": False}))
+                      "hooks": False, "workingDirectory": str(root), "streaming": False}
+            if model:
+                params['model'] = model
+            started = checked(provider, rpc.call("session.create", params), 'session.create')
             thread = started["sessionId"]
             checked(provider, rpc.call("session.send", {"sessionId": thread, "prompt": prompt,
                       "responseFormat": {"type": "json_schema", "jsonSchema": {
-                          "name": "action", "strict": True, "schema": ACTION_SCHEMA}}}))
+                          "name": "action", "strict": True, "schema": ACTION_SCHEMA}}}), 'session.send')
         answer = None
         pending, rpc.notifications = rpc.notifications, []
         while True:
@@ -205,6 +210,9 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180):
             elif method == "session.event" and params.get("sessionId") == thread:
                 item = params.get("event") or {}
                 kind, data = item.get("type"), item.get("data", {})
+                if kind == 'assistant.usage':
+                    if isinstance(data.get('model'), str):
+                        metadata['models'] = [data['model']]
                 if kind == "assistant.message":
                     if data.get("toolRequests"):
                         raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})

@@ -20,15 +20,23 @@ def check(provider, codex_home=None):
     try:
         if not credential:
             raise Failure({"status": "auth_failure", "scope": "provider", "reason": "missing_secret"})
-        catalog = models(provider, credential)
+        try:
+            catalog = models(provider, credential)
+        except Failure as error:
+            if provider != 'copilot' or error.observation.get('reason') != 'empty_model_catalog':
+                raise
+            catalog = {'source': 'provider_rpc', 'models': [], 'reason': 'empty_model_catalog'}
         result["catalog"] = catalog
         model = "claude-sonnet-5-5" if provider == "claude" else next(
-            (m["id"] for m in catalog["models"] if m["default"]), catalog["models"][0]["id"])
+            (m["id"] for m in catalog["models"] if m["default"]),
+            catalog["models"][0]["id"] if catalog['models'] else None)
         result["model"] = model
         prompt = ('Return a single JSON object matching this schema: ' + json.dumps(ACTION_SCHEMA) +
                   '. Set tool="Finish", status="done", text="BROKER_READY", and every other field to an empty string. '
                   'Do not use native tools. The parent process executes role tools.')
-        action = request(provider, model, credential, prompt)
+        metadata = {}
+        action = request(provider, model, credential, prompt, metadata=metadata)
+        result['execution_models'] = metadata.get('models', [])
         if (action["tool"], action["status"], action["text"]) != ("Finish", "done", "BROKER_READY"):
             raise Failure({"status": "unknown", "scope": "model", "reason": "unexpected_action"})
         result.update(status="available", scope="model", reason="structured_action_accepted")
