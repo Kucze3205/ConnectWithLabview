@@ -176,6 +176,11 @@ was blindly replayed. The source refs are `task/900039136473067` and
 The complete run remains red solely because Claude's independent readiness call
 reports quota. During an earlier run Codex also reported quota; no capacity was
 invented or spending enabled. A later actual request again proved Codex available.
+The follow-up [Haiku check](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39136965641)
+also reported quota for `claude-haiku-4-5-20251001` before falling back to Codex.
+Thus the remaining positive Claude task cannot currently be established by
+switching from Sonnet/Opus to that lighter model. No provider reset timestamp was
+invented and no paid API or extra usage was enabled.
 
 ## Remaining verification
 
