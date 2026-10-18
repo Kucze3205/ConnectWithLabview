@@ -15,5 +15,8 @@ test -s /probe/installed-version.txt
 test -s /probe/fixtures/empty_vifile.vi
 LabVIEWCLI -LogToConsole TRUE -LogFilePath /probe/masscompile.log \
   -OperationName MassCompile -DirectoryToCompile /probe/fixtures \
-  -LabVIEWPath "$LV_PATH" -Headless 2>&1 | tee /probe/console.log
+  -LabVIEWPath "$LV_PATH" -Headless > /probe/console.log 2>&1
+# The long-lived LabVIEW child inherits stdout. A pipe to tee waits for that
+# child to close the descriptor, preventing the EXIT trap from stopping it.
+cat /probe/console.log
 grep -F 'MassCompile operation succeeded' /probe/console.log
