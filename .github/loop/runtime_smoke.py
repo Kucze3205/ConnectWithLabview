@@ -27,7 +27,7 @@ def main():
     # No live issue can have this synthetic number. Separate task ref and state
     # per run, so repeated cloud tests do not rewrite a user's work.
     issue = ('9001' if policymaker else '9000') + source_run
-    owner = {'providers': {'claude': {'models': ['claude-opus-5-5' if policymaker else 'claude-sonnet-5-5']},
+    owner = {'providers': {'claude': {'models': ['claude-opus-5-5' if policymaker else 'claude-haiku-4-5-20251001']},
                            'codex': {'models': ['gpt-6-astra' if policymaker else 'gpt-6.1-sol']},
                            'copilot': {'models': ['gpt-5.6-luna']}},
              'backoff': {'initial_seconds': 300, 'max_seconds': 21600}}
