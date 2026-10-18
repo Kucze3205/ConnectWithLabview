@@ -29,10 +29,13 @@ OWNED = ("attempts", "resume_after", "kicks", "kicked", "conflicts", "cause", "v
          "merged", "detail", "model", "effort", "turns", "peak_context", "tokens_in", "tokens_out", "cache_read", "cache_write",
          "models", "agent_s", "gate_s", "total_s", "parked_s", "paused_at", "runner", "branch", "iteration", "artifacts",
          "verifier_issue", "verified_commit", "verifier_passed")
-SECRETS = ("GH_TOKEN", "GITHUB_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN")
+SECRETS = ("GH_TOKEN", "GITHUB_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "CODEX_AUTH_JSON", "CODEX_CI_AUTH_JSON",
+           "CODEX_WORKER_AUTH_JSON", "COPILOT_GITHUB_TOKEN", "COPILOT_SDK_AUTH_TOKEN",
+           "CREDENTIAL_STORE_TOKEN", "CREDENTIAL_STORE_APP_PRIVATE_KEY")
 
 DEFAULT_TOOLS = ["Read", "Grep", "Glob", "Write", "Edit", "Skill", "Bash(git:*)", "Bash(python3:*)"]
 DEFAULTS = {
+    "provider_pool": None,
     "cli_version": "2.1.284",
     "author": {"name": "", "email": ""},
     "owner": "",

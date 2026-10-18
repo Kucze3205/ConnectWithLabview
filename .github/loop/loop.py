@@ -77,11 +77,23 @@ def session_options(i, role, p):
     turns = min(int(x) for x in (lim.get("max_turns") or 10**6, p.get("max_turns") or ceil["max_turns"], ceil["max_turns"]))
     fingerprint = {"profile": p, "limits": cfg["limits"], "cli_version": cfg["cli_version"], "gate": cfg["gate"],
                    "policymaker_session_ceilings": cfg.get("policymaker_session_ceilings")}
-    return {"kind": "script" if p.get("agent") is False else "agent", "role": role,
+    if cfg.get("provider_pool") and p.get("agent") is not False:
+        import provider_pool
+        routing = c.params().get("routing") or {}
+        task = "policymaker" if role == "policymaker" else c.label_value(labels, "route:") or (
+            role if role in routing.get("tasks", {}) else "default")
+        provider_pool.select_candidate(cfg["provider_pool"], routing, {}, task, c.now())
+        fingerprint.update(provider_pool=cfg["provider_pool"], routing=routing, task=task)
+    options = {"kind": "script" if p.get("agent") is False else "agent", "role": role,
             "model": model, "effort": effort, "tools": ",".join(list(p.get("tools") or []) + ["Skill"]),
             "max_turns": turns, "agent_timeout": timeout, "job_timeout": timeout + gate_min + 30,
             "iteration": "%04d" % (c.iteration_of(labels) or 0),
             "profile_digest": hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()}
+    if cfg.get("provider_pool") and p.get("agent") is not False:
+        options.update(execution="routed", routing_task=task)
+    else:
+        options.update(execution="legacy", routing_task="")
+    return options
 
 
 def resolve(n):
@@ -195,10 +207,24 @@ def stage(n, work, trusted):
         dest = os.path.join(os.path.expanduser("~"), ".claude", "skills", role)
         shutil.rmtree(dest, ignore_errors=True)
         shutil.copytree("policy/roles/%s" % role, dest)
-        if not p.get("internet", False):
+        if not p.get("internet", False) or c.cfg().get("provider_pool"):
             staged_role = os.path.join(sess, "role")
             shutil.rmtree(staged_role, ignore_errors=True)
             shutil.copytree("policy/roles/%s" % role, staged_role)
+    if c.cfg().get("provider_pool") and p.get("agent") is not False:
+        options = session_options(i, role, p)
+        for name in ("runtime_entry.py", "runtime_checkpoint.py", "runtime_store.py", "role_runtime.py", "tool_broker.py",
+                     "provider_adapter.py", "provider_rpc.py", "provider_pool.py", "cloud_probe.py", "probe_isolation.py", "common.py"):
+            shutil.copy(".github/loop/" + name, trusted)
+        with open(os.path.join(trusted, "runtime.json"), "w", encoding="utf-8") as fh:
+            json.dump({"owner": c.cfg()["provider_pool"], "policy": c.params()["routing"], "profile": p,
+                       "config": c.cfg(), "task": options["routing_task"], "fingerprint": options["profile_digest"]}, fh)
+        prompt_path = os.path.join(trusted, "prompt.md")
+        with open(prompt_path, encoding="utf-8") as fh:
+            prompt = fh.read().replace("Call the Skill tool with `%s`. " % role,
+                                      "Read .session/role/SKILL.md and its relevant references. ")
+        with open(prompt_path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(prompt)
     # Skill hooks and interpolation execute outside the Bash tool sandbox.
     if p.get("agent") is not False and not p.get("internet", False):
         for root in (os.path.join(work, ".claude", "skills"), os.path.join(os.path.expanduser("~"), ".claude", "skills")):
@@ -526,6 +552,7 @@ def finalize(n, work):
     k = c.iteration_of(labels) or 0
     p = profile_of(role) or {}
     script = p.get("agent") is False
+    routed = bool(c.cfg().get("provider_pool")) and not script
     text = c.safe_read(work, ".session/report.md")
     if text:
         c.publish(n, text)
@@ -543,6 +570,21 @@ def finalize(n, work):
         upd["cause"] = "exit=%s" % exit_code if exit_code not in ("0", "") else None
         status = "done" if exit_code == "0" else "crashed"
         prose = "Script %s.\n" % ("finished" if status == "done" else "failed (exit %s)" % exit_code) + (c.safe_read(tmp, "script-output.txt") or "")[-1500:]
+    elif routed:
+        try:
+            with open(os.path.join(tmp, "provider-execution-output.json"), encoding="utf-8") as fh:
+                execution = json.load(fh)
+        except (OSError, ValueError):
+            execution = {}
+        status = execution.get("status")
+        if status not in c.AGENT_STATUSES | {"paused"}:
+            status = "crashed"
+        limited = status == "paused"
+        reset = c.parse_time(execution["retry_after"]) if execution.get("retry_after") else None
+        upd.update(cause="providers:unavailable" if limited else execution.get("reason"),
+                   model=(execution.get("candidate") or {}).get("model"), effort=os.environ.get("EFFORT"),
+                   turns=execution.get("turns"))
+        prose = "All policy candidates are unavailable; durable checkpoint retained for resume." if limited else ""
     else:
         cause, limited, reset = machine_cause(exec_path, exit_code)
         upd["cause"] = cause or None
@@ -616,7 +658,7 @@ def finalize(n, work):
     elif status not in ("done", "paused") and sha and role != "policymaker":
         merge_notes(n, role)
     if status == "paused":
-        if park(n, i, f, upd, prose, reset):
+        if park(n, i, f, upd, prose, reset, durable=routed):
             session_reports.capture(n, work)
             return
         status, prose = "crashed", "Resumes exhausted or the issue is too old."
@@ -675,10 +717,10 @@ def tag_unmerged(n, k, upd):
         c.git(".", "push", "-q", "-f", "origin", "refs/heads/task/%s:refs/tags/iter/%04d/%s" % (n, k, n), check=False, remote=True)
 
 
-def park(n, i, f, upd, prose, reset):
+def park(n, i, f, upd, prose, reset, durable=False):
     kk = int(f.get("attempts", 0)) + 1
     age = (c.now() - c.parse_time(i["created_at"])).days
-    if kk > MAX_ATTEMPTS or age >= MAX_AGE_DAYS:
+    if not durable and (kk > MAX_ATTEMPTS or age >= MAX_AGE_DAYS):
         return False
     when = reset or c.now() + timedelta(hours=BACKOFF_H[min(kk - 1, len(BACKOFF_H) - 1)])
     c.update_report(n, dict(upd, status="paused", attempts=kk, resume_after=c.iso(when), paused_at=c.iso()), prose)
@@ -912,7 +954,7 @@ def reconcile():
 def watch():
     if not c.guard_ok() or c.outage_open():
         return 0
-    code = c.probe()
+    code = None if c.cfg().get("provider_pool") else c.probe()
     if code in (401, 403):
         c.open_outage("dead Claude credential (HTTP %s)" % code, "The probe of `CLAUDE_CODE_OAUTH_TOKEN` returned %s. No session can start." % code,
                       "Generate a new token (`claude setup-token`) and store it as the repo secret. Then close this issue.")
@@ -1071,6 +1113,9 @@ def main(argv):
     if cmd == "guard":
         return 0 if c.guard_ok() else 10
     if cmd == "probe":
+        if c.cfg().get("provider_pool"):
+            print("probe: provider availability is checked by the routed execution engine")
+            return 0
         code = c.probe()
         print("probe: HTTP %s" % code)
         return 1 if code in (401, 403) else 0
