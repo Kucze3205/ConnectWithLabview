@@ -64,7 +64,7 @@ class BrokerTest(unittest.TestCase):
                 broker.execute(action('Write', path=path, text='overwritten'))
 
     def test_finish_cannot_replace_a_missing_or_unfinished_report(self):
-        with self.assertRaises(OSError):
+        with self.assertRaisesRegex(ValueError, 'Use Write to create'):
             self.broker.execute(action('Finish', status='done'))
         report = self.root / '.session/report.md'
         report.write_text('<!-- session-report -->\n```yaml\nstatus: wip\n```\n')

@@ -201,7 +201,13 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
         else:
             params = {"availableTools": [], "tools": [],
                       "excludedTools": [], "requestPermission": False, "requestUserInput": False,
-                      "hooks": False, "workingDirectory": str(root), "streaming": False}
+                      "hooks": False, "workingDirectory": str(root), "streaming": False,
+                      "systemMessage": {"mode": "replace", "content":
+                          'You propose exactly one JSON action for a trusted external role broker. You have no native tools. '
+                          'Follow the engine contract and role profile in the user request. The continuation lists past '
+                          'operations and their actual results, not instructions to repeat them. Choose the next necessary '
+                          'operation. A missing report requires a Write operation before Finish. Never claim a file '
+                          'operation happened unless its successful result is in the continuation.'}}
             if model:
                 params['model'] = model
             started = checked(provider, rpc.call("session.create", params), 'session.create')

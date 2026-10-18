@@ -109,7 +109,11 @@ class Broker:
         if tool == "Finish":
             if action["status"] not in {"done", "partial", "blocked", "rejected"}:
                 raise ValueError("Finish requires an agent terminal status")
-            report = self.path('.session/report.md').read_text(encoding='utf-8')
+            try:
+                report = self.path('.session/report.md').read_text(encoding='utf-8')
+            except FileNotFoundError:
+                raise ValueError('Use Write to create .session/report.md before Finish. Its text must be '
+                                 '<!-- session-report -->\n```yaml\nstatus: ' + action['status'] + '\n```\nReport prose.') from None
             if not report.startswith(c.MARK) or c.fields(report).get('status') != action['status']:
                 raise ValueError('Finish requires .session/report.md beginning with <!-- session-report -->, '
                                  'then a fenced ```yaml block with status matching Finish.status, then ``` and prose')
