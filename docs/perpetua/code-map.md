@@ -42,6 +42,11 @@ The engine uses the accepted checkout; agent commits enter through `fetch_candid
 | Historical input staging | `session_exports.py` | `test_exports.py` |
 | Isolation and credentials | `session_security.py`, `agent.sh`, `offline_exec.py` | `test_security.py`, `test_static.py` |
 | Recovery and parked sessions | `loop.watch`, `drive`, `resume`; `stream_filter.py` | `test_watchdog.py`, `test_stream.py` |
+| Provider transports and catalogs | `provider_adapter.py`, `provider_rpc.py`, `provider_contract.py` | `test_provider_adapter.py`, `test_provider_rpc.py`; cloud provider jobs |
+| Role tools and prepared-source access | `tool_broker.py`, `offline_exec.py`, `probe_isolation.py` | `test_tool_broker.py`; cloud kernel isolation |
+| Routing, shared availability and continuation | `provider_pool.py`, `role_runtime.py`, `runtime_entry.py`, `runtime_store.py` | `test_provider_pool.py`, `test_role_runtime.py`, `test_runtime_store.py`, `test_routed_session.py` |
+| Durable source/output checkpoints | `runtime_checkpoint.py`, `runtime_smoke.py` | `test_runtime_checkpoint.py`; separate cloud interruption/resume runners |
+| Dedicated credential renewal | `credential_store.py`; `credential-maintenance.yml` | `test_credential_store.py`; serialized cloud maintenance proof |
 
 `common.py` owns shared configuration, GitHub and git operations. Tests replace
 GitHub operations with `tests/fakes.py` and use real temporary git repositories.

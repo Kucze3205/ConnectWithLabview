@@ -261,6 +261,12 @@ Changes to routing are validated before policy merges and again at session start
 Legacy `model:` aliases and `policymaker_session.model` apply to the old Claude
 path; routed selection is controlled by the ordered candidate lists. Effort,
 time and action-count ceilings continue to constrain every provider.
+The routed `max_turns` is a hard cap on proposed broker actions, rather than a
+portable count of provider-internal inference turns. Unexpected native tool
+requests terminate the transport; per-request deadlines and the session's outer
+process timeout bound internal work. This replaces the Claude-only CLI turn cap
+with an action cap plus wall-clock enforcement. Observed token/cache usage is
+recorded by provider/model; it is not a provider billing ledger.
 
 The setup enables this path in configuration while AUTOPILOT remains off.
 `session.yml` refreshes Codex through a separate serialized trusted workflow,
@@ -300,6 +306,9 @@ inspect the current files. Extraction accepts only canonical declared outputs;
 staged inputs cannot be replaced. Archives have a 2 GB restoration bound.
 The normal epilogue, protected-path checks, independent evaluator verification
 and change gate still decide what may enter the default branch.
+An execution/store failure or a killed worker with a saved continuation parks
+the same issue for recovery. Git subprocess errors are sanitized before they
+can expose an encoded authorization header in a traceback.
 
 Cloud evidence and remaining checks are in [cloud-authentication.md](cloud-authentication.md).
 This setup verification never enables AUTOPILOT and does not implement the product.
