@@ -71,7 +71,7 @@ class RuntimeTest(unittest.TestCase):
         self.assertEqual(result['status'], 'done')
 
     def test_interrupted_command_is_never_blindly_replayed(self):
-        state = {'fingerprint': 'fingerprint', 'turns': 1, 'history': [],
+        state = {'fingerprint': 'previous-policy-fingerprint', 'turns': 1, 'history': [],
                  'pending': action('Bash', command='python3 migration.py')}
         self.store.update('sessions/11.json', lambda _: state)
         def request(*args, **kwargs):

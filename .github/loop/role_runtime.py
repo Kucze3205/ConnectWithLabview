@@ -82,9 +82,13 @@ class Runtime:
 
     def run(self, max_turns, seconds):
         state = self.store.read(self.key)
-        if state.get("fingerprint") != self.fingerprint:
+        if not state:
             state = {"fingerprint": self.fingerprint, "turns": 0, "history": []}
-        elif state.get("pending"):
+        else:
+            # A new accepted policy changes permissions, not the fact that an
+            # earlier operation may already have run. Preserve that evidence.
+            state['fingerprint'] = self.fingerprint
+        if state.get("pending"):
             state["history"].append({"recovery": "The runner stopped with this action pending. It may have run. "
                                      "Inspect the current files before proposing another operation.",
                                      "action": state.pop("pending")})

@@ -19,16 +19,20 @@ class InterruptedCheckpoint(RuntimeError):
 
 def main():
     resume = '--resume' in sys.argv
+    policymaker = '--policymaker' in sys.argv
+    role = 'policymaker' if policymaker else 'worker'
+    proof_file = 'policy/provider-proof.txt' if policymaker else 'src/provider-proof.txt'
     repository = os.environ['GITHUB_REPOSITORY']
     # No live issue can have this synthetic number. Separate task ref and state
     # per run, so repeated cloud tests do not rewrite a user's work.
-    issue = '9000' + os.environ['GITHUB_RUN_ID']
-    owner = {'providers': {'claude': {'models': ['claude-sonnet-5-5']},
-                           'codex': {'models': ['gpt-6.1-sol']}, 'copilot': {'models': ['gpt-5.6-luna']}},
+    issue = ('9001' if policymaker else '9000') + os.environ['GITHUB_RUN_ID']
+    owner = {'providers': {'claude': {'models': ['claude-opus-5-5' if policymaker else 'claude-sonnet-5-5']},
+                           'codex': {'models': ['gpt-6-astra' if policymaker else 'gpt-6.1-sol']},
+                           'copilot': {'models': ['gpt-5.6-luna']}},
              'backoff': {'initial_seconds': 300, 'max_seconds': 21600}}
     candidates = [{'provider': provider, 'model': entry['models'][0]} for provider, entry in owner['providers'].items()]
-    policy = {'tasks': {'proof': candidates[:2], 'resume': [candidates[2]]}}
-    report = {'status': 'failed', 'stage': 'prepare'}
+    policy = {'tasks': {role: [candidates[2]] if resume else candidates[:2]}}
+    report = {'status': 'failed', 'stage': 'prepare', 'role': role}
     try:
         with tempfile.TemporaryDirectory(prefix='runtime-proof-') as directory:
             work = Path(directory, 'work')
@@ -42,11 +46,12 @@ def main():
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
             (work / '.git/info/exclude').write_text('.session/\n')
             (work / '.session').mkdir()
-            (work / '.session/issue.md').write_text('Write src/provider-proof.txt containing exactly BROKER_TASK_READY. '
+            (work / '.session/issue.md').write_text('Write ' + proof_file + ' containing exactly BROKER_TASK_READY. '
                 'Read it back to verify. Write .session/report.md with the session report marker and YAML status done. '
                 'Use this exact report format: <!-- session-report -->\n```yaml\nstatus: done\n```\nReport prose.\n'
                 'Then propose Finish with status done. Use only role tools, no native tools.')
-            broker = Broker(work, {'tools': ['Read', 'Write', 'Edit', 'Glob', 'Grep'], 'write': ['src/**']},
+            broker = Broker(work, {'tools': ['Read', 'Write', 'Edit', 'Glob', 'Grep'],
+                                  'write': ['policy/'] if policymaker else ['src/**']},
                             {'protected': ['.github/', 'engine.yml', 'goal/'], 'evaluator_paths': ['policy/evaluator/']})
             backend = GitHubBackend(repository, base=os.environ.get('DEFAULT_BRANCH', 'main'))
             backend.initialize()
@@ -54,9 +59,9 @@ def main():
             # Keep smoke availability distinct from real loop availability.
             class SmokeStore:
                 def read(self, key):
-                    return store.read('proof-' + os.environ['GITHUB_RUN_ID'] + '/' + key)
+                    return store.read('proof-' + role + '-' + os.environ['GITHUB_RUN_ID'] + '/' + key)
                 def update(self, key, change):
-                    return store.update('proof-' + os.environ['GITHUB_RUN_ID'] + '/' + key, change)
+                    return store.update('proof-' + role + '-' + os.environ['GITHUB_RUN_ID'] + '/' + key, change)
             durable = SmokeStore()
             if not resume:
                 # Real GitHub content-SHA contention on one file, separate
@@ -78,21 +83,23 @@ def main():
             if resume:
                 previous = durable.read('sessions/' + issue + '.json')
                 checkpoint.restore(previous)
-                if (work / 'src/provider-proof.txt').read_text().strip() != 'BROKER_TASK_READY':
+                if (work / proof_file).read_text().strip() != 'BROKER_TASK_READY':
                     raise RuntimeError('new runner lost accepted code')
-                prompt = ('The previous runner completed the file task. Verify src/provider-proof.txt and '
+                prompt = ('The previous runner completed the file task. Verify ' + proof_file + ' and '
                           '.session/report.md using Read. If the report is missing after interruption, create it '
                           'with the session report marker and YAML status done, then Finish done. '
                           'Do not replace the accepted source file.')
             def durable_checkpoint(state):
                 saved = checkpoint(state)
-                if not resume and (work / 'src/provider-proof.txt').exists():
+                if not resume and (work / proof_file).exists():
                     # Simulate the exact crash window after file push but before
                     # continuation CAS. The next runner sees pending intent and
                     # must inspect the remotely saved file, never replay it.
                     raise InterruptedCheckpoint()
                 return saved
-            runtime = Runtime(owner, policy, 'resume' if resume else 'proof', durable, 'sessions/' + issue + '.json', broker,
+            if policymaker:
+                prompt = 'You are the Policymaker in an isolated setup test. Write only policy/ and session outputs. ' + prompt
+            runtime = Runtime(owner, policy, role, durable, 'sessions/' + issue + '.json', broker,
                               durable_checkpoint, credentials, prompt, 'smoke-v1')
             try:
                 result = runtime.run(12, 240)
@@ -109,12 +116,12 @@ def main():
                 return 0
             report.update(result)
             state = durable.read('sessions/' + issue + '.json')
-            if result['status'] != 'done' or (work / 'src/provider-proof.txt').read_text().strip() != 'BROKER_TASK_READY':
+            if result['status'] != 'done' or (work / proof_file).read_text().strip() != 'BROKER_TASK_READY':
                 raise RuntimeError('proof task incomplete')
             if resume:
                 reads = {item.get('action', {}).get('path') for item in state['history'][len(previous['history']):]
                          if item.get('action', {}).get('tool') == 'Read'}
-                if not {'src/provider-proof.txt', '.session/report.md'} <= reads:
+                if not {proof_file, '.session/report.md'} <= reads:
                     raise RuntimeError('resume provider did not verify accepted work')
             # Replace session outputs as if the runner were lost, restore from
             # remote release, then confirm the report and source both survived.
