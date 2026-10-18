@@ -13,6 +13,14 @@ iteration starts.
 This contract belongs to the engine: only the owner changes it. Read `.session/protocol.md` first.
 Your editable work instructions are staged in `.session/policymaker.md`.
 
+When the engine enables provider routing, choose ordered provider/model candidates
+through `policy/params.yml.routing.tasks`, including `policymaker`. The owner catalog
+is `engine.yml.provider_pool`; you cannot add model IDs or adapter options there.
+Use task classes (role names, the declared default, or a `route:<class>` label) to
+select policy routes. The legacy `models` aliases and `policymaker_session.model`
+do not override routed execution. Existing effort, turn and time ceilings still
+apply. A limited provider can fall back only to candidates declared by policy.
+
 ## Input
 
 - `.session/loop-state.json`: why you were called (`trigger`), the goal (and its accepted gate, if any), parameters and

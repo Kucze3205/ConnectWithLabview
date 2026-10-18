@@ -37,7 +37,19 @@ class Runtime:
         def changed(document):
             state = document.setdefault("availability", {})
             previous = document.setdefault("credentials", {})
+            # Owner catalog changes retain observations for surviving IDs while
+            # removing entries that no longer belong to the execution catalog.
+            for scope in ('providers', 'models'):
+                for provider in list(state.get(scope, {})):
+                    if provider not in self.owner['providers']:
+                        state[scope].pop(provider)
+                    elif scope == 'models':
+                        for model in list(state[scope][provider]):
+                            if model not in self.owner['providers'][provider]['models']:
+                                state[scope][provider].pop(model)
             for provider, identity in identities.items():
+                if provider not in self.owner['providers']:
+                    continue
                 if previous.get(provider) == identity:
                     continue
                 # New credentials permit a new authentication check. Neither

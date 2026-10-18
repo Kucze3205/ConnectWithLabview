@@ -79,7 +79,7 @@ def _record(owner, record):
             raise ValueError("retry_after must follow observed_at")
     if record["status"] in {"available"} | PERMANENT:
         if retry is not None:
-            raise ValueError("available/auth_failure cannot have retry_after")
+            raise ValueError("available or permanent failures cannot have retry_after")
         return None
     return retry if retry is not None else observed + timedelta(seconds=_delay(owner, attempts))
 
@@ -130,7 +130,7 @@ def select_candidate(owner, policy, state, task, now):
             ("provider", state.get("providers", {}).get(provider)),
             ("model", state.get("models", {}).get(provider, {}).get(model)),
         ]
-        blocked, waits, probe_scope = [], [], None
+        blocked, blocked_statuses, waits, probe_scope = [], [], [], None
         for scope, record in records:
             if record is None:
                 if scope == "model":
@@ -139,6 +139,7 @@ def select_candidate(owner, policy, state, task, now):
             status = record["status"]
             if status in PERMANENT:
                 blocked.append(scope)
+                blocked_statuses.append(status)
             elif status in TRANSIENT:
                 retry = _record(owner, record)
                 if retry > now:
@@ -146,7 +147,7 @@ def select_candidate(owner, policy, state, task, now):
                 else:
                     probe_scope = probe_scope or scope
         if blocked:
-            reasons.append(dict(candidate, reason="auth_failure", scopes=blocked))
+            reasons.append(dict(candidate, reason=blocked_statuses[0], scopes=blocked))
         elif waits:
             # Both model and provider restrictions must expire for this candidate.
             retry = max(waits)
@@ -159,7 +160,8 @@ def select_candidate(owner, policy, state, task, now):
             return result
     if retries:
         return {"action": "wait", "retry_after": _iso(min(retries)), "reasons": reasons}
-    return {"action": "blocked", "reason": "authentication_required", "reasons": reasons}
+    reason = "authentication_required" if any(r["reason"] == "auth_failure" for r in reasons) else "model_entitlement_required"
+    return {"action": "blocked", "reason": reason, "reasons": reasons}
 
 
 def record_outcome(owner, state, provider, model, status, now, retry_after=None, scope="model"):

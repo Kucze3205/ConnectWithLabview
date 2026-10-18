@@ -48,7 +48,9 @@ classification tests. It does not validate unfinished adapter integration.
 `.github/workflows/environment.yml` runs on setup-branch changes to environment
 code, and can be dispatched after GitHub registers the workflow. It does not call
 the loop, merge work, or enable `AUTOPILOT`. Repository Actions are enabled; the
-workflow needs only `contents: read` plus the selected provider's secret. No custom
+provider jobs need `contents: read` plus their provider permissions. Setup proof
+jobs additionally need `contents: write` for separate task refs, state and
+checkpoint assets; they do not merge to the default branch. No custom
 runner is registered. `AUTOPILOT=off` is explicit during setup.
 
 Pinned CLI packages are recorded in `.github/loop/cloud-providers.json`. Each
@@ -60,7 +62,7 @@ secret, exhausted quota or failed response fails that readiness check. Generic
 | Provider | Repository secret | Access semantics |
 |---|---|---|
 | Claude | `CLAUDE_CODE_OAUTH_TOKEN` | The owner created a supported long-lived token with `claude setup-token` and replaced the secret on 18 October 2026. Hosted probes reach the service but report subscription exhaustion. Track eventual replacement in the credential lifecycle. |
-| Codex | Bootstrap `CODEX_AUTH_JSON`; opt-in environment `CODEX_CI_AUTH_JSON` | The existing snapshot proves model access only. The new guarded secret round trip requires a dedicated CI login and the App described in cloud-authentication.md; it is not yet enabled or live-verified. |
+| Codex | Maintenance environment `CODEX_CI_AUTH_JSON`; execution `CODEX_WORKER_AUTH_JSON` | The owner provisioned the dedicated CI login and scoped App. Sequential cloud runners verified forced renewal and write-back; workers receive only access tokens. |
 | Copilot | Job `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job now requests `copilot-requests: write` and checks the pinned CLI. Current GitHub documentation supports this in personally owned repositories against the owner's seat. The earlier copied OAuth token remains stored but is no longer passed by this readiness job. |
 
 The owner requested access to these accounts for cloud execution. Bootstrap values

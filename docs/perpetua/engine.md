@@ -249,3 +249,57 @@ the provider check requires explicit opt-in and credentials. Exercise the deploy
 
 `python -m unittest discover -s .github/loop/tests` (needs `pyyaml`, `git`, `bash`). `fakes.py` is the fake GitHub and the
 git world. In a loop's repository the suites for the template (`test_static.py`) skip themselves.
+
+## Routed cloud execution
+
+`engine.yml.provider_pool` is the owner's provider/model allowlist and backoff
+bound. `policy/params.yml.routing.tasks` supplies ordered candidates per task
+class. A matching role class is used first, otherwise the explicitly declared
+`default`; `route:<class>` selects another declared class. Policymaker sessions
+always use `policymaker`. Policy cannot add IDs outside the owner's catalog.
+Changes to routing are validated before policy merges and again at session start.
+Legacy `model:` aliases and `policymaker_session.model` apply to the old Claude
+path; routed selection is controlled by the ordered candidate lists. Effort,
+time and action-count ceilings continue to constrain every provider.
+
+The setup enables this path in configuration while AUTOPILOT remains off.
+`session.yml` refreshes Codex through a separate serialized trusted workflow,
+then starts `runtime_entry.py` from the staged engine directory. The engine
+checkout is still removed. The trusted parent receives GitHub write authority;
+the model transports and role commands receive separate environment allowlists.
+No model sees the workspace, App key, writer token or renewable login bundle.
+Codex uses external tokens in memory; Claude has no native tools, and Copilot
+sessions have an explicit empty native-tool allowlist. Native tools cannot act
+on the role's workspace. Provider model connections remain online.
+
+Models propose one JSON operation. The trusted broker applies the role's tools,
+write paths, protected paths and evaluator ownership. Commands have immutable
+git metadata, no credential environment, and only permitted writable mounts.
+Offline roles additionally deny all socket creation with the existing seccomp
+helper. Prepared public sources are read-only under `@environment/` for file
+tools and `$LABVIEW_ENVIRONMENT` for commands. Docker daemon access is not granted
+to role commands; NI container readiness is a separate trusted environment check.
+Skills are staged files read through the broker. Finish requires a marked report
+whose fenced YAML terminal status matches the operation.
+
+Shared availability and per-session continuation live on `loop-runtime`, outside
+the default branch, through GitHub content-SHA compare-and-swap. Concurrent writers
+retry instead of replacing another session's observations. Quota, transport and
+service errors use bounded cooldown; a provider's explicit future reset takes
+precedence. Time alone never proves availability. New credentials clear an auth
+failure/expired-worker observation, while preserving quota and entitlement state.
+All unavailable candidates park the issue without the legacy three-resume limit.
+A dead Claude credential no longer stops the other providers in the watchdog.
+
+Before an operation, the parent persists its intent. After it, accepted source
+changes are committed and pushed only to `task/N`, while reports and artifacts
+are snapshotted into immutable-named assets of release `loop-checkpoints`.
+The continuation is then saved with that code/output identity. Interrupted
+commands are never replayed automatically: recovery tells the next model to
+inspect the current files. Extraction accepts only canonical declared outputs;
+staged inputs cannot be replaced. Archives have a 2 GB restoration bound.
+The normal epilogue, protected-path checks, independent evaluator verification
+and change gate still decide what may enter the default branch.
+
+Cloud evidence and remaining checks are in [cloud-authentication.md](cloud-authentication.md).
+This setup verification never enables AUTOPILOT and does not implement the product.

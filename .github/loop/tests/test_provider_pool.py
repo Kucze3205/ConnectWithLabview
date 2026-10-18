@@ -123,6 +123,23 @@ class ProviderPoolTest(unittest.TestCase):
         self.policy["tasks"]["build"] = [self.a]
         self.assertEqual(self.select()["action"], "blocked")
 
+    def test_model_entitlement_is_permanent_and_has_a_distinct_reason(self):
+        self.policy['tasks']['build'] = [self.a, self.b]
+        self.observe(self.a, 'entitlement_failure')
+        self.observe(self.b)
+        self.assertEqual(self.select()['candidate'], self.b)
+        self.policy['tasks']['build'] = [self.a]
+        result = self.select(now=self.now + timedelta(days=30))
+        self.assertEqual(result['reason'], 'model_entitlement_required')
+        self.assertEqual(result['reasons'][0]['reason'], 'entitlement_failure')
+
+    def test_late_provider_writer_cannot_erase_newer_quota(self):
+        self.observe(self.a, 'quota', scope='provider')
+        previous = copy.deepcopy(self.state)
+        self.state = pool.record_outcome(self.owner, self.state, **self.a, status='available',
+                                         scope='provider', now=self.now - timedelta(seconds=1))
+        self.assertEqual(self.state, previous)
+
     def test_auth_blocked_candidate_does_not_supply_meaningless_retry(self):
         self.policy["tasks"]["build"] = [self.a]
         self.observe(self.a, "auth_failure", scope="provider")

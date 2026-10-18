@@ -101,3 +101,24 @@ class RuntimeTest(unittest.TestCase):
         state = self.runtime(None).availability()
         self.assertNotIn('claude', state['providers'])
         self.assertEqual(state['providers']['codex']['status'], 'quota')
+
+    def test_revoked_authentication_and_temporary_transport_failure_fall_back(self):
+        for status in ('auth_failure', 'network_failure', 'service_failure', 'throttled', 'credential_expired'):
+            with self.subTest(status=status):
+                self.backend.files.clear()
+                self.backend.revisions.clear()
+                def request(provider, *args, **kwargs):
+                    if provider == 'claude':
+                        raise Failure({'status': status, 'scope': 'provider'})
+                    return action('Finish', status='done')
+                result = self.runtime(request).run(5, 30)
+                self.assertEqual(result['candidate']['provider'], 'codex')
+
+    def test_owner_catalog_reduction_preserves_remaining_provider_quota(self):
+        runtime = self.runtime(None)
+        for candidate in self.candidates:
+            runtime.observe(candidate, {'status': 'quota', 'scope': 'provider'}, self.clock())
+        self.owner['providers'].pop('copilot')
+        state = runtime.availability()
+        self.assertNotIn('copilot', state['providers'])
+        self.assertEqual(state['providers']['codex']['status'], 'quota')

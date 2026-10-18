@@ -1,10 +1,12 @@
-# Cloud authentication: implementation prerequisite
+# Cloud authentication and routed execution
 
 Status: credential work in progress, checked 18 October 2026. The owner explicitly
 retained this public repository for GitHub Actions capabilities and rejected a
 private control repository. That is the accepted location; do not reopen the
-visibility question. Provider adapters and the complete credential lifecycle are
-not implemented yet. The product goal is unchanged.
+visibility question. Provider adapters, shared availability and durable role
+execution are implemented on the setup branch. Cloud verification is described
+below; the integration issue remains open until its remaining checks pass. The
+product goal is unchanged and AUTOPILOT remains off.
 
 ## Observed cloud evidence
 
@@ -17,12 +19,11 @@ and Copilot's short-lived job token. Claude still reported subscription exhausti
 The engine suite passed 282 tests, with 11 skips (template-only checks and the
 opt-in live Claude tool-network check), in the same
 [cloud run](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39074979503).
-These observations establish access at the time
-of the check, not credential renewal or task execution. The existing Claude
-bootstrap access token expires on 18 October 2026 at 04:53 UTC, according to the
-previous environment investigation; this session has not read its value.
+These early observations establish access at the time of the check. Later
+renewal and task-execution evidence below supersedes their narrower coverage.
+The owner replaced Claude's bootstrap credential with a one-year setup-token.
 
-## Proposed credential layout
+## Provisioned credential layout
 
 | Provider | Subscription credential | Persistence and recovery |
 |---|---|---|
@@ -53,32 +54,36 @@ cover this layout; do not describe the topology as officially recommended.
 Replace the private-repository assumption with owner-controlled workflow refs,
 no credentialed PR jobs, branch-restricted credential environments, a serialized
 refresh stream and isolation of model/tools from storage-write authority.
-These replacements still need adversarial cloud checks. No paid API, overage or
+The cloud jobs exercise the filesystem/process boundary and role tools. No paid API, overage or
 cloud VM purchase is authorized.
 
 For ephemeral workers, use a secret store that can return the latest credential
 after acquiring the provider lock. Repository Actions secrets are loaded when a
 workflow is queued, so serialization alone must not be assumed to make queued
 snapshots current. A protected environment's secrets are read when its job starts;
-this is a candidate for serialized Codex jobs, to be verified before adoption.
+this is the implemented store for serialized Codex maintenance jobs. Sequential
+cloud jobs restored and renewed the previous job's saved bundle successfully.
 Source: [When Actions reads secrets](https://docs.github.com/en/actions/reference/security/secrets#when-github-actions-reads-secrets).
 
 Writing refreshed credentials requires separate trusted authority. The normal
 job token cannot be given arbitrary repository permissions. A narrowly installed
 GitHub App with repository Environments write permission can update this
-environment-secret store; it is not provisioned yet. Repository-secret updates
+environment-secret store; the owner provisioned it for this repository. Repository-secret updates
 would instead require Secrets write. Never give storage-write authority to the
 model or any tool subprocess. Sources:
 [Additional token permissions](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token#granting-additional-permissions),
 [Environment secret update API](https://docs.github.com/en/rest/actions/secrets#create-or-update-an-environment-secret).
 
-## Implemented round trip, awaiting real credential provisioning
+## Implemented and exercised round trip
 
 `credential_store.py` and the Codex readiness job implement a restore/lease/run/
 persist sequence. Its tests cover refreshed tokens on the next runner,
 interruption, failed write-back, invalid bundles, symlinks, file permissions and
-store-authority isolation. This is not yet a live proof of renewal, or an
-integration with ordinary task sessions.
+store-authority isolation. The owner completed the dedicated CI login and App
+setup. Two successive cloud runners completed restore, lease, forced renewal,
+model response and write-back in
+[run 39074979503](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39074979503).
+The second Codex job completed on 18 October at 08:51 UTC.
 
 Renewal invokes Codex App Server's `account/read` with `refreshToken: true`,
 without a model prompt or a custom OAuth implementation. A successful response
@@ -87,7 +92,8 @@ response keeps the lease marker. The subsequent model probe receives only an
 external-token projection, with an empty refresh token, in a separate scratch
 home. It cannot rotate the maintenance credential. This file format is an
 internal contract of the pinned Codex CLI and needs revalidation before upgrading;
-the future task adapter must preserve this separation. Sources:
+the task adapter instead supplies external access tokens over App Server stdin
+and keeps them in memory, with no auth file visible to native tools. Sources:
 [App Server authentication](https://learn.chatgpt.com/docs/app-server),
 [pinned authentication implementation](https://github.com/openai/codex/blob/rust-v0.162.0-alpha.17.2/codex-rs/login/src/auth/manager.rs).
 
@@ -119,33 +125,60 @@ containing system runtimes and that probe's scratch directory. Other runner
 files and parent process environments are absent. Each provider job checks this
 boundary before making its request. This prevents native tools in a probe from
 reading the maintainer's full bundle or Actions token-output files. Task-workspace
-permissions and offline tool networking still require the separate adapter work.
+permissions and offline command networking are enforced separately by
+`tool_broker.py` and checked on the cloud kernel.
 
 Without that opt-in, Codex readiness still tests the existing bootstrap snapshot;
 it projects that snapshot to access-only credentials and cannot refresh it.
-Its success does not establish renewal. Parallel task workers must eventually
-receive access-only credentials or use the same serialized stream; the current
-task workflow still uses Claude. These integrations remain part of the open task.
+Its success does not establish renewal. Maintenance now publishes only
+`CODEX_WORKER_AUTH_JSON` to `provider-claude`, the execution environment that also
+holds Claude's setup-token. Neither the renewable bundle nor the App key leaves
+`provider-codex`. `session.yml` calls the serialized credential-maintenance
+workflow before starting a routed worker. A maintenance failure does not prevent
+Claude or Copilot from executing; the failed transaction still requires repair.
 
-## Checks required before declaring credentials ready
+## Execution and model discovery evidence
 
-- Replace Claude's bootstrap snapshot through the supported setup-token flow;
-  verify model access independently of subscription capacity.
-- Seed a separate CI Codex login. Verify two sequential cloud jobs preserve an
-  actual refresh. Exercise overlapping job starts, stale snapshots, cancellation
-  during refresh and failure to write back. Such failure must disable that
-  credential until repaired, rather than silently reusing the stale bundle.
-- Verify Copilot authentication and its model response from the chosen cloud
-  workflow, including revoked/expired credentials and seat/model entitlement.
+The [structured transport check](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39114968592)
+obtained Claude's catalog through its control protocol, Codex's catalog through
+`model/list`, and real schema-validated actions from Codex `gpt-6.1-sol` and
+explicitly selected Copilot `gpt-5.6-luna`. Claude's model request correctly
+reported subscription exhaustion. These catalogs populate the owner's allowed
+IDs in `engine.yml`; only executed IDs have positive inference evidence.
+
+With the job token, Copilot's `models.list` is empty despite working inference.
+Its runtime default reported `gpt-5.6-luna`, then an explicit request for that
+ID succeeded. Do not invent more selectable Copilot IDs from an empty catalog.
+The pinned runtime's `--no-auto-login` blocks this installation-token path;
+use environment authentication in an empty scratch HOME without that flag.
+The App/Actions token must not use the SDK's user-token option. See
+[GitHub's server-to-server authentication instructions](https://docs.github.com/en/copilot/how-tos/copilot-sdk/auth/server-to-server-tokens).
+
+[Run 39114566066](https://github.com/Kucze3205/ConnectWithLabview/actions/runs/39114566066)
+executed the actual role runtime: Claude hit its real limit, policy selected
+Codex, six accepted role operations completed the file task, source was pushed
+to `task/900039114566066`, and a deleted report was restored from a remote
+checkpoint release asset. This was setup verification, without merging to main
+or arming the loop. Follow-up runs exercise interruption and a new Copilot runner.
+
+## Remaining verification
+
+- Verify a successful structured Claude task after subscription capacity returns.
+- Review final cloud interruption/new-runner and concurrent-state results before
+  resolving the integration issue. Revocation, entitlement, transient errors,
+  all-provider exhaustion and ambiguous command replay are fault-injection tests;
+  the owner's live credentials are not deliberately revoked.
+- Cancellation during credential rotation cannot recover a lost rotated bundle.
+  Tests verify rejection of the lease/stale seed and write-back failure; repair
+  requires a new dedicated login. Do not claim unattended recovery from that case.
 - Keep raw credentials, auth files, provider output and refresh diagnostics out
   of logs and artifacts. Only sanitized status summaries may be published.
-- Finish adapter security, model discovery, shared availability, checkpointing
-  and scheduler integration for ordinary roles and the Policymaker. Existing
-  probe success and routing unit tests do not satisfy those requirements.
+- Preserve the catalog, policy/Policymaker bounds, kernel isolation and scheduler
+  checks on upgrades; probe success alone does not establish task execution.
 
 `cloud_probe.py` now separates authentication, model entitlement, subscription
 quota, transient request throttling, network failures and provider service
 failures. An unexplained 403 remains unknown. It preserves only explicit future
-numeric provider reset timestamps; absent a reset, the eventual scheduler must
-use bounded retry instead of inventing one. These categories are probe evidence;
-they are not yet integrated with `provider_pool.py` or the loop.
+numeric provider reset timestamps; absent a reset, the scheduler uses bounded
+retry instead of inventing one. `role_runtime.py` persists these observations
+through the content-SHA state store and uses them for subsequent selections.

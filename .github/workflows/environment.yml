@@ -220,7 +220,7 @@ jobs:
 
   runtime-resume:
     needs: runtime-proof
-    if: needs.runtime-proof.result == 'success'
+    if: always() && needs.runtime-proof.result == 'success'
     runs-on: ubuntu-24.04
     environment: provider-claude
     permissions:
