@@ -145,6 +145,9 @@ obtained Claude's catalog through its control protocol, Codex's catalog through
 explicitly selected Copilot `gpt-5.6-luna`. Claude's model request correctly
 reported subscription exhaustion. These catalogs populate the owner's allowed
 IDs in `engine.yml`; only executed IDs have positive inference evidence.
+The owner added `claude-haiku-5-5` to the catalog on 20 October 2026 from public
+model information, without a catalog or inference check here. Runtime availability
+probing decides whether it can be used; the next catalog check should confirm it.
 
 With the job token, Copilot's `models.list` is empty despite working inference.
 Its runtime default reported `gpt-5.6-luna`, then an explicit request for that

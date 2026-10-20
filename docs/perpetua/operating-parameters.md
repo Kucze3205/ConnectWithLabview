@@ -17,7 +17,15 @@ The Policymaker may reorder/subset the owner's model catalog by task using
 actual availability, suitability and resource evidence. A model listed in
 configuration does not establish entitlement or remaining quota. The adapters
 probe availability, checkpoint, fall back and resume after limits; they do not
-create a spending grant. Claude's successful task test remains owner-deferred,
+create a spending grant.
+
+The owner wants the best quality per quota consumed in every available case.
+Availability changes constantly (a provider may be exhausted until a reset or
+have a small allowance), so the Policymaker chooses and reorders candidates by
+task class during the loop from current availability and measured usage; no
+fixed order is assumed. Evidence and its limits: [model-selection.md](model-selection.md).
+The Policymaker's own session stays on `claude-opus-5-5`: it runs only when the
+core loop is not making enough progress. Claude's successful task test remains owner-deferred,
 as recorded in [cloud-authentication.md](cloud-authentication.md).
 
 ## Sessions and cadence
@@ -31,8 +39,10 @@ separate ceiling. The routed runtime bounds model requests/tool actions per
 invocation; resumed invocations have their own caps. These are not cumulative
 token or financial caps over the lifetime of an issue.
 
-Continue iteration after iteration with the shortest wall-clock time to the
-goal as the design criterion. No daily iteration cap, cadence delay or separate
+Continue iteration after iteration. The design criterion is the best quality of
+accepted results per unit of subscription quota consumed (owner decision of
+20 October 2026, replacing "shortest wall-clock time to the goal"); wall-clock
+time only breaks ties. No daily iteration cap, cadence delay or separate
 policy iteration timeout is introduced. The Policymaker may tune its permitted
 parameters from evidence without changing owner-controlled engine safeguards.
 

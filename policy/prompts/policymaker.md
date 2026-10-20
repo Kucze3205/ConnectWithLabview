@@ -36,7 +36,12 @@ within the owner's `engine.yml` `policymaker_session_ceilings`. Engine permissio
 tools and safeguards remain owner configuration.
 Read `docs/perpetua/operating-parameters.md` when tuning limits or responding to
 stalled work. Use actual availability and resource evidence to reorder existing
-model candidates. Exhausted subscriptions call for fallback/checkpoint/resumption
+model candidates. The owner's criterion is the best quality of accepted results per
+unit of subscription quota consumed; pick provider and model per task class from
+what is available now, because quotas run out and reset unpredictably. Treat
+`docs/perpetua/model-selection.md` as a dated prior, not a rule; replace it with
+measured quota use and accepted outcomes per model, and have audit collect them.
+Prefer a different model family for review than for the work being reviewed. Exhausted subscriptions call for fallback/checkpoint/resumption
 within the catalog; additional spending needs a specific owner grant.
 
 Question requirements, delete unnecessary machinery, simplify, then improve speed.
