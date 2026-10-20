@@ -14,6 +14,7 @@ import os
 import re
 
 import common as c
+import managed_resources as resources
 import owner_requests as requests
 import session_exports
 import session_reports
@@ -225,11 +226,11 @@ def policymaker_failures():
 
 
 def policy_rev():
-    return c.tree_hash("HEAD", "policy")
+    return resources.revision()
 
 
 def evaluator_rev():
-    return ",".join(c.tree_hash("HEAD", p) for p in c.cfg()["evaluator_paths"])
+    return resources.evaluator_revision_string()
 
 
 def request_summary(x):
@@ -290,7 +291,7 @@ def read_state(it, mark=STATE_MARK):
     return None
 
 
-def export_state(n, directory):
+def export_state(n, directory, role=None):
     """`.session/loop-state.json`: the snapshot taken when the Policymaker session was opened, or, for the shaper, when
     its iteration began."""
     state = read_state(n)
@@ -300,7 +301,10 @@ def export_state(n, directory):
         state = read_state(it["number"]) if it else None
     os.makedirs(directory, exist_ok=True)
     if state is not None:
-        session_reports.stage(state, directory)
+        import session_inputs
+        if role and session_inputs.restricted(role):
+            state = session_inputs.state(state)
+        session_reports.stage(state, directory, role=role)
         with open(os.path.join(directory, "loop-state.json"), "w", encoding="utf-8") as fh:
             json.dump(state, fh, indent=1, ensure_ascii=False)
 
@@ -902,9 +906,9 @@ def revert_policy(why):
         c.open_outage("cannot roll back policy/", "Nothing to return to: no closed iteration and no `setup-baseline` tag. Reason: %s." % why,
                       "Restore `policy/` by hand to a state you trust.")
         return False
-    if c.tree_hash("HEAD", "policy") == c.tree_hash(target, "policy"):
+    if resources.revision() == resources.revision(target):
         return False
-    c.commit_main({}, "roll back policy/ to %s: %s" % (target[:8], why), restore=(target, ["policy"]))
+    c.commit_main({}, "roll back policy/ to %s: %s" % (target[:8], why), restore=(target, resources.restore_paths()))
     open_request("notice", "policy/ rolled back", "The engine returned `policy/` to %s. Reason: %s." % (target[:8], why),
                  "The loop was not progressing or the Policymaker failed twice in a row.",
                  "Nothing is blocked. The Policymaker sees this notice in its next session.", ref="rollback-%s" % c.head()[:8])

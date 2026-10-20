@@ -28,6 +28,15 @@ class ProvenanceTest(unittest.TestCase):
         text = self.w.origin_file(filename)
         return json.loads(text) if text else None
 
+    def test_evaluator_revisions_preserve_configured_order_and_duplicate_paths(self):
+        self.w.push_main({"engine.yml": "evaluator_paths: [checks/, policy/evaluator/, checks/]\n",
+                          "checks/measure.txt": "external", "policy/evaluator/measure.txt": "internal"})
+        c.sync_main()
+        external = fakes.sh(self.w.loop, "git", "rev-parse", "HEAD:checks")
+        internal = fakes.sh(self.w.loop, "git", "rev-parse", "HEAD:policy/evaluator")
+        self.assertEqual(it.evaluator_rev(), external + "," + internal + "," + external)
+        self.assertEqual(changes.evaluator_rev("HEAD"), {"checks/": external, "policy/evaluator/": internal})
+
     def test_two_policymaker_sessions_have_exact_diffs_and_do_not_rewrite_closed_records(self):
         old = '{"schema_version":1,"iteration":6,"status":"closed"}\n'
         self.w.push_main({"iterations/0006.json": old})
@@ -65,7 +74,7 @@ class ProvenanceTest(unittest.TestCase):
         self.assertEqual(self.read(it.record_path(7))["policy"]["change_ids"], [ra["id"], rb["id"]])
         self.assertEqual(self.w.origin_file("iterations/0006.json"), old)
         # Retrying a successful merge cannot alter its provenance.
-        replay = loop.merge_branch(a, "policymaker", self.hub.issue(a))
+        replay = loop.merge_branch(a, "policymaker", self.hub.issue(a), boundary=True)
         self.assertEqual(loop.merge_outcome(replay)[1]["merged"], "true")
         self.assertEqual(self.read(changes.path(a)), ra)
 
@@ -95,7 +104,7 @@ class ProvenanceTest(unittest.TestCase):
             return git(cwd, *args, **kwargs)
 
         with patch.object(c, "git", side_effect=racing_push), patch.object(c, "iso", side_effect=["2026-01-01T00:00:01Z", "2026-01-01T00:00:02Z"]):
-            r = loop.merge_branch(n, "policymaker", self.hub.issue(n))
+            r = loop.merge_branch(n, "policymaker", self.hub.issue(n), boundary=True)
         self.assertEqual(r["result"], "merged")
         record = self.read(changes.path(n))
         self.assertEqual(record["applied_at"], "2026-01-01T00:00:02Z")

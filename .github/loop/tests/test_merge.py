@@ -108,7 +108,7 @@ class RefusalTest(MergeCase):
     def test_policy_cannot_replace_or_remove_the_independent_verifier(self):
         import yaml
         for remove in (False, True):
-            proposed = yaml.safe_load(fakes.WORKER_PROFILES)
+            proposed = yaml.safe_load(fakes.POLICY_PROFILES)
             if remove:
                 del proposed["evaluator-verifier"]
             else:
@@ -117,8 +117,8 @@ class RefusalTest(MergeCase):
             self.assertEqual(r["result"], "protected")
 
     def test_policy_can_still_add_other_roles(self):
-        r = self.merge({"policy/profiles.yml": fakes.WORKER_PROFILES + "\nresearcher:\n  write: [docs/**]\n"}, role="policymaker")
-        self.assertEqual(r["result"], "merged")
+        r = self.merge({"policy/profiles.yml": fakes.POLICY_PROFILES + "\nresearcher:\n  write: [docs/**]\n"}, role="policymaker")
+        self.assertEqual(r["result"], "awaiting-iteration")      # layered engine: Policymaker work waits for the iteration boundary
 
     def test_protected_paths(self):
         for path in (".github/workflows/x.yml", "engine.yml", "iterations/0001.json", "goal/gate.yml", "GOAL_REACHED"):

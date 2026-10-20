@@ -17,6 +17,8 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
+import managed_resources as resources
+
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
 MARK = "<!-- session-report -->"
 TRUSTED = {"OWNER", "MEMBER", "COLLABORATOR"}
@@ -28,7 +30,7 @@ AGENT_STATUSES = {"done", "partial", "blocked", "rejected"}
 OWNED = ("attempts", "resume_after", "kicks", "kicked", "conflicts", "cause", "verification", "verdict", "improved",
          "merged", "detail", "model", "effort", "turns", "peak_context", "tokens_in", "tokens_out", "cache_read", "cache_write",
          "models", "agent_s", "gate_s", "total_s", "parked_s", "paused_at", "runner", "branch", "iteration", "artifacts",
-         "verifier_issue", "verified_commit", "verifier_passed")
+         "verifier_issue", "verified_commit", "verifier_passed", "owner_accepted", "owner_accepted_commit")
 SECRETS = ("GH_TOKEN", "GITHUB_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "CODEX_AUTH_JSON", "CODEX_CI_AUTH_JSON",
            "CODEX_WORKER_AUTH_JSON", "COPILOT_GITHUB_TOKEN", "COPILOT_SDK_AUTH_TOKEN",
            "CREDENTIAL_STORE_TOKEN", "CREDENTIAL_STORE_APP_PRIVATE_KEY")
@@ -36,21 +38,22 @@ SECRETS = ("GH_TOKEN", "GITHUB_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "CODEX_AUTH_JS
 DEFAULT_TOOLS = ["Read", "Grep", "Glob", "Write", "Edit", "Skill", "Bash(git:*)", "Bash(python3:*)"]
 DEFAULTS = {
     "provider_pool": None,
+    "resources": {"format": "layered"},
     "cli_version": "2.1.284",
     "author": {"name": "", "email": ""},
     "owner": "",
     "check": "",
-    "protected": [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED"],
-    "direct_paths": ["policy/", "audit/", "journal/"],
+    "protected": [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/"],
+    "direct_paths": [resources.EXECUTION + "/", resources.ROOT + "/", "audit/", "journal/"],
     "notes_paths": ["journal/"],
-    "evaluator_paths": ["policy/evaluator/"],
+    "evaluator_paths": [resources.EVALUATOR],
     "policymaker_only_roles": ["evaluator", "audit"],
     "verifier_role": "evaluator-verifier",
     "large_file_bytes": 5000000,
     "gate": {"kind": "owner", "command": "", "timeout_minutes": 120, "env_passthrough": []},
     "limits": {"tools": DEFAULT_TOOLS, "internet_write": []},
     "policymaker": {"model": "claude-opus-5-5", "effort": "high", "max_turns": 150, "timeout_minutes": 90,
-               "tools": DEFAULT_TOOLS, "write": ["policy/"]},
+               "tools": DEFAULT_TOOLS, "write": [resources.EXECUTION + "/", resources.ROOT + "/"]},
     "policymaker_session_ceilings": None,
     "params": {"no_progress_iterations": None, "quiet_minutes": None, "owner_wait_counts": None,
                "stream_retention_iterations": None},
@@ -85,11 +88,11 @@ def params():
     p = {"shaper": "orchestrator", "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
          "ceilings": {"job_minutes": 240, "iteration_minutes": None, "max_turns": 150},
          "policymaker_triggers": {"every_iterations": None, "no_progress": None}}
-    return merged(p, load_yaml("policy/params.yml"))
+    return merged(p, load_yaml(resources.PARAMS))
 
 
 def profiles():
-    return load_yaml("policy/profiles.yml")
+    return resources.role_profiles()
 
 
 def engine_version():
@@ -488,11 +491,13 @@ def safe_read(root, rel):
         return fh.read()
 
 
-def export_issue(n, path):
+def export_issue(n, path, omit_markers=()):
     """Agent input: the issue body and the comments of trusted authors. The agent has no `gh`."""
     i = issue(n)
     parts = ["# Issue #%s: %s\n\n%s\n" % (n, i["title"], i["body"] or "")]
     for c in trusted_comments(n):
+        if any(marker in c["body"] for marker in omit_markers):
+            continue
         parts.append("\n---\ncomment %s (%s)\n\n%s\n" % (c["id"], c["user"]["login"], c["body"]))
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
@@ -605,7 +610,9 @@ def commit_main(files, message, remove=(), restore=None, expected=None):
         if restore:
             sha, paths = restore
             git(".", "rm", "-r", "-q", "-f", "--ignore-unmatch", *paths)
-            git(".", "checkout", sha, "--", *paths)
+            present = [path for path in paths if tree_hash(sha, path)]
+            if present:
+                git(".", "checkout", sha, "--", *present)
         for p in remove:
             git(".", "rm", "-q", "-f", "--ignore-unmatch", p)
         for p, text in files.items():

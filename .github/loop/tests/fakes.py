@@ -205,9 +205,12 @@ class World:
         shutil.copy(os.path.join(ENGINE, "ENGINE_VERSION"), self.loop)
         self.write(self.loop, "engine.yml", engine_yml if engine_yml is not None else "")
         self.write(self.loop, "policy/params.yml", POLICY_PARAMS)
-        self.write(self.loop, "policy/profiles.yml", WORKER_PROFILES)
-        for role in ("orchestrator", "worker", "net", "evaluator", "evaluator-verifier", "audit"):
-            self.write(self.loop, "policy/roles/%s/SKILL.md" % role, "---\nname: %s\ndescription: fixture\n---\nx\n" % role)
+        self.write(self.loop, "execution/profiles.yml", EXECUTION_PROFILES)
+        self.write(self.loop, "policy/profiles.yml", POLICY_PROFILES)
+        for layer, roles in (("execution", ("orchestrator", "worker", "net")),
+                             ("policy", ("evaluator", "evaluator-verifier", "audit", "policymaker"))):
+            for role in roles:
+                self.write(self.loop, "%s/roles/%s/SKILL.md" % (layer, role), "---\nname: %s\ndescription: fixture\n---\nx\n" % role)
         for p, text in (files or {}).items():
             self.write(self.loop, p, text)
         sh(self.loop, "git", "init", "-q", "-b", "main")
@@ -262,6 +265,14 @@ class World:
         sh(self.tmp, "git", "clone", "-q", "-c", "core.autocrlf=false", self.origin, work)
         sh(work, "git", "config", "core.autocrlf", "false")
         sh(work, "git", "checkout", "-q", "-B", "task/%s" % n, base or "origin/main")
+        rt = os.path.join(self.tmp, "rt%s" % self.n_work)
+        os.makedirs(rt)
+        os.environ["RUNNER_TEMP"] = rt
+        role = common.roles_of(common.label_names(self.hub.issue(n)))[0]
+        if loop.session_inputs.restricted(role):
+            # Model the real staging/admission handshake even when the session's
+            # output itself is supplied by the test rather than executed.
+            loop.stage(n, work, os.path.join(rt, "trusted"))
         for p, t in (files or {}).items():
             self.write(work, p, t)
         for p in delete:
@@ -274,8 +285,6 @@ class World:
                 common.MARK, status, yaml, n, report_extra))
         for p, t in (session_files or {}).items():
             self.write(work, ".session/" + p, t)
-        rt = os.path.join(self.tmp, "rt%s" % self.n_work)
-        os.makedirs(rt)
         self.write(rt, "agent-exit", exit_code)
         self.write(rt, "session-start", str(int(datetime.now().timestamp()) - 50))
         self.write(rt, "agent-start", str(int(datetime.now().timestamp()) - 40))
@@ -355,6 +364,9 @@ models:
   opus: claude-opus-5-5
 efforts: [low, medium, high]
 """
+
+EXECUTION_PROFILES, POLICY_PROFILES = WORKER_PROFILES.split("evaluator:\n", 1)
+POLICY_PROFILES = "evaluator:\n" + POLICY_PROFILES
 
 
 def worker_world(engine_yml=None):
