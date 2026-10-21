@@ -46,9 +46,16 @@ jobs:
       - name: Test engine contracts without provider credentials
         env:
           LOOP_BROKER_INTEGRATION: '1'
-        # Root: the executor boundary test plants canary copies in system directories (/usr/bin, /usr/local/share)
-        # that an unprivileged runner user cannot write, so its host-visibility check would not run otherwise.
-        run: sudo -E env "PATH=$PATH" python3 -m unittest discover -s .github/loop/tests -v
+        # Two invocations, together the whole suite. The executor boundary test plants canary copies in system
+        # directories (/usr/bin, /usr/local/share) that an unprivileged runner user cannot write, so it runs as root.
+        # Everything else stays unprivileged: bwrap run as root cannot read the runner's checkout (model boundary test).
+        run: |
+          export PYTHONPATH=.github/loop/tests
+          others=$(cd .github/loop/tests && ls test_*.py | grep -v '^test_executor_boundary\.py$' | sed 's/\.py$//')
+          status=0
+          sudo -E env "PATH=$PATH" python3 -m unittest -v test_executor_boundary || status=1
+          python3 -m unittest -v $others || status=1
+          exit $status
 
   public-sources:
     runs-on: ubuntu-24.04
