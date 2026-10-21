@@ -27,7 +27,8 @@ _Avoid_: framework, runtime
 
 **Role**:
 A pair of skill + permission profile, selected by a label on an issue. Built
-per loop during setup, preferably from existing skills.
+per loop during setup, preferably from existing skills; installed as a complete
+local copy in one layer (`execution/` or `policy/`).
 _Avoid_: persona, agent type
 
 **Goal**:
@@ -77,13 +78,28 @@ The agent in the policy layer that manages the loop's architecture by creating
 and revising policy; it does not perform the implementation layer's work.
 _Avoid_: policy, politician, strategy, scheduler
 
-**Policy layer**:
+**Policy layer** (directory `policy/`):
 The part of the loop in which the policymaker defines how the implementation
-layer works, within the owner's accepted limits.
+layer works, within the owner's accepted limits. Holds the Policymaker's skill,
+audit, evaluator maintenance, the evaluator verifier, parameters and the
+measurement.
 
-**Implementation layer**:
+**Implementation layer** (also *execution layer*, directory `execution/`):
 The part of the loop that applies policy to plan, execute and evaluate work
-toward the goal.
+toward the goal. Holds the shaper and the goal roles; its sessions do not see
+the inside of policy.
+
+**Managed definitions**:
+The version-controlled definitions the engine stages, admits and rolls back as
+one revision: per layer `profiles.yml`, `roles/<role>/`, `protocol.md` and
+`prompts/role.md`, plus the shared `policy/params.yml` and the evaluator. Layer
+is assigned by location, never by a field. Inactive candidates stay in
+`templates/` and are not roles.
+
+**Role template**:
+An inactive starting skill or profile under `templates/`, or `ROLE-TEMPLATE.md`.
+Setup copies a template (or an existing skill) into a layer and adapts the copy;
+the template itself never runs.
 
 **Orchestrator**:
 A role that turns the goal and the loop's state into concrete work: what to
@@ -137,7 +153,8 @@ _Avoid_: review, merge check
 
 **Setup baseline**:
 The state of the loop's repository at the moment the setup map is closed and
-the loop is armed, marked by a tag. The engine returns the policy artifacts to
+the loop is armed, marked by the tag `setup-baseline` and checked with
+`setup_roles.py validate --baseline setup-baseline` before arming. The engine returns the policy artifacts to
 it when they are rolled back before any iteration has closed.
 
 **Owner request**:

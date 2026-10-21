@@ -2,7 +2,7 @@
 
 The owner accepted the two intervention thresholds in setup topic G on
 18 October 2026. Configuration is in `engine.yml` and `policy/params.yml`;
-ordinary role limits are in `policy/profiles.yml`.
+ordinary role limits are in `execution/profiles.yml` and `policy/profiles.yml`.
 
 ## Costs and model selection
 
@@ -49,7 +49,7 @@ parameters from evidence without changing owner-controlled engine safeguards.
 ## Two distinct interventions
 
 - **No closed iteration for 24 hours:** the watchdog fails the active iteration,
-  restores `policy/` to the last closed iteration's state (or `setup-baseline`
+  restores the managed definitions (`execution/` and `policy/`) to the last closed iteration's state (or `setup-baseline`
   before the first close), notifies the owner and retries. Unaccepted policy
   changes since that state can be discarded. The watchdog checks every
   30 minutes, so intervention occurs at the next check after the threshold.

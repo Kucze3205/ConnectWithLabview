@@ -6,7 +6,7 @@ receipts, iteration revisions and rollback use this boundary.
 
 New templates declare `resources: {format: layered}`. Omission uses that same
 format; explicit legacy formats are rejected. Existing loops keep their own
-versioned engine (ADR-0001); this release supplies no migration or update.
+versioned engine (ADR-0001). The plugin supplies no migration or update; this loop was converted by hand (setup tickets M1-M3) and uses the layered format.
 
 ## Active definitions and inactive sources
 
@@ -145,10 +145,14 @@ execute the staged script and epilogue, probe host/files/Git/network access,
 attempt credential-bearing worker Git hooks/configuration, and check data
 preservation and admission refusals. A skip on another platform is not evidence
 of isolation. No provider or actual GitHub credential is needed.
-## New-loop setup
+## Setup of this loop
 
-The shipped template has empty `execution/profiles.yml` and `policy/profiles.yml`, no active skills and no selected shaper. Candidate skills and profiles live under protected `templates/`. `setup_roles.py prepare` checks this fresh state before the setup branch is committed; it does not convert definitions or change the plugin installation.
+**Present layout.** `execution/` holds the shaper `orchestrator` and the goal roles `researcher`, `benchmark`, `implementation` (with `tests.md`, `mocking.md`) and `reviewer`; `policy/` holds `audit`, `evaluator`, `evaluator-verifier` and the `policymaker` skill, plus `policy/params.yml` (shaper `orchestrator`, routing, criterion) and `policy/evaluator/`. Unused candidates remain under `templates/`. Role responsibilities and provenance: [roles.md](roles.md).
+
+**Template procedure** (kept for reference; the shipped template differs from this repository).
+
+A fresh template has empty `execution/profiles.yml` and `policy/profiles.yml`, no active skills and no selected shaper. Candidate skills and profiles live under protected `templates/`. `setup_roles.py prepare` checks this fresh state before the setup branch is committed; it fails on a repository with selected roles, such as this one, and does not convert definitions.
 
 The setup map chooses sources from project/global/plugin skills (including optional Matt Pocock skills), inactive templates, or a newly authored skill when no source fits. `setup_roles.py install` copies a complete skill directory and installs the explicitly supplied profile in one layer. Adaptations modify local copies only; separate names allow independent adaptations of one source in both layers. Policymaker instructions are local to policy, while its permissions stay owner-controlled.
 
-Before enabling execution, `setup_roles.py validate --baseline setup-baseline` requires a selected execution shaper, all required policy roles, local skills and layer instructions, valid profiles within accepted limits, and a clean accepted baseline matching HEAD. Every local managed definition and skill reference must also exist with matching content in that commit, including files hidden by ignore rules; ignored work products outside managed definitions remain allowed. It prints the common managed revision without starting any session. The setup notes contain the selection and arming procedure. This adds no migration, update or reconfiguration mode.
+Before enabling execution, `setup_roles.py validate --baseline setup-baseline` requires a selected execution shaper, all required policy roles, local skills and layer instructions, valid profiles within accepted limits, and a clean accepted baseline matching HEAD. Every local managed definition and skill reference must also exist with matching content in that commit, including files hidden by ignore rules; ignored work products outside managed definitions remain allowed. It prints the common managed revision without starting any session. In this loop it is a step of the arming ticket (#8), run after the `setup-baseline` tag and before `AUTOPILOT` is switched on; the setup notes contain the selection and arming procedure. This adds no migration, update or reconfiguration mode.
