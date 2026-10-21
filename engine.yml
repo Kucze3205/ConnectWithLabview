@@ -3,7 +3,7 @@
 # Values set to null have no default on purpose: the setup map decides them per loop, and the engine does nothing
 # for a null parameter.
 
-resources: {format: layered}     # layered managed definitions; roles stay in policy/ until the layout ticket moves them
+resources: {format: layered}     # layered managed definitions: execution/ (goal roles, shaper) and policy/ (audit, evaluator, verifier, Policymaker)
 cli_version: "2.1.292"          # matches the locally installed CLI; live call currently reports a weekly limit
 provider_pool:
   # Owner catalog. Policy can reorder/subset these IDs, never add another model.
@@ -35,7 +35,7 @@ gate:
   env_passthrough: []            # names of secrets the gate command may see (e.g. a judge that calls a model)
 
 # --- zones ------------------------------------------------------------------------------------------------------
-protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "docs/perpetua/accepted-limits.md"]
+protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "execution/prompts/role.md", "execution/protocol.md", "docs/perpetua/accepted-limits.md"]
 direct_paths: ["execution/", "policy/", "audit/", "journal/"]   # not work: merged without the change gate (role `write` paths still apply)
 notes_paths: ["journal/"]        # merged even when the session did not finish
 evaluator_paths: ["policy/evaluator/"]            # only a role whose profile has `owns_evaluator`; merged only after the verifier

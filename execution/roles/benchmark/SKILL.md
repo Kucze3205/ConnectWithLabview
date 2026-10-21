@@ -1,6 +1,7 @@
 ---
 name: benchmark
-description: Prepare the LabVIEW verification protocol, development fixtures and readiness evidence before product implementation; loaded for role:benchmark.
+description: Prepare the LabVIEW verification protocol, development fixtures and readiness
+  evidence before product implementation; loaded for role:benchmark.
 ---
 
 # Benchmark preparation

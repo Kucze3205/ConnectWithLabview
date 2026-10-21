@@ -1,6 +1,7 @@
 ---
 name: reviewer
-description: Independently review product or benchmark preparation against a pinned specification and documented standards; loaded for role:reviewer.
+description: Independently review product or benchmark preparation against a pinned
+  specification and documented standards; loaded for role:reviewer.
 ---
 
 # Independent reviewer

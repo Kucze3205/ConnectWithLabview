@@ -1,6 +1,7 @@
 ---
 name: researcher
-description: Investigate LabVIEW artifacts, compatibility and delivery choices against prepared primary sources; loaded for role:researcher.
+description: Investigate LabVIEW artifacts, compatibility and delivery choices against
+  prepared primary sources; loaded for role:researcher.
 ---
 
 # Researcher

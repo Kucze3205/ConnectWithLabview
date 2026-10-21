@@ -1,6 +1,7 @@
 ---
 name: implementation
-description: Implement an assigned product specification after independently checked and owner-accepted benchmark readiness; loaded for role:implementation.
+description: Implement an assigned product specification after independently checked
+  and owner-accepted benchmark readiness; loaded for role:implementation.
 ---
 
 # Implementation

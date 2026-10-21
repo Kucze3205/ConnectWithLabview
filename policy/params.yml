@@ -2,8 +2,7 @@
 # Starting rationale and owner decisions: docs/perpetua/operating-parameters.md.
 # Use existing subscriptions only; routing checks actual availability and falls back
 # within engine.provider_pool. A configured model is not proof of available quota.
-shaper: orchestrator             # the role that decides what an iteration does and writes its task graph: an LLM role,
-                                 # or a script role (a deterministic rule: a profile with `agent: false` and a `command`)
+shaper: orchestrator             # the role that decides what an iteration does and writes its task graph (execution layer)
 criterion: "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties"
 # Explicit ordered candidates by task class. role name selects a matching class;
 # route:<class> selects another declared class. New roles use the declared default.

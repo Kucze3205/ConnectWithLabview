@@ -1,6 +1,8 @@
 ---
 name: orchestrator
-description: "The loop's shaper. Decides what one iteration does and writes its task graph (roles, edges, limits); keeps a journal. Loaded when a task has the label `role:orchestrator`."
+description: The loop's shaper. Decides what one iteration does and writes its task
+  graph (roles, edges, limits); keeps a journal. Loaded when a task has the label
+  `role:orchestrator`.
 ---
 
 # Orchestrator
@@ -23,7 +25,7 @@ Protocol (task format, report, trust): `.session/protocol.md`.
 4. **You do not edit your own skill.** If you think it is wrong, submit an evidenced suggestion in
    `.session/suggestions.json`; the Policymaker judges it. An error
    in your own skill poisons every later iteration and nobody is positioned to catch it.
-5. **The roles that exist are in `policy/profiles.yml`.** You do not invent roles. A missing capability is a request
+5. **The roles that exist are in `execution/profiles.yml` and `policy/profiles.yml`.** You do not invent roles. A missing capability is a request
    in `.session/suggestions.json` for the Policymaker, not a task for a role that does not exist.
 6. **Do not give the same files to parallel tasks.** Two tasks on the same files are conflicts at merge, a sign you
    cut the work badly. Chain such tasks with `blocked_by`.
@@ -36,7 +38,7 @@ Read these first, then follow only the evidence needed to shape this iteration:
 
 1. `.session/protocol.md`;
 2. `.session/loop-state.json` (the goal, open owner requests, the iteration index);
-3. `policy/profiles.yml` (the roles that exist);
+3. `execution/profiles.yml` and `policy/profiles.yml` (the roles that exist);
 4. the newest `journal/NNNN.md`, only its `## State` (it stands alone);
 5. the records of the last iterations (`iterations/NNNN.json`) that the State points to, and
    `.session/reports/index.json` with the staged report bodies it lists. Check what a report links before you write the next task from it: "why go there" written

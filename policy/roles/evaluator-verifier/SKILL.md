@@ -1,6 +1,8 @@
 ---
 name: evaluator-verifier
-description: "Independent check of an evaluator change: does the changed evaluator still measure progress toward the goal? Started by the engine right after every evaluator change. Loaded when a task has the label `role:evaluator-verifier`."
+description: 'Independent check of an evaluator change: does the changed evaluator
+  still measure progress toward the goal? Started by the engine right after every
+  evaluator change. Loaded when a task has the label `role:evaluator-verifier`.'
 ---
 
 # Evaluator verifier

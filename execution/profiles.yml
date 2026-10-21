@@ -1,1 +1,77 @@
-{}
+orchestrator:
+  write:
+  - journal/**
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  model: opus
+  effort: high
+  max_turns: 150
+  timeout_minutes: 120
+researcher:
+  write:
+  - docs/research/**
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git:*)
+  - Bash(python3:*)
+  internet: false
+  effort: high
+  max_turns: 120
+  timeout_minutes: 120
+benchmark:
+  write:
+  - benchmark/**
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git:*)
+  - Bash(python3:*)
+  internet: false
+  effort: high
+  max_turns: 120
+  timeout_minutes: 120
+implementation:
+  write:
+  - src/**
+  - tests/**
+  - docs/product/**
+  - pyproject.toml
+  - requirements.txt
+  - README.md
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git:*)
+  - Bash(python3:*)
+  internet: false
+  effort: high
+  max_turns: 150
+  timeout_minutes: 120
+reviewer:
+  write: []
+  tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git:*)
+  - Bash(python3:*)
+  internet: false
+  effort: high
+  max_turns: 100
+  timeout_minutes: 120

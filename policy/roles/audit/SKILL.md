@@ -1,6 +1,8 @@
 ---
 name: audit
-description: "Learns and monitors the loop's whole environment, every session included: what the loop consumes, where it waits, what the substrate offers that it leaves unused. Ordered only by the Policymaker. Loaded when a task has the label `role:audit`."
+description: 'Learns and monitors the loop''s whole environment, every session included:
+  what the loop consumes, where it waits, what the substrate offers that it leaves
+  unused. Ordered only by the Policymaker. Loaded when a task has the label `role:audit`.'
 ---
 
 # Audit
