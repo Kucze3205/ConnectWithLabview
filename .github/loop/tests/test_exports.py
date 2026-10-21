@@ -103,7 +103,8 @@ class ExportsTest(unittest.TestCase):
 
 class PolicymakerSessionTest(unittest.TestCase):
     def setUp(self):
-        self.cfg = {"policymaker": {"model": "large", "effort": "high", "max_turns": 150, "timeout_minutes": 90,
+        self.cfg = {"verifier_role": "evaluator-verifier",
+                    "policymaker": {"model": "large", "effort": "high", "max_turns": 150, "timeout_minutes": 90,
                                 "tools": ["Read"], "write": ["policy/"]},
                     "policymaker_session_ceilings": {"models": ["large", "small"], "efforts": ["low", "medium", "high"],
                                                 "max_turns": 100, "timeout_minutes": 60}}
