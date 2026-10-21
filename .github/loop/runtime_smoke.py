@@ -1,0 +1,146 @@
+"""Real cloud fallback/checkpoint exercise without arming or merging the loop."""
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+from concurrent.futures import ThreadPoolExecutor
+
+from role_runtime import Runtime
+from runtime_checkpoint import Checkpoint
+from runtime_store import GitHubBackend, Store
+from tool_broker import Broker
+
+
+class InterruptedCheckpoint(RuntimeError):
+    pass
+
+
+def main():
+    resume = '--resume' in sys.argv
+    policymaker = '--policymaker' in sys.argv
+    role = 'policymaker' if policymaker else 'worker'
+    proof_file = 'policy/provider-proof.txt' if policymaker else 'src/provider-proof.txt'
+    source_run = os.environ.get('RESUME_SOURCE_RUN', os.environ['GITHUB_RUN_ID']) if resume else os.environ['GITHUB_RUN_ID']
+    repository = os.environ['GITHUB_REPOSITORY']
+    # No live issue can have this synthetic number. Separate task ref and state
+    # per run, so repeated cloud tests do not rewrite a user's work.
+    issue = ('9001' if policymaker else '9000') + source_run
+    owner = {'providers': {'claude': {'models': ['claude-opus-5-5' if policymaker else 'claude-haiku-4-5-20251001']},
+                           'codex': {'models': ['gpt-6-astra' if policymaker else 'gpt-6.1-sol']},
+                           'copilot': {'models': ['gpt-5.6-luna']}},
+             'backoff': {'initial_seconds': 300, 'max_seconds': 21600}}
+    candidates = [{'provider': provider, 'model': entry['models'][0]} for provider, entry in owner['providers'].items()]
+    policy = {'tasks': {role: [candidates[2]] if resume else candidates[:2]}}
+    report = {'status': 'failed', 'stage': 'prepare', 'role': role, 'source_run': source_run}
+    try:
+        with tempfile.TemporaryDirectory(prefix='runtime-proof-') as directory:
+            work = Path(directory, 'work')
+            # Plain git checkout; the model cannot see either this process's
+            # environment or git metadata as writable mounts.
+            subprocess.run(['git', 'clone', '--quiet', '--no-checkout',
+                            'https://github.com/' + repository + '.git', str(work)], check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=90)
+            subprocess.run(['git', '-C', str(work), 'checkout', '--quiet', '--detach',
+                            'origin/task/' + issue if resume else 'origin/' + os.environ.get('DEFAULT_BRANCH', 'main')], check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+            (work / '.git/info/exclude').write_text('.session/\n')
+            (work / '.session').mkdir()
+            (work / '.session/issue.md').write_text('Write ' + proof_file + ' containing exactly BROKER_TASK_READY. '
+                'Read it back to verify. Write .session/report.md with the session report marker and YAML status done. '
+                'Use this exact report format: <!-- session-report -->\n```yaml\nstatus: done\n```\nReport prose.\n'
+                'Then propose Finish with status done. Use only role tools, no native tools.')
+            broker = Broker(work, {'tools': ['Read', 'Write', 'Edit', 'Glob', 'Grep'],
+                                  'write': ['policy/'] if policymaker else ['src/**']},
+                            {'protected': ['.github/', 'engine.yml', 'goal/'], 'evaluator_paths': ['policy/evaluator/']})
+            backend = GitHubBackend(repository, base=os.environ.get('DEFAULT_BRANCH', 'main'))
+            backend.initialize()
+            store = Store(backend)
+            # Keep smoke availability distinct from real loop availability.
+            class SmokeStore:
+                def read(self, key):
+                    return store.read('proof-' + role + '-' + source_run + '/' + key)
+                def update(self, key, change):
+                    return store.update('proof-' + role + '-' + source_run + '/' + key, change)
+            durable = SmokeStore()
+            if not resume:
+                # Real GitHub content-SHA contention on one file, separate
+                # from availability. Both concurrent updates must survive.
+                with ThreadPoolExecutor(max_workers=2) as executor:
+                    futures = [executor.submit(durable.update, 'concurrent.json',
+                               lambda current, provider=p: dict(current, **{provider: 'observed'}))
+                               for p in ('claude', 'codex')]
+                    for future in futures:
+                        future.result()
+                if durable.read('concurrent.json') != {'claude': 'observed', 'codex': 'observed'}:
+                    raise RuntimeError('concurrent checkpoint update was lost')
+            checkpoint = Checkpoint(broker, repository, issue)
+            credentials = {'claude': os.environ.get('CLAUDE_CODE_OAUTH_TOKEN', ''),
+                           'codex': os.environ.get('CODEX_WORKER_AUTH_JSON', ''),
+                           'copilot': os.environ.get('COPILOT_GITHUB_TOKEN', '')}
+            report['stage'] = 'execute'
+            prompt = 'Read .session/issue.md and complete its task.'
+            if resume:
+                previous = durable.read('sessions/' + issue + '.json')
+                checkpoint.restore(previous)
+                if (work / proof_file).read_text().strip() != 'BROKER_TASK_READY':
+                    raise RuntimeError('new runner lost accepted code')
+                prompt = ('The previous runner completed the file task. Verify ' + proof_file + ' and '
+                          '.session/report.md using Read. If the report is missing after interruption, create it '
+                          'with the session report marker and YAML status done, then Finish done. '
+                          'Do not replace the accepted source file.')
+            def durable_checkpoint(state):
+                saved = checkpoint(state)
+                if not resume and (work / proof_file).exists():
+                    # Simulate the exact crash window after file push but before
+                    # continuation CAS. The next runner sees pending intent and
+                    # must inspect the remotely saved file, never replay it.
+                    raise InterruptedCheckpoint()
+                return saved
+            if policymaker:
+                prompt = 'You are the Policymaker in an isolated setup test. Write only policy/ and session outputs. ' + prompt
+            runtime = Runtime(owner, policy, role, durable, 'sessions/' + issue + '.json', broker,
+                              durable_checkpoint, credentials, prompt, 'smoke-v1')
+            try:
+                result = runtime.run(12, 240)
+            except InterruptedCheckpoint:
+                state = durable.read('sessions/' + issue + '.json')
+                if not state.get('pending'):
+                    raise RuntimeError('interruption did not retain action intent')
+                report.update(status='success', stage='interrupted_after_push',
+                              checkpoint=checkpoint.git('rev-parse', 'HEAD').stdout.strip(), branch='task/' + issue,
+                              pending_action=state['pending']['tool'],
+                              availability=durable.read('pool.json').get('availability', {}))
+                Path(os.environ['RUNNER_TEMP'], 'runtime-proof.json').write_text(json.dumps(report, indent=2) + '\n')
+                print(json.dumps(report))
+                return 0
+            report.update(result)
+            state = durable.read('sessions/' + issue + '.json')
+            if result['status'] != 'done' or (work / proof_file).read_text().strip() != 'BROKER_TASK_READY':
+                raise RuntimeError('proof task incomplete')
+            if resume:
+                reads = {item.get('action', {}).get('path') for item in state['history'][len(previous['history']):]
+                         if item.get('action', {}).get('tool') == 'Read'}
+                if not {proof_file, '.session/report.md'} <= reads:
+                    raise RuntimeError('resume provider did not verify accepted work')
+            # Replace session outputs as if the runner were lost, restore from
+            # remote release, then confirm the report and source both survived.
+            (work / '.session/report.md').unlink()
+            checkpoint.restore(state)
+            if not (work / '.session/report.md').read_text():
+                raise RuntimeError('proof report missing after restore')
+            remote = checkpoint.git('ls-remote', 'origin', 'refs/heads/task/' + issue, remote=True).stdout
+            if state['head'] not in remote:
+                raise RuntimeError('proof code checkpoint missing')
+            report.update(status='success', stage='complete', checkpoint=state['head'], branch='task/' + issue,
+                          availability=durable.read('pool.json').get('availability', {}))
+    except (OSError, ValueError, KeyError, TypeError, RuntimeError, subprocess.SubprocessError):
+        report['status'] = 'failed'
+    Path(os.environ['RUNNER_TEMP'], 'runtime-resume.json' if resume else 'runtime-proof.json').write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps(report))
+    return 0 if report['status'] == 'success' else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

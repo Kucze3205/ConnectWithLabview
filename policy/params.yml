@@ -1,0 +1,47 @@
+# Parameters the Policymaker owns. Defaults of the engine are in the code; this file overrides them.
+# Starting rationale and owner decisions: docs/perpetua/operating-parameters.md.
+# Use existing subscriptions only; routing checks actual availability and falls back
+# within engine.provider_pool. A configured model is not proof of available quota.
+shaper: orchestrator             # the role that decides what an iteration does and writes its task graph (execution layer)
+criterion: "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties"
+# Explicit ordered candidates by task class. role name selects a matching class;
+# route:<class> selects another declared class. New roles use the declared default.
+# Policymaker always uses its own class. Model IDs must be in engine.provider_pool.
+routing:
+  tasks:
+    default: &implementation
+      - {provider: claude, model: claude-sonnet-5-5}
+      - {provider: codex, model: gpt-6.1-sol}
+      - {provider: copilot, model: gpt-5.6-luna}
+    implementation: *implementation
+    orchestrator: &planning
+      - {provider: claude, model: claude-opus-5-5}
+      - {provider: codex, model: gpt-6-astra}
+    policymaker: *planning
+    researcher: *planning
+    benchmark: *planning
+    evaluator: *planning
+    audit: &review
+      - {provider: copilot, model: gpt-5.6-luna}
+      - {provider: codex, model: gpt-6.1-sol}
+      - {provider: claude, model: claude-sonnet-5-5}
+    evaluator-verifier: *review
+    review: *review
+    reviewer: *review
+policymaker_session:                 # model id (not an alias); bounded by engine.yml policymaker_session_ceilings
+  model: claude-opus-5-5
+  effort: high
+  max_turns: 150
+  timeout_minutes: 90
+models:                          # label `model:<alias>` on a task -> model id; `default` when there is no label
+  default: claude-sonnet-5-5
+  opus: claude-opus-5-5
+efforts: [low, medium, high]
+ceilings:                        # a task's limits never exceed these; the engine enforces time and turns hard
+  job_minutes: 240               # outer cap; starting ordinary role profiles use at most 120 minutes
+  iteration_minutes: null
+  max_turns: 150
+policymaker_triggers:                 # the Policymaker runs after an iteration closes when one fires; it never blocks an iteration.
+                                 # A new audit report always calls it. null: off
+  every_iterations: 5            # after every K-th iteration
+  no_progress: 3                 # each time this many more iterations in a row went without an improving change

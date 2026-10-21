@@ -1,0 +1,73 @@
+# Engine configuration of this loop. Owner zone: only the owner changes it (on the setup branch while the setup map
+# runs). No session can write it (`protected` below).
+# Values set to null have no default on purpose: the setup map decides them per loop, and the engine does nothing
+# for a null parameter.
+
+resources: {format: layered}     # layered managed definitions: execution/ (goal roles, shaper) and policy/ (audit, evaluator, verifier, Policymaker)
+cli_version: "2.1.292"          # matches the locally installed CLI; live call currently reports a weekly limit
+provider_pool:
+  # Owner catalog. Policy can reorder/subset these IDs, never add another model.
+  # Catalog and execution evidence: docs/perpetua/cloud-authentication.md.
+  providers:
+    claude:
+      models: [claude-sonnet-5-5, claude-opus-5-5, claude-fable-5-1, claude-haiku-5-5, claude-haiku-4-5-20251001]
+    codex:
+      models: [gpt-6.1-sol, gpt-6-astra, gpt-6-sol, gpt-6-luna, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna]
+    copilot:
+      models: [gpt-5.6-luna]
+  backoff:
+    initial_seconds: 300
+    max_seconds: 21600
+author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
+  name: ""
+  email: ""
+owner: "Kucze3205"               # GitHub login owner requests are assigned to
+
+# --- the change gate -------------------------------------------------------------------------------------------
+# Nothing enters the default branch without a verdict "not worse than what is accepted".
+check: "python3 policy/evaluator/evaluate.py --check"  # evidence integrity; missing benchmark is explicitly unmeasured
+gate:
+  kind: owner                    # bootstrap: owner judges substance; no validated benchmark or quality thresholds yet
+  command: ""                    # script: run from the ACCEPTED tree, never from the candidate; prints a JSON object last:
+                                 #   {"verdict": "accepted|rejected|inconclusive", "improved": true, "detail": "..."}
+                                 #   env: CANDIDATE_DIR BASELINE_DIR CANDIDATE_SHA BASELINE_SHA CHANGED_FILES_FILE TASK ITERATION
+  timeout_minutes: 120
+  env_passthrough: []            # names of secrets the gate command may see (e.g. a judge that calls a model)
+
+# --- zones ------------------------------------------------------------------------------------------------------
+protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "execution/prompts/role.md", "execution/protocol.md", "docs/perpetua/accepted-limits.md"]
+direct_paths: ["execution/", "policy/", "audit/", "journal/"]   # not work: merged without the change gate (role `write` paths still apply)
+notes_paths: ["journal/"]        # merged even when the session did not finish
+evaluator_paths: ["policy/evaluator/"]            # only a role whose profile has `owns_evaluator`; merged only after the verifier
+policymaker_only_roles: [evaluator, audit]             # tasks of these roles come only from the Policymaker's `orders`
+verifier_role: evaluator-verifier
+large_file_bytes: 5000000        # bigger files go to `.session/artifacts/` (release assets), not into git
+
+# --- accepted limits ---------------------------------------------------------------------------------------------
+# What a role's profile may have without asking the owner. Beyond it, each session needs a granted consent request.
+limits:
+  internet: false               # online role profiles require per-session owner consent, including read-only roles
+  tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
+  internet_write: []             # path prefixes a profile with internet may write
+  # Accepted resource/data/spending boundaries: docs/perpetua/accepted-limits.md.
+  # Optional private access requests never block an iteration; schedule only ready work.
+
+# --- the Policymaker's fixed permissions and owner ceilings -------------------------------------------------------
+policymaker:
+  tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
+  write: ["execution/", "policy/"]
+policymaker_session_ceilings:          # effort/time/turn caps apply to every provider; models is the legacy alias bound
+  models: [claude-opus-5-5, claude-sonnet-5-5]
+  efforts: [low, medium, high]
+  max_turns: 150
+  timeout_minutes: 90
+
+# --- parameters of the setup (null = off) ------------------------------------------------------------------------
+params:
+  no_progress_iterations: 10     # notify the owner; independent work continues
+  quiet_minutes: 1440            # 24 hours without closing: roll back policy/ and retry
+  owner_wait_counts: false       # subtract cumulative blocking owner waits, including completed waits
+  stream_retention_iterations: null   # keep raw session streams for this many iterations (null: GitHub's default)
+cadence:
+  min_interval_minutes: null     # null: iteration after iteration
+  daily_iterations: null

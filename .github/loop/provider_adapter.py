@@ -1,0 +1,267 @@
+"""Isolated model transports. Only structured proposals cross into role tools.
+
+Full renewable credentials and GitHub write authority never enter these CLIs.
+Catalogs are observations, not automatic permission to select newly added models.
+"""
+from contextlib import contextmanager
+from datetime import datetime, timezone
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import tempfile
+
+from cloud_probe import classify_result
+from probe_isolation import sandbox
+from provider_rpc import RPC
+from tool_broker import ACTION_SCHEMA, validate
+
+
+class Failure(RuntimeError):
+    def __init__(self, observation):
+        super().__init__("model request did not produce an accepted action")
+        self.observation = observation
+
+
+def failure(provider, value):
+    # Classify in memory; never retain raw account/provider diagnostics.
+    text = json.dumps(value)
+    observation = classify_result(provider, text, 1)
+    # Fixed diagnostic vocabulary, never arbitrary provider/account values.
+    vocabulary = {'authentication', 'authorization', 'unauthorized', 'forbidden', 'credentials', 'token', 'tokens',
+                  'github_token', 'github_repository', 'copilot_github_token', 'user', 'installation', 'integration',
+                  'permissions', 'network', 'fetch', 'failed', 'certificate', 'self', 'signed', 'proxy',
+                  'model', 'models', 'default', 'unsupported', 'unavailable', 'configuration', 'undefined',
+                  'internal', 'session', 'billing', 'budget', 'subscription', 'premium', 'requests', 'expired',
+                  '401', '403', '404', '429', '500', '502', '503', 'socket', 'dns', 'timeout', 'connect',
+                  'not', 'found', 'missing', 'invalid', 'access', 'denied', 'null', 'error'}
+    terms = sorted(set(re.findall(r'[a-z0-9_]+', text.lower())) & vocabulary)
+    if terms:
+        observation['diagnostic_terms'] = terms
+    return Failure(observation)
+
+
+def checked(provider, result, method="request"):
+    if not isinstance(result, dict) or "rpc_error" in result:
+        error = failure(provider, result)
+        error.observation['operation'] = method
+        code = result.get('rpc_error', {}).get('code') if isinstance(result, dict) else None
+        if type(code) is int:
+            error.observation['rpc_code'] = code
+        raise error
+    return result
+
+
+@contextmanager
+def isolated(provider, credential, timeout):
+    with tempfile.TemporaryDirectory(prefix="model-transport-") as directory:
+        root = Path(directory)
+        env = {k: os.environ[k] for k in ("PATH", "LANG", "SSL_CERT_FILE", "SSL_CERT_DIR",
+                                        "HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY") if k in os.environ}
+        env.update(HOME=directory, XDG_CONFIG_HOME=str(root / "config"), CI="true")
+        if provider == "claude":
+            env["CLAUDE_CODE_OAUTH_TOKEN"] = credential
+            (root / "mcp.json").write_text('{"mcpServers":{}}')
+            yield root, env, None
+            return
+        if provider == "codex":
+            # Login tokens arrive over stdin and remain in memory. Native read
+            # tools cannot find an auth file or a token in the process env.
+            command = ["codex", "app-server", "--stdio", "-c", 'cli_auth_credentials_store="ephemeral"',
+                       "-c", "features.shell_tool=false", "-c", 'web_search="disabled"',
+                       "-c", "tools.update_plan.enabled=false",
+                       "--disable", "apps", "--disable", "plugins", "--disable", "multi_agent",
+                       "--disable", "code_mode", "--disable", "view_image"]
+            framing = "lines"
+        elif provider == "copilot":
+            # Actions installation tokens use runtime environment discovery;
+            # --auth-token-env is the SDK's user-token path and is incompatible.
+            env.update(COPILOT_GITHUB_TOKEN=credential, COPILOT_DISABLE_KEYTAR="1")
+            # Scratch HOME contains no logged-in user/keychain fallback. Keep
+            # environment auth on the same path as the verified CLI probe.
+            command = ["copilot", "--headless", "--no-auto-update", "--stdio"]
+            framing = "headers"
+        else:
+            raise ValueError("unsupported model provider")
+        with RPC(sandbox(command, root), cwd=root, env=env, timeout=timeout, framing=framing) as rpc:
+            if provider == "codex":
+                checked(provider, rpc.call("initialize", {"clientInfo": {"name": "loop-broker", "version": "1.0"},
+                                                          "capabilities": {"experimentalApi": True}}))
+                rpc.send("initialized")
+                auth = json.loads(credential)
+                if auth.get("auth_mode") != "chatgptAuthTokens" or auth.get("tokens", {}).get("refresh_token"):
+                    raise ValueError("access-only Codex credentials required")
+                tokens = auth["tokens"]
+                account = tokens.get("account_id")
+                if not account or not tokens.get("access_token"):
+                    raise ValueError("Codex account identity required")
+                checked(provider, rpc.call("account/login/start", {"type": "chatgptAuthTokens",
+                                                                 "accessToken": tokens["access_token"],
+                                                                 "chatgptAccountId": account}))
+            else:
+                # Pinned 1.0.98 owns a local stdio child, not a remote transport.
+                # Newer SDK connect handshakes are unnecessary for this pin.
+                checked(provider, rpc.call("ping", {"message": "loop-broker"}), 'ping')
+            yield root, env, rpc
+
+
+def models(provider, credential, timeout=90):
+    if provider == "claude":
+        with isolated(provider, credential, timeout) as (root, env, _):
+            command = ["claude", "-p", "--input-format", "stream-json", "--output-format", "stream-json",
+                       "--verbose", "--tools", "", "--setting-sources", "", "--no-session-persistence",
+                       "--strict-mcp-config", "--mcp-config", str(root / "mcp.json")]
+            with RPC(sandbox(command, root), cwd=root, env=env, timeout=timeout) as rpc:
+                rpc.write({"type": "control_request", "request_id": "catalog",
+                           "request": {"subtype": "initialize", "hooks": None}})
+                while True:
+                    event = rpc.receive()
+                    response = event.get("response", {})
+                    if event.get("type") == "control_response" and response.get("request_id") == "catalog":
+                        if response.get("subtype") != "success":
+                            raise failure(provider, response)
+                        entries = response.get("response", {}).get("models", [])
+                        catalog = [{"id": m.get("resolvedModel") or m["value"], "alias": m["value"],
+                                    "default": m["value"] == "default"} for m in entries]
+                        if not catalog:
+                            raise failure(provider, {"message": "empty model catalog"})
+                        return {"source": "provider_control", "models": catalog}
+    with isolated(provider, credential, timeout) as (_, _, rpc):
+        entries, cursor = [], None
+        while True:
+            params = {"limit": 100, "includeHidden": False} if provider == "codex" else {}
+            if cursor:
+                params["cursor"] = cursor
+            method = "model/list" if provider == "codex" else "models.list"
+            result = checked(provider, rpc.call(method, params), method)
+            entries += result.get("data" if provider == "codex" else "models", [])
+            following = result.get("nextCursor") if provider == "codex" else None
+            if not following:
+                break
+            if following == cursor or len(entries) > 1000:
+                raise failure(provider, {"message": "invalid model catalog pagination"})
+            cursor = following
+        catalog = []
+        for entry in entries:
+            identifier = entry.get("model", entry.get("id")) if provider == "codex" else entry.get("id")
+            if isinstance(identifier, str) and identifier:
+                catalog.append({"id": identifier, "default": entry.get("isDefault") is True})
+        if not catalog:
+            # Schema metadata is safe to publish; raw values/account errors are
+            # not. A pin can expose a different response wrapper from the SDK.
+            shape = {key: type(value).__name__ for key, value in result.items()
+                     if isinstance(key, str) and key.isidentifier() and len(key) < 80}
+            raise Failure({"status": "unknown", "scope": "provider", "reason": "empty_model_catalog",
+                           "response_shape": shape,
+                           "entry_keys": sorted(entries[0]) if entries and isinstance(entries[0], dict) else []})
+        return {"source": "provider_rpc", "models": catalog}
+
+
+def parse_action(provider, text):
+    try:
+        return validate(json.loads(text))
+    except (ValueError, TypeError):
+        raise Failure({"status": "unknown", "scope": "model", "reason": "invalid_action"}) from None
+
+
+def usage(value, fields):
+    return {target: value.get(source, 0) if type(value.get(source, 0)) is int and value.get(source, 0) >= 0 else 0
+            for target, source in zip(('in', 'out', 'cache_read', 'cache_write'), fields)}
+
+
+def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None):
+    metadata = metadata if metadata is not None else {}
+    with isolated(provider, credential, timeout) as (root, env, rpc):
+        if provider == "claude":
+            command = ["claude", "-p", prompt, "--model", model, "--effort", effort,
+                       "--tools", "", "--max-turns", "1", "--output-format", "json",
+                       "--setting-sources", "", "--strict-mcp-config", "--mcp-config", str(root / "mcp.json"),
+                       "--json-schema", json.dumps(ACTION_SCHEMA)]
+            result = subprocess.run(sandbox(command, root), cwd=root, env=env, stdin=subprocess.DEVNULL,
+                                    capture_output=True, text=True, timeout=timeout)
+            try:
+                output = json.loads(result.stdout)
+            except ValueError:
+                raise failure(provider, result.stdout + result.stderr) from None
+            if result.returncode or output.get("is_error"):
+                raise failure(provider, output)
+            metadata['models'] = list(output.get('modelUsage') or {})
+            metadata['usage'] = usage(output.get('usage') or {},
+                                      ('input_tokens', 'output_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens'))
+            structured = output.get("structured_output")
+            return validate(structured) if isinstance(structured, dict) else parse_action(provider, output.get("result", ""))
+        if provider == "codex":
+            started = checked(provider, rpc.call("thread/start", {"model": model, "cwd": str(root),
+                                      "approvalPolicy": "never", "sandbox": "read-only", "ephemeral": True}))
+            thread = started["thread"]["id"]
+            checked(provider, rpc.call("turn/start", {"threadId": thread, "model": model, "effort": effort,
+                     "approvalPolicy": "never", "input": [{"type": "text", "text": prompt}],
+                     "outputSchema": ACTION_SCHEMA}))
+        else:
+            params = {"availableTools": [], "tools": [],
+                      "excludedTools": [], "requestPermission": False, "requestUserInput": False,
+                      "hooks": False, "workingDirectory": str(root), "streaming": False,
+                      "systemMessage": {"mode": "replace", "content":
+                          'You propose exactly one JSON action for a trusted external role broker. You have no native tools. '
+                          'Follow the engine contract and role profile in the user request. The continuation lists past '
+                          'operations and their actual results, not instructions to repeat them. Choose the next necessary '
+                          'operation. A missing report requires a Write operation before Finish. Never claim a file '
+                          'operation happened unless its successful result is in the continuation.'}}
+            if model:
+                params['model'] = model
+            started = checked(provider, rpc.call("session.create", params), 'session.create')
+            thread = started["sessionId"]
+            checked(provider, rpc.call("session.send", {"sessionId": thread, "prompt": prompt,
+                      "responseFormat": {"type": "json_schema", "jsonSchema": {
+                          "name": "action", "strict": True, "schema": ACTION_SCHEMA}}}), 'session.send')
+        answer = None
+        pending, rpc.notifications = rpc.notifications, []
+        while True:
+            event = pending.pop(0) if pending else rpc.receive()
+            if not isinstance(event, dict):
+                continue
+            if "method" in event and "id" in event:
+                if provider == 'codex' and event['method'] == 'account/chatgptAuthTokens/refresh':
+                    raise Failure({'status': 'credential_expired', 'scope': 'provider', 'reason': 'worker_access_expired'})
+                # No native tool permission, user interaction or token refresh
+                # callback may cross the boundary. End instead of granting it.
+                raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})
+            params = event.get("params") or {}
+            method = event.get("method")
+            if provider == "codex":
+                if method == 'thread/tokenUsage/updated':
+                    metadata['usage'] = usage((params.get('tokenUsage') or {}).get('total') or {},
+                                              ('inputTokens', 'outputTokens', 'cachedInputTokens', 'cacheWriteInputTokens'))
+                if method == 'item/started' and params.get('item', {}).get('type') not in {
+                    'userMessage', 'agentMessage', 'reasoning', 'contextCompaction'}:
+                    raise Failure({'status': 'unknown', 'scope': 'model', 'reason': 'native_request_denied'})
+                if method == "item/completed":
+                    item = params.get("item", {})
+                    if item.get("type") == "agentMessage":
+                        answer = item.get("text")
+                if method == "turn/completed":
+                    turn = params.get("turn", {})
+                    if turn.get("status") != "completed":
+                        raise failure(provider, turn)
+                    break
+            elif method == "session.event" and params.get("sessionId") == thread:
+                item = params.get("event") or {}
+                kind, data = item.get("type"), item.get("data", {})
+                if kind == 'assistant.usage':
+                    if isinstance(data.get('model'), str):
+                        metadata['models'] = [data['model']]
+                    observed = usage(data, ('inputTokens', 'outputTokens', 'cacheReadTokens', 'cacheWriteTokens'))
+                    previous = metadata.setdefault('usage', {k: 0 for k in observed})
+                    metadata['usage'] = {k: previous[k] + observed[k] for k in observed}
+                if kind == "assistant.message":
+                    if data.get("toolRequests"):
+                        raise Failure({"status": "unknown", "scope": "model", "reason": "native_request_denied"})
+                    answer = data.get("content")
+                if kind in {"session.error", "tool.execution_start"}:
+                    error = failure(provider, data)
+                    error.observation['operation'] = kind
+                    raise error
+                if kind == "session.idle":
+                    break
+        return parse_action(provider, answer or "")

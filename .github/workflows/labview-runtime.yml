@@ -1,0 +1,33 @@
+name: LabVIEW cloud runtime
+
+on:
+  push:
+    branches: [perpetua/setup]
+    paths:
+      - '.github/loop/labview-runtime.json'
+      - '.github/loop/labview_runtime.sh'
+      - '.github/loop/check_labview_runtime.py'
+      - '.github/workflows/labview-runtime.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify pinned NI runtime with an existing public VI
+        run: python3 .github/loop/check_labview_runtime.py --output "$RUNNER_TEMP/labview-runtime/readiness.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: labview-cloud-runtime-readiness
+          path: |
+            ${{ runner.temp }}/labview-runtime/readiness.json
+            ${{ runner.temp }}/labview-runtime/*.log
+            ${{ runner.temp }}/labview-runtime/*.txt
