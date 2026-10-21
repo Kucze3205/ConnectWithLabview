@@ -46,7 +46,9 @@ jobs:
       - name: Test engine contracts without provider credentials
         env:
           LOOP_BROKER_INTEGRATION: '1'
-        run: python3 -m unittest discover -s .github/loop/tests -v
+        # Root: the executor boundary test plants canary copies in system directories (/usr/bin, /usr/local/share)
+        # that an unprivileged runner user cannot write, so its host-visibility check would not run otherwise.
+        run: sudo -E env "PATH=$PATH" python3 -m unittest discover -s .github/loop/tests -v
 
   public-sources:
     runs-on: ubuntu-24.04
