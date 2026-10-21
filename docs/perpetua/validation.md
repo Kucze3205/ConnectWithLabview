@@ -36,4 +36,4 @@ The regression suite also covers engine ownership and local versioning (ADR-0001
 credential-free agent sessions (ADR-0002), the accepted-tree change gate without
 an engine-owned accepted measurement (ADR-0003), limits, owner requests and rollback
 triggers. Validation supplies no migration or reconfiguration procedure. Before arming, also run
-`python3 .github/loop/setup_roles.py validate --baseline setup-baseline` against the tagged commit (see the setup notes).
+`python3 .github/loop/setup_roles.py validate --baseline setup-baseline` against the tagged commit (see [setup decisions](setup-decisions.md)).
