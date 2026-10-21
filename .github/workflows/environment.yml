@@ -50,7 +50,7 @@ jobs:
         # directories (/usr/bin, /usr/local/share) that an unprivileged runner user cannot write, so it runs as root.
         # Everything else stays unprivileged: bwrap run as root cannot read the runner's checkout (model boundary test).
         run: |
-          export PYTHONPATH="$PWD/.github/loop/tests"
+          export PYTHONPATH="$PWD/.github/loop/tests:$PWD/.github/loop"
           others=$(cd .github/loop/tests && ls test_*.py | grep -v '^test_executor_boundary\.py$' | sed 's/\.py$//')
           status=0
           sudo -E env "PATH=$PATH" "PYTHONPATH=$PYTHONPATH" "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" python3 -m unittest -v test_executor_boundary || status=1
