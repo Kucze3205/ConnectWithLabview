@@ -15,7 +15,7 @@ replaces in the setup notes and implementing files; preserve that account in `do
 arming deletes the notes. Losing a guarantee informs the owner's decision and does not automatically veto it. With
 no owner change, the shipped behavior remains in force.
 
-Engine version: `ENGINE_VERSION`. There is no update path from the plugin in the first release.
+Engine version: `ENGINE_VERSION` (`0.3.0`, the engine of plugin 0.4.0, extended here with routed Claude/Codex/Copilot execution). The plugin ships no update path for installed loops; this loop was moved by a manual three-way merge (setup tickets M1-M4) and any later update needs the same care.
 
 When investigating behavior or proposing an engine change, use the [code map](code-map.md)
 to find the responsible module, contract and tests.

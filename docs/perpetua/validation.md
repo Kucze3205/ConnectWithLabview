@@ -1,13 +1,16 @@
 # Validating the layered engine
 
-Run from the plugin root:
+Run from the repository root:
 
 ```sh
-python -m unittest discover -s engine/.github/loop/tests
+python3 -m unittest discover -s .github/loop/tests
 ```
 
-In a copied loop use `-s .github/loop/tests`. The suite never arms a real loop.
-`test_template_flow.py` copies the actual inactive template, explicitly installs
+The suite never arms a real loop. The evidence for this loop's migration is the Linux Actions run recorded in
+ticket M4 (#15): 415 tests, 18 skipped (3 environmental provider/network checks, tracked in #24, and 15 that apply
+only to the plugin template). Skips are missing checks, not passes. `environment.yml` runs `test_executor_boundary`
+under `sudo` and the other modules unprivileged.
+`test_template_flow.py` is written for the plugin's inactive template; in this loop it is skipped. It copies the inactive template, explicitly installs
 roles, validates the committed setup baseline, stages the selected shaper, accepts
 a work product through the accepted-tree gate, delivers a suggestion to the
 Policymaker, activates changes to both layers and checks receipts and rollback.
@@ -32,5 +35,5 @@ provider boundary check before claiming all ADR-0004 validation is complete.
 The regression suite also covers engine ownership and local versioning (ADR-0001),
 credential-free agent sessions (ADR-0002), the accepted-tree change gate without
 an engine-owned accepted measurement (ADR-0003), limits, owner requests and rollback
-triggers. Validation supplies no migration or reconfiguration procedure. Repeating
-setup as a review is separate work.
+triggers. Validation supplies no migration or reconfiguration procedure. Before arming, also run
+`python3 .github/loop/setup_roles.py validate --baseline setup-baseline` against the tagged commit (see the setup notes).

@@ -1,7 +1,7 @@
 # Finding the right engine code
 
-Paths below are relative to a loop's repository root. In the plugin source they
-live under `engine/`; setup copies that directory's contents to the target root.
+Paths below are relative to this repository's root. In the plugin source the same files live
+under `engine/`; this loop is a hand-merged copy that adds routed Claude/Codex/Copilot execution.
 
 For a running session, start with `.session/issue.md`, `.session/protocol.md` and
 the staged role instructions. Read this map when investigating engine behavior
@@ -56,9 +56,8 @@ configuration, admission, revision and restore boundaries. See
 [managed definitions](managed-resources.md) for the supported layout and activation contract.
 `common.py` owns shared configuration, GitHub and git operations. Tests replace
 GitHub operations with `tests/fakes.py` and use real temporary git repositories.
-Run the suite from the loop repository root:
-`python -m unittest discover -s .github/loop/tests`.
-From the plugin source use `-s engine/.github/loop/tests` instead.
+Run the suite from the repository root:
+`python3 -m unittest discover -s .github/loop/tests`.
 See `engine.md` for prerequisites and limits of this verification.
 
 ## Details that are easy to misread

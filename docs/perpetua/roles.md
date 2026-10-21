@@ -1,24 +1,26 @@
 # Starting roles
 
 Topic E configures the loop's starting capabilities. It creates no reader, benchmark cases,
-quality thresholds or new access. The role label selects `policy/roles/<name>/SKILL.md`
-and the matching entry in `policy/profiles.yml`. The Policymaker may adapt ordinary roles
-within the owner's limits; the evaluator verifier's contract remains owner-controlled.
+quality thresholds or new access. The role label selects `<layer>/roles/<name>/SKILL.md`
+and the matching entry in that layer's `profiles.yml` (see [managed definitions](managed-resources.md)).
+The Policymaker may adapt ordinary roles within the owner's limits; the evaluator verifier's
+contract remains owner-controlled. Layer assignment (M2/M3, 20 October 2026): execution roles do
+not see the inside of policy, so the reviewer judges the work from pinned evidence without it.
 
 ## Responsibilities and separation
 
-| Role | Responsibility | Repository output |
-|---|---|---|
-| orchestrator | Shape one iteration and its dependencies; preserve context | `journal/` |
-| researcher | Investigate prepared primary sources, LabVIEW compatibility and delivery options | `docs/research/` |
-| benchmark | Prepare verification protocol, development cases and reproducible readiness evidence | `benchmark/` |
-| implementation | Implement assigned product behavior after benchmark prerequisites | Product paths declared in its profile |
-| reviewer | Independently inspect a pinned product or preparation change against Standards and Spec | Session report/artifacts only |
-| evaluator | Implement the measurement under the Policymaker's order | `policy/evaluator/` only |
-| evaluator-verifier | Independently check an evaluator change, including transition to real measurement | Session report/artifacts only |
-| audit | Measure use of the loop's environment, not product quality | `audit/` |
+| Role | Layer | Responsibility | Repository output |
+|---|---|---|---|
+| orchestrator (shaper) | execution | Shape one iteration and its dependencies; preserve context | `journal/` |
+| researcher | execution | Investigate prepared primary sources, LabVIEW compatibility and delivery options | `docs/research/` |
+| benchmark | execution | Prepare verification protocol, development cases and reproducible readiness evidence | `benchmark/` |
+| implementation | execution | Implement assigned product behavior after benchmark prerequisites | Product paths declared in its profile |
+| reviewer | execution | Independently inspect a pinned product or preparation change against Standards and Spec | Session report/artifacts only |
+| evaluator | policy | Implement the measurement under the Policymaker's order | `policy/evaluator/` only |
+| evaluator-verifier | policy | Independently check an evaluator change, including transition to real measurement | Session report/artifacts only |
+| audit | policy | Measure use of the loop's environment, not product quality | `audit/` |
 
-The Policymaker is a separate engine-selected agent, not a new task profile.
+The Policymaker is a separate engine-selected agent in the policy layer (its skill is `policy/roles/policymaker/SKILL.md`, its permissions come from `engine.yml`), not a task profile.
 Keep its existing evaluator and audit orders. The orchestrator can order researcher,
 benchmark, implementation and reviewer work, but cannot order evaluator changes.
 
@@ -57,7 +59,7 @@ automatic product-review merge gate.
 
 ## Available tools and limits
 
-All four new profiles are offline. They use the broker's Read/Glob/Grep/Write/Edit tools
+The four goal-work profiles (researcher, benchmark, implementation, reviewer) are offline. They use the broker's Read/Glob/Grep/Write/Edit tools
 and allowlisted git/Python commands. The engine separately permits session reports and
 artifacts, so `reviewer.write: []` allows a report while preventing repository edits.
 Profiles define filesystem writes, not data confidentiality: readable repository content
@@ -111,7 +113,7 @@ provenance, not runtime dependencies.
   accepted evaluation contract. It does not reuse that grader's output schema or declare
   numeric scoring rules. Benchmark authors do not approve their own readiness.
 
-Only each selected role folder and referenced repository/staged inputs are required on
+Each role is a complete local copy under its layer; only the selected role folder and referenced repository/staged inputs are required on
 the runner; personal paths, connector accounts and native skill discovery are unnecessary.
 
 Installed inputs (SHA-256 of the original bytes):
