@@ -80,6 +80,19 @@ class RuntimeTest(unittest.TestCase):
         self.runtime(request).run(2, 30)
         self.assertEqual(self.broker.commands, 0)
 
+    def test_the_same_interrupted_action_is_counted_instead_of_growing_the_continuation(self):
+        read = action('Read', path='.session/protocol.md')
+        self.store.update('sessions/11.json', lambda _: {'fingerprint': 'f', 'turns': 0, 'history': [], 'pending': read})
+        for _ in range(3):
+            self.runtime(lambda *args, **kwargs: action('Finish', status='partial')).run(0, 30)
+            self.store.update('sessions/11.json', lambda state: dict(state, pending=read))
+        history = self.store.read('sessions/11.json')['history']
+        self.assertEqual(len(history), 1)
+        self.assertEqual(history[0]['repeats'], 3)
+        self.store.update('sessions/11.json', lambda state: dict(state, pending=action('Glob', pattern='*')))
+        self.runtime(lambda *args, **kwargs: action('Finish', status='partial')).run(0, 30)
+        self.assertEqual(len(self.store.read('sessions/11.json')['history']), 2)
+
     def test_failure_to_checkpoint_stops_before_another_action(self):
         calls = []
         def checkpoint(_):

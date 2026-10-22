@@ -97,9 +97,14 @@ class Runtime:
             # earlier operation may already have run. Preserve that evidence.
             state['fingerprint'] = self.fingerprint
         if state.get("pending"):
-            state["history"].append({"recovery": "The runner stopped with this action pending. It may have run. "
-                                     "Inspect the current files before proposing another operation.",
-                                     "action": state.pop("pending")})
+            action, last = state.pop("pending"), (state["history"] or [None])[-1]
+            if last and last.get("recovery") and last.get("action") == action:
+                # The same operation keeps interrupting: count it instead of growing the continuation.
+                last["repeats"] = last.get("repeats", 1) + 1
+            else:
+                state["history"].append({"recovery": "The runner stopped with this action pending. It may have run. "
+                                         "Inspect the current files before proposing another operation.",
+                                         "action": action})
         state.pop("result", None)
         state = self.save(state)
         deadline = time.monotonic() + seconds
