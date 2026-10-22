@@ -1,6 +1,7 @@
 import json
 from contextlib import contextmanager
 from pathlib import Path
+import subprocess
 import unittest
 from unittest.mock import patch
 
@@ -57,6 +58,24 @@ class AdapterTest(unittest.TestCase):
             with self.assertRaises(adapter.Failure) as error:
                 adapter.request('codex', 'model', 'access-only', 'task')
             self.assertEqual(error.exception.observation['reason'], 'native_request_denied')
+
+    def test_claude_prompt_goes_through_stdin_so_a_long_continuation_cannot_overflow_argv(self):
+        action = {field: '' for field in FIELDS}
+        action.update(tool='Finish', status='done')
+        seen = {}
+        @contextmanager
+        def isolated(*args):
+            yield Path('.'), {}, None
+        def run(command, **kwargs):
+            seen.update(command=command, **kwargs)
+            return subprocess.CompletedProcess(command, 0, json.dumps({'structured_output': action, 'usage': {}}), '')
+        prompt = 'x' * 300_000                      # one argv entry is limited to 128 KiB
+        with patch.object(adapter, 'isolated', isolated), patch.object(adapter, 'sandbox', side_effect=lambda c, _: c), \
+                patch.object(adapter.subprocess, 'run', run):
+            self.assertEqual(adapter.request('claude', 'model', 'token', prompt), action)
+        self.assertEqual(seen['input'], prompt)
+        self.assertNotIn(prompt, seen['command'])
+        self.assertTrue(all(len(part) < 100_000 for part in seen['command']))
 
     def test_copilot_legacy_handshake_and_catalog_use_explicit_empty_ping(self):
         rpc = FakeRPC()

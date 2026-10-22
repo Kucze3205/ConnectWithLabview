@@ -174,11 +174,13 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
     metadata = metadata if metadata is not None else {}
     with isolated(provider, credential, timeout) as (root, env, rpc):
         if provider == "claude":
-            command = ["claude", "-p", prompt, "--model", model, "--effort", effort,
+            # The prompt goes through stdin: one argv entry is limited to 128 KiB (E2BIG) and the
+            # continuation can be larger.
+            command = ["claude", "-p", "--model", model, "--effort", effort,
                        "--tools", "", "--max-turns", "1", "--output-format", "json",
                        "--setting-sources", "", "--strict-mcp-config", "--mcp-config", str(root / "mcp.json"),
                        "--json-schema", json.dumps(ACTION_SCHEMA)]
-            result = subprocess.run(sandbox(command, root), cwd=root, env=env, stdin=subprocess.DEVNULL,
+            result = subprocess.run(sandbox(command, root), cwd=root, env=env, input=prompt,
                                     capture_output=True, text=True, timeout=timeout)
             try:
                 output = json.loads(result.stdout)
