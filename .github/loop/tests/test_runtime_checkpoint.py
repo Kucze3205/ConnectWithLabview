@@ -53,6 +53,15 @@ class CheckpointTest(unittest.TestCase):
         self.assertEqual(remote, 'accepted turn')
         self.assertEqual(len(result['head']), 40)
 
+    def test_executor_prepared_repository_without_origin_checkpoints_locally(self):
+        # executor_boundary.prepare re-initialises the work repository: there is no remote to push to.
+        fakes.sh(self.work, 'git', 'remote', 'remove', 'origin')
+        (self.work / 'src/result').write_text('accepted turn')
+        result = self.checkpoint({})
+        self.assertEqual(fakes.sh(self.work, 'git', 'rev-parse', 'HEAD'), result['head'])
+        self.assertEqual(fakes.sh(self.work, 'git', 'show', 'HEAD:src/result'), 'accepted turn')
+        self.assertEqual(self.checkpoint({})['head'], result['head'])   # a read-only turn changes nothing
+
     def test_checkpoint_refuses_out_of_scope_mutations_before_push(self):
         (self.work / 'engine.yml').write_text('forbidden')
         with self.assertRaises(PermissionError):

@@ -140,5 +140,9 @@ class Checkpoint:
             self.git('add', '-A', '--', *sorted(changed))
             self.git('commit', '-m', 'Role checkpoint for task ' + self.issue)
         head = self.git('rev-parse', 'HEAD').stdout.strip()
-        self.git('push', 'origin', 'HEAD:refs/heads/task/' + self.issue, remote=True)
+        # A work repository prepared by the executor boundary is a fresh snapshot without `origin`: its
+        # source reaches `task/N` only when the epilogue admits the files as data. Outputs still go to
+        # the release asset below.
+        if self.git('remote', 'get-url', 'origin', check=False).returncode == 0:
+            self.git('push', 'origin', 'HEAD:refs/heads/task/' + self.issue, remote=True)
         return dict(self.snapshot(previous), head=head)
