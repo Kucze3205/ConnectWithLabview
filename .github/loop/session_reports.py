@@ -6,9 +6,11 @@ import os
 import re
 
 import common as c
+import session_inputs
 
 ROOT = ".github/loop/data/session-reports"
 STATE = ".github/loop/data/suggestions-state.json"
+FINAL = ("done", "partial", "crashed", "rejected")      # a parked (`paused`) session freezes nothing
 DECISIONS_MARK = "<!-- suggestion-decisions -->"
 
 
@@ -61,7 +63,7 @@ def source_records(n=None):
 def capture(n, work=None):
     """Freeze a trusted report and validated proposals. Replaying identical output is a no-op."""
     report = report_snapshot(n)
-    if not report:
+    if not report or c.fields(report["body"]).get("status") not in FINAL:
         return
     items, errors = [], []
     if work:
@@ -146,12 +148,14 @@ def apply_decisions(n):
             c.sync_main()
 
 
-def stage(state, directory):
+def stage(state, directory, role=None):
     """Actual trusted comment bodies, readable without gh or credentials."""
     reports, seen = [], set()
     for line in state.get("iterations", [])[-5:]:
         for issue in c.list_issues(state="all", labels=(c.ITER + str(line["n"]),)):
             n = issue["number"]
+            if (role and session_inputs.restricted(role) and not session_inputs.visible(n)):
+                continue
             if n in seen or not c.roles_of(c.label_names(issue)):
                 continue
             seen.add(n)
@@ -160,6 +164,8 @@ def stage(state, directory):
                 reports.append(report)
     for item in state.get("suggestions", []):
         n = item["source"]["issue"]
+        if role and session_inputs.restricted(role) and not session_inputs.visible(n):
+            continue
         if n in seen:
             continue
         seen.add(n)
@@ -179,6 +185,8 @@ def stage(state, directory):
               for item in state.get("suggestions", [])}
     for _, record in source_records():
         report = record["report"]
+        if (role and session_inputs.restricted(role) and not session_inputs.visible(report["issue"])):
+            continue
         if (report["issue"], report["snapshot"]) in wanted:
             rel = "%s-%s.json" % (report["issue"], report["snapshot"])
             with open(os.path.join(out, rel), "w", encoding="utf-8") as fh:

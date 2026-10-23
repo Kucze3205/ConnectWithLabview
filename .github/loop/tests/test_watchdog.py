@@ -70,7 +70,7 @@ class ArmingTest(WatchCase):
     def test_the_switch_off_stops_the_watchdog(self):
         self.hub.vars["AUTOPILOT"] = "off"
         self.assertEqual(loop.watch(), 0)
-        self.assertEqual(self.hub.issues, {})
+        self.assertEqual(set(self.hub.issues), {0})        # only the fixture's earlier Policymaker session
 
 
 class JamTest(WatchCase):
@@ -181,7 +181,7 @@ class StallTest(WatchCase):
 
 
 class CeilingTest(WatchCase):
-    PARAMS = "ceilings:\n  iteration_minutes: 5\n"
+    PARAMS = "shaper: orchestrator\nceilings:\n  iteration_minutes: 5\n"
 
     def test_the_policymakers_iteration_ceiling_ends_a_long_iteration_without_a_rollback(self):
         it.start_iteration()

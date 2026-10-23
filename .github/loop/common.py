@@ -17,6 +17,8 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
+import managed_resources as resources
+
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
 MARK = "<!-- session-report -->"
 TRUSTED = {"OWNER", "MEMBER", "COLLABORATOR"}
@@ -25,29 +27,31 @@ ITER = "loop:iteration "                 # label `loop:iteration N`: the loop's 
 ROLE = "role:"
 AGENT_STATUSES = {"done", "partial", "blocked", "rejected"}
 # Report fields written only by the engine. An agent's value for them is dropped when its report is published.
-OWNED = ("attempts", "resume_after", "kicks", "kicked", "conflicts", "cause", "verification", "verdict", "improved",
+OWNED = ("attempts", "idle_resumes", "head", "resume_after", "kicks", "kicked", "conflicts", "cause", "verification", "verdict", "improved",
          "merged", "detail", "model", "effort", "turns", "peak_context", "tokens_in", "tokens_out", "cache_read", "cache_write",
          "models", "agent_s", "gate_s", "total_s", "parked_s", "paused_at", "runner", "branch", "iteration", "artifacts",
-         "verifier_issue", "verified_commit", "verifier_passed")
+         "verifier_issue", "verified_commit", "verifier_passed", "owner_accepted", "owner_accepted_commit")
 SECRETS = ("GH_TOKEN", "GITHUB_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN")
 
 DEFAULT_TOOLS = ["Read", "Grep", "Glob", "Write", "Edit", "Skill", "Bash(git:*)", "Bash(python3:*)"]
 DEFAULTS = {
+    "resources": {"format": "layered"},
     "cli_version": "2.1.284",
     "author": {"name": "", "email": ""},
     "owner": "",
+    "idle_resumes": 3,
     "check": "",
-    "protected": [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED"],
-    "direct_paths": ["policy/", "audit/", "journal/"],
+    "protected": [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/"],
+    "direct_paths": [resources.EXECUTION + "/", resources.ROOT + "/", "audit/", "journal/"],
     "notes_paths": ["journal/"],
-    "evaluator_paths": ["policy/evaluator/"],
+    "evaluator_paths": [resources.EVALUATOR],
     "policymaker_only_roles": ["evaluator", "audit"],
     "verifier_role": "evaluator-verifier",
     "large_file_bytes": 5000000,
     "gate": {"kind": "owner", "command": "", "timeout_minutes": 120, "env_passthrough": []},
     "limits": {"tools": DEFAULT_TOOLS, "internet_write": []},
     "policymaker": {"model": "claude-opus-5-5", "effort": "high", "max_turns": 150, "timeout_minutes": 90,
-               "tools": DEFAULT_TOOLS, "write": ["policy/"]},
+               "tools": DEFAULT_TOOLS, "write": [resources.EXECUTION + "/", resources.ROOT + "/"]},
     "policymaker_session_ceilings": None,
     "params": {"no_progress_iterations": None, "quiet_minutes": None, "owner_wait_counts": None,
                "stream_retention_iterations": None},
@@ -79,14 +83,14 @@ def cfg():
 
 
 def params():
-    p = {"shaper": "orchestrator", "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
+    p = {"shaper": None, "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
          "ceilings": {"job_minutes": 240, "iteration_minutes": None, "max_turns": 150},
          "policymaker_triggers": {"every_iterations": None, "no_progress": None}}
-    return merged(p, load_yaml("policy/params.yml"))
+    return merged(p, load_yaml(resources.PARAMS))
 
 
 def profiles():
-    return load_yaml("policy/profiles.yml")
+    return resources.role_profiles()
 
 
 def engine_version():
@@ -233,6 +237,17 @@ def ensure_label(name, color="C5DEF5", desc=""):
 
 def comments(n):
     return api_list("repos/%s/issues/%s/comments" % (REPO, n))
+
+
+def pr_for_branch(branch):
+    """The pull request opened from `branch` (any state), or None: {number, url, state, merged}."""
+    prs = api_list("repos/%s/pulls?state=all&head=%s:%s" % (REPO, REPO.split("/")[0], urllib.parse.quote(branch, safe="")))
+    return ({"number": prs[0]["number"], "url": prs[0]["html_url"], "state": prs[0]["state"],
+             "merged": bool(prs[0].get("merged_at"))} if prs else None)
+
+
+def open_pr(branch, title, body):
+    gh("pr", "create", "--head", branch, "--base", default_branch(), "--title", title, "--body-file", "-", inp=body)
 
 
 def post_comment(n, body):
@@ -485,11 +500,13 @@ def safe_read(root, rel):
         return fh.read()
 
 
-def export_issue(n, path):
+def export_issue(n, path, omit_markers=()):
     """Agent input: the issue body and the comments of trusted authors. The agent has no `gh`."""
     i = issue(n)
     parts = ["# Issue #%s: %s\n\n%s\n" % (n, i["title"], i["body"] or "")]
     for c in trusted_comments(n):
+        if any(marker in c["body"] for marker in omit_markers):
+            continue
         parts.append("\n---\ncomment %s (%s)\n\n%s\n" % (c["id"], c["user"]["login"], c["body"]))
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
@@ -602,7 +619,9 @@ def commit_main(files, message, remove=(), restore=None, expected=None):
         if restore:
             sha, paths = restore
             git(".", "rm", "-r", "-q", "-f", "--ignore-unmatch", *paths)
-            git(".", "checkout", sha, "--", *paths)
+            present = [path for path in paths if tree_hash(sha, path)]
+            if present:
+                git(".", "checkout", sha, "--", *present)
         for p in remove:
             git(".", "rm", "-q", "-f", "--ignore-unmatch", p)
         for p, text in files.items():

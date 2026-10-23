@@ -19,7 +19,7 @@ import loop  # noqa: E402
 
 PATCHED = ["variable", "issue", "list_issues", "create_issue", "edit_labels", "close_issue", "ensure_label", "comments",
            "post_comment", "patch_comment", "blockers", "blocking", "add_blocker", "workflow_run", "run_list",
-           "list_artifacts", "delete_artifact", "cancel_run", "recent_closed", "gh"]
+           "list_artifacts", "delete_artifact", "cancel_run", "recent_closed", "gh", "pr_for_branch", "open_pr"]
 
 
 class FakeHub:
@@ -32,6 +32,7 @@ class FakeHub:
         self.vars = {"AUTOPILOT": "on"}
         self.runs, self.dispatched, self.cancelled, self.deleted, self.gh_calls = [], [], [], [], []
         self.artifacts = []
+        self.prs = {}                       # head branch -> {"number", "url", "state", "merged", "title", "body"}
         self.next_n = 1
 
     def ts(self):
@@ -120,6 +121,15 @@ class FakeHub:
         done = [self._view(x) for x in self.issues.values() if x["state"] == "closed"]
         return sorted(done, key=lambda x: x["closed_at"], reverse=True)[:limit]
 
+    def pr_for_branch(self, branch):
+        pr = self.prs.get(branch)
+        return pr and {k: pr[k] for k in ("number", "url", "state", "merged")}
+
+    def open_pr(self, branch, title, body):
+        n = 900 + len(self.prs)
+        self.prs[branch] = {"number": n, "url": "https://github.com/o/r/pull/%s" % n, "state": "open", "merged": False,
+                            "title": title, "body": body}
+
     def gh(self, *args, inp=None, check=True):
         self.gh_calls.append(args)
         return ""
@@ -172,7 +182,7 @@ def sh(cwd, *args):
 class World:
     """A hub, a bare origin, the engine's checkout (cwd) and a place for agent copies."""
 
-    def __init__(self, engine_yml=None, files=None):
+    def __init__(self, engine_yml=None, files=None, first_iteration=False):
         self.tmp = tempfile.mkdtemp(prefix="perpetua-test-")
         self.env_saved = dict(os.environ)
         self.cwd_saved = os.getcwd()
@@ -198,9 +208,12 @@ class World:
         shutil.copy(os.path.join(ENGINE, "ENGINE_VERSION"), self.loop)
         self.write(self.loop, "engine.yml", engine_yml if engine_yml is not None else "")
         self.write(self.loop, "policy/params.yml", POLICY_PARAMS)
-        self.write(self.loop, "policy/profiles.yml", WORKER_PROFILES)
-        for role in ("orchestrator", "worker", "net", "evaluator", "evaluator-verifier", "audit"):
-            self.write(self.loop, "policy/roles/%s/SKILL.md" % role, "---\nname: %s\ndescription: fixture\n---\nx\n" % role)
+        self.write(self.loop, "execution/profiles.yml", EXECUTION_PROFILES)
+        self.write(self.loop, "policy/profiles.yml", POLICY_PROFILES)
+        for layer, roles in (("execution", ("orchestrator", "worker", "net")),
+                             ("policy", ("evaluator", "evaluator-verifier", "audit", "policymaker"))):
+            for role in roles:
+                self.write(self.loop, "%s/roles/%s/SKILL.md" % (layer, role), "---\nname: %s\ndescription: fixture\n---\nx\n" % role)
         for p, text in (files or {}).items():
             self.write(self.loop, p, text)
         sh(self.loop, "git", "init", "-q", "-b", "main")
@@ -213,6 +226,11 @@ class World:
         self.hub = FakeHub()
         self.hub.install()
         common.LAUNCHED.clear()
+        if not first_iteration:     # an earlier Policymaker session (#0, closed, done): the first-iteration trigger is spent
+            self.hub.issues[0] = {"number": 0, "id": 1000, "title": "Policymaker at the start of iteration 0", "body": "",
+                                  "state": "closed", "state_reason": "completed", "_labels": {"role:policymaker"},
+                                  "assignees": [], "created_at": self.hub.ts(), "closed_at": self.hub.ts()}
+            common.update_report(0, {"status": "done"}, "seed")
 
     def close(self):
         self.hub.uninstall()
@@ -255,6 +273,14 @@ class World:
         sh(self.tmp, "git", "clone", "-q", "-c", "core.autocrlf=false", self.origin, work)
         sh(work, "git", "config", "core.autocrlf", "false")
         sh(work, "git", "checkout", "-q", "-B", "task/%s" % n, base or "origin/main")
+        rt = os.path.join(self.tmp, "rt%s" % self.n_work)
+        os.makedirs(rt)
+        os.environ["RUNNER_TEMP"] = rt
+        role = common.roles_of(common.label_names(self.hub.issue(n)))[0]
+        if loop.session_inputs.restricted(role):
+            # Model the real staging/admission handshake even when the session's
+            # output itself is supplied by the test rather than executed.
+            loop.stage(n, work, os.path.join(rt, "trusted"))
         for p, t in (files or {}).items():
             self.write(work, p, t)
         for p in delete:
@@ -267,8 +293,6 @@ class World:
                 common.MARK, status, yaml, n, report_extra))
         for p, t in (session_files or {}).items():
             self.write(work, ".session/" + p, t)
-        rt = os.path.join(self.tmp, "rt%s" % self.n_work)
-        os.makedirs(rt)
         self.write(rt, "agent-exit", exit_code)
         self.write(rt, "session-start", str(int(datetime.now().timestamp()) - 50))
         self.write(rt, "agent-start", str(int(datetime.now().timestamp()) - 40))
@@ -349,7 +373,11 @@ models:
 efforts: [low, medium, high]
 """
 
+EXECUTION_PROFILES, POLICY_PROFILES = WORKER_PROFILES.split("evaluator:\n", 1)
+POLICY_PROFILES = "evaluator:\n" + POLICY_PROFILES
 
-def worker_world(engine_yml=None):
-    """The world of most tests: a `worker` and a `net` role next to the engine's roles; `engine_yml` goes over the defaults."""
-    return World(engine_yml=engine_yml)
+
+def worker_world(engine_yml=None, first_iteration=False):
+    """The world of most tests: a `worker` and a `net` role next to the engine's roles; `engine_yml` goes over the defaults.
+    Unless `first_iteration`, an iteration starts straight from the shaper (see World)."""
+    return World(engine_yml=engine_yml, first_iteration=first_iteration)
