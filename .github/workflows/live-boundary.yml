@@ -38,13 +38,12 @@ jobs:
         env:
           LOOP_NETWORK_INTEGRATION: '1'
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-        working-directory: .github/loop/tests
         run: |
           set +e
-          python3 -m unittest -v \
-            test_model_boundary.ModelBoundaryTest.test_native_cli_starts_without_provider_credentials \
-            test_model_boundary.ModelBoundaryTest.test_real_provider_file_search_shell_boundary_online_and_offline \
-            test_security.OfflineKernelTest.test_real_provider_works_while_bash_python_and_raw_sockets_are_offline \
+          python3 -m unittest discover -s .github/loop/tests -p 'test_*.py' -v \
+            -k test_native_cli_starts_without_provider_credentials \
+            -k test_real_provider_file_search_shell_boundary_online_and_offline \
+            -k test_real_provider_works_while_bash_python_and_raw_sockets_are_offline \
             > "$RUNNER_TEMP/live.log" 2>&1
           code=$?
           # The log goes to the job output, where Actions masks the secret; it is not uploaded.
