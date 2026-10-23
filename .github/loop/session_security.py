@@ -48,27 +48,34 @@ def profile_error(profile, cli_version):
     return None
 
 
-def settings(profile, trusted):
-    """Bash children are isolated; the parent CLI retains its provider connection."""
+def settings(profile, trusted, broker=False):
+    """Bash children are isolated; the parent CLI retains its provider connection.
+
+    In the model boundary (`broker`) the CLI has no Bash of its own: a nested sandbox cannot mount
+    the masked /proc, and tool_broker enforces the offline mode instead.
+    """
     out = {"hooks": {"PostToolUse": [{"matcher": "*", "hooks": [
         {"type": "command", "command": "python3 " + shlex.quote(os.path.join(trusted, "remaining.py"))}]}]}}
     if not profile.get("internet", False):
-        out["sandbox"] = {
-            "enabled": True, "failIfUnavailable": True,
-            "autoAllowBashIfSandboxed": False, "allowUnsandboxedCommands": False,
-            "excludedCommands": [],
-            "network": {"allowedDomains": [], "deniedDomains": ["*"],
-                        "strictAllowlist": True, "allowAllUnixSockets": False,
-                        "allowUnixSockets": [], "allowLocalBinding": False},
-            "filesystem": {"denyWrite": [trusted], "denyRead": ["/proc"]},
-        }
+        if not broker:
+            out["sandbox"] = {
+                "enabled": True, "failIfUnavailable": True,
+                "autoAllowBashIfSandboxed": False, "allowUnsandboxedCommands": False,
+                "excludedCommands": [],
+                "network": {"allowedDomains": [], "deniedDomains": ["*"],
+                            "strictAllowlist": True, "allowAllUnixSockets": False,
+                            "allowUnixSockets": [], "allowLocalBinding": False},
+                "filesystem": {"denyWrite": [trusted], "denyRead": ["/proc"]},
+            }
         out["permissions"] = {"deny": ["WebFetch", "WebSearch", "Agent", "Task", "Monitor", "PowerShell", "Skill",
                                                "Read(/proc/**)", "Write(%s/**)" % trusted, "Edit(%s/**)" % trusted]}
     return out
 
 
-def tool_names(profile):
+def tool_names(profile, broker=False):
     names = {t.split("(", 1)[0] for t in profile.get("tools", [])} | {"Skill"}
+    if broker:
+        names.discard("Bash")  # the broker's MCP tool replaces it
     if not profile.get("internet", False):
         names.discard("Skill")  # staged role instructions replace executable skill discovery
     return sorted(names)
