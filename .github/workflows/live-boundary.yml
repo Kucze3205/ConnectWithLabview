@@ -34,6 +34,17 @@ jobs:
           PACKAGE=$(python3 -c 'import json; p=json.load(open(".github/loop/cloud-providers.json"))["claude"]; print(p["package"]+"@"+p["version"])')
           npm install -g "$PACKAGE"
           bash .github/loop/sandbox.sh
+      - name: Put the native pinned CLI first on PATH
+        run: |
+          ROOT=$(npm root -g)/@anthropic-ai
+          ls -la "$ROOT" "$ROOT"/claude-code/bin 2>&1 || true
+          mkdir -p "$RUNNER_TEMP/native"
+          for f in $(find "$ROOT" -type f \( -name claude -o -name claude.exe \) -size +1M); do
+            if [ "$(head -c 4 "$f" | od -An -c | tr -d ' ')" = '177ELF' ]; then cp "$f" "$RUNNER_TEMP/native/claude"; break; fi
+          done
+          chmod +x "$RUNNER_TEMP/native/claude"
+          "$RUNNER_TEMP/native/claude" --version
+          echo "$RUNNER_TEMP/native" >> "$GITHUB_PATH"
       - name: Three live tests
         env:
           LOOP_NETWORK_INTEGRATION: '1'
