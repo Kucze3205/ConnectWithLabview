@@ -35,6 +35,15 @@ execution-layer role and requires a completed session (`turns` of at least 1), a
 no `origin` remote in the executor repository. Without its requirements it is skipped with the reason
 printed; a skip is an outstanding check, never a pass.
 
+`test_routed_chain.py` is the same chain for the routed runtime that this loop actually runs: stage, executor
+admission, `runtime_entry.py` (real broker, git checkpoint and `provider_adapter.request`), epilogue. The stand-in is a
+`claude` executable that answers `Read`, `Write` and `Finish`; GitHub's state API and release assets are plain files and
+the bubblewrap wrapper is removed (`test_model_boundary.py` covers the namespace). It requires `turns` of at least 1,
+the written file on `task/N`, a prompt over 128 KiB reaching the CLI through stdin, no `origin` in the executor
+repository and a frozen `done` report. It needs a POSIX shell and runs unprivileged in `environment.yml`. Both iteration 0
+failures (a checkpoint that pushed to a missing `origin`, a prompt in argv) make it fail. **Its result on the commit to be
+armed is a precondition of `AUTOPILOT=on`**, next to the full Linux suite.
+
 Record the commit, command, platform, test count and skips for each validation run.
 Report provider quota/authentication or missing kernel support separately from
 test failures. Require both the full Linux regressions and the opted-in live
