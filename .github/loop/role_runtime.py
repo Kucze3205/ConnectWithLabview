@@ -3,6 +3,7 @@
 The transport never sees the checkout. The broker never sees credentials. A
 tool action becomes accepted only after its files and continuation are remote.
 """
+import errno
 import hashlib
 import json
 import os
@@ -15,6 +16,11 @@ from provider_adapter import Failure, request
 from tool_broker import ACTION_SCHEMA, validate
 
 
+LOCAL_ERRORS = (OSError, ValueError, TypeError)   # our code or host, not the provider
+LOCAL_ATTEMPTS = 3                                # consecutive local errors (kept in the session state) that crash it
+LONG_COOLDOWN = 30 * 60                           # a longer wait is first checked with a probe
+
+
 def now():
     return datetime.now(timezone.utc)
 
@@ -25,11 +31,12 @@ def digest(value):
 
 class Runtime:
     def __init__(self, owner, policy, task, store, session_key, broker, checkpoint,
-                 credentials, prompt, fingerprint, effort="medium", model_request=request, clock=now):
+                 credentials, prompt, fingerprint, effort="medium", model_request=request, clock=now, probe=None):
         self.owner, self.policy, self.task = owner, policy, task
         self.store, self.key, self.broker, self.checkpoint = store, session_key, broker, checkpoint
         self.credentials, self.prompt, self.fingerprint = credentials, prompt, fingerprint
         self.effort, self.request, self.clock = effort, model_request, clock
+        self.probe, self.probed = probe, set()
 
     def availability(self):
         identities = {provider: hashlib.sha256(value.encode()).hexdigest()
@@ -65,12 +72,31 @@ class Runtime:
             return document
         return self.store.update("pool.json", changed)["availability"]
 
-    def observe(self, candidate, result, observed):
+    def shorten(self, choice, remaining):
+        """Probe each provider once whose cooldown is long; a real answer ends its provider-wide block."""
+        cleared = False
+        for reason in choice["reasons"]:
+            provider = reason["provider"]
+            if (not self.probe or reason["reason"] != "cooldown" or provider in self.probed
+                    or (pool._time(reason["retry_after"]) - self.clock()).total_seconds() <= LONG_COOLDOWN):
+                continue
+            self.probed.add(provider)
+            try:
+                report = self.probe(provider, self.credentials.get(provider, ""), min(60, int(remaining)))
+            except Exception:
+                continue
+            if report.get("status") == "available":
+                self.observe({k: reason[k] for k in ("provider", "model")},
+                             {"status": "available", "scope": "provider"}, self.clock())
+                cleared = True
+        return cleared
+
+    def observe(self, candidate, result, observed, error=None):
         def change(document):
             document["availability"] = pool.record_outcome(
                 self.owner, document.get("availability", {}), **candidate,
                 status=result["status"], now=observed, scope=result.get("scope", "model"),
-                retry_after=result.get("retry_after"))
+                retry_after=result.get("retry_after"), error=error)
             return document
         self.store.update("pool.json", change)
 
@@ -113,6 +139,8 @@ class Runtime:
             if remaining < 5:
                 break
             choice = pool.select_candidate(self.owner, self.policy, self.availability(), self.task, self.clock())
+            if choice["action"] == "wait" and self.shorten(choice, remaining):
+                continue
             if choice["action"] in {"wait", "blocked"}:
                 result = {"status": "paused", "reason": "providers_unavailable", **choice}
                 result['usage'] = state.get('usage', {})
@@ -147,9 +175,24 @@ class Runtime:
                 self.usage(state, candidate, metadata)
                 self.observe(candidate, error.observation, observed)
                 continue
-            except (OSError, ValueError, TypeError, RuntimeError, subprocess.SubprocessError):
-                self.observe(candidate, {"status": "unknown", "scope": "provider"}, observed)
+            except (*LOCAL_ERRORS, RuntimeError, subprocess.SubprocessError) as exc:
+                error = {"type": type(exc).__name__}
+                if isinstance(exc, OSError) and exc.errno:
+                    error["errno"] = exc.errno
+                if not isinstance(exc, LOCAL_ERRORS):
+                    self.observe(candidate, {"status": "unknown", "scope": "provider"}, observed, error)
+                    continue
+                # A fault on our side says nothing about the provider: a short fixed wait, and only a few tries.
+                state["local_errors"] = state.get("local_errors", 0) + 1
+                self.observe(candidate, {"status": "unknown", "scope": "provider", "retry_after": pool._iso(
+                    observed + timedelta(seconds=self.owner["backoff"]["initial_seconds"]))}, observed, error)
+                if state["local_errors"] >= LOCAL_ATTEMPTS:
+                    result = {"status": "crashed", "turns": state["turns"], "usage": state.get("usage", {}),
+                              "reason": "local_error:%s:%s" % (error["type"], errno.errorcode.get(error.get("errno"), "none"))}
+                    self.save(dict(state, result=result), files=True)
+                    return result
                 continue
+            state.pop("local_errors", None)
             self.usage(state, candidate, metadata)
             self.observe(candidate, {"status": "available", "scope": "model"}, observed)
             if choice.get("scope") == "provider":

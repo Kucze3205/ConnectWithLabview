@@ -5,6 +5,7 @@ Owner config supplies providers/models and bounded backoff. Policy supplies orde
 """
 from datetime import datetime, timedelta, timezone
 import copy
+import re
 
 
 TRANSIENT = {"quota", "unknown", "throttled", "network_failure", "service_failure", "credential_expired"}
@@ -63,9 +64,20 @@ def _delay(owner, attempts):
     return min(maximum, initial * 2 ** min(attempts - 1, maximum.bit_length()))
 
 
+def _error(error):
+    """Sanitized failure of our own side: the exception class and errno, never its text or argv."""
+    if (not isinstance(error, dict) or set(error) - {"type", "errno"} or not isinstance(error.get("type"), str)
+            or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,63}", error["type"])
+            or "errno" in error and type(error["errno"]) is not int):
+        raise ValueError("invalid availability error")
+    return error
+
+
 def _record(owner, record):
-    if not isinstance(record, dict) or set(record) - {"status", "observed_at", "retry_after", "attempts"}:
+    if not isinstance(record, dict) or set(record) - {"status", "observed_at", "retry_after", "attempts", "error"}:
         raise ValueError("invalid availability record")
+    if "error" in record:
+        _error(record["error"])
     if not isinstance(record.get("status"), str) or record["status"] not in STATUSES:
         raise ValueError("invalid availability status")
     attempts = record.get("attempts", 1)
@@ -130,7 +142,7 @@ def select_candidate(owner, policy, state, task, now):
             ("provider", state.get("providers", {}).get(provider)),
             ("model", state.get("models", {}).get(provider, {}).get(model)),
         ]
-        blocked, blocked_statuses, waits, probe_scope = [], [], [], None
+        blocked, blocked_statuses, waits, probe_scope, errors = [], [], [], None, []
         for scope, record in records:
             if record is None:
                 if scope == "model":
@@ -144,6 +156,7 @@ def select_candidate(owner, policy, state, task, now):
                 retry = _record(owner, record)
                 if retry > now:
                     waits.append(retry)
+                    errors += [record["error"]] if "error" in record else []
                 else:
                     probe_scope = probe_scope or scope
         if blocked:
@@ -152,7 +165,7 @@ def select_candidate(owner, policy, state, task, now):
             # Both model and provider restrictions must expire for this candidate.
             retry = max(waits)
             retries.append(retry)
-            reasons.append(dict(candidate, reason="cooldown", retry_after=_iso(retry)))
+            reasons.append(dict(candidate, reason="cooldown", retry_after=_iso(retry), **({"error": errors[0]} if errors else {})))
         else:
             result = {"action": "probe" if probe_scope else "run", "candidate": dict(candidate), "reasons": reasons}
             if probe_scope:
@@ -164,7 +177,7 @@ def select_candidate(owner, policy, state, task, now):
     return {"action": "blocked", "reason": reason, "reasons": reasons}
 
 
-def record_outcome(owner, state, provider, model, status, now, retry_after=None, scope="model"):
+def record_outcome(owner, state, provider, model, status, now, retry_after=None, scope="model", error=None):
     """Return a copied state with an adapter observation and bounded retry delay.
 
     Adapters must explicitly report whether exhaustion covers a model or provider.
@@ -193,5 +206,7 @@ def record_outcome(owner, state, provider, model, status, now, retry_after=None,
         record["retry_after"] = _iso(retry)
     elif status in TRANSIENT:
         record["retry_after"] = _iso(now + timedelta(seconds=_delay(owner, attempts)))
+    if error is not None:
+        record["error"] = _error(error)
     target[key] = record
     return result
