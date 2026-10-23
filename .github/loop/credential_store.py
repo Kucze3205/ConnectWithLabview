@@ -21,6 +21,27 @@ ENVIRONMENT = "provider-codex"
 SECRET = "CODEX_CI_AUTH_JSON"
 
 
+class NotReady(ValueError):
+    """A stored secret that cannot be restored; the reason names the cause, never the value."""
+
+    def __init__(self, reason):
+        super().__init__(reason)
+        self.reason = reason
+
+
+def classify(text):
+    """Why a stored secret is not a usable bundle: lease marker, empty secret or bad format."""
+    if not text.strip():
+        return "credential_empty"
+    try:
+        value = json.loads(text)
+    except ValueError:
+        return "credential_invalid_format"
+    if isinstance(value, dict) and value.get("state") == "leased":
+        return "credential_leased"
+    return "credential_invalid_format"
+
+
 def bundle(text):
     value = json.loads(text)
     if not isinstance(value, dict) or value.get("auth_mode") != "chatgpt" or value.get("OPENAI_API_KEY"):
@@ -61,7 +82,10 @@ def auth_file(directory):
 
 
 def restore(directory, text):
-    value = bundle(text)
+    try:
+        value = bundle(text)
+    except ValueError as exc:
+        raise NotReady(classify(text)) from exc
     home = home_path(directory, create=True)
     descriptor = os.open(home / "auth.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(descriptor, "w", encoding="utf-8") as fh:
@@ -211,8 +235,9 @@ def main():
             if path.is_symlink():
                 raise ValueError("credential file redirected")
             path.unlink(missing_ok=True)
-    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError):
-        print(json.dumps({"operation": args.command, "status": "failed", "reason": "credential_store_not_ready"}))
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:
+        reason = exc.reason if isinstance(exc, NotReady) else "credential_store_not_ready"
+        print(json.dumps({"operation": args.command, "status": "failed", "reason": reason}))
         return 1
     print(json.dumps({"operation": args.command, "status": "ok"}))
     return 0

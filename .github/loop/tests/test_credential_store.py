@@ -59,6 +59,20 @@ class CredentialStoreTest(unittest.TestCase):
                 store.restore(self.home, text)
             self.assertEqual(self.saved, SEED)
 
+    def test_restore_names_lease_empty_and_bad_format_without_the_value(self):
+        cases = {"credential_leased": json.dumps({"state": "leased", "run_id": "123"}),
+                 "credential_empty": "  ",
+                 "credential_invalid_format": "synthetic-not-json-secret"}
+        for reason, text in cases.items():
+            with self.subTest(reason=reason), self.assertRaises(store.NotReady) as error:
+                store.restore(self.home, text)
+            self.assertEqual(error.exception.reason, reason)
+            self.assertNotIn("synthetic-not-json-secret", str(error.exception))
+            with patch.dict(os.environ, {"CODEX_AUTH_JSON": text}),                  patch("sys.argv", ["credential_store.py", "restore", "--home", str(self.home)]),                  patch("sys.stdout", new_callable=io.StringIO) as out:
+                self.assertEqual(store.main(), 1)
+            self.assertEqual(json.loads(out.getvalue())["reason"], reason)
+            self.assertNotIn("synthetic-not-json-secret", out.getvalue())
+
     def test_restore_never_overwrites_an_existing_or_redirected_file(self):
         path = store.restore(self.home, SEED)
         with self.assertRaises(FileExistsError):
