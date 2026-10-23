@@ -14,18 +14,25 @@ routing:
       - {provider: codex, model: gpt-6.1-sol}
       - {provider: copilot, model: gpt-5.6-luna}
     implementation: *implementation
+    # Fallback gpt-6.1-sol, not gpt-6-astra: about 5x cheaper for 1-2 index points (model-selection.md), and
+    # session #27 spent 2.86M astra input tokens for 9.6k output with no accepted result (2026-10-23).
     orchestrator: &planning
       - {provider: claude, model: claude-opus-5-5}
-      - {provider: codex, model: gpt-6-astra}
+      - {provider: codex, model: gpt-6.1-sol}
     policymaker: *planning
     researcher: *planning
     benchmark: *planning
     evaluator: *planning
-    audit: &review
+    audit:
       - {provider: copilot, model: gpt-5.6-luna}
       - {provider: codex, model: gpt-6.1-sol}
       - {provider: claude, model: claude-sonnet-5-5}
-    evaluator-verifier: *review
+    # Luna is a first-pass filter, not a sole reviewer (model-selection.md). Review starts on another
+    # family than the Claude-first implementation and evaluator routes.
+    evaluator-verifier: &review
+      - {provider: codex, model: gpt-6.1-sol}
+      - {provider: claude, model: claude-sonnet-5-5}
+      - {provider: copilot, model: gpt-5.6-luna}
     review: *review
     reviewer: *review
 policymaker_session:                 # model id (not an alias); bounded by engine.yml policymaker_session_ceilings
