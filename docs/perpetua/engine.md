@@ -244,7 +244,8 @@ A plain script (`watchdog.yml`, every 30 minutes and on demand), never an agent:
   the free push channel);
 - `idle_resumes` (`engine.yml`, default 3) is the progress breaker: that many consecutive resumes of one parked session
   that used the agent (`agent_s` or tokens) and made no progress (no turns, no new commit) open an outage and the session is not
-  resumed again. Waiting for a limit reset without using the agent does not count; parking does not use up resumes, only the
+  resumed again. A routed session reports turns and tokens for its whole life, so for it the breaker counts the growth since the
+  previous report, not the totals. Waiting for a limit reset without using the agent does not count; parking does not use up resumes, only the
   breaker and the 30-day age limit end a wait. A parked session commits nothing: reports freeze only in a final state.
 - three consecutive `crashed` sessions without a commit is an outage; three fruitless kicks of one issue too; three failed
   iterations in a row too;
