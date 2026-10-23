@@ -294,7 +294,7 @@ types and dependencies; arming is a separate final ticket after coverage is veri
 | Starting roles | selected `execution/roles/<role>/SKILL.md` or `policy/roles/<role>/SKILL.md`, with profiles in that layer; inactive sources under `templates/` |
 | Accepted limits | `engine.yml`: `limits`; consent secrets in `session.yml` |
 | Parameters | `engine.yml`: `params`, `cadence`; `policy/params.yml`: `criterion`, `ceilings`, `models`, `policymaker_triggers` |
-| Arming | delete `docs/perpetua/setup-notes.md`, merge the setup branch into the default branch, tag `setup-baseline`, set `AUTOPILOT=on`, then run `gh workflow run watchdog.yml` — GitHub's schedule can take 3–6 h to start it. Done by the agent or by the owner, depending on the preflight check of arming permissions |
+| Arming | delete `docs/perpetua/setup-notes.md`, merge the setup branch into the default branch, tag `setup-baseline`, pass `test_routed_chain.py` on that commit ([validation](validation.md)), set `AUTOPILOT=on`, then run `gh workflow run watchdog.yml` — GitHub's schedule can take 3–6 h to start it. Done by the agent or by the owner, depending on the preflight check of arming permissions |
 
 ## Changing the engine after arming
 

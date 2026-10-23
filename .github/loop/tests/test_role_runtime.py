@@ -5,7 +5,7 @@ import unittest
 
 import fakes
 from provider_adapter import Failure
-from role_runtime import Runtime
+from role_runtime import Runtime, compact
 from runtime_store import Store
 from test_runtime_store import Backend
 from test_tool_broker import action
@@ -38,6 +38,37 @@ class RuntimeTest(unittest.TestCase):
         return Runtime(self.owner, self.policy, task, self.store, 'sessions/11.json', self.broker,
                        checkpoint or (lambda _: {'head': 'durable-head'}), self.credentials,
                        'Read task inputs.', 'fingerprint', model_request=request, clock=self.clock)
+
+    def test_one_megabyte_history_is_cut_to_the_limit_and_recent_actions_stay_whole(self):
+        secret = 'FILE-CONTENT-' * 200
+        history = [{'candidate': self.candidates[0], 'action': {'tool': 'Read', 'path': 'src/%d.vi' % n, 'text': ''},
+                    'outcome': {'text': secret}} for n in range(400)]
+        self.assertGreater(len(json.dumps(history)), 1_000_000)
+        limits = {'history_bytes': 120_000, 'recent_turns': 12}
+        sent = compact(history, limits)
+        self.assertLessEqual(len(json.dumps(sent).encode()), 120_000)
+        self.assertEqual(sent['recent_turns'], history[-12:])
+        self.assertNotIn('FILE-CONTENT', json.dumps(sent['earlier_turns']))
+        self.assertEqual(sent['earlier_turns'][-1]['path'], 'src/387.vi')
+        self.assertIn('read them again', sent['note'])
+
+    def test_request_prompt_is_compacted_and_its_size_recorded_in_usage(self):
+        self.store.update('sessions/11.json', lambda _: {'fingerprint': 'f', 'turns': 30, 'history': [
+            {'candidate': self.candidates[0], 'action': {'tool': 'Read', 'path': 'a%d' % n},
+             'outcome': {'text': 'BODY%d' % n}} for n in range(30)]})
+        prompts = []
+        def request(provider, model, credential, prompt, **kwargs):
+            prompts.append(prompt)
+            return action('Finish', status='done')
+        runtime = Runtime(self.owner, self.policy, 'build', self.store, 'sessions/11.json', self.broker,
+                          lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
+                          model_request=request, clock=self.clock, context={'recent_turns': 3})
+        runtime.run(1, 30)
+        self.assertIn('BODY29', prompts[0])
+        self.assertNotIn('BODY26', prompts[0])
+        self.assertIn('"path": "a0"', prompts[0])
+        used = self.store.read('sessions/11.json')['requests']['claude/allowed']
+        self.assertEqual((used['count'], used['bytes']), (1, len(prompts[0].encode())))
 
     def test_quota_switch_preserves_accepted_work_and_policymaker_uses_its_policy(self):
         calls = []

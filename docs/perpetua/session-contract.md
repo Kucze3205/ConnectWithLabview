@@ -84,3 +84,13 @@ A session sees a secret only when the owner approved its name for that task. Thr
 
 The GitHub token never reaches the agent. `gate.env_passthrough` in `engine.yml` is a separate owner list for the gate
 command only, never for an agent.
+
+## What the model receives each turn
+
+A routed session (`role_runtime.py`) sends one request per turn, built from the role prompt, the action schema, the role profile and the continuation:
+
+- **Recent turns in full:** the last `context.recent_turns` (12) history entries, each with its action and outcome.
+- **Earlier turns as a list:** tool, path or pattern or command (200 characters at most) and `ok` or `error: <kind>`, with no file or command contents, plus the note that files are the source of truth and must be read again.
+- **Byte limit:** the continuation is at most `context.history_bytes` (120 000, about 30k tokens). The oldest earlier entries go first, then the oldest full turns.
+
+`policy/params.yml` `context` sets both numbers; the Policymaker cannot exceed `engine.yml` `context_ceilings` (600 000 bytes, 40 turns). The stored session history is cut at that ceiling. Each request's size is added to the session's `requests.<provider>/<model>` (`count`, `bytes`, `max_bytes`) next to `usage`, so an audit can compare models by bytes per turn.

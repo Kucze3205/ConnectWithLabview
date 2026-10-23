@@ -111,6 +111,13 @@ def model_id(alias):
     return c.params()["models"].get(alias, alias)
 
 
+def context_limits():
+    """Prompt history limits the Policymaker set, never above the owner's ceilings in engine.yml."""
+    want, ceiling = c.params()["context"], c.cfg()["context_ceilings"]
+    return {k: min(int(want[k]), int(ceiling[k])) for k in ("history_bytes", "recent_turns")} | {
+        "stored_bytes": int(ceiling["history_bytes"])}
+
+
 def session_options(i, role, p):
     """Execution parameters shared by prep and the startup recheck."""
     labels = c.label_names(i)
@@ -289,6 +296,7 @@ def stage(n, work, trusted):
         with open(os.path.join(trusted, "runtime.json"), "w", encoding="utf-8") as fh:
             json.dump({"owner": c.cfg()["provider_pool"], "policy": c.params()["routing"], "profile": p,
                        "config": c.cfg(), "task": options["routing_task"], "fingerprint": options["profile_digest"],
+                       "context": context_limits(),
                        "resources": {"environment": os.environ["LABVIEW_ENVIRONMENT"]}
                                     if os.environ.get("LABVIEW_ENVIRONMENT") else {}}, fh)
     # Skill hooks and interpolation execute outside the Bash tool sandbox.

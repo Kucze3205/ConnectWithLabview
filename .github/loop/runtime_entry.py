@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 from datetime import datetime, timedelta, timezone
 
+import cloud_probe
 from role_runtime import Runtime
 from runtime_checkpoint import Checkpoint
 from runtime_store import GitHubBackend, Store
@@ -33,7 +34,8 @@ def main():
             'copilot': 'COPILOT_GITHUB_TOKEN'}.items()}
         runtime = Runtime(options['owner'], options['policy'], options['task'], store, key, broker,
                           checkpoint, credentials, (trusted / 'prompt.md').read_text(), options['fingerprint'],
-                          effort=os.environ['EFFORT'])
+                          effort=os.environ['EFFORT'], context=options.get('context'),
+                          probe=lambda provider, credential, timeout: cloud_probe.probe(provider, timeout, credential=credential))
         result = runtime.run(int(os.environ['MAX_TURNS']), int(os.environ['AGENT_TIMEOUT']) * 60)
     except Exception:
         # This is the credential-bearing outer boundary. Never echo arbitrary

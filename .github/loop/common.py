@@ -58,6 +58,7 @@ DEFAULTS = {
     "policymaker_session_ceilings": None,
     "params": {"no_progress_iterations": None, "quiet_minutes": None, "owner_wait_counts": None,
                "stream_retention_iterations": None},
+    "context_ceilings": {"history_bytes": 600000, "recent_turns": 40},
     "cadence": {"min_interval_minutes": None, "daily_iterations": None},
 }
 
@@ -88,7 +89,8 @@ def cfg():
 def params():
     p = {"shaper": None, "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
          "ceilings": {"job_minutes": 240, "iteration_minutes": None, "max_turns": 150},
-         "policymaker_triggers": {"every_iterations": None, "no_progress": None}}
+         "policymaker_triggers": {"every_iterations": None, "no_progress": None},
+         "context": {"history_bytes": 120000, "recent_turns": 12}}
     return merged(p, load_yaml(resources.PARAMS))
 
 

@@ -45,3 +45,6 @@ policymaker_triggers:                 # the Policymaker runs after an iteration 
                                  # A new audit report always calls it. null: off
   every_iterations: 5            # after every K-th iteration
   no_progress: 3                 # each time this many more iterations in a row went without an improving change
+context:                         # what each model request carries of the session history; bounded by engine.yml context_ceilings
+  history_bytes: 120000          # about 30k tokens; the quota criterion prefers a short repeated prefix
+  recent_turns: 12               # these turns in full, older ones as tool/path/status only

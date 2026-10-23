@@ -69,6 +69,9 @@ params:
   quiet_minutes: 1440            # 24 hours without closing: roll back policy/ and retry
   owner_wait_counts: false       # subtract cumulative blocking owner waits, including completed waits
   stream_retention_iterations: null   # keep raw session streams for this many iterations (null: GitHub's default)
+context_ceilings:                # the Policymaker's policy/params.yml `context` never exceeds these (and stored history is cut here)
+  history_bytes: 600000          # history sent with one request
+  recent_turns: 40               # turns sent in full
 cadence:
   min_interval_minutes: null     # null: iteration after iteration
   daily_iterations: null

@@ -99,10 +99,12 @@ def classify(provider, output, returncode):
     return classify_result(provider, output, returncode)["status"]
 
 
-def probe(provider, timeout, codex_home=None):
+def probe(provider, timeout, codex_home=None, credential=None):
     secret = {"claude": "CLAUDE_CODE_OAUTH_TOKEN", "codex": "CODEX_AUTH_JSON", "copilot": "COPILOT_GITHUB_TOKEN"}[provider]
     value = os.environ.get(secret, "")
-    if provider == "codex" and codex_home is not None:
+    if credential is not None:
+        value = credential
+    elif provider == "codex" and codex_home is not None:
         from credential_store import auth_file
         value = auth_file(codex_home).read_text(encoding="utf-8")
     report = {"provider": provider, "observed_at": datetime.now(timezone.utc).isoformat(),
@@ -112,7 +114,9 @@ def probe(provider, timeout, codex_home=None):
     if provider == "codex":
         from credential_store import worker_bundle
         try:
-            auth = worker_bundle(json.loads(value))
+            auth = json.loads(value)
+            if not isinstance(auth, dict) or auth.get("auth_mode") != "chatgptAuthTokens":   # the runtime already holds the access-only worker form
+                auth = worker_bundle(auth)
         except (ValueError, TypeError):
             return dict(report, reason="invalid_credential_bundle")
     with tempfile.TemporaryDirectory(prefix="provider-probe-") as directory:
