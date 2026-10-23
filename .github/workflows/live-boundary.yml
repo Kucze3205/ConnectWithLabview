@@ -1,0 +1,60 @@
+name: Live model boundary
+
+# Runs the three provider-dependent boundary tests that environment.yml skips (issue 24).
+# Subscription token only; no paid API. Runs on a push that edits this file, on perpetua/setup,
+# because the provider-claude environment accepts only main and perpetua/setup.
+on:
+  push:
+    branches: [perpetua/setup]
+    paths:
+      - '.github/workflows/live-boundary.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    if: github.repository == 'Kucze3205/ConnectWithLabview' && github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    environment: provider-claude
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare pinned CLI and sandbox
+        run: |
+          pip install -q pyyaml
+          PACKAGE=$(python3 -c 'import json; p=json.load(open(".github/loop/cloud-providers.json"))["claude"]; print(p["package"]+"@"+p["version"])')
+          npm install -g "$PACKAGE"
+          bash .github/loop/sandbox.sh
+      - name: Three live tests
+        env:
+          LOOP_NETWORK_INTEGRATION: '1'
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        working-directory: .github/loop/tests
+        run: |
+          set +e
+          python3 -m unittest -v \
+            test_model_boundary.ModelBoundaryTest.test_native_cli_starts_without_provider_credentials \
+            test_model_boundary.ModelBoundaryTest.test_real_provider_file_search_shell_boundary_online_and_offline \
+            test_security.OfflineKernelTest.test_real_provider_works_while_bash_python_and_raw_sockets_are_offline \
+            > "$RUNNER_TEMP/live.log" 2>&1
+          code=$?
+          # The log goes to the job output, where Actions masks the secret; it is not uploaded.
+          cat "$RUNNER_TEMP/live.log"
+          {
+            echo "commit: $GITHUB_SHA, exit: $code"
+            echo '```'
+            grep -E '\.\.\. |^Ran |^OK|^FAILED' "$RUNNER_TEMP/live.log"
+            echo '```'
+            if grep -qiE 'usage limit|rate.?limit|quota|exhaust' "$RUNNER_TEMP/live.log"; then echo "provider limit reported (not a test defect)"; fi
+            if grep -qiE 'authenticat|invalid.*(token|credential)' "$RUNNER_TEMP/live.log"; then echo "authentication problem reported (not a test defect)"; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
