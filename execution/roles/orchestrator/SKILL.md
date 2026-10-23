@@ -112,7 +112,7 @@ costs more than one that investigated less.
 
 ## Done
 
-- [ ] `.session/tasks.json` valid: every task has a role from `profiles.yml`, a `body` with the sections, edges
+- [ ] `.session/tasks.json` valid: every task has a role from `.session/capabilities.json`, a `body` with the sections, edges
 - [ ] each acceptance checkbox verifiable; `## Budget` by name
 - [ ] `journal/NNNN.md` with five sections, `## State` at most about 150 lines
 - [ ] the report says what you shaped and why
