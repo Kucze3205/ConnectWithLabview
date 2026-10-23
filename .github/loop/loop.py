@@ -934,13 +934,17 @@ def tag_unmerged(n, k, upd):
 def park(n, i, f, upd, prose, reset, head, durable=False):
     """Park for the provider; the clock is the limit reset. Returns None when parked, else why the session ends.
     Waiting costs nothing, so it is bounded by the age limit (not for a durable, provider-routed session) and by the
-    progress breaker: K resumes in a row that used the agent and moved nothing (no turns, the branch head unmoved)
+    progress breaker: K resumes in a row that used the agent and moved nothing (no new turns, the branch head unmoved)
     open an outage."""
     kk = int(f.get("attempts", 0)) + 1
     if not durable and (c.now() - c.parse_time(i["created_at"])).days >= MAX_AGE_DAYS:
         return "The issue is too old."
-    spent = bool(upd.get("agent_s") or (upd.get("tokens_in") or 0) + (upd.get("tokens_out") or 0))
-    moved = bool(upd.get("turns")) or bool(f.get("head") and head != f.get("head"))
+    tokens = lambda x: int(x.get("tokens_in") or 0) + int(x.get("tokens_out") or 0)
+    if durable:         # a routed session reports turns and tokens for its whole life: only the growth since the last report counts
+        turns, spent = int(upd.get("turns") or 0) - int(f.get("turns") or 0), tokens(upd) > tokens(f)
+    else:
+        turns, spent = int(upd.get("turns") or 0), bool(upd.get("agent_s") or tokens(upd))
+    moved = turns > 0 or bool(f.get("head") and head != f.get("head"))
     idle = 0 if moved else int(f.get("idle_resumes", 0)) + (spent and bool(f.get("paused_at")))   # only a resume counts
     limit = c.cfg()["idle_resumes"]
     if limit and idle >= limit:

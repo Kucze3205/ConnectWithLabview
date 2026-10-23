@@ -60,6 +60,43 @@ class RoutedSessionTest(SessionCase):
         self.assertEqual(self.hub.report(n)['status'], 'paused')
         self.assertEqual(self.hub.issues[n]['state'], 'open')
 
+    def routed_park(self, n, turns, tokens_out, head="a" * 40):
+        """One parked report of a routed session: turns and tokens are totals for the session's whole life."""
+        upd = {"turns": turns, "tokens_in": 100, "tokens_out": tokens_out}
+        return loop.park(n, c.issue(n), c.report_fields(n), upd, "waiting", None, head, durable=True)
+
+    def outages(self):
+        return [x for x in self.hub.issues.values() if x.get("title", "").startswith("OUTAGE:")]
+
+    def test_routed_resumes_with_frozen_turns_and_growing_tokens_open_an_outage(self):
+        n = self.issue()
+        self.assertIsNone(self.routed_park(n, 5, 10))          # the run that made progress
+        for k in range(1, 3):
+            self.assertIsNone(self.routed_park(n, 5, 10 + k))
+        self.assertEqual(self.outages(), [])
+        self.assertIn("without progress", self.routed_park(n, 5, 13))
+        self.assertEqual(len(self.outages()), 1)
+
+    def test_routed_waiting_for_a_reset_does_not_count_even_after_earlier_token_use(self):
+        n = self.issue()
+        self.routed_park(n, 0, 500)
+        for _ in range(6):
+            self.assertIsNone(self.routed_park(n, 0, 500))      # the same totals again: nothing was spent
+        self.assertEqual(self.hub.report(n)["idle_resumes"], "0")
+        self.assertEqual(self.outages(), [])
+
+    def test_routed_new_turns_or_a_new_head_reset_the_counter(self):
+        n = self.issue()
+        self.routed_park(n, 5, 10)
+        self.routed_park(n, 5, 20)
+        self.assertEqual(self.hub.report(n)["idle_resumes"], "1")
+        self.routed_park(n, 6, 30)
+        self.assertEqual(self.hub.report(n)["idle_resumes"], "0")
+        self.routed_park(n, 6, 40)
+        self.assertEqual(self.hub.report(n)["idle_resumes"], "1")
+        self.routed_park(n, 6, 50, head="b" * 40)
+        self.assertEqual(self.hub.report(n)["idle_resumes"], "0")
+
     def test_policy_cannot_merge_models_outside_the_owner_catalog(self):
         n = self.issue('policymaker')
         params = c.params()
