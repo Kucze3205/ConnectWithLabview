@@ -39,7 +39,7 @@ Read these first, then follow only the evidence needed to shape this iteration:
 
 1. `.session/protocol.md`;
 2. `.session/loop-state.json` (the goal, open owner requests, the iteration index);
-3. `execution/profiles.yml` and `policy/profiles.yml` (the roles that exist);
+3. `.session/capabilities.json` (the roles you may order and their tools);
 4. the newest `journal/NNNN.md`, only its `## State` (it stands alone);
 5. the records of the last iterations (`iterations/NNNN.json`) that the State points to, and
    `.session/reports/index.json` with the staged report bodies it lists. Check what a report links before you write the next task from it: "why go there" written
