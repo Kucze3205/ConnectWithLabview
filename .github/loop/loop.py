@@ -29,7 +29,6 @@ import policy_changes
 import executor_boundary
 
 BACKOFF_H = (1, 5, 24)          # when the session result carries no limit reset time
-MAX_ATTEMPTS = 3                # resume attempts
 MAX_AGE_DAYS = 30
 MAX_KICKS = 3
 CRASH_STREAK = 3                # consecutive `crashed` without a commit
@@ -44,11 +43,19 @@ JOB_MAX_MIN = 355               # GitHub kills a job at 360 min; the epilogue mu
 # ---------------------------------------------------------------- start of a session
 
 def consent_status(profile, labels, task=None):
-    """(granted, why-not). A profile beyond the accepted limits runs only for the one session its consent request allows."""
+    """(granted, why-not). Granted by the task's completed consent request for exactly this task and profile, also
+    within the limits. A profile beyond the accepted limits runs only for the one session its consent request allows."""
+    if _consent_request(labels, task, profile):
+        return True, None
     exceeded = it.limits_exceeded(profile)
-    req = c.label_value(labels, "consent:")
-    if not exceeded and not req:
+    if not exceeded:
         return False, None
+    return False, "beyond the accepted limits (%s) and no granted consent" % ", ".join(exceeded)
+
+
+def _consent_request(labels, task, profile):
+    """The owner's completed consent request assigned to the task, scoped to this task and profile, else None."""
+    req = c.label_value(labels, "consent:")
     if req and req.isdigit():
         r = c.issue(int(req))
         snapshot = it.requests.read(int(req))
@@ -56,8 +63,42 @@ def consent_status(profile, labels, task=None):
                 and snapshot.get("kind") == "consent"
                 and snapshot.get("status") in ("pending", "approved")
                 and snapshot.get("scope") == {"task": task, "profile": profile}):
-            return True, None
-    return False, "beyond the accepted limits (%s) and no granted consent" % ", ".join(exceeded)
+            return r
+    return None
+
+
+def secrets_of_consent(labels, task=None, profile=None):
+    """Secret names of the frozen text of the task's granted consent for this task and profile; empty without one."""
+    r = _consent_request(labels, task, profile)
+    text = it.frozen_text(r["body"]) if r else None
+    m = re.match(r"secrets: (.+)$", text or "")
+    return [s.strip() for s in m.group(1).split(",")] if m else []
+
+
+def secret_pool():
+    """Secret names the owner wired into the `Session` step of session.yml (default branch); the token of the
+    Claude credential is not a session secret. Empty when the file or the step is not there."""
+    import yaml
+    text = c.safe_read(".", ".github/workflows/session.yml")
+    try:
+        steps = (((yaml.safe_load(text or "") or {}).get("jobs") or {}).get("session") or {}).get("steps") or []
+    except (yaml.YAMLError, AttributeError):
+        return []
+    step = next((x for x in steps if isinstance(x, dict) and x.get("name") == "Session"), {})
+    return sorted(k for k in (step.get("env") or {}) if k != "CLAUDE_CODE_OAUTH_TOKEN")
+
+
+def block_secret_missing(n, i, name, work=None):
+    """The task is blocked and the owner is asked (capability, no value) to provide the secret `name`."""
+    title = "Secret `%s` for task #%s" % (name, n)
+    if not it.request_open("capability", title=title):
+        it.open_request("capability", title,
+                        "Task #%s has your consent to use the secret `%s`, but the session cannot get it." % (n, name),
+                        "The secret is not in the secret pool of the `Session` step of session.yml, or the repository secret is empty.",
+                        "Nothing by itself: closing this request creates no secret. Add the name to the `Session` step and set the repository secret, then restart the task.",
+                        ref="secret-%s-%s" % (n, name), iteration=c.iteration_of(c.label_names(i)),
+                        readiness="Check that `%s` is a repository secret and a line of the `Session` step. Disclose no value." % name)
+    close_out(n, i, "blocked", {"cause": "secret-missing:" + name}, "The session did not start: secret `%s` is missing." % name, work)
 
 
 def profile_of(role):
@@ -131,6 +172,13 @@ def resolve(n):
         close_out(n, i, "blocked", {"cause": "start:" + why.split()[0]}, "The session did not start: " + why + ".")
         reconcile()
         raise SystemExit(why)
+    names = secrets_of_consent(labels, n, p) if granted else []
+    pool = secret_pool()
+    for name in names:
+        if name not in pool:
+            block_secret_missing(n, i, name)
+            reconcile()
+            raise SystemExit("secret-missing:" + name)
     try:
         options = session_options(i, role, p)
     except ValueError as error:
@@ -142,7 +190,8 @@ def resolve(n):
     start = branch if has else (c.marker(i["body"], "start-branch") or c.default_branch())
     session_inputs.capture_origin(n, role)
     c.edit_labels(n, remove=["blocked:rate-limit", "conflict"])
-    c.set_output(**options, start=start, consented="true" if granted else "false")
+    c.set_output(**options, start=start, consented="true" if granted else "false",
+                 secrets="|%s|" % "|".join(names) if names else "")
 
 
 def stage(n, work, trusted):
@@ -658,13 +707,16 @@ def finalize(n, work):
     text = c.safe_read(work, ".session/report.md")
     if text:
         c.publish(n, text)
-    session_reports.capture(n, work)
     f = c.report_fields(n)
     status = f.get("status", "")
     exit_code = ""
     if os.path.exists(os.path.join(tmp, "agent-exit")):
         with open(os.path.join(tmp, "agent-exit")) as fh:
             exit_code = fh.read().strip()
+    missing = (c.safe_read(tmp, "secret-missing") or "").strip()
+    if missing and re.fullmatch(r"[A-Z][A-Z0-9_]*", missing) and missing in secrets_of_consent(labels, n, p):
+        block_secret_missing(n, i, missing, work)
+        return
     exec_path = os.path.join(tmp, "claude-execution-output.json")
     limited, reset, prose = False, None, ""
     upd = {"branch": "task/%s" % n, "iteration": k, "runner": os.environ.get("RUNNER_OS") or None}
@@ -744,7 +796,7 @@ def finalize(n, work):
             upd["verification"] = "fail"
     pending = None
     if status == "done" and sha and role == "policymaker":
-        pending = "pending-iteration"            # its changes and orders take effect when the next iteration starts
+        pending = "pending-iteration"            # its changes and orders take effect when the iteration it opened continues
         prose = hold_policymaker_output(n, work)
         c.edit_labels(n, add=["awaiting:iteration"])
         c.update_report(n, dict(upd, status="done", merged=pending), prose)
@@ -756,7 +808,6 @@ def finalize(n, work):
             upd["conflicts"] = kk
             if kk < MAX_CONFLICTS:
                 c.update_report(n, dict(upd, status="partial"), "Rebase on the default branch: conflict (attempt %s)." % kk)
-                session_reports.capture(n, work)
                 c.edit_labels(n, add=["conflict"])
                 c.launch(n)
                 return
@@ -782,29 +833,31 @@ def finalize(n, work):
     elif status not in ("done", "paused") and sha and role != "policymaker":
         merge_notes(n, role)
     if status == "paused":
-        if park(n, i, f, upd, prose, reset, durable=routed):
+        ended = park(n, i, f, upd, prose, reset, sha, durable=routed)
+        if ended is None:
             session_reports.capture(n, work)
             return
-        status, prose = "crashed", "Resumes exhausted or the issue is too old."
+        status, prose = "crashed", ended
     if not pending:
         tag_unmerged(n, k, upd)
     proposals(work, k, source=n)
-    session_reports.capture(n, work)
+    if pending:
+        session_reports.capture(n, work)
     after_session(n, i, labels, role, k, work, status, upd, prose, pending)
 
 
 def hold_policymaker_output(n, work):
-    """Keep a finished Policymaker session's orders on its issue until the next iteration starts. Returns the report prose."""
+    """Keep a finished Policymaker session's orders on its issue until the iteration it opened continues. Returns the report prose."""
     session_reports.freeze_decisions(n, work, (it.read_state(n) or {}).get("suggestions", []))
     text = c.safe_read(work, ".session/orders.json")
     if not text:
-        return "Waiting for the next iteration to start: then `policy/` merges."
+        return "Waiting for the iteration to continue: then `policy/` merges."
     try:
         doc = json.loads(text)
     except ValueError:
-        return "`.session/orders.json` is not JSON: no orders. Waiting for the next iteration to start: then `policy/` merges."
+        return "`.session/orders.json` is not JSON: no orders. Waiting for the iteration to continue: then `policy/` merges."
     it.store_state(n, doc, it.ORDERS_MARK)
-    return "Waiting for the next iteration to start: then `policy/` merges and the orders start."
+    return "Waiting for the iteration to continue: then `policy/` merges and the orders start."
 
 
 def apply_policy():
@@ -870,16 +923,28 @@ def tag_unmerged(n, k, upd):
         c.git(".", "push", "-q", "-f", "origin", "refs/heads/task/%s:refs/tags/iter/%04d/%s" % (n, k, n), check=False, remote=True)
 
 
-def park(n, i, f, upd, prose, reset, durable=False):
+def park(n, i, f, upd, prose, reset, head, durable=False):
+    """Park for the provider; the clock is the limit reset. Returns None when parked, else why the session ends.
+    Waiting costs nothing, so it is bounded by the age limit (not for a durable, provider-routed session) and by the
+    progress breaker: K resumes in a row that used the agent and moved nothing (no turns, the branch head unmoved)
+    open an outage."""
     kk = int(f.get("attempts", 0)) + 1
-    age = (c.now() - c.parse_time(i["created_at"])).days
-    if not durable and (kk > MAX_ATTEMPTS or age >= MAX_AGE_DAYS):
-        return False
+    if not durable and (c.now() - c.parse_time(i["created_at"])).days >= MAX_AGE_DAYS:
+        return "The issue is too old."
+    spent = bool(upd.get("agent_s") or (upd.get("tokens_in") or 0) + (upd.get("tokens_out") or 0))
+    moved = bool(upd.get("turns")) or bool(f.get("head") and head != f.get("head"))
+    idle = 0 if moved else int(f.get("idle_resumes", 0)) + (spent and bool(f.get("paused_at")))   # only a resume counts
+    limit = c.cfg()["idle_resumes"]
+    if limit and idle >= limit:
+        c.open_outage("Session #%s resumed %s times in a row without progress" % (n, idle),
+                      "Each resume used the agent and produced no turn and no commit.",
+                      "Look at the session's stream and report, fix the cause, then close this issue.")
+        return "%s resumes in a row used the agent without progress." % idle
     when = reset or c.now() + timedelta(hours=BACKOFF_H[min(kk - 1, len(BACKOFF_H) - 1)])
-    c.update_report(n, dict(upd, status="paused", attempts=kk, resume_after=c.iso(when), paused_at=c.iso()), prose)
+    c.update_report(n, dict(upd, status="paused", attempts=kk, idle_resumes=idle, head=head, resume_after=c.iso(when), paused_at=c.iso()), prose)
     c.edit_labels(n, add=["blocked:rate-limit"])
     c.workflow_run("resume.yml", issue=n)      # the clock lives in a workflow: GitHub's cron lags by hours
-    return True
+    return None
 
 
 def after_session(n, i, labels, role, k, work, status, upd, prose, merged_pending):

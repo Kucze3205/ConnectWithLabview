@@ -21,6 +21,7 @@ provider_pool:
 author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
   name: ""
   email: ""
+idle_resumes: 3                 # consecutive resumes of a parked session that used the agent without progress: outage, no more resumes
 owner: "Kucze3205"               # GitHub login owner requests are assigned to
 
 # --- the change gate -------------------------------------------------------------------------------------------

@@ -64,7 +64,8 @@ An optional access proposal does not pause this clock or independent work.
 Provider quota parking remains subject to the ordinary watchdog rule; it is not
 an owner-decision wait. Existing repeated-failure outage controls still apply.
 
-The Policymaker starts after the first closed iteration, every fifth iteration,
+A Policymaker session opens the iteration when a trigger is due, and the
+iteration waits for it: the first iteration always, then every fifth iteration,
 each additional three iterations without improvement, a new audit report or
 new session suggestions. Only one Policymaker session runs at a time. The first
 session orders an audit unless already ordered, running or complete; later

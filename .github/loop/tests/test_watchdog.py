@@ -70,7 +70,7 @@ class ArmingTest(WatchCase):
     def test_the_switch_off_stops_the_watchdog(self):
         self.hub.vars["AUTOPILOT"] = "off"
         self.assertEqual(loop.watch(), 0)
-        self.assertEqual(self.hub.issues, {})
+        self.assertEqual(set(self.hub.issues), {0})        # only the fixture's earlier Policymaker session
 
 
 class JamTest(WatchCase):
@@ -164,7 +164,7 @@ class StallTest(WatchCase):
         self.assertFalse(it.stalled())
 
     def test_waiting_for_the_owner_does_not_count_unless_the_setup_says_so(self):
-        self.w.push_main({"policy/params.yml": "ceilings:\n  iteration_minutes: 30\n"}, "iteration limit")
+        self.w.push_main({"policy/params.yml": "shaper: orchestrator\nceilings:\n  iteration_minutes: 30\n"}, "iteration limit")
         c.sync_main()
         it.start_iteration()
         self.later(10)
@@ -246,7 +246,7 @@ class StallTest(WatchCase):
 
 
 class CeilingTest(WatchCase):
-    PARAMS = "ceilings:\n  iteration_minutes: 5\n"
+    PARAMS = "shaper: orchestrator\nceilings:\n  iteration_minutes: 5\n"
 
     def test_the_policymakers_iteration_ceiling_ends_a_long_iteration_without_a_rollback(self):
         it.start_iteration()

@@ -56,7 +56,7 @@ class RoutedSessionTest(SessionCase):
     def test_durable_wait_does_not_exhaust_the_legacy_three_attempts(self):
         n = self.issue()
         self.hub.issues[n]['created_at'] = '2020-01-01T00:00:00Z'
-        self.assertTrue(loop.park(n, c.issue(n), {'attempts': '100'}, {}, 'waiting', None, durable=True))
+        self.assertIsNone(loop.park(n, c.issue(n), {'attempts': '100'}, {}, 'waiting', None, None, durable=True))
         self.assertEqual(self.hub.report(n)['status'], 'paused')
         self.assertEqual(self.hub.issues[n]['state'], 'open')
 

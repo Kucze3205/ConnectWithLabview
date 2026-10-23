@@ -6,7 +6,7 @@ receipts, iteration revisions and rollback use this boundary.
 
 New templates declare `resources: {format: layered}`. Omission uses that same
 format; explicit legacy formats are rejected. Existing loops keep their own
-versioned engine (ADR-0001). The plugin supplies no migration or update; this loop was converted by hand (setup tickets M1-M3) and uses the layered format.
+versioned engine (ADR-0001); this release supplies no migration. This loop was converted by hand (setup tickets M1-M3), uses the layered format, and takes engine releases through `/perpetua:update`.
 
 ## Active definitions and inactive sources
 
@@ -151,7 +151,7 @@ of isolation. No provider or actual GitHub credential is needed.
 
 **Template procedure** (kept for reference; the shipped template differs from this repository).
 
-A fresh template has empty `execution/profiles.yml` and `policy/profiles.yml`, no active skills and no selected shaper. Candidate skills and profiles live under protected `templates/`. `setup_roles.py prepare` checks this fresh state before the setup branch is committed; it fails on a repository with selected roles, such as this one, and does not convert definitions.
+A fresh template has empty `execution/profiles.yml` and `policy/profiles.yml`, no active skills and no selected shaper. Candidate skills and profiles live under protected `templates/`. `setup_roles.py prepare` checks this fresh state before the setup branch is committed; it fails on a repository with selected roles, such as this one, and does not convert definitions or change the plugin installation.
 
 The setup map chooses sources from project/global/plugin skills (including optional Matt Pocock skills), inactive templates, or a newly authored skill when no source fits. `setup_roles.py install` copies a complete skill directory and installs the explicitly supplied profile in one layer. Adaptations modify local copies only; separate names allow independent adaptations of one source in both layers. Policymaker instructions are local to policy, while its permissions stay owner-controlled.
 

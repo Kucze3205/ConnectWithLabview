@@ -27,7 +27,7 @@ ITER = "loop:iteration "                 # label `loop:iteration N`: the loop's 
 ROLE = "role:"
 AGENT_STATUSES = {"done", "partial", "blocked", "rejected"}
 # Report fields written only by the engine. An agent's value for them is dropped when its report is published.
-OWNED = ("attempts", "resume_after", "kicks", "kicked", "conflicts", "cause", "verification", "verdict", "improved",
+OWNED = ("attempts", "idle_resumes", "head", "resume_after", "kicks", "kicked", "conflicts", "cause", "verification", "verdict", "improved",
          "merged", "detail", "model", "effort", "turns", "peak_context", "tokens_in", "tokens_out", "cache_read", "cache_write",
          "models", "agent_s", "gate_s", "total_s", "parked_s", "paused_at", "runner", "branch", "iteration", "artifacts",
          "verifier_issue", "verified_commit", "verifier_passed", "owner_accepted", "owner_accepted_commit")
@@ -42,6 +42,7 @@ DEFAULTS = {
     "cli_version": "2.1.284",
     "author": {"name": "", "email": ""},
     "owner": "",
+    "idle_resumes": 3,
     "check": "",
     "protected": [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/"],
     "direct_paths": [resources.EXECUTION + "/", resources.ROOT + "/", "audit/", "journal/"],
@@ -85,7 +86,7 @@ def cfg():
 
 
 def params():
-    p = {"shaper": "orchestrator", "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
+    p = {"shaper": None, "criterion": "", "models": {"default": "claude-sonnet-5-5"}, "efforts": ["low", "medium", "high"],
          "ceilings": {"job_minutes": 240, "iteration_minutes": None, "max_turns": 150},
          "policymaker_triggers": {"every_iterations": None, "no_progress": None}}
     return merged(p, load_yaml(resources.PARAMS))
@@ -239,6 +240,17 @@ def ensure_label(name, color="C5DEF5", desc=""):
 
 def comments(n):
     return api_list("repos/%s/issues/%s/comments" % (REPO, n))
+
+
+def pr_for_branch(branch):
+    """The pull request opened from `branch` (any state), or None: {number, url, state, merged}."""
+    prs = api_list("repos/%s/pulls?state=all&head=%s:%s" % (REPO, REPO.split("/")[0], urllib.parse.quote(branch, safe="")))
+    return ({"number": prs[0]["number"], "url": prs[0]["html_url"], "state": prs[0]["state"],
+             "merged": bool(prs[0].get("merged_at"))} if prs else None)
+
+
+def open_pr(branch, title, body):
+    gh("pr", "create", "--head", branch, "--base", default_branch(), "--title", title, "--body-file", "-", inp=body)
 
 
 def post_comment(n, body):
