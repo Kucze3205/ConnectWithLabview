@@ -40,3 +40,7 @@ The shipped GitHub issue owner-request channel (acceptance, refusal, frozen payl
 ## Arming
 
 Performed by [#8](https://github.com/Kucze3205/ConnectWithLabview/issues/8): merge `perpetua/setup` into `main`, tag the merge commit `setup-baseline`, run `python3 .github/loop/setup_roles.py validate --baseline setup-baseline` from a clean checkout of that commit, then set `AUTOPILOT=on` and run `watchdog.yml`. The result and links are in the ticket's comments.
+
+## Baseline tag
+
+`setup-baseline` was moved by the owner on 23 Oct 2026 from `8fa87b7` to `7e83c72` (engine update 0.3.0 → 0.5.0, which changed `engine.yml` and `policy/prompts/policymaker.md`). Since engine 0.5.0, `validate --baseline` compares the managed-definition revision, not the commit SHA, so engine-only fixes under `.github/loop/` do not require moving the tag. Move it again only after an owner-approved change to the managed definitions (`/perpetua:update`); the watchdog uses it to roll back `execution/` and `policy/`. Validation also counts ignored files in `execution/` and `policy/`: remove any `__pycache__` there or run tests with `python -B`.
