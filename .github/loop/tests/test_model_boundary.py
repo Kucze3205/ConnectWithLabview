@@ -93,7 +93,8 @@ Path('product').write_text('done')
             with patch.dict(os.environ, {"CLAUDE_CODE_OAUTH_TOKEN": ""}):
                 result = boundary.launch_model(str(work), str(trusted), ["--version"], capture=True)
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertIn("2.1.284", result.stdout)
+            pinned = json.loads(Path(LOOP_DIR, "cloud-providers.json").read_text())["claude"]["version"]
+            self.assertIn(pinned, result.stdout)
 
     def test_online_script_retains_network_without_host_policy_access(self):
         with tempfile.TemporaryDirectory() as root, socket.socket() as listener:
@@ -171,6 +172,12 @@ Path('product').write_text('done')
                            if block.get("type") == "tool_result"}
                 self.assertTrue(all(call["id"] in results for call in calls))
                 self.assertNotIn("POLICY_CANARY_UNAVAILABLE_40", result.stdout)
+                trace = " | ".join(json.dumps(block.get("content"))[:300] for event in events
+                                   if event.get("type") == "user"
+                                   for block in event.get("message", {}).get("content", [])
+                                   if block.get("type") == "tool_result")
+                trace = trace.replace(os.environ["CLAUDE_CODE_OAUTH_TOKEN"], "[credential]")
+                self.assertTrue((work / "product.txt").exists(), "no product.txt; tool results: " + trace)
                 self.assertEqual((work / "product.txt").read_text(), "Useful approved input")
                 self.assertEqual((work / "network-result.txt").read_text(), "connected" if online else "blocked")
                 self.assertEqual(json.loads((work / "observations.json").read_text()),
