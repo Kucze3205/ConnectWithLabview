@@ -151,6 +151,8 @@ import hashlib, math, random, datetime, collections, itertools, functools, typin
 import encodings.utf_8, encodings.ascii, encodings.latin_1, encodings.idna
 import ssl, urllib.request
 import sys
+class _Struct(ctypes.Structure):   # 3.14 loads ctypes._layout only when a Structure is defined
+    _fields_ = [('a', ctypes.c_int)]
 print(json.dumps(sorted({m.__file__ for m in sys.modules.values()
                         if getattr(m, '__file__', None)})))'''
     python = shutil.which("python3", path=environment()["PATH"])
