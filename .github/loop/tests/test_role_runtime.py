@@ -101,6 +101,17 @@ class RuntimeTest(unittest.TestCase):
         result = self.runtime(lambda *args, **kwargs: action('Finish', status='done')).run(2, 30)
         self.assertEqual(result['status'], 'done')
 
+    def test_a_park_reports_the_turns_already_taken(self):
+        read = action('Read', path='.session/protocol.md')
+        def provider(*args, **kwargs):
+            if not self.calls:
+                self.calls.append(1)
+                return read
+            raise Failure({'status': 'quota', 'scope': 'provider'})
+        self.calls = []
+        result = self.runtime(provider).run(10, 30)
+        self.assertEqual((result['status'], result['turns']), ('paused', 1))
+
     def test_interrupted_command_is_never_blindly_replayed(self):
         state = {'fingerprint': 'previous-policy-fingerprint', 'turns': 1, 'history': [],
                  'pending': action('Bash', command='python3 migration.py')}

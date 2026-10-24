@@ -181,7 +181,7 @@ class Runtime:
             if choice["action"] == "wait" and self.shorten(choice, remaining):
                 continue
             if choice["action"] in {"wait", "blocked"}:
-                result = {"status": "paused", "reason": "providers_unavailable", **choice}
+                result = {"status": "paused", "reason": "providers_unavailable", "turns": state["turns"], **choice}
                 result['usage'] = state.get('usage', {})
                 # Authentication also waits for new credentials; the watchdog
                 # rechecks with bounded delay without exhausting old park counts.
