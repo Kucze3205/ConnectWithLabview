@@ -14,17 +14,20 @@ routing:
       - {provider: codex, model: gpt-6.1-sol}
       - {provider: copilot, model: gpt-5.6-luna}
     implementation: *implementation
-    # Fallback gpt-6.1-sol, not gpt-6-astra: about 5x cheaper for 1-2 index points (model-selection.md), and
-    # session #27 spent 2.86M astra input tokens for 9.6k output with no accepted result (2026-10-23).
+    # Owner note 2026-10-24: the Claude 5-hour window is shared with the owner. gpt-6.1-sol is about 5x cheaper
+    # for 4 index points less (model-selection.md) and produced turns in sessions #48-#50; Sonnet is the
+    # Claude fallback. Opus stays only where its edge is claimed (policymaker, evaluator).
     orchestrator: &planning
-      - {provider: claude, model: claude-opus-5-5}
       - {provider: codex, model: gpt-6.1-sol}
-    policymaker: *planning
+      - {provider: claude, model: claude-sonnet-5-5}
     researcher: *planning
     benchmark: *planning
-    evaluator: *planning
+    policymaker: &measured
+      - {provider: claude, model: claude-opus-5-5}
+      - {provider: codex, model: gpt-6.1-sol}
+    evaluator: *measured
+    # Luna dropped from the first slot: audit #43 spent 1.17M luna input with 0 turns and crashed.
     audit:
-      - {provider: copilot, model: gpt-5.6-luna}
       - {provider: codex, model: gpt-6.1-sol}
       - {provider: claude, model: claude-sonnet-5-5}
     # Luna is a first-pass filter, not a sole reviewer (model-selection.md). Review starts on another
@@ -38,7 +41,7 @@ routing:
 policymaker_session:                 # model id (not an alias); bounded by engine.yml policymaker_session_ceilings
   model: claude-opus-5-5
   effort: high
-  max_turns: 150
+  max_turns: 60                  # every turn resends the prompt; a Policymaker needing more than 60 is investigating too broadly
   timeout_minutes: 90
 models:                          # label `model:<alias>` on a task -> model id; `default` when there is no label
   default: claude-sonnet-5-5
@@ -53,5 +56,5 @@ policymaker_triggers:                 # the Policymaker runs after an iteration 
   every_iterations: 5            # after every K-th iteration
   no_progress: 3                 # each time this many more iterations in a row went without an improving change
 context:                         # what each model request carries of the session history; bounded by engine.yml context_ceilings
-  history_bytes: 120000          # about 30k tokens; the quota criterion prefers a short repeated prefix
-  recent_turns: 12               # these turns in full, older ones as tool/path/status only
+  history_bytes: 40000           # about 10k tokens; every turn is a stateless call resending this (owner note 2026-10-24)
+  recent_turns: 5                # these turns in full, older ones as tool/path/status only
