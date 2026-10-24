@@ -93,10 +93,11 @@ replace("engine.yml", '''  min_interval_minutes: null     # null: iteration afte
 cadence_diff = git("diff").stdout
 
 for name, diff in (("compact", compact_diff), ("cadence", cadence_diff)):
-    p = ROOT / ("policy/_scratch_%s.diff" % name)
-    p.write_text(diff)
-    chk = subprocess.run(["git", "apply", "--check", str(p)], cwd=ROOT, capture_output=True, text=True)
+    chk = subprocess.run(["git", "apply", "--check", "-"], cwd=ROOT, input=diff, capture_output=True, text=True)
     print("APPLY", name, chk.returncode, chk.stderr, "bytes", len(diff))
+    print("=====DIFF %s=====" % name)
+    print(diff)
+    print("=====END %s=====" % name)
 
 for p in sorted((ROOT / "iterations").glob("*.json")):
     r = json.loads(p.read_text())
