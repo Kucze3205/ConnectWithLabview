@@ -113,3 +113,35 @@ for p in sorted((ROOT / "iterations").glob("*.json")):
           "ALL in+cw", sum(v[0] for v in tot.values()), sum(v[1] for v in tot.values()))
     if o.get("sessions"):
         print("  sample session keys", sorted(o["sessions"][0].keys()), json.dumps(o["sessions"][0].get("tokens"))[:400])
+
+reqs = [
+    {"kind": "engine-change",
+     "title": "Cache-stable session history: brief earlier turns in aligned batches",
+     "what": "compact() in .github/loop/role_runtime.py moves the split between briefed and full turns, and the cut of the "
+             "oldest briefs, only at multiples of 8 absolute turns, and caps briefs at a quarter of history_bytes. "
+             "earlier_turns then stays byte-identical between consecutive requests. Runtime passes the absolute start "
+             "of the stored history. One new test; two expectations adjusted; 13/13 runtime tests pass.",
+     "why": "Every turn is a stateless request resending prompt + history. Today the oldest brief is dropped or a new one "
+            "added on every turn, so the prefix after the fixed prompt changes each request and the provider cache "
+            "cannot reuse it. Iteration 0002: claude cache_write 3.91M vs cache_read 0.19M; codex input 4.27M vs "
+            "cache_read 0.74M. Quota is the loop's criterion and the Claude window is shared with the owner.",
+     "unblocks": "Lower subscription quota per accepted result for every role session.",
+     "frozen": "Apply to main with `git apply`; verify with `cd .github/loop/tests && PYTHONPATH=.. python3 -m unittest "
+               "test_role_runtime`.\n\n" + compact_diff},
+    {"kind": "engine-change",
+     "title": "Cadence: at most one iteration per 5-hour subscription window",
+     "what": "engine.yml cadence.min_interval_minutes: null -> 300.",
+     "why": "Iterations 0000-0002 ran back to back with no improving change while consuming 2.2-4.3M input tokens each; "
+            "the Claude 5-hour window is shared with the owner. Spacing iterations leaves quota for the owner and lets "
+            "the cache-stable history and lower turn caps show their effect before more quota is spent.",
+     "unblocks": "Predictable quota headroom for the owner; decline it if back-to-back iterations are preferred.",
+     "frozen": "Apply to main with `git apply`.\n\n" + cadence_diff},
+]
+print("=====REQUESTS=====")
+print(json.dumps(reqs, ensure_ascii=False, indent=1))
+print("=====END REQUESTS=====")
+for n in (".session/orders.json", ".session/requests.json"):
+    print("FILE", n, repr((ROOT / n).read_text()[:400]) if (ROOT / n).exists() else "MISSING")
+s = json.loads((ROOT / ".session/loop-state.json").read_text())
+print("AUDIT", json.dumps(s.get("audit_report"))[:800], "| OWNER_REQ", json.dumps(s.get("owner_requests"))[:800])
+print("NOPROG", s.get("no_progress"), "TRIGGER", s.get("trigger"))
