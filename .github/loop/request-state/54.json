@@ -1,0 +1,11 @@
+{
+  "kind": "engine-change",
+  "frozen": "Apply to main with `git apply`.\n\ndiff --git a/engine.yml b/engine.yml\nindex a5a5db7..b984e9a 100644\n--- a/engine.yml\n+++ b/engine.yml\n@@ -73,5 +73,5 @@ context_ceilings:                # the Policymaker's policy/params.yml `context`\n   history_bytes: 600000          # history sent with one request\n   recent_turns: 40               # turns sent in full\n cadence:\n-  min_interval_minutes: null     # null: iteration after iteration\n+  min_interval_minutes: 300      # one iteration per 5-hour subscription window; null: iteration after iteration\n   daily_iterations: null\n",
+  "proposal_sha": "55cd208a3d66e3c81ca5063fbfeac9c4dad674b3a226a044e1ff3cf0765158b1",
+  "base_commit": "4e3b52cf5d39f4915504a618667aea5a5d8657b1",
+  "base_engine_sha": "31c5be629744061fa5afe77a576bc643e8eff8d0f72ed1edede2d65f857821b7",
+  "readiness": null,
+  "status": "pending",
+  "issue": 54,
+  "body_sha": "4838e2442d8c42eeaf5b7f1eb96ab86e6fa72e602667720ef1f051d3b18efb54"
+}
