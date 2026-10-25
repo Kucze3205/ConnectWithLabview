@@ -83,6 +83,8 @@ MODEL_TRUSTED="$TRUSTED"
 if [ -f "$TRUSTED/executor-mode" ]; then
   MODEL_LAUNCH=(python3 "$TRUSTED/executor_boundary.py" model "$WORK" "$TRUSTED")
   MODEL_TRUSTED=/engine
+  # Bash is the broker's MCP tool here; the role's Bash(...) rules are applied by the broker, outside the boundary
+  [ ! -f "$TRUSTED/broker.json" ] || TOOLS="$TOOLS,mcp__broker__Bash"
 fi
 # the prompt goes through stdin: an argument over 128 KiB fails with E2BIG
 CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" timeout "${AGENT_TIMEOUT}m" "${MODEL_LAUNCH[@]}" -p \
