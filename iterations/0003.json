@@ -1,0 +1,489 @@
+{
+ "schema_version": 1,
+ "iteration": 3,
+ "status": "failed",
+ "failure": "the shaper produced no valid task graph",
+ "started": "2026-10-24T13:27:05Z",
+ "ended": "2026-10-25T00:07:35Z",
+ "engine_version": "0.5.0",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 3,
+  "engine_version": "0.5.0",
+  "policy_rev": "layered-v1:69a18a9b6eebe4fcf0ed3c9d4cdd5f13aa1e5f8fc2f6c56eaf23cdfdcec66391",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 5,
+    "no_progress": 3
+   },
+   "context": {
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false,
+   "stream_retention_iterations": null
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)"
+   ],
+   "internet_write": [],
+   "internet": false
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": []
+  },
+  "owner_requests": {
+   "open": [
+    {
+     "number": 54,
+     "kind": "engine-change",
+     "title": "Cadence: at most one iteration per 5-hour subscription window",
+     "decision": "pending",
+     "proposal_sha": "55cd208a3d66e3c81ca5063fbfeac9c4dad674b3a226a044e1ff3cf0765158b1",
+     "base_commit": "4e3b52cf5d39f4915504a618667aea5a5d8657b1",
+     "detail": null,
+     "readiness": null
+    },
+    {
+     "number": 53,
+     "kind": "engine-change",
+     "title": "Cache-stable session history: brief earlier turns in aligned batches",
+     "decision": "pending",
+     "proposal_sha": "69a9eb0bab56897b3a49c878f7fee966972d590385359d109e8147b753768050",
+     "base_commit": "76e9d7fb0c35fd0f8bf4105a0841603de1859cdf",
+     "detail": null,
+     "readiness": null
+    }
+   ],
+   "recently_closed": [
+    {
+     "number": 40,
+     "kind": "notice",
+     "title": "Iteration 0000 stalled",
+     "decision": "approved",
+     "proposal_sha": "02909817dc170cb53c32514215638ef1a48463bce8eaae2625e8032030aed80f",
+     "base_commit": "275d32c3de34cb78d311aab6d13a95cc0a378083",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 3,
+  "policymaker_sessions": [
+   {
+    "issue": 42,
+    "status": "done"
+   }
+  ],
+  "suggestions": [],
+  "audit_report": null,
+  "audit_rev": null
+ },
+ "policy": {
+  "rev_start": "layered-v1:ae34f27c5c70d868b6afed28f59b1f7b322df9a26b2f2170e27b4b523321aa62",
+  "rev_end": "layered-v1:69a18a9b6eebe4fcf0ed3c9d4cdd5f13aa1e5f8fc2f6c56eaf23cdfdcec66391",
+  "commit_end": "0f67ef0f942e5817023cd3670cb7963e6b9bf3c2",
+  "orders_refused": null,
+  "session": 52,
+  "trigger": "3 iterations without progress",
+  "change_ids": [
+   "change-52"
+  ]
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "order-52-audit-quota",
+   "title": "Audit: quota per session, cache reuse and zero-turn attempts in iterations 0000-0002",
+   "role": "audit",
+   "model": "default",
+   "effort": "medium",
+   "body": "## Goal\nMeasure where the loop spends subscription quota and what it gets for it, so the Policymaker can tune routing, turn caps and context from numbers instead of the dated prior in docs/perpetua/model-selection.md. The first audit (#43) crashed on copilot/gpt-5.6-luna with 0 turns; this one routes to codex/gpt-6.1-sol first.\n\n## Acceptance\n- [ ] Per iteration 0000-0002 and per session: provider/model, turns, attempts, attempts with 0 turns, tokens (in, out, cache_read, cache_write), and whether the session's result was accepted (merged / improved / verdict).\n- [ ] Cache reuse ratio (cache_read / (cache_read + cache_write + in)) per provider/model, with the sessions that dominate cache_write named.\n- [ ] Tokens spent on attempts or sessions that produced no accepted turn, as a share of each iteration's total.\n- [ ] Where in `.github/loop/` (file:line) a session is retried after attempts with 0 turns, and how many retries are possible today; a concrete proposal for a cap of 2-3 zero-turn attempts.\n- [ ] Per-model quota per accepted result where any exists; say plainly where nothing was accepted.\n- [ ] A mechanical script in `audit/metrics/` for the token and attempt tables, rerunnable by later audits.\n- [ ] Report in `audit/0003.md`, copied to `audit/latest.md`: numbers first, then proposals each with the number behind it and the expected effect. State what could not be measured and why.\n\n## Verification\n`python3 audit/metrics/<your script>.py` reproduces the tables in the report from `iterations/*.json` and staged exports.\n\n## Context\n- `iterations/0000.json`..`0002.json`: `outcome.sessions[].tokens`, `attempts`, `turns`, `verdict`, `merged`.\n- `.session/exports/manifest.json`: check which records and streams were downloaded before drawing conclusions.\n- `.github/loop/role_runtime.py`, `.github/loop/provider_adapter.py`: how turns, attempts and history compaction work.\n- Owner note 2026-10-24 in the Policymaker instructions: baseline iteration 0 = 2.15M in / 2.61M cache write; iteration 1 = 1.84M in / 2.52M cache write; iteration 2 = 4.27M in / 3.91M cache write.\n\n## Budget\n- Read only the three iteration records, the staged streams and the two runtime files named above; do not read whole stream directories line by line — compute from `usage` and `result` files with a script.",
+   "blocked_by": [],
+   "start_branch": null,
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "inputs": [],
+   "exports": [
+    {
+     "source": "records",
+     "iterations": [
+      0,
+      1,
+      2
+     ]
+    },
+    {
+     "source": "streams",
+     "iterations": [
+      1,
+      2
+     ]
+    },
+    {
+     "source": "reports",
+     "iterations": [
+      1,
+      2
+     ]
+    }
+   ],
+   "issue": 55
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 56,
+    "role": "orchestrator",
+    "model": null,
+    "effort": "medium",
+    "report_snapshots": [
+     ".github/loop/data/session-reports/56/df94c7d1635f4baf2692ef3c50e9231475a60fbd974181346ea5be78e8252537.json"
+    ],
+    "suggestion_ids": [],
+    "status": "partial",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/56",
+    "commit": "4a1de6fe",
+    "tokens": {
+     "in": 539390,
+     "out": 2518,
+     "cache_read": 100796,
+     "cache_write": 10169
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 2236,
+      "cache_write": 10169,
+      "in": 4,
+      "out": 405
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 98560,
+      "cache_write": 0,
+      "in": 539386,
+      "out": 2113
+     }
+    },
+    "turns": 32,
+    "peak_context": 0,
+    "attempts": 12,
+    "agent_s": 337,
+    "gate_s": 0,
+    "total_s": 439,
+    "parked_s": 16181,
+    "runner": "Linux",
+    "artifacts": 0,
+    "stream": "stream-0003-56"
+   },
+   {
+    "issue": 55,
+    "role": "audit",
+    "model": null,
+    "effort": "medium",
+    "report_snapshots": [],
+    "suggestion_ids": [],
+    "status": "crashed",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/55",
+    "commit": "f5842d24",
+    "tokens": {
+     "in": 22,
+     "out": 2977,
+     "cache_read": 12298,
+     "cache_write": 116428
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 12298,
+      "cache_write": 116428,
+      "in": 22,
+      "out": 2977
+     }
+    },
+    "turns": 11,
+    "peak_context": 0,
+    "attempts": 12,
+    "agent_s": 10,
+    "gate_s": 0,
+    "total_s": 45,
+    "parked_s": 11271,
+    "runner": "Linux",
+    "artifacts": 0,
+    "stream": "stream-0003-55"
+   }
+  ],
+  "shaper": {
+   "issue": 56,
+   "role": "orchestrator",
+   "model": null,
+   "effort": "medium",
+   "report_snapshots": [
+    ".github/loop/data/session-reports/56/df94c7d1635f4baf2692ef3c50e9231475a60fbd974181346ea5be78e8252537.json"
+   ],
+   "suggestion_ids": [],
+   "status": "partial",
+   "verdict": null,
+   "improved": false,
+   "merged": false,
+   "branch": "task/56",
+   "commit": "4a1de6fe",
+   "tokens": {
+    "in": 539390,
+    "out": 2518,
+    "cache_read": 100796,
+    "cache_write": 10169
+   },
+   "models": {
+    "claude/claude-sonnet-5-5": {
+     "cache_read": 2236,
+     "cache_write": 10169,
+     "in": 4,
+     "out": 405
+    },
+    "codex/gpt-6.1-sol": {
+     "cache_read": 98560,
+     "cache_write": 0,
+     "in": 539386,
+     "out": 2113
+    }
+   },
+   "turns": 32,
+   "peak_context": 0,
+   "attempts": 12,
+   "agent_s": 337,
+   "gate_s": 0,
+   "total_s": 439,
+   "parked_s": 16181,
+   "runner": "Linux",
+   "artifacts": 0,
+   "stream": "stream-0003-56"
+  },
+  "verdict": {
+   "value": "none",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": false
+  },
+  "tokens": {
+   "in": 539412,
+   "out": 5495,
+   "cache_read": 113094,
+   "cache_write": 126597,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 26,
+     "out": 3382,
+     "cache_read": 14534,
+     "cache_write": 126597
+    },
+    "codex/gpt-6.1-sol": {
+     "in": 539386,
+     "out": 2113,
+     "cache_read": 98560,
+     "cache_write": 0
+    }
+   }
+  },
+  "limit_hits": 24,
+  "wall_s": 38430,
+  "critical_path_s": 45,
+  "width": 0,
+  "owner_requests": {
+   "opened": [
+    54,
+    53
+   ],
+   "open_at_close": [
+    54,
+    53
+   ]
+  }
+ },
+ "evaluator_verifications": []
+}
