@@ -34,13 +34,6 @@ class SecurityTest(unittest.TestCase):
         self.assertTrue(sandbox["network"]["strictAllowlist"])
         self.assertNotIn("sandbox", security.settings({"internet": True}, "/trusted"))
 
-    def test_boundary_settings_leave_bash_to_the_broker(self):
-        self.assertNotIn("sandbox", security.settings({}, "/engine", True))
-        self.assertIn("WebFetch", security.settings({}, "/engine", True)["permissions"]["deny"])
-        profile = {"tools": ["Read", "Bash(python3:*)"]}
-        self.assertEqual(security.tool_names(profile, True), ["Read"])
-        self.assertEqual(security.tool_names(profile), ["Bash", "Read"])
-
     def test_offline_skills_cannot_run_commands_outside_bash(self):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root, "SKILL.md")

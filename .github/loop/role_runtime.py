@@ -50,12 +50,19 @@ def brief(entry):
     return out
 
 
-def compact(history, limits):
-    """Full recent turns, a brief list of earlier ones; the oldest briefs go when the byte limit is exceeded."""
+BATCH = 8  # earlier turns are briefed and cut in groups of this many, aligned to absolute turn numbers
+
+
+def compact(history, limits, start=0):
+    """Full recent turns, a brief list of earlier ones; the oldest briefs go when they exceed a quarter of the limit.
+    `start` is the absolute number of history[0]. The split and the cut move only at multiples of BATCH, so
+    `earlier_turns` stays byte-identical between consecutive requests: an append-only prefix a prompt cache can read."""
     keep = max(1, int(limits["recent_turns"]))
-    older, recent = [brief(e) for e in history[:-keep]], history[-keep:]
-    while older and size([older, recent]) > limits["history_bytes"]:
-        older.pop(0)
+    split = max(0, (start + len(history) - keep) // BATCH * BATCH - start)
+    older, recent = [brief(e) for e in history[:split]], history[split:]
+    del older[:(-start) % BATCH]
+    while older and size(older) > limits["history_bytes"] // 4:
+        del older[:BATCH]
     while len(recent) > 1 and size([older, recent]) > limits["history_bytes"]:
         recent.pop(0)
     return {"earlier_turns": older, "note": FILES_ARE_TRUTH, "recent_turns": recent} if older else recent
@@ -192,12 +199,13 @@ class Runtime:
             candidate = choice["candidate"]
             observed = self.clock()
             provider = candidate["provider"]
+            start = max(0, state["turns"] - len(state["history"]))  # the stored history may have lost its oldest turns
             prompt = (self.prompt + '\n\nYou propose one JSON action matching this schema: ' +
                       json.dumps(ACTION_SCHEMA) + '\nUse no native tools. All role tools are executed by the parent. '
                       'The parent commits accepted changes. Read staged skills instead of calling a native Skill tool. '
                       'Commands are argv strings, without shell expansion. Unused fields must be empty strings. '
                       'Finish only after writing the required report and outputs.\nRecent continuation:\n' +
-                      json.dumps(compact(state["history"], self.context), ensure_ascii=False))
+                      json.dumps(compact(state["history"], self.context, start), ensure_ascii=False))
             if hasattr(self.broker, 'profile'):
                 prompt += '\nRole profile: ' + json.dumps(self.broker.profile)
             if getattr(self.broker, 'resources', None):

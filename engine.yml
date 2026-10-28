@@ -73,5 +73,5 @@ context_ceilings:                # the Policymaker's policy/params.yml `context`
   history_bytes: 600000          # history sent with one request
   recent_turns: 40               # turns sent in full
 cadence:
-  min_interval_minutes: null     # null: iteration after iteration
+  min_interval_minutes: 300      # one iteration per 5-hour subscription window; null: iteration after iteration
   daily_iterations: null

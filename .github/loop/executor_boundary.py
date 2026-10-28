@@ -5,17 +5,14 @@ configuration or original objects. Its root filesystem is an allowlist, not a
 read-only view of the host. Admission reconstructs a child of the original
 baseline using regular file bytes; no worker Git program/config/hook is run.
 """
-import contextlib
 import json
 import os
 from pathlib import Path
 import shutil
-import socketserver
 import stat
 import subprocess
 import sys
 import tempfile
-import threading
 
 
 HIDDEN = {"policy", "execution", "templates", ".github", ".git", ".claude", ".codex", "iterations", "audit"}
@@ -154,8 +151,6 @@ import hashlib, math, random, datetime, collections, itertools, functools, typin
 import encodings.utf_8, encodings.ascii, encodings.latin_1, encodings.idna
 import ssl, urllib.request
 import sys
-class _Struct(ctypes.Structure):   # 3.14 loads ctypes._layout only when a Structure is defined
-    _fields_ = [('a', ctypes.c_int)]
 print(json.dumps(sorted({m.__file__ for m in sys.modules.values()
                         if getattr(m, '__file__', None)})))'''
     python = shutil.which("python3", path=environment()["PATH"])
@@ -181,50 +176,13 @@ print(json.dumps(sorted({m.__file__ for m in sys.modules.values()
     return sorted(paths)
 
 
-@contextlib.contextmanager
-def broker_server(work, trusted):
-    """Serve the role's Bash from outside the boundary, over a socket bound into it.
-
-    The CLI's own Bash would start a nested bubblewrap, which the kernel refuses
-    under the masked /proc. Here the command runs in tool_broker's separate
-    sandbox instead: its Bash rules, offline mode and write scope are unchanged.
-    """
-    from tool_broker import Broker, validate, FIELDS
-    staged = json.loads(Path(trusted, "broker.json").read_text(encoding="utf-8"))
-    broker = Broker(work, staged["profile"], staged["config"],
-                    {name: Path(path) for name, path in staged["resources"].items()})
-    timeout = int(os.environ.get("BASH_MAX_TIMEOUT_MS", "60000")) / 1000
-    lock = threading.Lock()
-
-    class Handler(socketserver.StreamRequestHandler):
-        def handle(self):
-            try:
-                action = dict({key: "" for key in FIELDS}, tool="Bash", **json.loads(self.rfile.readline(6_000_000)))
-                with lock:
-                    reply = {"ok": broker.execute(validate(action), timeout)}
-            except (OSError, ValueError, TypeError) as error:  # PermissionError is an OSError
-                reply = {"error": "%s: %s" % (type(error).__name__, error)}
-            self.wfile.write(json.dumps(reply).encode())
-
-    with tempfile.TemporaryDirectory(prefix="broker-") as directory:
-        path = os.path.join(directory, "broker.sock")
-        server = socketserver.ThreadingUnixStreamServer(path, Handler)
-        server.daemon_threads = True
-        threading.Thread(target=server.serve_forever, daemon=True).start()
-        try:
-            yield path
-        finally:
-            server.shutdown()
-            server.server_close()
-
-
-def model_command(work, trusted, arguments, broker=None):
+def model_command(work, trusted, arguments):
     """Isolate every CLI file tool, independently of its permission settings.
 
     Only the native pinned CLI is supported. A script/package installation must
     not cause its parent directory (possibly containing policy) to be mounted.
-    The provider connection remains in the CLI; Bash is not a CLI tool here but
-    the trusted broker behind the `broker` socket (see broker_server).
+    The provider connection remains in the CLI; offline Bash uses the existing
+    strict tool sandbox inside this filesystem boundary.
     """
     if sys.platform != "linux" or not shutil.which("bwrap"):
         raise RuntimeError("required model filesystem isolation unavailable")
@@ -256,28 +214,18 @@ def model_command(work, trusted, arguments, broker=None):
     command += ["--ro-bind", str(Path(__file__).with_name("offline_exec.py")), "/engine/process_guard.py"]
     for name in ("contract.md", "mcp.json", "settings.json", "remaining.py"):
         command += ["--ro-bind", os.path.join(trusted, name), "/engine/" + name]
-    if broker:
-        command += ["--bind", broker, "/engine/broker.sock",
-                    "--ro-bind", str(Path(__file__).with_name("mcp_broker.py")), "/engine/mcp_broker.py"]
     command += ["--chdir", "/work", "python3", "/engine/process_guard.py", "--process-only", cli, *arguments]
     return command
 
 
 def launch_model(work, trusted, arguments, capture=False):
-    if Path(trusted, "broker.json").is_file():
-        with broker_server(work, trusted) as socket_path:
-            return run_model(work, trusted, arguments, capture, socket_path)
-    return run_model(work, trusted, arguments, capture)
-
-
-def run_model(work, trusted, arguments, capture, broker=None):
     env = environment()
     for key in ("CLAUDE_CODE_OAUTH_TOKEN", "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS",
                 "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB", "CLAUDE_CODE_RETRY_WATCHDOG",
                 "BASH_DEFAULT_TIMEOUT_MS", "BASH_MAX_TIMEOUT_MS", "SESSION_END"):
         if key in os.environ:
             env[key] = os.environ[key]
-    return subprocess.run(model_command(work, trusted, arguments, broker), env=env,
+    return subprocess.run(model_command(work, trusted, arguments), env=env,
                           capture_output=capture, text=capture, check=False)
 
 

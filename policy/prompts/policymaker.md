@@ -66,33 +66,3 @@ capability request does not create a secret. An accepted engine change becomes a
 Follow `.session/protocol.md` for the JSON fields and readiness confirmations. You may
 propose these changes but cannot accept them or edit the engine yourself.
 Report the changes you made and the evidence behind them in `.session/report.md`.
-
-## Owner note (2026-10-24): the 5-hour subscription limit runs out far faster than interactive use
-
-Measured in `iterations/0000.json` and `0001.json` (`outcome.sessions[].tokens`), and in `.github/loop/role_runtime.py`
-and `provider_adapter.py`. Fix these first, ahead of any quality work:
-
-1. **Every model turn is a fresh, stateless call** (`claude -p --max-turns 1`, or a new codex/copilot thread) that resends the
-   role prompt plus the whole compacted history. Cost is about turns x prompt size, not output. Orchestrator #27 used 165 turns,
-   #44 used 90 turns; the prompt is up to `context.history_bytes` (120 KB, about 30k tokens) each time. Lower
-   `context.history_bytes` (try 40000) and `recent_turns` (try 4-6), and cut `max_turns` for the orchestrator (about 30) and
-   for the audit. An orchestrator that needs 90+ turns to emit a task graph is a design problem: make the shaper smaller,
-   or replace it with a deterministic rule.
-2. **The prompt cache is written and almost never read.** Opus: cache_write 2.61M vs cache_read 0.14M (iteration 0),
-   1.24M vs 0.07M (iteration 1). Cache writes are billed above normal input and are wasted when the next call has a different
-   prefix. `compact()` slides the window and re-briefs older turns each turn, so the prefix changes every call. Params cannot
-   fix this: submit an `engine-change` so `compact()` keeps a stable, append-only prefix (brief older turns in batches,
-   not one per turn). Until then, the smaller the window, the less is wasted.
-3. **Opus is first for five task classes** (orchestrator, policymaker, researcher, benchmark, evaluator), and the Claude
-   5-hour window is shared with the owner's own prompting. Per `docs/perpetua/model-selection.md`, `gpt-6.1-sol` is about
-   5x cheaper for 4 index points less. Put `gpt-6.1-sol` first for orchestrator, researcher and benchmark; keep Opus
-   only where its edge is measured (evaluator, policymaker), and use Sonnet at `medium` effort as the Claude fallback.
-4. **Failed attempts cost real tokens with nothing to show.** Iteration 0: 169 attempts, 0 turns, 2.61M cache write.
-   Audit #43: 1.17M copilot/gpt-5.6-luna input, 0 turns, crashed. The codex fallback spent 2.15M (#27) and 0.67M (#44)
-   input for under 5k output, with no cache. Do not put a candidate first or second that has not produced an accepted
-   turn; drop `gpt-5.6-luna` from the audit's first slot. Stop retrying a session after 2-3 attempts with 0 turns.
-5. **Iterations run back to back** (`engine.yml` `cadence` is null). Propose to the owner, via `limits-change` or
-   `engine-change`, a `daily_iterations` or `min_interval_minutes` cap so the loop leaves quota for the owner.
-
-Report the new tokens per iteration in `.session/report.md` and compare with: iteration 0 = 2.15M in / 2.61M cache write;
-iteration 1 = 1.84M in / 2.52M cache write.

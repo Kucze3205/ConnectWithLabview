@@ -270,23 +270,12 @@ def stage(n, work, trusted):
         fh.write(bootstrap if role == "policymaker" else bootstrap + template)
     with open(os.path.join(trusted, "network-mode"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write("online\n" if p.get("internet", False) else "offline\n")
-    # Behind the executor boundary Bash is the trusted broker, not the CLI tool (its nested sandbox cannot
-    # mount the masked /proc)
-    broker = session_inputs.restricted(role) and any(t.split("(", 1)[0] == "Bash" for t in p.get("tools") or [])
     with open(os.path.join(trusted, "tools"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(",".join(security.tool_names(p, broker)))
+        fh.write(",".join(security.tool_names(p)))
     with open(os.path.join(trusted, "mcp.json"), "w", encoding="utf-8") as fh:
-        json.dump({"mcpServers": {"broker": {"command": "python3", "args": ["/engine/mcp_broker.py"]}}
-                   if broker else {}}, fh)
+        json.dump({"mcpServers": {}}, fh)
     for f in ("agent.sh", "stream_filter.py", "remaining.py", "offline_exec.py"):
         shutil.copy(".github/loop/" + f, trusted)
-    if broker:
-        for f in ("mcp_broker.py", "tool_broker.py", "common.py", "probe_isolation.py", "managed_resources.py"):
-            shutil.copy(".github/loop/" + f, trusted)
-        with open(os.path.join(trusted, "broker.json"), "w", encoding="utf-8") as fh:
-            json.dump({"profile": p, "config": c.cfg(),
-                       "resources": {"environment": os.environ["LABVIEW_ENVIRONMENT"]}
-                                    if os.environ.get("LABVIEW_ENVIRONMENT") else {}}, fh)
     if resources.layered() and p.get("agent") is not False:
         staged_role = os.path.join(sess, "role")
         shutil.rmtree(staged_role, ignore_errors=True)
@@ -315,7 +304,7 @@ def stage(n, work, trusted):
         for root in (os.path.join(work, ".claude", "skills"), os.path.join(os.path.expanduser("~"), ".claude", "skills")):
             security.check_skills(root)
     with open(os.path.join(trusted, "settings.json"), "w", encoding="utf-8") as fh:
-        json.dump(security.settings(p, "/engine" if session_inputs.restricted(role) else trusted, broker), fh)
+        json.dump(security.settings(p, "/engine" if session_inputs.restricted(role) else trusted), fh)
     if session_inputs.restricted(role):
         shutil.copy(".github/loop/executor_boundary.py", trusted)
         executor_boundary.prepare(work, trusted)

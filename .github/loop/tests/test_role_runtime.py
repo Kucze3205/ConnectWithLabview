@@ -47,10 +47,25 @@ class RuntimeTest(unittest.TestCase):
         limits = {'history_bytes': 120_000, 'recent_turns': 12}
         sent = compact(history, limits)
         self.assertLessEqual(len(json.dumps(sent).encode()), 120_000)
-        self.assertEqual(sent['recent_turns'], history[-12:])
+        self.assertEqual(sent['recent_turns'], history[384:])
         self.assertNotIn('FILE-CONTENT', json.dumps(sent['earlier_turns']))
-        self.assertEqual(sent['earlier_turns'][-1]['path'], 'src/387.vi')
+        self.assertEqual(sent['earlier_turns'][-1]['path'], 'src/383.vi')
+        self.assertEqual(int(sent['earlier_turns'][0]['path'][4:-3]) % 8, 0)
         self.assertIn('read them again', sent['note'])
+
+    def test_earlier_turns_change_only_at_aligned_batch_boundaries(self):
+        history = [{'action': {'tool': 'Read', 'path': 'f%d/' % n + 'p' * 150}, 'outcome': {'text': 'x' * 300}}
+                   for n in range(200)]
+        limits = {'history_bytes': 40_000, 'recent_turns': 5}
+        view = lambda n: json.dumps(compact(history[:n], limits)['earlier_turns'])
+        for n in range(16, 200):
+            if (n - 5) % 8:
+                self.assertEqual(view(n), view(n - 1))
+        # A cut of the stored history keeps the batches aligned to absolute turn numbers.
+        cut = compact(history[3:100], limits, 3)['earlier_turns']
+        self.assertEqual(cut, compact(history[:100], limits)['earlier_turns'])
+        self.assertLess(len(cut), 80)
+        self.assertEqual(int(cut[0]['path'][1:].split('/')[0]) % 8, 0)
 
     def test_request_prompt_is_compacted_and_its_size_recorded_in_usage(self):
         self.store.update('sessions/11.json', lambda _: {'fingerprint': 'f', 'turns': 30, 'history': [
@@ -64,8 +79,8 @@ class RuntimeTest(unittest.TestCase):
                           lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
                           model_request=request, clock=self.clock, context={'recent_turns': 3})
         runtime.run(1, 30)
-        self.assertIn('BODY29', prompts[0])
-        self.assertNotIn('BODY26', prompts[0])
+        self.assertIn('BODY24', prompts[0])
+        self.assertNotIn('BODY23', prompts[0])
         self.assertIn('"path": "a0"', prompts[0])
         used = self.store.read('sessions/11.json')['requests']['claude/allowed']
         self.assertEqual((used['count'], used['bytes']), (1, len(prompts[0].encode())))
