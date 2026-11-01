@@ -65,7 +65,7 @@ The engine uses the accepted checkout; files left by a session (committed or not
 | Provider transports and catalogs (this loop) | `provider_adapter.py`, `provider_rpc.py`, `provider_contract.py` | [Setup decisions](setup-decisions.md) | `test_provider_adapter.py`, `test_provider_rpc.py`; cloud provider jobs |
 | Role tools and prepared-source access (this loop) | `tool_broker.py` | [Setup decisions](setup-decisions.md) | `test_tool_broker.py` |
 | Routing, shared availability and continuation (this loop) | `provider_pool.py`, `role_runtime.py`, `runtime_entry.py`, `runtime_store.py` | [Model selection](model-selection.md) | `test_provider_pool.py`, `test_role_runtime.py`, `test_runtime_store.py`, `test_routed_session.py` |
-| Source/output checkpoints (this loop) | `runtime_checkpoint.py`, `runtime_smoke.py` | [Setup decisions](setup-decisions.md) | `test_runtime_checkpoint.py` |
+| Source/output checkpoints (this loop) | `runtime_checkpoint.py` | [Setup decisions](setup-decisions.md) | `test_runtime_checkpoint.py` |
 | Dedicated credential renewal (this loop) | `credential_store.py`; `credential-maintenance.yml` | [Cloud authentication](cloud-authentication.md) | `test_credential_store.py` |
 
 `managed_resources.py` describes the managed definition tree and its role, prompt,
