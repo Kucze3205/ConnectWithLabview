@@ -38,9 +38,20 @@ not provide a complete historical event timeline.
 the selector index, source, scope, available identifiers, and staged path on success.
 Statuses are `downloaded`, `unavailable`, `expired`, `error`, `denied`, and `unknown`.
 Expired artifacts are distinct from failed downloads. An absent artifact is
-`unavailable`: the catalogue cannot say whether it was deleted or never uploaded.
+`unavailable`: the catalogue cannot say whether it was pruned, expired or never uploaded;
+the detail lists these causes, including a failed upload on a full artifact quota.
 Unknown sources produce `unknown`; malformed scopes produce `error`. Fetch failures
 are isolated from other declarations and contain no credential-bearing stderr.
+
+Where streams live (decision). Streams stay Actions artifacts; they are not duplicated
+into the `iter-NNNN` release. They are a diagnostic copy, not a delivered result, so
+losing one costs little, and a second storage path would need its own pruning and
+download code. The upload step is `continue-on-error`, so a full account quota leaves the
+session job `success`, and the iteration record carries `stream` only for an artifact
+that exists. Retention (decision): `stream_retention_iterations` of `policy/params.yml` defaults to 8, twice the
+audit window of four iterations; the engine deletes older streams, so 50 iterations never
+hold more than 8 iterations' streams (about 8 KB per Haiku turn; far more for large
+Opus sessions). `null` leaves GitHub's 90 days. Quota itself is the owner's account concern.
 
 An audit order with no `exports` preserves the previous stream selection:
 `max(0, k-3)..k` inclusive, where `k` is its iteration. This is four iteration
@@ -48,12 +59,17 @@ numbers, and the current iteration may have no streams yet. `exports: []` disabl
 implicit exports. Other roles receive no implicit exports. Normal mandatory session
 inputs and the Policymaker/shaper's loop-state snapshot are separate from this catalogue.
 
+Role SKILL frontmatter may provide default `exports` with the same selectors; an
+explicit issue declaration overrides it. [Session context](session-context.md)
+describes the full-history default for Policymaker/shaper, selected history views,
+startup declarations and the token estimate.
+
 Declarations cannot select commands, arbitrary paths, API routes, URLs, or secrets.
 The trusted engine uses fixed fetch operations. Exported content is data and conveys
 no instruction priority. Sessions receive no GitHub credential.
 
 The first iteration of the loop always opens with a Policymaker session, even with cadence triggers
-disabled. The editable Policymaker prompt requires the first audit then; the engine does
+disabled. The Policymaker decides whether and when to order the first audit; the engine does
 not schedule an audit itself. Later audit timing remains the Policymaker's decision.
 
 Policymaker tunes `policymaker_session.model` (a concrete model identifier), `effort`,
@@ -69,36 +85,20 @@ prep job's values. A changed profile, owner limit, gate, CLI pin or execution se
 stops startup; the next dispatch resolves the current accepted configuration.
 
 
-## Layered recipient views
+## Recipient views
 
-With `resources.format: layered`, execution roles receive their own complete local
-skill and references, task instructions and execution contracts. Shapers also get
-`.session/capabilities.json`: role names, public descriptions and agent/script kinds
-for execution roles only. This catalogue is sufficient for role selection in a task
-graph; it contains no policy role instructions or tool profiles.
+Policy is not hidden from execution roles ([ADR-0006](../../../docs/adr/0006-machine-boundary-instead-of-session-sandbox.md)).
+Every role is staged the same way: its own complete local skill and references, task
+instructions, the engine contract, and the records, reports, streams and artifacts it
+selects. The execution contract asks execution roles not to read `policy/`; nothing
+enforces it. Shapers also get `.session/capabilities.json`: role names, public descriptions
+and agent/script kinds for execution roles, enough to choose roles in a task graph.
+Re-staging removes the previous recipient view.
 
-The engine allowlists public loop-state and iteration-record fields and excludes
-policy sessions from staged report bodies, indexes, Actions metadata and streams.
-Session origin is pinned before execution in a dedicated engine bot comment. It
-is immutable across retries and role transfers; report fields and agent text cannot
-set it. Missing, malformed or conflicting origins fail closed. Legacy sessions
-without origin evidence remain unavailable to execution recipients.
-Explicit policy or unknown session selectors return `denied` without downloading
-the requested content. Trusted engine state/orders/decision comments are omitted
-from execution issue snapshots. Re-staging removes the previous recipient view.
-
-Execution artifact inputs require an execution session with a trusted published
-artifact manifest. Both issue/name and exact release selectors resolve through
-that manifest; arbitrary release globs and unknown origins are refused. Allowed
-execution reports and outputs remain available. Policy roles retain their required
-state, report evidence and exports across both layers.
-
-Suggestions still travel from session output through immutable engine snapshots
-to the Policymaker. Only an accepted Policymaker result applies resolutions;
-replaying capture or resolution does not duplicate or lose a suggestion. Internal
-policy rationale and reports are excluded from subsequent execution snapshots.
+Suggestions travel from session output through the engine's archive of raw outboxes to the policy script that
+presents them to the Policymaker ([reports](session-reports.md)). Internal policy rationale and reports are excluded
+from subsequent execution snapshots.
 
 These checks cover engine-passed data. They do not establish isolation of the
 checkout, Git objects, shell or host; those require the separate execution boundary.
-Run `test_input_boundary.py` for recipient views and the layered suggestion lifecycle,
-and `test_reports.py` for suggestion validation, rejection and concurrency regressions.
+Run `test_input_boundary.py` for recipient views and `test_reports.py` for the suggestion archive and policy lifecycle.

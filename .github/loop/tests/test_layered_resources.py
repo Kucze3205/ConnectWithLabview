@@ -1,30 +1,15 @@
+import json
 import os
 import shutil
 import unittest
 
 import fakes
-from fakes import common as c, loop
-import test_session as sessions
-from test_session import read
+from fakes import common as c, iteration as it, loop
+import managed_resources as resources
+from session_fixtures import LayeredSessionCase, SessionCase, read
 
 
-class LayeredSessionTest(sessions.SessionCase):
-    work = sessions.StageTest.work
-    def setUp(self):
-        super().setUp()
-        # A controlled owner-selected layout, leaving unrelated inactive skills.
-        self.w.write(self.w.loop, 'engine.yml', 'resources:\n  format: layered\n')
-        self.w.write(self.w.loop, 'policy/params.yml', fakes.POLICY_PARAMS.replace('orchestrator', 'worker'))
-        self.w.write(self.w.loop, 'execution/profiles.yml', 'worker:\n  tools: [Read, Write]\n  write: [src/**, execution/**, policy/**]\n')
-        self.w.write(self.w.loop, 'policy/profiles.yml', 'audit:\n  tools: [Read]\n  write: [audit/**]\n')
-        for layer, role in (('execution', 'worker'), ('policy', 'audit'), ('policy', 'policymaker')):
-            self.w.write(self.w.loop, '%s/roles/%s/SKILL.md' % (layer, role), '---\nname: %s\ndescription: fixture\n---\n%s role\n' % (role, layer))
-        self.w.write(self.w.loop, 'execution/prompts/role.md', 'Execution prompt')
-        self.w.write(self.w.loop, 'execution/protocol.md', 'Execution rules')
-        fakes.sh(self.w.loop, 'git', 'add', '-A')
-        fakes.sh(self.w.loop, 'git', 'commit', '-qm', 'layered setup')
-        fakes.sh(self.w.loop, 'git', 'push', '-q', 'origin', 'HEAD:main')
-
+class LayeredSessionTest(LayeredSessionCase):
     def test_layered_roles_resolve_stage_and_admit_their_work(self):
         for role, expected, files in (('worker', 'execution role', {'src/result.txt': 'work'}),
                                       ('audit', 'policy role', {'audit/result.txt': 'audit'})):
@@ -36,7 +21,7 @@ class LayeredSessionTest(sessions.SessionCase):
                 loop.stage(n, work, trusted)
                 self.assertIn(expected, read(os.path.join(work, '.session/role/SKILL.md')))
                 if role == 'worker':
-                    self.assertIn('Execution rules', read(os.path.join(work, '.session/protocol.md')))
+                    self.assertIn('Execution rules', read(os.path.join(trusted, 'prompt.md')))
                     self.assertIn('Execution prompt', read(os.path.join(trusted, 'prompt.md')))
                 self.w.branch(n, files)
                 result = loop.merge_branch(n, role, self.hub.issue(n), override={'verdict': 'accepted'})
@@ -79,7 +64,7 @@ class LayeredSessionTest(sessions.SessionCase):
                                ('policy/evaluator/new.py', 'scope')):
             if path.startswith('../'):
                 # Git cannot carry host writes: scope also excludes source installations.
-                self.assertFalse(loop.may_write(loop.profile_of('policymaker'), '/global/skill.md'))
+                self.assertFalse(resources.may_write(loop.profile_of('policymaker'), '/global/skill.md'))
                 continue
             with self.subTest(path=path):
                 n = self.issue('policymaker')
@@ -98,10 +83,8 @@ class LayeredSessionTest(sessions.SessionCase):
         original = read('execution/profiles.yml')
         cases = [
             ('policy/profiles.yml', 'worker: {tools: [Read]}\n', 'both execution and policy'),
-            ('execution/profiles.yml', original + 'audit: {}\n', 'must belong to the policy'),
             ('execution/profiles.yml', 'worker: {layer: policy}\n', 'assigned by its profiles.yml'),
             ('execution/profiles.yml', 'worker: {}\nworker: {tools: [Read]}\n', 'duplicate'),
-            ('policy/roles/worker/SKILL.md', 'conflicting copy', 'wrong or both layers'),
         ]
         for path, content, reason in cases:
             with self.subTest(path=path, content=content):
@@ -117,6 +100,17 @@ class LayeredSessionTest(sessions.SessionCase):
                     else:
                         self.w.write(self.w.loop, path, old)
 
+    def test_layer_rules_are_policy_and_refuse_at_merge(self):
+        for files, reason in (({'execution/profiles.yml': read('execution/profiles.yml') + 'evaluator: {}\n'}, 'must belong to the policy'),
+                              ({'policy/roles/worker/SKILL.md': 'conflicting copy'}, 'wrong or both layers')):
+            with self.subTest(files=files):
+                n = self.issue('policymaker')
+                self.w.branch(n, files)
+                result = loop.merge_branch(n, 'policymaker', self.hub.issue(n), boundary=True)
+                self.assertEqual(result['result'], 'invalid-resources')
+                self.assertIn('policy/layer-rules.py: ', result['detail'])
+                self.assertRegex(result['detail'], reason)
+
     def test_profiles_keep_independent_tools_network_and_owner_limits(self):
         n = self.issue()
         loop.resolve(n)
@@ -124,14 +118,13 @@ class LayeredSessionTest(sessions.SessionCase):
         audit = self.issue('audit')
         loop.resolve(audit)
         self.assertEqual(self.outputs()['tools'], 'Read,Skill')
-        # The policy layer does not itself grant internet or extra tools.
+        # The policy layer does not itself grant extra tools.
         self.w.write(self.w.loop, 'policy/profiles.yml',
-                     'audit: {tools: [Read, WebSearch], internet: true, write: [audit/**]}\n')
+                     'audit: {tools: [Read, WebSearch], write: [audit/**]}\n')
         with self.assertRaisesRegex(SystemExit, 'beyond the accepted limits'):
             loop.stage(audit, self.work(), os.path.join(self.w.tmp, 'beyond-limits'))
-        # The execution role still has its own unchanged offline profile.
+        # The execution role still has its own unchanged profile.
         loop.stage(n, self.work(), os.path.join(self.w.tmp, 'worker-after-audit-change'))
-        self.assertEqual(read(os.path.join(self.w.tmp, 'worker-after-audit-change/network-mode')), 'offline\n')
 
     def test_invalid_candidate_catalog_is_not_admitted(self):
         n = self.issue('policymaker')
@@ -141,18 +134,17 @@ class LayeredSessionTest(sessions.SessionCase):
         self.assertIn('both execution and policy', result['detail'])
         self.assertNotIn('worker:', self.w.origin_file('policy/profiles.yml'))
 
-    def test_layered_online_staging_preserves_global_source_installation(self):
+    def test_layered_staging_preserves_global_source_installation(self):
         global_skill = os.path.join(self.home, '.claude/skills/worker/SKILL.md')
         self.w.write(self.home, '.claude/skills/worker/SKILL.md', 'global source remains')
         self.w.write(self.w.loop, 'execution/profiles.yml',
-                     'worker: {tools: [Read, Write], internet: true, write: []}\n')
+                     'worker: {tools: [Read, Write], write: []}\n')
         n = self.issue()
         trusted = os.path.join(self.w.tmp, 'online-trusted')
         work = self.work()
         loop.stage(n, work, trusted)
         self.assertEqual(read(global_skill), 'global source remains')
         self.assertIn('execution role', read(os.path.join(work, '.session/role/SKILL.md')))
-        self.assertEqual(read(os.path.join(trusted, 'network-mode')), 'online\n')
         self.assertIn('.session/role/SKILL.md', read(os.path.join(trusted, 'prompt.md')))
 
     def test_layered_script_role_stages_command_and_admits_product(self):
@@ -193,3 +185,44 @@ class LayeredSessionTest(sessions.SessionCase):
                     os.unlink(location)
                     if exists:
                         os.rename(backup, location)
+
+
+class ManagedResourcesRegressionTest(SessionCase):
+    def test_layered_role_admission_receipt_and_rollback_stay_consistent(self):
+        baseline = c.head()
+        initial_revision = resources.revision()
+        fakes.sh(self.w.loop, "git", "tag", "setup-baseline", baseline)
+        self.assertEqual(it.policy_rev(), initial_revision)
+
+        n = self.issue()
+        loop.resolve(n)
+        self.assertEqual(self.outputs()["tools"], "Read,Grep,Glob,Write,Edit,Skill")
+        work = self.work()
+        loop.stage(n, work, os.path.join(self.w.tmp, "trusted-regression"))
+        self.assertEqual(read(os.path.join(work, ".session", "role", "SKILL.md")),
+                         "---\nname: worker\ndescription: fixture\n---\nx\n")
+        self.w.branch(n, {"execution/roles/worker/SKILL.md": "forbidden"})
+        self.assertEqual(loop.merge_branch(n, "worker", self.hub.issue(n))["result"], "scope")
+
+        pol = self.issue("policymaker")
+        replacement = "---\nname: worker\ndescription: adapted\n---\nnew instructions\n"
+        self.w.branch(pol, {"execution/roles/worker/SKILL.md": replacement})
+        accepted = loop.merge_branch(pol, "policymaker", self.hub.issue(pol), boundary=True)
+        self.assertEqual((accepted["result"], accepted["verdict"]), ("merged", None))
+        receipt = accepted["change"]
+        self.assertEqual(receipt["policy_rev_before"], initial_revision)
+        self.assertEqual(receipt["changed_paths"], ["execution/roles/worker/SKILL.md"])
+        self.assertEqual(receipt["policy_rev_after"],
+                         resources.revision("main", self.w.origin))
+        c.sync_main()
+        self.assertEqual(it.policy_rev(), receipt["policy_rev_after"])
+        work = self.work()
+        loop.stage(n, work, os.path.join(self.w.tmp, "trusted-adapted"))
+        self.assertEqual(read(os.path.join(work, ".session", "role", "SKILL.md")), replacement)
+
+        self.w.push_main({"src/kept.txt": "product", "journal/kept.md": "report"})
+        self.assertTrue(it.revert_policy("layered regression"))
+        self.assertEqual(it.policy_rev(), initial_revision)
+        self.assertEqual(self.w.origin_file("src/kept.txt"), "product")
+        self.assertEqual(self.w.origin_file("journal/kept.md"), "report")
+        self.assertFalse(it.revert_policy("already restored"))

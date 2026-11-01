@@ -9,6 +9,7 @@ import yaml
 
 import fakes
 from fakes import ENGINE, common as c, iteration as it
+import owner_requests as requests
 
 BASH = None
 for cand in ("C:/Program Files/Git/bin/bash.exe", "C:/Program Files (x86)/Git/bin/bash.exe", "/bin/bash", "/usr/bin/bash"):
@@ -83,6 +84,16 @@ class FilesTest(unittest.TestCase):
                 r = subprocess.run([BASH, "-n", p], capture_output=True, text=True)
                 self.assertEqual(r.returncode, 0, "%s: %s" % (p, r.stderr))
 
+    def test_no_session_sandbox_remains(self):
+        for p in engine_files():
+            if p == __file__:
+                continue
+            with open(p, encoding="utf-8") as fh:
+                text = fh.read().lower()
+            # SUBPROCESS_ENV_SCRUB makes the CLI require bubblewrap: a session would exit before its first model call
+            for word in ("bubblewrap", "bwrap", "seccomp", "offline_exec", "sandbox.sh", "subprocess_env_scrub"):
+                self.assertNotIn(word, text, "%s still mentions %s" % (p, word))
+
     def test_version_stamp(self):
         with open(os.path.join(ENGINE, "ENGINE_VERSION"), encoding="utf-8") as fh:
             self.assertRegex(fh.read().strip(), r"^\d+\.\d+\.\d+$")
@@ -103,15 +114,30 @@ class WorkflowTest(unittest.TestCase):
             self.assertIn("jobs", doc, f)
             self.assertTrue("on" in doc or True in doc, f)                   # PyYAML reads `on:` as True
             self.assertIn("permissions", doc, f)
-            if f != "watchdog.yml":
+            if f not in ("watchdog.yml", "tokenless-job.yml"):          # the reusable job is only called from tokenless.yml
                 self.assertIn("vars.AUTOPILOT == 'on'", text, f)               # the first condition of every loop workflow
         if not IN_LOOP_REPO:
-            self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "owner-request.yml"})
+            self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "owner-request.yml", "tokenless.yml", "tokenless-job.yml"})
+
+    def test_run_names_keep_their_hash(self):
+        """An unquoted ' #' in a YAML value is a comment: run-name became 'session' and no run matched its session (#84)."""
+        for f, text, doc in self.workflows():
+            name = doc.get("run-name")
+            if name is None:
+                continue
+            self.assertIn("#", name, f)
+            rendered = re.sub(r"\$\{\{ (inputs\.issue|github\.event\.issue\.number) \}\}", "12", name)
+            rendered = re.sub(r"\$\{\{.*?\}\}", "", rendered)
+            if f == "session.yml":
+                self.assertEqual(c.run_issue(rendered), "session #12")
 
     def test_no_workflow_uses_the_dangerous_inputs(self):
         for f, text, doc in self.workflows():
             self.assertNotIn("pull_request_target", text, f)
-            self.assertNotIn("ANTHROPIC_API_KEY", text, f)
+            self.assertNotIn("ANTHROPIC_API_KEY", str(doc.get("env", {})), f)
+            for job in doc.get("jobs", {}).values():
+                self.assertNotIn("ANTHROPIC_API_KEY", str(job.get("env", {})), f)
+                self.assertNotIn("ANTHROPIC_API_KEY", str(job.get("steps", [])), f)
             lines = text.splitlines()
             for i, line in enumerate(lines):
                 if "uses: actions/checkout@v4" in line:
@@ -140,14 +166,50 @@ class WorkflowTest(unittest.TestCase):
     def test_the_agent_never_gets_the_github_token(self):
         with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
             text = fh.read()
-        step = text[text.index("- name: Session"):text.index("- uses: actions/checkout@v4\n        if: always()")]
+        workflow = yaml.safe_load(text)
+        step = str(next(step for step in workflow["jobs"]["session"]["steps"] if step.get("name") == "Session"))
         self.assertNotIn("github.token", step)
         self.assertNotIn("GH_TOKEN", step)
+        self.assertNotIn("ANTHROPIC_API_KEY", step)
         with open(os.path.join(ENGINE, ".github", "loop", "agent.sh"), encoding="utf-8") as fh:
             sh = fh.read()
         self.assertIn("unset CLAUDE_CODE_OAUTH_TOKEN GH_TOKEN GITHUB_TOKEN", sh)
         code = [l for l in sh.splitlines() if not l.strip().startswith("#")]
         self.assertEqual([l for l in code if re.search(r"(^|[\s;|&(])gh\s", l)], [])          # the agent has no gh
+
+
+    def test_the_tokenless_job_has_no_permissions_and_no_secret(self):
+        for name in ("tokenless-job.yml", "tokenless.yml"):
+            with open(os.path.join(ENGINE, ".github", "workflows", name), encoding="utf-8") as fh:
+                text = fh.read()
+            job = yaml.safe_load(text)["jobs"]["run"]
+            self.assertEqual(job["permissions"], {}, name)
+            if name == "tokenless-job.yml":
+                self.assertEqual(yaml.safe_load(text)["permissions"], {})
+                self.assertNotIn("secrets", text.replace("no GitHub secret", ""))
+                self.assertNotIn("github.token", text)
+                self.assertNotIn("GH_TOKEN", text)
+
+    def test_the_session_job_has_no_permissions_and_only_the_claude_token(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            jobs = yaml.safe_load(fh)["jobs"]
+        job = jobs["session"]
+        self.assertEqual(job["permissions"], {})
+        text = str(job)
+        for forbidden in ("github.token", "GH_TOKEN", "GITHUB_TOKEN", "ANTHROPIC_API_KEY", "actions/checkout"):
+            self.assertNotIn(forbidden, text)
+        text = re.sub(r"contains\(needs\.prep\.outputs\.secrets, '\|\w+\|'\) && secrets\.\w+ \|\| ''", "", text)    # consented names
+        self.assertEqual(set(re.findall(r"secrets\.([A-Za-z0-9_]+)", text)), {"CLAUDE_CODE_OAUTH_TOKEN"})
+        # the token jobs sit on both sides of it and are other machines
+        self.assertEqual(job["needs"], ["prep", "stage"])
+        self.assertEqual(jobs["epilogue"]["needs"], ["prep", "stage", "session"])
+        self.assertIn("github.token", str(jobs["epilogue"]))
+
+    def test_every_checkout_leaves_no_credentials_behind(self):
+        for f, text, doc in self.workflows():
+            for step in [s for j in doc["jobs"].values() for s in j.get("steps", [])]:
+                if str(step.get("uses", "")).startswith("actions/checkout"):
+                    self.assertIs((step.get("with") or {}).get("persist-credentials"), False, f)
 
 
 @TEMPLATE_ONLY
@@ -165,35 +227,35 @@ class ConfigTest(unittest.TestCase):
     def test_the_setup_parameters_are_null_on_purpose(self):
         doc = self.load("engine.yml")
         self.assertEqual(set(doc["params"].values()) | set(doc["cadence"].values()), {None})
+        self.assertEqual(self.load("policy", "params.yml")["stream_retention_iterations"], 8)     # #87: streams are pruned by default
 
-    def test_template_is_layered_and_all_roles_are_inactive(self):
+    def test_template_is_layered_with_policy_roles_and_no_execution_roles(self):
         self.assertEqual(self.load('engine.yml')['resources'], {'format': 'layered'})
         self.assertIsNone(self.load('policy', 'params.yml')['shaper'])
-        for layer in ('execution', 'policy'):
-            self.assertEqual(self.load(layer, 'profiles.yml'), {})
-            self.assertFalse(os.path.exists(os.path.join(ENGINE, layer, 'roles')))
-        self.assertIn('templates/', self.load('engine.yml')['protected'])
+        self.assertEqual(self.load('execution', 'profiles.yml'), {})
+        self.assertFalse(os.path.exists(os.path.join(ENGINE, 'execution', 'roles')))
+        self.assertFalse(os.path.exists(os.path.join(ENGINE, 'templates')))
 
-    def test_template_candidates_are_complete_and_within_limits(self):
+    def test_shipped_policy_roles_are_complete_and_within_limits(self):
         w = fakes.World()
         try:
-            for layer in ('execution', 'policy'):
-                profs = self.load('templates', layer, 'profiles.yml')
-                for role, profile in profs.items():
-                    self.assertEqual(it.limits_exceeded(profile), [], role)
-                    path = os.path.join(ENGINE, 'templates', layer, 'roles', role, 'SKILL.md')
-                    with open(path, encoding='utf-8') as fh:
-                        fm = it.frontmatter(fh.read())[0]
-                    self.assertEqual(fm.get('name'), role)
-                    self.assertTrue(fm.get('description'), role)
-            self.assertTrue(os.path.isfile(os.path.join(ENGINE, 'templates/policy/roles/policymaker/SKILL.md')))
+            profs = self.load('policy', 'profiles.yml')
+            self.assertEqual(set(profs), {'audit', 'evaluator', 'evaluator-verifier'})
+            for role, profile in profs.items():
+                self.assertEqual(requests.limits_exceeded(profile), [], role)
+            for role in [*profs, 'policymaker']:
+                path = os.path.join(ENGINE, 'policy', 'roles', role, 'SKILL.md')
+                with open(path, encoding='utf-8') as fh:
+                    fm = it.frontmatter(fh.read())[0]
+                self.assertEqual(fm.get('name'), role)
+                self.assertTrue(fm.get('description'), role)
         finally:
             w.close()
 
     def test_the_protocol_names_the_fields_the_engine_owns(self):
         with open(os.path.join(ENGINE, ".github", "loop", "session-protocol.md"), encoding="utf-8") as fh:
             text = fh.read()
-        for field in ("attempts", "resume_after", "kicks", "conflicts", "cause", "verdict", "merged", "branch", "artifacts"):
+        for field in ("attempts", "resume_after", "kicks", "conflicts", "fixes", "cause", "verdict", "merged", "branch", "artifacts"):
             self.assertIn(field, text)
             self.assertIn(field, c.OWNED)
 
@@ -209,7 +271,7 @@ class ProtectionTest(unittest.TestCase):
 
     @TEMPLATE_ONLY
     def test_no_shipped_profile_can_write_the_engine(self):
-        with open(os.path.join(ENGINE, "templates", "policy", "profiles.yml"), encoding="utf-8") as fh:
+        with open(os.path.join(ENGINE, "policy", "profiles.yml"), encoding="utf-8") as fh:
             profs = yaml.safe_load(fh)
         for role, p in profs.items():
             for g in p.get("write") or []:

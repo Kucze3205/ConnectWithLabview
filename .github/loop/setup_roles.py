@@ -1,4 +1,4 @@
-"""One-time setup of local layered roles; never modifies source installations."""
+"""One-time setup of local layered roles: registers the skills the setup map wrote."""
 import sys
 # Validation must not dirty the accepted setup with engine bytecode caches.
 sys.dont_write_bytecode = True
@@ -8,10 +8,11 @@ import json
 import os
 from pathlib import Path
 import re
-import shutil
 import subprocess
+import tempfile
 import yaml
 import common as c
+import owner_requests as requests
 import managed_resources as resources
 
 
@@ -21,60 +22,55 @@ def write_yaml(path, data):
 
 
 def prepare(repo):
-    """Check a fresh copied template; setup never converts existing definitions."""
+    """Check a fresh copied engine: shipped policy roles only, no execution roles."""
     root = Path(repo).resolve()
     resources.layered(root)
-    if not (root / 'templates').is_dir():
-        raise ValueError('fresh layered engine template required; no migration mode')
-    if any(c.load_yaml(root / layer / 'profiles.yml') or
-           (root / layer / 'roles').exists() for layer in resources.LAYERS):
+    if c.load_yaml(root / resources.EXECUTION / 'profiles.yml') or (root / resources.EXECUTION / 'roles').exists():
         raise ValueError('setup already prepared with selected roles; no reconfiguration mode')
     if c.load_yaml(root / resources.PARAMS).get('shaper') is not None:
-        raise ValueError('fresh template must have no selected shaper')
+        raise ValueError('fresh engine must have no selected shaper')
 
 
-def install(repo, role, layer, source, profile=None):
-    root, source = Path(repo).resolve(), Path(source).resolve()
+def install(repo, role, layer, profile=None):
+    """Register a role whose complete skill the setup map wrote in <layer>/roles/<role>/."""
+    root = Path(repo).resolve()
     if layer not in resources.LAYERS or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_-]*', role):
         raise ValueError('invalid role or layer')
     if not resources.layered(root):
         raise ValueError('prepare layered setup first')
-    if role == 'policymaker' and layer != 'policy':
-        raise ValueError('policymaker belongs to policy')
-    script = isinstance(profile, dict) and profile.get('agent') is False and role != 'policymaker'
-    if not source.is_dir() or (not script and not (source / 'SKILL.md').is_file()):
-        raise ValueError('source must contain a complete SKILL.md for model roles')
+    if role == 'policymaker':
+        raise ValueError('policymaker is shipped with the policy layer; edit its local skill')
+    for name in resources.LAYERS:
+        if role in c.load_yaml(root / name / 'profiles.yml'):
+            raise ValueError('role already installed: ' + role)
+    script = isinstance(profile, dict) and profile.get('agent') is False
+    dest = root / layer / 'roles' / role
+    if not isinstance(profile, dict) or 'layer' in profile:
+        raise ValueError('explicit profile mapping required, without layer')
     if script and not profile.get('command'):
         raise ValueError('script command required')
-    # A complete copy must not retain aliases to global/project installations.
-    for path in [source, *source.rglob('*')]:
-        if path.is_symlink() or path.resolve() != path.absolute():
-            raise ValueError('source references must be local files, not redirects')
-    for name in resources.LAYERS:
-        if (root / name / 'roles' / role).exists() or role in c.load_yaml(root / name / 'profiles.yml'):
-            raise ValueError('role already installed: ' + role)
-    if role != 'policymaker' and (not isinstance(profile, dict) or 'layer' in profile):
-        raise ValueError('explicit profile mapping required, without layer')
-    dest = root / layer / 'roles' / role
-    if source == dest or dest in source.parents or source in dest.parents:
-        raise ValueError('source and installation overlap')
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(source, dest)
-    skill = dest / 'SKILL.md'
-    if skill.is_file():
-        text = skill.read_text(encoding='utf-8')
-        if text.startswith('---\n'):
-            parts = text.split('---\n', 2)
-            if len(parts) == 3:
-                metadata = yaml.safe_load(parts[1])
-                if isinstance(metadata, dict):
-                    metadata['name'] = role
-                    skill.write_text('---\n' + yaml.safe_dump(metadata, sort_keys=False) + '---\n' + parts[2], encoding='utf-8', newline='\n')
-    if role != 'policymaker':
-        path = root / layer / 'profiles.yml'
-        catalog = c.load_yaml(path)
-        catalog[role] = profile
-        write_yaml(path, catalog)
+    if not script and not (dest / 'SKILL.md').is_file():
+        raise ValueError('write the complete skill first: ' + str(dest / 'SKILL.md'))
+    path = root / layer / 'profiles.yml'
+    catalog = c.load_yaml(path)
+    catalog[role] = profile
+    write_yaml(path, catalog)
+
+
+def layer_errors():
+    """What `policy/layer-rules.py` refuses in the setup being validated. Before arming nothing runs in Actions yet, so the
+    script runs here, on the owner's own setup."""
+    script = Path(resources.ROOT, 'layer-rules.py')
+    if not script.is_file():
+        return []
+    with tempfile.TemporaryDirectory() as tmp:
+        facts = Path(tmp, 'facts.json')
+        facts.write_text(json.dumps(resources.layer_facts('.', True)), encoding='utf-8')
+        out = subprocess.run([sys.executable, '-I', str(script.resolve()), str(facts)], capture_output=True, text=True)
+    try:
+        return json.loads(out.stdout)['errors']
+    except (ValueError, KeyError, TypeError):
+        raise ValueError('policy/layer-rules.py returned no errors list: ' + out.stderr[-300:])
 
 
 def validate(repo, baseline=None):
@@ -88,7 +84,9 @@ def validate(repo, baseline=None):
         params = c.load_yaml('policy/params.yml')
         if params.get('shaper') is not None and not isinstance(params['shaper'], str):
             raise ValueError('shaper must be a role name or null')
-        resources.validate_activation('.')
+        refused = layer_errors()
+        if refused:
+            raise ValueError('; '.join(refused))
         profiles = resources.role_profiles()
         required = ['audit', 'evaluator', c.cfg()['verifier_role']]
         for role in required:
@@ -96,13 +94,12 @@ def validate(repo, baseline=None):
                 raise ValueError('required policy role missing: ' + role)
         import loop
         import session_security
-        import iteration
         pm_profile = dict(loop.profile_of('policymaker'), layer='policy')
         for role, profile in dict(profiles, policymaker=pm_profile).items():
-            error = session_security.profile_error(profile, c.cfg()['cli_version'])
+            error = session_security.profile_error(profile)
             if error:
                 raise ValueError('invalid profile ' + role + ': ' + error)
-            if role != 'policymaker' and iteration.limits_exceeded(profile):
+            if role != 'policymaker' and requests.limits_exceeded(profile):
                 raise ValueError('profile exceeds accepted limits: ' + role)
             if profile.get('agent', True) and not Path(profile['layer'], 'roles', role, 'SKILL.md').is_file():
                 raise ValueError('complete local skill missing: ' + role)
@@ -129,7 +126,7 @@ def validate(repo, baseline=None):
                 raise ValueError('setup baseline requires clean committed configuration')
             # Engine fixes under .github/loop/ move HEAD but not the managed definitions.
             if resources.revision('HEAD') != resources.revision(baseline) or git(
-                    'diff', '--name-only', baseline, 'HEAD', '--', 'engine.yml', 'goal', 'templates'):
+                    'diff', '--name-only', baseline, 'HEAD', '--', 'engine.yml', 'goal'):
                 raise ValueError('setup baseline does not match accepted setup commit')
             # Status omits ignored files and can hide skip-worktree changes. Compare
             # every local managed file (including skill references) with the commit.
@@ -169,14 +166,13 @@ def main():
     ins = sub.add_parser('install')
     ins.add_argument('role')
     ins.add_argument('layer', choices=resources.LAYERS)
-    ins.add_argument('source')
-    ins.add_argument('--profile', help='JSON profile; mandatory except for policymaker')
+    ins.add_argument('--profile', required=True, help='JSON profile mapping')
     val = sub.add_parser('validate')
     val.add_argument('--baseline', required=True)
     args = parser.parse_args()
     try:
         if args.action == 'prepare': prepare('.')
-        elif args.action == 'install': install('.', args.role, args.layer, args.source, json.loads(args.profile) if args.profile else None)
+        elif args.action == 'install': install('.', args.role, args.layer, json.loads(args.profile))
         else: print(validate('.', args.baseline))
     except (ValueError, OSError, subprocess.CalledProcessError) as error:
         parser.exit(1, str(error) + '\n')

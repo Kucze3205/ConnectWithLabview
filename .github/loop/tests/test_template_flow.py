@@ -13,11 +13,9 @@ from unittest.mock import patch
 import fakes
 from fakes import common as c, iteration as it, loop, task, tasks_json
 import managed_resources as resources
-import policy_changes
-import session_reports as reports
 import setup_roles
-from test_merge import GATE_SH
-from test_reports import PROPOSAL
+from gate_fixtures import GATE_SH
+from proposal_fixtures import PROPOSAL
 
 
 class TemplateFlowTest(unittest.TestCase):
@@ -26,20 +24,18 @@ class TemplateFlowTest(unittest.TestCase):
         self.addCleanup(self.w.close)
         root = Path(self.w.loop)
         # Replace fixture definitions with precisely the material setup copies.
-        for name in ('execution', 'policy', 'templates'):
+        for name in ('execution', 'policy'):
             shutil.rmtree(root / name, ignore_errors=True)
             shutil.copytree(Path(fakes.ENGINE, name), root / name)
         shutil.copyfile(Path(fakes.ENGINE, 'engine.yml'), root / 'engine.yml')
         setup_roles.prepare(root)
-        for role, layer in [('orchestrator', 'execution'), ('audit', 'policy'),
-                            ('evaluator', 'policy'), ('evaluator-verifier', 'policy'),
-                            ('policymaker', 'policy')]:
-            catalog = c.load_yaml(root / 'templates' / layer / 'profiles.yml')
-            setup_roles.install(root, role, layer, root / 'templates' / layer / 'roles' / role,
-                                catalog.get(role))
-        setup_roles.install(root, 'worker', 'execution',
-                            root / 'templates/execution/roles/orchestrator',
-                            {'tools': ['Read', 'Write'], 'write': ['src/**']})
+        # The setup map writes the execution skills; the policy roles ship with the engine.
+        for role in ('orchestrator', 'worker'):
+            skill = root / 'execution/roles' / role / 'SKILL.md'
+            skill.parent.mkdir(parents=True)
+            skill.write_text('---\nname: %s\ndescription: test role\n---\n# %s\n' % (role, role), encoding='utf-8')
+        setup_roles.install(root, 'orchestrator', 'execution', {'tools': ['Read', 'Write'], 'write': ['journal/**']})
+        setup_roles.install(root, 'worker', 'execution', {'tools': ['Read', 'Write'], 'write': ['src/**']})
         params = c.load_yaml(root / 'policy/params.yml')
         params['shaper'] = 'orchestrator'
         params['policymaker_triggers'] = {'every_iterations': None, 'no_progress': None}
@@ -81,26 +77,27 @@ class TemplateFlowTest(unittest.TestCase):
         self.assertEqual(self.w.origin_file('src/product.txt'), 'accepted work')
         record = json.loads(self.w.origin_file(it.record_path(0)))
         self.assertEqual(record['status'], 'closed')
-        pending = reports.pending()
-        self.assertEqual(len(pending), 1)
         # Keep the controller at an explicit boundary while a new set is prepared.
         with patch.object(loop, 'reconcile'):
             policymaker = it.start_policymaker(1, 'new session suggestion')
             staged = self.stage(policymaker)
             state = json.loads((staged / '.session/loop-state.json').read_text())
-            self.assertEqual(state['suggestions'][0]['id'], pending[0]['id'])
+            pending = state['suggestions']
+            self.assertEqual(len(pending), 1)
             self.w.session(policymaker,
                            files={'execution/roles/worker/reference.md': 'public work guidance',
-                                  'policy/roles/policymaker/reference.md': 'private governance'},
-                           session_files={'suggestion-decisions.json': json.dumps([
-                               {'id': pending[0]['id'], 'status': 'handled', 'reason': 'adapted both layers'}])})
+                                  'policy/roles/policymaker/reference.md': 'private governance',
+                                  'policy/suggestion-decisions.json': json.dumps({
+                                      pending[0]['id']: {'status': 'handled', 'reason': 'adapted both layers'}})})
             self.assertIsNone(self.w.origin_file('execution/roles/worker/reference.md'))
             loop.apply_policy()
         c.sync_main()
-        receipt = json.loads(self.w.origin_file(policy_changes.path(policymaker)))
+        receipt = it.applied('changes', it.change_id(policymaker))
         self.assertEqual(receipt['policy_rev_before'], self.initial)
         self.assertEqual(receipt['policy_rev_after'], resources.revision())
-        self.assertEqual(reports.pending(), [])
+        later = it.start_policymaker(2, 'after the decision')
+        state = json.loads((self.stage(later) / '.session/loop-state.json').read_text())
+        self.assertEqual(state['suggestions'], [])
         self.assertEqual(self.w.origin_file('policy/roles/policymaker/reference.md'), 'private governance')
         self.assertTrue(it.revert_policy('controlled integration rollback'))
         self.assertEqual(resources.revision(), self.initial)
@@ -108,4 +105,4 @@ class TemplateFlowTest(unittest.TestCase):
         self.assertIsNone(self.w.origin_file('policy/roles/policymaker/reference.md'))
         self.assertEqual(self.w.origin_file('src/product.txt'), 'accepted work')
         self.assertIsNotNone(self.w.origin_file(it.record_path(0)))
-        self.assertIsNotNone(self.w.origin_file(policy_changes.path(policymaker)))
+        self.assertIsNotNone(it.applied('changes', it.change_id(policymaker)))
