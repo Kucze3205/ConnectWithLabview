@@ -106,6 +106,7 @@ jobs:
 
   session:
     needs: stage
+    if: always() && needs.stage.result == 'success'
     runs-on: ubuntu-latest
     environment: provider-claude
     permissions: {}
