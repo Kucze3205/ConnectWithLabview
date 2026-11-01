@@ -88,8 +88,7 @@ jobs:
               out = tempfile.mkdtemp(prefix="out-")
               with open(os.path.join(out, "stdout.txt"), "w") as so, open(os.path.join(out, "stderr.txt"), "w") as se:
                   r = subprocess.run(["bash", os.path.join(bundle, "run.sh")], cwd=bundle, stdout=so, stderr=se, timeout=timeout_minutes * 60)
-              open(os.path.join(out, "exit-code"), "w").write(str(r.returncode) + "
-")
+              open(os.path.join(out, "exit-code"), "w").write(str(r.returncode) + "\n")
               return out
 
           c.run_tokenless = local
