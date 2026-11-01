@@ -58,3 +58,15 @@ policymaker_triggers:                 # the Policymaker runs after an iteration 
 context:                         # what each model request carries of the session history; bounded by engine.yml context_ceilings
   history_bytes: 40000           # about 10k tokens; every turn is a stateless call resending this (owner note 2026-10-24)
   recent_turns: 5                # these turns in full, older ones as tool/path/status only
+limits:                      # kernel hard caps: fix_rounds, successor_generations, merge_conflict_retries 5; backoff 6 steps of 72 h
+  fix_rounds: 2              # correction rounds after a failed verification or check
+  successor_generations: 3
+  merge_conflict_retries: 3
+  backoff_hours: [1, 5, 24]  # waits after a rate limit without a reset time
+cadence:                     # only stricter than the owner's in engine.yml has an effect
+  min_interval_minutes: null
+  daily_iterations: null
+policymaker_only_roles: [evaluator, audit]   # tasks of these roles come only from the Policymaker's orders
+audit_exports_window: 3      # the audit receives the streams of this many iterations before the current one
+stream_retention_iterations: null   # keep raw session streams for this many iterations (null: GitHub's 90 days)
+startup_token_warning: 100000    # initial documents of any model session; diagnostics never block execution

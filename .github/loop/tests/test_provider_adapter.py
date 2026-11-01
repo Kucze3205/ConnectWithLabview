@@ -70,7 +70,7 @@ class AdapterTest(unittest.TestCase):
             seen.update(command=command, **kwargs)
             return subprocess.CompletedProcess(command, 0, json.dumps({'structured_output': action, 'usage': {}}), '')
         prompt = 'x' * 300_000                      # one argv entry is limited to 128 KiB
-        with patch.object(adapter, 'isolated', isolated), patch.object(adapter, 'sandbox', side_effect=lambda c, _: c), \
+        with patch.object(adapter, 'isolated', isolated), \
                 patch.object(adapter.subprocess, 'run', run):
             self.assertEqual(adapter.request('claude', 'model', 'token', prompt), action)
         self.assertEqual(seen['input'], prompt)
@@ -79,7 +79,7 @@ class AdapterTest(unittest.TestCase):
 
     def test_copilot_legacy_handshake_and_catalog_use_explicit_empty_ping(self):
         rpc = FakeRPC()
-        with patch.object(adapter, 'RPC', return_value=rpc), patch.object(adapter, 'sandbox', side_effect=lambda c, _: c):
+        with patch.object(adapter, 'RPC', return_value=rpc):
             result = adapter.models('copilot', 'synthetic-token')
         self.assertEqual([m for m, _ in rpc.calls], ['ping', 'models.list'])
         self.assertEqual(result['models'][0]['id'], 'live-copilot-id')
@@ -93,7 +93,7 @@ class AdapterTest(unittest.TestCase):
             self.assertNotIn('synthetic-access', kwargs['env'].values())
             self.assertFalse((Path(kwargs['cwd']) / 'auth.json').exists())
             return rpc
-        with patch.object(adapter, 'RPC', side_effect=start), patch.object(adapter, 'sandbox', side_effect=lambda c, _: c):
+        with patch.object(adapter, 'RPC', side_effect=start):
             result = adapter.models('codex', auth)
         self.assertEqual(result['models'][0]['id'], 'execution-id')
         self.assertEqual(rpc.calls[1][1]['accessToken'], 'synthetic-access')

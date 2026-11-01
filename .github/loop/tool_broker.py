@@ -1,19 +1,18 @@
 """Provider-independent role tools. Credentials never enter this boundary.
 
-Model CLIs propose JSON actions; only this trusted broker touches the workspace.
-Direct operations check canonical paths and write permissions. Commands run with
-a minimal filesystem, immutable git metadata and kernel-enforced offline mode.
+Model CLIs propose JSON actions; only this broker touches the workspace.
+Direct operations check canonical paths and write permissions. Commands run in
+the workspace with a minimal environment; the epilogue's admission enforces the
+write paths for everything they leave.
 """
 import fnmatch
 import os
 from pathlib import Path, PurePosixPath
 import shlex
-import shutil
 import subprocess
 import tempfile
 
 import common as c
-from probe_isolation import sandbox
 
 FIELDS = ("tool", "path", "text", "pattern", "command", "old", "new", "status")
 TOOLS = ["Read", "Glob", "Grep", "Write", "Edit", "Delete", "Bash", "Finish"]
@@ -171,53 +170,21 @@ class Broker:
         allowed = "Bash" in rules or any(rule == "Bash(%s:*)" % argv[0] for rule in rules)
         if not allowed or "/" in argv[0] or "\\" in argv[0]:
             raise PermissionError("command is outside the role's Bash rules")
+        # No sandbox (ADR-0006): the session job is the boundary and admission checks the write paths. The command
+        # still gets no credential: only this minimal environment.
         with tempfile.TemporaryDirectory(prefix="role-command-") as scratch:
-            prefix = sandbox([], scratch)[:-1]
-            prefix += ["--ro-bind", str(self.root), "/workspace"]
-            for name, path in self.resources.items():
-                prefix += ['--ro-bind', str(path), '/resources/' + name]
-            # A read-only root prevents creation of new protected root paths.
-            # Direct Write can create new allowed roots, which later commands see.
-            for child in self.root.iterdir():
-                rel = child.name
-                if rel in {".git", ".session"} or child.is_symlink():
-                    continue
-                if not self.writable(rel + "/x" if child.is_dir() else rel):
-                    continue
-                if child.is_dir() and not any(p in {"**", rel + "/**", rel + "/"} for p in self.profile.get("write", [])):
-                    continue  # granular globs use direct tools, never a broader mount
-                protected = self.config["protected"] + ([] if self.profile.get("owns_evaluator") else self.config["evaluator_paths"])
-                if any(any(char in p for char in "*?[") for p in protected):
-                    continue
-                if any(p.rstrip("/").startswith(rel + "/") for p in protected):
-                    continue  # fail closed for a nested protected subtree
-                prefix += ["--bind", str(child), "/workspace/" + rel]
-            # Session inputs/contracts remain immutable; only declared outputs
-            # are writable. Commands cannot replace the whole .session folder.
-            session = self.root / ".session"
-            session.mkdir(exist_ok=True)
-            for name in OUTPUTS:
-                path = self.path(".session/" + name)
-                path.touch(exist_ok=True)
-                prefix += ["--bind", str(path), "/workspace/.session/" + name]
-            artifacts = self.path(".session/artifacts")
-            artifacts.mkdir(exist_ok=True)
-            prefix += ["--bind", str(artifacts), "/workspace/.session/artifacts", "--chdir", "/workspace"]
-            if not self.profile.get("internet", False):
-                helper = Path(scratch, "offline_exec.py")
-                shutil.copy(Path(__file__).with_name("offline_exec.py"), helper)
-                prefix += ["--unshare-net"]
-                argv = ["python3", str(helper)] + argv
             env = {"PATH": os.environ["PATH"], "HOME": scratch, "LANG": "C.UTF-8", "CI": "true",
-                   "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_TERMINAL_PROMPT": "0"}
+                   "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull, "GIT_TERMINAL_PROMPT": "0"}
             if 'environment' in self.resources:
-                env['LABVIEW_ENVIRONMENT'] = '/resources/environment'
+                env['LABVIEW_ENVIRONMENT'] = str(self.resources['environment'])
             with tempfile.TemporaryFile() as output:
                 try:
-                    result = subprocess.run(prefix + ["--"] + argv, env=env, stdin=subprocess.DEVNULL,
+                    result = subprocess.run(argv, cwd=self.root, env=env, stdin=subprocess.DEVNULL,
                                             stdout=output, stderr=subprocess.STDOUT, timeout=timeout, check=False)
                 except subprocess.TimeoutExpired:
                     return {"exit": 124, "text": "tool deadline exceeded"}
+                except OSError:
+                    return {"exit": 127, "text": "command not found: " + argv[0]}
                 size = output.tell()
                 output.seek(max(0, size - MAX_TEXT))
                 return {"exit": result.returncode, "text": output.read().decode("utf-8", errors="replace"),

@@ -1,18 +1,11 @@
 """The change gate and the merge, on real git repositories: what may enter the default branch and what may not."""
+import sys
 import unittest
 
 import fakes
 from fakes import common as c, iteration as it, loop
 
-GATE_SH = """if grep -q BAD "$CANDIDATE_DIR/src/a.txt" 2>/dev/null; then
-  echo '{"verdict": "rejected", "detail": "the candidate says BAD"}'
-elif [ -f "$CANDIDATE_DIR/src/silent.txt" ]; then
-  echo "no verdict printed"
-else
-  echo "{\\"verdict\\": \\"accepted\\", \\"improved\\": true, \\"detail\\": \\"changed: $(tr '\\n' ' ' < "$CHANGED_FILES_FILE")\\"}"
-fi
-"""
-SCRIPT_GATE = "gate:\n  kind: script\n  command: bash policy/evaluator/gate.sh\n"
+from gate_fixtures import GATE_SH, SCRIPT_GATE
 
 
 class MergeCase(unittest.TestCase):
@@ -53,6 +46,23 @@ class GateTest(MergeCase):
         self.assertEqual(r["result"], "gate-inconclusive")
         self.assertIsNone(self.w.origin_file("src/silent.txt"))
         self.assertEqual(loop.merge_outcome(r)[0], "partial")
+
+    def test_the_gate_runs_in_the_tokenless_job(self):
+        self.merge({"src/a.txt": "good"})
+        self.assertEqual(len(self.w.hub.tokenless), 1)
+        self.assertIn("run.sh", self.w.hub.tokenless[0])
+
+    def test_a_gate_job_without_an_artifact_is_not_a_yes(self):
+        self.w.hub.tokenless_fault = "no-artifact"
+        r = self.merge({"src/a.txt": "good"})
+        self.assertEqual(r["result"], "gate-inconclusive")
+        self.assertIsNone(self.w.origin_file("src/a.txt"))
+
+    def test_a_gate_job_that_failed_is_not_a_yes(self):
+        self.w.hub.tokenless_fault = "failed"
+        r = self.merge({"src/a.txt": "good"})
+        self.assertEqual(r["result"], "gate-inconclusive")
+        self.assertIsNone(self.w.origin_file("src/a.txt"))
 
     def test_direct_paths_skip_the_gate(self):
         r = self.merge({"journal/0001.md": "notes"}, role="orchestrator")

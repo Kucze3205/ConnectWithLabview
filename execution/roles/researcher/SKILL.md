@@ -7,7 +7,7 @@ description: Investigate LabVIEW artifacts, compatibility and delivery choices a
 # Researcher
 
 Adapted from the installed `research` skill; provenance is in `docs/perpetua/roles.md`.
-Protocol, task, report and trust: `.session/protocol.md`. Terms: `CONTEXT.md`.
+Protocol, task, report and trust: the engine contract in your system instructions. Terms: `CONTEXT.md`.
 
 1. Investigate the question against **primary sources** (official docs, source code, specs, first-party APIs), not a secondary write-up of them. Follow every claim back to the source that owns it.
 2. Write the findings to a single Markdown file, citing each claim's source.

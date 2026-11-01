@@ -13,7 +13,6 @@ import subprocess
 import tempfile
 
 from cloud_probe import classify_result
-from probe_isolation import sandbox
 from provider_rpc import RPC
 from tool_broker import ACTION_SCHEMA, validate
 
@@ -84,7 +83,7 @@ def isolated(provider, credential, timeout):
             framing = "headers"
         else:
             raise ValueError("unsupported model provider")
-        with RPC(sandbox(command, root), cwd=root, env=env, timeout=timeout, framing=framing) as rpc:
+        with RPC(command, cwd=root, env=env, timeout=timeout, framing=framing) as rpc:
             if provider == "codex":
                 checked(provider, rpc.call("initialize", {"clientInfo": {"name": "loop-broker", "version": "1.0"},
                                                           "capabilities": {"experimentalApi": True}}))
@@ -112,7 +111,7 @@ def models(provider, credential, timeout=90):
             command = ["claude", "-p", "--input-format", "stream-json", "--output-format", "stream-json",
                        "--verbose", "--tools", "", "--setting-sources", "", "--no-session-persistence",
                        "--strict-mcp-config", "--mcp-config", str(root / "mcp.json")]
-            with RPC(sandbox(command, root), cwd=root, env=env, timeout=timeout) as rpc:
+            with RPC(command, cwd=root, env=env, timeout=timeout) as rpc:
                 rpc.write({"type": "control_request", "request_id": "catalog",
                            "request": {"subtype": "initialize", "hooks": None}})
                 while True:
@@ -180,7 +179,7 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
                        "--tools", "", "--max-turns", "1", "--output-format", "json",
                        "--setting-sources", "", "--strict-mcp-config", "--mcp-config", str(root / "mcp.json"),
                        "--json-schema", json.dumps(ACTION_SCHEMA)]
-            result = subprocess.run(sandbox(command, root), cwd=root, env=env, input=prompt,
+            result = subprocess.run(command, cwd=root, env=env, input=prompt,
                                     capture_output=True, text=True, timeout=timeout)
             try:
                 output = json.loads(result.stdout)

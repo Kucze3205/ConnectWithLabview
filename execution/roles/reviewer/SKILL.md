@@ -7,7 +7,7 @@ description: Independently review product or benchmark preparation against a pin
 # Independent reviewer
 
 Adapted from the installed `code-review` skill; provenance is in `docs/perpetua/roles.md`.
-Protocol and report: `.session/protocol.md`. Work in a separate session from the author.
+Protocol and report: the engine contract in your system instructions. Work in a separate session from the author.
 Write findings to `.session/report.md`, with large evidence in `.session/artifacts/`.
 The profile permits no repository changes: report, do not fix.
 

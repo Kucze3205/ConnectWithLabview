@@ -6,6 +6,7 @@ login bundle or raw provider diagnostics belongs in these documents.
 """
 import base64
 import copy
+import hashlib
 import json
 import os
 import re
@@ -83,6 +84,69 @@ class GitHubBackend:
             if error.status in {409, 422}:
                 return False
             raise
+
+
+class LocalBackend:
+    """The session job's copy of the state (ADR-0006: no GitHub token next to the model). `stage` seeds it from
+    `loop-runtime`; the epilogue validates what the session left and publishes it (`publish`)."""
+
+    def __init__(self, directory):
+        self.root = os.path.abspath(directory)
+
+    def path(self, key):
+        return os.path.join(self.root, *key.split("/"))
+
+    def read(self, key):
+        try:
+            with open(self.path(key), "rb") as fh:
+                raw = fh.read()
+        except FileNotFoundError:
+            return {}, None
+        return json.loads(raw), hashlib.sha256(raw).hexdigest()
+
+    def write(self, key, value, expected):
+        if self.read(key)[1] != expected:
+            return False
+        os.makedirs(os.path.dirname(self.path(key)), exist_ok=True)
+        with open(self.path(key), "w", encoding="utf-8") as fh:
+            json.dump(value, fh, sort_keys=True, separators=(",", ":"))
+        return True
+
+
+def newer(remote, local):
+    """Per provider/model record, the newer observation wins: concurrent sessions each publish what they saw."""
+    from provider_pool import _time
+    out = copy.deepcopy(remote)
+    for scope in ("providers", "models"):
+        for provider, value in (local.get(scope) or {}).items():
+            if scope == "providers":
+                pairs, target = [(provider, value)], out.setdefault(scope, {})
+            else:
+                pairs, target = list(value.items()), out.setdefault(scope, {}).setdefault(provider, {})
+            for key, record in pairs:
+                if key not in target or _time(record["observed_at"]) > _time(target[key]["observed_at"]):
+                    target[key] = record
+    return out
+
+
+def publish(store, owner, pool, session_key, session):
+    """Epilogue: write the session's runtime state back as data. An invalid pool document is dropped, never trusted."""
+    import provider_pool
+    if isinstance(pool, dict) and isinstance(pool.get("availability", {}), dict):
+        try:
+            provider_pool._state(owner, pool.get("availability", {}))
+        except (ValueError, TypeError, KeyError):
+            pool = None
+        else:
+            def change(document):
+                document["availability"] = newer(document.get("availability", {}), pool.get("availability", {}))
+                if isinstance(pool.get("credentials"), dict):
+                    document.setdefault("credentials", {}).update(
+                        {k: v for k, v in pool["credentials"].items() if k in owner["providers"] and isinstance(v, str)})
+                return document
+            store.update("pool.json", change)
+    if isinstance(session, dict) and session:
+        store.update(session_key, lambda _: session)
 
 
 class Store:

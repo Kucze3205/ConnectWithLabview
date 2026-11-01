@@ -15,7 +15,7 @@ from tool_broker import Broker
 
 class ArchiveStore(Checkpoint):
     def __init__(self, broker, directory):
-        super().__init__(broker, 'owner/repo', 11)
+        super().__init__(broker, 'owner/repo', 11, remote=True)     # the smoke runner's mode; sessions are local
         self.storage = Path(directory)
 
     def command(self, command, **kwargs):
@@ -62,10 +62,21 @@ class CheckpointTest(unittest.TestCase):
         self.assertEqual(fakes.sh(self.work, 'git', 'show', 'HEAD:src/result'), 'accepted turn')
         self.assertEqual(self.checkpoint({})['head'], result['head'])   # a read-only turn changes nothing
 
-    def test_checkpoint_refuses_out_of_scope_mutations_before_push(self):
+    def test_checkpoint_leaves_out_of_scope_files_to_admission(self):
         (self.work / 'engine.yml').write_text('forbidden')
-        with self.assertRaises(PermissionError):
-            self.checkpoint({})
+        (self.work / 'src/result').write_text('accepted turn')
+        result = self.checkpoint({})
+        committed = fakes.sh(self.work, 'git', 'show', '--name-only', '--format=', result['head']).split()
+        self.assertEqual(committed, ['src/result'])
+
+    def test_a_session_checkpoint_is_local(self):
+        local = Checkpoint(self.broker, 'owner/repo', 11)
+        (self.work / 'src/result').write_text('accepted turn')
+        result = local({})
+        self.assertEqual(fakes.sh(self.work, 'git', 'show', 'HEAD:src/result'), 'accepted turn')
+        self.assertIsNone(result['outputs_asset'])
+        with self.assertRaises(RuntimeError):
+            fakes.sh(self.world.tmp, 'git', '--git-dir=' + self.world.origin, 'show', 'task/11:src/result')
 
     def test_outputs_and_artifact_survive_new_runner_without_replacing_staged_inputs(self):
         (self.work / '.session/artifacts').mkdir(parents=True)

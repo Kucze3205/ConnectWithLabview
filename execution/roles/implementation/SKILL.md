@@ -7,7 +7,7 @@ description: Implement an assigned product specification after independently che
 # Implementation
 
 Adapted from the installed `implement` and `tdd` skills; provenance is in
-`docs/perpetua/roles.md`. Protocol, git and report: `.session/protocol.md`.
+`docs/perpetua/roles.md`. Protocol, git and report: the engine contract in your system instructions.
 
 Before writing product code, read `docs/perpetua/evaluation.md` and the task's pinned
 independent readiness review and owner acceptance. A preparation index or green engine

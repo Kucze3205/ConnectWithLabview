@@ -27,7 +27,6 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pyyaml
-      - run: bash .github/loop/sandbox.sh
       - name: Engine contracts
         env:
           LOOP_BROKER_INTEGRATION: '1'

@@ -15,6 +15,10 @@ class RoutedSessionTest(SessionCase):
 
     def setUp(self):
         super().setUp()
+        fakes.MemoryBackend.documents = {}
+        backend = patch('runtime_store.GitHubBackend', fakes.MemoryBackend)
+        backend.start()
+        self.addCleanup(backend.stop)
         owner = {'providers': {'codex': {'models': ['approved-model']}},
                  'backoff': {'initial_seconds': 60, 'max_seconds': 300}}
         cfg = c.load_yaml('engine.yml')

@@ -1,8 +1,10 @@
-"""Trusted git/file checkpoint. Restores only declared role outputs, never code.
+"""Git/file checkpoint of a routed session. Restores only declared role outputs, never code.
 
-Task code lives on task/N. Session outputs and large artifacts live in immutable
-release assets, referenced by a CAS-protected session continuation. No extracted
-archive path is trusted and no hook/config in the task checkout is executed.
+In the session job (`remote=False`, ADR-0006: no GitHub token next to the model) a checkpoint is a local commit;
+source and outputs reach `task/N` only through the epilogue's admission of the files. With `remote=True` (the
+setup-era smoke runner, which holds a token) source is pushed to task/N and outputs go to immutable release
+assets, referenced by a CAS-protected session continuation. No extracted archive path is trusted and no
+hook/config in the task checkout is executed.
 """
 import hashlib
 import os
@@ -18,11 +20,12 @@ from tool_broker import OUTPUTS
 
 
 class Checkpoint:
-    def __init__(self, broker, repository, issue):
+    def __init__(self, broker, repository, issue, remote=False):
         if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository) or not str(issue).isdigit():
             raise ValueError("invalid checkpoint identity")
         self.broker, self.repo, self.issue = broker, repository, str(issue)
         self.release = "loop-checkpoints"
+        self.remote = remote
 
     def command(self, command, *, cwd=None, remote=False, check=True):
         env = {k: os.environ[k] for k in ("PATH", "HOME", "SYSTEMROOT", "SSL_CERT_FILE", "SSL_CERT_DIR") if k in os.environ}
@@ -76,7 +79,7 @@ class Checkpoint:
         digest = checksum.hexdigest()
         if previous.get('outputs_digest') == digest:
             return {k: previous[k] for k in ('outputs_digest', 'outputs_asset') if k in previous}
-        if not entries:
+        if not entries or not self.remote:
             return {'outputs_digest': digest, 'outputs_asset': None}
         asset = 'session-' + self.issue + '-' + digest + '.zip'
         with tempfile.TemporaryDirectory(prefix='trusted-checkpoint-') as directory:
@@ -128,12 +131,20 @@ class Checkpoint:
         if checksum.hexdigest() != state.get('outputs_digest'):
             raise ValueError('session checkpoint content mismatch')
 
+    def writable(self, name):
+        try:
+            self.broker.check_write(name)
+            return True
+        except PermissionError:
+            return False
+
     def __call__(self, previous):
         changed = set()
         for args in (('diff', '--name-only', '-z', 'HEAD'), ('ls-files', '--others', '--exclude-standard', '-z')):
             changed.update(p for p in self.git(*args).stdout.split('\0') if p)
-        for name in changed:
-            self.broker.check_write(name)
+        # Files outside the role's write paths (caches, runner debris) are not checkpointed; admission refuses or
+        # drops them in the epilogue.
+        changed = {name for name in changed if self.writable(name)}
         if changed:
             # Explicit paths avoid staging unrelated/unreviewed files. The .git
             # directory is immutable in every model/tool subprocess.
@@ -143,6 +154,6 @@ class Checkpoint:
         # A work repository prepared by the executor boundary is a fresh snapshot without `origin`: its
         # source reaches `task/N` only when the epilogue admits the files as data. Outputs still go to
         # the release asset below.
-        if self.git('remote', 'get-url', 'origin', check=False).returncode == 0:
+        if self.remote and self.git('remote', 'get-url', 'origin', check=False).returncode == 0:
             self.git('push', 'origin', 'HEAD:refs/heads/task/' + self.issue, remote=True)
         return dict(self.snapshot(previous), head=head)

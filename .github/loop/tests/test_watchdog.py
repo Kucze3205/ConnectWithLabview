@@ -5,7 +5,8 @@ from datetime import timedelta
 
 import fakes
 from fakes import common as c, iteration as it, loop, task, tasks_json
-from test_merge import GATE_SH, SCRIPT_GATE
+import owner_requests as requests
+from gate_fixtures import GATE_SH, SCRIPT_GATE
 
 
 class WatchCase(unittest.TestCase):
@@ -134,14 +135,14 @@ class StallTest(WatchCase):
         self.hub.base = c.now()
         self.hub.tick = 0
         task = task or self.shaper(0)
-        return it.open_request(kind, "Decision", "what", "why", "unblocks",
+        return requests.open_request(kind, "Decision", "what", "why", "unblocks",
                                iteration=0, blocks=[task] if kind == "consent" else [],
                                ref="task-%s" % task if kind == "merge-acceptance" else None)
 
     def decide(self, n):
         self.hub.answer(n, True)
         self.hub.issues[n]["closed_at"] = c.iso()
-        it.requests.settle(n, c.issue(n))
+        requests.settle(n, c.issue(n))
 
     def test_an_iteration_that_does_not_close_fails_and_policy_goes_back(self):
         self.run_iteration_zero()                                  # iteration 0 closed; its record marks the good state
@@ -202,7 +203,7 @@ class StallTest(WatchCase):
         it.start_iteration()
         self.hub.create_issue("Unrelated", "", labels=["awaiting:owner"])
         self.hub.create_issue("Old task", "", labels=["role:worker", "loop:iteration 9", "awaiting:owner"])
-        it.open_request("capability", "Optional", "what", "why", "unblocks", iteration=0,
+        requests.open_request("capability", "Optional", "what", "why", "unblocks", iteration=0,
                         readiness="owner checks access")
         self.later(45)
         self.assertTrue(it.stalled())
@@ -226,7 +227,7 @@ class StallTest(WatchCase):
         try:
             it.start_iteration()
             task = w2.hub.role_issues("orchestrator")[0]["number"]
-            it.open_request("consent", "Decision", "what", "why", "unblocks", iteration=0, blocks=[task])
+            requests.open_request("consent", "Decision", "what", "why", "unblocks", iteration=0, blocks=[task])
             base = saved()
             c.now = lambda: base + timedelta(minutes=45)
             self.assertTrue(it.stalled())
@@ -303,8 +304,32 @@ class DailyCapTest(WatchCase):
         self.assertIsNone(it.open_iteration())
 
 
+class PolicyCadenceTest(WatchCase):
+    YML = SCRIPT_GATE + "cadence:\n  min_interval_minutes: 60\n"
+    PARAMS = fakes.POLICY_PARAMS + "cadence:\n  min_interval_minutes: 10\n"
+
+    def test_a_looser_cadence_of_policy_has_no_effect(self):
+        self.run_iteration_zero()
+        self.later(30)
+        self.assertIsNone(it.start_iteration())
+        self.later(70)
+        self.assertEqual(it.start_iteration(), 1)
+
+
+class StricterPolicyCadenceTest(WatchCase):
+    YML = SCRIPT_GATE + "cadence:\n  min_interval_minutes: 10\n"
+    PARAMS = fakes.POLICY_PARAMS + "cadence:\n  min_interval_minutes: 60\n  daily_iterations: 1\n"
+
+    def test_a_stricter_cadence_of_policy_slows_the_iterations(self):
+        self.run_iteration_zero()
+        self.later(30)
+        self.assertIsNone(it.start_iteration())
+        self.later(70)
+        self.assertIsNone(it.start_iteration())      # the daily count of policy: one
+
+
 class StreamRetentionTest(WatchCase):
-    YML = SCRIPT_GATE + "params:\n  stream_retention_iterations: 2\n"
+    PARAMS = fakes.POLICY_PARAMS + "stream_retention_iterations: 2\n"
 
     def test_old_streams_are_deleted_and_recent_ones_stay(self):
         self.hub.artifacts = [{"id": 1, "name": "stream-0000-5"}, {"id": 2, "name": "stream-0001-6"},

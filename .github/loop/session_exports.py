@@ -9,7 +9,8 @@ import re
 import shutil
 
 import common as c
-import session_inputs
+
+MAX_WINDOW = 20      # kernel cap on the audit window policy sets
 
 SOURCES = {"streams", "actions", "records", "reports"}
 STREAM = re.compile(r"stream-(\d{4})-(\d+)$")
@@ -59,7 +60,7 @@ def _issues(request):
             and (not request.get("iterations") or c.iteration_of(c.label_names(i)) in request["iterations"])]
 
 
-def stage(body, role, iteration, sess):
+def stage(body, role, iteration, sess, defaults=None):
     """Write exports/manifest.json even for unavailable, invalid or unknown inputs.
 
     Omitted selectors preserve the existing audit stream window; explicit [] opts out.
@@ -77,11 +78,13 @@ def stage(body, role, iteration, sess):
         elif os.path.exists(path):
             os.unlink(path)
     raw = c.marker(body, "exports")
+    window = c.params()["audit_exports_window"]
+    window = min(max(window, 0), MAX_WINDOW) if isinstance(window, int) and not isinstance(window, bool) else 3
     manifest = {"schema_version": 1, "results": []}
     results = manifest["results"]
     try:
-        requests = json.loads(raw) if raw is not None else ([{
-            "source": "streams", "iterations": list(range(max(0, iteration - 3), iteration + 1))
+        requests = json.loads(raw) if raw is not None else defaults if defaults is not None else ([{
+            "source": "streams", "iterations": list(range(max(0, iteration - window), iteration + 1))
         }] if role == "audit" else [])
         errors = validate(requests)
     except (ValueError, TypeError):
@@ -99,14 +102,6 @@ def stage(body, role, iteration, sess):
             result("unknown", detail="unsupported export source")
             continue
         before = len(results)
-        restricted = session_inputs.restricted(role)
-        if restricted and request.get("sessions"):
-            denied = [n for n in request["sessions"] if not session_inputs.visible(n)]
-            for n in sorted(set(denied)):
-                result("denied", issue=n, detail="session data is not available to this recipient")
-            request = dict(request, sessions=[n for n in request["sessions"] if n not in denied])
-            if not request["sessions"]:
-                continue
         try:
             if source == "streams":
                 covered_iterations, covered_sessions = set(), set()
@@ -118,8 +113,6 @@ def stage(body, role, iteration, sess):
                     if request.get("iterations") and k not in request["iterations"]:
                         continue
                     if request.get("sessions") and issue not in request["sessions"]:
-                        continue
-                    if restricted and not session_inputs.visible(issue):
                         continue
                     covered_iterations.add(k)
                     covered_sessions.add(issue)
@@ -144,9 +137,9 @@ def stage(body, role, iteration, sess):
                 for key, covered in (("iterations", covered_iterations), ("sessions", covered_sessions)):
                     for identifier in sorted(set(request.get(key, [])) - covered):
                         missing = True
-                        result("unavailable", **{"iteration" if key == "iterations" else "issue": identifier}, detail="no matching artifact in the current Actions catalogue; it may have been deleted")
+                        result("unavailable", **{"iteration" if key == "iterations" else "issue": identifier}, detail="no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)")
                 if len(results) == before and not missing:
-                    result("unavailable", detail="no matching artifact in the current Actions catalogue; it may have been deleted")
+                    result("unavailable", detail="no matching artifact in the current Actions catalogue: pruned by stream_retention_iterations, expired, or never uploaded (upload failed, e.g. artifact quota)")
             elif source == "records":
                 for k in sorted(set(request["iterations"])):
                     text = c.safe_read(".", "iterations/%04d.json" % k)
@@ -155,14 +148,10 @@ def stage(body, role, iteration, sess):
                         continue
                     rel = "exports/records/%04d.json" % k
                     value = json.loads(text)
-                    if restricted:
-                        value = session_inputs.record(value)
                     _write(os.path.join(sess, *rel.split("/")), value)
                     result("downloaded", iteration=k, path=rel, snapshot=hashlib.sha256(text.encode()).hexdigest())
             else:
                 issues = _issues(request)
-                if restricted:
-                    issues = [i for i in issues if session_inputs.visible(i["number"])]
                 if source == "reports":
                     for issue in issues:
                         n = issue["number"]

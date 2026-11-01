@@ -84,47 +84,24 @@ class BrokerTest(unittest.TestCase):
                 self.broker.execute(action("Read", path=path))
         self.assertEqual(outside.read_text(), "synthetic secret")
 
-    @unittest.skipUnless(sys.platform == "linux" and shutil.which("bwrap") and
-                         os.environ.get("LOOP_BROKER_INTEGRATION") == "1", "requires cloud kernel isolation")
-    def test_command_has_no_network_no_parent_secrets_and_no_trusted_writes(self):
-        outside = Path(self.temp.name) / "credential"
-        outside.write_text("synthetic credential")
+    @unittest.skipUnless(shutil.which("python3"), "needs python3 on PATH")
+    def test_command_gets_no_parent_secret_and_sees_the_prepared_resource(self):
+        # No sandbox (ADR-0006): the command runs in the workspace; admission enforces the write paths later.
         resource = Path(self.temp.name, 'prepared')
         resource.mkdir()
         (resource / 'example').write_text('public input')
         self.broker = Broker(self.root, self.profile, self.config, {'environment': resource.resolve()})
-        code = """import json, os, pathlib, socket
-assert 'GH_TOKEN' not in os.environ
-assert not pathlib.Path(OUTSIDE).exists()
-prepared = pathlib.Path(os.environ['LABVIEW_ENVIRONMENT']) / 'example'
-assert prepared.read_text() == 'public input'
-try:
-    prepared.write_text('forbidden')
-except OSError:
-    pass
-else:
-    raise RuntimeError('prepared resource write allowed')
-for family in (socket.AF_INET, socket.AF_INET6, socket.AF_UNIX):
-    try:
-        socket.socket(family)
-    except PermissionError:
-        continue
-    raise RuntimeError('socket allowed')
-try:
-    pathlib.Path('engine.yml').write_text('forbidden')
-except OSError:
-    pass
-else:
-    raise RuntimeError('trusted write allowed')
+        code = """import os, pathlib
+assert 'GH_TOKEN' not in os.environ and 'SYNTHETIC_SECRET' not in os.environ
+assert (pathlib.Path(os.environ['LABVIEW_ENVIRONMENT']) / 'example').read_text() == 'public input'
 pathlib.Path('src/allowed.txt').write_text('ok')
-print('isolated')
-""".replace("OUTSIDE", repr(str(outside)))
+"""
         import shlex
-        result = self.broker.execute(action("Bash", command="python3 -c " + shlex.quote(code)))
+        from unittest import mock
+        with mock.patch.dict(os.environ, {"GH_TOKEN": "x", "SYNTHETIC_SECRET": "y"}):
+            result = self.broker.execute(action("Bash", command="python3 -c " + shlex.quote(code)))
         self.assertEqual(result["exit"], 0, result["text"])
         self.assertEqual((self.root / "src/allowed.txt").read_text(), "ok")
-        self.assertEqual((self.root / "engine.yml").read_text(), "trusted")
-
 
 if __name__ == "__main__":
     unittest.main()

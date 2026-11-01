@@ -9,7 +9,7 @@ description: Prepare the LabVIEW verification protocol, development fixtures and
 This project-specific skill adapts the installed skill-creator grader's evidence and
 assertion-critique method; provenance is in `docs/perpetua/roles.md`.
 It follows `docs/perpetua/evaluation.md`; read that contract and
-`goal/goal.md` before designing cases. Protocol and report: `.session/protocol.md`.
+`goal/goal.md` before designing cases. Protocol and report: the engine contract in your system instructions.
 The existing evaluator verifier supplies the independent readiness checks, in another session.
 
 Write only `benchmark/`: protocol, provenance and coverage records, development cases,

@@ -29,7 +29,7 @@ The owner replaced Claude's bootstrap credential with a one-year setup-token.
 |---|---|---|
 | Claude | One-year token from `claude setup-token`, in `CLAUDE_CODE_OAUTH_TOKEN` | Owner authorizes the browser flow, then replaces the secret. Track expiry and request replacement before it; no supported unattended reissuance established. Do not use `--bare` with this auth mode. |
 | Codex | Dedicated CI login bundle in environment secret `CODEX_CI_AUTH_JSON` | A serialized trusted worker restores the latest bundle, lets Codex refresh it, then writes the resulting bundle back to a secret manager, including after a failed model call. Desktop and CI must not rotate copies of the same login concurrently. |
-| Copilot | Actions' short-lived `GITHUB_TOKEN`, passed as `COPILOT_GITHUB_TOKEN` | The readiness job requests `copilot-requests: write` and tests compatibility with the pinned CLI. In this personally owned repository it draws from the owner's Copilot seat. No copied personal token is used by this job. |
+| Copilot | Actions' short-lived `GITHUB_TOKEN`, passed as `COPILOT_REQUESTS_TOKEN` | The readiness job requests `copilot-requests: write` and tests compatibility with the pinned CLI. In this personally owned repository it draws from the owner's Copilot seat. No copied personal token is used by this job. |
 
 Claude's documented CI token requires one browser authorization and expires after
 one year. Source: [Claude authentication](https://code.claude.com/docs/en/authentication#generate-a-long-lived-token).
@@ -120,13 +120,10 @@ tokens. It does not preserve a lost rotated bundle magically. The credentials
 directory is outside the workspace, has private permissions and is never uploaded;
 the auth file is removed in the final cleanup step. Writer errors publish only fixed
 summaries. The model process receives neither the App key nor its writer token.
-`probe_isolation.py` additionally runs each model CLI in a mount/PID namespace
-containing system runtimes and that probe's scratch directory. Other runner
-files and parent process environments are absent. Each provider job checks this
-boundary before making its request. This prevents native tools in a probe from
-reading the maintainer's full bundle or Actions token-output files. Task-workspace
-permissions and offline command networking are enforced separately by
-`tool_broker.py` and checked on the cloud kernel.
+Since engine 0.6.0 there is no namespace around model CLIs (ADR-0006): each probe runs with a scratch
+HOME and only its own credential in the environment, and the job is the boundary. Session jobs hold model
+credentials only; Copilot uses the `COPILOT_REQUESTS_TOKEN` secret (a token limited to Copilot requests), never
+the workflow's GitHub token.
 
 Without that opt-in, Codex readiness still tests the existing bootstrap snapshot;
 it projects that snapshot to access-only credentials and cannot refresh it.

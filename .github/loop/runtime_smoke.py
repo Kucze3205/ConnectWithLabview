@@ -75,7 +75,7 @@ def main():
                         future.result()
                 if durable.read('concurrent.json') != {'claude': 'observed', 'codex': 'observed'}:
                     raise RuntimeError('concurrent checkpoint update was lost')
-            checkpoint = Checkpoint(broker, repository, issue)
+            checkpoint = Checkpoint(broker, repository, issue, remote=True)
             credentials = {'claude': os.environ.get('CLAUDE_CODE_OAUTH_TOKEN', ''),
                            'codex': os.environ.get('CODEX_WORKER_AUTH_JSON', ''),
                            'copilot': os.environ.get('COPILOT_GITHUB_TOKEN', '')}

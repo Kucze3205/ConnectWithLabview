@@ -1,9 +1,8 @@
 """The real routed chain for a role behind the executor boundary, with a stand-in provider CLI.
 
-stage → executor_boundary.prepare → runtime_entry.py (real broker, real git checkpoint, real runtime state
+stage → runtime_entry.py (real broker, real git checkpoint, real runtime state
 machine, real provider_adapter.request) → epilogue. Replaced: the `claude` executable (answers from a script),
-GitHub's contents API and release assets (plain files) and the bubblewrap wrapper around the CLI (the namespace
-is covered by test_model_boundary.py). A stand-in is no provider evidence; it proves the engine's own chain, the
+GitHub's contents API and release assets (plain files). A stand-in is no provider evidence; it proves the engine's own chain, the
 one that stopped iteration 0 twice (a checkpoint that needed `origin`, a prompt that did not fit in argv).
 test_agent_chain.py covers the native-CLI path.
 """
@@ -63,7 +62,6 @@ def offline_gh(self, argv, **kwargs):
 
 runtime_store.GitHubBackend = FileBackend
 runtime_checkpoint.Checkpoint.command = offline_gh
-provider_adapter.sandbox = lambda command, root: command
 runpy.run_path(os.path.join(trusted, "runtime_entry.py"), run_name="__main__")
 '''
 
@@ -107,13 +105,14 @@ class RoutedChainTest(sessions.SessionCase):
 
     def test_restricted_role_does_work_through_the_routed_runtime_and_it_is_admitted(self):
         n = self.issue("worker")
-        self.assertTrue(session_inputs.restricted("worker"))
+        fakes.MemoryBackend.documents = {}
+        backend = patch("runtime_store.GitHubBackend", fakes.MemoryBackend)     # stage and finalize run in this process
+        backend.start()
+        self.addCleanup(backend.stop)
         work, output = self.work(), os.path.join(self.w.tmp, "run")
         trusted, state = os.path.join(output, "trusted"), os.path.join(self.w.tmp, "state")
         os.environ["RUNNER_TEMP"] = output
         loop.stage(n, work, trusted)
-        self.assertTrue(Path(trusted, "executor-mode").exists())        # prepared: a fresh repository, no remote
-        self.assertEqual(subprocess.run(["git", "remote"], cwd=work, capture_output=True, text=True).stdout.strip(), "")
         report = c.MARK + "\n```yaml\nstatus: done\n```\nDid the work.\n"
         script = [action("Read", path=".session/issue.md"),
                   action("Write", path="src/product.txt", text="agent product"),
@@ -141,7 +140,7 @@ class RoutedChainTest(sessions.SessionCase):
         self.assertLess(max(call["longest_arg"] for call in calls), 4096)
         self.assertEqual({call["token"] for call in calls}, {"synthetic-token"})
         self.assertIn("Goal", calls[1]["prompt_tail"])      # the Read came back to the model
-        session = json.loads(Path(state, "sessions__%s.json" % n).read_text())
+        session = json.loads(Path(output, "runtime-session.json").read_text())   # left for the epilogue to publish
         self.assertGreaterEqual(session["turns"], 1)
         self.assertEqual(session["result"]["status"], "done")
         self.assertEqual(subprocess.run(["git", "show", "task/%s:src/product.txt" % n], cwd=work, capture_output=True,

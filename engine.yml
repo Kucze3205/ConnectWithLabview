@@ -22,6 +22,7 @@ author:                          # git author of the loop's commits (the bot sta
   name: ""
   email: ""
 idle_resumes: 3                 # consecutive resumes of a parked session that used the agent without progress: outage, no more resumes
+policy_passes_notice: 10        # one informational owner request when an iteration's policy phase reaches this many passes; nothing stops
 owner: "Kucze3205"               # GitHub login owner requests are assigned to
 
 # --- the change gate -------------------------------------------------------------------------------------------
@@ -40,16 +41,13 @@ protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", 
 direct_paths: ["execution/", "policy/", "audit/", "journal/"]   # not work: merged without the change gate (role `write` paths still apply)
 notes_paths: ["journal/"]        # merged even when the session did not finish
 evaluator_paths: ["policy/evaluator/"]            # only a role whose profile has `owns_evaluator`; merged only after the verifier
-policymaker_only_roles: [evaluator, audit]             # tasks of these roles come only from the Policymaker's `orders`
 verifier_role: evaluator-verifier
 large_file_bytes: 5000000        # bigger files go to `.session/artifacts/` (release assets), not into git
 
 # --- accepted limits ---------------------------------------------------------------------------------------------
 # What a role's profile may have without asking the owner. Beyond it, each session needs a granted consent request.
 limits:
-  internet: false               # online role profiles require per-session owner consent, including read-only roles
-  tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
-  internet_write: []             # path prefixes a profile with internet may write
+  tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)", "Bash(echo:*)", "Bash(printf:*)", "Bash(mkdir:*)"]
   # Accepted resource/data/spending boundaries: docs/perpetua/accepted-limits.md.
   # Optional private access requests never block an iteration; schedule only ready work.
 
@@ -68,10 +66,9 @@ params:
   no_progress_iterations: 10     # notify the owner; independent work continues
   quiet_minutes: 1440            # 24 hours without closing: roll back policy/ and retry
   owner_wait_counts: false       # subtract cumulative blocking owner waits, including completed waits
-  stream_retention_iterations: null   # keep raw session streams for this many iterations (null: GitHub's default)
 context_ceilings:                # the Policymaker's policy/params.yml `context` never exceeds these (and stored history is cut here)
   history_bytes: 600000          # history sent with one request
   recent_turns: 40               # turns sent in full
-cadence:
+cadence:                         # the owner's bound; policy/params.yml may only make it stricter (the stricter value applies)
   min_interval_minutes: 300      # one iteration per 5-hour subscription window; null: iteration after iteration
   daily_iterations: null

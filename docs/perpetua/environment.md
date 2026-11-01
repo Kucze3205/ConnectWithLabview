@@ -14,7 +14,7 @@ LabVIEW 2026 observation does not verify LabVIEW 2024 or cross-version compatibi
 
 ## Reproducible public sources
 
-`.github/loop/prepare.sh` calls `prepare_environment.py`. It needs Python 3.10+
+`policy/prepare.sh` calls `.github/loop/prepare_environment.py` from the session's checkout. It needs Python 3.10+
 and git, no secrets, pip installations or NI activation. Sources and exact commits
 are in `.github/loop/environment-sources.json`:
 
