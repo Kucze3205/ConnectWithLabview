@@ -1,0 +1,177 @@
+# Live proof of one routed session in the 0.6.0 layout, for one provider, with AUTOPILOT off (setup-map ticket M9).
+# stage (GitHub token) → session (no GitHub permission, only that provider's model credential) → proof (a reduced epilogue:
+# publishes `pool.json` and `sessions/N.json` to `loop-runtime`, takes the commits in as data, checks that a turn was accepted).
+# The real epilogue is not run: it would merge the result into the default branch. The issue is a throwaway one with
+# `role:implementation`; the provider under test is the only routing candidate, set on the runner's copy of policy/params.yml.
+name: routed-proof
+run-name: "routed proof · ${{ inputs.provider }} · #${{ inputs.issue }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: Throwaway issue with role:implementation and loop:iteration N
+        required: true
+      provider:
+        description: Provider under test
+        type: choice
+        options: [claude, codex, copilot]
+        required: true
+      model:
+        description: Model of that provider (must be in engine.yml provider_pool)
+        required: true
+
+concurrency:
+  group: routed-proof-${{ inputs.provider }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  credentials:
+    if: inputs.provider == 'codex' && github.actor == github.repository_owner
+    uses: ./.github/workflows/credential-maintenance.yml
+    with:
+      setup_check: true
+    secrets: inherit
+
+  stage:
+    needs: credentials
+    if: always() && github.actor == github.repository_owner && github.ref_name == github.event.repository.default_branch && (needs.credentials.result == 'success' || needs.credentials.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ISSUE: ${{ inputs.issue }}
+      PROVIDER: ${{ inputs.provider }}
+      MODEL: ${{ inputs.model }}
+      WORK: ${{ github.workspace }}/work
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: loop
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          path: work
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Make the provider under test the only routing candidate (runner copy only)
+        working-directory: loop
+        run: |
+          pip install -q pyyaml
+          python3 - <<'EOF'
+          import os, yaml
+          params = yaml.safe_load(open("policy/params.yml"))
+          only = [{"provider": os.environ["PROVIDER"], "model": os.environ["MODEL"]}]
+          params["routing"]["tasks"] = {"default": only, "implementation": only}
+          yaml.safe_dump(params, open("policy/params.yml", "w"))
+          EOF
+      - name: Stage the session
+        working-directory: loop
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 .github/loop/loop.py git-identity
+          python3 .github/loop/loop.py stage "$ISSUE" "$WORK" "$RUNNER_TEMP/trusted"
+      - run: |
+          mkdir "$RUNNER_TEMP/ship"
+          rm -f "$RUNNER_TEMP/trusted/executor-baseline.json"
+          tar -czf "$RUNNER_TEMP/ship/trusted.tar.gz" -C "$RUNNER_TEMP" trusted
+          tar -czf "$RUNNER_TEMP/ship/work.tar.gz" -C "$GITHUB_WORKSPACE" work
+      - uses: actions/upload-artifact@v4
+        with:
+          name: staged
+          path: ${{ runner.temp }}/ship
+
+  session:
+    needs: stage
+    runs-on: ubuntu-latest
+    environment: provider-claude
+    permissions: {}
+    timeout-minutes: 30
+    env:
+      ISSUE: ${{ inputs.issue }}
+      EFFORT: medium
+      MAX_TURNS: '12'
+      AGENT_TIMEOUT: '15'
+      WORK: ${{ github.workspace }}/work
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: staged
+          path: ${{ runner.temp }}/ship
+      - run: |
+          tar -xzf "$RUNNER_TEMP/ship/trusted.tar.gz" -C "$RUNNER_TEMP"
+          tar -xzf "$RUNNER_TEMP/ship/work.tar.gz" -C "$GITHUB_WORKSPACE"
+      - name: Tools
+        run: |
+          python3 -c 'import json,subprocess,sys; catalog=json.load(open(sys.argv[1])); [subprocess.run(["npm","install","-g",p["package"]+"@"+p["version"]],check=True) for k,p in catalog.items() if k == sys.argv[2]]' "$RUNNER_TEMP/trusted/cloud-providers.json" "${{ inputs.provider }}"
+      - name: Routed session
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ inputs.provider == 'claude' && secrets.CLAUDE_CODE_OAUTH_TOKEN || '' }}
+          CODEX_WORKER_AUTH_JSON: ${{ inputs.provider == 'codex' && secrets.CODEX_WORKER_AUTH_JSON || '' }}
+          COPILOT_REQUESTS_TOKEN: ${{ inputs.provider == 'copilot' && secrets.COPILOT_REQUESTS_TOKEN || '' }}
+        run: timeout --signal=TERM --kill-after=15s "${AGENT_TIMEOUT}m" python3 "$RUNNER_TEMP/trusted/runtime_entry.py"
+      - name: Pack the results
+        if: always()
+        run: python3 "$RUNNER_TEMP/trusted/session_artifact.py" pack "$WORK" "$RUNNER_TEMP" "$RUNNER_TEMP/results"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: ${{ runner.temp }}/results
+          if-no-files-found: ignore
+
+  proof:
+    needs: [stage, session]
+    if: always() && needs.stage.result == 'success'
+    runs-on: ubuntu-latest
+    env:
+      ISSUE: ${{ inputs.issue }}
+      PROVIDER: ${{ inputs.provider }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: loop
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: results
+          path: ${{ runner.temp }}/results
+      - name: Publish runtime state and check the result
+        working-directory: loop
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pip install -q pyyaml
+          python3 .github/loop/loop.py git-identity
+          python3 - <<'EOF'
+          import json, os, sys, tempfile
+          sys.path.insert(0, ".github/loop")
+          import common as c, loop, session_artifact
+          from runtime_store import GitHubBackend, Store
+          n, tmp, art = os.environ["ISSUE"], os.environ["RUNNER_TEMP"], os.path.join(os.environ["RUNNER_TEMP"], "results")
+          session_artifact.receive_status(art, tmp)
+          commits = session_artifact.receive_commits(art, ".", n)
+          loop.publish_runtime_state(int(n), tmp)
+          store = Store(GitHubBackend(c.REPO, base=c.default_branch()))
+          pool, session = store.read("pool.json"), store.read("sessions/%s.json" % n)
+          try:
+              out = json.load(open(os.path.join(tmp, "provider-execution-output.json")))
+          except (OSError, ValueError):
+              out = {}
+          print("execution:", json.dumps(out))
+          print("commits imported:", commits)
+          print("pool.json keys:", sorted(pool or {}))
+          print("sessions/%s.json:" % n, json.dumps(session)[:2000])
+          ok = out.get("status") in ("done", "partial") and int(out.get("turns") or 0) >= 1 and bool(pool) and bool(session)
+          print("ACCEPTED TURN + STATE PUBLISHED:", ok)
+          sys.exit(0 if ok else 1)
+          EOF
