@@ -58,9 +58,6 @@ policymaker_triggers:                 # the Policymaker runs after an iteration 
                                  # A new audit report always calls it. null: off
   every_iterations: 5            # after every K-th iteration
   no_progress: 3                 # each time this many more iterations in a row went without an improving change
-context:                         # what each model request carries of the session history; bounded by engine.yml context_ceilings
-  history_bytes: 40000           # about 10k tokens; every turn is a stateless call resending this (owner note 2026-10-24)
-  recent_turns: 5                # these turns in full, older ones as tool/path/status only
 limits:                      # kernel hard caps: fix_rounds, successor_generations, merge_conflict_retries 5; backoff 6 steps of 72 h
   fix_rounds: 2              # correction rounds after a failed verification or check
   successor_generations: 3
