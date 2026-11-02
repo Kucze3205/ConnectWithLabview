@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/91\niteration: 2\nrunner: Linux\ncause: input_budget\neffort: high\nturns: 19\nmodels: {\"claude/claude-opus-5-5\":{\"cache_read\":168868,\"cache_write\":109651,\"in\":20,\"out\":2472},\"codex/gpt-6.1-sol\":{\"cache_read\":8960,\"cache_write\":0,\"in\":699295,\"out\":1517}}\ntokens_in: 699315\ntokens_out: 3989\ncache_read: 177828\ncache_write: 109651\nagent_s: 117\ntotal_s: 146\ncommit: 2ae7244\nstatus: partial\n```\nIteration 0001 failed because no shaper was configured and no valid tasks were ordered ([record](.session/history/records/0001.json)).\nEarlier review work exhausted its task limit without producing an exported review; its dependent benchmark task remained blocked ([prior report](.session/reports/87.json)).\nThe startup diagnostic reports 9,794 estimated tokens against a 100,000 warning threshold; no startup reduction is indicated.\n\n## What next\nPrepare bounded orders with explicit outputs and expected gains, beginning with the required environment audit.\nCheck the task-graph contract, current role definitions, export availability and benchmark preparation evidence before writing orders.\nStartup documents have been read; use this continuation and their recorded contents instead of repeating those reads.\nBenchmark readiness and product quality remain unestablished; independent method review and owner acceptance still precede reader implementation.\n",
+  "comment": 6591472241,
+  "issue": 91,
+  "snapshot": "54b9ec2e9ebbbc491219e32ef0ace6d74ac192299a8b2861568d6f293bf1dc85",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/91#issuecomment-6591472241"
+ },
+ "schema_version": 1
+}
