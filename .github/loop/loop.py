@@ -80,10 +80,9 @@ def model_id(alias):
 
 
 def context_limits():
-    """Prompt history limits the Policymaker set, never above the owner's ceilings in engine.yml."""
+    """The unique input tokens one session may use: what the Policymaker set, never above the owner's ceiling in engine.yml."""
     want, ceiling = c.params()["context"], c.cfg()["context_ceilings"]
-    return {k: min(int(want[k]), int(ceiling[k])) for k in ("history_bytes", "recent_turns")} | {
-        "stored_bytes": int(ceiling["history_bytes"])}
+    return {"input_tokens": min(int(want["input_tokens"]), int(ceiling["input_tokens"]))}
 
 
 def session_options(i, role, p):
