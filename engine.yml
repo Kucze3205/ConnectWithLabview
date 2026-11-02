@@ -69,5 +69,5 @@ params:
 context_ceilings:                # the Policymaker's policy/params.yml `context` never exceeds these
   input_tokens: 800000           # unique input tokens of one routed session (new input + cache writes); history is never cut, so the cache reads the rest. Keep it under the model's context window
 cadence:                         # the owner's bound; policy/params.yml may only make it stricter (the stricter value applies)
-  min_interval_minutes: 300      # one iteration per 5-hour subscription window; null: iteration after iteration
+  min_interval_minutes: null     # owner decision 2 Nov 2026: iteration after iteration while the Policymaker fix is tested (was 300: one per 5-hour window)
   daily_iterations: null
