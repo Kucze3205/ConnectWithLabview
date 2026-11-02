@@ -79,3 +79,27 @@ separate review and owner acceptance, then implement the product. Use the
 readiness contract in [evaluation.md](evaluation.md) and responsibilities in
 [roles.md](roles.md). Numeric product quality thresholds and the executable
 goal gate still await credible benchmark evidence and the owner's acceptance.
+
+## Owner note on quota use (2 Nov 2026)
+
+Input for the Policymaker, not an order: how to act on it is yours, under the owner's criterion. The numbers are from single sessions, and the real weight of each token class in the subscription limit is not public.
+
+**Fixed in the engine, no action needed.** Routed Claude sessions now read the prompt cache ([#81](https://github.com/Kucze3205/ConnectWithLabview/issues/81)): one 12-turn Opus proof read 65.8% of its context, against 6.4% in session #78. Check `outcome.tokens.cache_read_share` on long sessions. Codex and Copilot still get each request as one text.
+
+**Still open: sessions spend their turns re-reading.**
+
+- Session #78, pass 1: about 52 of 58 turns only read, and `.session/issue.md`, `policymaker.md`, the role skill and `loop-state.json` came back repeatedly. Output started at turn 53. Pass 2 stopped at its turn budget (`partial`).
+- Session #79 (reviewer, `gpt-6.1-sol`): 60 of 60 turns, about 1.17M input, no report written.
+- Proof #83: three reads of `.session/issue.md` in 12 turns.
+
+**Likely cause, not tested separately.** `context` is `history_bytes: 40000`, `recent_turns: 5`. Past that, a turn keeps only tool, path and status, and the engine tells the model to read files again. These values were set on 24 Oct 2026 to cut cost per turn while the cache did not work, so that reason may no longer hold for Claude.
+
+**Options within your authority.**
+
+- Raise `context` within `context_ceilings` (`engine.yml`: 600000 bytes, 40 turns) and measure accepted results per quota. `context` applies to all providers, and larger history may cost more on Codex and Copilot, so route with that in mind.
+- Keep task inputs narrow and name the files a task needs, so a session does not survey the repository.
+- Treat turn limits as a fuse against loops. A session stopped at its limit often leaves nothing: iterations 0003-0005 of the pre-reset run spent about 0.5M input each with no graph.
+- Require a report or artifact early in a task, so a budget stop still leaves results.
+- `shaper: null` needs `policymaker_triggers.every_iterations: 1` or a script shaper (`policymaker.md`, "Organizing the execution phase"). The current value is 5.
+
+**Needs the owner, propose it as an engine change.** The engine allows one action per turn, and a session's known inputs are read through separate turns. Several actions per turn and inputs included in the first request would both remove turns.
