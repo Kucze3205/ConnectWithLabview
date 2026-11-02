@@ -1,0 +1,43 @@
+[
+ {
+  "id": "order-78-review-sources",
+  "title": "Independent review of the benchmark `sources` milestone and coverage research 0002",
+  "role": "reviewer",
+  "effort": "high",
+  "body": "## Goal\nIndependently review the prepared `sources` milestone (`benchmark/`, status `prepared-not-reviewed`) and the measurement in `docs/research/0002-coverage.md` against `docs/perpetua/evaluation.md`. Expected gain: the first milestone of the verification method gets a reviewed verdict, so later milestones build on checked provenance instead of unreviewed input (reset note: `docs/perpetua/reset-2026-10-28.md`, all prior sessions ended `partial`).\n## Acceptance\n- [ ] Run `python3 -I benchmark/scripts/sources.py --check` and `python3 -I docs/research/scripts/coverage/inventory.py` yourself; record exit codes and any divergence from the committed records.\n- [ ] Check against the `sources` row of evaluation.md: origin, license, pinned commit and SHA256 of originals; dependencies, artifact save version and reading environment recorded separately; originals preserved before conversion.\n- [ ] Note what 0002 implies for the `coverage` row (families, versions, modules, access conditions, gaps kept in the denominator) and what is missing.\n- [ ] Separate Standards and Spec findings, each with path/line, evidence, impact and correction; overall recommendation tied to the reviewed commit.\n- [ ] Write the full findings also to `.session/artifacts/review-sources.md` so the next task can consume them.\n## Verification\n`python3 -I benchmark/scripts/sources.py --check`\n## Context\n- docs/perpetua/evaluation.md: the contract being checked\n- benchmark/preparation-status.json, benchmark/sources.md, benchmark/sources.json: the candidate\n- docs/research/0002-coverage.md: coverage measurement input\n- docs/perpetua/environment.md: prepared read-only sources (`$LABVIEW_ENVIRONMENT`)\n## Budget\n- benchmark/**, docs/research/0002-coverage.md, docs/research/scripts/coverage/inventory.py, docs/perpetua/evaluation.md, docs/perpetua/environment.md\n- Do not read other docs broadly; report, do not fix.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 79
+ },
+ {
+  "id": "order-78-bench-coverage",
+  "title": "Address source-review findings and prepare the `coverage` milestone record",
+  "role": "benchmark",
+  "effort": "high",
+  "body": "## Goal\nFix the findings of the independent `sources` review that fall in `benchmark/`, then prepare the `coverage` milestone of `docs/perpetua/evaluation.md`: a repeatable inventory of artifact families, save versions, reading environments, modules and access conditions of the prepared public sources, building on `docs/research/0002-coverage.md`. Expected gain: two of seven milestones prepared with explicit gaps, so the next review can check `coverage` and the next order can start `tasks`/`oracle`. The next session checks `benchmark/preparation-status.json` milestones and the verification command below.\n## Acceptance\n- [ ] Each review finding in the staged `review-sources.md` is fixed or answered with a reason in your report; do not mark any milestone reviewed or ready.\n- [ ] `benchmark/scripts/coverage.py` regenerates a committed coverage record (JSON + short markdown) from `$LABVIEW_ENVIRONMENT`; `--check` exits non-zero when the record differs.\n- [ ] The record lists every family and save version found, unsupported/opaque/unreadable cases and unexamined LabVIEW versions as explicit gaps; nothing is removed from the denominator and the 2024 fallback is not chosen.\n- [ ] `benchmark/preparation-status.json` sets `coverage` to `prepared-not-reviewed` and keeps `independent_review` pending.\n- [ ] Report lists what coverage cannot show without native LabVIEW (`native_labview: not executed`).\n## Verification\n`python3 -I benchmark/scripts/coverage.py --check`\n## Context\n- staged input `review-sources.md`: the findings to address\n- docs/perpetua/evaluation.md: `coverage` and `sources` rows\n- docs/research/0002-coverage.md and docs/research/scripts/coverage/inventory.py: reuse the method, do not copy blindly\n- benchmark/scripts/sources.py: existing generator/--check pattern to follow\n## Budget\n- benchmark/**, docs/research/0002-coverage.md, docs/research/scripts/coverage/inventory.py, docs/perpetua/evaluation.md, docs/perpetua/environment.md, goal/goal.md",
+  "blocked_by": [
+   "order-78-review-sources"
+  ],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 120,
+   "max_turns": 100
+  },
+  "inputs": [
+   {
+    "from": "review-sources",
+    "name": "review-sources.md"
+   }
+  ],
+  "exports": [],
+  "pass": 1,
+  "issue": 80
+ }
+]
