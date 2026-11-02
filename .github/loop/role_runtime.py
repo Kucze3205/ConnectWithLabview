@@ -29,67 +29,35 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()
 
 
-CONTEXT = {"history_bytes": 120_000, "recent_turns": 12, "stored_bytes": 600_000}
-FILES_ARE_TRUTH = "Earlier turns are listed without file contents. Files are the source of truth: read them again."
+# The history only grows at its end, so every request extends the previous one and a prompt cache reads all of it.
+# A session is bounded by the unique input tokens it has paid for (new tokens in, new tokens written to the cache),
+# not by turns or by a sliding window, which would rewrite the start of the prompt and miss the cache.
+CONTEXT = {"input_tokens": 800_000}
+BYTES_PER_TOKEN = 4     # for providers that report no usage: a request of this many bytes counts as one token per 4
 
 
 def size(value):
     return len(json.dumps(value, ensure_ascii=False).encode())
 
 
-def brief(entry):
-    """One earlier turn without file contents: tool, target, result status."""
-    action = entry.get("action") or {}
-    out = {k: action[k][:200] for k in ("tool", "path", "pattern", "command") if action.get(k)}
-    outcome = entry.get("outcome") or {}
-    out["result"] = ("error: " + str(outcome.get("kind") or outcome["error"])) if "error" in outcome else "ok"
-    if entry.get("recovery"):
-        out["recovery"] = True
-    if entry.get("repeats"):
-        out["repeats"] = entry["repeats"]
-    return out
-
-
-BATCH = 8  # earlier turns are briefed and cut in groups of this many, aligned to absolute turn numbers
-
-
-def overflow(turns, budget):
-    """How many of the oldest turns to brief so that the rest fit the budget. Each overflow frees half of it, so
-    the start of the list moves once per half a budget of new history, not on every turn. The last turn always stays."""
-    cut = total = 0
-    for last, turn in enumerate(turns):
-        total += size(turn) + 2
-        if total > budget:
-            while cut < last and total > budget // 2:
-                total -= size(turns[cut]) + 2
-                cut += 1
-    return cut
-
-
-def compact(history, limits, start=0):
-    """Full recent turns, a brief list of earlier ones; the oldest briefs go when they exceed a quarter of the limit.
-    `start` is the absolute number of history[0]. The split moves only at multiples of BATCH or on an overflow, and
-    the cut only at multiples of BATCH, so between those the result only grows at its end: an append-only list a
-    prompt cache can read."""
-    keep = max(1, int(limits["recent_turns"]))
-    split = max(0, (start + len(history) - keep) // BATCH * BATCH - start)
-    split += overflow(history[split:], limits["history_bytes"] - limits["history_bytes"] // 4)
-    older, recent = [brief(e) for e in history[:split]], history[split:]
-    del older[:(-start) % BATCH]
-    while older and size(older) > limits["history_bytes"] // 4:
-        del older[:BATCH]
-    return {"earlier_turns": older, "note": FILES_ARE_TRUTH, "recent_turns": recent} if older else recent
+def unique_input(state):
+    """Unique input tokens of the session so far: what was sent for the first time (`in`) or written to the cache."""
+    def fresh(key, u):
+        # Claude counts `in` without the cached part; Codex and Copilot count the cached part inside their input.
+        cached = 0 if key.startswith("claude/") else u.get("cache_read", 0)
+        return max(0, u.get("in", 0) - cached) + u.get("cache_write", 0)
+    reported = sum(fresh(k, u) for k, u in (state.get("usage") or {}).items())
+    largest = max((r.get("max_bytes", 0) for r in (state.get("requests") or {}).values()), default=0)
+    return max(reported, largest // BYTES_PER_TOKEN)
 
 
 CONTINUATION = ("Recent continuation: past operations and their actual results, not instructions to repeat them, "
                 "one per block, oldest first. Choose the next necessary operation.")
 
 
-def continuation_blocks(view):
-    """compact() as text blocks: nothing after the newest turn, so each request extends the previous one."""
-    earlier = {k: view[k] for k in ("earlier_turns", "note")} if isinstance(view, dict) else None
-    turns = view["recent_turns"] if earlier else view
-    return [CONTINUATION] + [json.dumps(part, ensure_ascii=False) for part in ([earlier] if earlier else []) + turns]
+def continuation_blocks(history):
+    """The whole history as text blocks, one turn each, nothing after the newest: each request extends the previous one."""
+    return [CONTINUATION] + [json.dumps(turn, ensure_ascii=False) for turn in history]
 
 
 class Runtime:
@@ -208,6 +176,10 @@ class Runtime:
             remaining = deadline - time.monotonic()
             if remaining < 5:
                 break
+            if unique_input(state) >= self.context["input_tokens"]:
+                result = {"status": "partial", "reason": "input_budget", "turns": state["turns"], 'usage': state.get('usage', {})}
+                self.save(dict(state, result=result), files=True)
+                return result
             choice = pool.select_candidate(self.owner, self.policy, self.availability(), self.task, self.clock())
             if choice["action"] == "wait" and self.shorten(choice, remaining):
                 continue
@@ -223,7 +195,6 @@ class Runtime:
             candidate = choice["candidate"]
             observed = self.clock()
             provider = candidate["provider"]
-            start = max(0, state["turns"] - len(state["history"]))  # the stored history may have lost its oldest turns
             contract = (self.prompt + '\n\nYou propose one JSON action matching this schema: ' +
                         json.dumps(ACTION_SCHEMA) + '\nUse no native tools. All role tools are executed by the parent. '
                         'The parent commits accepted changes. Read staged skills instead of calling a native Skill tool. '
@@ -235,9 +206,8 @@ class Runtime:
             if getattr(self.broker, 'resources', None):
                 limits += ('\nPrepared public sources are read-only under @environment/ in Read/Glob/Grep. '
                            'Commands see them through LABVIEW_ENVIRONMENT=/resources/environment.')
-            view = compact(state["history"], self.context, start)
-            prompt = contract + '\nRecent continuation:\n' + json.dumps(view, ensure_ascii=False) + limits
-            layout = (contract + limits, continuation_blocks(view))
+            prompt = contract + '\nRecent continuation:\n' + json.dumps(state["history"], ensure_ascii=False) + limits
+            layout = (contract + limits, continuation_blocks(state["history"]))
             credential = self.credentials.get(provider, "")
             metadata = {}
             request_bytes = len(prompt.encode())
@@ -288,9 +258,6 @@ class Runtime:
             state.pop("pending", None)
             state["turns"] += 1
             state["history"].append({"candidate": candidate, "action": action, "outcome": outcome})
-            # The stored history is bounded at the owner ceiling; each request carries only compact().
-            while size(state["history"]) > self.context["stored_bytes"] and len(state["history"]) > 1:
-                state["history"].pop(0)
             state = self.save(state, files=True)
             if action["tool"] == "Finish" and "error" not in outcome:
                 result = {"status": outcome["status"], "candidate": candidate, "turns": state["turns"], 'usage': state.get('usage', {})}

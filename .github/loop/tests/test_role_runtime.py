@@ -5,7 +5,7 @@ import unittest
 
 import fakes
 from provider_adapter import Failure
-from role_runtime import Runtime, compact, continuation_blocks, CONTINUATION
+from role_runtime import Runtime, continuation_blocks, unique_input, CONTINUATION
 from runtime_store import Store
 from test_runtime_store import Backend
 from test_tool_broker import action
@@ -39,64 +39,40 @@ class RuntimeTest(unittest.TestCase):
                        checkpoint or (lambda _: {'head': 'durable-head'}), self.credentials,
                        'Read task inputs.', 'fingerprint', model_request=request, clock=self.clock)
 
-    def test_one_megabyte_history_is_cut_to_the_limit_and_recent_actions_stay_whole(self):
-        secret = 'FILE-CONTENT-' * 200
-        history = [{'candidate': self.candidates[0], 'action': {'tool': 'Read', 'path': 'src/%d.vi' % n, 'text': ''},
-                    'outcome': {'text': secret}} for n in range(400)]
-        self.assertGreater(len(json.dumps(history)), 1_000_000)
-        limits = {'history_bytes': 120_000, 'recent_turns': 12}
-        sent = compact(history, limits)
-        self.assertLessEqual(len(json.dumps(sent).encode()), 120_000)
-        self.assertEqual(sent['recent_turns'], history[384:])
-        self.assertNotIn('FILE-CONTENT', json.dumps(sent['earlier_turns']))
-        self.assertEqual(sent['earlier_turns'][-1]['path'], 'src/383.vi')
-        self.assertEqual(int(sent['earlier_turns'][0]['path'][4:-3]) % 8, 0)
-        self.assertIn('read them again', sent['note'])
-
-    def test_earlier_turns_change_only_at_aligned_batch_boundaries(self):
-        history = [{'action': {'tool': 'Read', 'path': 'f%d/' % n + 'p' * 150}, 'outcome': {'text': 'x' * 300}}
-                   for n in range(200)]
-        limits = {'history_bytes': 40_000, 'recent_turns': 5}
-        view = lambda n: json.dumps(compact(history[:n], limits)['earlier_turns'])
-        for n in range(16, 200):
-            if (n - 5) % 8:
-                self.assertEqual(view(n), view(n - 1))
-        # A cut of the stored history keeps the batches aligned to absolute turn numbers.
-        cut = compact(history[3:100], limits, 3)['earlier_turns']
-        self.assertEqual(cut, compact(history[:100], limits)['earlier_turns'])
-        self.assertLess(len(cut), 80)
-        self.assertEqual(int(cut[0]['path'][1:].split('/')[0]) % 8, 0)
-
-    def blocks_over_a_session(self, history, limits):
-        return [continuation_blocks(compact(history[:n], limits)) for n in range(len(history) + 1)]
-
-    def test_blocks_only_grow_between_batches_with_one_turn_per_block(self):
-        history = [{'action': {'tool': 'Read', 'path': 'f%d' % n}, 'outcome': {'text': 'x' * 300}} for n in range(60)]
-        limits = {'history_bytes': 40_000, 'recent_turns': 5}
-        sessions = self.blocks_over_a_session(history, limits)
+    def test_blocks_only_grow_at_the_end_with_one_turn_per_block(self):
+        history = [{'action': {'tool': 'Read', 'path': 'f%d' % n}, 'outcome': {'text': 'x' * 3000}} for n in range(200)]
+        sessions = [continuation_blocks(history[:n]) for n in range(len(history) + 1)]
         self.assertEqual(sessions[0], [CONTINUATION])
         self.assertEqual(sessions[1][1], json.dumps(history[0]))
         self.assertEqual(sessions[-1][-1], json.dumps(history[-1]))
         for n in range(1, len(sessions)):
-            appended = sessions[n][:-1] == sessions[n - 1]
-            self.assertEqual(appended, n < 8 or (n - 5) % 8 != 0, n)
+            self.assertEqual(sessions[n][:-1], sessions[n - 1], n)      # the cache reads everything but the newest turn
 
-    def test_big_turns_change_the_start_of_the_blocks_rarely(self):
-        # Turns of a tenth of the budget: cutting one per request would change the start on every turn.
-        history = [{'action': {'tool': 'Read', 'path': 'f%d' % n}, 'outcome': {'text': 'x' * 3000}} for n in range(200)]
-        limits = {'history_bytes': 40_000, 'recent_turns': 40}
-        sessions = self.blocks_over_a_session(history, limits)
-        changed = sum(sessions[n][:-1] != sessions[n - 1] for n in range(1, len(sessions)))
-        self.assertLess(changed, len(sessions) / 3)
-        for blocks in sessions:
-            self.assertLessEqual(sum(len(b.encode()) for b in blocks), 40_000)
-        self.assertEqual(sessions[-1][-1], json.dumps(history[-1]))
+    def test_unique_input_counts_new_and_cached_writes_not_cache_reads(self):
+        state = {'usage': {'claude/m': {'in': 100, 'out': 5, 'cache_read': 900_000, 'cache_write': 2000},
+                           'codex/m': {'in': 10_000, 'out': 5, 'cache_read': 9_000, 'cache_write': 0}}}
+        self.assertEqual(unique_input(state), 100 + 2000 + 1000)
+        self.assertEqual(unique_input({'requests': {'x': {'max_bytes': 4000}}}), 1000)     # no usage reported
+        self.assertEqual(unique_input({}), 0)
 
-    def test_one_turn_bigger_than_the_limit_is_still_sent(self):
-        history = [{'action': {'tool': 'Read'}, 'outcome': {'text': 'x' * 100}},
-                   {'action': {'tool': 'Read'}, 'outcome': {'text': 'y' * 9000}}]
-        view = compact(history, {'history_bytes': 1000, 'recent_turns': 1})
-        self.assertEqual(view['recent_turns'], history[1:])
+    def test_session_stops_as_partial_when_the_unique_input_budget_is_spent(self):
+        self.store.update('sessions/13.json', lambda _: {'fingerprint': 'f', 'turns': 7, 'history': [],
+                                                          'usage': {'claude/m': {'in': 10, 'cache_write': 800_000}}})
+        calls = []
+        runtime = Runtime(self.owner, self.policy, 'build', self.store, 'sessions/13.json', self.broker,
+                          lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
+                          model_request=lambda *a, **k: calls.append(1), clock=self.clock, context={'input_tokens': 800_000})
+        result = runtime.run(50, 30)
+        self.assertEqual((result['status'], result['reason'], result['turns']), ('partial', 'input_budget', 7))
+        self.assertEqual(calls, [])
+
+    def test_history_is_never_cut(self):
+        secret = 'FILE-CONTENT-' * 200
+        history = [{'candidate': self.candidates[0], 'action': {'tool': 'Read', 'path': 'src/%d.vi' % n, 'text': ''},
+                    'outcome': {'text': secret}} for n in range(400)]
+        self.assertGreater(len(json.dumps(history)), 1_000_000)
+        self.assertEqual(len(json.dumps(continuation_blocks(history))) > 1_000_000, True)
+        self.assertEqual(continuation_blocks(history)[1:], [json.dumps(t) for t in history])
 
     def test_request_layout_keeps_stable_parts_out_of_the_history(self):
         self.store.update('sessions/12.json', lambda _: {'fingerprint': 'f', 'turns': 2, 'history': [
@@ -108,7 +84,7 @@ class RuntimeTest(unittest.TestCase):
             return action('Read', path='next') if len(layouts) == 1 else action('Finish', status='done')
         runtime = Runtime(self.owner, self.policy, 'build', self.store, 'sessions/12.json', self.broker,
                           lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
-                          model_request=request, clock=self.clock, context={'recent_turns': 3})
+                          model_request=request, clock=self.clock)
         runtime.run(2, 30)
         (flat, (system, blocks)), (_, (next_system, next_blocks)) = layouts
         for stable in ('Read task inputs.', '"tool"', 'PROFILE'):
@@ -121,7 +97,7 @@ class RuntimeTest(unittest.TestCase):
         self.assertIn('Recent continuation:', flat)     # Codex and Copilot still get one text
         self.assertTrue(flat.endswith('Role profile: ' + json.dumps({'name': 'PROFILE'})))
 
-    def test_request_prompt_is_compacted_and_its_size_recorded_in_usage(self):
+    def test_request_prompt_holds_the_whole_history_and_its_size_is_recorded_in_usage(self):
         self.store.update('sessions/11.json', lambda _: {'fingerprint': 'f', 'turns': 30, 'history': [
             {'candidate': self.candidates[0], 'action': {'tool': 'Read', 'path': 'a%d' % n},
              'outcome': {'text': 'BODY%d' % n}} for n in range(30)]})
@@ -131,10 +107,10 @@ class RuntimeTest(unittest.TestCase):
             return action('Finish', status='done')
         runtime = Runtime(self.owner, self.policy, 'build', self.store, 'sessions/11.json', self.broker,
                           lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
-                          model_request=request, clock=self.clock, context={'recent_turns': 3})
+                          model_request=request, clock=self.clock)
         runtime.run(1, 30)
-        self.assertIn('BODY24', prompts[0])
-        self.assertNotIn('BODY23', prompts[0])
+        self.assertIn('BODY29', prompts[0])
+        self.assertIn('BODY0', prompts[0])
         self.assertIn('"path": "a0"', prompts[0])
         used = self.store.read('sessions/11.json')['requests']['claude/allowed']
         self.assertEqual((used['count'], used['bytes']), (1, len(prompts[0].encode())))

@@ -61,7 +61,7 @@ DEFAULTS = {
                "tools": DEFAULT_TOOLS, "write": [resources.EXECUTION + "/", resources.ROOT + "/"]},
     "policymaker_session_ceilings": None,
     "params": {"no_progress_iterations": None, "quiet_minutes": None, "owner_wait_counts": None},
-    "context_ceilings": {"history_bytes": 600000, "recent_turns": 40},
+    "context_ceilings": {"input_tokens": 800000},
     "cadence": {"min_interval_minutes": None, "daily_iterations": None},
 }
 
@@ -101,7 +101,7 @@ def params():
          "cadence": {"min_interval_minutes": None, "daily_iterations": None},
          "policymaker_only_roles": ["evaluator", "audit"], "audit_exports_window": 3,
          "stream_retention_iterations": 8, "startup_token_warning": 100000,
-         "context": {"history_bytes": 120000, "recent_turns": 12}}
+         "context": {"input_tokens": 800000}}
     return merged(p, load_yaml(resources.PARAMS))
 
 

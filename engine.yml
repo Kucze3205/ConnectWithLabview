@@ -66,9 +66,8 @@ params:
   no_progress_iterations: 10     # notify the owner; independent work continues
   quiet_minutes: 1440            # 24 hours without closing: roll back policy/ and retry
   owner_wait_counts: false       # subtract cumulative blocking owner waits, including completed waits
-context_ceilings:                # the Policymaker's policy/params.yml `context` never exceeds these (and stored history is cut here)
-  history_bytes: 600000          # history sent with one request
-  recent_turns: 40               # turns sent in full
+context_ceilings:                # the Policymaker's policy/params.yml `context` never exceeds these
+  input_tokens: 800000           # unique input tokens of one routed session (new input + cache writes); history is never cut, so the cache reads the rest. Keep it under the model's context window
 cadence:                         # the owner's bound; policy/params.yml may only make it stricter (the stricter value applies)
   min_interval_minutes: 300      # one iteration per 5-hour subscription window; null: iteration after iteration
   daily_iterations: null
