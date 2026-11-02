@@ -5,7 +5,7 @@ import unittest
 
 import fakes
 from provider_adapter import Failure
-from role_runtime import Runtime, compact
+from role_runtime import Runtime, compact, continuation_blocks, CONTINUATION
 from runtime_store import Store
 from test_runtime_store import Backend
 from test_tool_broker import action
@@ -66,6 +66,60 @@ class RuntimeTest(unittest.TestCase):
         self.assertEqual(cut, compact(history[:100], limits)['earlier_turns'])
         self.assertLess(len(cut), 80)
         self.assertEqual(int(cut[0]['path'][1:].split('/')[0]) % 8, 0)
+
+    def blocks_over_a_session(self, history, limits):
+        return [continuation_blocks(compact(history[:n], limits)) for n in range(len(history) + 1)]
+
+    def test_blocks_only_grow_between_batches_with_one_turn_per_block(self):
+        history = [{'action': {'tool': 'Read', 'path': 'f%d' % n}, 'outcome': {'text': 'x' * 300}} for n in range(60)]
+        limits = {'history_bytes': 40_000, 'recent_turns': 5}
+        sessions = self.blocks_over_a_session(history, limits)
+        self.assertEqual(sessions[0], [CONTINUATION])
+        self.assertEqual(sessions[1][1], json.dumps(history[0]))
+        self.assertEqual(sessions[-1][-1], json.dumps(history[-1]))
+        for n in range(1, len(sessions)):
+            appended = sessions[n][:-1] == sessions[n - 1]
+            self.assertEqual(appended, n < 8 or (n - 5) % 8 != 0, n)
+
+    def test_big_turns_change_the_start_of_the_blocks_rarely(self):
+        # Turns of a tenth of the budget: cutting one per request would change the start on every turn.
+        history = [{'action': {'tool': 'Read', 'path': 'f%d' % n}, 'outcome': {'text': 'x' * 3000}} for n in range(200)]
+        limits = {'history_bytes': 40_000, 'recent_turns': 40}
+        sessions = self.blocks_over_a_session(history, limits)
+        changed = sum(sessions[n][:-1] != sessions[n - 1] for n in range(1, len(sessions)))
+        self.assertLess(changed, len(sessions) / 3)
+        for blocks in sessions:
+            self.assertLessEqual(sum(len(b.encode()) for b in blocks), 40_000)
+        self.assertEqual(sessions[-1][-1], json.dumps(history[-1]))
+
+    def test_one_turn_bigger_than_the_limit_is_still_sent(self):
+        history = [{'action': {'tool': 'Read'}, 'outcome': {'text': 'x' * 100}},
+                   {'action': {'tool': 'Read'}, 'outcome': {'text': 'y' * 9000}}]
+        view = compact(history, {'history_bytes': 1000, 'recent_turns': 1})
+        self.assertEqual(view['recent_turns'], history[1:])
+
+    def test_request_layout_keeps_stable_parts_out_of_the_history(self):
+        self.store.update('sessions/12.json', lambda _: {'fingerprint': 'f', 'turns': 2, 'history': [
+            {'action': {'tool': 'Read', 'path': 'a%d' % n}, 'outcome': {'text': 'BODY%d' % n}} for n in range(2)]})
+        self.broker.profile = {'name': 'PROFILE'}
+        layouts = []
+        def request(provider, model, credential, prompt, **kwargs):
+            layouts.append((prompt, kwargs['layout']))
+            return action('Read', path='next') if len(layouts) == 1 else action('Finish', status='done')
+        runtime = Runtime(self.owner, self.policy, 'build', self.store, 'sessions/12.json', self.broker,
+                          lambda _: {}, self.credentials, 'Read task inputs.', 'fingerprint',
+                          model_request=request, clock=self.clock, context={'recent_turns': 3})
+        runtime.run(2, 30)
+        (flat, (system, blocks)), (_, (next_system, next_blocks)) = layouts
+        for stable in ('Read task inputs.', '"tool"', 'PROFILE'):
+            self.assertIn(stable, system)
+        self.assertFalse(any('PROFILE' in block or 'Read task inputs.' in block for block in blocks))
+        self.assertNotIn('BODY', system)
+        self.assertEqual(next_system, system)
+        self.assertEqual(next_blocks[:-1], blocks)      # the next request only appends the new turn
+        self.assertIn('BODY1', blocks[-1])
+        self.assertIn('Recent continuation:', flat)     # Codex and Copilot still get one text
+        self.assertTrue(flat.endswith('Role profile: ' + json.dumps({'name': 'PROFILE'})))
 
     def test_request_prompt_is_compacted_and_its_size_recorded_in_usage(self):
         self.store.update('sessions/11.json', lambda _: {'fingerprint': 'f', 'turns': 30, 'history': [

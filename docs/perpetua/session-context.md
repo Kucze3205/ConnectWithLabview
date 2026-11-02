@@ -94,6 +94,7 @@ A routed session (`role_runtime.py`) sends one request per turn, built from the 
 
 - **Recent turns in full:** the last `context.recent_turns` (12) history entries, each with its action and outcome.
 - **Earlier turns as a list:** tool, path or pattern or command (200 characters at most) and `ok` or `error: <kind>`, with no file or command contents, plus the note that files are the source of truth and must be read again.
-- **Byte limit:** the continuation is at most `context.history_bytes` (120 000, about 30k tokens). The oldest earlier entries go first, then the oldest full turns.
+- **Byte limit:** the continuation is at most `context.history_bytes` (120 000, about 30k tokens), a quarter of it for the list of earlier turns. When full turns overflow the rest, the oldest move to the list until half of that space is free, so the start of the continuation changes rarely. The oldest list entries go in groups of 8.
+- **Claude's prompt cache:** Claude gets the stable parts as a system prompt file and the continuation as separate blocks of one stream-json message: one for the list, one per full turn, nothing after the newest turn. Each CLI process uses the same working directory, because the CLI writes that path into its system prompt. Codex and Copilot get everything as one text.
 
 `policy/params.yml` `context` sets both numbers; the Policymaker cannot exceed `engine.yml` `context_ceilings` (600 000 bytes, 40 turns). The stored session history is cut at that ceiling. Each request's size is added to the session's `requests.<provider>/<model>` (`count`, `bytes`, `max_bytes`) next to `usage`, so an audit can compare models by bytes per turn.
