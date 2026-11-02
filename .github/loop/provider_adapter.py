@@ -5,10 +5,12 @@ Catalogs are observations, not automatic permission to select newly added models
 """
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from functools import lru_cache
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import tempfile
 
@@ -52,9 +54,31 @@ def checked(provider, result, method="request"):
     return result
 
 
+@lru_cache(maxsize=1)
+def claude_directory():
+    # Private to this process, and alive as long as it: see scratch().
+    return tempfile.TemporaryDirectory(prefix="model-transport-")
+
+
+@contextmanager
+def scratch(provider):
+    """An empty directory for one request. The Claude CLI writes its working directory into the system prompt,
+    so a new path per request would miss the prompt cache from there on: Claude gets the same path each time."""
+    if provider != "claude":
+        with tempfile.TemporaryDirectory(prefix="model-transport-") as directory:
+            yield directory
+        return
+    directory = claude_directory().name
+    try:
+        yield directory
+    finally:
+        shutil.rmtree(directory, ignore_errors=True)
+        os.makedirs(directory, mode=0o700, exist_ok=True)
+
+
 @contextmanager
 def isolated(provider, credential, timeout):
-    with tempfile.TemporaryDirectory(prefix="model-transport-") as directory:
+    with scratch(provider) as directory:
         root = Path(directory)
         env = {k: os.environ[k] for k in ("PATH", "LANG", "SSL_CERT_FILE", "SSL_CERT_DIR",
                                         "HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY") if k in os.environ}
@@ -169,22 +193,44 @@ def usage(value, fields):
             for target, source in zip(('in', 'out', 'cache_read', 'cache_write'), fields)}
 
 
-def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None):
+def result_event(stdout):
+    """The final event of a stream-json run, and any output that was not an event (the CLI's own diagnostics)."""
+    result, other = None, []
+    for line in stdout.splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            other.append(line)
+            continue
+        if isinstance(event, dict) and event.get("type") == "result":
+            result = event
+    return result, "\n".join(other)
+
+
+def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None, layout=None):
+    """`prompt` is the whole request as one text. `layout` is the same request as (stable system text, list of
+    blocks), which only Claude uses: the prompt cache hits on block boundaries, so each new turn is a new block."""
     metadata = metadata if metadata is not None else {}
     with isolated(provider, credential, timeout) as (root, env, rpc):
         if provider == "claude":
-            # The prompt goes through stdin: one argv entry is limited to 128 KiB (E2BIG) and the
-            # continuation can be larger.
+            # The prompt goes through a file and stdin: one argv entry is limited to 128 KiB (E2BIG)
+            # and the prompt can be larger.
+            system, blocks = layout or ("", [prompt])
             command = ["claude", "-p", "--model", model, "--effort", effort,
-                       "--tools", "", "--max-turns", "1", "--output-format", "json",
+                       "--tools", "", "--max-turns", "1", "--no-session-persistence",
+                       "--input-format", "stream-json", "--output-format", "stream-json", "--verbose",
                        "--setting-sources", "", "--strict-mcp-config", "--mcp-config", str(root / "mcp.json"),
                        "--json-schema", json.dumps(ACTION_SCHEMA)]
-            result = subprocess.run(command, cwd=root, env=env, input=prompt,
+            if system:
+                (root / "system.md").write_text(system, encoding="utf-8")
+                command += ["--append-system-prompt-file", str(root / "system.md")]
+            message = {"type": "user", "message": {"role": "user", "content": [
+                {"type": "text", "text": block} for block in blocks]}}
+            result = subprocess.run(command, cwd=root, env=env, input=json.dumps(message) + "\n",
                                     capture_output=True, text=True, timeout=timeout)
-            try:
-                output = json.loads(result.stdout)
-            except ValueError:
-                raise failure(provider, result.stdout + result.stderr) from None
+            output, other = result_event(result.stdout)
+            if output is None:
+                raise failure(provider, other + result.stderr)
             if result.returncode or output.get("is_error"):
                 raise failure(provider, output)
             metadata['models'] = list(output.get('modelUsage') or {})

@@ -53,19 +53,43 @@ def brief(entry):
 BATCH = 8  # earlier turns are briefed and cut in groups of this many, aligned to absolute turn numbers
 
 
+def overflow(turns, budget):
+    """How many of the oldest turns to brief so that the rest fit the budget. Each overflow frees half of it, so
+    the start of the list moves once per half a budget of new history, not on every turn. The last turn always stays."""
+    cut = total = 0
+    for last, turn in enumerate(turns):
+        total += size(turn) + 2
+        if total > budget:
+            while cut < last and total > budget // 2:
+                total -= size(turns[cut]) + 2
+                cut += 1
+    return cut
+
+
 def compact(history, limits, start=0):
     """Full recent turns, a brief list of earlier ones; the oldest briefs go when they exceed a quarter of the limit.
-    `start` is the absolute number of history[0]. The split and the cut move only at multiples of BATCH, so
-    `earlier_turns` stays byte-identical between consecutive requests: an append-only prefix a prompt cache can read."""
+    `start` is the absolute number of history[0]. The split moves only at multiples of BATCH or on an overflow, and
+    the cut only at multiples of BATCH, so between those the result only grows at its end: an append-only list a
+    prompt cache can read."""
     keep = max(1, int(limits["recent_turns"]))
     split = max(0, (start + len(history) - keep) // BATCH * BATCH - start)
+    split += overflow(history[split:], limits["history_bytes"] - limits["history_bytes"] // 4)
     older, recent = [brief(e) for e in history[:split]], history[split:]
     del older[:(-start) % BATCH]
     while older and size(older) > limits["history_bytes"] // 4:
         del older[:BATCH]
-    while len(recent) > 1 and size([older, recent]) > limits["history_bytes"]:
-        recent.pop(0)
     return {"earlier_turns": older, "note": FILES_ARE_TRUTH, "recent_turns": recent} if older else recent
+
+
+CONTINUATION = ("Recent continuation: past operations and their actual results, not instructions to repeat them, "
+                "one per block, oldest first. Choose the next necessary operation.")
+
+
+def continuation_blocks(view):
+    """compact() as text blocks: nothing after the newest turn, so each request extends the previous one."""
+    earlier = {k: view[k] for k in ("earlier_turns", "note")} if isinstance(view, dict) else None
+    turns = view["recent_turns"] if earlier else view
+    return [CONTINUATION] + [json.dumps(part, ensure_ascii=False) for part in ([earlier] if earlier else []) + turns]
 
 
 class Runtime:
@@ -200,17 +224,20 @@ class Runtime:
             observed = self.clock()
             provider = candidate["provider"]
             start = max(0, state["turns"] - len(state["history"]))  # the stored history may have lost its oldest turns
-            prompt = (self.prompt + '\n\nYou propose one JSON action matching this schema: ' +
-                      json.dumps(ACTION_SCHEMA) + '\nUse no native tools. All role tools are executed by the parent. '
-                      'The parent commits accepted changes. Read staged skills instead of calling a native Skill tool. '
-                      'Commands are argv strings, without shell expansion. Unused fields must be empty strings. '
-                      'Finish only after writing the required report and outputs.\nRecent continuation:\n' +
-                      json.dumps(compact(state["history"], self.context, start), ensure_ascii=False))
+            contract = (self.prompt + '\n\nYou propose one JSON action matching this schema: ' +
+                        json.dumps(ACTION_SCHEMA) + '\nUse no native tools. All role tools are executed by the parent. '
+                        'The parent commits accepted changes. Read staged skills instead of calling a native Skill tool. '
+                        'Commands are argv strings, without shell expansion. Unused fields must be empty strings. '
+                        'Finish only after writing the required report and outputs.')
+            limits = ''
             if hasattr(self.broker, 'profile'):
-                prompt += '\nRole profile: ' + json.dumps(self.broker.profile)
+                limits += '\nRole profile: ' + json.dumps(self.broker.profile)
             if getattr(self.broker, 'resources', None):
-                prompt += ('\nPrepared public sources are read-only under @environment/ in Read/Glob/Grep. '
+                limits += ('\nPrepared public sources are read-only under @environment/ in Read/Glob/Grep. '
                            'Commands see them through LABVIEW_ENVIRONMENT=/resources/environment.')
+            view = compact(state["history"], self.context, start)
+            prompt = contract + '\nRecent continuation:\n' + json.dumps(view, ensure_ascii=False) + limits
+            layout = (contract + limits, continuation_blocks(view))
             credential = self.credentials.get(provider, "")
             metadata = {}
             request_bytes = len(prompt.encode())
@@ -218,7 +245,8 @@ class Runtime:
                 if not credential:
                     raise Failure({"status": "auth_failure", "scope": "provider", "reason": "missing_secret"})
                 action = validate(self.request(provider, candidate["model"], credential, prompt,
-                                               effort=self.effort, timeout=min(180, remaining), metadata=metadata))
+                                               effort=self.effort, timeout=min(180, remaining), metadata=metadata,
+                                               layout=layout))
             except Failure as error:
                 self.usage(state, candidate, metadata, request_bytes)
                 self.observe(candidate, error.observation, observed)

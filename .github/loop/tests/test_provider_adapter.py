@@ -1,5 +1,6 @@
 import json
 from contextlib import contextmanager
+import os
 from pathlib import Path
 import subprocess
 import unittest
@@ -59,23 +60,53 @@ class AdapterTest(unittest.TestCase):
                 adapter.request('codex', 'model', 'access-only', 'task')
             self.assertEqual(error.exception.observation['reason'], 'native_request_denied')
 
-    def test_claude_prompt_goes_through_stdin_so_a_long_continuation_cannot_overflow_argv(self):
+    def claude_request(self, stdout=None, **kwargs):
         action = {field: '' for field in FIELDS}
         action.update(tool='Finish', status='done')
         seen = {}
-        @contextmanager
-        def isolated(*args):
-            yield Path('.'), {}, None
-        def run(command, **kwargs):
-            seen.update(command=command, **kwargs)
-            return subprocess.CompletedProcess(command, 0, json.dumps({'structured_output': action, 'usage': {}}), '')
-        prompt = 'x' * 300_000                      # one argv entry is limited to 128 KiB
-        with patch.object(adapter, 'isolated', isolated), \
-                patch.object(adapter.subprocess, 'run', run):
-            self.assertEqual(adapter.request('claude', 'model', 'token', prompt), action)
-        self.assertEqual(seen['input'], prompt)
-        self.assertNotIn(prompt, seen['command'])
+        def run(command, **options):
+            seen.update(command=command, **options)
+            if '--append-system-prompt-file' in command:
+                seen['system'] = Path(command[command.index('--append-system-prompt-file') + 1]).read_text(encoding='utf-8')
+            seen['cwd'] = str(options['cwd'])
+            output = stdout if stdout is not None else '\n'.join(json.dumps(event) for event in (
+                {'type': 'system', 'subtype': 'init', 'tools': []},
+                {'type': 'result', 'structured_output': action, 'usage': {}}))
+            return subprocess.CompletedProcess(command, 0, output, '')
+        with patch.object(adapter.subprocess, 'run', run):
+            return adapter.request('claude', 'model', 'token', 'whole prompt', **kwargs), seen, action
+
+    def test_claude_prompt_goes_through_stdin_so_a_long_continuation_cannot_overflow_argv(self):
+        result, seen, action = self.claude_request()
+        self.assertEqual(result, action)
+        self.assertEqual(json.loads(seen['input'])['message']['content'], [{'type': 'text', 'text': 'whole prompt'}])
+        self.assertNotIn('--append-system-prompt-file', seen['command'])
+        long = 'x' * 300_000                        # one argv entry is limited to 128 KiB
+        _, seen, _ = self.claude_request(layout=(long, ['y' * 300_000]))
+        self.assertEqual(seen['system'], long)
         self.assertTrue(all(len(part) < 100_000 for part in seen['command']))
+
+    def test_claude_layout_sends_stable_text_as_system_and_each_block_separately(self):
+        _, seen, _ = self.claude_request(layout=('role and schema', ['intro', 'turn 1', 'turn 2 ż']))
+        self.assertEqual(seen['system'], 'role and schema')
+        message = json.loads(seen['input'])
+        self.assertEqual((message['type'], message['message']['role']), ('user', 'user'))
+        self.assertEqual([block['text'] for block in message['message']['content']], ['intro', 'turn 1', 'turn 2 ż'])
+        for flag in ('--no-session-persistence', '--setting-sources', '--tools'):
+            self.assertIn(flag, seen['command'])
+        self.assertEqual(seen['command'][seen['command'].index('--tools') + 1], '')
+
+    def test_claude_requests_share_a_working_directory_and_leave_nothing_in_it(self):
+        # The CLI writes this path into its system prompt, in front of everything the cache should read.
+        _, first, _ = self.claude_request(layout=('s', ['b']))
+        self.assertEqual(os.listdir(first['cwd']), [])
+        _, second, _ = self.claude_request(layout=('s', ['b']))
+        self.assertEqual(first['cwd'], second['cwd'])
+
+    def test_claude_output_without_a_result_event_is_a_failure_that_ignores_stream_events(self):
+        with self.assertRaises(adapter.Failure) as error:
+            self.claude_request(stdout='{"type": "system", "subtype": "init", "tools": ["token"]}\nnot json error\n')
+        self.assertEqual(error.exception.observation['diagnostic_terms'], ['error', 'not'])
 
     def test_copilot_legacy_handshake_and_catalog_use_explicit_empty_ping(self):
         rpc = FakeRPC()

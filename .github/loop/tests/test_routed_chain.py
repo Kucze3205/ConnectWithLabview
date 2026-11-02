@@ -71,13 +71,15 @@ import json, os, sys
 from pathlib import Path
 state = Path(STATE)   # the transport passes the CLI a scrubbed environment: paths are baked in
 prompt = sys.stdin.buffer.read()
+system = Path(sys.argv[sys.argv.index("--append-system-prompt-file") + 1]).read_bytes()
 log = state / "calls.json"
 calls = json.loads(log.read_text()) if log.exists() else []
-calls.append({"prompt_bytes": len(prompt), "prompt_tail": prompt.decode()[-4000:], "longest_arg": max(map(len, sys.argv)),
+calls.append({"system_bytes": len(system), "cwd": os.getcwd(), "home": os.environ["HOME"], "prompt_tail": prompt.decode()[-4000:], "longest_arg": max(map(len, sys.argv)),
               "token": os.environ.get("CLAUDE_CODE_OAUTH_TOKEN")})
 log.write_text(json.dumps(calls))
 action = json.loads(Path(SCRIPT).read_text())[len(calls) - 1]
-print(json.dumps({"is_error": False, "structured_output": action, "usage": {"input_tokens": 1, "output_tokens": 1}}))
+print(json.dumps({"type": "system", "subtype": "init"}))
+print(json.dumps({"type": "result", "is_error": False, "structured_output": action, "usage": {"input_tokens": 1, "output_tokens": 1}}))
 '''
 
 
@@ -136,7 +138,9 @@ class RoutedChainTest(sessions.SessionCase):
         self.assertEqual(Path(output, "agent-exit").read_text().strip(), "0")
         calls = json.loads(Path(state, "calls.json").read_text())
         self.assertEqual(len(calls), len(script))
-        self.assertGreater(calls[0]["prompt_bytes"], 128 * 1024)         # the whole prompt reaches the CLI, by stdin
+        self.assertGreater(calls[0]["system_bytes"], 128 * 1024)         # the whole prompt reaches the CLI, by a file
+        self.assertEqual(len({call["cwd"] for call in calls}), 1)        # the path is in the CLI's system prompt
+        self.assertEqual(len({call["home"] for call in calls}), 1)
         self.assertLess(max(call["longest_arg"] for call in calls), 4096)
         self.assertEqual({call["token"] for call in calls}, {"synthetic-token"})
         self.assertIn("Goal", calls[1]["prompt_tail"])      # the Read came back to the model
