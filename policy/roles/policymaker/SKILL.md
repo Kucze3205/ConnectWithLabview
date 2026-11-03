@@ -102,6 +102,14 @@ and writing notes, and ended `partial` without ever writing `.session/orders.jso
   and ends `partial` (`input_budget`) near turn 27. Plan to have the orders written
   well before that.
 - Never end a session with `shaper: null` and no `.session/orders.json`.
+- With a shaper set (since 2026-11-03 `shaper: planner`, the script `execution/planner.py`),
+  orders are optional. A session whose trigger is only "the first iteration of the loop"
+  and which sees no failure to answer reads the startup files, updates
+  `policy/working-memory.md` and writes `.session/report.md`, then ends. Ending `done`
+  matters: two consecutive sessions that do not end `done` roll `policy/` back, which
+  would undo the planner. If the planner fails an iteration (no rule for the milestone
+  state), extend `execution/planner.py` for the next milestone rather than returning
+  to `shaper: null`.
 
 ## Order the work
 
