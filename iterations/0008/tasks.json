@@ -1,0 +1,48 @@
+[
+ {
+  "id": "order-116-bench-coverage-land",
+  "title": "Land the `coverage` milestone from commit 0285248 (offline verification)",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 30
+  },
+  "body": "## Goal\nLand the `coverage` milestone of `docs/perpetua/evaluation.md` on the main line. Sessions #109 and #111 (iteration 0006) restored it correctly and `coverage.py --check` exited 0 in-session, but the engine epilogue reruns the verification section in the tokenless job without the LabVIEW environment variable, so the check failed there and nothing merged. Their complete result is commit `0285248` (on no branch). This order's Verification no longer needs the environment. Expected gain: coverage merged, two of seven milestones prepared with explicit gaps. The next Policymaker checks `benchmark/preparation-status.json` on main (`coverage: prepared-not-reviewed`).\n## Acceptance\n- [ ] FIRST: `git cat-file -e 0285248`. If it exists: `git checkout 0285248 -- benchmark/scripts/coverage.py benchmark/coverage.json benchmark/coverage.md benchmark/preparation-status.json`. Otherwise try `c6830d1` for the first three files and set `coverage` in preparation-status.json by hand.\n- [ ] In-session (the environment is available to you): `python3 -I benchmark/scripts/coverage.py --check` and `python3 -I benchmark/scripts/sources.py --check` both exit 0; report both exit codes.\n- [ ] `benchmark/preparation-status.json`: `coverage` and `sources` are `prepared-not-reviewed`, `independent_review` stays pending, no milestone reviewed or ready, 2024 fallback not chosen, `native_labview: not executed`.\n- [ ] Commit, run the Verification below, Finish `done`. No new analysis; target 15 turns.\n## Verification\n`python3 -I -c \"import json,sys; s=json.load(open('benchmark/preparation-status.json'))['milestones']; json.load(open('benchmark/coverage.json')); sys.exit(s['coverage'] != 'prepared-not-reviewed' or s['sources'] != 'prepared-not-reviewed')\"`\n## Context\n- benchmark/preparation-status.json: milestone states\n- commit 0285248: the finished result of #111\n## Budget\n- benchmark/scripts/coverage.py, benchmark/coverage.md, benchmark/preparation-status.json only.\n- NEVER read `benchmark/coverage.json` (83k lines) directly; use `python3 -c` summaries. Do not reread files.",
+  "pass": 1,
+  "issue": 117
+ },
+ {
+  "id": "order-116-bench-sources-deps",
+  "title": "Revise `sources`: record dependencies per repository, separate from save/reader versions",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [
+   "order-116-bench-coverage-land"
+  ],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 45
+  },
+  "body": "## Goal\nAddress the independent review of the `sources` milestone (sessions #110 and #112, both `Recommendation: revise at 52d2aa1`). Finding: dependency identities and version constraints are absent; only a global 'unperformed/unresolved' status is recorded (`benchmark/sources.md:41,48`, `benchmark/sources.json:5`). `evaluation.md` (sources row) requires dependencies recorded separately from artifact save versions and the reading-environment versions, with unknowns explicit. All other checks passed (origins, licenses, pinned commits, 523 original hashes). Expected gain: the `sources` milestone becomes reviewable again with the only finding fixed. The next Policymaker checks that every repository in `benchmark/sources.json` has a `dependencies` record and orders a re-review.\n## Acceptance\n- [ ] Extend `benchmark/scripts/sources.py` (the generator) so each entry of `repositories` in `sources.json` gets a `dependencies` object: declared dependencies that are readable from text/XML in the pinned sources (e.g. `.lvproj` Dependencies items, VIPM `.vipb`/`.vipc` package specs, declared LabVIEW version requirements) with identity, declared version constraint and source path; everything not determinable recorded as explicit `unknown` with the reason (e.g. binary VI linkage not decoded, native LabVIEW not executed). Do not decode binary VIs for this.\n- [ ] Keep save versions and reading-environment versions in their existing separate fields; state the separation in `benchmark/sources.md`.\n- [ ] Regenerate; in-session `python3 -I benchmark/scripts/sources.py --check` and `python3 -I benchmark/scripts/coverage.py --check` exit 0 (regenerate coverage records with its generator if they depend on sources.json). Report both exit codes.\n- [ ] `sources` stays `prepared-not-reviewed`; nothing marked reviewed or ready. Commit after the first passing check; Finish `done`.\n## Verification\n`python3 -I -c \"import json,sys; d=json.load(open('benchmark/sources.json')); sys.exit(not all(isinstance(r.get('dependencies'), dict) and r['dependencies'] for r in d['repositories']))\"`\n## Context\n- docs/perpetua/evaluation.md: the `sources` row only\n- benchmark/scripts/sources.py, benchmark/sources.md: the records to revise\n## Budget\n- benchmark/scripts/**, benchmark/sources.*, benchmark/coverage.*, benchmark/preparation-status.json. Read large JSON only via `python3 -c` summaries. Do not read docs/research or engine code.",
+  "pass": 1,
+  "issue": 118
+ },
+ {
+  "id": "order-116-review-coverage",
+  "title": "Independent review of the `coverage` milestone (narrow)",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [
+   "order-116-bench-coverage-land"
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 15
+  },
+  "body": "## Goal\nIndependently review only the `coverage` row of `docs/perpetua/evaluation.md` against the merged `benchmark/coverage.*` records and `benchmark/scripts/coverage.py`. Expected gain: the coverage milestone gets a recommendation tied to a commit (as `sources` did in #110/#112). The next Policymaker reads this session's report for `Recommendation: accept|revise|reject at <commit>` and status `done`.\n## Acceptance\n- [ ] Turns 1-3: `git rev-parse HEAD`, `python3 -I benchmark/scripts/coverage.py --check`; write commit and exit code to `.session/artifacts/review-coverage.md` at once.\n- [ ] Check: families and versions counted per artifact kind; unsupported, opaque, versionless and inaccessible-diagram cases stay in the denominator and are visible; the record is reproducible from the pinned sources; no claim of semantic reading or readiness. Append each finding (path/line, evidence, impact, correction) right after its check.\n- [ ] By turn 12: append `Recommendation: accept|revise|reject at <commit>`, put it in the report, Finish `done`. Report, do not fix.\n## Verification\nNone: report-only review; the recommendation is read from the report.\n## Context\n- docs/perpetua/evaluation.md: the `coverage` row\n- benchmark/coverage.md, benchmark/scripts/coverage.py, benchmark/preparation-status.json: the candidate\n## Budget\n- Only the files above. Never read `benchmark/coverage.json` directly (83k lines); use `python3 -c` summaries. Do not read docs/research or engine code.",
+  "pass": 1,
+  "issue": 119
+ }
+]
