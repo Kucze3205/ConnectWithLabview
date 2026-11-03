@@ -1,0 +1,46 @@
+[
+ {
+  "id": "order-131-bench-sources-deps-land",
+  "title": "Land saved sources dependency records and repair evidence hashes",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 25
+  },
+  "body": "## Goal\nReuse session #123's dependency extraction at ef9db89. It stopped partial/input_budget; its report claimed re-pinning, but preparation.json was unchanged and four evidence hashes would mismatch. Project virtual folders were also counted as dependency identities. Expected gain: a corrected, reviewable sources milestone on main. The next Policymaker checks actual generator exits, evaluator errors and the independent re-review.\n## Acceptance\n- [ ] Restore only benchmark/scripts/sources.py, benchmark/sources.json, benchmark/sources.md and benchmark/coverage.json from ef9db89; do not redo extraction.\n- [ ] Exclude project Type=Folder items from declared dependencies. Consolidate duplicate declarations without losing source paths, kinds or differing version constraints; retain explicit unknowns. Keep dependency constraints separate from artifact save versions and reading-environment versions.\n- [ ] Regenerate sources, then coverage with their existing generators. Run python3 -I benchmark/scripts/sources.py --check and python3 -I benchmark/scripts/coverage.py --check in-session; record actual exit codes.\n- [ ] Update every changed evidence hash in benchmark/preparation.json. Run python3 -I policy/evaluator/evaluate.py --check; quote actual output and exit code.\n- [ ] Sources and coverage remain prepared-not-reviewed, independent review pending, native LabVIEW not executed; no readiness claim.\n- [ ] Run git status --short and report the actual changed paths. Leave changes staged if git identity is unavailable; the engine commits. Write .session/report.md before finishing done.\n## Verification\n`python3 -I -c \"import json,sys,hashlib; d=json.load(open('benchmark/sources.json')); p=json.load(open('benchmark/preparation.json'))['milestones']; bad=[r['path'] for m in p.values() for r in m if hashlib.sha256(open(r['path'],'rb').read()).hexdigest()!=r['sha256']]; deps=[r.get('dependencies') for r in d['repositories']]; folders=[e for v in deps if isinstance(v,dict) for e in v.get('declared',[]) if e.get('identity') in ('Dependencies','vi.lib','user.lib','instr.lib')]; sys.exit(bool(bad) or bool(folders) or not all(isinstance(v,dict) and v for v in deps))\"`\n## Context\n- ef9db89: saved extraction from iteration 0009, session #123.\n- benchmark/preparation.json: evidence hashes checked again after rebase.\n## Budget\nRead benchmark/scripts/sources.py, benchmark/sources.md and benchmark/preparation*.json only; inspect sources.json and coverage.json through bounded Python summaries. Use the existing generators and prepared public sources. Do not read engine code or redo research.",
+  "pass": 1,
+  "issue": 132
+ },
+ {
+  "id": "order-131-review-coverage2",
+  "title": "Independent coverage review with findings saved directly in the report",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 20
+  },
+  "body": "## Goal\nIndependently review the coverage row of docs/perpetua/evaluation.md against the accepted coverage records. Session #124 ended partial/session_budget and its report contained only an unavailable artifact reference; do not infer its findings. Expected gain: a readable recommendation tied to the inspected commit. The next Policymaker reads the report and checks commit applicability.\n## Acceptance\n- [ ] First run git rev-parse HEAD and python3 -I benchmark/scripts/coverage.py --check. Immediately write .session/report.md with commit, actual exit code and Recommendation: pending.\n- [ ] Check inventory by artifact family and version, modules and access conditions; difficult, unsupported, opaque, versionless and inaccessible-diagram cases remain visible in the denominator. Check reproducibility from pinned sources and absence of unsupported semantic-reading or readiness claims.\n- [ ] Append each finding directly to .session/report.md with evidence path/line, impact and correction. Keep missing coverage and unmeasured quality explicit.\n- [ ] By turn 14 replace pending with Recommendation: accept|revise|reject at <commit>, list unchecked items and finish done. Report findings without fixing the candidate.\n## Verification\nNone: report-only review.\n## Context\n- docs/perpetua/evaluation.md: coverage requirements.\n- benchmark/coverage.md, benchmark/scripts/coverage.py and benchmark/preparation-status.json: candidate evidence.\n## Budget\nRead only those files and bounded Python summaries of benchmark/coverage.json; never read the large JSON directly. No engine code or additional research.",
+  "pass": 1,
+  "issue": 133
+ },
+ {
+  "id": "order-131-review-sources2",
+  "title": "Independent sources re-review after dependency records land",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [
+   "order-131-bench-sources-deps-land"
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 20
+  },
+  "body": "## Goal\nReviews #110/#112 recommended revise at 52d2aa1 because per-source dependency identities and constraints were missing. Re-review the sources row after the dependency repair. Expected gain: an independent recommendation tied to the inspected commit, read by the next Policymaker.\n## Acceptance\n- [ ] First run git rev-parse HEAD and python3 -I benchmark/scripts/sources.py --check. Immediately write .session/report.md with commit, actual exit code and Recommendation: pending.\n- [ ] Sample at least five dependency declarations against pinned public .lvproj/.vipb sources. Check identities, constraints and preserved provenance, explicit reasons for unknowns, exclusion of folder items and separation from save/reading-environment versions.\n- [ ] Spot-check previously passing origin, license, pinned-commit and original-hash properties. Append findings directly to .session/report.md with evidence path/line, impact and correction. Keep missing coverage and unmeasured quality explicit.\n- [ ] By turn 14 replace pending with Recommendation: accept|revise|reject at <commit>, list unchecked items and finish done. Report findings without fixing the candidate; do not mark readiness established.\n## Verification\nNone: report-only review.\n## Context\n- docs/perpetua/evaluation.md: sources requirements.\n- benchmark/sources.md and benchmark/scripts/sources.py: candidate evidence.\n## Budget\nRead those files, bounded Python summaries of benchmark/sources.json and sampled pinned public sources under LABVIEW_ENVIRONMENT. Never read the large JSON directly. No engine code or additional research.",
+  "pass": 1,
+  "issue": 134
+ }
+]
