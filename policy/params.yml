@@ -60,7 +60,7 @@ ceilings:                        # a task's limits never exceed these; the engin
   max_turns: 150
 policymaker_triggers:                 # the Policymaker runs after an iteration closes when one fires; it never blocks an iteration.
                                  # A new audit report always calls it. null: off
-  every_iterations: 5            # after every K-th iteration
+  every_iterations: 1            # shaper: null needs the Policymaker's orders every iteration (docs/perpetua/engine.md); 5 failed iteration 0007 (issue 100)
   no_progress: 3                 # each time this many more iterations in a row went without an improving change
 context:                         # what each model request carries of the session history; bounded by engine.yml context_ceilings
   history_bytes: 40000           # about 10k tokens; every turn is a stateless call resending this (owner note 2026-10-24)
