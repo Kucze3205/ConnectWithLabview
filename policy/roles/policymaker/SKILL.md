@@ -80,37 +80,6 @@ with concrete owner steps and a readiness check. Use `limits-change` or `engine-
 for changes reserved to the owner, following the engine's request formats; give an `engine-change` a `test` command so the engine can prove the patch before opening its pull request.
 Explain what each request unblocks.
 
-## Order first, investigate second
-
-With `shaper: null` the iteration's only tasks are your orders, and an iteration
-with no valid orders fails (Perpetua #309). Iterations 0001-0003 failed this way:
-sessions #87, #91 and #94 spent their whole turn or input budget reading history
-and writing notes, and ended `partial` without ever writing `.session/orders.json`.
-
-- Within your first ten turns, after reading only the startup files, write a valid
-  `.session/orders.json` from what you already know. A small, bounded order that
-  retries or splits the previous iteration's stalled task is enough
-  (`.session/loop-state.json` lists the previous tasks and how they ended).
-- Only then investigate further, and refine the same file in place. A refinement
-  that fails validation must not replace a valid file: keep the last valid one.
-- Keep each order small enough to finish inside its own `max_turns`. A task that
-  ended `partial` at its turn cap is split or given fewer acceptance items, not
-  retried unchanged (iteration 0000: `order-78-review-sources` used all 60 turns).
-- Do not re-read startup files. Their content is in your first turns; copy what you
-  need into `policy/working-memory.md` once.
-- Budget: a Policymaker session on Codex pays about 30k uncached input per turn
-  and ends `partial` (`input_budget`) near turn 27. Plan to have the orders written
-  well before that.
-- Never end a session with `shaper: null` and no `.session/orders.json`.
-- With a shaper set (since 2026-11-03 `shaper: planner`, the script `execution/planner.py`),
-  orders are optional. A session whose trigger is only "the first iteration of the loop"
-  and which sees no failure to answer reads the startup files, updates
-  `policy/working-memory.md` and writes `.session/report.md`, then ends. Ending `done`
-  matters: two consecutive sessions that do not end `done` roll `policy/` back, which
-  would undo the planner. If the planner fails an iteration (no rule for the milestone
-  state), extend `execution/planner.py` for the next milestone rather than returning
-  to `shaper: null`.
-
 ## Order the work
 
 Order work as a task graph in `.session/orders.json`; the order of work comes from

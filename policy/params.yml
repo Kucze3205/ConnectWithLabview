@@ -2,12 +2,10 @@
 # Starting rationale and owner decisions: docs/perpetua/operating-parameters.md.
 # Use existing subscriptions only; routing checks actual availability and falls back
 # within engine.provider_pool. A configured model is not proof of available quota.
-# Owner decision 2026-11-01 (docs/perpetua/setup-decisions.md): no starting shaper, the Policymaker organizes the execution layer.
-# 2026-11-03 (issue 95): with shaper: null iterations 0001-0003 failed because the Policymaker ended `partial` before writing
-# .session/orders.json (Perpetua issue 309: an iteration with no tasks fails). The script shaper `planner` (execution/planner.py,
-# no model, no credentials) now writes the task graph deterministically. The Policymaker still owns this choice: change `shaper`
-# back to null or to another role when evidence calls for it. The orchestrator role stays registered, unused.
-shaper: planner                  # the role that decides what an iteration does and writes its task graph (execution layer)
+# Owner decision 2026-11-01 (docs/perpetua/setup-decisions.md): no starting shaper. The Policymaker decides how the
+# execution layer is organized and changes it when progress is insufficient. The orchestrator role stays registered, unused.
+# Without a shaper the iteration's only tasks are Policymaker orders; an iteration with no tasks fails (Perpetua issue 309).
+shaper: null                     # the role that decides what an iteration does and writes its task graph (execution layer)
 criterion: "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties"
 # Explicit ordered candidates by task class. role name selects a matching class;
 # route:<class> selects another declared class. New roles use the declared default.
