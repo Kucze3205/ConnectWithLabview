@@ -26,5 +26,33 @@
   "body": "## Goal\nIndependently review only the `sources` row of `docs/perpetua/evaluation.md` against the prepared `benchmark/sources.*` records. Expected gain: the first milestone gets a reviewed recommendation tied to a commit. Session #103 wrote an artifact but stopped `partial` at 12 turns on the input budget; your session has about the same capacity, so keep every step small. The next Policymaker checks that `.session/artifacts/review-sources.md` ends with `Recommendation:` naming the reviewed commit, and that the session reports `done`.\n## Acceptance\n- [ ] Turn 1-3: `git rev-parse HEAD`, run `python3 -I benchmark/scripts/sources.py --check`; write commit and exit code to `.session/artifacts/review-sources.md` at once.\n- [ ] Check origin, license, pinned commit and SHA256 of originals; dependencies, save version and reading environment recorded separately; originals preserved. Append each finding (path/line, evidence, impact, correction) right after the check.\n- [ ] By turn 10 at the latest: append `Recommendation: accept|revise|reject at <commit>` and Finish with status `done`. Report, do not fix.\n## Verification\n`python3 -I benchmark/scripts/sources.py --check`\n## Context\n- docs/perpetua/evaluation.md: the `sources` row\n- benchmark/sources.md, benchmark/sources.json, benchmark/preparation-status.json: the candidate\n## Budget\n- Only the files above. Do not read docs/research, coverage files or engine code. Read large JSON only through `python3 -c` summaries.",
   "pass": 1,
   "issue": 110
+ },
+ {
+  "id": "order-108-bench-coverage",
+  "title": "Land the `coverage` milestone record (resume commit c6830d1)",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 40
+  },
+  "body": "## Goal\nLand the `coverage` milestone of `docs/perpetua/evaluation.md` on the main line. Session #104 (iteration 0005) already produced `benchmark/scripts/coverage.py`, `benchmark/coverage.json` and `benchmark/coverage.md` in commit `c6830d1`, but stopped `partial` on the engine's input budget, so nothing merged. Expected gain: two of seven milestones prepared with explicit gaps, merged. The next Policymaker checks `benchmark/preparation-status.json` (`coverage: prepared-not-reviewed`) and that the verification command below exits 0 on the main line.\n## Acceptance\n- [ ] FIRST: `git cat-file -e c6830d1`. If it exists, restore with `git checkout c6830d1 -- benchmark/scripts/coverage.py benchmark/coverage.json benchmark/coverage.md` and run the verification. If it does not exist, write `benchmark/scripts/coverage.py` anew (generator + `--check`, pattern of `benchmark/scripts/sources.py`, method of `docs/research/scripts/coverage/inventory.py`) and generate the record.\n- [ ] `python3 -I benchmark/scripts/coverage.py --check` exits 0 and exits non-zero when the record differs.\n- [ ] `benchmark/preparation-status.json` sets `coverage` to `prepared-not-reviewed`; `independent_review` stays pending; no milestone marked reviewed or ready; the 2024 fallback is not chosen; gaps stay in the denominator (already listed in coverage.md).\n- [ ] Report `done` with a short list of what coverage cannot show without native LabVIEW (`native_labview: not executed`).\n## Verification\n`python3 -I benchmark/scripts/coverage.py --check`\n## Context\n- benchmark/preparation-status.json: milestone states\n- benchmark/scripts/sources.py: existing generator/--check pattern\n- docs/perpetua/evaluation.md: `coverage` row only\n## Budget\n- benchmark/scripts/**, benchmark/preparation-status.json, benchmark/coverage.md, docs/perpetua/evaluation.md\n- NEVER read `benchmark/coverage.json` (83k lines); inspect it only through the script or `python3 -c` summaries. Do not re-read files. Commit as soon as the check passes, then finish.",
+  "pass": 1,
+  "issue": 111
+ },
+ {
+  "id": "order-108-review-sources",
+  "title": "Independent review of the `sources` milestone (narrow)",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 12
+  },
+  "body": "## Goal\nIndependently review only the `sources` row of `docs/perpetua/evaluation.md` against the prepared `benchmark/sources.*` records. Expected gain: the first milestone gets a reviewed recommendation tied to a commit. Session #103 wrote an artifact but stopped `partial` at 12 turns on the input budget; your session has about the same capacity, so keep every step small. The next Policymaker checks that `.session/artifacts/review-sources.md` ends with `Recommendation:` naming the reviewed commit, and that the session reports `done`.\n## Acceptance\n- [ ] Turn 1-3: `git rev-parse HEAD`, run `python3 -I benchmark/scripts/sources.py --check`; write commit and exit code to `.session/artifacts/review-sources.md` at once.\n- [ ] Check origin, license, pinned commit and SHA256 of originals; dependencies, save version and reading environment recorded separately; originals preserved. Append each finding (path/line, evidence, impact, correction) right after the check.\n- [ ] By turn 10 at the latest: append `Recommendation: accept|revise|reject at <commit>` and Finish with status `done`. Report, do not fix.\n## Verification\n`python3 -I benchmark/scripts/sources.py --check`\n## Context\n- docs/perpetua/evaluation.md: the `sources` row\n- benchmark/sources.md, benchmark/sources.json, benchmark/preparation-status.json: the candidate\n## Budget\n- Only the files above. Do not read docs/research, coverage files or engine code. Read large JSON only through `python3 -c` summaries.",
+  "pass": 1,
+  "issue": 112
  }
 ]
