@@ -217,6 +217,15 @@ class WorkflowTest(unittest.TestCase):
         self.assertEqual(jobs["epilogue"]["needs"], ["prep", "stage", "session"])
         self.assertIn("github.token", str(jobs["epilogue"]))
 
+    def test_a_failed_stage_has_a_job_that_schedules_the_next_attempt(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            jobs = yaml.safe_load(fh)["jobs"]
+        job = jobs["stage-failed"]
+        self.assertIn("always()", job["if"])                # a failed need skips a job without it
+        self.assertIn("needs.stage.result == 'failure'", job["if"])
+        self.assertIn("loop.py stage-failed", str(job["steps"]))
+        self.assertIn("needs.stage.result == 'success'", jobs["epilogue"]["if"])
+
     def test_every_checkout_leaves_no_credentials_behind(self):
         for f, text, doc in self.workflows():
             for step in [s for j in doc["jobs"].values() for s in j.get("steps", [])]:

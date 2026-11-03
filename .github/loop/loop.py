@@ -36,6 +36,7 @@ MAX_AGE_DAYS = 30
 MAX_KICKS = 3
 CRASH_STREAK = 3                # consecutive `crashed` without a commit
 MAX_SLEEP_S = 340 * 60          # resume.yml: a job is limited to 360 min; a longer park is the watchdog's
+STAGE_RETRY_MIN = (5, 30)       # waits after a failed `stage`; one more failure in a row is an outage
 GRACE_MIN = 30                  # covers dispatch latency, never working time
 PUSH_TRIES = 3
 JOB_MAX_MIN = 355               # GitHub kills a job at 360 min; the epilogue must fit
@@ -322,6 +323,28 @@ def stage(n, work, trusted):
 # ---------------------------------------------------------------- artifacts: large outputs live in release assets
 
 ARTIFACT_LINE = re.compile(r"^- artifact: (\S+) \| release: (\S+) \| size: (\d+) \| sha256: ([0-9a-f]{64})$", re.M)
+
+
+def stage_failed(n):
+    """`stage` died, so this run has no epilogue and nothing else would start the issue again before the watchdog,
+    whose cron lags by hours. Bounded: a cause that does not pass must not relaunch forever."""
+    if not c.guard_ok() or c.outage_open():
+        return
+    i = c.issue(n)
+    if i["state"] != "open" or not c.in_loop(c.label_names(i)):
+        return
+    failures = int(c.report_fields(n).get("stage_failures") or 0)
+    if failures >= len(STAGE_RETRY_MIN):
+        c.update_report(n, {"stage_failures": None})
+        c.open_outage("session #%s failed to stage %s times in a row" % (n, failures + 1),
+                      "The `stage` job failed every time, so the session never started.",
+                      "Read the error in the `stage` job of the latest `session #%s` run, fix the cause, then close this issue." % n)
+        return
+    when = c.now() + timedelta(minutes=STAGE_RETRY_MIN[failures])
+    c.update_report(n, {"status": "paused", "cause": "stage-failed", "stage_failures": failures + 1, "resume_after": c.iso(when)},
+                    "The session could not be staged; another attempt is scheduled.")
+    c.edit_labels(n, add=["blocked:rate-limit"])
+    c.workflow_run("resume.yml", issue=n)
 
 
 def upload_artifacts(n, work, k):
@@ -727,7 +750,7 @@ def finalize(n, work):
         return
     exec_path = os.path.join(tmp, "claude-execution-output.json")
     limited, reset, prose = False, None, ""
-    upd = {"branch": "task/%s" % n, "iteration": k, "runner": os.environ.get("RUNNER_OS") or None}
+    upd = {"branch": "task/%s" % n, "iteration": k, "runner": os.environ.get("RUNNER_OS") or None, "stage_failures": None}
     if script:
         upd["cause"] = "exit=%s" % exit_code if exit_code not in ("0", "") else None
         status = "done" if exit_code == "0" else "crashed"
@@ -1473,6 +1496,8 @@ def main(argv):
         resolve(int(args[0]))
     elif cmd == "stage":
         stage(int(args[0]), args[1], args[2])
+    elif cmd == "stage-failed":
+        stage_failed(int(args[0]))
     elif cmd == "epilogue":
         epilogue(int(args[0]), *args[1:4])
     elif cmd == "request-closed":
