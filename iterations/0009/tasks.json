@@ -1,0 +1,48 @@
+[
+ {
+  "id": "order-121-bench-coverage-land2",
+  "title": "Land the `coverage` milestone from 0285248 and re-pin benchmark/preparation.json hashes",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 30
+  },
+  "body": "## Goal\nLand the `coverage` milestone on main. Session #117 (iteration 0008) restored the files from `0285248` correctly and both in-session checks exited 0, but after rebase the engine ran `python3 policy/evaluator/evaluate.py --check`, which rejected it: `benchmark/preparation.json` pins the sha256 of `benchmark/preparation-status.json`, and that file changed (`empty evidence or hash mismatch: benchmark/preparation-status.json`). This time the pinned hashes are updated in the same change. Expected gain: coverage merged as `prepared-not-reviewed` and indexed as evidence, so `evaluate.py --check` on main reports `errors: []` and no longer lists `coverage` under `missing`. The next Policymaker runs that check on main.\n## Acceptance\n- [ ] `git checkout 0285248 -- benchmark/scripts/coverage.py benchmark/coverage.json benchmark/coverage.md benchmark/preparation-status.json` (do not redo any analysis).\n- [ ] In-session (the environment is available to you): `python3 -I benchmark/scripts/coverage.py --check` and `python3 -I benchmark/scripts/sources.py --check` exit 0; report both exit codes.\n- [ ] Edit `benchmark/preparation.json`: recompute the `sha256` of `benchmark/preparation-status.json` under `sources`; set `coverage` to references (path + sha256) for `benchmark/coverage.md`, `benchmark/coverage.json`, `benchmark/scripts/coverage.py` and `benchmark/preparation-status.json`. Compute hashes with `python3 -c` and hashlib. Keep the existing key layout (`schema_version`, `milestones` only).\n- [ ] `python3 -I policy/evaluator/evaluate.py --check` exits 0 and `coverage` is not in `missing`; report its output.\n- [ ] `benchmark/preparation-status.json`: `coverage` and `sources` `prepared-not-reviewed`, `independent_review` pending, nothing reviewed or ready, 2024 fallback not chosen, `native_labview: not executed`.\n- [ ] Commit; if `git commit` fails for a missing identity, leave the changes staged and say so. Run the Verification, Finish `done`. Target 15 turns.\n## Verification\n`python3 -I -c \"import json,sys,hashlib; p=json.load(open('benchmark/preparation.json'))['milestones']; s=json.load(open('benchmark/preparation-status.json'))['milestones']; bad=[r['path'] for m in p.values() for r in m if hashlib.sha256(open(r['path'],'rb').read()).hexdigest()!=r['sha256']]; sys.exit(bool(bad) or not p['coverage'] or s['coverage']!='prepared-not-reviewed' or s['sources']!='prepared-not-reviewed')\"`\n## Context\n- commit 0285248: the finished coverage result of #111\n- benchmark/preparation.json: pinned evidence index checked by the engine\n## Budget\n- benchmark/scripts/coverage.py, benchmark/coverage.md, benchmark/preparation-status.json, benchmark/preparation.json only.\n- NEVER read `benchmark/coverage.json` (83k lines) directly; use `python3 -c` summaries. Do not reread files.",
+  "pass": 1,
+  "issue": 122
+ },
+ {
+  "id": "order-121-bench-sources-deps",
+  "title": "Revise `sources`: record dependencies per repository, separate from save/reader versions",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [
+   "order-121-bench-coverage-land2"
+  ],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 45
+  },
+  "body": "## Goal\nAddress the independent review of the `sources` milestone (sessions #110 and #112, both `Recommendation: revise at 52d2aa1`). Finding: dependency identities and version constraints are absent; only a global 'unperformed/unresolved' status is recorded (`benchmark/sources.md:41,48`, `benchmark/sources.json:5`). `evaluation.md` (sources row) requires dependencies recorded separately from artifact save versions and reading-environment versions, with unknowns explicit. All other checks passed (origins, licenses, pinned commits, 523 original hashes). Expected gain: `sources` becomes reviewable again with the only finding fixed. The next Policymaker checks that every repository in `benchmark/sources.json` has a non-empty `dependencies` record and orders a re-review.\n## Acceptance\n- [ ] Extend `benchmark/scripts/sources.py` (the generator) so each entry of `repositories` in `sources.json` gets a `dependencies` object: declared dependencies readable from text/XML in the pinned sources (e.g. `.lvproj` Dependencies items, VIPM `.vipb`/`.vipc` specs, declared LabVIEW version requirements) with identity, declared version constraint and source path; everything not determinable recorded as explicit `unknown` with the reason (e.g. binary VI linkage not decoded, native LabVIEW not executed). Do not decode binary VIs.\n- [ ] Keep save versions and reading-environment versions in their existing separate fields; state the separation in `benchmark/sources.md`.\n- [ ] Regenerate; in-session `python3 -I benchmark/scripts/sources.py --check` and `python3 -I benchmark/scripts/coverage.py --check` exit 0 (regenerate coverage with its generator if it depends on sources.json). Report both exit codes.\n- [ ] Rewrite the `sha256` of every changed file listed in `benchmark/preparation.json`; `python3 -I policy/evaluator/evaluate.py --check` exits 0 (the engine reruns it after rebase and rejects hash mismatches; that lost #117).\n- [ ] `sources` stays `prepared-not-reviewed`; nothing reviewed or ready. Commit after the first passing checks (if identity is missing, leave staged and say so); Finish `done`.\n## Verification\n`python3 -I -c \"import json,sys,hashlib; d=json.load(open('benchmark/sources.json')); p=json.load(open('benchmark/preparation.json'))['milestones']; bad=[r['path'] for m in p.values() for r in m if hashlib.sha256(open(r['path'],'rb').read()).hexdigest()!=r['sha256']]; sys.exit(bool(bad) or not all(isinstance(r.get('dependencies'), dict) and r['dependencies'] for r in d['repositories']))\"`\n## Context\n- docs/perpetua/evaluation.md: the `sources` row only\n- benchmark/scripts/sources.py, benchmark/sources.md: the records to revise\n## Budget\n- benchmark/scripts/**, benchmark/sources.*, benchmark/coverage.*, benchmark/preparation*.json. Read large JSON only via `python3 -c` summaries. Do not read docs/research or engine code.",
+  "pass": 1,
+  "issue": 123
+ },
+ {
+  "id": "order-121-review-coverage",
+  "title": "Independent review of the `coverage` milestone (narrow)",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [
+   "order-121-bench-coverage-land2"
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 15
+  },
+  "body": "## Goal\nIndependently review only the `coverage` row of `docs/perpetua/evaluation.md` against the merged `benchmark/coverage.*` records and `benchmark/scripts/coverage.py`. Expected gain: the coverage milestone gets a recommendation tied to a commit (as `sources` did in #110/#112). The next Policymaker reads this session's report for `Recommendation: accept|revise|reject at <commit>` and status `done`.\n## Acceptance\n- [ ] Turns 1-3: `git rev-parse HEAD`, `python3 -I benchmark/scripts/coverage.py --check`; write commit and exit code to `.session/artifacts/review-coverage.md` at once.\n- [ ] Check: families and versions counted per artifact kind; unsupported, opaque, versionless and inaccessible-diagram cases stay in the denominator and are visible; the record is reproducible from the pinned sources; no claim of semantic reading or readiness. Append each finding (path/line, evidence, impact, correction) right after its check.\n- [ ] By turn 12: append `Recommendation: accept|revise|reject at <commit>`, put it in the report, Finish `done`. Report, do not fix.\n## Verification\nNone: report-only review; the recommendation is read from the report.\n## Context\n- docs/perpetua/evaluation.md: the `coverage` row\n- benchmark/coverage.md, benchmark/scripts/coverage.py, benchmark/preparation-status.json: the candidate\n## Budget\n- Only the files above. Never read `benchmark/coverage.json` directly (83k lines); use `python3 -c` summaries. Do not read docs/research or engine code.",
+  "pass": 1,
+  "issue": 124
+ }
+]
