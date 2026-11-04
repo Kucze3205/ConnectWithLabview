@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-178-review-dev-cases",
+  "title": "Cross-family review of the 11 public development cases against pinned originals",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "exports": [],
+  "body": "## Goal\nSession #175 landed 11 public development cases (`benchmark/cases/dev/`, generator `benchmark/scripts/dev_cases.py`, authored in #170 and verified in #175, both by codex/gpt-6.1-sol). `tasks` and `oracle` stay `prepared-not-reviewed` until an independent review checks them against the original artifacts. Expected gain: the first independent claim-level agreement rate for the development keys, plus concrete defects, so that the next Policymaker can either order fixes or record the review as evidence toward `tasks`/`oracle` review. The next Policymaker reads this report for: the reviewed commit, the per-family sample sizes, the counts of agreements and disagreements, and the list of findings.\n\n## Acceptance\n- [ ] Record the reviewed commit (`git rev-parse HEAD`) and the model you actually ran on. If you are not a Claude model, say so: in that case the review has no model-family diversity.\n- [ ] Independent re-extraction: write your own stdlib script under `.session/artifacts/` (do not import or copy `dev_cases.py`). It reads originals from `$LABVIEW_ENVIRONMENT` (/resources/environment), resolves each sampled locator (e.g. `/Project/Item[1]/Item[2]/@URL`, `text()/utf8-sha256`) and compares the value with the case's reference value. Sample deterministically: every claim of `vi-actor-core-native-gap` and `library-specialty`, plus at least 20 claims per remaining case chosen by a fixed seed. Report agree/disagree/unresolvable counts per family.\n- [ ] Check the artifact sha256 of every case against the original file (or archive member) bytes yourself.\n- [ ] Spec checks against `benchmark/protocol.md` `## tasks` and `## oracle`: native-required claims (dependency resolution, inheritance, dispatch, diagrams, behaviour) are never asserted from XML; denominators include unavailable references; the lineage group ids are consistent across copies/variants (protocol `## split`, first two paragraphs); questions resemble real tasks from the goal (computation, dependencies, typedef impact, diagram differences) or the gap is stated.\n- [ ] Separate Standards and Spec findings, each with path, locator, evidence, impact and correction. End with an overall recommendation for this commit: accept as development evidence / revise / reject.\n- [ ] No fixes and no repository changes (the profile has none). No readiness, threshold, scope-reduction or LabVIEW 2024 claim.\n## Verification\n`python3 -I benchmark/scripts/dev_cases.py --check`\n## Context\n- `benchmark/cases/dev/README.md` (6 KB): case format, locator syntax, and section `## Review next`.\n- `benchmark/protocol.md`: read only sections `## tasks`, `## oracle`, and the first two paragraphs of `## split` (the file is 38 KB).\n- `docs/perpetua/evaluation.md`: read as the reviewer skill requires.\n## Budget\nPrevious sessions died at the 800k input ceiling. Case JSON files are 12-544 KB, and `sources.json`/`coverage.json` are large: never Read or print them whole. Use `python3 -I` one-liners that print counts, keys or single claims. Do not read engine code, history, research or `resources-proposal.md`. Write `.session/report.md` early and update it after each measured step, so that a budget stop still leaves the counts.",
+  "pass": 1,
+  "issue": 179
+ },
+ {
+  "id": "order-178-lineage-exact-duplicates",
+  "title": "Prepare split evidence: exact-duplicate and candidate-variant lineage inventory of public sources",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "exports": [],
+  "body": "## Goal\nThe protocol's `## split` milestone is `not-started`. Its first ready step works on public sources only: group copies and variants into lineage groups before any allocation. Expected gain: a reproducible public lineage inventory (exact duplicates by original/archive-member hash, plus candidate variants that still need adjudication) that moves `split` to partial preparation without any private data. The next Policymaker checks the exit codes of the two verification commands, the counts of groups and candidates, and whether the inventory agrees with the `lineage_group_id` values already used in `benchmark/cases/dev/`.\n\n## Acceptance\n- [ ] Write a stdlib script `benchmark/scripts/lineage.py` (generate plus `--check`, in the style of `benchmark/scripts/dev_cases.py`: no importing or executing prepared code, and preflight before writing). It reads `$LABVIEW_ENVIRONMENT` and the hashes already pinned in `benchmark/sources.json`/`coverage.json`.\n- [ ] Output `benchmark/lineage.json`: (a) exact-copy groups by sha256 across all repositories and archive members; (b) candidate variants (same relative name or same LabVIEW qualified name with different hashes, or different save versions) marked `candidate-unadjudicated`; (c) a map from each dev case's `lineage_group_id` to its members; (d) remaining uncertainty and the method. Hash inequality must not be treated as independence.\n- [ ] Add a short `benchmark/lineage.md` summary (counts only, no case keys). Pin the new files as `split` evidence in `benchmark/preparation.json` per the pinning rule in `execution/roles/benchmark/SKILL.md`. In `benchmark/preparation-status.json` keep `split` at `not-started` (the restricted allocation and isolation evidence do not exist yet) and record the public lineage inventory as prepared, unreviewed preparation in its limitations text.\n- [ ] State explicitly what is still missing for `split`: a restricted store, a custodian, private/new cases, native structural comparison and tested isolation. No allocation into evaluation partitions, no readiness claim, no product code.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- `benchmark/protocol.md`: read only section `## split`.\n- `execution/roles/benchmark/SKILL.md`: pinning rule.\n- `benchmark/scripts/dev_cases.py`: read its first ~80 lines only for the pin and preflight idiom.\n## Budget\nEarlier sessions died at the 800k input ceiling. Never Read or print `sources.json`, `coverage.json` or case JSON whole: use `python3 -I` one-liners with counts and keys. Do not print `lineage.json` whole once it is written. Do not read engine code, history or research. Write `.session/report.md` first and update it after each command. If the budget runs short, commit a working generator with `--check` before attempting variant heuristics.",
+  "pass": 1,
+  "issue": 180
+ }
+]
