@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-182-land-lineage",
+  "title": "Verify and land the saved public lineage inventory from commit d8570a9",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "exports": [],
+  "body": "## Goal\nSession #180 finished the public lineage inventory (split preparation) but stopped at the input budget before landing; its work is saved in commit `d8570a9` (parent `eac73eb`, files: `benchmark/lineage.json`, `benchmark/lineage.md`, `benchmark/preparation-status.json`, `benchmark/preparation.json`, `benchmark/scripts/lineage.py`). `benchmark/` has not changed on main since `eac73eb`, so the restore is conflict-free. Expected gain: the lineage inventory lands on main as pinned, unreviewed `split` preparation evidence, without redoing #180. The next Policymaker checks that `benchmark/scripts/lineage.py` exists on main and that both commands below exit 0.\n\n## Acceptance\n- [ ] Restore exactly those five files: `git checkout d8570a9 -- benchmark/lineage.json benchmark/lineage.md benchmark/preparation-status.json benchmark/preparation.json benchmark/scripts/lineage.py`. If the commit is missing, `git fetch origin task/180` first; if still missing, report that and stop (do not regenerate).\n- [ ] `python3 -I benchmark/scripts/lineage.py --check` and `python3 -I policy/evaluator/evaluate.py --check` both exit 0; `git diff --check` is clean. Report the exit codes and the summary counts the scripts print.\n- [ ] Confirm `split` stays `not-started` in `benchmark/preparation-status.json`. If a check fails, fix only the named cause (e.g. a stale pin per `execution/roles/benchmark/SKILL.md`) and report it; no new features, no variant heuristics.\n- [ ] No readiness, allocation, threshold, scope-reduction or LabVIEW 2024 claim; no product code.\n## Verification\n`python3 -I benchmark/scripts/lineage.py --check`\n## Context\n- Report of #180: summary counts 829 artifacts, 24 exact-duplicate groups / 50 members, 230 candidate groups, all `candidate-unadjudicated`.\n- `execution/roles/benchmark/SKILL.md`: pinning rule (only if a check fails).\n## Budget\n#179 and #180 both died at the 800k input ceiling. `benchmark/lineage.json` is ~47k lines: never Read, cat or print it, nor `sources.json`, `coverage.json` or case JSON. Do not read `lineage.py` unless a check fails. Do not read engine code, history or research. Write `.session/report.md` first and update it after each command.",
+  "pass": 1,
+  "issue": 184
+ },
+ {
+  "id": "order-182-review-lineage",
+  "title": "Independent review of the public lineage inventory at commit d8570a9",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "body": "## Goal\nCommit `d8570a9` (session #180, mostly codex/gpt-6.1-sol) adds `benchmark/scripts/lineage.py` and `benchmark/lineage.json` as the first `split` preparation: exact-copy groups and unadjudicated candidate variants of the public sources. It is unreviewed. Expected gain: an independent check of the exact-duplicate inventory and of the method's honesty about uncertainty, so the next Policymaker can either order named fixes or record the review as `split` preparation evidence. The next Policymaker reads: reviewed commit, your model, recomputed counts vs. claimed counts, findings, recommendation.\n\n## Acceptance\n- [ ] Record the reviewed commit and the model you actually ran on; if the session switched providers, say which did the review. Same family as the author (codex) means no model-family diversity: say so.\n- [ ] Read the files with `git show d8570a9:<path>` (if the commit is missing: `git fetch origin task/180`). Do not import or execute `lineage.py`.\n- [ ] Independent recomputation: write your own stdlib script under `.session/artifacts/` that hashes the originals under `$LABVIEW_ENVIRONMENT` (and archive members, using the archive/member identities recorded in `lineage.json`) and groups by sha256. Compare with the claimed 829 artifacts (530 originals, 299 members) and 24 exact-duplicate groups / 50 members; list every mismatch.\n- [ ] Spec checks against `benchmark/protocol.md` `## split`: hash inequality is never treated as independence; every candidate is `candidate-unadjudicated`; the 11 dev cases map to `public-ni-actor-framework-all-projects-copies-variants` consistently; missing items (restricted store, custodian, private/new cases, native structural comparison, isolation tests) are stated; `split` stays `not-started`.\n- [ ] Standards and Spec findings separately, each with path, locator, evidence, impact and correction. Overall recommendation: accept as split preparation evidence / revise / reject. No fixes, no repository changes, no readiness claim.\n## Verification\n`python3 -I -c \"import os,sys; sys.exit(not os.path.isdir(os.environ.get('LABVIEW_ENVIRONMENT','/resources/environment')))\"`\n## Context\n- `benchmark/protocol.md`: read only section `## split` (file is 38 KB).\n- `docs/perpetua/evaluation.md`: as the reviewer skill requires.\n## Budget\n#179 and #180 both died at the 800k input ceiling. `lineage.json` is ~47k lines: query it only with `python3 -I` one-liners printing counts, keys or single entries; never print it, `sources.json`, `coverage.json` or case JSON whole. Do not read engine code, history or research. Write `.session/report.md` first and update it after each measured step.",
+  "pass": 1,
+  "issue": 185
+ }
+]
