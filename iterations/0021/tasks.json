@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-187-land-lineage-2",
+  "title": "Land the saved public lineage inventory from commit d8570a9 (verification without LABVIEW_ENVIRONMENT)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "exports": [],
+  "body": "## Goal\nSession #184 restored the five lineage files from `d8570a9` and every in-session check passed (lineage.py --check exit 0, evaluate.py --check exit 0, git diff --check clean), but the engine epilogue re-ran `lineage.py --check` without `LABVIEW_ENVIRONMENT` and failed (`lineage: LABVIEW_ENVIRONMENT is required`), so nothing merged. Independent review #185 recomputed 829 artifacts / 24 exact-duplicate groups / 50 members with 0 mismatches and recommended acceptance as split preparation evidence. Expected gain: the lineage inventory lands on main; the Verification below needs no environment. The next Policymaker checks that `benchmark/scripts/lineage.py` is on main and that `evaluate.py --check` no longer lists `split` as missing.\n\n## Acceptance\n- [ ] Restore exactly: `git checkout d8570a9 -- benchmark/lineage.json benchmark/lineage.md benchmark/preparation-status.json benchmark/preparation.json benchmark/scripts/lineage.py` (if missing: `git fetch origin task/180`, or use identical commit `2e9ccf1` on `task/184`). Do not regenerate or edit them.\n- [ ] Run `python3 -I benchmark/scripts/lineage.py --check` in-session (the environment is set inside sessions) and the Verification command; report exit codes. `git diff --check` clean.\n- [ ] `split` stays `not-started` in `benchmark/preparation-status.json`. No readiness, allocation, threshold, scope or LabVIEW 2024 claim; no product code.\n## Verification\n`python3 -I -c \"import json,subprocess,sys; r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); sys.exit(bool(r.returncode or d['errors'] or 'split' in d['missing']))\"`\n## Context\n- Report #184 (counts) and #185 (review: accept as split preparation evidence only).\n## Budget\nAbout 55k input last time. `benchmark/lineage.json` is ~47k lines: never Read, cat or print it, nor `sources.json`, `coverage.json` or case JSON. Do not read lineage.py, engine code, history or research. Write `.session/report.md` first.",
+  "pass": 1,
+  "issue": 188
+ },
+ {
+  "id": "order-187-challenge-fixtures",
+  "title": "Prepare development challenge fixtures with frozen expected outcomes (no scorer)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "body": "## Goal\nThe `challenges` milestone is `not-started`; it is one of the two remaining missing milestones before the method can be reviewed as a whole. Expected gain: repeatable public development challenge fixtures whose expected outcomes are frozen from the case reference inventories and protocol rules, so a later Policymaker can order the evaluator role to build a scorer against them (scorer and fixtures stay independent). The next Policymaker reads: the fixture list per protocol row, which rows are fully set up vs. explicit gaps, and the `--check` exit code.\n\n## Acceptance\n- [ ] Write a stdlib generator `benchmark/scripts/challenges.py` (with `--check` that regenerates in memory, compares bytes and never writes) and its output under `benchmark/challenges/` (one JSON per fixture plus a short `README.md`). Derive fixtures from 2-3 existing dev cases, e.g. `class-stop-msg`, one `.lvlib` case, and `vi-actor-core-native-gap` for the unsupported/native-gap row; the script reads case JSON itself and must run without `LABVIEW_ENVIRONMENT` (the engine re-runs Verification without it; #184 failed that way).\n- [ ] Cover each row of `benchmark/protocol.md` `## challenges`: wrong answer (changed literal with a still-valid locator), wrong citation (existing non-supporting locator and an unresolvable one), selective omission (answer and reader dimension separately), extra false / true / unverified claim, duplicate and contradiction, constant export across two cases with differing facts, empty / truncated / failed probe, unsupported case, missing key or zero executed tests, plus positive controls (correct claims and locators).\n- [ ] Each fixture records: source case id and revision, the submitted answer record or reader response in the case contracts' shape, and the frozen expected outcome per required ID and per dimension (correctness, grounding, fidelity) using the case outcome categories, with fixed denominators and the extras ledger. Where a row needs native evidence or computation/typedef semantics the dev cases lack, record it as an explicit gap; do not fake it.\n- [ ] Do not write a scorer and do not touch `policy/evaluator/`. Do not edit `benchmark/preparation.json` or `benchmark/preparation-status.json` (a parallel task lands lineage there); state in the report that pinning and the milestone status are pending. Keep `challenges` unexecuted: no challenge results, readiness, threshold or scope claim; no product code.\n## Verification\n`python3 -I benchmark/scripts/challenges.py --check`\n## Context\n- `benchmark/protocol.md`: read only `## challenges` and the outcome/denominator rules in `## tasks`.\n- `benchmark/cases/dev/README.md`: locator syntax and contracts.\n- `execution/roles/benchmark/SKILL.md`.\n## Budget\n#179 and #180 died at the 800k input ceiling. Never print case JSON, `lineage.json`, `sources.json` or `coverage.json` whole: inspect with `python3 -I` one-liners printing keys, counts or single entries. Do not read engine code, history or research. Write `.session/report.md` first and update it after each step; commit work as you go so a budget stop leaves it saved.",
+  "pass": 1,
+  "issue": 189
+ }
+]
