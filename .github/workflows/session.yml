@@ -5,7 +5,8 @@
 # (`permissions: {}`, only the Claude token and the secrets the owner consented to) runs the agent on it and packs what it
 # left; `epilogue` (GitHub token, a fresh runner) takes that in as data (links, redirected paths and oversized files are
 # refused), reads the commits from a git bundle and does everything else itself. The executor baseline reaches the
-# epilogue through its own artifact, which the session never sees.
+# epilogue through its own artifact, which the session never sees. A failed `stage` has no epilogue: `stage-failed`
+# schedules the next attempt.
 # Two kinds: `agent` (a Claude session) and `script` (a deterministic role, no model, no credential).
 # This loop adds routed execution (`engine.yml` `provider_pool`): an agent session runs `runtime_entry.py` in the same
 # tokenless `session` job with the Claude, Codex and Copilot model credentials; `credentials` refreshes Codex first.
@@ -154,6 +155,24 @@ jobs:
         with:
           name: baseline
           path: ${{ runner.temp }}/baseline
+
+  stage-failed:
+    needs: [prep, stage]
+    if: always() && needs.stage.result == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VARS_AUTOPILOT: ${{ vars.AUTOPILOT }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - run: |
+          pip install -q pyyaml
+          python3 .github/loop/loop.py stage-failed "${{ inputs.issue }}"
 
   session:
     needs: [prep, stage]

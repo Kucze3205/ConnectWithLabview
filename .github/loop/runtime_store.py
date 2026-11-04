@@ -15,6 +15,9 @@ import time
 from urllib.parse import quote
 
 
+RETRY_PAUSES_S = (2, 8)     # GitHub's 5xx responses pass within seconds; writes are compare-and-swap, so a repeat is safe
+
+
 class APIError(RuntimeError):
     def __init__(self, status):
         super().__init__("runtime state API unavailable (HTTP %s)" % status)
@@ -35,12 +38,16 @@ class GitHubBackend:
         command = ["gh", "api", "repos/" + self.repo + "/" + path, "--method", method]
         if value is not None:
             command += ["--input", "-"]
-        result = subprocess.run(command, input=json.dumps(value) if value is not None else None,
-                                env=env, capture_output=True, text=True, timeout=90)
-        if result.returncode:
+        for pause in (*RETRY_PAUSES_S, None):
+            result = subprocess.run(command, input=json.dumps(value) if value is not None else None,
+                                    env=env, capture_output=True, text=True, timeout=90)
+            if not result.returncode:
+                return json.loads(result.stdout) if result.stdout.strip() else None
             found = re.search(r"HTTP (\d+)", result.stderr)
-            raise APIError(int(found[1]) if found else 0)
-        return json.loads(result.stdout) if result.stdout.strip() else None
+            status = int(found[1]) if found else 0
+            if pause is None or 0 < status < 500:       # a 404 or 409 is an answer; 0 means no response at all
+                raise APIError(status)
+            time.sleep(pause)
 
     def initialize(self):
         try:

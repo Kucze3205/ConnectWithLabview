@@ -54,6 +54,39 @@ class EpilogueTest(SessionCase):
         loop.watch_parked()
         self.assertEqual(self.hub.dispatched[-1][1]["issue"], n)
 
+    def test_a_failed_stage_is_parked_and_its_clock_started(self):
+        n = self.issue()
+        loop.stage_failed(n)
+        f = self.hub.report(n)
+        self.assertEqual((f["status"], f["cause"], f["stage_failures"]), ("paused", "stage-failed", "1"))
+        self.assertGreater(c.parse_time(f["resume_after"]), c.now())
+        self.assertIn("blocked:rate-limit", self.hub.issues[n]["_labels"])
+        self.assertEqual(self.hub.dispatched[-1], ("resume.yml", {"issue": n}))
+
+    def test_a_stage_that_keeps_failing_is_an_outage_and_not_relaunched(self):
+        n = self.issue()
+        for _ in loop.STAGE_RETRY_MIN:
+            loop.stage_failed(n)
+        before = list(self.hub.dispatched)
+        loop.stage_failed(n)
+        self.assertEqual(len(self.hub.by_label("outage")), 1)
+        self.assertEqual(self.hub.dispatched, before)
+        self.assertNotIn("stage_failures", self.hub.report(n))          # a fresh count once the owner closes the outage
+
+    def test_a_session_that_ran_clears_the_stage_failures(self):
+        n = self.issue()
+        loop.stage_failed(n)
+        self.w.session(n, report=False, exit_code="1", result=self.limit_result())
+        self.assertNotIn("stage_failures", self.hub.report(n))
+
+    def test_a_failed_stage_of_a_closed_issue_changes_nothing(self):
+        n = self.issue()
+        self.hub.issues[n]["state"] = "closed"
+        before = list(self.hub.dispatched)
+        loop.stage_failed(n)
+        self.assertEqual(self.hub.dispatched, before)
+        self.assertNotIn("blocked:rate-limit", self.hub.issues[n]["_labels"])
+
     def test_the_parked_time_is_accounted_for_on_the_next_run(self):
         n = self.issue()
         self.w.session(n, report=False, exit_code="1", result=self.limit_result())
