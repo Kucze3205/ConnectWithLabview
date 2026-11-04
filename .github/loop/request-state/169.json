@@ -6,7 +6,9 @@
   "base_engine_sha": "20c5ff269afc48b2b68a9fb83bdd7f7752a1b0a328540593bdaa04c4fc37fc46",
   "proposal_sha": "2ff1dccf2be2aea4e0b1b1007832da88ea9e6466a1064afea27c5fb47e1923ea",
   "readiness": "Dispatch the job on one public development VI with independently known behaviour from the prepared sources. Pass only if: the original's sha256 is identical before and after (python3 -I), the job emits native properties and a diagram capture with output sha256 manifest, controlled inputs produce recorded outputs, git status --porcelain shows no source mutation, container networking stays disabled, and a separate session compares the outputs with independently expected values. Compile success alone fails.",
-  "status": "pending",
+  "status": "waiting",
   "issue": 169,
-  "body_sha": "d3392e6446988f9cee8c6d6e975a6891355ac0328570323ac3a4c1d036c56676"
+  "body_sha": "d3392e6446988f9cee8c6d6e975a6891355ac0328570323ac3a4c1d036c56676",
+  "detail": "Waiting for the owner's explicit `capability-ready` confirmation; dependencies remain blocked.",
+  "decided_at": "2026-11-04T22:34:59Z"
 }
