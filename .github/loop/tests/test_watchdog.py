@@ -117,6 +117,21 @@ class JamTest(WatchCase):
             self.hub.close_issue(n, "not planned")
         self.assertFalse(loop.crash_streak())
 
+    def test_sessions_a_failed_iteration_ended_do_not_count(self):
+        """Issue #159: one failed iteration ended its three sessions and that alone opened an outage."""
+        for k in range(3):
+            n = self.hub.create_issue("T%s" % k, "b", labels=["role:worker", "loop:iteration 1"])
+            c.update_report(n, {"status": "crashed", "cause": "iteration-failed"})
+            self.hub.close_issue(n, "not planned")
+        self.assertFalse(loop.crash_streak())
+
+    def test_sessions_a_failed_iteration_ended_do_not_hide_a_streak(self):
+        for k, cause in enumerate([None, "iteration-failed", None, None]):
+            n = self.hub.create_issue("T%s" % k, "b", labels=["role:worker", "loop:iteration 1"])
+            c.update_report(n, {"status": "crashed", "cause": cause})
+            self.hub.close_issue(n, "not planned")
+        self.assertTrue(loop.crash_streak())
+
     def test_closing_an_outage_resets_the_count(self):
         for k in range(3):
             n = self.hub.create_issue("T%s" % k, "b", labels=["role:worker", "loop:iteration 1"])

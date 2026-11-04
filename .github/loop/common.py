@@ -686,7 +686,9 @@ def launch(n):
            for r in session_runs()):
         return False
     roles = roles_of(label_names(i))
-    workflow_run("session.yml", issue=n, role=roles[0] if len(roles) == 1 else "")
+    if not workflow_run("session.yml", issue=n, role=roles[0] if len(roles) == 1 else ""):
+        say("#%s not launched: the dispatch was refused" % n)
+        return False
     LAUNCHED.add(n)
     say("launch #%s" % n)
     return True
@@ -778,9 +780,12 @@ def clean_env(extra=()):
     return env
 
 
+NO_RESULT = -1      # the return code of a command whose job left no output: no command can exit with it
+
+
 def run_command(cmd, tree, timeout_minutes=60):
     """A shell command from the repo (check, verification, goal gate) run on a copy of `tree` in the tokenless job, never
-    on a machine with the token. Returns a CompletedProcess; a job that left no output counts as a failed command."""
+    on a machine with the token. Returns a CompletedProcess; a job that left no output returns NO_RESULT."""
     bundle = tempfile.mkdtemp(prefix="bundle-")
     try:
         shutil.copytree(tree, os.path.join(bundle, "tree"), symlinks=True, ignore=shutil.ignore_patterns(".git"))
@@ -800,5 +805,5 @@ def run_command(cmd, tree, timeout_minutes=60):
     if out:
         shutil.rmtree(out, ignore_errors=True)
     if stdout is None or code is None or not code.strip().isdigit():
-        return subprocess.CompletedProcess(cmd, 1, "", "the tokenless job returned no result for the command")
+        return subprocess.CompletedProcess(cmd, NO_RESULT, "", "the tokenless job returned no result for the command")
     return subprocess.CompletedProcess(cmd, int(code.strip()), stdout, stderr or "")

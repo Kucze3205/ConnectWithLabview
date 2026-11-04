@@ -134,6 +134,7 @@ class FakeHub:
         if workflow == "session.yml":
             self.runs.append({"databaseId": 9000 + len(self.runs), "displayTitle": "session #%s" % inputs["issue"], "status": "queued",
                               "createdAt": self.ts()})
+        return True
 
     def run_list(self, workflow):
         return list(self.runs) if workflow == "session.yml" else []

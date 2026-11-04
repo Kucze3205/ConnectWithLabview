@@ -311,9 +311,19 @@ class EpilogueTest(SessionCase):
         c.sync_main()
         self.assertEqual(c.limits(), {"fix_rounds": 5, "successor_generations": 5, "merge_conflict_retries": 0, "backoff_hours": [1, 72]})
 
-    def test_a_verification_job_that_returns_nothing_fails_the_verification(self):
+    def test_a_verification_job_that_returns_nothing_costs_no_fix_round(self):
+        """The command never ran, so the agent has no error to fix: the run goes red and the session stays open."""
         n = self.issue(body="## Goal\nx\n## Verification\n`true`\n")
         self.w.before_finalize = lambda: setattr(self.hub, "tokenless_fault", "no-artifact")     # after staging, which runs the state script
+        with self.assertRaisesRegex(SystemExit, "tokenless job"):
+            self.w.session(n, files={"src/a.txt": "A"})
+        report = self.hub.report(n)
+        self.assertNotIn("verification", report)
+        self.assertNotIn("fixes", report)
+        self.assertEqual(self.hub.issues[n]["state"], "open")
+
+    def test_a_verification_command_that_fails_still_costs_a_fix_round(self):
+        n = self.issue(body="## Goal\nx\n## Verification\n`false`\n")
         self.w.session(n, files={"src/a.txt": "A"})
         self.assertEqual(self.hub.report(n)["verification"], "fail")
 

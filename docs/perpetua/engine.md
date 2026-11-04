@@ -233,7 +233,9 @@ A plain script (`watchdog.yml`, every 30 minutes and on demand), never an agent:
 - a tokenless job that never ran is GitHub's failure, not the policy's: the dispatch and the download are retried, then a `stage`
   goes red into `stage-failed`, an iteration that cannot start or leave its policy phase fails without a rollback, and any other
   run goes red with its session left open for the watchdog;
-- three consecutive `crashed` sessions without a commit is an outage; three fruitless kicks of one issue too; three failed
+- a verification or `check` command whose job left nothing goes the same way and costs no fix round; the goal gate reads it as not reached;
+- a dispatch refused after its retries is not a launch: the watchdog's kicks count it;
+- three consecutive `crashed` sessions without a commit is an outage, not counting sessions a failed iteration ended; three fruitless kicks of one issue too; three failed
   iterations in a row too;
 - resumes parked sessions that are due; relaunches ready sessions nobody started (kicking before calling);
 - `ceilings.iteration_minutes` (the Policymaker's own): fails an iteration that runs past it;
