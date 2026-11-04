@@ -1,67 +1,55 @@
 # Policy working memory
 
-Considered: iteration records 0000–0013; reviews #146/#147; task #150's final report and
-owner acceptance #151; loop state and startup diagnostics for Policymaker #153, iteration 0014.
-Historical inputs: `.session/history/manifest.json`; selected record `.session/history/records/0013.json`;
-final #150 report `.github/loop/data/session-reports/150/ede6e2116830bcdcf33621b2162300f913d1328d5cd1e8cda301c8d8ae7e35b7.json`.
+Considered: iteration records 0000–0012; review reports #146/#147 (iteration 0012); benchmark/protocol.md as
+reviewed at a595009. Updated by Policymaker #149, iteration 0013.
+Historical inputs: `.session/history/manifest.json`; iteration 0012: `.session/history/records/0012.json`;
+reports: `.github/loop/data/session-reports/<issue>/*.json`.
 
 ## Current organization and state
 - `shaper: null`: always write `.session/orders.json`; it supplies the iteration's work.
-- Iteration 0013: one benchmark session #150, accepted/merged after owner request #151.
-  F1/F2 revision is available in the prepared checkout at `2669ec4bcfcb86f1fabf86c51cf4acdfd153ebb3`;
-  baseline protocol commit `cf38154ea947b34a66494f66a6d3353c32428c50`. The author's protocol checkpoint
-  `165f1c283e27115bdae5e6e9ed6ecc9ffe3791b6` differs from the admitted commit: review the available tree.
-- Original reviews #146/#147 both recommended revise. F1: frozen required-claim accounting, separate
-  dimension outcomes and denominators. F2: independent fixed probes, raw outputs, native-reference
-  alignment and missing/unsupported/error outcomes. Revised sections: tasks 28–42, baseline 84–86,
-  challenges 100–104. Closure remains for independent review, not inferred from acceptance to merge.
-- #150 used both Claude and codex; final model codex/gpt-6.1-sol, 562,970 input tokens, 26 turns.
-  Reviewer routing remains Claude-first to prefer another family. Actual family must be reported;
-  fallback does not guarantee model-family diversity. Independent sessions remain required.
-- The author's evaluator --check passed with 8 evidence refs, benchmark_ready=false,
-  benchmark_executed=false, tool_quality=null; tasks/oracle/split/baseline/challenges still missing.
-  No scoring runtime, native keys or challenge execution was established. Coverage remains incomplete.
-- Startup diagnostic for #153: 11,885 estimated tokens of 100,000, status ok; no budget notice.
+- Iteration 0012: one order (`order-145-review-protocol1`) became two sessions #146 and #147 (same id, both
+  reviewer, both done). Both ran on codex/gpt-6.1-sol after Claude fallback despite Claude-first `reviewer`
+  routing, ~400k codex input each (796k total). Cause of the duplicate unknown; watch whether it recurs.
+- Both reviews: Recommendation **revise** at a595009 (protocol unchanged since cf38154). Shared finding
+  F1/S1: no frozen required-claim accounting / dimension outcome rules / denominators (tasks 26–30, baseline
+  72–76, challenges 85–92). #147 adds F2: no reader-observation contract (fixed probes, raw outputs, native
+  alignment, missing/unsupported/error outcomes). Rest of the method judged consistent with evaluation.md.
+- Resources table (lines 103–109): neither review found any of the 7 rows concrete enough for a `capability`
+  request; each needs named resources, recipient providers, access/publication/revocation and readiness terms.
+  Ordinary public review needs no new access.
+- Caveat: both reviews are codex, same family as the protocol author (#141). The re-review of the revision
+  should be Claude if the revision is done by codex, and vice versa (check the record's `models`).
+- Evaluator --check: exit 0, 8 evidence refs, tasks/oracle/split/baseline/challenges missing; not readiness.
 
-## Orders for iteration 0014
-- `rereview-protocol-f1f2`: reviewer, high, 60 min/30 turns, exports reports 146/147/150. Pin review
-  to 2669ec4 versus cf38154; require per-finding closure, regression check and overall recommendation.
-  Expected gain: evidence the owner can assess before protocol acceptance; no readiness inference.
-- `resource-proposals`: benchmark, medium, 45 min/25 turns, exports reports 146/147. Write only
-  benchmark/resources-proposal.md, one concrete proposal per resource row, prioritizing native jobs
-  and restricted storage. Include recipients, access/publication/revocation, owner steps and readiness;
-  unknowns stay explicit. Expected gain: actionable inputs for later capability requests.
-- Tasks are independent: proposal drafting uses the existing resource table and requests no access,
-  executes no native jobs and spends no new resources. No dependency on an ungranted capability.
-- Next Policymaker: inspect review and proposal outcomes, including actual model families. If revised
-  method is acceptable, use the existing owner gate for pinned protocol/evidence acceptance; merge
-  acceptance alone is not benchmark readiness. If revise, order only the evidenced correction.
-  Submit concrete optional capability requests only after checking the proposals against accepted limits;
-  unavailable resource-dependent work waits for verified readiness while other ready work continues.
+## Orders for iteration 0013
+- `revise-protocol-f1f2` (benchmark, Claude-first, high, 60 min/30 turns, exports reports 146/147): focused
+  F1+F2 edit of benchmark/protocol.md; verification evaluator --check.
+- No parallel re-review: the revision reaches main only after owner merge-acceptance, so a blocked review
+  in the same iteration would read the old text.
+- Next Policymaker: if the revision is accepted/merged, order an independent re-review (family other than the
+  revision's author) focused on F1/F2 plus a regression look. If it failed or stayed partial, read its report
+  and narrow the task. Then: concrete resource proposals (native-job runner, restricted store) as a separate
+  benchmark/research task before any `capability` request. Ask the owner how a commit-bound review
+  recommendation becomes milestone `reviewed` status if still undecided.
 
 ## Milestone evidence
-- sources: review #134 revise → fix #139 → re-review #140 accept at d588fa9. Coverage review #133 accept
-  at 6933e17 as limited inventory. Both remain prepared-not-reviewed in preparation-status.json;
-  do not mark reviewed from review recommendations alone. Owner change gate remains authoritative.
+- sources: review #134 revise → fix #139 → re-review #140 accept at d588fa9. Coverage review #133 accept at
+  6933e17 as limited inventory. Both stay prepared-not-reviewed in benchmark/preparation-status.json; do not
+  mark reviewed from reviews alone (owner change gate).
 
 ## Mechanisms to preserve
-- Input ceiling 800k unique input; codex counts non-cached input. Do not directly read large
-  sources.json/coverage.json; use bounded summaries. Keep sessions short; use measured outcomes.
-- Task Verification runs in-session and offline; checks must read committed files. Report-only
-  reviews can omit commands; an index check verifies neither method content nor benchmark quality.
-- Rebase runs evaluator --check; changed pinned files need preparation.json hashes updated.
+- Input ceiling is 800k unique input; codex counts all non-cached input. Never read large sources.json/
+  coverage.json directly; bounded Python summaries. Keep codex sessions short or route Claude-first.
+- Task Verification runs in-session and again offline; keep it over committed files. Report-only reviews use
+  no command and write report findings from the start.
+- After rebase the engine runs evaluator --check; changed pinned files require preparation.json re-pinning.
 - Missing git identity: leave changes staged; parent engine commits. Partial predecessors block dependants.
-- Requests: `.session/requests.json`; schema `.github/loop/session-protocol.md` (Three additional kinds).
-  Exports: `docs/perpetua/session-exports.md`; order schema `.github/loop/task-graph.md`.
-- Read docs/perpetua/evaluation.md before product planning; implementation requires independently
-  checked, owner-accepted verification method. Read accepted-limits.md before private data or spending.
+- Requests: `.session/requests.json`, format in `.github/loop/session-protocol.md` ("Three additional kinds").
+- Exports contract: `docs/perpetua/session-exports.md`; explicit selectors only. Order format: `.github/loop/task-graph.md`.
 
 ## Open questions
-- Notice #100 is approved/closed in current loop state; #92 remains pending. Do not reinstate the
-  crashed script shaper without contract review.
-- Iteration 0012 created two done reviewer sessions (#146/#147) for one order; cause unknown.
-  No recurrence in 0013. If it recurs, collect evidence before an engine-change request.
-- Actual Claude availability is unmeasured; #150 began on Claude and finished on codex.
-- All-version effort estimate and compatibility limits remain required before choosing LabVIEW 2024.
-- How a commit-bound review recommendation becomes milestone reviewed status remains unresolved;
-  do not invent an automatic transition or bypass the owner's protocol/evidence acceptance.
+- Notices #92/#100 remain pending for the owner. Do not reinstate the crashed script shaper without contract review.
+- Fallback variant (LabVIEW 2024) needs an all-version effort estimate before any choice; not yet started.
+- Duplicate session per order in 0012 (#146/#147): engine behaviour or retry? If it recurs, raise an
+  `engine-change` with evidence; it doubles quota use.
+- Claude routing fell back to codex for all sessions in 0011 and 0012; Claude availability unmeasured.
