@@ -1,0 +1,601 @@
+{
+ "schema_version": 1,
+ "iteration": 10,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-03T12:54:54Z",
+ "ended": "2026-11-04T00:16:33Z",
+ "engine_version": "0.7.1",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 10,
+  "engine_version": "0.7.1",
+  "policy_rev": "layered-v1:a09ab613da4b65800dd8256f7ab268ebdd26bf7dbc22853d4f7e9b4a0f85ded8",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": null,
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 1,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": []
+  },
+  "owner_requests": {
+   "open": [
+    {
+     "number": 100,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "pending",
+     "proposal_sha": "1b9bb24cc033201c709162edce490790bcf0b45a0e5f2e543d3a10bcce03cab8",
+     "base_commit": "6a324a2a5a21686f184497c138dcd27d4ec7986d",
+     "detail": null,
+     "readiness": null
+    },
+    {
+     "number": 92,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "pending",
+     "proposal_sha": "bda7d738780cb8d1e697cecb043b3be23ed399cb7240adb30e57870df9fb4b93",
+     "base_commit": "d6ad70c5099f28d99fc75da0973d8110cc72ca10",
+     "detail": null,
+     "readiness": null
+    }
+   ],
+   "recently_closed": [
+    {
+     "number": 136,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #132: Land saved sources dependency records and repair evidence hashes",
+     "decision": "approved",
+     "proposal_sha": "83ada3b8d60588b9a0bd35ab05279310c0a2c3bf91bf49f5c4686e25192fcf1e",
+     "base_commit": "dc7dc581c28a04d66d741c79500d7317288eff93",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 129,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #122: Land the `coverage` milestone from 0285248 and re-pin benchmark/preparation.json hashes",
+     "decision": "approved",
+     "proposal_sha": "c5163e023c89b2b03fab2f8b280f5863ad6d73b140ae89807d674a3ee119cd65",
+     "base_commit": "fb47b8f2e00837990817096783138d39b1079a4a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 128,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #125: Land the `coverage` milestone from 0285248 and re-pin benchmark/preparation.json hashes",
+     "decision": "declined",
+     "proposal_sha": "48e23d8af9e1131237c8be95dc7a1111d66f472e77cc0961f6032ba4e10c2545",
+     "base_commit": "b0c65bce1fe428ab337a0bb3aed4ea428b05de2c",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 54,
+     "kind": "engine-change",
+     "title": "Cadence: at most one iteration per 5-hour subscription window",
+     "answer": "completed"
+    },
+    {
+     "number": 53,
+     "kind": "engine-change",
+     "title": "Cache-stable session history: brief earlier turns in aligned batches",
+     "answer": "completed"
+    },
+    {
+     "number": 40,
+     "kind": "notice",
+     "title": "Iteration 0000 stalled",
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 0,
+  "policymaker_sessions": [
+   {
+    "issue": 121,
+    "status": "done"
+   },
+   {
+    "issue": 116,
+    "status": "done"
+   },
+   {
+    "issue": 108,
+    "status": "done"
+   },
+   {
+    "issue": 102,
+    "status": "done"
+   },
+   {
+    "issue": 98,
+    "status": "done"
+   }
+  ],
+  "outboxes": [],
+  "audit_report": null,
+  "audit_rev": null,
+  "startup_notices": []
+ },
+ "policy": {
+  "rev_start": "layered-v1:25ac90aa97acc75a34c1399b3fa81cc550b2401d1495acf2c8513b04e7be36be",
+  "rev_end": "layered-v1:a09ab613da4b65800dd8256f7ab268ebdd26bf7dbc22853d4f7e9b4a0f85ded8",
+  "commit_end": "0e9319a897956c9e686adc901216a2ce8a220f57",
+  "orders_refused": null,
+  "session": 131,
+  "trigger": "every 1 iterations",
+  "passes": 2,
+  "changes": [
+   {
+    "id": "change-131",
+    "issue": 131,
+    "role": "policymaker",
+    "base_commit": "984a992ebc5576e221e3d960525ba3b148634898",
+    "applied_base_commit": "72c44b147a29668acaaa5ddf2b9630c3da3de723",
+    "accepted_commit": "e6dac792309d23cbc503b40e660ae96e3a5c57ad",
+    "policy_rev_before": "layered-v1:25ac90aa97acc75a34c1399b3fa81cc550b2401d1495acf2c8513b04e7be36be",
+    "policy_rev_after": "layered-v1:a09ab613da4b65800dd8256f7ab268ebdd26bf7dbc22853d4f7e9b4a0f85ded8",
+    "changed_paths": [
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-03T18:51:43Z"
+   }
+  ]
+ },
+ "decided_by": null,
+ "tasks": [
+  {
+   "id": "order-131-bench-sources-deps-land",
+   "title": "Land saved sources dependency records and repair evidence hashes",
+   "role": "benchmark",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 25
+   },
+   "body": "## Goal\nReuse session #123's dependency extraction at ef9db89. It stopped partial/input_budget; its report claimed re-pinning, but preparation.json was unchanged and four evidence hashes would mismatch. Project virtual folders were also counted as dependency identities. Expected gain: a corrected, reviewable sources milestone on main. The next Policymaker checks actual generator exits, evaluator errors and the independent re-review.\n## Acceptance\n- [ ] Restore only benchmark/scripts/sources.py, benchmark/sources.json, benchmark/sources.md and benchmark/coverage.json from ef9db89; do not redo extraction.\n- [ ] Exclude project Type=Folder items from declared dependencies. Consolidate duplicate declarations without losing source paths, kinds or differing version constraints; retain explicit unknowns. Keep dependency constraints separate from artifact save versions and reading-environment versions.\n- [ ] Regenerate sources, then coverage with their existing generators. Run python3 -I benchmark/scripts/sources.py --check and python3 -I benchmark/scripts/coverage.py --check in-session; record actual exit codes.\n- [ ] Update every changed evidence hash in benchmark/preparation.json. Run python3 -I policy/evaluator/evaluate.py --check; quote actual output and exit code.\n- [ ] Sources and coverage remain prepared-not-reviewed, independent review pending, native LabVIEW not executed; no readiness claim.\n- [ ] Run git status --short and report the actual changed paths. Leave changes staged if git identity is unavailable; the engine commits. Write .session/report.md before finishing done.\n## Verification\n`python3 -I -c \"import json,sys,hashlib; d=json.load(open('benchmark/sources.json')); p=json.load(open('benchmark/preparation.json'))['milestones']; bad=[r['path'] for m in p.values() for r in m if hashlib.sha256(open(r['path'],'rb').read()).hexdigest()!=r['sha256']]; deps=[r.get('dependencies') for r in d['repositories']]; folders=[e for v in deps if isinstance(v,dict) for e in v.get('declared',[]) if e.get('identity') in ('Dependencies','vi.lib','user.lib','instr.lib')]; sys.exit(bool(bad) or bool(folders) or not all(isinstance(v,dict) and v for v in deps))\"`\n## Context\n- ef9db89: saved extraction from iteration 0009, session #123.\n- benchmark/preparation.json: evidence hashes checked again after rebase.\n## Budget\nRead benchmark/scripts/sources.py, benchmark/sources.md and benchmark/preparation*.json only; inspect sources.json and coverage.json through bounded Python summaries. Use the existing generators and prepared public sources. Do not read engine code or redo research.",
+   "pass": 1,
+   "issue": 132
+  },
+  {
+   "id": "order-131-review-coverage2",
+   "title": "Independent coverage review with findings saved directly in the report",
+   "role": "reviewer",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 20
+   },
+   "body": "## Goal\nIndependently review the coverage row of docs/perpetua/evaluation.md against the accepted coverage records. Session #124 ended partial/session_budget and its report contained only an unavailable artifact reference; do not infer its findings. Expected gain: a readable recommendation tied to the inspected commit. The next Policymaker reads the report and checks commit applicability.\n## Acceptance\n- [ ] First run git rev-parse HEAD and python3 -I benchmark/scripts/coverage.py --check. Immediately write .session/report.md with commit, actual exit code and Recommendation: pending.\n- [ ] Check inventory by artifact family and version, modules and access conditions; difficult, unsupported, opaque, versionless and inaccessible-diagram cases remain visible in the denominator. Check reproducibility from pinned sources and absence of unsupported semantic-reading or readiness claims.\n- [ ] Append each finding directly to .session/report.md with evidence path/line, impact and correction. Keep missing coverage and unmeasured quality explicit.\n- [ ] By turn 14 replace pending with Recommendation: accept|revise|reject at <commit>, list unchecked items and finish done. Report findings without fixing the candidate.\n## Verification\nNone: report-only review.\n## Context\n- docs/perpetua/evaluation.md: coverage requirements.\n- benchmark/coverage.md, benchmark/scripts/coverage.py and benchmark/preparation-status.json: candidate evidence.\n## Budget\nRead only those files and bounded Python summaries of benchmark/coverage.json; never read the large JSON directly. No engine code or additional research.",
+   "pass": 1,
+   "issue": 133
+  },
+  {
+   "id": "order-131-review-sources2",
+   "title": "Independent sources re-review after dependency records land",
+   "role": "reviewer",
+   "effort": "medium",
+   "blocked_by": [
+    "order-131-bench-sources-deps-land"
+   ],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 20
+   },
+   "body": "## Goal\nReviews #110/#112 recommended revise at 52d2aa1 because per-source dependency identities and constraints were missing. Re-review the sources row after the dependency repair. Expected gain: an independent recommendation tied to the inspected commit, read by the next Policymaker.\n## Acceptance\n- [ ] First run git rev-parse HEAD and python3 -I benchmark/scripts/sources.py --check. Immediately write .session/report.md with commit, actual exit code and Recommendation: pending.\n- [ ] Sample at least five dependency declarations against pinned public .lvproj/.vipb sources. Check identities, constraints and preserved provenance, explicit reasons for unknowns, exclusion of folder items and separation from save/reading-environment versions.\n- [ ] Spot-check previously passing origin, license, pinned-commit and original-hash properties. Append findings directly to .session/report.md with evidence path/line, impact and correction. Keep missing coverage and unmeasured quality explicit.\n- [ ] By turn 14 replace pending with Recommendation: accept|revise|reject at <commit>, list unchecked items and finish done. Report findings without fixing the candidate; do not mark readiness established.\n## Verification\nNone: report-only review.\n## Context\n- docs/perpetua/evaluation.md: sources requirements.\n- benchmark/sources.md and benchmark/scripts/sources.py: candidate evidence.\n## Budget\nRead those files, bounded Python summaries of benchmark/sources.json and sampled pinned public sources under LABVIEW_ENVIRONMENT. Never read the large JSON directly. No engine code or additional research.",
+   "pass": 1,
+   "issue": 134
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 134,
+    "role": "reviewer",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 3707,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/134/f081aec54d972018b425e4910692e6c234e57adaddb7c56f8b8af14d009ec51d.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/134",
+    "commit": "54dad4a",
+    "tokens": {
+     "in": 531684,
+     "out": 3461,
+     "cache_read": 13696,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 13696,
+      "cache_write": 0,
+      "in": 531684,
+      "out": 3461
+     }
+    },
+    "turns": 15,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 120,
+    "gate_s": 0,
+    "total_s": 158,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 133,
+    "role": "reviewer",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 3712,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/133/3100451ce3ecea8b31d7b66694db53724e8e85931d34f070f22fd7a6a8760ddd.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/133",
+    "commit": "f313a7f",
+    "tokens": {
+     "in": 251231,
+     "out": 2981,
+     "cache_read": 0,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "in": 251231,
+      "out": 2981
+     }
+    },
+    "turns": 10,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 114,
+    "gate_s": 0,
+    "total_s": 174,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 132,
+    "role": "benchmark",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4442,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/132/1a4bd2e866f67e7644eba5a331c448e021e6a3e6dd0b9b33cb101b88536a153e.json",
+     ".github/loop/data/session-reports/132/c2d7a218c6b6e778f99e84a0f10ce406c6109c736f1d8ca79582c5f05c0490df.json"
+    ],
+    "status": "done",
+    "verdict": "accepted",
+    "improved": true,
+    "merged": true,
+    "branch": "task/132",
+    "commit": "df0f3a4",
+    "tokens": {
+     "in": 297079,
+     "out": 5882,
+     "cache_read": 30576,
+     "cache_write": 14517
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 21616,
+      "cache_write": 14517,
+      "in": 10,
+      "out": 1334
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 8960,
+      "cache_write": 0,
+      "in": 297069,
+      "out": 4548
+     }
+    },
+    "turns": 18,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 186,
+    "gate_s": 0,
+    "total_s": 257,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": null,
+  "verdict": {
+   "value": "accepted",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": true
+  },
+  "tokens": {
+   "in": 1079994,
+   "out": 12324,
+   "cache_read": 44272,
+   "cache_write": 14517,
+   "by_model": {
+    "codex/gpt-6.1-sol": {
+     "in": 1079984,
+     "out": 10990,
+     "cache_read": 22656,
+     "cache_write": 0
+    },
+    "claude/claude-sonnet-5-5": {
+     "in": 10,
+     "out": 1334,
+     "cache_read": 21616,
+     "cache_write": 14517
+    }
+   },
+   "cache_read_share": 0.039
+  },
+  "limit_hits": 0,
+  "wall_s": 40900,
+  "critical_path_s": 415,
+  "width": 2,
+  "owner_requests": {
+   "opened": [
+    136
+   ],
+   "open_at_close": [
+    100,
+    92
+   ]
+  }
+ },
+ "evaluator_verifications": []
+}
