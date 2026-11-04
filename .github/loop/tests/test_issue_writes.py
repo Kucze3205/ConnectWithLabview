@@ -68,6 +68,21 @@ class IssueWritesTest(unittest.TestCase):
         with mock.patch.object(c.subprocess, "run", return_value=done(1, "HTTP 500")):
             self.assertFalse(c.workflow_run("tokenless.yml", key="k"))
 
+    def test_a_dispatch_that_keeps_failing_is_not_a_launch(self):
+        """A launch nobody started must not read as a commitment: the kicks that follow count, and end in an outage."""
+        i = {"state": "open", "labels": [{"name": "role:worker"}, {"name": "loop:iteration 1"}]}
+        with mock.patch.object(c, "guard_ok", return_value=True), mock.patch.object(c, "issue", return_value=i), \
+                mock.patch.object(c, "is_unblocked", return_value=True), mock.patch.object(c, "session_runs", return_value=[]), \
+                mock.patch.object(c, "workflow_run", return_value=False), mock.patch.object(c, "LAUNCHED", set()):
+            self.assertFalse(c.launch(150))
+            self.assertEqual(c.LAUNCHED, set())
+        self.assertIn("#150", c.say.call_args.args[0])
+
+    def test_a_command_whose_job_left_nothing_is_told_from_a_failed_command(self):
+        with mock.patch.object(c, "run_tokenless", return_value=None):
+            r = c.run_command("true", tempfile.mkdtemp())
+        self.assertEqual(r.returncode, c.NO_RESULT)
+
     def tokenless(self, *download):
         run = [{"displayTitle": "tokenless #abc", "status": "completed", "databaseId": 7}]
         with mock.patch.object(c, "git"), mock.patch.object(c, "workflow_run", return_value=True),                 mock.patch.object(c, "run_list", return_value=run), mock.patch.object(c.uuid, "uuid4", return_value=mock.Mock(hex="abc")),                 mock.patch.object(c.shutil, "make_archive"), mock.patch.object(c.subprocess, "run", side_effect=download) as gh:

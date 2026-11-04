@@ -460,10 +460,18 @@ def verification_rules(body):
     return ["Bash(%s)" % re.sub(r"([\\()*])", r"\\\1", cmd) for cmd in verification_commands(body) if "\n" not in cmd]
 
 
+def run_for_agent(cmd, cand):
+    """A command whose failure the agent is asked to fix. If it never ran there is nothing to fix, so no fix round goes on it."""
+    r = c.run_command(cmd, cand)
+    if r.returncode == c.NO_RESULT:
+        raise it.TokenlessUnavailable("`%s` did not run: %s" % (cmd, r.stderr))
+    return r
+
+
 def run_verification(cand, body):
     """`## Verification` of the task: commands from code blocks or backticked lines, run in the tokenless job."""
     for cmd in verification_commands(body):
-        r = c.run_command(cmd, cand)
+        r = run_for_agent(cmd, cand)
         print("$ %s\n%s%s" % (cmd, r.stdout, r.stderr))
         if r.returncode:
             return False, cmd + "\n" + (r.stdout + r.stderr)[-1500:]
@@ -557,7 +565,7 @@ def merge_branch(n, role, i, override=None, verified=False, checked_commit=None,
                     return dict(res, result="invalid-policy", detail="Routing is missing or exceeds the owner's model catalog.")
             if work_paths:
                 if cfg["check"]:
-                    t = c.run_command(cfg["check"], cand)
+                    t = run_for_agent(cfg["check"], cand)
                     if t.returncode:
                         return dict(res, result="check", detail=(t.stdout + t.stderr)[-1500:])
                 if override:
@@ -1334,7 +1342,7 @@ def drive():
     roll back policy; no commitments -> kick or start the next iteration."""
     if crash_streak():
         c.open_outage("%s sessions in a row crashed without a commit" % CRASH_STREAK,
-                      "The last %s sessions ended `crashed` with no commit. The counter is blind to the cause." % CRASH_STREAK,
+                      "The last %s sessions ended `crashed` with no commit. The counter skips only sessions a failed iteration ended." % CRASH_STREAK,
                       "Look at the machine cause (`cause`) in the reports of the latest sessions and fix it.")
         c.say("outage: %s sessions in a row crashed without a commit" % CRASH_STREAK)
         return 1
@@ -1373,13 +1381,17 @@ def crash_streak():
     closed = c.list_issues(state="closed", labels=("outage",))
     since = max([x["closed_at"] for x in closed if x.get("closed_at")], default="")
     sessions = [x for x in c.recent_closed() if x["closed_at"] > since and c.in_loop(c.label_names(x))]
-    if len(sessions) < CRASH_STREAK:
-        return False
-    for x in sessions[:CRASH_STREAK]:
+    crashes = 0
+    for x in sessions:
         f = c.report_fields(x["number"])
+        if f.get("cause") == "iteration-failed":        # did not crash on its own; failed iterations have their own count
+            continue
         if f.get("status") != "crashed" or f.get("commit"):
             return False
-    return True
+        crashes += 1
+        if crashes == CRASH_STREAK:
+            return True
+    return False
 
 
 def parked_until(n):
