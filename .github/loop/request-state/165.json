@@ -1,0 +1,12 @@
+{
+  "kind": "engine-change",
+  "frozen": "Apply with `git apply` from the repository root on current main (d7ba8a0 or later; iteration.py unchanged since a9a3a30).\n\ndiff --git a/.github/loop/iteration.py b/.github/loop/iteration.py\n--- a/.github/loop/iteration.py\n+++ b/.github/loop/iteration.py\n@@ -527,7 +527,11 @@ def run_policy_script(name, facts, max_bytes=POLICY_OUTPUT_BYTES):\n     finally:\n         shutil.rmtree(bundle, ignore_errors=True)\n     if out is None:\n         raise TokenlessUnavailable(\"policy/%s did not run: the tokenless job left no output\" % name)\n+    if not os.path.isfile(os.path.join(out, \"stdout.txt\")):\n+        # The job's redirect creates stdout.txt before the script starts: without it the script never ran (the bundle\n+        # did not unpack, the step never started). GitHub's failure, not the policy's: nothing is rolled back.\n+        raise TokenlessUnavailable(\"policy/%s did not run: the tokenless job left no stdout\" % name)\n     try:\n         with open(os.path.join(out, \"exit-code\"), encoding=\"utf-8\") as fh:\n             code = fh.read().strip()\n",
+  "test": "python3 -m unittest discover -s .github/loop/tests",
+  "base_commit": "d7ba8a0cfaecf850c0c422465ec44f473fcd8a92",
+  "base_engine_sha": "20c5ff269afc48b2b68a9fb83bdd7f7752a1b0a328540593bdaa04c4fc37fc46",
+  "proposal_sha": "caf86dc9f4e5efb0dc4f3a628cdd4f4b2e3c6afede96ebaad2eae2faf8e6f5a6",
+  "readiness": null,
+  "status": "pending",
+  "issue": 165,
+  "body_sha": "67f00827fcb0b2fe1d021f93fea1ab47b64553d06ddfe554a03d3f3473c92dae"
+}
