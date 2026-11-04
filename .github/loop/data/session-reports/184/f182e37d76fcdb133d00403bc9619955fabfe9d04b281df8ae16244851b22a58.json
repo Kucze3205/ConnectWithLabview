@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nfixes: 2\nbranch: task/184\niteration: 20\nrunner: Linux\nmodel: claude-sonnet-5-5\neffort: medium\nturns: 26\nmodels: {\"claude/claude-sonnet-5-5\":{\"cache_read\":75083,\"cache_write\":30806,\"in\":24,\"out\":4359},\"copilot/gpt-5.6-luna\":{\"cache_read\":0,\"cache_write\":54983,\"in\":55025,\"out\":3513}}\ntokens_in: 55049\ntokens_out: 7872\ncache_read: 75083\ncache_write: 85789\nagent_s: 15\ntotal_s: 44\ncommit: 2e9ccf1\nverification: fail\nstatus: partial\n```\n# Report: land lineage inventory (issue #184)\n\nRestored exactly five files from commit `d8570a9` via `git checkout` (exit 0). No regeneration.\n\n- `python3 -I benchmark/scripts/lineage.py --check`: exit 0, status `pass`.\n- Counts: 829 artifacts (530 originals, 299 archive members); 24 exact-duplicate groups / 50 members; 230 candidate groups (13 with version differences); 2 conservative lineage groups; 11 development cases; 1,244 distinct different-hash candidate pairs; 647 static membership declarations; 151 static name gaps; 2 repositories.\n- `python3 -I policy/evaluator/evaluate.py --check`: exit 0, no errors, 39 evidence references, manifest indexed. Missing: baseline, challenges. `benchmark_ready` is false.\n- `git diff --check`: exit 0, clean.\n- `split` remains `not-started` in `benchmark/preparation-status.json`.\n\nNo readiness, allocation, threshold, scope or LabVIEW 2024 claim, and no product code. The lineage evidence is unreviewed and needs a separate reviewer session.\n\n## Discoveries\n\n- Evaluator readiness is still incomplete: baseline and challenges are missing (`python3 -I policy/evaluator/evaluate.py --check` output).\n\nThe epilogue ran `## Verification` and got an error:\n```\npython3 -I benchmark/scripts/lineage.py --check\nlineage: LABVIEW_ENVIRONMENT is required\n\n```\n",
+  "comment": 6645099191,
+  "issue": 184,
+  "snapshot": "99fefb385084e74381db5a25a05c56e02c99785ae1645995dde7fd98e52f4b7b",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/184#issuecomment-6645099191"
+ },
+ "schema_version": 1
+}
