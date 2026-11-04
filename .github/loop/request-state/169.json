@@ -1,0 +1,12 @@
+{
+  "kind": "capability",
+  "frozen": "Owner steps: (1) Confirm the NI container development-licence terms permit automated read-only inspection, diagram capture and controlled execution of public development VIs in GitHub-hosted jobs (environment.md records this as an interpretation, not an NI statement). (2) Confirm whether VI Scripting / property inspection is available in the image; if not, say so and the job is limited to LabVIEW CLI operations. (3) Confirm no new spending: only the existing free hosted-runner minutes of this public repository; any paid minutes or self-hosted runner needs a separate grant. (4) Approve the operations list: read properties, capture diagrams, controlled I/O on public development artifacts; edits and builds excluded. (5) Approve that model providers already used by the loop (Anthropic, OpenAI, GitHub Copilot) may receive job outputs for public development artifacts only. (6) Implement or apply the workflow extension (an engine-change may be proposed for the diff) and post capability-ready after the readiness check.",
+  "test": null,
+  "base_commit": "eed5c9591714b9db5062056eae044b4ec52cce90",
+  "base_engine_sha": "20c5ff269afc48b2b68a9fb83bdd7f7752a1b0a328540593bdaa04c4fc37fc46",
+  "proposal_sha": "2ff1dccf2be2aea4e0b1b1007832da88ea9e6466a1064afea27c5fb47e1923ea",
+  "readiness": "Dispatch the job on one public development VI with independently known behaviour from the prepared sources. Pass only if: the original's sha256 is identical before and after (python3 -I), the job emits native properties and a diagram capture with output sha256 manifest, controlled inputs produce recorded outputs, git status --porcelain shows no source mutation, container networking stays disabled, and a separate session compares the outputs with independently expected values. Compile success alone fails.",
+  "status": "pending",
+  "issue": 169,
+  "body_sha": "d3392e6446988f9cee8c6d6e975a6891355ac0328570323ac3a4c1d036c56676"
+}
