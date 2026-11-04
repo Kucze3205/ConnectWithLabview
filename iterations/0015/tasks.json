@@ -1,0 +1,26 @@
+[
+ {
+  "id": "order-164-order-164-rereview-protocol-f1f2",
+  "title": "Independent re-review of benchmark/protocol.md F1/F2 revision at 2669ec4",
+  "role": "reviewer",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 30
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     146,
+     147,
+     150
+    ]
+   }
+  ],
+  "body": "## Goal\nReviews #146/#147 (iteration 0012, at a595009) recommended **revise** for two findings: F1 (no frozen required-claim accounting, dimension outcome rules or denominators) and F2 (no reader-observation contract). Task #150 (final model codex/gpt-6.1-sol) revised benchmark/protocol.md; the owner accepted it and it is on main as 2669ec4 (tasks about lines 28-42, baseline 84-86, challenges 100-104). This re-review was ordered in iteration 0014, but its sessions #154/#156 crashed before starting because of an engine staging failure, so no review exists yet. Expected gain: a commit-bound recommendation (accept / revise) on whether F1 and F2 are closed, so the owner can consider the method before any implementation. The next Policymaker reads this session's report for a per-finding verdict and an overall recommendation tied to 2669ec4.\n\n## Acceptance\n- [ ] Read .session/exports/manifest.json first; if a report is not `downloaded`, use the summary above and say so.\n- [ ] Confirm the reviewed tree: `git log -1 --format=%H -- benchmark/protocol.md` and `git diff cf38154 2669ec4 -- benchmark/protocol.md`.\n- [ ] Per finding F1 and F2: closed / partially closed / open, with protocol line references, evidence and a concrete correction for anything open. Check that missing/unsupported/error outcomes can never count as a pass and that omission, extra-false-claim, duplicate and contradiction cases are scored consistently with fixed denominators.\n- [ ] Regression look: does the revision contradict docs/perpetua/evaluation.md or other protocol sections (oracle, split isolation, matched baseline, challenges, coverage reporting)? Only new issues introduced by the diff; do not re-litigate sections the earlier reviews judged consistent.\n- [ ] Do not propose quality thresholds, the LabVIEW 2024 fallback, scope reduction or a readiness claim. Keep missing coverage and unmeasured quality explicit.\n- [ ] State the provider/model family you ran on in the report (the revision author was codex); end with Standards and Spec findings and one overall recommendation tied to 2669ec4.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/protocol.md at 2669ec4: the revision under review.\n- .session/exports/reports/146.json, 147.json: original findings; 150.json: the author's account (a lead, not proof).\n- docs/perpetua/evaluation.md, goal/goal.md: requirements.\n## Budget\nRead the files above only. Do not read benchmark/sources.json, coverage.json or benchmark/resources-proposal.md; no research, no prepared-source scans, no engine code. Write findings into .session/report.md from the start. Finish by turn 25.",
+  "pass": 1,
+  "issue": 166
+ }
+]
