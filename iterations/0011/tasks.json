@@ -1,0 +1,46 @@
+[
+ {
+  "id": "order-138-bench-sources-conflict-fix",
+  "title": "Record VIPB package conflicts under their real package identity",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 20
+  },
+  "body": "## Goal\nReview #134 recommended revise at bb56af2: benchmark/scripts/sources.py:172-175 records VIPB `Package_Conflicts` with identity `package conflict`, puts the package name inside `version_constraint`, and does not distinguish a conflict from a requirement. Expected gain: the only open sources finding is fixed, so a focused re-review can recommend accept. The next Policymaker checks the verification exit, the evaluator check and review #3's recommendation.\n## Acceptance\n- [ ] Change only the Package_Conflicts handling in benchmark/scripts/sources.py: one record per conflicting package with identity = package name, version_constraint = its constraint (e.g. `>=1.0.1.2`, or `unknown` if absent), an explicit `relationship: conflict` (requirements get `relationship: requires`), and the raw declaration text preserved. Handle several conflicts in one element if the separator is present; do not guess beyond the pinned text.\n- [ ] Regenerate benchmark/sources.json, then benchmark/coverage.json, with the existing generators. Run python3 -I benchmark/scripts/sources.py --check and python3 -I benchmark/scripts/coverage.py --check; record actual exit codes.\n- [ ] Update every changed evidence hash in benchmark/preparation.json. Run python3 -I policy/evaluator/evaluate.py --check; quote output and exit code.\n- [ ] Document the relationship field in benchmark/sources.md in one or two sentences. Sources and coverage stay prepared-not-reviewed; no readiness claim.\n- [ ] Run git status --short; report actual changed paths. Leave changes staged if git identity is missing. Write .session/report.md before finishing.\n## Verification\n`python3 -I -c \"import json,sys,hashlib; d=json.load(open('benchmark/sources.json')); p=json.load(open('benchmark/preparation.json'))['milestones']; bad=[r['path'] for m in p.values() for r in m if hashlib.sha256(open(r['path'],'rb').read()).hexdigest()!=r['sha256']]; ids=[e['identity'] for r in d['repositories'] for e in r['dependencies']['declared']]; sys.exit(bool(bad) or 'package conflict' in ids or 'zyah_solutions_lib_interface_for_actor_ini' not in ids)\"`\n## Context\n- Session #134 report: finding and pinned source `Providers/Actor Framework Project Providers 2024 for 2020.vipb:20` in the actor-framework repository.\n- benchmark/scripts/sources.py lines 140-200: dependency extraction and consolidation.\n## Budget\nRead benchmark/scripts/sources.py, benchmark/sources.md, benchmark/preparation.json and that one pinned VIPB. Inspect sources.json/coverage.json only through bounded Python summaries. No re-extraction of other dependencies, engine code or research.",
+  "pass": 1,
+  "issue": 139
+ },
+ {
+  "id": "order-138-review-sources3",
+  "title": "Focused sources re-review of the package-conflict correction",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [
+   "order-138-bench-sources-conflict-fix"
+  ],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 14
+  },
+  "body": "## Goal\nReview #134 at bb56af2 passed six sampled declarations, provenance, licenses, pins and hashes, and recommended revise only for the VIPB package-conflict record. Re-check that correction and the diff since bb56af2. Expected gain: an independent accept/revise/reject for the sources milestone tied to the inspected commit, read by the next Policymaker.\n## Acceptance\n- [ ] First run git rev-parse HEAD and python3 -I benchmark/scripts/sources.py --check. Immediately write .session/report.md with commit, actual exit code and Recommendation: pending.\n- [ ] Inspect git diff bb56af2 HEAD -- benchmark/scripts/sources.py benchmark/sources.md and bounded Python summaries of conflict/requirement records. Compare against the pinned VIPB `Package_Conflicts` text. Confirm the raw text, identity, constraint and relationship; confirm no other dependency records changed unexpectedly (count declared entries before/after).\n- [ ] Do not redo #134's passing checks; cite them as prior evidence. Append each finding with evidence path/line, impact and correction. Keep missing coverage (binary linkage, native loading, modules) and unmeasured quality explicit.\n- [ ] By turn 10 replace pending with Recommendation: accept|revise|reject at <commit>, list unchecked items and finish done. Do not fix the candidate or claim readiness.\n## Verification\nNone: report-only review.\n## Context\n- Session #134 report: prior findings and sampled declarations.\n- docs/perpetua/evaluation.md: sources row.\n## Budget\nRead the diff, benchmark/sources.md and the one pinned VIPB under LABVIEW_ENVIRONMENT; summarize sources.json with bounded Python only. No engine code or research.",
+  "pass": 1,
+  "issue": 140
+ },
+ {
+  "id": "order-138-bench-protocol-draft",
+  "title": "Draft the method for tasks, oracle, split, baseline and challenges",
+  "role": "benchmark",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 40
+  },
+  "body": "## Goal\nSources and coverage are near independent acceptance; the evaluator still reports missing tasks, oracle, split, baseline and challenges, and nothing defines how they will be produced. Expected gain: one reviewable design in benchmark/protocol.md that states, per milestone, the method and exactly which resources are missing, so the next Policymaker can order an independent method review and file concrete owner requests (restricted evaluation store, native LabVIEW jobs). The next Policymaker reads protocol.md and its resource table.\n## Acceptance\n- [ ] Write benchmark/protocol.md (at most ~250 lines) with sections `## tasks`, `## oracle`, `## split`, `## baseline`, `## challenges`, `## resources and owner decisions`. Save the file after each section so a budget stop leaves usable work.\n- [ ] tasks: task families (VI computation and execution dependencies, project dependencies, typedef change impact, diagram-diff meaning, plus others needed for all artifact families in coverage.md), the gradeable answer format and the required source citation into the original artifact; reading fidelity scored separately from answer correctness.\n- [ ] oracle: how answers are established independently of the reader (native LabVIEW properties/diagrams via trusted cloud jobs, controlled I/O, documentation, independent check record); the tool's own export is never the key.\n- [ ] split: development/evaluation separation by whole project and family, copy/variant detection, new own cases, and why a public repository cannot hold withheld cases or keys; what isolation must be tested before measurement.\n- [ ] baseline: matched with/without-tool runs (same model, prompt, budget, pinned versions, repetitions, cost and time; images where available); uncertainty and tolerances defined before comparison.\n- [ ] challenges: wrong answers, wrong citations, constant/empty export, unsupported case; zero executed tests or missing runtime/key never pass.\n- [ ] resources section: a table of each needed resource (restricted store, native LabVIEW versions, private cases), what it unblocks, least access, providers, publication limits, revocation and a readiness check, per docs/perpetua/accepted-limits.md. Which parts can proceed with public sources now. No quality thresholds; those belong to the owner.\n- [ ] Change no other file (no preparation.json, preparation-status.json or milestone status); the draft is unpinned and unreviewed. Write .session/report.md before finishing.\n## Verification\n`python3 -I -c \"import sys; t=open('benchmark/protocol.md').read(); sys.exit(not all(h in t for h in ('## tasks','## oracle','## split','## baseline','## challenges','## resources and owner decisions')))\"`\n## Context\n- docs/perpetua/evaluation.md: required evidence per milestone.\n- docs/perpetua/accepted-limits.md: restricted storage, native LabVIEW jobs, private data, spending.\n- benchmark/coverage.md and benchmark/sources.md: current inventory and its gaps.\n## Budget\nRead those four files and docs/research/0002-coverage.md headings only. Never read sources.json or coverage.json directly. No engine code, web research or product implementation.",
+  "pass": 1,
+  "issue": 141
+ }
+]
