@@ -3,6 +3,7 @@ import json
 import os
 import unittest
 from datetime import timedelta
+from unittest import mock
 
 import fakes
 from fakes import common as c, iteration as it, loop, task, tasks_json
@@ -122,10 +123,21 @@ class PolicyScriptTest(Flow):
     def test_a_failing_script_is_refused(self):
         self.assert_refused("import sys\nprint('{\"reason\": \"a\"}')\nsys.exit(1)\n")
 
-    def test_a_script_that_cannot_run_in_the_tokenless_job_fails_the_iteration(self):
+    def test_a_script_that_cannot_run_in_the_tokenless_job_fails_the_iteration_and_keeps_the_policy(self):
+        """The job never ran, so the policy said nothing wrong: the next iteration tries again on the same policy."""
         self.hub.tokenless_fault = "no-artifact"
-        n = it.start_iteration()
+        with mock.patch.object(it, "revert_policy") as revert:
+            n = it.start_iteration()
         self.assertEqual(it.read_json(it.record_path(n))["status"], "failed")
+        revert.assert_not_called()
+
+    def test_a_job_that_never_ran_during_staging_leaves_the_iteration_to_the_retry(self):
+        """Iteration 14: an HTTP 500 while staging one session failed the iteration, its other sessions and the policy."""
+        n = it.start_iteration()
+        self.hub.tokenless_fault = "no-artifact"
+        with mock.patch.object(it, "fail_iteration") as fail, self.assertRaisesRegex(SystemExit, "tokenless job"):
+            loop.policy_output({c.ITER + str(n)}, it.run_policy_script, "policymaker-trigger.py", {})
+        fail.assert_not_called()
 
     def test_one_open_policymaker_whatever_the_script_returns(self):
         self.set_script("raise SystemExit(1)\n")
@@ -319,6 +331,26 @@ class PolicyPhaseTest(Flow):
 
     def phase(self):
         return c.report_fields(self.open_iteration()["number"])["phase"]
+
+    def test_orders_are_placed_once_when_a_list_still_shows_the_closed_session(self):
+        """Iteration 12: GitHub's list lagged behind a close, so the session merged "again" and its orders ran twice."""
+        it.start_iteration()
+        pol = self.session_issue("policymaker")
+        listed = c.list_issues
+
+        def lagging(state="open", labels=(), limit=None):
+            found = listed(state=state, labels=labels, limit=limit)
+            if state == "open" and "role:policymaker" in labels and not any(x["number"] == pol for x in found):
+                view = dict(self.hub._view(self.hub.issues[pol]), state="open")
+                view["labels"] = view["labels"] + [{"name": "awaiting:iteration"}]
+                found = [view] + found
+            return found
+
+        with mock.patch.object(c, "list_issues", lagging):
+            self.w.session(pol, files={"policy/params.yml": fakes.POLICY_PARAMS + "criterion: one" + chr(10)}, session_files={"orders.json": self.A})
+        c.sync_main()
+        self.assertEqual([t["id"] for t in it.graph.read(it.iteration_number(self.open_iteration()))], ["order-%s-a" % pol])
+        self.assertEqual(len(self.runs_of(self.task_issue("order-%s-a" % pol))), 1)
 
     def test_the_policymaker_returns_when_an_ordered_session_failed_and_sees_it(self):
         it.start_iteration()

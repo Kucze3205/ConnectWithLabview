@@ -326,6 +326,9 @@ def start_iteration():
     c.update_report(it, {"phase": "starting", "started": c.iso(), "policy_rev_start": policy_rev()})
     try:
         why = policymaker_due(n)
+    except TokenlessUnavailable as e:
+        fail_iteration(n, str(e))
+        return n
     except PolicyScriptError as e:
         fail_iteration(n, "invalid policy script output: %s" % e, rollback=True)
         return n
@@ -334,6 +337,8 @@ def start_iteration():
         return n
     try:
         begin_work(n, it)
+    except TokenlessUnavailable as e:
+        fail_iteration(n, str(e))
     except PolicyScriptError as e:
         fail_iteration(n, "invalid policy script output: %s" % e, rollback=True)
     return n
@@ -498,9 +503,15 @@ class PolicyScriptError(Exception):
     """A policy script returned data the engine refuses."""
 
 
+class TokenlessUnavailable(SystemExit):
+    """The tokenless job left nothing, so the script never answered and the policy is not at fault. Uncaught it turns the
+    run red: a `stage` is tried again by `stage-failed`, a session left open by the watchdog."""
+
+
 def run_policy_script(name, facts, max_bytes=POLICY_OUTPUT_BYTES):
     """The JSON object `policy/<name>` prints for `facts`, run in the tokenless job (`python3 <script> facts.json`). Anything
-    else - no output, over `max_bytes`, a failed run, not one JSON object - raises PolicyScriptError. None: no such script."""
+    else - no output, over `max_bytes`, a failed run, not one JSON object - raises PolicyScriptError, and a job that left
+    nothing raises TokenlessUnavailable. None: no such script."""
     path = "%s/%s" % (resources.ROOT, name)
     if not os.path.isfile(path):
         return None
@@ -515,12 +526,14 @@ def run_policy_script(name, facts, max_bytes=POLICY_OUTPUT_BYTES):
         out = c.run_tokenless(bundle, POLICY_SCRIPT_MINUTES)
     finally:
         shutil.rmtree(bundle, ignore_errors=True)
+    if out is None:
+        raise TokenlessUnavailable("policy/%s did not run: the tokenless job left no output" % name)
     try:
         with open(os.path.join(out, "exit-code"), encoding="utf-8") as fh:
             code = fh.read().strip()
         with open(os.path.join(out, "stdout.txt"), encoding="utf-8", errors="replace") as fh:
             text = fh.read(max_bytes + 1)
-    except (OSError, TypeError):
+    except OSError:
         raise PolicyScriptError("policy/%s returned no output from the tokenless job" % name)
     if code != "0":
         raise PolicyScriptError("policy/%s exited with %s" % (name, code))
@@ -615,8 +628,13 @@ def orders_of(sessions):
 
 
 def place_orders(n, it, orders):
-    """The orders of a Policymaker session left over from an earlier iteration become tasks of iteration n, running beside the shaper and its graph. True when placed."""
-    errs = validate_tasks({"tasks": orders}, ordered=True)
+    """The orders of a Policymaker session left over from an earlier iteration become tasks of iteration n, running beside the shaper and its graph. True when placed.
+    A list can still show a session that just closed, so its orders can arrive again: those already placed stay as they are."""
+    taken = {t["id"] for t in graph.read(n)}
+    orders = [o for o in orders if o.get("id") not in taken]
+    if not orders:
+        return False
+    errs = validate_tasks({"tasks": orders}, ordered=True, taken=taken)
     if errs:
         c.update_report(it, {"orders_refused": "; ".join(errs[:6])[:300]}, "The Policymaker's orders were refused: %s." % "; ".join(errs[:6]))
         return False
@@ -685,6 +703,8 @@ def advance():
         elif policy_settled(n):
             try:
                 policy_pass(n, it["number"])
+            except TokenlessUnavailable as e:
+                fail_iteration(n, str(e))
             except PolicyScriptError as e:
                 fail_iteration(n, "invalid policy script output: %s" % e, rollback=True)
     elif phase == "starting":

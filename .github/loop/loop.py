@@ -443,7 +443,9 @@ def fetch_candidate(work, n):
     touched = [f for f in c.git(".", "diff", "--name-only", "origin/%s...task/%s" % (d, n), check=False).stdout.split()
                if resources.is_protected(f)]
     if not touched:
-        c.git(".", "push", "-q", "-f", "origin", "task/%s:refs/heads/task/%s" % (n, n), check=False, remote=True)
+        pushed = c.git(".", "push", "-q", "-f", "origin", "task/%s:refs/heads/task/%s" % (n, n), check=False, remote=True)
+        if pushed.returncode:
+            c.say("task/%s not published: %s" % (n, (pushed.stderr or pushed.stdout).strip()))
     return c.git(".", "rev-parse", "--short", "task/%s" % n).stdout.strip(), touched
 
 
@@ -1164,9 +1166,9 @@ def close_out(n, i, status, upd, prose, work=None):
             session_startup.acknowledge(n)
         except (Exception, SystemExit):
             c.say("session #%s: startup notices remain pending" % n)
-    c.edit_labels(n, remove=["blocked:rate-limit", "conflict", "awaiting:owner", "awaiting:verifier", "awaiting:iteration", "awaiting:orders"])
     succ = spawn_successor(n, i, body) if status == "partial" else None
     c.close_issue(n, "completed" if status == "done" else "not planned")
+    c.edit_labels(n, remove=["blocked:rate-limit", "conflict", "awaiting:owner", "awaiting:verifier", "awaiting:iteration", "awaiting:orders"])      # after the close: a failed close keeps what a retry looks for
     if not succ:        # the successor starts from this branch
         c.git(".", "push", "-q", "origin", "--delete", "task/%s" % n, check=False, remote=True)
     if status == "done":

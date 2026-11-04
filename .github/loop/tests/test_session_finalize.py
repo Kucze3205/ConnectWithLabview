@@ -317,6 +317,20 @@ class EpilogueTest(SessionCase):
         self.w.session(n, files={"src/a.txt": "A"})
         self.assertEqual(self.hub.report(n)["verification"], "fail")
 
+    def test_a_branch_that_cannot_be_published_says_why(self):
+        """Session #157 reported done and its branch was simply not there at the merge, with nothing in the log."""
+        n = self.issue()
+        git = c.git
+
+        def refused(cwd, *args, **kwargs):
+            if args[0] == "push" and "refs/heads/task/%s" % n in args[-1]:
+                return subprocess.CompletedProcess(args, 1, "", "remote: rejected by the server")
+            return git(cwd, *args, **kwargs)
+
+        with patch.object(c, "git", refused), patch.object(c, "say") as say, self.assertRaises(SystemExit):
+            self.w.session(n, files={"src/a.txt": "A"})
+        self.assertIn("rejected by the server", " ".join(str(x.args[0]) for x in say.call_args_list))
+
     def test_the_clock_of_a_park_is_the_probes_not_the_sessions(self):
         n = self.issue()
         reset = c.now() + timedelta(hours=3)
