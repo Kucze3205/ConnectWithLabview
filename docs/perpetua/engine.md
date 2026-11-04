@@ -228,6 +228,11 @@ A plain script (`watchdog.yml`, every 30 minutes and on demand), never an agent:
   breaker and the 30-day age limit end a wait. A parked session commits nothing: reports freeze only in a final state.
 - a failed `stage` job does not wait for the watchdog: `stage-failed` in `session.yml` parks the session for 5, then 30
   minutes, and a third failure in a row is an outage. `prep` failures are not covered, because `resolve` also exits on purpose;
+- a close that keeps failing after its retries turns the run red, because an issue left open reads as work in progress. An owner
+  request stays unhandled, so the watchdog's sweep settles it again; a failed label edit is only logged;
+- a tokenless job that never ran is GitHub's failure, not the policy's: the dispatch and the download are retried, then a `stage`
+  goes red into `stage-failed`, an iteration that cannot start or leave its policy phase fails without a rollback, and any other
+  run goes red with its session left open for the watchdog;
 - three consecutive `crashed` sessions without a commit is an outage; three fruitless kicks of one issue too; three failed
   iterations in a row too;
 - resumes parked sessions that are due; relaunches ready sessions nobody started (kicking before calling);

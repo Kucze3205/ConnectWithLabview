@@ -1,5 +1,6 @@
 """Owner acceptance and independent evaluator verification."""
 import unittest
+from unittest import mock
 
 from fakes import common as c, iteration as it, loop, task, tasks_json
 from gate_fixtures import GATE_SH
@@ -13,6 +14,29 @@ class OwnerGateTest(Flow):
         it.start_iteration()
         self.play_shaper(task("a"))
         return self.task_issue("a")
+
+    def test_a_close_that_fails_after_the_merge_is_finished_by_the_watchdog(self):
+        """Issue #150: the owner said yes, the change merged, the task stayed open and the loop waited for it in silence."""
+        t = self.start_with_one_task()
+        self.w.session(t, files={"src/a.txt": "A"})
+        (req,) = self.hub.by_label("owner-request:merge-acceptance")
+        self.hub.answer(req["number"], True)
+        closes = c.close_issue
+
+        def refused(n, reason="completed"):
+            if int(n) == t:
+                raise SystemExit("#%s stays open: HTTP 502" % n)
+            closes(n, reason)
+
+        with mock.patch.object(c, "close_issue", refused), self.assertRaises(SystemExit):
+            loop.on_request_closed(req["number"])
+        self.assertEqual(self.w.origin_file("src/a.txt"), "A")
+        self.assertEqual(self.hub.issues[t]["state"], "open")
+        self.assertNotIn("request:handled", self.hub.issues[req["number"]]["_labels"])
+        loop.sweep_requests()
+        self.assertEqual(self.hub.issues[t]["state"], "closed")
+        self.assertEqual(self.hub.report(t)["merged"], "true")
+        self.assertEqual(self.record(0)["status"], "closed")
 
     def test_the_owner_says_yes(self):
         t = self.start_with_one_task()

@@ -198,6 +198,9 @@ def path_match(path, patterns):
 
 # ---------------------------------------------------------------- GitHub (thin: tests replace these functions)
 
+WRITE_RETRY_PAUSES_S = (2, 10)
+
+
 def gh(*args, inp=None, check=True):
     r = subprocess.run(["gh", *args], input=inp, capture_output=True, text=True)
     if check and r.returncode:
@@ -257,7 +260,26 @@ def create_issue(title, body, labels=(), assignees=()):
     raise SystemExit("gh issue create: %s" % r.stderr.strip())
 
 
+def gh_write(*args):
+    """A write the loop's state depends on, tried again after a passing failure. Returns the last error, or None."""
+    for pause in (*WRITE_RETRY_PAUSES_S, None):
+        r = subprocess.run(["gh", *args], capture_output=True, text=True)
+        if not r.returncode:
+            return None
+        if pause is not None:
+            time.sleep(pause)
+    return r.stderr.strip() or "exit %s" % r.returncode
+
+
 def edit_labels(n, add=(), remove=()):
+    """Removes only what the issue has: `gh issue edit` refuses the whole edit over a label missing from the repository."""
+    if remove:
+        try:
+            present = label_names(issue(n))
+        except SystemExit as e:
+            say("labels of #%s not changed: %s" % (n, e))
+            return
+        remove = [r for r in remove if r in present]
     args = ["issue", "edit", str(n)]
     for a in add:
         ensure_label(a)
@@ -265,11 +287,17 @@ def edit_labels(n, add=(), remove=()):
     for r in remove:
         args += ["--remove-label", r]
     if len(args) > 3:
-        gh(*args, check=False)
+        error = gh_write(*args)
+        if error:
+            say("labels of #%s not changed: %s" % (n, error))
 
 
 def close_issue(n, reason="completed"):
-    gh("issue", "close", str(n), "--reason", reason, check=False)
+    """An issue left open reads as work in progress and the loop waits for it, so a close that keeps failing stops the
+    run: red, and the steps after it stay undone for the watchdog's next look."""
+    error = gh_write("issue", "close", str(n), "--reason", reason)
+    if error:
+        raise SystemExit("#%s stays open: %s" % (n, error))
 
 
 _ENSURED = set()
@@ -337,10 +365,10 @@ def workflow_run(workflow, **inputs):
     args = ["workflow", "run", workflow]
     for k, v in inputs.items():
         args += ["-f", "%s=%s" % (k, v)]
-    r = subprocess.run(["gh", *args], capture_output=True, text=True)
-    if r.returncode:
-        print("gh workflow run %s: %s" % (workflow, r.stderr.strip()), file=sys.stderr)
-    return r.returncode == 0
+    error = gh_write(*args)
+    if error:
+        print("gh workflow run %s: %s" % (workflow, error), file=sys.stderr)
+    return not error
 
 
 def run_tokenless(bundle, timeout_minutes, poll=15):
@@ -366,8 +394,10 @@ def run_tokenless(bundle, timeout_minutes, poll=15):
             time.sleep(poll)
             run = next((r for r in run_list("tokenless.yml") if r["displayTitle"] == "tokenless #%s" % key), None)
             if run and run["status"] == "completed":
-                gh("run", "download", str(run["databaseId"]), "-n", "result-%s" % key, "-D", out, check=False)
-                return out if os.path.isdir(out) else None
+                error = gh_write("run", "download", str(run["databaseId"]), "-n", "result-%s" % key, "-D", out)
+                if error:
+                    print("gh run download %s: %s" % (run["databaseId"], error), file=sys.stderr)
+                return None if error else out
         return None
     finally:
         git(shipment, "push", "-q", url, "--delete", branch, check=False, remote=True)
