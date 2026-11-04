@@ -1,0 +1,25 @@
+[
+ {
+  "id": "order-149-revise-protocol-f1f2",
+  "title": "Revise benchmark/protocol.md for review findings F1 (claim accounting) and F2 (reader-observation contract)",
+  "role": "benchmark",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 30
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     146,
+     147
+    ]
+   }
+  ],
+  "body": "## Goal\nTwo independent method reviews of benchmark/protocol.md (#146, #147, iteration 0012, both at a595009) recommend **revise** with the same findings; everything else (oracle, whole-project/family split, tested isolation, matched baseline, negative/positive controls) was judged consistent with docs/perpetua/evaluation.md. Expected gain: a revised method that closes the two gaps, so a re-review next iteration can recommend accept and the owner can consider the protocol. The next Policymaker checks this session's report and the diff of benchmark/protocol.md against the findings below.\n\nFindings to fix (full text in .session/exports/reports/146.json and 147.json):\n- F1/S1 (tasks lines 26-30, baseline 72-76, challenges 85-92): required facts are listed but their mapping to outcomes is undefined; selective omission, extra or duplicate claims and contradictions could escape consistent scoring. Freeze required-claim accounting per task (independent reference inventory of required claims), dimension-level outcome rules (reading fidelity, answer correctness, source grounding scored separately) and denominators; add omission and extra-false-claim challenge fixtures to the challenge list.\n- F2 (tasks 26-29, baseline 71-72, challenges 87-88): direct reader fidelity has no reader-observation contract. Define fixed probes chosen independently of agent answers, raw-output records, alignment to native references, and explicit missing/unsupported/error outcomes that can never count as a pass.\n\n## Acceptance\n- [ ] Read .session/exports/manifest.json first; if a report is not `downloaded`, use the findings above and say so.\n- [ ] Edit only benchmark/protocol.md (and benchmark/preparation.json only if protocol.md is pinned there; re-pin its sha256 in the same change). Keep changes focused on F1 and F2; do not rewrite other sections.\n- [ ] Do not set quality thresholds, choose the LabVIEW 2024 fallback, narrow scope or claim readiness: those remain owner decisions. Keep missing coverage and unmeasured quality explicit.\n- [ ] Report: per finding, the changed section and line range, and what remains unresolved. List the commit of your change.\n- [ ] Leave the resources table as is except where F1/F2 add a needed resource; concrete capability requests are not part of this task.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/protocol.md: the draft to revise.\n- .session/exports/reports/146.json, 147.json: the review reports.\n- docs/perpetua/evaluation.md and goal/goal.md: requirements and accepted principles.\n## Budget\nRead the files above only. Do not read benchmark/sources.json or coverage.json; no research, no prepared-source scans, no engine code. Finish by turn 25.",
+  "pass": 1,
+  "issue": 150
+ }
+]
