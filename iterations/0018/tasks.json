@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-174-order-174-land-dev-cases",
+  "title": "Verify and land the saved development cases from commit d0e14f6",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "body": "## Goal\nSession #170 (iteration 0016) ended `partial` on its input budget, but its saved commit `d0e14f6` (branch task/170, not merged) already contains `benchmark/scripts/dev_cases.py`, 11 case files under `benchmark/cases/dev/` (3 .lvproj, 3 .lvclass, 4 .lvlib, 1 .vi native-gap), README, and updated `benchmark/preparation.json` / `preparation-status.json`. Its report never verified them. Expected gain: the first verified `tasks`/`oracle` development evidence lands, without redoing the work. The next Policymaker checks this report for the exit codes of both commands below, the case counts per family, and the commit to be reviewed; then orders a cross-family review.\n\n## Acceptance\n- [ ] Restore the saved work: `git checkout d0e14f6 -- benchmark/scripts/dev_cases.py benchmark/cases/dev benchmark/preparation.json benchmark/preparation-status.json`. Do not regenerate from scratch.\n- [ ] Run `python3 -I benchmark/scripts/dev_cases.py --check` and `python3 -I policy/evaluator/evaluate.py --check`; report both exit codes verbatim.\n- [ ] If either fails, make the smallest fix (generator, a pin in preparation.json, or a case file through the generator) and rerun; if not fixable in budget, keep the saved files and report the exact failure.\n- [ ] Spot-check at most 2 cases with bounded summaries: every claim needing native evidence (resolution, behaviour, diagrams) is marked native-required/unavailable, never asserted from XML; each case has a lineage/group id; artifact sha256 matches benchmark/sources.json or coverage.json.\n- [ ] Keep `tasks` and `oracle` at `prepared-not-reviewed`. No product code, thresholds, LabVIEW 2024 fallback, scope reduction or readiness claim. State missing coverage (families, versions, native evidence) explicitly.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/cases/dev/README.md (6 KB): the case format and reproduce commands.\n- benchmark/protocol.md `## tasks` only if a spot-check needs a rule.\n- execution/roles/benchmark/SKILL.md: pinning rule for preparation.json.\n## Budget\nThe last two sessions died on the 800k input ceiling (codex counts all non-cached input). Never print or Read any case JSON (31-544 KB), sources.json or coverage.json whole: use `python3 -I` one-liners that print counts, keys or a single claim. Do not read resources-proposal.md, engine code, research or history. Write .session/report.md first and update it after each command, so a budget stop still leaves exit codes.",
+  "pass": 1,
+  "issue": 175
+ }
+]
