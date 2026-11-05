@@ -50,6 +50,8 @@ class FakeHub:
         self.base = datetime.now(timezone.utc)
         self.tick = 0
         self.lagging_label = None
+        self.lagging_close = False          # GitHub's issue list still shows an issue as open a moment after its close
+        self.listed_open = set()
         self.issues = {}
         self.cmts = {}
         self.deps = []                      # (blocked, blocker)
@@ -81,8 +83,9 @@ class FakeHub:
     def list_issues(self, state="open", labels=(), limit=None):
         if self.lagging_label in labels:
             return []                       # GitHub's label-filtered list does not return a label added a moment ago
-        out = [self._view(x) for x in self.issues.values()
-               if (state == "all" or x["state"] == state) and set(labels) <= x["_labels"]]
+        shown = lambda x: "open" if x["number"] in self.listed_open else x["state"]
+        out = [self._view(dict(x, state=shown(x))) for x in self.issues.values()
+               if (state == "all" or shown(x) == state) and set(labels) <= x["_labels"]]
         out = sorted(out, key=lambda x: x["number"])
         return out[::-1][:limit] if limit else out
 
@@ -101,6 +104,8 @@ class FakeHub:
     def close_issue(self, n, reason="completed"):
         x = self.issues[int(n)]
         x.update(state="closed", state_reason="not_planned" if reason == "not planned" else "completed", closed_at=self.ts())
+        if self.lagging_close:
+            self.listed_open.add(int(n))
 
     def ensure_label(self, *a, **k):
         pass
