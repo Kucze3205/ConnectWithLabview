@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-219-finish-gap-disclosure-215",
+  "title": "Report the saved diagram-difference gap disclosure (tag iter/0025/215) done with git-free Verification",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": "task/215",
+  "limits": {
+   "timeout_minutes": 15,
+   "max_turns": 8
+  },
+  "body": "## Goal\nSession #215 completed its work (README row + challenges.py row + preparation.json re-pins, saved as tag iter/0025/215, commit 756f8a1) but ended `partial` on session_budget, so nothing merged. Report it done so it can merge. Expected gain: main's challenge README discloses the diagram-difference gap (review #212's only finding closed). The next Policymaker checks that main's `benchmark/challenges/README.md` contains `Diagram difference`.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn, update it at the end.\n- [ ] Do not redo the edit: the row is already present in `benchmark/challenges/README.md` and `benchmark/scripts/challenges.py`. Change nothing unless Verification fails.\n- [ ] Run the Verification command once and report status done if it exits 0.\n- [ ] Do not run `git commit` or any git diff; the parent commits. Make no readiness or quality claim.\n## Verification\n`python3 -I -c \"import subprocess,sys;sys.exit(subprocess.call([sys.executable,'-I','benchmark/scripts/challenges.py','--check']) or subprocess.call([sys.executable,'-I','policy/evaluator/evaluate.py','--check']) or ('Diagram difference' not in open('benchmark/challenges/README.md').read()))\"`\n## Context\n- Report of #215 (it already ran this Verification with exit 0).\n## Budget\n- No reads beyond the Verification output.",
+  "exports": [],
+  "pass": 1,
+  "issue": 220
+ },
+ {
+  "id": "order-219-review-baseline-design",
+  "title": "Independent review of the baseline run-manifest design (#216) and the gap disclosure at tag iter/0025/215",
+  "role": "reviewer",
+  "model": "opus",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nThe baseline milestone is the only preparation area still missing in the evaluator (missing == [baseline]). #216 (author codex gpt-6.1-sol) added `benchmark/baseline/README.md`, `benchmark/baseline/run-manifest.template.json` (62 null fields with reasons) and `benchmark/scripts/baseline.py` on main. Expected gain: an accept/revise verdict with concrete findings, so the next Policymaker can either order fixes or order pinning of the baseline design as preparation evidence. The next Policymaker reads the verdict and findings in your report.\n## Acceptance\n- [ ] Write `.session/report.md` in your first two turns with a provisional verdict; update it at the end. You have no write scope: write only the report.\n- [ ] Spec check: every manifest item required by `benchmark/protocol.md` ## baseline and `docs/perpetua/evaluation.md` (paired with/without-reader comparison, matched budgets, uncertainty, cost basis) has a template field; list any missing or superfluous field with file:line.\n- [ ] Check that the README makes no numeric repetition count, threshold, spending or readiness claim, lists the blockers (accepted cases/keys/split, tested isolation, model quota, reviewed scorer), and respects `docs/perpetua/accepted-limits.md` on providers/recipients/costs.\n- [ ] Run `python3 -I benchmark/scripts/baseline.py --check` and one or two in-memory mutation checks (e.g. a missing field, a non-null undecided value) to confirm it rejects them; do not edit files.\n- [ ] Read-only: confirm with `git show iter/0025/215:benchmark/challenges/README.md` that the diagram-difference gap row states the missing evidence (paired revisions, native diagram evidence for both, independent difference key) and keeps the case in scope. Do not repeat review #212's fixture audits.\n- [ ] Verdict: accept or revise, findings numbered with file:line. State missing coverage and unmeasured quality explicitly; no readiness claim.\n## Verification\n`python3 -I benchmark/scripts/baseline.py --check`\n## Context\n- `benchmark/protocol.md` ## baseline; `docs/perpetua/evaluation.md`; `docs/perpetua/accepted-limits.md`; `execution/roles/reviewer/SKILL.md`.\n## Budget\n- The three baseline files, the three docs above, one git show; no case JSON or prepared environment reads.",
+  "exports": [],
+  "pass": 1,
+  "issue": 221
+ }
+]
