@@ -528,6 +528,10 @@ def run_policy_script(name, facts, max_bytes=POLICY_OUTPUT_BYTES):
         shutil.rmtree(bundle, ignore_errors=True)
     if out is None:
         raise TokenlessUnavailable("policy/%s did not run: the tokenless job left no output" % name)
+    if not os.path.isfile(os.path.join(out, "stdout.txt")):
+        # The job's redirect creates stdout.txt before the script starts: without it the script never ran (the bundle
+        # did not unpack, the step never started). GitHub's failure, not the policy's: nothing is rolled back.
+        raise TokenlessUnavailable("policy/%s did not run: the tokenless job left no stdout" % name)
     try:
         with open(os.path.join(out, "exit-code"), encoding="utf-8") as fh:
             code = fh.read().strip()
