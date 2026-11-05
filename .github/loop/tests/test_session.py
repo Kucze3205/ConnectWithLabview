@@ -4,6 +4,7 @@ import os
 import unittest
 from unittest.mock import patch
 
+import fakes
 from fakes import common as c, iteration as it, loop
 import owner_requests as requests
 from session_fixtures import SessionCase, read
@@ -43,12 +44,30 @@ class ResolveTest(SessionCase):
         self.assertEqual(self.outputs()["kind"], "script")
 
     def test_the_start_branch_is_the_marker_or_the_existing_task_branch(self):
+        self.w.branch(77, {"src/b.txt": "y"})
         n = self.issue(body="x\n<!-- start-branch: task/77 -->\n")
         loop.resolve(n)
         self.assertEqual(self.outputs()["start"], "task/77")
         self.w.branch(n, {"src/a.txt": "x"})
         loop.resolve(n)
         self.assertEqual(self.outputs()["start"], "task/%s" % n)
+
+    def test_a_deleted_task_branch_starts_from_its_newest_iteration_tag(self):
+        self.w.branch(77, {"src/b.txt": "y"})
+        for tag in ("iter/0003/77", "iter/0004/77", "iter/0005/177"):
+            fakes.sh(self.w.origin, "git", "tag", tag, "task/77")
+        fakes.sh(self.w.origin, "git", "branch", "-D", "task/77")
+        n = self.issue(body="x\n<!-- start-branch: task/77 -->\n")
+        loop.resolve(n)
+        self.assertEqual(self.outputs()["start"], "iter/0004/77")
+
+    def test_a_missing_start_branch_blocks_the_session_instead_of_failing_stage(self):
+        n = self.issue(body="x\n<!-- start-branch: task/77 -->\n")
+        with self.assertRaises(SystemExit):
+            loop.resolve(n)
+        self.assertEqual(self.hub.report(n)["status"], "blocked")
+        self.assertIn("task/77", self.hub.prose(n))
+        self.assertEqual(self.hub.issues[n]["state"], "closed")
 
     def test_refusals_close_the_issue_as_blocked(self):
         for role, why in (("nobody", "no profile"), ("ghost", "no skill"), ("cmdless", "no command")):
