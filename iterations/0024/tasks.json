@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-205-land-challenges-script",
+  "title": "Land the #195 challenge fixtures on main with the prepared idempotent script (no merge)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 12
+  },
+  "body": "## Goal\nSession #201 (iteration 0023) tried to merge origin/main into the #195 branch and lost its merge resolution across 9 runner interruptions; nothing landed. Policymaker #205 wrote `execution/scripts/land_challenges_195.py`, which needs no merge state: it copies the five challenge files byte-for-byte from tag `iter/0022/195`, sets `challenges` to `prepared-not-reviewed`, appends #195's limitation sentence and re-pins every reference in `benchmark/preparation.json`. A dry run on a copy of main gave `challenges.py --check` exit 0 and evaluator missing `[\"baseline\"]`, errors []. Expected gain: challenge fixtures pinned next to the landed lineage, so an independent review can start from this branch. The next Policymaker checks the Verification exit code, `git diff --stat origin/main` (only the five challenge files and the two preparation JSON files) and the report.\n## Acceptance\n- [ ] Starting from main, run `python3 -I execution/scripts/land_challenges_195.py` once (it is idempotent; if interrupted, simply run it again). Do not merge, rebase or hand-edit the JSON files.\n- [ ] Run the Verification below, then commit all changed files under `benchmark/` in one commit. Do not edit `execution/`, `policy/`, lineage or split files, fixtures, README or generator.\n- [ ] If the script or Verification fails, report the exact output and stop; do not redesign. No scorer, readiness, threshold, scope or LabVIEW 2024 claim.\n## Verification\n`python3 -I -c \"import hashlib,json,subprocess as s,sys; P={'benchmark/scripts/challenges.py':'d72cf42c9b639349d6599384213108aa1197000cfeb8f84de35b90ee2ea2022e','benchmark/challenges/README.md':'9e3111d44ce482246e657d645f38a7d7a943fa5eff6648e9de4a4802994b1b0d','benchmark/challenges/library-icon-tests.json':'ad0413fda8f0e75c18a87aadec0cd18abe2733dea5c896f1dcbeb0505836b2a4','benchmark/challenges/library-specialty.json':'d34933b668f556323ce13c4a03d548b83a0de6eef168421494bff86e3769c752','benchmark/challenges/vi-actor-core-native-gap.json':'ee3bc374b0fe5878c43c449850654d2101bf45bc30f8748cbd94a450ec7d5bcf'}; h=all(hashlib.sha256(open(p,'rb').read()).hexdigest()==v for p,v in P.items()); a=s.run([sys.executable,'-I','benchmark/scripts/challenges.py','--check']).returncode; r=s.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); l=s.run(['git','diff','--quiet','origin/main','--','benchmark/lineage.json','benchmark/lineage.md','benchmark/scripts/lineage.py']).returncode; t=s.run(['git','ls-files'],capture_output=True,text=True).stdout; sys.exit(not h or bool(a or r.returncode or d['errors'] or l) or d['missing']!=['baseline'] or '__pycache__' in t)\"`\n## Context\n- `execution/scripts/land_challenges_195.py`: the only action needed.\n- `execution/roles/benchmark/SKILL.md`.\n## Budget\nMechanical task. Never print fixture, lineage or case JSON. Do not read protocol, history, engine code or research. Write `.session/report.md` (about 5 lines) right after the commit.",
+  "pass": 1,
+  "issue": 206
+ }
+]
