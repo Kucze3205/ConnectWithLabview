@@ -119,6 +119,18 @@ class FirstIterationTest(Flow):
         self.assertIsNone(it.start_iteration())
         self.assertEqual(len(self.hub.by_label("loop:map")), 1)
 
+    def test_a_list_that_still_shows_the_closed_iteration_does_not_stop_the_loop(self):
+        it.start_iteration()
+        cur = self.open_iteration()["number"]
+        self.hub.lagging_close = True
+        c.close_issue(cur, "completed")
+        self.assertIn(cur, [x["number"] for x in c.list_issues(labels=(it.MAP,))])     # the list lags the close
+        self.assertIsNone(it.open_iteration())
+        self.assertIsNotNone(it.start_iteration())
+        really_open = [n for n, x in self.hub.issues.items() if "loop:map" in x["_labels"] and x["state"] == "open"]
+        self.assertEqual(len(really_open), 1)
+        self.assertNotEqual(really_open[0], cur)
+
     def test_the_switch_stops_everything(self):
         self.hub.vars["AUTOPILOT"] = "off"
         self.assertIsNone(it.start_iteration())

@@ -171,8 +171,13 @@ def find_iteration_issue(n, state="open"):
 
 
 def open_iteration():
-    found = c.list_issues(labels=(MAP,))
-    return found[0] if found else None
+    """The open iteration issue, or None. GitHub's issue list lags a close by seconds: the closer of an iteration that
+    then starts the next one would still see it open and start nothing, leaving the loop idle until the watchdog's
+    cron (hours late). So each listed issue's state is read directly before it counts."""
+    for x in c.list_issues(labels=(MAP,)):
+        if c.issue(x["number"])["state"] == "open":
+            return x
+    return None
 
 
 def applied_list(fields, key):
@@ -303,7 +308,8 @@ def start_iteration():
     if not c.guard_ok() or c.outage_open():
         return None
     c.sync_main()
-    if open_iteration():
+    if (cur := open_iteration()):
+        c.say("iteration #%s is still open: none started" % cur["number"])
         return None
     if (lost := closed_without_record()) is not None:
         revert_policy("iteration %s was closed without a record" % tag(lost))
@@ -320,7 +326,7 @@ def start_iteration():
         c.ensure_label(l, "0E8A16" if l == MAP else "C5DEF5", "iteration of the loop")
     it = c.create_issue("Iteration %s" % tag(n), "Iteration %s of the loop. State is in the comments and in `iterations/`.\n" % tag(n),
                         labels=(MAP, label))
-    if any(x["number"] < it for x in c.list_issues(labels=(MAP,))):      # two runs started one at once: the lower number stays
+    if any(x["number"] < it and c.issue(x["number"])["state"] == "open" for x in c.list_issues(labels=(MAP,))):      # two runs started one at once: the lower number stays (read directly: the list lags a close)
         c.close_issue(it, "not planned")
         return None
     c.update_report(it, {"phase": "starting", "started": c.iso(), "policy_rev_start": policy_rev()})
