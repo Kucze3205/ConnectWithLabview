@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-223-land-gap-and-baseline",
+  "title": "Land the diagram-difference gap row and pin the reviewed baseline design with one script run",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 15
+  },
+  "body": "## Goal\nTwo finished results have not reached main: the diagram-difference gap row (#215, partial twice: #215/#220 on session_budget) and the pinning of the baseline design (#216) that review #221 accepted. The Policymaker wrote `execution/scripts/land_gap_and_baseline.py`, which is idempotent and git-free. It adds the row to `benchmark/challenges/README.md` and `benchmark/scripts/challenges.py` and checks them against the sha256 values #215 produced. It sets the baseline milestone to `design-reviewed` and adds a limitation note, then pins the 3 baseline files plus preparation-status.json and re-pins every changed reference. A dry run on a copy of main gave: challenges --check 0, baseline --check 0, sources --check 0, evaluator errors [] missing [] with 49 references, and exactly 4 files changed. Expected gain: main's evaluator reports missing == [] and the README discloses the gap. The next Policymaker reads main's evaluator output and README.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn and update it at the end.\n- [ ] Run `python3 -I execution/scripts/land_gap_and_baseline.py` once from the repository root. Make no other edits. If it exits non-zero, report its output as blocked and do not hand-edit.\n- [ ] Run the Verification command once. If it exits 0, report done.\n- [ ] Do not run `git commit` or any git diff; the parent commits. Make no readiness or quality claim: the baseline is a template only and quality is unmeasured.\n## Verification\n`python3 -I -c \"import json,subprocess,sys;r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True);print(r.stdout);sys.exit(r.returncode or json.loads(r.stdout)['missing']!=[] or subprocess.call([sys.executable,'-I','benchmark/scripts/challenges.py','--check']) or subprocess.call([sys.executable,'-I','benchmark/scripts/baseline.py','--check']) or ('Diagram difference' not in open('benchmark/challenges/README.md').read()))\"`\n## Context\n- `execution/scripts/land_gap_and_baseline.py`: the only action needed.\n## Budget\n- No reads beyond the script and the command outputs.",
+  "exports": [],
+  "pass": 1,
+  "issue": 224
+ }
+]
