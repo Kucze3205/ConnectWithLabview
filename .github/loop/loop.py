@@ -162,7 +162,13 @@ def resolve(n):
         raise SystemExit(str(error))
     branch = "task/%s" % n
     has = c.git(".", "ls-remote", "--exit-code", "--heads", "origin", branch, check=False, remote=True).returncode == 0
-    start = branch if has else (c.marker(i["body"], "start-branch") or c.default_branch())
+    asked = None if has else c.marker(i["body"], "start-branch")
+    start = branch if has else (c.start_ref(asked) if asked else c.default_branch())
+    if not start:       # a checkout of a missing ref fails `stage` every time: say so once, instead of an outage
+        why = "start branch `%s` is on origin neither as a branch nor as an `iter/*` tag" % asked
+        close_out(n, i, "blocked", {"cause": "start:start-branch"}, "The session did not start: " + why + ".")
+        reconcile()
+        raise SystemExit(why)
     c.edit_labels(n, remove=["blocked:rate-limit", "conflict"])
     c.set_output(**options, start=start, consented="true" if granted else "false",
                  secrets="|%s|" % "|".join(names) if names else "")

@@ -78,6 +78,12 @@ def validate_tasks(doc, ordered=False, taken=()):
         if limits is not None and (not isinstance(limits, dict) or set(limits) - {"timeout_minutes", "max_turns"} or any(
                 type(v) is not int or v < 1 for v in limits.values())):
             errors.append("task %s: `limits` takes only `timeout_minutes` and `max_turns`, as positive integers" % task_id)
+        start = task.get("start_branch")
+        if start is not None and (not isinstance(start, str) or not start.strip()):
+            errors.append("task %s: `start_branch` must be a branch name or null" % task_id)
+        elif start and not c.start_ref(start):
+            errors.append("task %s: start_branch `%s` is on origin neither as a branch nor as an `iter/*` tag "
+                          "(a closed task's branch is deleted; its unmerged work stays as `iter/NNNN/N`)" % (task_id, start))
         dependencies = task.get("blocked_by", [])
         if dependencies is None:
             dependencies = []

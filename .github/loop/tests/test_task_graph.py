@@ -42,6 +42,18 @@ class TaskGraphTest(unittest.TestCase):
                        {"width": 3}, ["max_turns"]):
             self.assertTrue(self.errs(fakes.task("a", limits=limits)), limits)
 
+    def test_start_branch_must_be_on_origin_as_a_branch_or_an_iteration_tag(self):
+        self.assertTrue(self.errs(fakes.task("a", start_branch="task/77")))
+        self.assertTrue(self.errs(fakes.task("a", start_branch=7)))
+        self.assertTrue(self.errs(fakes.task("a", start_branch=" ")))
+        self.assertEqual(self.errs(fakes.task("a", start_branch=None)), [])
+        self.w.branch(77, {"src/b.txt": "y"})
+        self.assertEqual(self.errs(fakes.task("a", start_branch="task/77")), [])
+        fakes.sh(self.w.origin, "git", "tag", "iter/0021/77", "task/77")
+        fakes.sh(self.w.origin, "git", "branch", "-D", "task/77")
+        self.assertEqual(self.errs(fakes.task("a", start_branch="task/77")), [])
+        self.assertTrue(self.errs(fakes.task("a", start_branch="task/78")))
+
     def test_cycle(self):
         self.assertTrue(self.errs(fakes.task("a", blocked_by=["b"]), fakes.task("b", blocked_by=["a"])))
 

@@ -657,6 +657,21 @@ def marker(body, name):
     return m.group(1) if m else None
 
 
+def start_ref(name):
+    """The ref a session asked to start from `name` checks out: the branch while it is on origin. A task branch
+    `task/N` is deleted when its session closes; unmerged work lives on as the tag `iter/NNNN/N` (`tag_unmerged`), so
+    the newest such tag stands in for it. None: neither exists, and a checkout of `name` would fail."""
+    if git(".", "ls-remote", "--exit-code", "--heads", "origin", name, check=False, remote=True).returncode == 0:
+        return name
+    m = re.fullmatch(r"task/(\d+)", name)
+    if not m:
+        return None
+    out = git(".", "ls-remote", "--tags", "origin", "refs/tags/iter/*", check=False, remote=True).stdout
+    tags = sorted(t for t in (line.split("refs/tags/", 1)[-1] for line in out.splitlines())
+                  if re.fullmatch(r"iter/\d{4}/%s" % m.group(1), t))
+    return tags[-1] if tags else None
+
+
 # ---------------------------------------------------------------- launching sessions
 
 LAUNCHED = set()     # dispatches from this process: `gh run list` shows a new run late
