@@ -1,0 +1,733 @@
+{
+ "schema_version": 1,
+ "iteration": 22,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-05T05:37:14Z",
+ "ended": "2026-11-05T09:45:18Z",
+ "engine_version": "0.7.1",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 22,
+  "engine_version": "0.7.1",
+  "policy_rev": "layered-v1:571bdd9fa9c716224198332b2dac8823cdb724c52c9a771f9fc024f5a96642f5",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": null,
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 1,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": []
+  },
+  "owner_requests": {
+   "open": [],
+   "recently_closed": [
+    {
+     "number": 190,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #188: Land the saved public lineage inventory from commit d8570a9 (verification without LABVIEW_ENVIRONMENT)",
+     "decision": "approved",
+     "proposal_sha": "9dd358028dcf5766cbc9b81d6a2fff4f02429c4e1e0b17f3726d2437265674c3",
+     "base_commit": "7f87e88340823c82470039f2c0aa3adfc7b63075",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 176,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #175: Verify and land the saved development cases from commit d0e14f6",
+     "decision": "approved",
+     "proposal_sha": "6d57e01e82c491daffe710c1f567b11287685a8d512238aa9c612c006b59b3d0",
+     "base_commit": "a09b6de367e21d378ee5279f8e23a9ce3aa0113d",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 169,
+     "kind": "capability",
+     "title": "Bounded native LabVIEW inspection jobs on the existing NI container path (resources row 2)",
+     "decision": "waiting",
+     "proposal_sha": "2ff1dccf2be2aea4e0b1b1007832da88ea9e6466a1064afea27c5fb47e1923ea",
+     "base_commit": "eed5c9591714b9db5062056eae044b4ec52cce90",
+     "detail": "Waiting for the owner's explicit `capability-ready` confirmation; dependencies remain blocked.",
+     "readiness": "Dispatch the job on one public development VI with independently known behaviour from the prepared sources. Pass only if: the original's sha256 is identical before and after (python3 -I), the job emits native properties and a diagram capture with output sha256 manifest, controlled inputs produce recorded outputs, git status --porcelain shows no source mutation, container networking stays disabled, and a separate session compares the outputs with independently expected values. Compile success alone fails.",
+     "answer": "completed"
+    },
+    {
+     "number": 165,
+     "kind": "engine-change",
+     "title": "Policy scripts: a tokenless job that never ran the script is not a policy fault",
+     "decision": "approved",
+     "proposal_sha": "caf86dc9f4e5efb0dc4f3a628cdd4f4b2e3c6afede96ebaad2eae2faf8e6f5a6",
+     "base_commit": "d7ba8a0cfaecf850c0c422465ec44f473fcd8a92",
+     "detail": "The owner explicitly confirmed engine-applied; dependencies may resume.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 161,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #157: Draft concrete resource proposals for the protocol's resources table",
+     "decision": "approved",
+     "proposal_sha": "5913e6b947b3bbd09b66fbd1bc50c562fe1caa47629540256d49b31276209d21",
+     "base_commit": "6c1abeae50fd41894f95f21f670675a5235c608b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 158,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "c61601768f12be3d3e9a24bfb40a8bce7e5d691eaec75522bdaf90669435cdbc",
+     "base_commit": "d546ab6ac52ef9d40180b161e5b1d381c0f54090",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 151,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #150: Revise benchmark/protocol.md for review findings F1 (claim accounting) and F2 (reader-observation contract)",
+     "decision": "approved",
+     "proposal_sha": "16fd2c87cd061c448b565a52c8502da00428bf1067188c4675e02c453e1ef478",
+     "base_commit": "6a9c29d8ae34f0b076ed8f3d2fbbc5d5ea1c63ce",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 143,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #141: Draft the method for tasks, oracle, split, baseline and challenges",
+     "decision": "approved",
+     "proposal_sha": "368a1eb2678d61b02fc33bbbda411e82eb51ccbdf2be8a44fdb09e695667b996",
+     "base_commit": "9ac31c597a6493133b7ad052705a90455195f83c",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 142,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #139: Record VIPB package conflicts under their real package identity",
+     "decision": "approved",
+     "proposal_sha": "58300d1ccc57bfc6bd3e46204206c4feefb8c752842fcf20a23b1a576a93f04a",
+     "base_commit": "facfdf9a470e44945ab6c01c4d520c5ec6551ce3",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 136,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #132: Land saved sources dependency records and repair evidence hashes",
+     "decision": "approved",
+     "proposal_sha": "83ada3b8d60588b9a0bd35ab05279310c0a2c3bf91bf49f5c4686e25192fcf1e",
+     "base_commit": "dc7dc581c28a04d66d741c79500d7317288eff93",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 0,
+  "policymaker_sessions": [
+   {
+    "issue": 192,
+    "status": "partial"
+   },
+   {
+    "issue": 187,
+    "status": "done"
+   },
+   {
+    "issue": 182,
+    "status": "done"
+   },
+   {
+    "issue": 178,
+    "status": "done"
+   },
+   {
+    "issue": 174,
+    "status": "done"
+   }
+  ],
+  "outboxes": [],
+  "audit_report": null,
+  "audit_rev": null,
+  "startup_notices": []
+ },
+ "policy": {
+  "rev_start": "layered-v1:8d2525ef584ee62b277341729e9bf75ae31472eb3b37679264b82e3c8ae7a507",
+  "rev_end": "layered-v1:571bdd9fa9c716224198332b2dac8823cdb724c52c9a771f9fc024f5a96642f5",
+  "commit_end": "d2ecfb590f41fae88d9bc95de95aaf5525b32923",
+  "orders_refused": null,
+  "session": 192,
+  "trigger": "every 1 iterations",
+  "passes": 5,
+  "changes": [
+   {
+    "id": "change-192",
+    "issue": 192,
+    "role": "policymaker",
+    "base_commit": "afcdf135400debe830f6139b742b46c7490f3201",
+    "applied_base_commit": "fc018942c2d778faf08a0217ed93244ec79261c6",
+    "accepted_commit": "d992c4c55a90f16858b4278152b59f04d1d80c1d",
+    "policy_rev_before": "layered-v1:8d2525ef584ee62b277341729e9bf75ae31472eb3b37679264b82e3c8ae7a507",
+    "policy_rev_after": "layered-v1:571bdd9fa9c716224198332b2dac8823cdb724c52c9a771f9fc024f5a96642f5",
+    "changed_paths": [
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-05T05:48:28Z"
+   }
+  ]
+ },
+ "decided_by": null,
+ "tasks": [
+  {
+   "id": "order-192-challenge-fixtures-2",
+   "title": "Revise the saved challenge fixtures from ecd17c4 into concrete, denominator-correct submissions and pin the challenges milestone",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [],
+   "start_branch": "task/189",
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 30
+   },
+   "body": "## Goal\nSession #189 saved `benchmark/scripts/challenges.py` and three fixtures at `ecd17c4` (branch `task/189`, unmerged: input_budget). Policymaker #192 inspected them; they cannot be reviewed yet because: (1) every fixture submits only the first 2 of 50/141 required claims yet expects `correctness: correct` for the positive control, which contradicts the frozen-denominator rule (that is `partial`); (2) mutations are prose descriptions (`\"extra\": \"false assertion\"`, `\"reader_response\": \"prefix-only\"`, `\"export\": \"same-plausible-export\"`) instead of the materialized submitted record; (3) `README.md` was never written; (4) no per-ID expected ledger. Expected gain: a reviewable `challenges` milestone pinned on main, so `evaluate.py --check` lists only `baseline` missing and the next Policymaker can order an independent review and then a scorer. The next Policymaker checks the Verification exit code, the evaluate.py missing list and the README row table.\n\n## Acceptance\n- [ ] Work on the `task/189` files; keep the generator stdlib-only, deterministic, runnable without `LABVIEW_ENVIRONMENT`. `--check` regenerates in memory, never writes, and fails on any differing, missing or extra file in `benchmark/challenges/` (README included, generated by the script).\n- [ ] Prefer small cases to save budget: `library-icon-tests` and `library-specialty` (12 IDs each), `vi-actor-core-native-gap` (3) for unsupported; drop the 141-ID library case unless needed.\n- [ ] Every control stores the full materialized submission it tests (answer record and/or reader response in the case contract shape) with real locators from the case inventory, plus the frozen expected outcome per required ID and per dimension (correctness, grounding, fidelity), the fixed denominators and the extras/duplicates/contradictions ledgers. The positive control submits every required ID with its supporting locator. The wrong-citation controls use a real existing non-supporting locator and a syntactically valid unresolvable one. Extra false/true/unverified claims are concrete assertions with the inventory evidence that falsifies or supports them. Constant export is one concrete fixed export text applied to both small library cases, naming the required observations it contradicts in each. Empty, wrapper-only, truncated, unsupported and error probes are concrete raw responses.\n- [ ] Reader fidelity has no native reference: expected fidelity of otherwise correct reader content is `unverified`, never `correct`. Wrong-answer for computation/typedef-impact claims is an explicit gap (dev cases are XML declarations); use a declared membership/dependency literal and say so.\n- [ ] README: a table of every `benchmark/protocol.md` `## challenges` row plus positive controls -> fixture/control names, set up or explicit gap, and why.\n- [ ] Pin: add the generator, README and fixtures to `benchmark/preparation.json` `challenges`; set `challenges` to `prepared-not-reviewed` in `benchmark/preparation-status.json`, adding one limitation sentence (public development fixtures, unexecuted, no scorer, review pending); then recompute every pinned sha256 of `benchmark/preparation-status.json` in all milestones. No scorer, no `policy/evaluator/` edit, no challenge results, readiness, threshold, scope or LabVIEW 2024 claim, no product code.\n## Verification\n`python3 -I -c \"import json,subprocess,sys; a=subprocess.run([sys.executable,'-I','benchmark/scripts/challenges.py','--check']).returncode; r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); sys.exit(bool(a or r.returncode or d['errors'] or 'challenges' in d['missing']))\"`\n## Context\n- `benchmark/protocol.md`: only `## challenges` and the outcome/denominator rules in `## tasks`.\n- `benchmark/cases/dev/README.md`: locator syntax and contracts.\n- Report #189 (saved state) and `execution/roles/benchmark/SKILL.md`.\n## Budget\n#189 used 460k input in 18 turns on the fallback provider without cache credit; the ceiling is 800k. Never print whole case JSON, `lineage.json`, `sources.json` or `coverage.json`; inspect with `python3 -I` one-liners printing keys, counts or single entries. Do not read engine code, history or research. Write `.session/report.md` first, update it after each step, and commit as you go.",
+   "pass": 1,
+   "issue": 193
+  },
+  {
+   "id": "order-192-2-challenge-fixtures-2",
+   "title": "Revise the saved challenge fixtures from ecd17c4 into concrete, denominator-correct submissions and pin the challenges milestone",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [],
+   "start_branch": "task/189",
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 30
+   },
+   "body": "## Goal\nSession #189 saved `benchmark/scripts/challenges.py` and three fixtures at `ecd17c4` (branch `task/189`, unmerged: input_budget). Policymaker #192 inspected them; they cannot be reviewed yet because: (1) every fixture submits only the first 2 of 50/141 required claims yet expects `correctness: correct` for the positive control, which contradicts the frozen-denominator rule (that is `partial`); (2) mutations are prose descriptions (`\"extra\": \"false assertion\"`, `\"reader_response\": \"prefix-only\"`, `\"export\": \"same-plausible-export\"`) instead of the materialized submitted record; (3) `README.md` was never written; (4) no per-ID expected ledger. Expected gain: a reviewable `challenges` milestone pinned on main, so `evaluate.py --check` lists only `baseline` missing and the next Policymaker can order an independent review and then a scorer. The next Policymaker checks the Verification exit code, the evaluate.py missing list and the README row table.\n\n## Acceptance\n- [ ] Work on the `task/189` files; keep the generator stdlib-only, deterministic, runnable without `LABVIEW_ENVIRONMENT`. `--check` regenerates in memory, never writes, and fails on any differing, missing or extra file in `benchmark/challenges/` (README included, generated by the script).\n- [ ] Prefer small cases to save budget: `library-icon-tests` and `library-specialty` (12 IDs each), `vi-actor-core-native-gap` (3) for unsupported; drop the 141-ID library case unless needed.\n- [ ] Every control stores the full materialized submission it tests (answer record and/or reader response in the case contract shape) with real locators from the case inventory, plus the frozen expected outcome per required ID and per dimension (correctness, grounding, fidelity), the fixed denominators and the extras/duplicates/contradictions ledgers. The positive control submits every required ID with its supporting locator. The wrong-citation controls use a real existing non-supporting locator and a syntactically valid unresolvable one. Extra false/true/unverified claims are concrete assertions with the inventory evidence that falsifies or supports them. Constant export is one concrete fixed export text applied to both small library cases, naming the required observations it contradicts in each. Empty, wrapper-only, truncated, unsupported and error probes are concrete raw responses.\n- [ ] Reader fidelity has no native reference: expected fidelity of otherwise correct reader content is `unverified`, never `correct`. Wrong-answer for computation/typedef-impact claims is an explicit gap (dev cases are XML declarations); use a declared membership/dependency literal and say so.\n- [ ] README: a table of every `benchmark/protocol.md` `## challenges` row plus positive controls -> fixture/control names, set up or explicit gap, and why.\n- [ ] Pin: add the generator, README and fixtures to `benchmark/preparation.json` `challenges`; set `challenges` to `prepared-not-reviewed` in `benchmark/preparation-status.json`, adding one limitation sentence (public development fixtures, unexecuted, no scorer, review pending); then recompute every pinned sha256 of `benchmark/preparation-status.json` in all milestones. No scorer, no `policy/evaluator/` edit, no challenge results, readiness, threshold, scope or LabVIEW 2024 claim, no product code.\n## Verification\n`python3 -I -c \"import json,subprocess,sys; a=subprocess.run([sys.executable,'-I','benchmark/scripts/challenges.py','--check']).returncode; r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); sys.exit(bool(a or r.returncode or d['errors'] or 'challenges' in d['missing']))\"`\n## Context\n- `benchmark/protocol.md`: only `## challenges` and the outcome/denominator rules in `## tasks`.\n- `benchmark/cases/dev/README.md`: locator syntax and contracts.\n- Report #189 (saved state) and `execution/roles/benchmark/SKILL.md`.\n## Budget\n#189 used 460k input in 18 turns on the fallback provider without cache credit; the ceiling is 800k. Never print whole case JSON, `lineage.json`, `sources.json` or `coverage.json`; inspect with `python3 -I` one-liners printing keys, counts or single entries. Do not read engine code, history or research. Write `.session/report.md` first, update it after each step, and commit as you go.",
+   "pass": 2,
+   "issue": 195
+  },
+  {
+   "id": "order-192-3-challenge-fixtures-2",
+   "title": "Repair and pin the saved development challenge fixtures",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [],
+   "start_branch": "task/189",
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 30
+   },
+   "body": "## Goal\nSession #189 saved its generator and three JSON fixtures at ecd17c4 on task/189, then stopped at input_budget. Policymaker #192 inspected them: positive controls submit only 2 of 50/141 required claims but expect correct; mutations are prose rather than actual submissions; per-ID expected ledgers and README are absent. Expected gain: concrete public development fixtures suitable for independent review, pinned as challenge preparation. The next Policymaker checks the report, README coverage table, verification outcome and actual landed files.\n\n## Acceptance\n- [ ] Repair the saved files rather than landing them unchanged. Keep the generator stdlib-only and deterministic, runnable without LABVIEW_ENVIRONMENT. Its --check regenerates in memory without writes and detects differing, missing or extra files in benchmark/challenges/, including a generated README.\n- [ ] Prefer library-icon-tests and library-specialty (12 required IDs each), plus vi-actor-core-native-gap (3). Inspect JSON through bounded summaries rather than printing whole inventories.\n- [ ] Store full materialized answer records and reader responses in their case contract shapes. Positive controls include every required ID and supporting locator. Freeze expected outcomes per required ID and dimension, fixed denominators, and separate extras, duplicates and contradictions ledgers. Omitted IDs remain missing.\n- [ ] Map every protocol challenges row and positive control to concrete fixtures or an explicit gap. Include actual changed literals; existing non-supporting and unresolvable locators; separate answer/reader omissions; concrete false, true and unverified extras; duplicates and contradictions in both response types; one fixed export tested against two cases with incompatible facts; empty, wrapper-only, truncated, unsupported and error responses; and missing-key/zero-execution conditions. Preserve source evidence supporting or falsifying the assertions. Do not substitute mutation descriptions for submitted records.\n- [ ] Native reference alignment is unavailable: otherwise correct reader content remains unverified, never demonstrated full fidelity. Computation/typedef-impact challenges remain explicit gaps; public XML membership/dependency examples do not close them. Record any other unprepared protocol coverage explicitly.\n- [ ] Generate README with protocol-row coverage, fixture/control names and limitations. Add generator, README and fixtures to benchmark/preparation.json challenges references. Set challenges to prepared-not-reviewed in benchmark/preparation-status.json, retaining public-development-only, unexecuted, no-scorer and review-pending limitations. Recompute every pinned hash of preparation-status.json across all milestones.\n- [ ] No scorer or policy/evaluator edit, challenge results, benchmark readiness, quality threshold, scope restriction, LabVIEW 2024 choice or product code. An indexed milestone establishes preparation only.\n\n## Verification\n`python3 -I -c \"import json,subprocess,sys; a=subprocess.run([sys.executable,'-I','benchmark/scripts/challenges.py','--check']).returncode; r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); sys.exit(bool(a or r.returncode or d['errors'] or 'challenges' in d['missing']))\"`\n\n## Context\n- benchmark/protocol.md: challenges and task outcome/denominator rules.\n- benchmark/cases/dev/README.md: contracts and locator syntax.\n- execution/roles/benchmark/SKILL.md; saved commit ecd17c4 from session #189, iteration 0021.\n\n## Budget\n#189 consumed 460k input in 18 turns, predominantly on fallback copilot/gpt-5.6-luna, and stopped at input_budget. Write .session/report.md first and update after each step; checkpoint commits. Avoid whole case JSON, lineage.json, sources.json and coverage.json output. Do not investigate engine code, history or research. If unfinished, record exact saved commit, verification outcomes, remaining gaps and next step.",
+   "pass": 3,
+   "issue": 196
+  },
+  {
+   "id": "order-192-4-challenge-fixtures-2",
+   "title": "Repair and pin the saved development challenge fixtures",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [],
+   "start_branch": "task/189",
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 30
+   },
+   "body": "## Goal\nSession #189 saved its generator and three fixtures at ecd17c4 on task/189, then stopped at input_budget. Policymaker #192 inspected them: positive controls submit only 2 of 50/141 required claims but expect correct; mutations are descriptions rather than actual submissions; per-ID expected ledgers and README are absent. Expected gain: concrete public development fixtures suitable for independent review, pinned as challenge preparation. The next Policymaker checks the report, README coverage table, verification outcome and landed files.\n\n## Acceptance\n- [ ] Repair saved work rather than landing it unchanged. Keep the generator stdlib-only, deterministic and runnable without LABVIEW_ENVIRONMENT. Its --check regenerates in memory without writes and detects differing, missing or extra files in benchmark/challenges/, including a generated README.\n- [ ] Prefer library-icon-tests and library-specialty (12 required IDs each), plus vi-actor-core-native-gap (3). Inspect JSON through bounded summaries.\n- [ ] Store full materialized answer records and reader responses in their case contract shapes. Positive controls include every required ID and supporting locator. Freeze expected outcomes per required ID and dimension, fixed denominators, and separate extras, duplicates and contradictions ledgers. Omitted IDs remain missing.\n- [ ] Map every protocol challenges row and positive control to concrete fixtures or an explicit gap. Include changed literals; existing non-supporting and unresolvable locators; separate answer/reader omissions; concrete false, true and unverified extras; duplicates and contradictions in both response types; one fixed export tested against two cases with incompatible facts; empty, wrapper-only, truncated, unsupported and error responses; and missing-key/zero-execution conditions. Preserve supporting or falsifying evidence. Mutation descriptions alone are insufficient.\n- [ ] Native reference alignment is unavailable: otherwise correct reader content remains unverified, never demonstrated full fidelity. Computation/typedef-impact challenges remain explicit gaps; XML membership/dependency examples do not close them. Record other missing coverage explicitly.\n- [ ] Generate README with protocol-row coverage, fixture/control names and limitations. Add generator, README and fixtures to benchmark/preparation.json challenges references. Set challenges to prepared-not-reviewed in benchmark/preparation-status.json, retaining public-development-only, unexecuted, no-scorer and review-pending limitations. Recompute every pinned hash of preparation-status.json across all milestones.\n- [ ] No scorer or policy/evaluator edit, challenge execution results, readiness, quality threshold, scope restriction, LabVIEW 2024 choice or product code. Evidence indexing establishes preparation only.\n\n## Verification\n`python3 -I -c \"import json,subprocess,sys; a=subprocess.run([sys.executable,'-I','benchmark/scripts/challenges.py','--check']).returncode; r=subprocess.run([sys.executable,'-I','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True); d=json.loads(r.stdout); sys.exit(bool(a or r.returncode or d['errors'] or 'challenges' in d['missing']))\"`\n\n## Context\n- benchmark/protocol.md: challenges and task outcome/denominator rules.\n- benchmark/cases/dev/README.md: contracts and locator syntax.\n- execution/roles/benchmark/SKILL.md; saved commit ecd17c4 from session #189, iteration 0021.\n\n## Budget\n#189 consumed 460k input in 18 turns, predominantly on fallback copilot/gpt-5.6-luna, and stopped at input_budget. Write .session/report.md first and update after each step; checkpoint commits. Avoid whole case JSON, lineage.json, sources.json and coverage.json output. Do not investigate engine code, history or research. If unfinished, record the saved commit, verification outcomes, remaining gaps and next step.",
+   "pass": 4,
+   "issue": 197
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 197,
+    "role": "benchmark",
+    "model": null,
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4766,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/197/196e6624a50c85526f48e3b9ee1cded3e3561b6d130f9e0dc3831e3095da9820.json"
+    ],
+    "status": "partial",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/197",
+    "commit": "dfa289a",
+    "tokens": {
+     "in": 543083,
+     "out": 23168,
+     "cache_read": 22754,
+     "cache_write": 400689
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 4834,
+      "cache_write": 4882,
+      "in": 4,
+      "out": 773
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 17920,
+      "cache_write": 0,
+      "in": 147254,
+      "out": 2404
+     },
+     "copilot/gpt-5.6-luna": {
+      "cache_read": 0,
+      "cache_write": 395807,
+      "in": 395825,
+      "out": 19991
+     }
+    },
+    "turns": 13,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 1440,
+    "gate_s": 0,
+    "total_s": 1474,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 196,
+    "role": "benchmark",
+    "model": null,
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4797,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/196/802098e9f3ed4db540652ef5065ddbfbe735e5cce6030403d00b13f67b5ea1df.json"
+    ],
+    "status": "partial",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/196",
+    "commit": "a09009e",
+    "tokens": {
+     "in": 605809,
+     "out": 23242,
+     "cache_read": 35840,
+     "cache_write": 328917
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 35840,
+      "cache_write": 0,
+      "in": 276877,
+      "out": 4191
+     },
+     "copilot/gpt-5.6-luna": {
+      "cache_read": 0,
+      "cache_write": 328917,
+      "in": 328932,
+      "out": 19051
+     }
+    },
+    "turns": 14,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 1100,
+    "gate_s": 0,
+    "total_s": 1129,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 195,
+    "role": "benchmark",
+    "model": null,
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4898,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/195/aeafb4b78720c01a8f6b6d8eb524bb17a4adddd87304cd9975a93f3cf69a8ac5.json"
+    ],
+    "status": "partial",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/195",
+    "commit": "fbcdb75",
+    "tokens": {
+     "in": 667338,
+     "out": 26127,
+     "cache_read": 373810,
+     "cache_write": 93625
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 267698,
+      "cache_write": 65519,
+      "in": 18,
+      "out": 3679
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 106112,
+      "cache_write": 0,
+      "in": 639211,
+      "out": 17248
+     },
+     "copilot/gpt-5.6-luna": {
+      "cache_read": 0,
+      "cache_write": 28106,
+      "in": 28109,
+      "out": 5200
+     }
+    },
+    "turns": 25,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 1031,
+    "gate_s": 0,
+    "total_s": 1064,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 193,
+    "role": "benchmark",
+    "model": null,
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4977,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/193/3494d65e2de41c92597ffd50505cb52173441d332f6f07c1beeb60e826d7794e.json"
+    ],
+    "status": "partial",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/193",
+    "commit": "d58d58f",
+    "tokens": {
+     "in": 826288,
+     "out": 12485,
+     "cache_read": 16698,
+     "cache_write": 8714
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 16698,
+      "cache_write": 8714,
+      "in": 8,
+      "out": 1593
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "in": 826280,
+      "out": 10892
+     }
+    },
+    "turns": 14,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 340,
+    "gate_s": 0,
+    "total_s": 374,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": null,
+  "verdict": {
+   "value": "none",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": false
+  },
+  "tokens": {
+   "in": 2642518,
+   "out": 85022,
+   "cache_read": 449102,
+   "cache_write": 831945,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 30,
+     "out": 6045,
+     "cache_read": 289230,
+     "cache_write": 79115
+    },
+    "codex/gpt-6.1-sol": {
+     "in": 1889622,
+     "out": 34735,
+     "cache_read": 159872,
+     "cache_write": 0
+    },
+    "copilot/gpt-5.6-luna": {
+     "in": 752866,
+     "out": 44242,
+     "cache_read": 0,
+     "cache_write": 752830
+    }
+   },
+   "cache_read_share": 0.114
+  },
+  "limit_hits": 0,
+  "wall_s": 14885,
+  "critical_path_s": 1474,
+  "width": 4,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
