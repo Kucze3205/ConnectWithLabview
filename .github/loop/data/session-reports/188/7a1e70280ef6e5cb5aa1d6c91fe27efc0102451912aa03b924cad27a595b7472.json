@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/188\niteration: 21\nrunner: Linux\nmodel: gpt-5.6-luna\neffort: low\nturns: 13\nmodels: {\"claude/claude-sonnet-5-5\":{\"cache_read\":19928,\"cache_write\":6165,\"in\":10,\"out\":1385},\"copilot/gpt-5.6-luna\":{\"cache_read\":0,\"cache_write\":27520,\"in\":27544,\"out\":2247}}\ntokens_in: 27554\ntokens_out: 3632\ncache_read: 19928\ncache_write: 33685\nagent_s: 113\ntotal_s: 151\ncommit: 8d3403c\nverdict: accepted\nimproved: true\ndetail: accepted by the owner\nmerged: true\nstatus: done\n```\n\n## Findings\n\n- Restored the five saved lineage files exactly from commit `d8570a9`; no regeneration or edits were made.\n- `python3 -I benchmark/scripts/lineage.py --check` passed (exit 0), reporting 829 artifacts, 24 exact-duplicate groups, and 50 exact-duplicate members.\n- The evaluator verification command passed (exit 0): no evaluator errors and `split` is not listed as missing. Its unrelated missing entries remain `baseline` and `challenges`.\n- `git diff --check HEAD` passed with no whitespace errors.\n- The saved preparation status retains `split` as `not-started`; this work makes no readiness, allocation, threshold, scope, LabVIEW 2024, or product-code claims.\n\n## Discoveries\n\n- The lineage check succeeds in this session without the prior epilogue failure, confirming that the restored script and inventory are internally consistent. Evidence: the successful lineage check above.\n\n## What next\n\n- Preserve the restored lineage inventory and preparation metadata for the Policymaker to review and land.\n- The next session should verify the files are present on main and confirm the evaluator still does not report `split` as missing; do not regenerate the large lineage inventory or alter its pinned evidence.\n\nWaiting for the owner: request #190.\n",
+  "comment": 6645546261,
+  "issue": 188,
+  "snapshot": "a8569d4352d3f614b5d4bbbdd5e71c209ec9242fa9b3dbce3398807baa82a615",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/188#issuecomment-6645546261"
+ },
+ "schema_version": 1
+}
