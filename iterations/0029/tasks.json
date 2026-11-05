@@ -1,0 +1,33 @@
+[
+ {
+  "id": "order-230-land-scorer-228",
+  "title": "Land the #228 development scorer with its output moved to benchmark/results/challenges.json (one script run)",
+  "role": "benchmark",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 15
+  },
+  "body": "## Goal\nSession #228 wrote a stdlib development scorer (33 public controls: 33 matches, 0 mismatches, 0 unevaluable) but ended partial: its required output `benchmark/challenges/results.json` is rejected as an extra entry by `challenges.py --check`. The Policymaker wrote `execution/scripts/land_scorer_228.py`, which copies score.py from tag `iter/0028/228` (sha256-checked), moves the output to `benchmark/results/challenges.json`, regenerates it and requires byte identity with #228's results.json, and drops bytecode. A dry run on a copy of main passed all checks. Expected gain: the first executed (development-only) challenge results land on main. The next Policymaker checks that main has `benchmark/results/challenges.json` with totals controls 33 / matches 33 and that the Verification below passes.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn.\n- [ ] Run once: `python3 -I -B execution/scripts/land_scorer_228.py` (it prints `landed <sha> <sha>`). Do not edit fixtures, challenges.py, preparation*.json or the scorer logic.\n- [ ] Changed files must be exactly `benchmark/scripts/score.py` and `benchmark/results/challenges.json` (new); no `__pycache__`.\n- [ ] Run the Verification and report `done`. State that the scorer is development-only, unreviewed, same role family as the fixtures, native evidence absent, quality unmeasured; no readiness claim.\n- [ ] Do not run `git commit`; the parent commits.\n## Verification\n`python3 -I -B -c \"import json,os,subprocess,sys;c=lambda *a:subprocess.call([sys.executable,'-I','-B',*a]);r=subprocess.run([sys.executable,'-I','-B','policy/evaluator/evaluate.py','--check'],capture_output=True,text=True);print(r.stdout);t=json.load(open('benchmark/results/challenges.json'))['totals'];print(t);sys.exit(c('benchmark/scripts/score.py','--check') or c('benchmark/scripts/challenges.py','--check') or r.returncode or json.loads(r.stdout)['missing']!=[] or t['controls']!=33 or os.path.exists('benchmark/challenges/results.json'))\"`\n## Context\n- execution/scripts/land_scorer_228.py: the whole procedure.\n## Budget\n- Do not open results JSON files whole (about 880 KB); do not read lineage.json, coverage.json or sources.json.",
+  "pass": 1,
+  "issue": 231
+ },
+ {
+  "id": "order-230-review-scorer-228",
+  "title": "Independent review of the #228 development scorer and its results (read-only from the saved tag)",
+  "role": "reviewer",
+  "model": "opus",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nThe #228 scorer reports 33/33 challenge controls matching their frozen expectations. Its author ran mostly on codex gpt-6.1-sol, the same family as the fixtures (#195), so a match may reflect shared assumptions rather than an independent check. Expected gain: an independent accept/revise verdict, with numbered findings, on whether the scorer implements protocol `## challenges` without reading the expectations. The next Policymaker reads the verdict and findings in your report and orders fixes or the next milestone.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn (verdict pending) and update it at the end with: verdict accept|revise, numbered findings with file:line evidence, and the scope you did not check.\n- [ ] Read the scorer read-only: `git show iter/0028/228:benchmark/scripts/score.py` (295 lines). Its output path will move to `benchmark/results/challenges.json` in a parallel landing; ignore that path difference.\n- [ ] Spec check against benchmark/protocol.md `## challenges` (lines 92-112) and benchmark/challenges/README.md: the compute path never reads `expected`, `current_evidence_per_id`, `purpose`, `evidence` or the authored `expected_outcome`. Missing IDs stay in the denominator, duplicates count once, contradictions are incorrect, extras stay in a separate ledger, and unavailable native references stay unverified.\n- [ ] Mutation check by script in a temp directory copy (never in the worktree): change at least three control submissions (e.g. a wrong literal, a removed ID, a wrong citation) and confirm the scorer's computed outcomes change and the comparison reports a mismatch. Report the commands and results.\n- [ ] Inspect results with bounded python3 queries only (`git show iter/0028/228:benchmark/challenges/results.json` is about 880 KB; never print it whole).\n- [ ] Write no repository files except the report. Do not run `git commit`.\n## Verification\n`python3 -I -c \"import sys;t=open('.session/report.md').read();sys.exit(0 if ('accept' in t or 'revise' in t) else 1)\"`\n## Context\n- benchmark/protocol.md `## challenges`; benchmark/challenges/README.md control table.\n- benchmark/challenges/*.json fixtures (library-icon-tests.json is about 1 MB: bounded key/length queries only).\n## Budget\n- Do not read lineage.json, coverage.json or sources.json. Do not repeat #212's fixture checks (33 controls, 1,080 slots, pointers already verified).",
+  "pass": 1,
+  "issue": 232
+ }
+]
