@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-214-fix-diagram-gap-disclosure",
+  "title": "Disclose the missing diagram-difference challenge in the challenge README (review #212 finding)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 25,
+   "max_turns": 15
+  },
+  "body": "## Goal\nApply the single finding of review #212 on the challenge fixtures that are now on main. `benchmark/challenges/README.md:15` and the README string in `benchmark/scripts/challenges.py` (around line 345) do not state that no diagram-difference challenge exists. Expected gain: the challenge coverage account is complete and the fixtures can be re-reviewed as development fixtures. The next Policymaker checks the Verification result and greps the README for the new gap row.\n## Acceptance\n- [ ] Write `.session/report.md` early and update it at the end.\n- [ ] Edit only the README text in `benchmark/scripts/challenges.py`. Add one explicit table row or sentence: no diagram-difference (paired-revision) control exists. The missing evidence is before/after revisions of the same VI, native diagram evidence for both, and an independently established difference key. This remains a visible gap and does not exclude the case from scope. Do not change any fixture logic.\n- [ ] Regenerate with `python3 -I benchmark/scripts/challenges.py`. Only `benchmark/challenges/README.md` and the script should change.\n- [ ] Re-pin the sha256 of every changed file in `benchmark/preparation.json`, including references in `benchmark/preparation-status.json` if it records them. If preparation-status.json changes, re-pin it everywhere too. Write both JSON files as json.dumps(indent=2, sort_keys=True) plus a newline.\n- [ ] Do not run `git commit`; the parent commits. Make no readiness or quality claim.\n## Verification\n`python3 -I -c \"import subprocess,sys;sys.exit(subprocess.call([sys.executable,'-I','benchmark/scripts/challenges.py','--check']) or subprocess.call([sys.executable,'-I','policy/evaluator/evaluate.py','--check']) or ('diagram-difference' not in open('benchmark/challenges/README.md').read()))\"`\n## Context\n- Review #212 report (finding and recommendation): it audited 33 controls, 1,080 slots and 23 pointers. Do not repeat those audits.\n- `execution/roles/benchmark/SKILL.md`.\n## Budget\n- benchmark/scripts/challenges.py lines 330-360, benchmark/preparation.json, benchmark/preparation-status.json; no case JSON reads",
+  "pass": 1,
+  "issue": 215
+ },
+ {
+  "id": "order-214-draft-baseline-manifest",
+  "title": "Draft the baseline run-manifest template and development-only precision/cost plan (design only)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nThe baseline milestone is the last preparation area with no evidence (evaluator missing == [baseline]). Prepare a reviewable design artifact for the paired with/without-reader comparison in `benchmark/protocol.md` ## baseline (lines 77-90) and `docs/perpetua/evaluation.md` row 68. Expected gain: a baseline design that an independent reviewer can check next iteration. The next Policymaker checks that `python3 -I benchmark/scripts/baseline.py --check` exits 0 and reads the report's list of unresolved fields.\n## Acceptance\n- [ ] Write `.session/report.md` early and update it at the end.\n- [ ] Create `benchmark/baseline/README.md` and `benchmark/baseline/run-manifest.template.json`. The template has a field for every manifest item the protocol requires: provider and exact model snapshot, image capability, generation settings and seeds, prompt and input hashes, arm-specific tool instruction, reader commit and configuration, tool schema, runner/scorer versions, split/key revision, native evidence versions, matched token/context/output/wall-time budgets, tool-call limits, repetitions, sampling order, stopping rule, run ceiling, uncertainty procedure and cost basis. Every value that is not decided yet is null and has a stated reason.\n- [ ] The README describes a development-pilot-only precision/cost plan method. Give no numeric repetition count, no threshold and no spending. List the blockers: accepted cases/keys/split, tested isolation, model quota, reviewed scorer.\n- [ ] Create `benchmark/scripts/baseline.py`, stdlib only and environment-free. `--check` validates the template structure against a frozen list of required fields and rejects missing, extra or non-null undecided fields.\n- [ ] Read `docs/perpetua/accepted-limits.md` before naming any provider, data recipient or cost.\n- [ ] Do NOT edit `benchmark/preparation.json` or `preparation-status.json`; a parallel task is re-pinning them. Pinning happens after review. Do not run `git commit`. Make no readiness claim.\n## Verification\n`python3 -I benchmark/scripts/baseline.py --check`\n## Context\n- `benchmark/protocol.md` ## baseline; `docs/perpetua/evaluation.md`; `docs/perpetua/accepted-limits.md`.\n- `execution/roles/benchmark/SKILL.md`.\n## Budget\n- the three docs above; no case JSON or prepared environment reads",
+  "pass": 1,
+  "issue": 216
+ }
+]
