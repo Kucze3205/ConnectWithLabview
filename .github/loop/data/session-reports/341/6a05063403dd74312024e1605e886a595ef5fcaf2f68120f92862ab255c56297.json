@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/341\niteration: 56\nrunner: Linux\ncause: input_budget\neffort: medium\nturns: 26\nmodels: {\"copilot/gpt-5.6-luna\":{\"cache_read\":0,\"cache_write\":428418,\"in\":429289,\"out\":24446}}\ntokens_in: 429289\ntokens_out: 24446\ncache_read: 0\ncache_write: 428418\nagent_s: 443\ntotal_s: 472\ncommit: cd3390b\nstatus: partial\n```\n# Issue #341 benchmark report\n\n## Discoveries\n- `run_record.py` currently validates only that `manifest_sha256` has SHA-256 shape; it does not compare the value with supplied manifest bytes (`benchmark/scripts/run_record.py`, `validate`).\n- The checker already has a synthetic record/manifest fixture and mutation harness in `check()`, which can host the binding controls.\n\n## Status\n- Startup documents and `benchmark/scripts/run_record.py` have been read.\n- Required template and README sections still need inspection before implementation.\n- No code or pin changes have been made yet.\n\n## What next\nRead `benchmark/baseline/run-record.template.json`, the run-record sections of `benchmark/baseline/README.md`, and preparation pins. Then add a stdlib byte-hash binding function, matching and wrong-content controls, revert-proof evidence, README update, and refreshed pins. Run the required evaluator and baseline checks without creating `__pycache__` files.\n",
+  "comment": 6698460188,
+  "issue": 341,
+  "snapshot": "e5b382392144b92212a58171efa46fa2750f5eba25687bc0901cae4fa92a3080",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/341#issuecomment-6698460188"
+ },
+ "schema_version": 1
+}
