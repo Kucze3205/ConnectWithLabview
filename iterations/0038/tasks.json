@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-264-pin-native-262",
+  "title": "Pin the reviewed native job design under the oracle milestone with one script run (execution/scripts/pin_native_262.py)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nReview #262 accepted the landed design-only native job contract (benchmark/native/ + benchmark/scripts/native_jobs.py) with no findings. The Policymaker wrote a hash-gated idempotent script that adds the four files to the oracle milestone of benchmark/preparation.json, appends one limitation sentence (design only, zero native executions, #169 not ready, same GPT-family author/reviewer) to benchmark/preparation-status.json and re-pins its references. Dry run on a copy of main: idempotent, evaluator missing [] with 55 refs, status sha 5c972a14..., preparation.json sha d4a37c5f.... Expected gain: the reviewed native design is pinned evidence; the next Policymaker checks main evaluator --check reports 55 references and preparation-status.json sha starts 5c972a14.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Run exactly once: `python3 -I execution/scripts/pin_native_262.py`. If it exits non-zero, report the output and stop; do not fix by hand.\n- [ ] Run the Verification command; record its exit code, `evidence_references` and `missing` in the report; set status done.\n- [ ] Change nothing else: only benchmark/preparation.json and benchmark/preparation-status.json may change; no `__pycache__`; do not run `git commit` (the parent commits).\n## Verification\n`python3 policy/evaluator/evaluate.py --check`\n## Context\n- execution/scripts/pin_native_262.py: the whole procedure.\n## Budget\n- At most 6 tool calls. Do not read recipes.json, case JSON or results JSON.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 265
+ }
+]
