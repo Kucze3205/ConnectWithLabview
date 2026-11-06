@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-316-land-run-record-312",
+  "title": "Land the saved run-record contract (template + checker) from tag iter/0050/312 without README or pin edits",
+  "role": "benchmark",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "body": "## Goal\nTask #312 wrote the baseline raw run-record contract, but it ended `blocked` only because it also edited the pinned benchmark/baseline/README.md. Expected gain: the two new files land on main and the evaluator stays green, so an independent review can lead to a pin under the baseline milestone. The next Policymaker checks `python3 -I -B benchmark/scripts/run_record.py --check` exit 0 and evaluator missing [] with 60 refs on main.\n## Acceptance\n- [ ] Write .session/report.md with status wip first.\n- [ ] Run exactly: `git checkout iter/0050/312 -- benchmark/baseline/run-record.template.json benchmark/scripts/run_record.py`. Copy nothing else from the tag.\n- [ ] Check sha256 with python3 -I: run-record.template.json == aa92803180d88a8336243c6db08dc4b65529f0db6c87d553f23c083b9b44e35d and run_record.py == bf57224fb2e29fb476b4d343770adc20126a2997f622efcd8c5ce353cd9c3300. If either differs, stop and report blocked.\n- [ ] Do NOT edit benchmark/baseline/README.md, benchmark/preparation.json or benchmark/preparation-status.json. Do not track __pycache__ (always use python3 -I -B).\n- [ ] Run `python3 -I -B benchmark/scripts/run_record.py --check` and `python3 -I -B policy/evaluator/evaluate.py --check`; record exit codes, missing list and reference count in the report.\n- [ ] Do not run `git commit`; the parent commits. Use at most 8 tool calls.\n## Verification\n`python3 -I -B benchmark/scripts/run_record.py --check`\n## Context\n- Report of #312: synthetic contract, 6 rejecting mutations pass, 8 undecided fields.\n- Policymaker #314 diagnosis: the README append broke the README pin; that section is added later together with re-pinning.\n## Budget\n- Only the two files above and the two check commands. No corpus reads.",
+  "pass": 1,
+  "issue": 317
+ },
+ {
+  "id": "order-316-review-run-record-312",
+  "title": "Independent review of the #312 baseline run-record contract (report only, from main)",
+  "role": "reviewer",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "body": "## Goal\nExpected gain: a verdict (accept or revise) with numbered findings on the #312 run-record contract, so the Policymaker can pin it under the baseline milestone or order one narrow fix. The next Policymaker reads the verdict and findings in this report.\n## Acceptance\n- [ ] Write .session/report.md with status wip and a verdict placeholder in the first turns; update it as you go.\n- [ ] Read the saved files read-only with `git show iter/0050/312:benchmark/scripts/run_record.py` and `git show iter/0050/312:benchmark/baseline/run-record.template.json` (they may also be on main already). Confirm sha256 bf57224f... and aa928031....\n- [ ] Spec check: the frozen field list covers what benchmark/protocol.md section baseline (about lines 77-90) says a matched run must record (case, arm, repetition, pinned manifest hash, prompt hash, token/time/tool-call accounting, truncation/exhaustion, answer claims with source pointers). Name each missing or extra field.\n- [ ] Check that the in-memory conversion yields the claim structure that benchmark/scripts/score.py consumes (read only its claim-input functions) and that run_record.py never reads expected answers.\n- [ ] In a temp copy outside the repo, apply at least 3 mutations of your own (for example: drop the manifest-hash cross-check, accept an unknown arm, skip the token-sum check) and confirm `--check` then fails, i.e. the self-tests are not masked.\n- [ ] Check that every value in the template is synthetic-marked or null with a reason, with no real case answers or private data. Check honesty: design only, no runs, no readiness, tool quality unmeasured.\n- [ ] Report: verdict, numbered findings (file:line), blocking yes/no for each, and your actual model family. Change no repository files.\n## Verification\n`python3 -I -B benchmark/scripts/score.py --check`\n## Context\n- Author #312 was codex gpt-6.1-sol; prefer a different family if routing allows, and report the family you ran on.\n- Do not read .session/report.md in Verification. Do not re-review score.py or the manifest template (reviews #221, #247).\n## Budget\n- run_record.py, the template, protocol.md baseline section, score.py claim-input functions, run-manifest.template.json field names. Stay under 300k input.",
+  "pass": 1,
+  "issue": 318
+ }
+]
