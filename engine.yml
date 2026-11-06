@@ -19,8 +19,8 @@ provider_pool:
     initial_seconds: 300
     max_seconds: 21600
 author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
-  name: ""
-  email: ""
+  name: "Kamil Kuczerowski"      # owner decision 6 Nov 2026: the owner authors every loop commit, admitted session output too
+  email: "kuczerowski2005@gmail.com"
 idle_resumes: 3                 # consecutive resumes of a parked session that used the agent without progress: outage, no more resumes
 policy_passes_notice: 10        # one informational owner request when an iteration's policy phase reaches this many passes; nothing stops
 rollback_notice_after: 2        # a policy/ rollback opens an owner notice only from this many in a row (to the same last good state); a single one self-heals and the Policymaker sees it in state `rollbacks`

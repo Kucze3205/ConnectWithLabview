@@ -440,7 +440,7 @@ def fetch_candidate(work, n):
         # settings, a tool's virtualenv links): neither inspected nor admitted. Everything else reaches the checks.
         write = profile_of(role).get("write") or []
         skip = lambda rel, tracked: not tracked and not c.path_match(rel, write)
-        executor_boundary.import_candidate(work, meta, ".", ref, skip)
+        executor_boundary.import_candidate(work, meta, ".", ref, skip, c.cfg().get("author"))
     except (ValueError, OSError, subprocess.SubprocessError):
         print("Session output could not be admitted safely")
         return None, []

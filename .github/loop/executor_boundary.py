@@ -22,6 +22,14 @@ def environment():
             "GIT_COMMITTER_NAME": "executor", "GIT_COMMITTER_EMAIL": "executor@localhost"}
 
 
+def identity(author):
+    """The configured author of admitted output, or nothing (the `executor` default of environment())."""
+    a = author or {}
+    if a.get("name") and a.get("email"):
+        return {"GIT_AUTHOR_NAME": a["name"], "GIT_AUTHOR_EMAIL": a["email"]}
+    return {}
+
+
 def git(root, *args, data=None, env=None):
     clean = environment()
     if os.name == "nt":
@@ -62,10 +70,11 @@ def record(work, trusted):
         "paths": [n.decode("utf-8") for n in names if n], "work": os.path.abspath(work)}), encoding="utf-8")
 
 
-def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: False):
+def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: False, author=None):
     """Write objects/index in the engine repo, without consulting worker .git: one commit on the baseline from the file
     bytes the session left, whether or not it committed. Environment debris never reaches any check: `skip(rel, tracked)`
-    by path, before the file is inspected or read."""
+    by path, before the file is inspected or read. `author` ({name, email}, from engine.yml) authors the commit;
+    without both fields it stays `executor`."""
     if os.path.abspath(work) != metadata["work"]:
         raise ValueError("executor output does not match its staged origin")
     tracked = set(metadata["paths"])
@@ -83,7 +92,7 @@ def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: Fal
         tree = git(trusted, "write-tree", env=env).decode().strip()
         commit = git(trusted, "commit-tree", tree, "-p", metadata["baseline"], data=b"Session output admitted as data\n",
                      # fixed dates: the same output is the same commit, so "the head did not move" is observable
-                     env={"GIT_AUTHOR_DATE": "@0 +0000", "GIT_COMMITTER_DATE": "@0 +0000"}).decode().strip()
+                     env=dict(identity(author), GIT_AUTHOR_DATE="@0 +0000", GIT_COMMITTER_DATE="@0 +0000")).decode().strip()
     git(trusted, "update-ref", ref, commit)
     return commit
 
