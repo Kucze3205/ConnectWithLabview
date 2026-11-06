@@ -136,5 +136,51 @@
   ],
   "pass": 3,
   "issue": 335
+ },
+ {
+  "id": "order-329-4-readiness-gap-delta",
+  "title": "Update gap map #282 against current main and list the non-resource items that still block an owner method-acceptance request",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nGap map #282 (iteration 0043) listed what blocks benchmark readiness. Since then the loop landed: sources/coverage/tasks/oracle `reviewed` (#288, #304, #309), the #212 gap row and #281 split checker re-reviews (#298, Policymaker revert-proof), the native readiness case (#292/#297/#301), the run-record contract (#312/#318/#322). Store readiness review #327 said `revise` (owner must rerun; not your task). Report only; change no repository file.\n\nExpected gain: the next Policymaker learns whether only resource-dependent items remain (native jobs #169, restricted store #268) and so whether to prepare the owner method-acceptance request now, or which exact small items to order first. It reads the table and the decision line in your report.\n\n## Acceptance\n- [ ] Read `docs/perpetua/evaluation.md` and `benchmark/protocol.md` sections on readiness, method acceptance and the change gate. Quote (file:line) what the owner must accept before product implementation, and whether executed baseline/native/split evidence is a precondition of that acceptance or of later benchmark readiness.\n- [ ] For every #282 row (staged report, see Context), give: current state on main with one evidence pointer (file:line or `--check` output), and class `done`, `resource-dependent` (#169/#268), `owner-decision` or `now-doable`.\n- [ ] For each `now-doable` row: one-sentence task, files touched, and whether it edits a pinned file (then it must re-pin `benchmark/preparation.json`).\n- [ ] Include #318 finding 4 (manifest-content binding, `benchmark/scripts/run_record.py:134`) and public lineage adjudication as rows.\n- [ ] End with one line: `decision: request-acceptance-now` or `decision: do-first <ids>`, with the reason.\n- [ ] Write the report early, then refine. Keep missing coverage and unmeasured quality explicit.\n\n## Verification\n`python3 benchmark/scripts/score.py --check`\n\n## Context\n- Staged report of #282 (exports, see `.session/exports/manifest.json`): the original gap table. If unavailable, rebuild the rows from evaluation.md and protocol.md and say so.\n- `benchmark/preparation-status.json`: milestone labels and limitation sentences.\n- `policy/evaluator/evaluate.py --check`: environment-free index check (expected errors [], missing []).\n\n## Budget\n- At most 20 tool calls, under 300k input tokens. Do not read benchmark/cases/dev/*.json or benchmark/results/*.json bodies; use --check outputs and grep.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     282
+    ]
+   }
+  ],
+  "pass": 4,
+  "issue": 336
+ },
+ {
+  "id": "order-329-4-review-store-workflow-proposal",
+  "title": "Review the proposed store-readiness workflow against review #327 findings 1-3 before the owner reruns it",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nReview #327 said `revise` for the #268 store readiness record: (1) step (d) zero counts can follow failed downloads or searches; (2) step (b) push exit 128 does not show an authorization rejection; (3) step (a)/(b) commit creation is not gated or recorded. The Policymaker wrote a replacement workflow at `policy/proposals/store-readiness.yml` (current: `.github/workflows/store-readiness.yml`). The owner will copy it and rerun only after your verdict. Report only; change no repository file. Do not access the private store.\n\nExpected gain: the owner gets one reviewed workflow and reruns readiness once, so split work can use the store. The next Policymaker reads your verdict and files the owner request with the exact file.\n\n## Acceptance\n- [ ] Diff the proposal against the current workflow (python difflib). For each finding 1-3 of #327 (evidence below), say if the change closes it, with proposal line numbers.\n- [ ] Check that no output can contain a token value, the sentinel marker, store contents or the private address (the marker is planted only in work/pc files, which are deleted by `rm -rf work`; check `inv` and every `rec` argument).\n- [ ] Run the `run:` script with `bash -n`. Test the shell helpers `q`, `qp`, `mk`, `first` locally in a temp dir with a local bare git repo (no network): a success, a non-auth failure and a simulated denial message must classify as expected.\n- [ ] Check fail-closed logic of step (d): a failed `gh api`, an empty run list, a run with zero log files, a failed download or tar, or a failing positive control must set `acquisition incomplete` and exit 1. Name any path that still yields a silent zero.\n- [ ] Name gaps the proposal leaves (e.g. no positive control for `git grep`/`git log -S`) as numbered findings with exact fixes.\n- [ ] Verdict `accept` or `revise` with numbered findings. Write the report early, then refine.\n\n## Verification\n`python3 benchmark/scripts/score.py --check`\n\n## Context\n- `policy/proposals/store-readiness.yml`: the proposal.\n- `.github/workflows/store-readiness.yml`: the workflow that produced the record.\n- `benchmark/split/store-readiness-268.redacted.json`: the record (#327 reviewed it).\n- #327 review report (exports, `.session/exports/manifest.json`): findings 1-3.\n\n## Budget\n- At most 20 tool calls, under 200k input tokens. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     327
+    ]
+   }
+  ],
+  "pass": 4,
+  "issue": 337
  }
 ]
