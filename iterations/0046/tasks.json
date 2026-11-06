@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-295-review-readiness-case-292",
+  "title": "Independently review the #292 readiness-case proposal for capability #169 (report only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nSession #292 (codex gpt-6.1-sol) proposed `readiness-case.json` for capability #169: two public pylavi VIs (empty_separate_code.vi, empty_no_debugging.vi) with saved-property expectations from pylavi/tests/test.yaml, and controlled I/O recorded as a gap. Expected gain: an independent accept/revise verdict, so the Policymaker can land the case by script and tell the owner that #169 has a concrete, cited property-readiness case. The next Policymaker reads the verdict and numbered findings in this report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Read the proposal: the fenced JSON block in the `report` field of `.github/loop/data/session-reports/292/d44dc4373002008469d9f40f42a57d5dc46834d08b60e7d434b6ef4bb140c382.json`.\n- [ ] Recompute with python3 -I every sha256 in the proposal (2 VIs, test.yaml, args.yaml, validate.py under $LABVIEW_ENVIRONMENT/pylavi; .github/loop/request-state/169.json).\n- [ ] Check every line pointer (test.yaml 86-125, args.yaml 23-29, validate.py 402-415, 460-466, 545-561, 566-576) states what the proposal claims. Check the two VIs have opposite separate-code and debugging expectations.\n- [ ] Check honesty: capability_169_ready false, native_executed false, controlled I/O stays an explicit gap, pass_rules.verbatim equals the readiness text in 169.json.\n- [ ] Verdict `accept` or `revise` with numbered findings (path:line). Do not interpret VI bytes; hashing only. Change no repository files; do not run `git commit`.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/native/README.md and recipes.json readiness recipe: current design (#258, review #262).\n## Budget\n- Do not open case JSON, results JSON, sources.json or lineage.json. At most 25 tool calls; keep total input below 250k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 297
+ },
+ {
+  "id": "order-295-rereview-gap-row-and-split-checker",
+  "title": "Re-review two open limitations: the #212 diagram-difference gap row and the #281 split-checker fix (report only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nbenchmark/preparation-status.json still records two items as not independently re-reviewed: the diagram-difference gap row added after review #212 (challenges README + challenges.py), and the #281 fix of the two #273 split-checker findings (benchmark/scripts/split_boundary.py). Expected gain: a verdict per item, so the Policymaker can replace both limitation sentences by script or order one narrow fix. The next Policymaker reads the two verdicts in this report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Item A: in benchmark/challenges/README.md and benchmark/scripts/challenges.py, confirm the `Diagram difference` row states the gap honestly (no case, no paired revisions, no claim of coverage) and that `python3 -I -B benchmark/scripts/challenges.py --check` exits 0.\n- [ ] Item B: in split_boundary.py, confirm the token mutation now reaches TOKEN_VALUE_RE and the unknown-partition mutation is rejected by validate() with specific reasons. In a temp copy, revert each fix and show that --check then fails.\n- [ ] Verdict per item `accept` or `revise` with numbered findings (path:line). Change no repository files; do not run `git commit`; no `__pycache__` (use python3 -B).\n## Verification\n`python3 -I -B benchmark/scripts/split_boundary.py --check`\n## Context\n- Review #212 finding (README.md:15 / challenges.py:345); review #273 findings (split_boundary.py:126, :130); fix commit 4332127.\n## Budget\n- Do not open case JSON, results JSON, sources.json or lineage.json. At most 25 tool calls; keep total input below 250k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 298
+ }
+]
