@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "capability": 268,
+  "request": 308,
+  "store": "restricted evaluation store of capability #268 (private repository; address withheld)",
+  "executed_at": "2026-11-06",
+  "executor": "owner-dispatched workflow .github/workflows/store-readiness.yml",
+  "workflow_commit": "d35e439a4c248e96f336e5b9bf83aeede8e24cf5",
+  "notes": [
+    "An earlier initial run (42281791571) failed step (b): the scorer token was invalid ('Invalid username or token'). The owner regenerated it; the run above repeats (a)-(d) with the regenerated token.",
+    "Step (e): the owner deleted the regenerated scorer token before the revoked run; the repository secret was left unchanged.",
+    "Only exit codes, hit counts and one URL-stripped git error line are recorded. No token value, sentinel marker, store contents or private repository address is included."
+  ],
+  "steps": [
+    {
+      "step": "a",
+      "step_id": "custodian_clone_push",
+      "identity_label": "custodian",
+      "operation": "git clone; commit and push branch readiness-probe-42283794047; delete branch",
+      "expected": "clone succeeds; push succeeds; branch deleted",
+      "actual": "clone exit 0; push exit 0; delete exit 0",
+      "result": "pass",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42283794047"
+    },
+    {
+      "step": "b",
+      "step_id": "scorer_clone_push_rejected",
+      "identity_label": "scorer",
+      "operation": "git clone; push branch readiness-probe-42283794047-scorer",
+      "expected": "clone succeeds; push rejected",
+      "actual": "clone exit 0; push exit 128",
+      "result": "pass",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42283794047"
+    },
+    {
+      "step": "c",
+      "step_id": "tokenless_ls_remote_denied",
+      "identity_label": "tokenless",
+      "operation": "git ls-remote without credentials",
+      "expected": "fails (non-zero exit)",
+      "actual": "ls-remote exit 128 (fatal: could not read Username for '<url> terminal prompts disabled)",
+      "result": "pass",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42283794047"
+    },
+    {
+      "step": "d",
+      "step_id": "sentinel_grep_zero_hits",
+      "identity_label": "independent-audit",
+      "operation": "grep sentinel marker: public tree, public history (-S), issues and comments, logs and artifacts of loop runs 42275273811 42275261060 42274282581 42276295183 42275932168 ",
+      "expected": "zero hits",
+      "actual": "tree 0; history 0; issues/comments 0; run logs 0; run artifacts 0",
+      "result": "pass",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42283794047"
+    },
+    {
+      "step": "e",
+      "step_id": "revoked_scorer_token_clone_denied",
+      "identity_label": "revoked-scorer",
+      "operation": "git clone after scorer token revocation",
+      "expected": "clone fails (non-zero exit)",
+      "actual": "clone exit 128 (remote: Invalid username or token. Password authentication is not supported for Git operations.)",
+      "result": "pass",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42284561529"
+    }
+  ],
+  "reviewer_session": null
+}
