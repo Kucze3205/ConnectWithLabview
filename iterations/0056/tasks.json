@@ -1,0 +1,41 @@
+[
+ {
+  "id": "order-340-manifest-binding-n1",
+  "title": "Bind the run record to the supplied manifest bytes and add a wrong-content negative control (gap delta #330 N1, review #318 finding 4)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nReview #318 finding 4 and gap delta #330 (item N1): `benchmark/scripts/run_record.py:134-135` checks only the shape of the manifest sha256, not equality with supplied manifest bytes. Make `run_record.py --check` prove the binding: a record is valid only when its manifest sha256 equals sha256 of the exact manifest bytes it is checked against.\n\nExpected gain: the last public, non-resource defect of the run-record contract closes, so the baseline runner can use it later. The next Policymaker checks `run_record.py --check` output for the new negative control and the evaluator check on main.\n\n## Acceptance\n- [ ] Read `benchmark/scripts/run_record.py`, `benchmark/baseline/run-record.template.json`, `benchmark/baseline/README.md` (sections on run records) first. Write `.session/report.md` early.\n- [ ] Add a function that takes manifest bytes and a record, computes sha256 of the bytes (hashlib, stdlib only) and rejects inequality with a specific reason.\n- [ ] In `--check`, build an in-memory synthetic manifest, a matching record (accepted), and two negative controls: wrong content with a well-formed hash (rejected, specific reason) and one changed byte in the manifest (rejected). Keep all existing mutations and their results.\n- [ ] Revert-proof: in a temp copy, disable the equality test and show that `--check` exits 1. Report the command and exit code.\n- [ ] Update the README sentence on finding 4 (`benchmark/baseline/README.md:31-33`) to say what is now bound and what stays undecided (no populated manifest, no runner).\n- [ ] Every changed file is pinned: re-pin it in `benchmark/preparation.json`, and re-pin every reference to `benchmark/preparation-status.json` if you change it. Both JSON files use json.dumps(indent=2, sort_keys=True) plus a newline.\n- [ ] Do not run `git commit`; the parent commits. No `__pycache__` files (use `python3 -I -B`).\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- `benchmark/scripts/run_record.py`: the checker (sha bf57224f... before your change).\n- `benchmark/preparation.json`: pins (baseline milestone).\n- `benchmark/scripts/baseline.py --check`, `benchmark/scripts/score.py --check`: must still exit 0.\n\n## Budget\n- At most 25 tool calls, under 300k input tokens. Do not read benchmark/cases or benchmark/results JSON bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "pass": 1,
+  "issue": 341
+ },
+ {
+  "id": "order-340-review-store-workflow-v2",
+  "title": "Review the revised store-readiness workflow proposal against the consolidated findings of reviews #331, #333, #335 and #337",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nFour reviews (#331, #333, #335, #337) said `revise` for `policy/proposals/store-readiness.yml`. The Policymaker revised it (this iteration). Check the revised file once against the consolidated list below. Report only; change no repository file. Do not access the private store.\n\nExpected gain: one accepted workflow, so the owner copies it and reruns store readiness once; split work can then use the store. The next Policymaker reads your verdict and files the owner request.\n\n## Acceptance\n- [ ] For each item F1-F6, say closed or open with proposal line numbers:\n  - F1: `git grep` and `git log -S` failures cannot become a silent zero (grep status 1 = no match, >1 = error -> acquisition incomplete).\n  - F2: positive controls exist for every search path (public tree, history, issue text, logs, artifacts) and each search status is checked.\n  - F3: the script works under the Actions default `bash -e -o pipefail`; expected no-match status does not abort before the record is written; cleanup runs on exit.\n  - F4: `qp` classifies only remote write-authorization text as `write-denied`; a local file permission error is `other`.\n  - F5: no arbitrary remote or diagnostic text reaches the record or the log; only fixed labels, exit codes, counts and run ids; the store address comes from a secret, not a literal `env`.\n  - F6: the job exits 1 unless all hit counts are zero and steps (a)-(e) have the expected outcomes.\n- [ ] Run `bash -n` on the `run:` script, extracted with python yaml or text slicing. Test `q`, `qp`, `mk`, `cnt` in a temp dir with a local bare git repo under `bash -e -o pipefail` (no network): success, non-auth failure, simulated denial, local permission error.\n- [ ] Verdict `accept` or `revise` with numbered findings and exact fixes. Write the report early.\n\n## Verification\n`python3 -I -B benchmark/scripts/score.py --check`\n\n## Context\n- `policy/proposals/store-readiness.yml`: the revised proposal.\n- `.github/workflows/store-readiness.yml`: the workflow that produced the first record.\n- Reports #331/#337 (exports, `.session/exports/manifest.json`): earlier findings. Do not repeat their full review.\n\n## Budget\n- At most 20 tool calls, under 200k input tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     331,
+     337
+    ]
+   }
+  ],
+  "pass": 1,
+  "issue": 342
+ }
+]
