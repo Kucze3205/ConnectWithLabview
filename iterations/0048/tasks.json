@@ -1,0 +1,43 @@
+[
+ {
+  "id": "order-303-relabel-review-tasks-oracle",
+  "title": "Currency review of the tasks and oracle milestones: relabel-reviewed or revise",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nThe `tasks` and `oracle` milestones in benchmark/preparation-status.json are still `prepared-not-reviewed`. Review #179 recomputed 1,053/1,053 XML agreements of the 11 development cases (landed via #175/#176). Review #262 accepted the native design and review #297 accepted benchmark/native/readiness-case.json. Expected gain: a per-milestone verdict (relabel-reviewed or revise) so one pin script can relabel them. The next Policymaker reads the verdict and numbered findings in your report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip), then update it as you go.\n- [ ] tasks: by script (python3 -I, sha256), check that each development case file pinned in benchmark/preparation.json under tasks is byte-identical to the bytes reviewed by #179 (find the reviewed commit with `git log` on benchmark/dev/; use `git show <commit>:<path>`). List any changed file.\n- [ ] tasks: seeded spot check (seed 302) of 10 XML slots against the original public artifacts under $LABVIEW_ENVIRONMENT. Record slot id, pointer, expected, actual.\n- [ ] oracle: check that every oracle pin hash matches the file on main, and that README/limitation text states that zero native executions exist (#169 not ready). The oracle label must not claim native evidence.\n- [ ] Verdict per milestone: `relabel-reviewed` or `revise`, with numbered findings (file:line). Do not edit repository files.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/preparation.json, benchmark/preparation-status.json: pins and labels.\n- Review #288 (iter-0044 evidence) is the model for a currency review: byte identity + seeded spot check.\n## Budget\n- Do not print whole case JSON files; read only the selected slots by script. Stay under 300k input tokens.\n- Do not read `.session/report.md` in Verification.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 304
+ },
+ {
+  "id": "order-303-review-store-readiness-268",
+  "title": "Find and review the restricted-store readiness record of capability #268",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nCapability #268 (restricted evaluation store) is approved and the owner posted capability-ready. Its readiness clause says: a loop session other than the author independently reviews the record before split work uses the store. The record is not in the repository. Expected gain: either a review verdict on the record (unblocks split allocation planning), or the exact proof that a session cannot read it (then the Policymaker asks the owner to commit a redacted record). The next Policymaker reads the verdict or the export status in your report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Read `.session/exports/manifest.json`. Report the status of the `reports` export for session 268 exactly (downloaded/unavailable/expired/error/unknown) and the staged paths.\n- [ ] Search the repository read-only for the record: `git grep -n -i sentinel` and `git log --all --oneline -- '*268*'`. Report hits.\n- [ ] If a record is found: check that steps (a)-(e) each give identity label, operation, expected result and actual result; recompute its sha256 with python3 -I and compare with the stated value; confirm that no token value appears. Verdict accept/revise with numbered findings.\n- [ ] If no record is found: report `record-unavailable` with the evidence above and stop. Do not guess its content.\n- [ ] Do not edit repository files. Do not try to access the private repository.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- Readiness text: .session/loop-state.json of the Policymaker, owner request #268.\n- benchmark/resources-proposal.md Row 1; benchmark/split/README.md.\n## Budget\n- At most 20 tool calls. Do not open case JSON, results JSON, sources.json or lineage.json.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     268
+    ]
+   }
+  ],
+  "pass": 1,
+  "issue": 305
+ }
+]
