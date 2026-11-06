@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/265\niteration: 38\nrunner: Linux\nmodel: gpt-5.6-luna\neffort: low\nturns: 8\nmodels: {\"claude/claude-sonnet-5-5\":{\"cache_read\":14081,\"cache_write\":5171,\"in\":8,\"out\":960},\"copilot/gpt-5.6-luna\":{\"cache_read\":0,\"cache_write\":8410,\"in\":8422,\"out\":810}}\ntokens_in: 8430\ntokens_out: 1770\ncache_read: 14081\ncache_write: 13581\nagent_s: 64\ntotal_s: 97\ncommit: e33073e\nverdict: accepted\nimproved: true\ndetail: routine change outside gate.owner_paths; `check` passed, accepted without the owner\nmerged: true\nstatus: done\n```\n# Report: order-264-pin-native-262\n\nStatus: done\n\n## Discoveries\n- The pin script validated the native design: 23/23 slots mapped, 12 recipes, and zero native executions.\n- The script completed successfully and pinned the evidence with 55 references; status SHA is `5c972a14a3f86353d2a332288803af7691650aa7b926ffe8ef9155a2ca82f027`.\n- Known-behaviour readiness remains unresolved, as expected; native execution was not performed.\n\n## Verification\n- Command: `python3 policy/evaluator/evaluate.py --check`\n- Exit code: `0`\n- `evidence_references`: `55`\n- `missing`: `[]`\n- Result: `benchmark_executed=false`, `benchmark_ready=false`, `errors=[]`, `manifest=indexed`.\n\nThe required pin script was run exactly once and completed without error. No manual fixes were applied; the parent may commit the staged benchmark changes.",
+  "comment": 6684834139,
+  "issue": 265,
+  "snapshot": "9c0de78ddb7295f82ff11dc5501969e3ea70953bbc024a82f25bf6659cf655a6",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/265#issuecomment-6684834139"
+ },
+ "schema_version": 1
+}
