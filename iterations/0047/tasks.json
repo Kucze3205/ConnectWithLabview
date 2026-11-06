@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-300-pin-readiness-and-rereviews-300",
+  "title": "Land the reviewed #169 readiness case and record re-review #298 with one script run",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nReview #297 accepted the #292 readiness-case proposal (property expectations only). Re-review #298 accepted the #212 diagram-difference gap row (item A). For item B (#281 split-checker fix), #298 reported masked revert results, but the Policymaker measured that reverting either fix makes `split_boundary.py --check` exit 1. Expected gain: main gets benchmark/native/readiness-case.json pinned under the oracle milestone, and the two stale \"not re-reviewed\" limitation sentences are replaced with exact records. The next Policymaker checks: evaluator --check exit 0, missing [], 60 refs, and readiness-case.json in the oracle pins.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Run once from main: `python3 -I -B execution/scripts/pin_readiness_300.py`. It is hash-gated and idempotent. Do not edit its outputs by hand.\n- [ ] If the script exits non-zero, report its exact stderr and stop; do not work around it.\n- [ ] Run the Verification command and report its output. Do not run `git commit`; the parent commits. No `__pycache__`.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- Script: execution/scripts/pin_readiness_300.py (written by Policymaker #300, dry-run twice on a copy of main).\n- Reviews: .github/loop/data/session-reports/297/ and 298/ snapshots.\n## Budget\n- At most 8 tool calls. Do not open case JSON, results JSON, sources.json or lineage.json.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 301
+ }
+]
