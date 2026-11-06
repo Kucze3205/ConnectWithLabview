@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/261\niteration: 37\nrunner: Linux\nmodel: gpt-5.6-luna\neffort: low\nturns: 10\nmodels: {\"claude/claude-sonnet-5-5\":{\"cache_read\":14064,\"cache_write\":5174,\"in\":8,\"out\":897},\"copilot/gpt-5.6-luna\":{\"cache_read\":0,\"cache_write\":15989,\"in\":16007,\"out\":1030}}\ntokens_in: 16015\ntokens_out: 1927\ncache_read: 14064\ncache_write: 21163\nagent_s: 80\ntotal_s: 108\ncommit: 10ec00d\nverdict: accepted\nimproved: true\ndetail: routine change outside gate.owner_paths; `check` passed, accepted without the owner\nmerged: true\nstatus: done\n```\n# Report (#261)\n\n## Discoveries\n- The saved native design landed successfully: 4 files were copied from the historical tag after validation; the landing script exited 0.\n- Native design verification passed: `python3 -I benchmark/scripts/native_jobs.py --check` exited 0, reporting 23/23 slots mapped, 12 recipes, and zero native executions.\n- Evaluator verification passed: `python3 policy/evaluator/evaluate.py --check` exited 0 with `missing: []`, 51 evidence references, and no errors.\n\nThe expected native design is now on the working tree and reviewable. The evaluator confirms indexed evidence is complete, but benchmark execution and readiness remain false because native executions and the known-behaviour readiness prerequisite are unresolved. No manual fixes or unrelated changes were made.\n\n## What next\nA Policymaker or independent reviewer should inspect the landed native design and decide how to resolve the explicitly reported readiness prerequisite before claiming executable benchmark readiness. Avoid rerunning the one-time landing script or modifying preparation, case, challenge, or loop data in this session.",
+  "comment": 6684505416,
+  "issue": 261,
+  "snapshot": "d3f7a2f55efd0ad4503e0c106887e24fb1352e4582e695c13b04937a794edbe7",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/261#issuecomment-6684505416"
+ },
+ "schema_version": 1
+}
