@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-290-status-currency-288",
+  "title": "Fix lineage.py --check (fails on main: split is design-reviewed), relabel sources/coverage reviewed per #288, and correct stale status text",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nOn main, `python3 -I -B benchmark/scripts/lineage.py --check` exits 1 with `lineage: Unexpected split status`: lineage.py:93 requires split == not-started, but #278 set split design-reviewed. lineage.py:25 and :391 also write the stale text `Split remains not-started`. Review #288 (verdict relabel-reviewed for both) found sources.md, sources.json, scripts/sources.py byte-identical to reviewed d588fa9 (#140) and coverage.md identical to reviewed 6933e17 (#133). Expected gain: every benchmark generator --check passes again, sources and coverage milestones carry `reviewed`, and preparation-status.json no longer contradicts itself. The next Policymaker checks: lineage.py --check exit 0, evaluator --check exit 0 with missing [], milestones sources/coverage == reviewed.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] lineage.py: read the split milestone from preparation-status.json instead of requiring `not-started` (accept `not-started` or `design-reviewed`; reject other values). Generate split text from that value, e.g. `Split is design-reviewed (benchmark/split/, review #273); no evaluation partitions are allocated.` Replace the old LIMITATION sentence in status limitations (do not append a second one). Keep the public lineage inventory labelled prepared, unreviewed.\n- [ ] preparation-status.json: set milestones sources and coverage to `reviewed`. Add one sentence: review #288 (codex gpt-6.1-sol, GPT family; author model of #140/#133 not recorded) confirmed byte identity with reviewed commits d588fa9/6933e17 and a 10-row seed-288 provenance spot check; scope stays header/provenance and a limited inventory, no native or semantic validation. Replace `two non-blocking checker findings open: two self-mutations are rejected before reaching the rule they target` with `the two non-blocking checker findings of #273 were fixed by #281 (not independently re-reviewed)`. Add one sentence: sources.md:57 and baseline/README.md:3,27 are dated text at their reviewed bytes; preparation-status.json milestones are current (#288 findings 1, 3). Do NOT edit sources.md, sources.json, coverage.*, baseline/README.md (that would break the reviewed bytes).\n- [ ] Regenerate with `python3 -I benchmark/scripts/lineage.py` (it re-pins split evidence); then re-pin every changed file and every preparation-status.json reference in benchmark/preparation.json. Both JSON files: json.dumps(indent=2, sort_keys=True) + newline.\n- [ ] With LABVIEW_ENVIRONMENT set: lineage.py, sources.py, coverage.py, split_boundary.py, baseline.py, dev_cases.py, score.py, challenges.py, native_jobs.py `--check` all exit 0; report each exit code and the new sha256 of preparation-status.json and lineage.py.\n- [ ] No `__pycache__` (use `python3 -B`). Do not run `git commit`.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/scripts/lineage.py:22-27, :93, :366, :388-408: the hardcoded split status and generated text.\n- .session/reports/288.json or history: review #288 findings 1-4.\n## Budget\n- Do not open case JSON, lineage.json, sources.json or results JSON (only hash them). At most 35 tool calls; keep total input below 400k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 291
+ },
+ {
+  "id": "order-290-readiness-case-pylavi",
+  "title": "Draft the #169 readiness case from pylavi test expectations (report only, bounded reads)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\n#287 ended partial on input_budget (940k codex input in 18 turns) without a result. Capability #169 readiness needs one public VI with behaviour known independently of the VI. Candidate evidence found by the Policymaker: pylavi/tests/test.yaml and pylavi/tests/args.yaml state expected properties (e.g. `eq: 21.0f`, no_beta, no_debugging, path_length) of named test VIs (empty*.vi, reentrancy/23.0/*.vi, reentrancy/26.0/*.vi). Expected gain: a concrete, cited readiness case for the native-property part of #169, and an honest statement of whether any controlled input/output expectation exists. The next Policymaker reads the case JSON in this report and lands it by script after review.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Read only: $LABVIEW_ENVIRONMENT/pylavi/tests/test.yaml, $LABVIEW_ENVIRONMENT/pylavi/tests/args.yaml, the pylavi file that interprets these keys (find it with one bounded Grep for `no_debugging` under pylavi/pylavi), benchmark/native/README.md and the readiness recipe in benchmark/native/recipes.json.\n- [ ] Choose 2-4 VIs. For each: path, sha256 (python3 -I), each expected native property with test.yaml/args.yaml line, file sha256 and the meaning of the key from the interpreting code (path:line).\n- [ ] Search at most 5 bounded Greps for an independent controlled input -> output expectation (e.g. a Python test that states outputs of add.vi). Report found or `none`; do not infer values by reading VI bytes.\n- [ ] Put the proposed `readiness-case.json` content in the report as one fenced JSON block: VI pins, independent pointers + sha256, expected properties, controlled vectors or an explicit gap, permitted operations (read-only, no save, networking disabled), pass rules quoting #169 readiness.\n- [ ] Report only: change no repository files. No native execution happened; say so. Do not run `git commit`.\n## Verification\n`python3 -I -B benchmark/scripts/native_jobs.py --check`\n## Context\n- .github/loop/request-state/169.json `readiness`: the pass rules.\n## Budget\n- Do not open case JSON, results JSON, sources.json or any .vi bytes beyond hashing. At most 20 tool calls; keep total input below 250k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 292
+ }
+]
