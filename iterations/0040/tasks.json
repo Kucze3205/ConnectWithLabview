@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-271-land-split-269",
+  "title": "Land the saved #269 split boundary design with one script run (execution/scripts/land_split_269.py)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nTask #269 finished the design-only split boundary contract but ended `partial` on input_budget, so nothing merged. Its four files are saved at tag `iter/0039/269`. The Policymaker checked them and wrote a hash-gated, idempotent landing script. Expected gain: main gets benchmark/split/ (README and two templates) plus benchmark/scripts/split_boundary.py, so the split milestone has a reviewable design. The next Policymaker checks that `python3 -I -B benchmark/scripts/split_boundary.py --check` exits 0 on main and that split_boundary.py has sha256 1365e531….\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Run once: `python3 -I -B execution/scripts/land_split_269.py`. It writes 4 files and runs the checker. Do not edit those files by hand.\n- [ ] Do NOT edit benchmark/preparation.json or preparation-status.json. No `__pycache__`. Do not run `git commit` (the parent commits). Do not delete the script (the Policymaker deletes it after merge).\n- [ ] Run Verification and report done with the script output.\n## Verification\n`python3 -I -B benchmark/scripts/split_boundary.py --check`\n## Context\n- execution/scripts/land_split_269.py: the only thing to run.\n## Budget\n- At most 6 tool calls. Do not read other benchmark files.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 272
+ },
+ {
+  "id": "order-271-review-split-design-269",
+  "title": "Independent review of the #269 split boundary design (tag iter/0039/269) against protocol ## split and resources Row 1",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nReview the design-only split contract saved at tag `iter/0039/269`: benchmark/split/README.md, allocation-manifest.template.json, isolation-record.template.json and benchmark/scripts/split_boundary.py. The author was copilot gpt-5.6-luna. Expected gain: an accept/revise verdict, so an accepted design can be pinned under the split milestone (the only milestone still `not-started`). The next Policymaker reads the verdict and the numbered findings in this report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip) and update it as you go.\n- [ ] Read the files without changing anything: `git show iter/0039/269:<path>`. Work from main and never write the tag's files into the repository.\n- [ ] Spec check: the README and templates against benchmark/protocol.md `## split` (characters about 15800-19450 only) and benchmark/resources-proposal.md Row 1. Confirm the two strata, the infeasible-stratum rule, whole lineage groups, no allocation, and no claim of secrecy. Confirm the five isolation steps match capability #268 readiness steps (a)-(e).\n- [ ] Checker probes, run in a temp directory outside the repo (python3 -I -B). Suspected weaknesses to test: (1) the `token-like string` mutation may be rejected only because the value is non-null, never by TOKEN_VALUE_RE. Try a token-like string inside a `reason` field. (2) `unknown partition` goes through a special branch in mutations(). Check whether validate() alone rejects it. (3) Does a duplicated step or reordered steps fail? (4) Does an allocated record in lineage_groups.records fail? Report each probe's expected and actual result.\n- [ ] Verdict: accept or revise, with numbered findings (file:line). Separate blocking findings from non-blocking ones.\n- [ ] Do not read `.session/report.md` in Verification. Do not run `git commit`.\n## Verification\n`python3 -I -B benchmark/scripts/score.py --check`\n## Context\n- capability #268 readiness (in the order context): (a) custodian clone+push, (b) scorer push rejected, (c) tokenless ls-remote denied, (d) zero sentinel hits, (e) revoked scorer token denied.\n- Precedent: benchmark/baseline/run-manifest.template.json and benchmark/scripts/baseline.py.\n## Budget\n- Do not read benchmark/lineage.json beyond its top-level keys, case JSON, results JSON or recipes.json. Bounded reads only; stay well below the 800k input ceiling.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 273
+ }
+]
