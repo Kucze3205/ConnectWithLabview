@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-239-rereview-condition-scorer",
+  "title": "Independent re-review of the condition-aware development scorer on main (review #232 finding 2, fix #236)",
+  "role": "reviewer",
+  "model": "opus",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nReview #232 (verdict revise) found that `benchmark/scripts/score.py` ignored claim `conditions`. Task #236 (merged, commit a480014, owner acceptance #237) made compute() condition-aware: exact-string, order-insensitive set comparison with the frozen key; a submitted condition absent from the key forces correctness and grounding to `incorrect` and is recorded in `condition_ledger` (claim ID, raw JSON pointer); a missing key condition caps the claim at `partial`; five in-memory positive-control mutations run in normal runs and `--check`. Results remain 3 fixtures / 33 controls / 33 matches / 0 mismatches / 0 cannot-evaluate in `benchmark/results/challenges.json`. Expected gain: an independent accept/revise verdict on the scorer, so the next Policymaker can pin scorer and results in the challenges milestone (accept) or order a narrow fix (revise). The next Policymaker reads your verdict and numbered findings in your report.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn (verdict pending), update it at the end. Large evidence goes to `.session/artifacts/`.\n- [ ] Spec: check score.py on main against review #232 finding 2 and benchmark/protocol.md:29 and :35-36 (claims hold under their conditions; citations support the full asserted content and conditions; implicit assertions accounted for). Confirm compute() never reads `expected`, `purpose`, `evidence` or alignment `expected_outcome`.\n- [ ] Run `python3 -I benchmark/scripts/score.py --check` and confirm the five built-in mutations each change the scored outcome as #236 reports. Then, in a temporary copy only (never edit the repository), try mutations the built-in set does not cover and report each result: duplicated condition strings, whitespace/case variants of a key condition, an extra condition on a non-required or unkeyed claim, conditions moved between claims, an extra condition combined with correct citations on a different control than A0005. A mutation that still scores `correct` while asserting content beyond its key is a finding.\n- [ ] Standards: naming, duplication, unnecessary abstraction, determinism of results.json regeneration (rerun into a temp path and compare sha256 with the committed file).\n- [ ] Do not repeat checks already verified by #232 (denominators, duplicates, contradictions, extras, compute independence of expected fields) beyond a spot check.\n- [ ] End with separate Standards and Spec findings (path:line, evidence, impact, correction) and an overall accept/revise verdict tied to the reviewed main commit. State that results are development-only and establish no benchmark readiness.\n## Verification\n`python3 -I benchmark/scripts/score.py --check`\n## Context\n- benchmark/scripts/score.py, benchmark/results/challenges.json, benchmark/challenges/README.md: reviewed files.\n- benchmark/protocol.md sections challenges and oracle: specification.\n- docs/perpetua/evaluation.md: evaluation contract.\n- execution/roles/reviewer/SKILL.md: method. Your profile permits no repository writes; start from main and do not read `.session/report.md` in Verification.\n## Budget\n- Do not load benchmark/results/challenges.json whole (about 900 KB); inspect it with bounded python3 -c queries.\n- Do not read benchmark/cases JSON whole.",
+  "pass": 1,
+  "issue": 241
+ }
+]
