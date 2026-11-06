@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-321-pin-run-record-318",
+  "title": "Pin the reviewed run-record contract under the baseline milestone with one script run",
+  "role": "benchmark",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "body": "## Goal\nReview #318 accepted the #312 run-record contract (now on main via #317). Expected gain: benchmark/baseline/run-record.template.json and benchmark/scripts/run_record.py become pinned baseline evidence, the README gets its run-record section, and the status text records review #318 and its same-family limit. The next Policymaker checks on main: evaluator --check exit 0, errors [], missing [], 62 evidence references; preparation-status.json sha256 fbdb65ce...\n## Acceptance\n- [ ] Write .session/report.md with status wip first.\n- [ ] Run exactly: `python3 -I -B execution/scripts/pin_run_record_318.py`. Do not edit any file by hand.\n- [ ] If the script exits non-zero, stop and report blocked with its full output.\n- [ ] Run `python3 -I -B benchmark/scripts/run_record.py --check`, `python3 -I -B benchmark/scripts/baseline.py --check` and `python3 -I -B policy/evaluator/evaluate.py --check`; record exit codes, missing list and reference count (expected 62).\n- [ ] Changed files must be only benchmark/baseline/README.md, benchmark/preparation.json and benchmark/preparation-status.json. No __pycache__.\n- [ ] Do not run `git commit`; the parent commits. Use at most 8 tool calls.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- Review #318 report: verdict accept, findings 1-5 non-blocking; finding 4 (manifest-content binding unresolved) stays a visible limitation.\n- Policymaker #321 dry-ran the script twice on a worktree of origin/main without LABVIEW_ENVIRONMENT: idempotent, all three checks exit 0, 62 refs.\n## Budget\n- Only the script and the three check commands. No corpus reads.",
+  "pass": 1,
+  "issue": 322
+ }
+]
