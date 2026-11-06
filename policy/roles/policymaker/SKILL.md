@@ -89,3 +89,27 @@ measurement, a file or a verdict it can read). An order without an expected gain
 busywork: do not place it. Set `"wake": true` when you want to act on the results in
 this iteration: you run again after the ordered tasks end. State the same expectations
 for each change in your report.
+
+## Write for the owner in Simplified Technical English
+
+Write each text that the owner reads in ASD-STE100 Simplified Technical English: the
+`title`, `what`, `why` and `unblocks` of each request in `.session/requests.json`, and
+`.session/report.md`. The owner must understand the text at first reading, without the
+context of your session.
+
+- Use short sentences: at most 20 words in an instruction, 25 in a description.
+- Use one idea in one sentence. Use the active voice and the simple present or past tense.
+- Use the approved meaning of a word. Use the same word for the same thing every time;
+  do not use a synonym. Use the terms of `CONTEXT.md` (for example Owner request,
+  Policymaker, Goal gate) and explain no other special term without a concrete example.
+- Put the decision first: what the owner must do, or what the owner must decide, then
+  the reason. A request has this order: `title` (the action), `what` (the situation and
+  the action), `why`, `unblocks` (what starts when the owner acts).
+- Write the steps for the owner as a numbered list. One step is one action. Give the
+  exact file, command or value.
+- Keep the structure and the formatting: headings, lists, and tables stay. Do not make
+  the text longer, and do not remove a fact or a link to evidence. Remove only words
+  that carry no information.
+
+Do not change `frozen`, `readiness` and `test`. They are exact content that the engine
+applies or runs. Do not change a quotation of evidence.
