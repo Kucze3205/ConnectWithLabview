@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-249-land-scorer-review-247",
+  "title": "Pin the reviewed development scorer and results under the challenges milestone (review #247 accept), one script run",
+  "role": "benchmark",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 15
+  },
+  "body": "## Goal\nReview #247 accepted the condition-aware development scorer (score.py sha256 810a5457..., results sha256 a5b97984...). The Policymaker wrote the idempotent, git-free script `execution/scripts/land_scorer_review_247.py`. It refuses to run unless both files hold the reviewed bytes. It then adds both files to the challenges pins in benchmark/preparation.json, sets the challenges milestone in benchmark/preparation-status.json to `scorer-reviewed`, replaces the stale challenge limitation sentence (which still says there is no scorer) with an accurate one that keeps the same-family review limit visible, and re-pins every reference to preparation-status.json. Expected gain: the reviewed scorer becomes pinned evidence, so a later method-acceptance request can cite it. The next Policymaker checks that the challenges milestone on main is `scorer-reviewed` and that the evaluator reports 51 references.\n## Acceptance\n- [ ] Write `.session/report.md` first, then run `python3 -I execution/scripts/land_scorer_review_247.py` once from the repository root. Do not edit its outputs by hand. If it exits non-zero, report the message as `blocked`; do not work around it.\n- [ ] Only benchmark/preparation.json and benchmark/preparation-status.json change. Report their new sha256 values.\n- [ ] `python3 -I benchmark/scripts/score.py --check`, `python3 -I benchmark/scripts/challenges.py --check` and `python3 -I policy/evaluator/evaluate.py --check` exit 0. The evaluator shows missing [] and 51 evidence references.\n- [ ] Do not run `git commit`; the parent commits. Do not delete the script (the Policymaker does).\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- execution/scripts/land_scorer_review_247.py: the whole change. A dry run on a temporary copy of main passed every --check, including lineage/dev_cases/sources with LABVIEW_ENVIRONMENT.\n## Budget\n- Do not open benchmark/results/challenges.json or the challenge JSON files.",
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 250
+ },
+ {
+  "id": "order-249-typedef-impact-feasibility",
+  "title": "Measure whether the public corpus supports a typedef-impact development case (report only)",
+  "role": "benchmark",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nThe owner's success rules name 'find project dependencies and the effects of a typedef change' as a real task. The benchmark has no typedef-impact control or development case; the challenge README lists this as a gap. Expected gain: a measured answer to whether the prepared public sources contain typedefs (.ctl) whose users can be established independently, and how. The next Policymaker reads the counts and candidate list in your report and decides whether to order a typedef-impact development case, or to record the gap with the missing evidence named.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn and update it at the end. This is a report-only task: write no repository files.\n- [ ] Using benchmark/sources.json / benchmark/coverage.json and the read-only sources under LABVIEW_ENVIRONMENT, count .ctl files per repository and LabVIEW save version where it is recorded. For up to 5 candidate typedefs, list the files that reference them as found by static evidence (project/library XML membership or name references in VI binaries), with exact source paths and the method used.\n- [ ] Say plainly which reference kinds static reading cannot establish (for example VI-internal typedef instances without native evidence), and what a typedef-impact key would additionally need (native evidence, paired revisions). Do not claim coverage that you did not measure.\n- [ ] No product/reader implementation, no edits to benchmark/, no `git commit`.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/protocol.md (task rows and the challenge gap rows), benchmark/challenges/README.md (gap table), docs/perpetua/evaluation.md.\n## Budget\n- Use bounded `python3 -I -c` queries. Do not print whole JSON files (case and results JSON reach hundreds of KB). Stop after 5 candidates.",
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 251
+ }
+]
