@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-253-land-scorer-review-247-retry",
+  "title": "Pin the reviewed development scorer under the challenges milestone: one script run from main (retry of partial #250)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nSession #250 ran `execution/scripts/land_scorer_review_247.py` correctly (all checks 0, evaluator missing [] with 51 references) but ended `partial` on session_budget at 14 of 15 turns, so nothing merged. Main still shows the challenges milestone `prepared-not-reviewed`. The script is idempotent and hash-gated; main still holds the reviewed bytes. Expected gain: the reviewed scorer (review #247 accept) becomes pinned evidence on main. The next Policymaker checks that main's benchmark/preparation-status.json has challenges `scorer-reviewed` and sha256 d32ec55004a1fb413e4555039f55c21c3a0222691c08cb2c21d0c495841c4558, and that the evaluator reports 51 references.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status in progress). Turn 2: run `python3 -I execution/scripts/land_scorer_review_247.py` once from the repository root. If it exits non-zero, report its message as `blocked`; do not work around it or edit outputs by hand.\n- [ ] Turn 3: run `python3 -I policy/evaluator/evaluate.py --check` and `python3 -I benchmark/scripts/score.py --check`; both exit 0, evaluator missing [] and 51 references.\n- [ ] Report the sha256 of benchmark/preparation.json (expected 07e30c21ecc205b74aaba561e147bc52e010ddcd41101e50417a13e38b388214) and benchmark/preparation-status.json (expected d32ec550...), then finish with status done. Nothing else is required: no extra exploration, no diffs, no reading other files.\n- [ ] Do not run `git commit` (the parent commits). Do not delete the script.\n## Verification\n`python3 -I policy/evaluator/evaluate.py --check`\n## Context\n- execution/scripts/land_scorer_review_247.py: the whole change. #250's report shows the exact expected result.\n## Budget\n- At most 6 tool calls. Do not open benchmark/results/challenges.json, challenge JSON or case JSON.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 254
+ }
+]
