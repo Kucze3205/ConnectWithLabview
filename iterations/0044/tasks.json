@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-285-native-readiness-case",
+  "title": "Prepare the #169 readiness case: one public VI whose behaviour is known from evidence independent of the VI, with controlled input/output vectors",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nCapability #169 (native jobs) cannot pass its readiness check because the reviewed native design (benchmark/native/README.md) names no VI with independently known behaviour; the candidate pylavi/tests/add.vi lacks it. Expected gain: a concrete readiness case so #169 can be confirmed by the owner and the first native observation can run, which unblocks the oracle, typedef-impact and diagram-difference gaps listed by gap map #282. The next Policymaker checks: `native_jobs.py --check` exit 0, the new readiness record exists, and each expected output cites a source that is not the VI file itself (test code, documentation or published spec, with path/line and sha256).\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Search the prepared public sources (LABVIEW_ENVIRONMENT, Grep/Glob with bounded results) for at most 5 candidate VIs whose behaviour is stated outside the VI (e.g. a Python test asserting outputs of a VI, a README describing a computation). For each: path, sha256 (python3 -I), the independent source path:line, and whether the expectation is complete enough for controlled inputs -> expected outputs.\n- [ ] Choose one (or report none qualifies and stop). Write `benchmark/native/readiness-case.json`: VI path + sha256, independent-evidence pointers + sha256, 2-5 input vectors with expected outputs, permitted operations (read-only, no save, networking disabled), and the pass rules of the #169 readiness check. If `benchmark/scripts/native_jobs.py --check` rejects the extra file, extend native_jobs.py minimally so it validates this file (required keys, sha256 format, no null expected outputs) and add one rejecting mutation.\n- [ ] Report honestly: no native execution happened; expected values are derived from the cited independent source, not from reading the VI.\n- [ ] No preparation.json / preparation-status.json edits (pin after review). No `__pycache__`. Do not run `git commit`.\n## Verification\n`python3 -I -B benchmark/scripts/native_jobs.py --check`\n## Context\n- benchmark/native/README.md, benchmark/native/recipes.json: the reviewed design and the readiness recipe.\n- .session/loop-state.json owner_requests #169 readiness text (also quoted in benchmark/native/README.md).\n## Budget\n- Do not open case JSON or results JSON. Read only files you cite. At most 35 tool calls; keep total input well below 500k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 75,
+   "max_turns": 45
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 287
+ },
+ {
+  "id": "order-285-review-currency-sources-coverage",
+  "title": "Check whether accepted reviews #140 (sources) and #133 (coverage) still cover the current pinned bytes, and spot-check sources provenance against the originals (review, report only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nGap map #282 lists sources and coverage as prepared-not-reviewed, yet sources was accepted by review #140 at d588fa9 and coverage by review #133 at 6933e17, and benchmark/sources.md, benchmark/sources.json and benchmark/coverage.md appear unchanged since. Expected gain: either evidence to relabel both milestones `reviewed` (a cheap pin script follows) or a precise list of what changed and still needs review. The next Policymaker reads the verdict table in this report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] For each of benchmark/sources.md, benchmark/sources.json, benchmark/coverage.md, benchmark/scripts/sources.py: compare the bytes at the reviewed commit (`git show <commit>:<path>`, d588fa9 for sources, 6933e17 for coverage) with main; report identical/changed and the diff summary if changed.\n- [ ] Independently spot-check 10 randomly chosen (state the seed) artifact rows of sources.json against the prepared originals under LABVIEW_ENVIRONMENT: sha256, license, commit, saved-version claim. Report every mismatch.\n- [ ] Note stale text found by #282 (sources.md:57, lineage.md:21, baseline/README.md:3,27) as findings with exact lines; do not edit.\n- [ ] Verdict per milestone: `relabel-reviewed` / `revise` with numbered findings. State your actual model; author model family of #140/#133 if visible in their reports.\n- [ ] Report only; change no repository files. Do not run `git commit`.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/preparation-status.json: current milestone labels.\n- docs/perpetua/evaluation.md:63,67: sources and coverage requirements.\n## Budget\n- Do not open case JSON or results JSON. At most 35 tool calls; keep total input below 400k tokens.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 288
+ }
+]
