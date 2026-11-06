@@ -1,0 +1,17 @@
+[
+ {
+  "id": "order-326-review-store-readiness-308",
+  "title": "Independently review the redacted #268 store readiness record committed by owner request #308",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nCapability #268 readiness requires that a loop session other than the author independently reviews the executed readiness record before split work uses the restricted store. The owner committed the record at a43a7b9: `benchmark/split/store-readiness-268.redacted.json` (sha256 4bed1602ac8cca4c7b4b5e4328bba9b9af230c6b9617fdd3cd33089c89151524) and `.sha256`. Review it. Report only; change no repository file.\n\nExpected gain: the split milestone can move from design to store use (synthetic allocation planning) if the verdict is accept. The next Policymaker reads the verdict in your report.\n\n## Acceptance\n- [ ] Recompute sha256 of the JSON with `python3 -I` and compare with the .sha256 file.\n- [ ] For each step a-e, compare `expected`/`actual`/`result` against the readiness clause of capability #268 (below) and against `benchmark/split/isolation-record.template.json` and `benchmark/split/README.md`. Name each mismatch, missing step or weaker check.\n- [ ] Check redaction: no token value, sentinel marker, private repository address or store contents in the record (scan with a python regex; report counts only).\n- [ ] Note what the record cannot prove (e.g. run URLs not fetched, owner-executed workflow), as limits, not as passes.\n- [ ] Verdict: `accept` (store may be used for synthetic split work) or `revise` with numbered findings and the exact owner action needed.\n- [ ] Write the report early, then refine.\n\nReadiness clause of #268: Using synthetic sentinels only: (a) with the custodian token, git clone succeeds and a test commit+push to a branch succeeds, then is deleted; (b) with the scorer token, git clone succeeds and git push is rejected; (c) with no token, git ls-remote of the private repository fails; (d) search the latest loop run logs, artifacts and the public repository for the sentinel marker: zero hits; (e) revoke the scorer token and repeat (b): clone now fails. Record identity label, operation, expected and actual result for each step, and the sha256 (python3 -I) of the record. A declared ACL without these executed results fails.\n\n## Verification\n`python3 benchmark/scripts/score.py --check`\n\n## Context\n- benchmark/split/store-readiness-268.redacted.json: the record under review\n- benchmark/split/README.md, benchmark/split/isolation-record.template.json: the reviewed split design\n- docs/perpetua/accepted-limits.md: private data and disclosure limits\n\n## Budget\n- At most 15 tool calls, under 200k input tokens. Do not read benchmark/dev or results JSON. Do not try to access the private store.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "pass": 1,
+  "issue": 327
+ }
+]
