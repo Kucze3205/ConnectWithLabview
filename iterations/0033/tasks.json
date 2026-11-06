@@ -1,0 +1,20 @@
+[
+ {
+  "id": "order-246-rereview-extra-conditions",
+  "title": "Re-review the extra-claim condition fix in score.py (review #241 finding 1, fixed by #244)",
+  "role": "reviewer",
+  "model": "opus",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #241 (verdict revise at main f913eb8) found that derivable extra claims in `benchmark/scripts/score.py` bypassed the frozen condition policy. Task #244 (commit 1da24f3, merged) moved required and extra claims onto one condition helper and added a sixth in-memory mutation `extra-claim-condition`. Current main: score.py sha256 810a5457c3c32ff8c856ae3d960ea06a495860b1efa5c78a8a895610eb649aac, benchmark/results/challenges.json sha256 a5b9798495cc18006b7128bfaf5e80e4c371cb6f1ac6fd41851fe303da79e484, totals 33 controls / 33 matches / 0 mismatches / 0 cannot-evaluate, `--check` exit 0. Expected gain: an independent accept/revise verdict on the fix. On accept the next Policymaker pins scorer and results under the challenges milestone. This is the last scorer fix round (fix_rounds 2). The next Policymaker reads the verdict and numbered findings in your report.\n## Acceptance\n- [ ] Write `.session/report.md` in your first turn with a provisional verdict, and update it at the end.\n- [ ] Spec: confirm that the shared helper applies benchmark/protocol.md:29 and :35-36 to both required claims and derivable answer-channel extras. That means exact-string set comparison with the key's conditions, an unsupported condition forcing incorrect/incorrect plus one condition_ledger entry per distinct condition with pointer `/claims/<i>/conditions/<j>`, and a missing key condition capping correct at partial. Confirm that reader-channel and non-derivable extra behaviour is unchanged compared with main before 1da24f3 (`git show 1da24f3^:benchmark/scripts/score.py`, read-only).\n- [ ] Mutations in a temporary copy of the repository, never in the checkout: (a) the #241 reproduction (native-runtime condition appended to X-true in extra-true-answer of library-icon-tests); (b) a key condition removed from a derivable extra (expect partial at best); (c) a duplicate condition on an extra (expect one ledger entry); (d) the same unsupported condition on a required claim, which must still behave as before. Report the observed outcomes.\n- [ ] Do not repeat the #232/#241 accounting, denominator, duplicate-claim or citation checks; they passed. Regenerate once in the temporary copy and confirm byte identity with the main results sha256 above.\n- [ ] Verdict `accept` or `revise` with numbered findings (file:line, reproduction). Report only findings that change scoring against the protocol; style notes are not findings. Write no files outside `.session/report.md`, and do not run `git commit`.\n## Verification\n`python3 -I benchmark/scripts/score.py --check`\n## Context\n- benchmark/scripts/score.py: shared condition helper, extra_outcome, regression_self_test.\n- benchmark/protocol.md:29, :35-36.\n- Prior reviews #232 and #241: .session history is not available to you, so the findings are summarised above.\n## Budget\n- Do not load benchmark/results/challenges.json or benchmark/challenges/*.json whole; use bounded `python3 -I -c` queries.\n- Do not read `.session/report.md` in Verification.",
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 247
+ }
+]
