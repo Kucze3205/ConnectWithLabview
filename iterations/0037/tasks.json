@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-260-land-native-258",
+  "title": "Land the saved #258 native job design with one script run (execution/scripts/land_native_258.py)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nSession #258 produced a valid design-only native job contract (benchmark/native/ + benchmark/scripts/native_jobs.py; 23/23 native-required dev slots mapped, 12 recipes) but ended `partial` on input_budget, so it did not merge. The Policymaker verified the saved bytes at tag iter/0036/258 (native_jobs.py --check exit 0, evaluator missing [] with 51 refs) and wrote a hash-gated idempotent landing script. Expected gain: the native job design is on main and reviewable; the next Policymaker checks that main has benchmark/native/recipes.json with sha256 f292d56e… and `python3 -I benchmark/scripts/native_jobs.py --check` exits 0.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Run exactly once: `python3 -I execution/scripts/land_native_258.py` (it copies 4 files from the tag, checks their sha256 and runs native_jobs.py --check). If it exits non-zero, report the output and stop; do not fix by hand.\n- [ ] Run the Verification command, then `python3 policy/evaluator/evaluate.py --check`; record both exit codes and the evaluator `missing` list in the report; set status done.\n- [ ] Change nothing else: no preparation JSON, cases, challenges or loop data; no `__pycache__`; do not run `git commit` (the parent commits).\n## Verification\n`python3 -I benchmark/scripts/native_jobs.py --check`\n## Context\n- execution/scripts/land_native_258.py: the whole procedure.\n## Budget\n- At most 6 tool calls. Do not read recipes.json or case JSON.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 261
+ },
+ {
+  "id": "order-260-review-native-design-258",
+  "title": "Independent review of the #258 native job design (read from tag iter/0036/258, start from main)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nIndependently review the design-only native job contract saved at tag iter/0036/258 (benchmark/scripts/native_jobs.py, benchmark/native/README.md, recipes.json, output-record.template.json) before it is pinned in the evaluation index. Expected gain: an accept/revise verdict with numbered findings that the next Policymaker reads to decide pinning (accept) or one narrow fix (revise).\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip, verdict pending); update after each check.\n- [ ] Read the four files read-only with `git show iter/0036/258:<path>` (or extract with `git archive iter/0036/258` into a temp directory and run `python3 -I benchmark/scripts/native_jobs.py --check` there without LABVIEW_ENVIRONMENT).\n- [ ] Spec: compare recipes against benchmark/protocol.md `## oracle` (native job recipes) and benchmark/resources-proposal.md `## Row 2` (permitted operations, readiness check). Confirm by script: all 23 native-required slot ids in benchmark/cases/dev/*.json are covered exactly once or explained; every input sha256 matches benchmark/sources.json/coverage.json; no operation outside read properties / diagram capture / controlled I/O.\n- [ ] Mutation checks in the temp copy: (a) unknown slot id, (b) wrong input sha256, (c) forbidden operation (e.g. build or save), (d) one byte changed in README; each must make --check fail.\n- [ ] Judge the README honesty: design only, no native evidence, #169 not ready, readiness VI `pylavi/tests/add.vi` lacks independently known behaviour (unmet prerequisite stated, not hidden), builds forbidden so build-result slots stay gaps.\n- [ ] Report: verdict accept or revise, numbered findings with file:line, and the checks that passed. Do not edit repository files; do not run `git commit`.\n## Verification\n`python3 policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/cases/dev/README.md: native-required slot counts per family.\n- Author model was codex gpt-6.1-sol (report the reviewer's own model family as a limit if the same).\n## Budget\n- Never print whole case JSON (up to 445k characters), recipes.json in full, or benchmark/results/challenges.json; use bounded python3 -I scripts that print counts, ids and mismatches only. Do not read .session/report.md in Verification.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 262
+ }
+]
