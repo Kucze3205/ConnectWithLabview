@@ -39,6 +39,9 @@ jobs:
           set -u
           mkdir -p out work
           q() { "$@" >/dev/null 2>&1; echo $?; }                       # exit code only, output discarded
+          # a failed clone: exit code and git's first fatal/remote line with every URL removed
+          qc() { "$@" >/dev/null 2>work/err; r=$?
+                 [ $r = 0 ] && echo 0 || echo "$r ($(grep -m1 -E '^(fatal|remote):' work/err | sed -E 's#https?://[^ ]*#<url>#g; s#'\''[^'\'']*'\''#<url>#g'))"; }
           url() { echo "https://x:$1@github.com/$STORE.git"; }
           git config --global user.name readiness
           git config --global user.email readiness@users.noreply.github.com
@@ -60,7 +63,7 @@ jobs:
                 "clone succeeds; push succeeds; branch deleted" "clone exit $c; push exit $p; delete exit $d"
 
             # (b) scorer: clone, push rejected
-            c=$(q git clone -q "$(url "$SCORER")" work/scor)
+            c=$(qc git clone -q "$(url "$SCORER")" work/scor)
             if [ "$c" = 0 ]; then
               git -C work/scor checkout -q -b "$B-scorer"
               echo probe > work/scor/readiness-probe.txt
@@ -71,7 +74,7 @@ jobs:
             rec b scorer "git clone; push branch $B-scorer" "clone succeeds; push rejected" "clone exit $c; push exit $p"
 
             # (c) no token, as an ordinary development session
-            l=$(q git -c credential.helper= ls-remote "https://github.com/$STORE.git")
+            l=$(qc git -c credential.helper= ls-remote "https://github.com/$STORE.git")
             rec c tokenless "git ls-remote without credentials" "fails (non-zero exit)" "ls-remote exit $l"
 
             # (d) sentinel marker: zero hits in the public repository, its issues and the latest loop runs
@@ -100,7 +103,7 @@ jobs:
             fi
           else
             # (e) scorer token revoked by the owner: clone fails
-            c=$(q git clone -q "$(url "$SCORER")" work/scor)
+            c=$(qc git clone -q "$(url "$SCORER")" work/scor)
             rec e revoked-scorer "git clone after scorer token revocation" "clone fails (non-zero exit)" "clone exit $c"
           fi
           rm -rf work
