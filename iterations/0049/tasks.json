@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-307-relabel-tasks-oracle-304",
+  "title": "Update tasks and oracle review labels within the scope accepted by review #304",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nReview #304 accepted relabeling the tasks and oracle milestones within explicit limits. Expected gain: current labels and limitation text match the completed reviews without claiming native validation or benchmark readiness. The next Policymaker checks the two labels, preserved limits, and evaluator output.\n## Acceptance\n- [ ] Write .session/report.md with status wip first.\n- [ ] Read review #304 in .github/loop/data/session-reports/304/089b02b9e0170b4b737d43576fffb79f93605897ae0b308116a281d2888ab330.json.\n- [ ] Change only benchmark/preparation-status.json and benchmark/preparation.json. Set tasks and oracle to reviewed, scoped to the public XML keys and reviewed native design.\n- [ ] Update current limitation sentences that incorrectly describe XML review as pending. Cite #179 and currency review #304. Preserve public visibility, unavailable native references, model-family uncertainty, 23 unresolved native slots, zero native executions, and all other coverage gaps.\n- [ ] Keep benchmark readiness and execution false, tool quality unmeasured, and split/baseline labels unchanged. Do not change case files or native design files.\n- [ ] Recompute every preparation.json reference to preparation-status.json. Preserve the existing JSON format: indent=2, sort_keys=True, trailing newline.\n- [ ] Run Verification. Require errors [], missing [], 60 evidence references, benchmark_ready false, and benchmark_executed false. Report the changed labels and status-file sha256. The parent commits accepted changes.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/preparation-status.json and benchmark/preparation.json: labels, limitations, and pins.\n- Review #304: iteration 0048, accepted scope and dated status text.\n## Budget\nUse at most 10 tool calls. Do not open whole case files, challenge results, sources.json, or lineage.json. Do not repeat the XML spot check or prior review. Save the report before optional investigation.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 35
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 309
+ }
+]
