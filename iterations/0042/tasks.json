@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-277-pin-split-273",
+  "title": "Pin the reviewed #273 split boundary design under the split milestone with one script run (execution/scripts/pin_split_273.py)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nReview #273 accepted the split boundary design that is already on main (benchmark/split/ and benchmark/scripts/split_boundary.py). The Policymaker wrote a hash-gated, idempotent pin script and dry-ran it on a copy of main. Expected gain: the last `not-started` milestone becomes `design-reviewed` and the 4 design files get pinned in benchmark/preparation.json. The next Policymaker checks that the main preparation-status.json has split == design-reviewed and that the evaluator reports 59 evidence references with missing [].\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Run once: `python3 -I -B execution/scripts/pin_split_273.py`. It edits only benchmark/preparation-status.json and benchmark/preparation.json, then runs split_boundary.py --check and the evaluator. Do not edit those files by hand.\n- [ ] No `__pycache__`. Do not run `git commit` (the parent commits). Do not delete the script (the Policymaker deletes it after the merge).\n- [ ] Run Verification and report done with the script output.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- execution/scripts/pin_split_273.py: the only thing to run.\n## Budget\n- At most 6 tool calls. Do not read other benchmark files.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 278
+ }
+]
