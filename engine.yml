@@ -23,6 +23,7 @@ author:                          # git author of the loop's commits (the bot sta
   email: ""
 idle_resumes: 3                 # consecutive resumes of a parked session that used the agent without progress: outage, no more resumes
 policy_passes_notice: 10        # one informational owner request when an iteration's policy phase reaches this many passes; nothing stops
+rollback_notice_after: 2        # a policy/ rollback opens an owner notice only from this many in a row (to the same last good state); a single one self-heals and the Policymaker sees it in state `rollbacks`
 owner: "Kucze3205"               # GitHub login owner requests are assigned to
 
 # --- the change gate -------------------------------------------------------------------------------------------
@@ -35,6 +36,12 @@ gate:
                                  #   env: CANDIDATE_DIR BASELINE_DIR CANDIDATE_SHA BASELINE_SHA CHANGED_FILES_FILE TASK ITERATION
   timeout_minutes: 120
   env_passthrough: []            # names of secrets the gate command may see (e.g. a judge that calls a model)
+  # Owner focus (owner decision 6 Nov 2026: too many routine merge requests). With kind `owner`, only a change whose
+  # work paths touch one of these waits for the owner; anything else that passed `check` merges on its own (it stays
+  # visible in the iteration record and can be reverted). null = every change waits for the owner.
+  # Kept: the verification method, the baseline comparison design, resource/data/spending proposals, owner docs.
+  # Routine (merged by the loop): scripts, results, case data, inventories, hash re-pins, status files, research notes.
+  owner_paths: ["benchmark/protocol.md", "benchmark/baseline/", "benchmark/resources-proposal.md", "docs/perpetua/"]
 
 # --- zones ------------------------------------------------------------------------------------------------------
 protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "execution/prompts/role.md", "execution/protocol.md", "docs/perpetua/accepted-limits.md"]

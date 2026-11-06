@@ -99,6 +99,34 @@ class OwnerGateTest(Flow):
         self.assertEqual(common_launched, c.LAUNCHED)
 
 
+class OwnerFocusGateTest(Flow):
+    """`gate.owner_paths`: only work touching the owner's reserved paths waits for them; routine work merges on its own."""
+    YML = 'gate:\n  kind: owner\n  owner_paths: ["src/method.md", "src/key/"]\n'
+
+    def start_with_one_task(self):
+        it.start_iteration()
+        self.play_shaper(task("a"))
+        return self.task_issue("a")
+
+    def test_a_routine_change_merges_without_an_owner_request(self):
+        t = self.start_with_one_task()
+        self.w.session(t, files={"src/a.txt": "A"})
+        self.assertEqual(self.hub.by_label("owner-request:merge-acceptance"), [])
+        self.assertEqual(self.w.origin_file("src/a.txt"), "A")
+        self.assertEqual(self.hub.report(t)["merged"], "true")
+        self.assertEqual(self.record(0)["status"], "closed")
+
+    def test_a_change_to_a_reserved_path_still_waits_for_the_owner(self):
+        t = self.start_with_one_task()
+        self.w.session(t, files={"src/a.txt": "A", "src/key/answers.json": "{}"})
+        (req,) = self.hub.by_label("owner-request:merge-acceptance")
+        self.assertIsNone(self.w.origin_file("src/a.txt"))
+        self.assertEqual(self.hub.report(t)["merged"], "pending-owner")
+        self.hub.answer(req["number"], True)
+        loop.on_request_closed(req["number"])
+        self.assertEqual(self.w.origin_file("src/key/answers.json"), "{}")
+
+
 class EvaluatorChangeTest(Flow):
     def start(self):
         """The Policymaker orders the evaluator role while no iteration is open: iteration 0 starts with the order."""
