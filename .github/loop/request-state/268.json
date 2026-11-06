@@ -6,7 +6,9 @@
   "base_engine_sha": "4b56cdf1cb3e3d1ced5917ff6fe4a6f4f71426862b55cf5aaf7026fddfee3c44",
   "proposal_sha": "efa5b1d76b1db9984398edf9421efdf4ac0080537c3d5ffbce4a42cd020768df",
   "readiness": "Using synthetic sentinels only: (a) with the custodian token, git clone succeeds and a test commit+push to a branch succeeds, then is deleted; (b) with the scorer token, git clone succeeds and git push is rejected; (c) with no token (as an ordinary development session has), git ls-remote of the private repository fails; (d) search the latest loop run logs, artifacts and the public repository for the sentinel marker: zero hits; (e) revoke the scorer token and repeat (b): clone now fails. Record identity label, operation, expected and actual result for each step, and the sha256 (python3 -I) of the record. A loop session other than the author independently reviews the record before split work uses the store. A declared ACL without these executed results fails.",
-  "status": "pending",
+  "status": "approved",
   "issue": 268,
-  "body_sha": "b40057dc630d579b0f0ce92429cf938202728f8bd313e64278576da0e9a322bd"
+  "body_sha": "b40057dc630d579b0f0ce92429cf938202728f8bd313e64278576da0e9a322bd",
+  "detail": "The owner explicitly confirmed capability-ready; dependencies may resume.",
+  "decided_at": "2026-11-06T15:28:39Z"
 }
