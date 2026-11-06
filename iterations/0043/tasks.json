@@ -1,0 +1,36 @@
+[
+ {
+  "id": "order-280-split-checker-mutations-273",
+  "title": "Make the split_boundary.py self-test mutations exercise the token and unknown-partition rules through validate() (review #273 non-blocking findings 1-2), then re-pin",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nReview #273 accepted the split boundary design but found two self-test mutations that do not test what they claim: (1) benchmark/scripts/split_boundary.py:126 the token mutation sets custodian_label.value non-null, so the null rule rejects it and TOKEN_VALUE_RE is never exercised; (2) :130 the unknown-partition mutation is rejected by a special branch inside mutations() instead of by validate(). Expected gain: a regression in token-value detection or partition validation would make `split_boundary.py --check` fail, so the reviewed isolation checker actually guards the split boundary. The next Policymaker checks: --check exit 0, evaluator exit 0 with missing [] and 59 references, and that each mutation names the rule that rejected it.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] Change only the mutations so that the token mutation puts a token-shaped string into a field that may be non-null (only TOKEN_VALUE_RE can reject it), and the unknown-partition mutation is rejected by validate() itself (remove the special branch in mutations()). Each mutation must assert the specific error reason returned by validate(), not just 'rejected'. Do not relax validate().\n- [ ] Show in the report that reverting each fix (temporarily disabling TOKEN_VALUE_RE / the partition check in a temp copy) makes --check fail.\n- [ ] Re-pin the new sha256 of benchmark/scripts/split_boundary.py in benchmark/preparation-status.json and every reference to it, then re-pin preparation-status.json in benchmark/preparation.json. Both files are json.dumps(indent=2, sort_keys=True) plus a trailing newline; edit them with a short python3 -I -B script, not by hand. Leave the split milestone label `design-reviewed`.\n- [ ] No `__pycache__`. Do not run `git commit` (the parent commits).\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- benchmark/scripts/split_boundary.py: the only code to change.\n- benchmark/preparation-status.json, benchmark/preparation.json: pins only.\n## Budget\n- Do not read other benchmark files, case JSON or the environment. At most 30 tool calls.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 281
+ },
+ {
+  "id": "order-280-readiness-gap-map",
+  "title": "Map every benchmark-readiness requirement of evaluation.md and protocol.md to its evidence on main and list what still blocks owner acceptance of the method (report only)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nAll seven preparation milestones are now indexed (split and baseline design-reviewed, challenges scorer-reviewed, coverage/oracle/sources/tasks prepared-not-reviewed) and the evaluator reports missing [] but benchmark_ready false. Expected gain: an exact list of what still stands between the current evidence and an owner request to accept the verification method, so the next Policymaker orders only the missing pieces instead of guessing. The next Policymaker reads the table in this session's report.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip).\n- [ ] In the report, a table with one row per requirement in docs/perpetua/evaluation.md and each section of benchmark/protocol.md: requirement (file:line), evidence path on main (or none), state (met / prepared-not-reviewed / design-only / blocked on resource / missing), and the blocking item. Mark rows that depend on capability #169 (native jobs) or #268 (restricted store).\n- [ ] Name separately which items can be done now with public data and loop tools, and which need the owner.\n- [ ] Report only: change no files except .session/report.md. Do not run `git commit`.\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n## Context\n- docs/perpetua/evaluation.md, benchmark/protocol.md: requirements.\n- benchmark/preparation-status.json: milestone labels and limitation sentences.\n- benchmark/*/README.md: claims per area (read README files only).\n## Budget\n- Do not open case JSON, results JSON or the environment; use grep and line ranges. At most 30 tool calls.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 282
+ }
+]
