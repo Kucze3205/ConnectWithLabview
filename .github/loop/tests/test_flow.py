@@ -313,5 +313,28 @@ class GraphRulesTest(Flow):
         self.assertTrue(any(x["title"] == "policy/ rolled back" for x in self.hub.issues.values()))
 
 
+class RollbackNoticeTest(Flow):
+    """`rollback_notice_after`: a single rollback self-heals without an owner notice; a repeated one notifies."""
+    YML = "rollback_notice_after: 2\n"
+    SCRIPT, NO_FORBIDDEN, set_script = GraphRulesTest.SCRIPT, GraphRulesTest.NO_FORBIDDEN, GraphRulesTest.set_script
+
+    def notices(self):
+        return [x for x in self.hub.issues.values() if x["title"] == "policy/ rolled back"]
+
+    def test_only_a_repeated_rollback_opens_an_owner_notice(self):
+        fakes.sh(self.w.loop, "git", "tag", "-f", "setup-baseline")
+        self.set_script(self.NO_FORBIDDEN)
+        self.assertTrue(it.revert_policy("first"))
+        c.sync_main()
+        self.assertFalse(os.path.exists(self.SCRIPT))
+        self.assertEqual(self.notices(), [])
+        self.assertEqual(json.loads(self.w.origin_file(it.ROLLBACKS))["streak"], 1)
+        self.assertEqual(it.build_state(0)["rollbacks"]["reason"], "first")
+        self.set_script(self.NO_FORBIDDEN)
+        self.assertTrue(it.revert_policy("second"))
+        self.assertEqual(len(self.notices()), 1)
+        self.assertEqual(json.loads(self.w.origin_file(it.ROLLBACKS))["streak"], 2)
+
+
 if __name__ == "__main__":
     unittest.main()

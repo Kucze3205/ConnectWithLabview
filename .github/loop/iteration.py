@@ -24,6 +24,7 @@ import session_reports
 import session_startup
 
 MAP = "loop:map"
+ROLLBACKS = ".github/loop/data/rollbacks.json"   # the latest rollback and how many came in a row to the same state
 VERDICT_BYTES = 64 * 1024        # what the engine reads of a tokenless job's output
 STATE_MARK = "<!-- input-state -->"
 ORDERS_MARK = "<!-- policymaker-orders -->"
@@ -162,6 +163,7 @@ def build_state(n):
         "audit_rev": audit_revision(),
         "iterations": idx,
         "startup_notices": list(session_startup.notices().values()),
+        "rollbacks": json.loads(c.safe_read(".", ROLLBACKS) or "null"),
     }
 
 
@@ -968,6 +970,14 @@ def run_gate(cand, base, ctx):
     JSON object last: {"verdict": "accepted|rejected|inconclusive", "improved": bool, "detail": "..."}."""
     g = c.cfg()["gate"]
     if g["kind"] == "owner":
+        focus = g.get("owner_paths")
+        if isinstance(focus, list):
+            # Owner focus: only work touching the paths the owner reserved waits for them; routine work that passed
+            # `check` enters on its own. The owner still sees it in the iteration record and can revert it.
+            changed = [f for f in ctx.get("changed") or [] if not resources.is_direct(f)]
+            if not any(c.path_match(f, focus) for f in changed):
+                return {"verdict": "accepted", "improved": True,
+                        "detail": "routine change outside gate.owner_paths; `check` passed, accepted without the owner"}
         return {"verdict": "pending-owner"}
     if not g.get("command"):
         return {"verdict": "inconclusive", "detail": "the change gate has no command"}
@@ -996,8 +1006,16 @@ def revert_policy(why):
         return False
     if resources.revision() == resources.revision(target):
         return False
-    c.commit_main({}, "roll back policy/ to %s: %s" % (target[:8], why), restore=(target, resources.restore_paths()))
-    requests.open_request("notice", "policy/ rolled back", "The engine returned `execution/` and `policy/` to %s. Reason: %s." % (target[:8], why),
+    # Consecutive rollbacks to the same last good state count as a streak; a closed iteration starts a new one.
+    prev = json.loads(c.safe_read(".", ROLLBACKS) or "null") or {}
+    streak = int(prev.get("streak") or 0) + 1 if prev.get("target") == target else 1
+    entry = {"target": target, "streak": streak, "reason": why, "at": c.iso()}
+    c.commit_main({ROLLBACKS: json.dumps(entry, indent=1) + "\n"}, "roll back policy/ to %s: %s" % (target[:8], why),
+                  restore=(target, resources.restore_paths()))
+    if streak < max(1, int(c.cfg().get("rollback_notice_after") or 1)):
+        c.say("policy/ rolled back to %s (streak %s): no owner notice yet; the Policymaker sees it in `rollbacks`" % (target[:8], streak))
+        return True
+    requests.open_request("notice", "policy/ rolled back", "The engine returned `execution/` and `policy/` to %s (%s rollback(s) in a row). Reason: %s." % (target[:8], streak, why),
                  "The iteration went wrong in a way policy/ or execution/ may have caused: %s." % why,
                  "Nothing is blocked. The Policymaker sees this notice in its next session.", ref="rollback-%s" % c.head()[:8])
     return True
