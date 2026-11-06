@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-267-split-boundary-design",
+  "title": "Design-only split boundary contract: restricted allocation manifest template, isolation readiness record schema and stdlib checker (benchmark/split/)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nSplit is the only preparation milestone still `not-started` (benchmark/preparation-status.json). Its restricted parts wait on the Row 1 capability request filed this iteration (private repo in the owner's existing GitHub account, synthetic sentinels only). Protocol ## split says public sources can support development specifications now. Produce the public, design-only contract so that, once the store is ready, the custodian and the isolation test have a pinned, reviewable shape. Expected gain: a checkable split design that an independent review can accept, moving split toward `design-reviewed`; the next Policymaker checks `python3 -I benchmark/scripts/split_boundary.py --check` exits 0 on main and reads the report's list of unresolved fields.\n## Acceptance\n- [ ] Turn 1: write `.session/report.md` (status wip) and update it as you go.\n- [ ] New `benchmark/split/README.md`: design only; states that no partition is allocated, no case or key is withheld, nothing public provides secrecy, the store is not ready (capability pending), and the two evaluation strata (unseen lineages within represented families; whole held-out families) with the infeasible-stratum rule from protocol ## split. Keep it under ~80 lines.\n- [ ] New `benchmark/split/allocation-manifest.template.json`: fields for split revision, lineage-group id -> partition (development | eval-unseen-lineage | eval-held-out-family), group member hashes, adjudication notes, key revision hashes, access configuration hash, custodian label; every value null with a `reason`, no real keys or allocations. It must reference lineage group ids by schema only (do not copy benchmark/lineage.json content).\n- [ ] New `benchmark/split/isolation-record.template.json`: one row per readiness step (a) custodian clone+push, (b) scorer clone ok / push rejected, (c) tokenless ls-remote denied, (d) sentinel grep zero hits in logs/artifacts/public repo, (e) revoked scorer token clone denied; fields identity_label, operation, expected, actual(null), evidence_sha256(null), reviewer_session(null).\n- [ ] New stdlib `benchmark/scripts/split_boundary.py --check`: validates both templates (required keys, allowed partitions, all actual/real fields null, no field resembling a token or secret), and runs at least 4 in-memory mutations that must fail (non-null actual, unknown partition, missing step, a token-like string). Exit 0 only if valid and all mutations rejected. Must run without LABVIEW_ENVIRONMENT and without git.\n- [ ] Do NOT edit benchmark/preparation.json or preparation-status.json (pin after review). No `__pycache__` files. Do not run `git commit` (the parent commits).\n- [ ] Report: files and sha256 (python3 -I), --check output, unresolved fields, and what still blocks split (store readiness, custodian check, new/private cases, native structural comparison).\n## Verification\n`python3 -I benchmark/scripts/split_boundary.py --check`\n## Context\n- benchmark/protocol.md: read only the `## split` section (characters ~15800-19450).\n- benchmark/resources-proposal.md: Row 1 only.\n- benchmark/lineage.md: summary counts; benchmark/baseline/run-manifest.template.json and benchmark/scripts/baseline.py: precedent for null-with-reason templates and mutation checks.\n## Budget\n- Do not read benchmark/lineage.json beyond its top-level keys, case JSON, results JSON or recipes.json. Bounded reads only; keep total input well below the 800k ceiling (earlier design tasks hit it).",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 75,
+   "max_turns": 45
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 269
+ }
+]
