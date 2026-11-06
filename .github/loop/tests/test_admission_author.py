@@ -30,7 +30,7 @@ class AdmissionAuthorTest(unittest.TestCase):
 
     def test_configured_author(self):
         self.assertEqual(self.admit({"name": "Owner", "email": "owner@example.test"}),
-                         "Owner <owner@example.test>|executor")
+                         "Owner <owner@example.test>|Owner")
 
     def test_empty_author_keeps_executor(self):
         self.assertEqual(self.admit({"name": "", "email": ""}), "executor <executor@localhost>|executor")

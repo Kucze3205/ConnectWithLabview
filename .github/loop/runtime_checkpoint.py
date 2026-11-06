@@ -34,7 +34,8 @@ class Checkpoint:
         author = self.broker.config.get('author') or {}
         env.update(GIT_AUTHOR_NAME=author.get('name') or c.BOT,
                    GIT_AUTHOR_EMAIL=author.get('email') or '41898282+github-actions[bot]@users.noreply.github.com',
-                   GIT_COMMITTER_NAME=c.BOT, GIT_COMMITTER_EMAIL='41898282+github-actions[bot]@users.noreply.github.com')
+                   GIT_COMMITTER_NAME=author.get('name') or c.BOT,
+                   GIT_COMMITTER_EMAIL=author.get('email') or '41898282+github-actions[bot]@users.noreply.github.com')
         if remote:
             env["GH_TOKEN"] = os.environ.get("GH_TOKEN", "")
         if command[0] == "git":

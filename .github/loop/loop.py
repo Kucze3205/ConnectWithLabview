@@ -1493,12 +1493,14 @@ def kick():
 # ---------------------------------------------------------------- main
 
 def git_identity():
+    """engine.yml `author` authors and commits every loop commit; without both fields the bot does."""
     a = c.cfg()["author"]
-    c.git(".", "config", "--global", "user.name", "github-actions[bot]")
-    c.git(".", "config", "--global", "user.email", "41898282+github-actions[bot]@users.noreply.github.com")
     if a.get("name") and a.get("email"):
-        c.git(".", "config", "--global", "author.name", a["name"])
-        c.git(".", "config", "--global", "author.email", a["email"])
+        name, email = a["name"], a["email"]
+    else:
+        name, email = c.BOT, "41898282+github-actions[bot]@users.noreply.github.com"
+    c.git(".", "config", "--global", "user.name", name)
+    c.git(".", "config", "--global", "user.email", email)
 
 
 def main(argv):
