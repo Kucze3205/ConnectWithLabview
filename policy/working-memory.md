@@ -339,26 +339,6 @@ selected reports `.session/history/sessions/<issue>/` (.md; list with python glo
   limitation sentence; one run from main (max_turns >= 25). If revise: one narrow checker fix from main (fix round 1).
   Remaining: native evidence (#169 waiting), store readiness (#268), typedef/diagram cases, owner presentation of 0002.
 
-## Iteration 0041 (#275, wake false)
-- Results of 0040: #272 landing DONE, merged 88eb9a9 (codex 105k input, 10 turns). Verified on main: split files sha
-  README c2ecb9a7…, allocation 5ebe26be…, isolation 6d540b66…, split_boundary.py 1365e531…; evaluator exit 0,
-  errors [], missing [], 55 refs. Deleted execution/scripts/land_split_269.py.
-- Review #273 ACCEPT (codex gpt-6.1-sol 388k input, 19 turns; author copilot -> both GPT family). No blocking findings.
-  Non-blocking: (1) split_boundary.py:126 token mutation rejected by null rule before TOKEN_VALUE_RE (move token into
-  a `reason` field); (2) :130 unknown-partition mutation has a special branch, bypasses validate(). All 5 probes
-  rejected as expected. Evidence artifact iter-0040/273-split-review-273.md.
-- Wrote execution/scripts/pin_split_273.py (hash-gated, idempotent): split label -> design-reviewed, replaces
-  "Split remains not-started…" sentence, adds 4 files to split milestone, re-pins status refs. Dry run twice on a
-  clone of main without env: status sha fae1e26d…, preparation.json 98077172…, 59 refs, score --check 0, no extras.
-- Order `pin-split-273` (benchmark, low, 20/25, main, <=6 calls). Checker fix NOT ordered in parallel: it would
-  change split_boundary.py, which the pin hash-gates.
-- Next: verify main status sha fae1e26d… + 59 refs + split design-reviewed, then delete pin_split_273.py. Then one
-  small benchmark order for findings 1-2 (edit mutations only; re-pin split_boundary.py sha in preparation.json via
-  script). All 7 milestones then have reviewed or prepared designs; remaining gaps need resources: native evidence
-  (#169 waiting), store readiness (#268 pending), typedef/diagram cases (need native + paired revisions). Consider
-  next: independent review of milestones still `prepared-not-reviewed` (coverage, sources, tasks, oracle beyond
-  native) and the owner presentation of docs/research/0002-delivery.md; owner method acceptance still not requested.
-
 ## Next Policymaker
 - Ready later: baseline design (manifest, development-only precision/cost plan), typedef-impact and
   diagram-difference dev cases, native-job input/output schema. Resource-dependent execution waits for readiness.
