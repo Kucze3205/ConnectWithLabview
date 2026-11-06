@@ -18,7 +18,7 @@ provider_pool:
   backoff:
     initial_seconds: 300
     max_seconds: 21600
-author:                          # git author of the loop's commits (the bot stays the committer); empty = the bot
+author:                          # git author and committer of the loop's commits; empty = the bot
   name: "Kamil Kuczerowski"      # owner decision 6 Nov 2026: the owner authors every loop commit, admitted session output too
   email: "kuczerowski2005@gmail.com"
 idle_resumes: 3                 # consecutive resumes of a parked session that used the agent without progress: outage, no more resumes
