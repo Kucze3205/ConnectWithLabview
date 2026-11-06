@@ -1,0 +1,19 @@
+[
+ {
+  "id": "order-311-baseline-run-record-contract",
+  "title": "Design the baseline raw run-record contract and a stdlib checker that feeds score.py (design only, no runs)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nGap map #282 lists the baseline as design-only: there is no raw run-record schema and no runner validation contract (template field raw_run_record_schema_and_storage is undecided). Expected gain: one checked contract that says what one no-tool/tool session must record (case, arm, repetition, pinned manifest hash, prompt hash, token/time/tool-call accounting, truncation/exhaustion, answer claims) and that the answer claims convert to the claim format that benchmark/scripts/score.py already scores. The next Policymaker checks `python3 -I -B benchmark/scripts/run_record.py --check` exit 0 on main and reads the report's list of still-undecided fields.\n## Acceptance\n- [ ] Write .session/report.md with status wip first.\n- [ ] Add benchmark/baseline/run-record.template.json: one synthetic record with every value either synthetic-marked or null with a reason. No model calls, no real case answers, no private data.\n- [ ] Add benchmark/scripts/run_record.py (stdlib only, python3 -I -B). `--check` validates the template structure against a frozen field list in the script, cross-checks field names that refer to benchmark/baseline/run-manifest.template.json, and converts the synthetic claims into score.py's claim structure in memory. Do not change score.py.\n- [ ] Add at least 4 in-memory rejecting mutations to --check (for example: missing repetition id, token total not equal to the sum of parts, claim without a source pointer, unknown arm). Each mutation must fail for its stated reason.\n- [ ] Append one short section to benchmark/baseline/README.md that links the two new files and states: design only, no runs, no readiness, tool quality unmeasured.\n- [ ] Do not edit preparation.json or preparation-status.json (pins come after an independent review). Do not track __pycache__.\n- [ ] Report: changed files with sha256, mutation results, and the fields that stay undecided with the reason for each. The parent commits accepted changes.\n## Verification\n`python3 -I -B benchmark/scripts/run_record.py --check`\n## Context\n- benchmark/protocol.md section baseline (about lines 77-90): what a matched run must record.\n- benchmark/baseline/README.md and run-manifest.template.json: the reviewed baseline design (review #221).\n- benchmark/scripts/score.py: read only the claim-input functions (about lines 60-190) to learn the claim format.\n## Budget\nUse at most 25 tool calls and keep input below 300k tokens. Do not open benchmark/results/challenges.json, sources.json, lineage.json or whole case files. Save the report before optional investigation.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 75,
+   "max_turns": 45
+  },
+  "inputs": [],
+  "exports": [],
+  "pass": 1,
+  "issue": 312
+ }
+]
