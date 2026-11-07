@@ -1,6 +1,12 @@
+# PROPOSED replacement for .github/workflows/store-readiness.yml (Policymaker #329 iteration 0055, revised #340 iteration 0056).
+# Revision 2 answers reviews #331/#333/#335/#337 (items F1-F6 of order review-store-workflow-v2) after review #327 findings 1-3.
+# The owner copies it into .github/workflows/ after independent review, and adds the secret EVAL_STORE_REPO (value owner/name).
 # Owner-dispatched readiness check of the restricted evaluation store (capability #268, request #308).
 # phase=initial runs steps (a)-(d); phase=revoked repeats the scorer clone after the owner revoked the scorer token (e).
-# It prints only exit codes and counts: never a token, the sentinel marker or store contents.
+# It prints only fixed labels, exit codes, classifications, counts and run ids: never a token, the store address, the
+# sentinel marker, store contents or remote diagnostic text (F5).
+# The job fails (exit 1) unless every step has its expected outcome, acquisition is complete, every positive control
+# finds the marker and every real search finds zero hits (F6).
 name: store-readiness
 
 on:
@@ -31,17 +37,31 @@ jobs:
           PHASE: ${{ inputs.phase }}
           CUSTODIAN: ${{ secrets.EVAL_STORE_CUSTODIAN_TOKEN }}
           SCORER: ${{ secrets.EVAL_STORE_SCORER_TOKEN }}
+          STORE: ${{ secrets.EVAL_STORE_REPO }}
           GH_TOKEN: ${{ github.token }}
-          STORE: Kucze3205/labview-eval-restricted
           PUBLIC: ${{ github.repository }}
           GIT_TERMINAL_PROMPT: "0"
         run: |
-          set -u
+          # Actions starts bash with -e (and -o pipefail); every status is checked explicitly below (F3)
+          set +e -u
           mkdir -p out work
-          q() { "$@" >/dev/null 2>&1; echo $?; }                       # exit code only, output discarded
-          # a failed clone: exit code and git's first fatal/remote line with every URL removed
-          qc() { "$@" >/dev/null 2>work/err; r=$?
-                 [ $r = 0 ] && echo 0 || echo "$r ($(grep -m1 -E '^(fatal|remote):' work/err | sed -E 's#https?://[^ ]*#<url>#g; s#'\''[^'\'']*'\''#<url>#g'))"; }
+          trap 'rm -rf work' EXIT
+          fail=0
+          # exit code only, all output discarded
+          q() { "$@" >/dev/null 2>&1; echo $?; }
+          # a push: 0, or exit code with a fixed classification; only GitHub's remote authorization texts are write-denied (F4)
+          qp() { local r; "$@" >/dev/null 2>work/err; r=$?
+                 if [ $r = 0 ]; then echo 0
+                 elif grep -q -E '^remote: Permission to [^ ]+ denied to |The requested URL returned error: 403' work/err; then echo "$r write-denied"
+                 else echo "$r other"; fi
+                 rm -f work/err; }
+          # a search: number of hit lines, or "error" when the status exceeds the no-match status mx (F1)
+          cnt() { local mx=$1 r; shift; "$@" >work/hits 2>/dev/null; r=$?
+                  if [ $r -le $mx ]; then wc -l < work/hits; else echo error; fi
+                  rm -f work/hits; }
+          # create a local commit on a new branch: one exit code for checkout, write, add and commit (#327 finding 3)
+          mk() { git -C "$1" checkout -q -b "$2" && echo "synthetic readiness probe $GITHUB_RUN_ID" > "$1/readiness-probe.txt" \
+                 && git -C "$1" add readiness-probe.txt && git -C "$1" commit -q -m "synthetic readiness probe"; }
           url() { echo "https://x:$1@github.com/$STORE.git"; }
           git config --global user.name readiness
           git config --global user.email readiness@users.noreply.github.com
@@ -50,65 +70,114 @@ jobs:
           B="readiness-probe-$GITHUB_RUN_ID"
 
           if [ "$PHASE" = initial ]; then
-            # (a) custodian: clone, commit+push to a branch, delete the branch
+            # (a) custodian: clone, local commit, push to a branch, delete the branch
             c=$(q git clone -q "$(url "$CUSTODIAN")" work/cust)
             if [ "$c" = 0 ]; then
-              git -C work/cust checkout -q -b "$B"
-              echo "synthetic readiness probe $GITHUB_RUN_ID" > work/cust/readiness-probe.txt
-              git -C work/cust add readiness-probe.txt && git -C work/cust commit -q -m "synthetic readiness probe"
-              p=$(q git -C work/cust push -q origin "$B")
-              d=$(q git -C work/cust push -q origin --delete "$B")
-            else p=skipped; d=skipped; fi
-            rec a custodian "git clone; commit and push branch $B; delete branch" \
-                "clone succeeds; push succeeds; branch deleted" "clone exit $c; push exit $p; delete exit $d"
+              k=$(q mk work/cust "$B")
+              if [ "$k" = 0 ]; then
+                p=$(q git -C work/cust push -q origin "$B")
+                d=$(q git -C work/cust push -q origin --delete "$B")
+              else p=skipped; d=skipped; fi
+            else k=skipped; p=skipped; d=skipped; fi
+            rec a custodian "git clone; local commit; push branch $B; delete branch" \
+                "clone succeeds; commit succeeds; push succeeds; branch deleted" \
+                "clone exit $c; commit exit $k; push exit $p; delete exit $d"
+            [ "$c/$k/$p/$d" = "0/0/0/0" ] || fail=1
 
-            # (b) scorer: clone, push rejected
-            c=$(qc git clone -q "$(url "$SCORER")" work/scor)
+            # (b) scorer: clone, valid local commit, push rejected by authorization
+            c=$(q git clone -q "$(url "$SCORER")" work/scor)
             if [ "$c" = 0 ]; then
-              git -C work/scor checkout -q -b "$B-scorer"
-              echo probe > work/scor/readiness-probe.txt
-              git -C work/scor add readiness-probe.txt && git -C work/scor commit -q -m "synthetic readiness probe"
-              p=$(q git -C work/scor push -q origin "$B-scorer")
-              [ "$p" = 0 ] && q git -C work/cust push -q origin --delete "$B-scorer" >/dev/null
-            else p=skipped; fi
-            rec b scorer "git clone; push branch $B-scorer" "clone succeeds; push rejected" "clone exit $c; push exit $p"
+              k=$(q mk work/scor "$B-scorer")
+              if [ "$k" = 0 ]; then
+                p=$(qp git -C work/scor push -q origin "$B-scorer")
+                case "$p" in 0) q git -C work/cust push -q origin --delete "$B-scorer" >/dev/null ;; esac
+              else p=skipped; fi
+            else k=skipped; p=skipped; fi
+            rec b scorer "git clone; local commit; push branch $B-scorer" \
+                "clone succeeds; commit succeeds; push rejected as write-denied" \
+                "clone exit $c; commit exit $k; push exit $p"
+            [ "$c/$k/${p#* }" = "0/0/write-denied" ] || fail=1
 
             # (c) no token, as an ordinary development session
-            l=$(qc git -c credential.helper= ls-remote "https://github.com/$STORE.git")
+            l=$(q git -c credential.helper= ls-remote "https://github.com/$STORE.git")
             rec c tokenless "git ls-remote without credentials" "fails (non-zero exit)" "ls-remote exit $l"
+            [ "$l" != 0 ] || fail=1
 
-            # (d) sentinel marker: zero hits in the public repository, its issues and the latest loop runs
-            m=$(tr -d '\r\n' < work/cust/sentinels/SENTINEL.txt 2>/dev/null || true)
+            # (d) sentinel marker: zero hits in the public repository, its issues and the latest loop runs.
+            # Fail closed: every acquisition and every search must succeed, and each search command must find planted copies.
+            m=$(tr -d '\r\n' < work/cust/sentinels/SENTINEL.txt 2>/dev/null)
             if [ -z "$m" ]; then
               rec d independent-audit "read sentinels/SENTINEL.txt" "marker readable" "marker missing or empty"
+              fail=1
             else
-              tree=$(git -C public grep -F -l -e "$m" | wc -l)
-              hist=$(git -C public log --all --oneline -S"$m" | wc -l)
-              gh api --paginate "repos/$PUBLIC/issues?state=all&per_page=100" > work/issues.json
-              gh api --paginate "repos/$PUBLIC/issues/comments?per_page=100" > work/comments.json
-              iss=$(grep -F -c -e "$m" work/issues.json work/comments.json | awk -F: '{s+=$2} END{print s+0}')
-              runs=$( (gh run list -R "$PUBLIC" -w session.yml -s completed -L 3 --json databaseId -q '.[].databaseId'
-                       gh run list -R "$PUBLIC" -w tokenless.yml -s completed -L 2 --json databaseId -q '.[].databaseId') | tr '\n' ' ')
+              ok=1
+              sg() { cnt 1 grep -r -F -l -a -e "$m" "$@"; }            # files with the marker
+              tg() { cnt 1 git -C "$1" grep -F -l -e "$m"; }           # tracked tree
+              hg() { cnt 0 git -C "$1" log --all --oneline -S"$m"; }   # history; git log has no no-match status
+              gh api --paginate "repos/$PUBLIC/issues?state=all&per_page=100" > work/issues.json 2>/dev/null || ok=0
+              gh api --paginate "repos/$PUBLIC/issues/comments?per_page=100" > work/comments.json 2>/dev/null || ok=0
+              ni=$(jq -s 'map(length)|add // 0' work/issues.json 2>/dev/null) || ni=error
+              nc=$(jq -s 'map(length)|add // 0' work/comments.json 2>/dev/null) || nc=error
+              case "$ni$nc" in *error*|"") ok=0 ;; esac
+              s=$(gh run list -R "$PUBLIC" -w session.yml -s completed -L 3 --json databaseId -q '.[].databaseId' 2>/dev/null) || ok=0
+              t=$(gh run list -R "$PUBLIC" -w tokenless.yml -s completed -L 2 --json databaseId -q '.[].databaseId' 2>/dev/null) || ok=0
+              runs=$(echo $s $t)
+              [ -n "$s" ] && [ -n "$t" ] || ok=0
+              inv=""
               for id in $runs; do
                 mkdir -p "work/runs/$id/logs" "work/runs/$id/art"
-                gh api "repos/$PUBLIC/actions/runs/$id/logs" > "work/runs/$id/logs.zip" 2>/dev/null \
-                  && unzip -q -o "work/runs/$id/logs.zip" -d "work/runs/$id/logs" 2>/dev/null
-                gh run download "$id" -R "$PUBLIC" -D "work/runs/$id/art" >/dev/null 2>&1 || true
-                find "work/runs/$id/art" -name '*.tar.gz' -exec sh -c 'mkdir -p "$1.x" && tar -xzf "$1" -C "$1.x"' _ {} \; 2>/dev/null || true
+                lg=$(q sh -c 'gh api "repos/$1/actions/runs/$2/logs" > "$3/logs.zip" && unzip -q -o "$3/logs.zip" -d "$3/logs"' _ "$PUBLIC" "$id" "work/runs/$id")
+                lf=$(find "work/runs/$id/logs" -type f | wc -l)
+                ac=$(gh api "repos/$PUBLIC/actions/runs/$id/artifacts" -q .total_count 2>/dev/null) || ac=error
+                if [ "$ac" = error ] || [ -z "$ac" ]; then ac=error; ad=error; ok=0
+                elif [ "$ac" = 0 ]; then ad=none
+                else ad=$(q gh run download "$id" -R "$PUBLIC" -D "work/runs/$id/art"); fi
+                tz=0
+                for f in $(find "work/runs/$id/art" -name '*.tar.gz'); do
+                  mkdir -p "$f.x" && tar -xzf "$f" -C "$f.x" 2>/dev/null || tz=$((tz+1))
+                done
+                af=$(find "work/runs/$id/art" -type f | wc -l)
+                [ "$lg" = 0 ] && [ "$lf" -gt 0 ] || ok=0
+                case "$ad" in none) ;; 0) [ "$af" -gt 0 ] || ok=0 ;; *) ok=0 ;; esac
+                [ "$tz" = 0 ] || ok=0
+                inv="$inv $id:logs exit $lg files $lf, artifacts $ac download $ad files $af tar-failures $tz;"
               done
-              logs=$(grep -r -F -l -e "$m" work/runs/*/logs 2>/dev/null | wc -l)
-              arts=$(grep -r -F -l -a -e "$m" work/runs/*/art 2>/dev/null | wc -l)
-              rec d independent-audit "grep sentinel marker: public tree, public history (-S), issues and comments, logs and artifacts of loop runs $runs" \
-                  "zero hits" "tree $tree; history $hist; issues/comments $iss; run logs $logs; run artifacts $arts"
+              # positive controls (F2): the same search functions must find the marker in planted copies of every source kind
+              mkdir -p work/pc/repo work/pc/iss work/pc/logs work/pc/art
+              { git -C work/pc/repo init -q && printf 'x%sx\n' "$m" > work/pc/repo/c.txt \
+                && git -C work/pc/repo add c.txt && git -C work/pc/repo commit -q -m control; } >/dev/null 2>&1 || ok=0
+              printf '[{"body":"x%sx"}]\n' "$m" > work/pc/iss/c.json
+              printf 'x%sx\n' "$m" > work/pc/logs/c.txt
+              printf 'x%sx\n' "$m" > work/pc/art/c.bin
+              ct=$(tg work/pc/repo); ch=$(hg work/pc/repo); ci=$(sg work/pc/iss); cl=$(sg work/pc/logs); ca=$(sg work/pc/art)
+              [ "$ct/$ch/$ci/$cl/$ca" = "1/1/1/1/1" ] || ok=0
+              # real searches; "error" means a failed search, never zero (F1)
+              tree=$(tg public); hist=$(hg public)
+              iss=$(sg work/issues.json work/comments.json)
+              logs=$(sg work/runs/*/logs); arts=$(sg work/runs/*/art)
+              zero=1
+              for v in "$tree" "$hist" "$iss" "$logs" "$arts"; do
+                [ "$v" = error ] && ok=0
+                [ "$v" = 0 ] || zero=0
+              done
+              [ "$ok" = 1 ] && st=complete || st=incomplete
+              [ "$ok" = 1 ] && [ "$zero" = 1 ] || fail=1
+              rec d independent-audit "grep sentinel marker: public tree, public history (-S), $ni issues and $nc comments, logs and artifacts of loop runs $runs; inventory:$inv positive controls tree/history/issues/logs/artifacts" \
+                  "acquisition complete; positive controls 1/1/1/1/1; zero hits" \
+                  "acquisition $st; positive controls $ct/$ch/$ci/$cl/$ca; tree $tree; history $hist; issues/comments $iss; run logs $logs; run artifacts $arts"
             fi
           else
             # (e) scorer token revoked by the owner: clone fails
-            c=$(qc git clone -q "$(url "$SCORER")" work/scor)
+            c=$(q git clone -q "$(url "$SCORER")" work/scor)
             rec e revoked-scorer "git clone after scorer token revocation" "clone fails (non-zero exit)" "clone exit $c"
+            [ "$c" != 0 ] || fail=1
           fi
-          rm -rf work
+          [ "$fail" = 0 ] && res=pass || res=fail
+          jq -n --arg p "$PHASE" --arg r "$res" '{step:"result",phase:$p,result:$r}' >> out/steps.jsonl
           cat out/steps.jsonl
+          exit $fail
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: store-readiness-${{ inputs.phase }}
           path: out
