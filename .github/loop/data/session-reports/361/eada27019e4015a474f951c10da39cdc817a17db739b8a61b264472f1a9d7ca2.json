@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/361\niteration: 60\nrunner: Linux\ncause: input_budget\neffort: high\nturns: 17\nmodels: {\"codex/gpt-6.1-sol\":{\"cache_read\":35840,\"cache_write\":0,\"in\":891947,\"out\":6905}}\ntokens_in: 891947\ntokens_out: 6905\ncache_read: 35840\ncache_write: 0\nagent_s: 201\ntotal_s: 235\ncommit: 2e54e00\nstatus: partial\n```\nOrdered one runner fix and two independent reviews in [orders.json](orders.json).\n[Review #358](https://github.com/Kucze3205/ConnectWithLabview/issues/358#issuecomment-6710019266) found that deleting the reason comparison still passes the runner check.\nThe fix adds a focused control and repeats four failure probes.\nKeep the runner files unpinned until independent review accepts the fix.\n[Lineage pilot #359](https://github.com/Kucze3205/ConnectWithLabview/issues/359#issuecomment-6710033821) proposes seven related groups and six unresolved groups.\nThe lineage review checks the rules, evidence and permitted next scope.\nMachine timings do not measure the time needed to decide lineage relationships.\nThe replacement [store record](../benchmark/split/store-readiness-268.redacted.json) now exists; its independent review checks capability #268 before store use.\nStartup diagnostics show no budget notice. All three orders parse; wake remains false.\nBenchmark quality remains unmeasured. Native evidence, typedef-impact cases and diagram-difference cases remain missing.\nThe owner has not accepted the verification method. Product implementation remains gated.\n\n## What next\nDecisions and exact sources are saved in [working memory](../policy/working-memory.md).\nRead the three task results, then order the runner review and act on the two review verdicts.\nDo not repeat the manifest comparison, pilot inventory measurement or searches for the old missing store record.\n",
+  "comment": 6711788666,
+  "issue": 361,
+  "snapshot": "159dc30f735b2e540f622e1e9d3a6b316c13e6cdd96caa1672352afeadac91db",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/361#issuecomment-6711788666"
+ },
+ "schema_version": 1
+}
