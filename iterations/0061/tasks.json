@@ -1,0 +1,72 @@
+[
+ {
+  "id": "order-363-fix-runner-reason-control-358",
+  "title": "Fix the runner reason control identified by review #358",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     358
+    ]
+   }
+  ],
+  "body": "## Goal\nClose blocking finding 1 of independent review #358. Removing the expected-reason comparison from runner_contract.py currently leaves --check passing. Expected gain: a runner check that detects this regression before the runner contract is pinned. The next Policymaker checks the changed file and four probe results, then orders independent review.\n\n## Acceptance\n- [ ] Write .session/report.md early with the required marker and YAML status.\n- [ ] Check .session/exports/manifest.json before reading the exported #358 report.\n- [ ] Change only benchmark/scripts/runner_contract.py. Add a focused self-test that calls expect_reject with deliberately different actual and expected reasons, requires the specific mismatch error, and fails if the helper returns normally. Keep the contract design only and unpinned.\n- [ ] Run --check. In temporary copies, repeat #358's four probes: remove the expected-reason comparison; ignore a missing run; accept a foreign-manifest binding; change one synthetic-manifest byte. Each probe must fail. Record exact commands, exit codes and diagnostic reasons.\n- [ ] Run the preparation evaluator. Preserve all existing pins and readiness limitations. Do not edit preparation files, run_record.py, case files or result files. Do not execute a benchmark or reader.\n- [ ] Report the changed SHA256 and actual author model family. The parent commits accepted changes.\n\n## Verification\n`python3 -I -B benchmark/scripts/runner_contract.py --check`\n\n## Context\n- benchmark/scripts/runner_contract.py: expect_reject and --check.\n- benchmark/baseline/runner-contract.md: design scope.\n- Exported review #358: finding 1 and four probes.\n\n## Budget\nAt most 18 tool calls. Read only the named files and exported review. Do not repeat the 62-field manifest comparison or inspect case/result bodies. Save results before further investigation.",
+  "pass": 1,
+  "issue": 364
+ },
+ {
+  "id": "order-363-review-lineage-pilot-359",
+  "title": "Review the public lineage rules and pilot decisions from task #359",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     359
+    ]
+   }
+  ],
+  "body": "## Goal\nIndependently review the rules and 13 pilot decisions reported by task #359. Expected gain: a justified decision on whether these rules can guide further public lineage work without asserting independence or concealing unresolved relationships. The next Policymaker reads an accept/revise verdict and a precise permitted next scope.\n\n## Acceptance\n- [ ] Write .session/report.md early. Report only; do not edit repository files.\n- [ ] Check .session/exports/manifest.json. Extract the single rules/decisions JSON block from exported report #359 without printing the full evidence block. Verify its lineage.json SHA256 and exact coverage of the 13 version-difference groups.\n- [ ] Check R1-R3 against benchmark/lineage.md and the split requirements of benchmark/protocol.md. Determine whether conservative grouping, unresolved overlap and whole-repository development constraints remain safe. Different hashes, versions or ownership names do not establish independence.\n- [ ] Check all seven same-lineage decisions against cited public evidence, including the candidate-0124/candidate-0227 overlap. Check that the other six groups remain unresolved. Read prepared originals only as needed; report unavailable evidence explicitly.\n- [ ] State whether the rules can guide additional triage. Do not authorize automatic same-lineage decisions for unexamined groups. Machine timings do not measure substantive review throughput.\n- [ ] Give accept/revise and numbered blocking findings with exact evidence pointers. State actual model family; task #359 used mainly OpenAI GPT. Preserve missing native evidence, public-only scope and unmeasured benchmark quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- Exported report #359: proposed rules and 13 decisions.\n- benchmark/lineage.md and benchmark/scripts/lineage.py: existing grouping contract.\n- benchmark/lineage.json: bounded queries only.\n\n## Budget\nAt most 20 tool calls. Never dump lineage.json or read case/result bodies. Do not repeat the 69-artifact inventory measurement unless a contradiction requires it. Save a verdict or explicit evidence gaps before expanding scope.",
+  "pass": 1,
+  "issue": 365
+ },
+ {
+  "id": "order-363-review-replacement-store-record-345",
+  "title": "Review the replacement public store readiness record before store use",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     327,
+     342
+    ]
+   }
+  ],
+  "body": "## Goal\nOwner request #345 is completed and the replacement redacted readiness record exists. Independently check it against capability #268 before split work uses the restricted store. Expected gain: an evidence-based accept/revise decision on store readiness. The next Policymaker reads that verdict and any exact remaining owner action.\n\n## Acceptance\n- [ ] Write .session/report.md early. Report only; do not edit repository files.\n- [ ] Read docs/perpetua/accepted-limits.md first. Check .session/exports/manifest.json before relying on reviews #327 and #342. Review public redacted evidence only; do not access the private store, credentials or sentinel values.\n- [ ] Verify benchmark/split/store-readiness-268.redacted.json against its .sha256 file. Establish that this is the replacement for the record rejected by #327; record available workflow/run references and provenance limitations.\n- [ ] Check executed evidence for capability #268 steps a-e: custodian clone/commit/push and branch deletion; scorer clone plus classified authorization denial on push; tokenless denial; complete public/log/artifact searches with zero hits and effective positive controls; scorer revocation followed by failed clone. Check the ordering of the new scorer test and revocation.\n- [ ] Check that the installed .github/workflows/store-readiness.yml closes #327's three findings and preserves review #342's reviewed controls. A workflow definition or owner completion alone does not prove an executed outcome. Missing inventories, search errors or unclassified failures remain gaps.\n- [ ] Check redaction without printing sensitive matches. Give accept/revise with numbered findings and public evidence pointers. If a record is absent or insufficient, report that result without repeating the historical missing-record search.\n- [ ] State that any accepted readiness remains limited to the existing synthetic-sentinel capability. It does not authorize real withheld data, private projects, spending, benchmark readiness or product implementation.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- benchmark/split/store-readiness-268.redacted.json and its .sha256 file.\n- .github/workflows/store-readiness.yml: installed workflow.\n- benchmark/split/README.md and isolation-record.template.json: evidence contract.\n- Capability #268 readiness clause is in .session/loop-state.json if staged; otherwise identify any unavailable clause rather than invent it.\n\n## Budget\nAt most 18 tool calls. Read only named evidence and exported reviews. No private operations or workflow execution. Save the verdict before optional investigation.",
+  "pass": 1,
+  "issue": 366
+ }
+]
