@@ -39,9 +39,10 @@ gate:
   # Owner focus (owner decision 6 Nov 2026: too many routine merge requests). With kind `owner`, only a change whose
   # work paths touch one of these waits for the owner; anything else that passed `check` merges on its own (it stays
   # visible in the iteration record and can be reverted). null = every change waits for the owner.
-  # Kept: the verification method, the baseline comparison design, resource/data/spending proposals, owner docs.
-  # Routine (merged by the loop): scripts, results, case data, inventories, hash re-pins, status files, research notes.
-  owner_paths: ["benchmark/protocol.md", "benchmark/baseline/", "benchmark/resources-proposal.md", "docs/perpetua/"]
+  # Kept: the verification method, resource/data/spending proposals, owner docs.
+  # Routine (merged by the loop): scripts, results, case data, inventories, hash re-pins, status files, research notes,
+  # and the baseline design (owner decision 7 Nov 2026: 5 baseline merge requests in a day; loop reviews cover it).
+  owner_paths: ["benchmark/protocol.md", "benchmark/resources-proposal.md", "docs/perpetua/"]
 
 # --- zones ------------------------------------------------------------------------------------------------------
 protected: [".github/", "engine.yml", "ENGINE_VERSION", "iterations/", "goal/", "GOAL_REACHED", "templates/", "policy/roles/evaluator-verifier/", "policy/prompts/role.md", "policy/protocol.md", "execution/prompts/role.md", "execution/protocol.md", "docs/perpetua/accepted-limits.md"]
