@@ -1,0 +1,32 @@
+[
+ {
+  "id": "order-350-pin-binding-review-347",
+  "title": "Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nReview #347 accepted the manifest binding in benchmark/scripts/run_record.py (finding 1: add uppercase-hash and text-input controls; finding 2: stale 'not yet reviewed' wording). The Policymaker wrote an idempotent, hash-gated script for both findings. Run it once from main.\n\nExpected gain: the binding counts as reviewed in the pinned status, and `--check` fails if case normalization or the bytes type test is removed. The next Policymaker checks main: `run_record.py --check` lists 5 `manifest_binding` entries (1 accepted, 4 rejected), evaluator exit 0, missing [], 62 refs.\n\n## Acceptance\n- [ ] Write `.session/report.md` first.\n- [ ] Run `python3 -I -B execution/scripts/pin_binding_347.py` once. It changes only benchmark/scripts/run_record.py, benchmark/baseline/README.md, benchmark/preparation-status.json and benchmark/preparation.json.\n- [ ] Run `python3 -I -B benchmark/scripts/run_record.py --check`, `python3 -I -B benchmark/scripts/baseline.py --check` and `python3 -I -B policy/evaluator/evaluate.py --check`. Report exit codes and the sha256 lines the script prints.\n- [ ] Do not edit any file by hand. Do not run `git commit`; the parent commits. No `__pycache__` files.\n- [ ] If the script prints ERROR, stop and report the exact line.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- `execution/scripts/pin_binding_347.py`: the script (dry run by the Policymaker on a copy of main).\n\n## Budget\n- At most 8 tool calls. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "pass": 1,
+  "issue": 351
+ },
+ {
+  "id": "order-350-populated-manifest-contract-n3",
+  "title": "Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nGap delta #330 lists N3 (populated run-manifest and runner contract) as now-doable public work. The run-record contract (benchmark/baseline/run-record.template.json, benchmark/scripts/run_record.py) and the manifest template (benchmark/baseline/run-manifest.template.json) exist, but no populated manifest and no runner contract exist. Design both over SYNTHETIC data only. No model calls, no real cases, no spending.\n\nExpected gain: the step from a manifest to raw run records becomes checkable before any baseline run. The next Policymaker reads `python3 -I -B benchmark/scripts/runner_contract.py --check` (exit 0) and the report's list of fields still undecided.\n\n## Acceptance\n- [ ] Write `.session/report.md` early and update it.\n- [ ] Add `benchmark/baseline/run-manifest.synthetic.json`: a populated manifest with only SYNTHETIC values, using every field name of run-manifest.template.json. Fields that need owner or resource decisions stay null with the template reason.\n- [ ] Add stdlib `benchmark/scripts/runner_contract.py --check`: validate the synthetic manifest against the template field names; plan the run list (cases x arms x repetitions) deterministically; build one synthetic run record per planned run in memory and validate each with run_record.py `validate` and `bind_manifest` (import by path, no edits to run_record.py); at least 4 rejecting mutations with specific reasons (e.g. missing arm, duplicate repetition id, manifest bytes changed after planning, unknown case id).\n- [ ] Add one new file `benchmark/baseline/runner-contract.md` (design only, no runs, no readiness, tool quality unmeasured, resource rows #169/#268 still needed). Do NOT edit benchmark/baseline/README.md or any file pinned in benchmark/preparation.json; do not edit preparation JSON files (pin after review).\n- [ ] Do not run `git commit`; the parent commits. No `__pycache__` files.\n\n## Verification\n`python3 -I -B benchmark/scripts/runner_contract.py --check`\n\n## Context\n- benchmark/baseline/README.md and run-manifest.template.json: field names and null reasons.\n- benchmark/scripts/run_record.py: `validate(record, manifest)` and `bind_manifest(record, manifest_bytes)`.\n- benchmark/protocol.md `## baseline`: arms and repetitions.\n\n## Budget\n- At most 25 tool calls, under 300k input tokens. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 75,
+   "max_turns": 45
+  },
+  "pass": 1,
+  "issue": 352
+ }
+]
