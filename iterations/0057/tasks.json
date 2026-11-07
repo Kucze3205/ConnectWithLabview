@@ -1,0 +1,32 @@
+[
+ {
+  "id": "order-344-apply-manifest-binding-n1",
+  "title": "Run the Policymaker script that binds run records to manifest bytes (gap delta #330 N1, review #318 finding 4)",
+  "role": "benchmark",
+  "effort": "low",
+  "body": "## Goal\nTask #341 ended partial on input_budget (429k input, no change). The Policymaker wrote the change as an idempotent, hash-gated script. Run it once from main.\n\nExpected gain: `run_record.py --check` proves manifest-content binding (one matching control accepted, a wrong-content hash and a one-byte change rejected), the last public non-resource defect of the run-record contract. The next Policymaker checks main: `run_record.py --check` prints `manifest_binding` with two `rejected` entries, evaluator exit 0, missing [], 62 refs.\n\n## Acceptance\n- [ ] Write `.session/report.md` first.\n- [ ] Run `python3 -I -B execution/scripts/bind_manifest_n1.py` once. It changes only benchmark/scripts/run_record.py, benchmark/baseline/README.md, benchmark/preparation-status.json and benchmark/preparation.json.\n- [ ] Run `python3 -I -B benchmark/scripts/run_record.py --check`, `python3 -I -B benchmark/scripts/baseline.py --check`, `python3 -I -B benchmark/scripts/score.py --check` and `python3 -I -B policy/evaluator/evaluate.py --check`. Report exit codes and the sha256 lines the script prints.\n- [ ] Do not edit any file by hand. Do not run `git commit`; the parent commits. No `__pycache__` files.\n- [ ] If the script prints ERROR, stop and report the exact line.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- `execution/scripts/bind_manifest_n1.py`: the script (dry run by the Policymaker on a copy of main).\n\n## Budget\n- At most 8 tool calls. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "pass": 1,
+  "issue": 346
+ },
+ {
+  "id": "order-344-review-manifest-binding-n1",
+  "title": "Independently review the manifest-binding change produced by execution/scripts/bind_manifest_n1.py (review #318 finding 4)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nThe Policymaker (Claude) wrote `execution/scripts/bind_manifest_n1.py`. It adds `bind_manifest` and two negative controls to `benchmark/scripts/run_record.py`, updates one README sentence and one status sentence, and re-pins. Review the result once. Report only; change no repository file.\n\nExpected gain: an independent verdict, so the binding can count as reviewed before runner work. The next Policymaker reads your verdict and numbered findings.\n\n## Acceptance\n- [ ] Write the report early.\n- [ ] In a temp dir, copy `benchmark/`, `policy/` and `execution/` with python3 shutil, run the script there twice (second run must change nothing), and list the changed files (expect 4).\n- [ ] Spec: the record is valid only when `manifest_sha256` equals sha256 of the exact supplied bytes; the reasons are specific; existing six mutations and the no-tool variant are unchanged.\n- [ ] Revert-proof in the temp copy: make the equality test always true and show `run_record.py --check` exits 1. Probes: uppercase hex of the right hash, one appended newline, a `str` instead of bytes. Report command and exit code for each.\n- [ ] Honesty: README and status text say synthetic bytes only, no populated manifest, no runner, not yet reviewed.\n- [ ] Verdict `accept` or `revise` with numbered findings and exact fixes.\n\n## Verification\n`python3 -I -B benchmark/scripts/score.py --check`\n\n## Context\n- `execution/scripts/bind_manifest_n1.py`; `benchmark/scripts/run_record.py` (sha bf57224f... before the change); `benchmark/baseline/README.md` section `Synthetic raw run-record contract`.\n\n## Budget\n- At most 20 tool calls, under 200k input tokens. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "pass": 1,
+  "issue": 347
+ }
+]
