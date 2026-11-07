@@ -1,0 +1,32 @@
+[
+ {
+  "id": "order-357-review-runner-contract-352",
+  "title": "Review the populated-manifest and runner contract of task #352 (gap delta #330 N3)",
+  "role": "reviewer",
+  "effort": "medium",
+  "body": "## Goal\nTask #352 added a synthetic populated manifest and a runner contract, merged at f405d54: benchmark/baseline/run-manifest.synthetic.json (sha256 4d4c2b0f...), benchmark/scripts/runner_contract.py (f5f1b174...), benchmark/baseline/runner-contract.md (b9e47205...). They are not pinned in benchmark/preparation.json. Give an independent Spec and Standards verdict before the Policymaker pins them.\n\nExpected gain: a reviewed runner contract lets the Policymaker pin it under the baseline milestone, which closes gap N3. The next Policymaker reads the verdict (accept/revise) and numbered findings with file:line pointers in this report.\n\n## Acceptance\n- [ ] Write `.session/report.md` in your first turns and update it. Report only: do not edit repository files.\n- [ ] Spec: compare the manifest field names and null reasons with benchmark/baseline/run-manifest.template.json by script (all names present, no extras, every null keeps the template reason, every populated value is marked synthetic).\n- [ ] Spec: check the run plan (cases x arms x repetitions) against benchmark/protocol.md `## baseline` (arms, repetitions, order randomisation). Check that run_record.py is imported unchanged and that `validate` and `bind_manifest` are really called per record.\n- [ ] Probes in a temporary copy (not in the repository): remove one mutation's expected-reason comparison, make the audit ignore a missing run, accept a record bound to another manifest, and edit the synthetic manifest by one byte. Each must make `--check` exit nonzero; report each result.\n- [ ] Honesty: runner-contract.md must say design only, no runs, no readiness, tool quality unmeasured, and name the open resource rows #169/#268.\n- [ ] Verdict `accept` (no blocking findings) or `revise` (numbered blocking findings, each with an exact fix). Report your actual model family; the author was Claude Sonnet.\n\n## Verification\n`python3 -I -B benchmark/scripts/runner_contract.py --check`\n\n## Context\n- benchmark/scripts/run_record.py: `validate`, `bind_manifest` (reviewed in #318 and #347).\n- benchmark/baseline/README.md: manifest field reasons.\n\n## Budget\n- At most 25 tool calls, under 300k input tokens. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "pass": 1,
+  "issue": 358
+ },
+ {
+  "id": "order-357-lineage-adjudication-n2-pilot",
+  "title": "Propose public lineage adjudication rules and apply them to the 13 version-difference candidate groups (gap delta #330 N2)",
+  "role": "benchmark",
+  "effort": "medium",
+  "body": "## Goal\nbenchmark/lineage.json holds 230 `candidate_variants` groups (rule same-basename, reason different-sha256), all `candidate-unadjudicated`. Gap delta #330 lists N2 (public lineage adjudication) as now-doable. 13 groups have a version difference. Write adjudication rules and apply them to those 13 groups as a pilot. Report only: do not edit repository files (lineage.json is pinned).\n\nExpected gain: tested rules that a later Policymaker landing script can apply to all 230 groups, so public lineage stops being unadjudicated. The next Policymaker reads the rule list and a JSON block with one decision per pilot group in this report.\n\n## Acceptance\n- [ ] Write `.session/report.md` in your first turns and update it.\n- [ ] Rules: a small set of labels (for example same-lineage, independent, undecidable), each with the static evidence it needs (member paths, repository, save version, XML or binary name evidence). Hash inequality alone never proves independence (benchmark/lineage.md). Undecidable stays a visible gap.\n- [ ] Select the 13 groups by script from lineage.json (version difference in `recorded_save_versions`). For each give: candidate id, label, evidence pointers (artifact ids, paths, file offsets or lines), and the rule used.\n- [ ] One fenced ```json block with `{\"rules\": [...], \"decisions\": [...]}` so a script can extract it. Give the sha256 of lineage.json you read.\n- [ ] State how long the full 230 groups would take with the same rules (measured per-group cost).\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- benchmark/lineage.md and benchmark/lineage.json (`candidate_variants`, `artifacts`).\n- benchmark/scripts/lineage.py: how candidates were formed (needs LABVIEW_ENVIRONMENT for originals).\n\n## Budget\n- At most 25 tool calls, under 300k input tokens. Read lineage.json only through bounded python3 -I queries, never whole. Do not read benchmark/cases or benchmark/results bodies.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "pass": 1,
+  "issue": 359
+ }
+]
