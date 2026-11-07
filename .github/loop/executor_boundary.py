@@ -23,10 +23,11 @@ def environment():
 
 
 def identity(author):
-    """The configured author of admitted output, or nothing (the `executor` default of environment())."""
+    """The configured author and committer of admitted output, or nothing (the `executor` default of environment())."""
     a = author or {}
     if a.get("name") and a.get("email"):
-        return {"GIT_AUTHOR_NAME": a["name"], "GIT_AUTHOR_EMAIL": a["email"]}
+        return {"GIT_AUTHOR_NAME": a["name"], "GIT_AUTHOR_EMAIL": a["email"],
+                "GIT_COMMITTER_NAME": a["name"], "GIT_COMMITTER_EMAIL": a["email"]}
     return {}
 
 
@@ -73,7 +74,7 @@ def record(work, trusted):
 def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: False, author=None):
     """Write objects/index in the engine repo, without consulting worker .git: one commit on the baseline from the file
     bytes the session left, whether or not it committed. Environment debris never reaches any check: `skip(rel, tracked)`
-    by path, before the file is inspected or read. `author` ({name, email}, from engine.yml) authors the commit;
+    by path, before the file is inspected or read. `author` ({name, email}, from engine.yml) authors and commits it;
     without both fields it stays `executor`."""
     if os.path.abspath(work) != metadata["work"]:
         raise ValueError("executor output does not match its staged origin")
