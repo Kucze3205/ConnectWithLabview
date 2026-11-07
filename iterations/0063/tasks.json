@@ -1,0 +1,47 @@
+[
+ {
+  "id": "order-373-review-lineage-pilot-359-noexport",
+  "title": "Review the lineage pilot rules and 13 decisions of task #359 (third attempt, no exports)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "body": "## Goal\nReview the rules and 13 public lineage decisions proposed by task #359. Tasks #365 and #370 crashed at zero turns; both staged a 113 KB report export, which is the suspected cause. This task has no exports: the Policymaker copied the single JSON block of report #359 to policy/proposals/lineage-pilot-359.json (sha256 3c416ffd57ac6d8c9ddf2bfa6b147649e522aec863112f1630b12a6e8009291f, keys rules and decisions). Expected gain: a justified scope for further lineage triage while unresolved relationships remain visible. The next Policymaker reads an accept/revise verdict and the permitted next scope.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in the first turns. Report only; do not edit repository files.\n- [ ] Verify the sha256 of policy/proposals/lineage-pilot-359.json, the benchmark/lineage.json sha256 it cites, and exact coverage of the 13 version-difference groups of `candidate_variants`.\n- [ ] Check rules R1-R3 against benchmark/lineage.md and the split requirements of benchmark/protocol.md. Different hashes, versions or ownership names do not establish independence. Preserve whole-repository development constraints and unresolved overlap.\n- [ ] Check all seven same-lineage decisions against cited public evidence, including the candidate-0124/candidate-0227 overlap. Confirm that the six other groups remain unresolved. Use bounded queries and prepared originals only when needed. State unavailable evidence explicitly.\n- [ ] State whether these rules can guide additional triage. Do not authorize automatic decisions for unexamined groups. Machine timings do not measure substantive review throughput.\n- [ ] Give accept/revise with numbered blocking findings and exact evidence pointers. Record the actual reviewer model family; author #359 used mainly OpenAI GPT. Preserve public-only scope, missing native evidence and unmeasured benchmark quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/lineage-pilot-359.json: proposed rules and pilot decisions (copy of report #359).\n- benchmark/lineage.md and benchmark/scripts/lineage.py: grouping contract.\n- benchmark/lineage.json: bounded queries only.\n\n## Budget\nAt most 20 tool calls. Never dump lineage.json or the proposal file whole; query by key with python3 -I. Do not read case/result bodies. Do not repeat the 69-artifact inventory measurement without a contradiction. Save a verdict or precise evidence gaps before expanding scope.",
+  "pass": 1,
+  "issue": 374
+ },
+ {
+  "id": "order-373-pin-runner-contract-369",
+  "title": "Run the Policymaker script that pins the reviewed synthetic runner contract under baseline (reviews #358, #369)",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "body": "## Goal\nRun execution/scripts/pin_runner_369.py once from main. Review #369 accepted the #364 reason-control fix with no blocking findings. Expected gain: the three N3 runner-contract files are pinned evidence under the baseline milestone, with an honest limitation sentence. The next Policymaker checks main: evaluator 65 references, preparation-status.json sha256 85b0f7192bc8df794b6637649c6a657b7270fc589033c13d4c1abecd6cfeb451, preparation.json sha256 403117b52f6647ad7c1b02155542d0ed88404699414107fc5d6d6ea82070545c.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first.\n- [ ] Run `python3 -I -B execution/scripts/pin_runner_369.py` once. It is hash-gated and idempotent; it prints the new shas and runs four --check commands. Exit 0 is required.\n- [ ] Confirm that only benchmark/preparation-status.json and benchmark/preparation.json changed, and no __pycache__ exists. Do not edit any other file. Do not run git commit; the parent commits.\n- [ ] Report the printed shas and the evaluator line. Preserve design-only status, zero runs, unmeasured quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- execution/scripts/pin_runner_369.py: dry run twice by the Policymaker on a worktree of origin/main without LABVIEW_ENVIRONMENT; all checks exit 0.\n\n## Budget\nAt most 8 tool calls. Read no other files.",
+  "pass": 1,
+  "issue": 375
+ },
+ {
+  "id": "order-373-rereview-store-workflow-v4-qr",
+  "title": "Re-review only the qr read-denial helper of store-readiness proposal revision 4 (review #371 blocking item 1)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 25
+  },
+  "body": "## Goal\nReview #371 found that tokenless git prints `fatal: could not read Username for '<url>': terminal prompts disabled`, which qr classified as other, so step (c) would fail on a correct result. The Policymaker added `^fatal: could not read (Username|Password) for ` to the access-denied pattern of qr in policy/proposals/store-readiness.yml (revision 4, sha256 27b365ecb5cca9becc4a18a0b86fec82c83bde17d0abacaebee1a0439990546e). Author: Policymaker (Claude family). Expected gain: an accept/revise verdict that decides whether the Owner can install revision 4. The next Policymaker reads the verdict and files the Owner request or fixes the file.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early. Report only; do not edit repository files.\n- [ ] Verify the sha256 above. Confirm that the only change versus revision 3 (768a447e06dcc475901875f6cd35ede1a3b8a7b26383b09003bd62b3edd9ba17, in git history of policy/proposals/store-readiness.yml) is the qr pattern.\n- [ ] Repeat the #371 local 401 server probe with credential.helper= and GIT_TERMINAL_PROMPT=0: qr must give access-denied. Synthetic stderr: Username and Password prompt texts and Repository not found give access-denied; Could not resolve host, Connection refused and a local path error give other.\n- [ ] Check bash -n on the extracted run script. Do not redo the decoded-JSON checks of #371.\n- [ ] Give accept/revise with numbered blocking findings and line pointers. Record the actual reviewer model family. No private store access, no workflow execution.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/store-readiness.yml: revision 4, qr helper near line 60.\n\n## Budget\nAt most 14 tool calls. Read only the named file and its git history.",
+  "pass": 1,
+  "issue": 376
+ }
+]
