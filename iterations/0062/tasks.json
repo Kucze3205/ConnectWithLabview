@@ -1,0 +1,73 @@
+[
+ {
+  "id": "order-368-review-runner-fix-364",
+  "title": "Independently review the runner reason control added by task #364",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     358,
+     364
+    ]
+   }
+  ],
+  "body": "## Goal\nIndependently review the focused runner fix from task #364. Expected gain: establish whether the synthetic runner contract detects the regression identified by review #358 before any pinning. The next Policymaker reads an accept/revise verdict and exact probe results.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early. Report only; do not edit repository files.\n- [ ] Check .session/exports/manifest.json before using reports #358 and #364. Author #364 used OpenAI GPT; record the actual reviewer model family.\n- [ ] Verify benchmark/scripts/runner_contract.py SHA256 against #364: 866e9c44bad30f654dd516e15cf2d47618838a551e408c86efd5e7b998f3429a. Inspect the focused self-test and its exact mismatch diagnostic.\n- [ ] Run runner_contract.py --check. In temporary copies, remove the expected-reason comparison, ignore a missing run, accept a foreign-manifest binding, and change one synthetic-manifest byte. Require every probe to fail for its intended reason. Record commands, exit codes and diagnostics.\n- [ ] Check that the new self-test fails on normal return and on an unexpected exception or diagnostic. Do not repeat the completed 62-field manifest comparison.\n- [ ] Give accept/revise with numbered blocking findings and precise file pointers. Preserve design-only status, existing pins, missing coverage, zero benchmark executions and unmeasured quality. No reader planning or implementation.\n\n## Verification\n`python3 -I -B benchmark/scripts/runner_contract.py --check`\n\n## Context\n- benchmark/scripts/runner_contract.py: expect_reject and reason-comparison self-test.\n- benchmark/baseline/runner-contract.md: synthetic design scope.\n- Exported reports #358 and #364: finding, fix and four probes.\n\n## Budget\nAt most 18 tool calls. Read only named evidence. Do not inspect case/result bodies or edit preparation files. Save the verdict before optional investigation.",
+  "pass": 1,
+  "issue": 369
+ },
+ {
+  "id": "order-368-retry-lineage-pilot-review-359",
+  "title": "Review the lineage pilot after task #365 crashed before starting",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     359
+    ]
+   }
+  ],
+  "body": "## Goal\nReview the rules and 13 public lineage decisions proposed by task #359. Task #365 crashed at zero turns and produced no review. Expected gain: a justified scope for further lineage triage while unresolved relationships remain visible. The next Policymaker reads an accept/revise verdict and the permitted next scope.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early. Report only; do not edit repository files.\n- [ ] Check .session/exports/manifest.json. Extract the single rules/decisions JSON block from report #359 without dumping the evidence block. Verify its lineage.json SHA256 and exact coverage of the 13 version-difference groups.\n- [ ] Check R1-R3 against benchmark/lineage.md and the split requirements of benchmark/protocol.md. Different hashes, versions or ownership names do not establish independence. Preserve whole-repository development constraints and unresolved overlap.\n- [ ] Check all seven same-lineage decisions against cited public evidence, including candidate-0124/candidate-0227 overlap. Confirm that six other groups remain unresolved. Use bounded queries and prepared originals only when needed. State unavailable evidence explicitly.\n- [ ] State whether these rules can guide additional triage. Do not authorize automatic decisions for unexamined groups. Machine timings do not measure substantive review throughput.\n- [ ] Give accept/revise with numbered blocking findings and exact evidence pointers. Record actual reviewer model family; author #359 used mainly OpenAI GPT. Preserve public-only scope, missing native evidence and unmeasured benchmark quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- Exported report #359: proposed rules and pilot decisions.\n- benchmark/lineage.md and benchmark/scripts/lineage.py: grouping contract.\n- benchmark/lineage.json: bounded queries only.\n\n## Budget\nAt most 20 tool calls. Never dump lineage.json or read case/result bodies. Do not repeat the 69-artifact inventory measurement without a contradiction. Save a verdict or precise evidence gaps before expanding scope.",
+  "pass": 1,
+  "issue": 370
+ },
+ {
+  "id": "order-368-review-store-workflow-v3",
+  "title": "Independently review store-readiness workflow proposal revision 3 against review #366 findings 1-2",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     342,
+     366
+    ]
+   }
+  ],
+  "body": "## Goal\nReview policy/proposals/store-readiness.yml revision 3 (sha256 768a447e06dcc475901875f6cd35ede1a3b8a7b26383b09003bd62b3edd9ba17), written by the Policymaker (Claude family). Expected gain: an accept/revise verdict that decides whether the Owner can install it and rerun the readiness check. The next Policymaker reads the verdict and either files an Owner request or fixes the file.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early. Report only; do not edit repository files.\n- [ ] Check .session/exports/manifest.json before using reports #342 and #366. Record the actual reviewer model family.\n- [ ] Finding 1 of #366: check that issue and comment API responses and the issue positive control are searched only after jq decoding of all string values (dj helper). In a temporary directory, with a synthetic marker that contains a double quote, a backslash and a non-ASCII character, show that the decoded control and a decoded serialized API-shaped JSON both match, and that the raw serialized JSON would not.\n- [ ] Finding 2 of #366: check the qr helper. With synthetic stderr texts, show that GitHub not-found, authentication-failed and HTTP 401/403 texts give access-denied, and that a DNS or transport failure and a local path error give other. Check that steps (c) and (e) fail the job unless access-denied.\n- [ ] Check that F1-F6 controls accepted by #342 remain, the script passes bash -n, and no private diagnostic text, marker or address is printed.\n- [ ] Give accept/revise with numbered blocking findings and exact line pointers. No private store access, no workflow execution.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/store-readiness.yml: revision 3.\n- .github/workflows/store-readiness.yml: installed revision 2 for comparison.\n- Exported reports #342 and #366.\n\n## Budget\nAt most 18 tool calls. Read only named files. Save the verdict before optional probes.",
+  "pass": 1,
+  "issue": 371
+ }
+]
