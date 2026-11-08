@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-436-update-store-text-431",
+  "title": "Run the Policymaker script that replaces stale 'store not ready' text after review #431 and regenerates lineage pins",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #431 accepted the executed store-readiness record, and #434 pinned it. Two pinned texts still say the restricted store is not ready: benchmark/scripts/lineage.py:34 (generated into preparation-status.json) and benchmark/split/README.md:3 and its last paragraph. The owner reads these files for open request #430. Expected gain: the evidence index no longer contradicts the reviewed record. The next Policymaker checks the printed sha256 values, lineage.py --check and the evaluator reference count (74).\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Confirm LABVIEW_ENVIRONMENT is set (python3 -I -c \"import os;print(os.environ.get('LABVIEW_ENVIRONMENT'))\"). If it is not set, stop with status blocked; do not edit files by hand.\n- [ ] Run once: python3 -I -B execution/scripts/update_store_text_431.py . It is hash-gated and idempotent. It edits lineage.py, split/README.md and the status sentence, re-pins the README, regenerates lineage outputs, and runs lineage.py --check, split_boundary.py --check and the evaluator. Exit 0 is required. If it exits 1, stop with status blocked and quote its stderr.\n- [ ] Report the four sha256 values the script prints and the evaluator output: errors [], missing [], 74 references, benchmark_ready false, benchmark_executed false.\n- [ ] Expected changed files: benchmark/scripts/lineage.py, benchmark/split/README.md, benchmark/preparation-status.json, benchmark/preparation.json. benchmark/lineage.json and benchmark/lineage.md must keep their bytes (lineage.json 52f3d2ea...). Do not run git commit; do not use git diff or git status as acceptance checks. Compare printed sha256 values only.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- Script: execution/scripts/update_store_text_431.py (written by Policymaker #436 and dry-run twice on a copy of main with LABVIEW_ENVIRONMENT).\n- The engine runs Verification again without LABVIEW_ENVIRONMENT; the evaluator check is environment-free.\n\n## Budget\nAt most 8 tool calls and 150k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 437
+ }
+]
