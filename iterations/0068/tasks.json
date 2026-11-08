@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-393-native-job-fix-391",
+  "title": "Fix review #391 findings in the native job draft: upload HTML diagram outputs, complete the README clause map",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nReview #391 (verdict revise) of the native job draft under benchmark/native/job/ found: (2) workflow.proposal.yml:38 uploads only record/manifest/logs, so the collected HTML diagram output stays on the runner and a separate comparison session cannot inspect it; the README clause map omits the opening known-behaviour dispatch clause and the final compile-only exclusion of the #169 readiness text. Finding 1 (open gaps: independently known behaviour, typed native properties, verified diagram content, controlled I/O, independent comparison) is already disclosed and stays a visible gap. Expected gain: a draft whose uploaded artifact contains reviewable diagram output, ready for one cross-family review and then an Owner install question for capability #169. The next Policymaker checks the Verification command and the changed upload paths on main.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first and update it as you go.\n- [ ] workflow.proposal.yml upload step also uploads the HTML outputs that native_job.py writes (for example `${{ runner.temp }}/native-inspection/reports/*.html`; use the actual output directory from native_job.py). Rename the step so it no longer says 'logs only'. VI files stay excluded; no other file kinds are added. PNG companions only if native_job.py already lists exact PNG paths in its output manifest; otherwise name them as a gap in README.\n- [ ] Every uploaded HTML file is listed with its sha256 in output-sha256.json (extend native_job.py if needed), and --self-test gains one rejecting mutation: an HTML output missing from the manifest or a hash mismatch. Keep the existing 5 mutations.\n- [ ] README.md clause map adds the two omitted clauses (known-behaviour dispatch; compile-only exclusion), each with file:line or a named gap. Keep the `unverified` marks for PrintToSingleFileHtml, -VIPath, -HTMLFilePath and safe-loading/no-save behaviour. Keep the statement that the draft needs a cross-family review before installation.\n- [ ] Change only files under benchmark/native/job/. No readiness, execution or quality claim. Do not run docker.\n- [ ] Record your actual model family in the report.\n\n## Verification\n`python3 -I -B benchmark/native/job/native_job.py --self-test`\n\n## Context\n- benchmark/native/job/: native_job.py, native_job.sh, workflow.proposal.yml, README.md (the draft).\n- .github/loop/request-state/169.json: exact `readiness` clauses.\n- Review #391 findings are quoted above; do not repeat its mutation probes or safety checks.\n\n## Budget\nAt most 25 tool calls and 300k input tokens. Read only the files named in Context. Do not run git commit or git diff checks. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 394
+ }
+]
