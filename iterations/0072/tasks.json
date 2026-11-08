@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-407-review-change-cases-404",
+  "title": "Independently review the typedef-impact and diagram-difference case designs of #404 before pinning",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nSession #404 (author GPT family, codex gpt-6.1-sol) added design-only change-case specifications on main (commit 39b6b6d): benchmark/change-cases/README.md (sha256 e3ab5773...), typedef-impact.spec.json (091a4f81...), diagram-difference.spec.json (edab2e80...) and benchmark/scripts/change_cases.py (cc363fde...). They close review #403 finding on benchmark/protocol.md:15,18,55,127. Expected gain: a `verdict:` line that lets the Policymaker pin these files under the tasks milestone and update the method-acceptance draft. The next Policymaker reads your `verdict:` line and numbered findings.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go.\n- [ ] Confirm the four sha256 values above by python3 -I script.\n- [ ] Spec check vs benchmark/protocol.md lines 12-20, 45-63, 115-127: frozen questions and claim ids, original path + sha256, derived-copy edit recipes only (typedef: one edit recipe; diagram: behavior-changing, presentation-only and uncertain-effect), static consumer candidates marked unconfirmed, every native answer `unavailable` (#169), owner grant before edits/builds (:120), unpinned semantic documentation listed as a gap (:59), statement that no paired public revisions exist.\n- [ ] Honesty check of README.md: design only, zero native executions, no key, no edit performed.\n- [ ] Revert-proof probes in a temp copy (not in the repository): for at least 3 of the rejecting mutations, disable the check in a copy of change_cases.py and confirm `--check` then exits nonzero; one probe must disable an expected-reason comparison.\n- [ ] Numbered findings with file:line, each marked blocking or non-blocking. One line `verdict: accept` or `verdict: revise`.\n- [ ] Change no repository file. Do not run git commit or git diff checks.\n\n## Verification\n`python3 -I -B benchmark/scripts/change_cases.py --check`\n\n## Context\n- benchmark/change-cases/ and benchmark/scripts/change_cases.py: the work under review.\n- benchmark/protocol.md: requirements (lines named above).\n- Prepared sources under LABVIEW_ENVIRONMENT: only the files named in the two specs, for sha256 confirmation.\n\n## Budget\nAt most 25 tool calls and 300k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json. Do not read whole VI binaries; hash them only. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 408
+ },
+ {
+  "id": "order-407-review-precision-plan-405",
+  "title": "Independently review the development repetition, precision and quota plan of #405 before pinning",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "exports": [],
+  "body": "## Goal\nSession #405 (author GPT family, codex gpt-6.1-sol) added a design-only plan on main (commit e0841e5): benchmark/precision/README.md (sha256 f94ba74b...), benchmark/precision/plan.json (bbf834a8...) and benchmark/scripts/precision_plan.py (81b992e6...). It closes review #403 finding on benchmark/protocol.md:88-90. Expected gain: a `verdict:` line that lets the Policymaker pin these files under the baseline milestone and update the method-acceptance draft. The next Policymaker reads your `verdict:` line and numbered findings.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go.\n- [ ] Confirm the three sha256 values above by python3 -I script.\n- [ ] Spec check vs benchmark/protocol.md lines 77-90 and docs/perpetua/evaluation.md: repetitions per case and arm, paired uncertainty at project/lineage level (confidence level, seed, resampling count, missing-pair treatment), pilot sizing from development-only variance, tolerances left to case oracles, quota marked `owner-decision` with no extra spending, no threshold proposed.\n- [ ] Confirm by script that each of the 19 listed overlapping field names exists in benchmark/baseline/run-manifest.template.json, and name any overlapping field the plan omits.\n- [ ] Revert-proof probes in a temp copy (not in the repository): for at least 3 of the rejecting mutations, disable the check in a copy of precision_plan.py and confirm `--check` then exits nonzero; one probe must disable an expected-reason comparison.\n- [ ] Numbered findings with file:line, each marked blocking or non-blocking. One line `verdict: accept` or `verdict: revise`.\n- [ ] Change no repository file. Do not run git commit or git diff checks.\n\n## Verification\n`python3 -I -B benchmark/scripts/precision_plan.py --check`\n\n## Context\n- benchmark/precision/ and benchmark/scripts/precision_plan.py: the work under review.\n- benchmark/protocol.md lines 77-90; benchmark/baseline/run-manifest.template.json, benchmark/baseline/runner-contract.md (read only).\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 409
+ }
+]
