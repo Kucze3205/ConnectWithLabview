@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-399-method-acceptance-delta",
+  "title": "Decide if only resource-blocked items remain before the owner method-acceptance request; draft it if yes",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "body": "## Goal\nGap delta #330 (iteration 0055) chose do-first with three now-doable items. Since then: N1 manifest binding landed and was reviewed (#346/#347, pinned under baseline); N3 runner contract landed and was reviewed (#352/#364/#369, pinned under baseline); N2 lineage adjudication was stopped by Policymaker #387 because 0 of 230 candidate groups cross repositories and each repository is already one conservative lineage group (protocol forbids splitting a project), so within-repo adjudication cannot change an allocation. A native job draft exists in benchmark/native/job/ (reviews #391/#397 technically accept; both reviewers GPT family). Store readiness waits for owner request #379; native readiness waits for capability #169. Expected gain: either an owner-ready draft of the method-acceptance request, or an exact do-first list. The next Policymaker reads the `decision:` line and the draft or list in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go.\n- [ ] Table: each requirement of docs/perpetua/evaluation.md and each section of benchmark/protocol.md -> pinned evidence (path in benchmark/preparation.json pins and its milestone label in benchmark/preparation-status.json) -> state: `met-for-method`, `resource-blocked` (name #169 or #268/#379), `not-met-now-doable`, or `owner-decision`.\n- [ ] Cite the lines of evaluation.md that say how the owner accepts the method (the existing change gate) and state the exact mechanism.\n- [ ] One line `decision: request-acceptance-now` or `decision: do-first`.\n- [ ] If do-first: each now-doable item with file:line, the smallest task that closes it and its check command.\n- [ ] If request-acceptance-now: a draft in ASD-STE100 Simplified Technical English with `title`, `what`, `why`, `unblocks` and numbered owner steps. The owner accepts the pinned protocol and preparation evidence as the verification method only: not benchmark readiness, no quality thresholds, no goal gate, no product claim. Name main commit sha and sha256 of benchmark/preparation.json. Keep every gap visible: zero native executions, 23 unresolved native slots, no split allocation, store readiness pending #379, missing typedef-impact and diagram-difference development cases, same-family review limits recorded in preparation-status.json, and the all-version vs LabVIEW 2024 effort estimate in docs/research/0002-delivery.md (information only, no fallback choice).\n- [ ] Change no repository file. Do not run git commit or git diff checks.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- docs/perpetua/evaluation.md: method requirements and acceptance mechanism.\n- benchmark/protocol.md: protocol sections.\n- benchmark/preparation-status.json and benchmark/preparation.json: milestone labels, limitations, pins (inspect with bounded python3, do not print whole files).\n- docs/research/0002-delivery.md: effort estimate summary only.\n\n## Budget\nAt most 20 tool calls and 300k input tokens. Read only the files in Context. Do not open development case JSON files or benchmark/lineage.json. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 400
+ }
+]
