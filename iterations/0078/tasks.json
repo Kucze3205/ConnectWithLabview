@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-426-review-method-request-draft-426",
+  "title": "Independently fact-check the updated method-acceptance owner request draft before the Policymaker files it",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #403 corrected the method-acceptance owner request draft at main dacb5fb. Since then the typedef-impact and diagram-difference specifications (benchmark/change-cases/) and the precision plan (benchmark/precision/) were reviewed (#408, #409, #415, #421) and pinned (session #424). The Policymaker (Claude family) updated the draft in policy/proposals/method-acceptance-draft.md. evaluation.md requires an independent method check before the owner assesses it. Expected gain: a verified owner request text that the next Policymaker files as one `question` without further review. The next Policymaker reads your `verdict:` line and your exact corrections.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Verify each fact of the draft by python3 script and give file:line for each check: sha256 of benchmark/preparation.json; that benchmark/ and docs/ trees are identical between the named commit and current main (git rev-parse <commit>:benchmark and :docs); that every path the draft names under benchmark/change-cases/ and benchmark/precision/ is pinned in preparation.json and under which milestone; milestone labels in preparation-status.json; that each review number and model-family claim is supported by a limitation sentence in preparation-status.json; the docs/research/0002-delivery.md figures and line numbers.\n- [ ] Check that the draft keeps every gap visible: zero native executions, 23 unresolved native slots, native answers for the change cases unavailable, no edit or build grant, no pinned semantic documentation, no split allocation, store readiness pending #379 under #268, #169 not ready, quota an owner decision, scorer independently_reviewed false. Check that it claims no readiness, quality threshold, goal gate, product claim or fallback choice.\n- [ ] Check ASD-STE100 form: sentences of at most 25 words, active voice, one idea per sentence, same term for the same thing.\n- [ ] One line `verdict: accept` or `verdict: revise`. For revise, give each correction as exact old text -> new text. Do not rewrite the whole draft.\n- [ ] Name your actual model family from your models block.\n- [ ] Change no repository file. Do not run git commit, git diff or git status acceptance checks.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/method-acceptance-draft.md: the draft under review.\n- .github/loop/data/session-reports/403/f2f9617058d208b792b09030f37e745cbc161705de5cc442eb61470642fb805a.json (field report.body, read with python3 json): the #403 corrected draft, for comparison. The draft file header names the changes vs #403.\n- docs/perpetua/evaluation.md, benchmark/protocol.md (lines 50-61, 86-90, 118-129): requirements.\n- benchmark/preparation.json, benchmark/preparation-status.json: pins, labels, limitations (bounded python3 inspection).\n- Do not repeat the #400 requirement map, the #403 row-by-row check, or the spec reviews #408/#409/#415/#421.\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Do not open development case JSON files, benchmark/lineage.json, benchmark/results/challenges.json or spec JSON bodies beyond their keys. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 427
+ }
+]
