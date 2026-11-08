@@ -1,81 +1,81 @@
 {
   "schema_version": 1,
   "capability": 268,
-  "request": 345,
-  "replaces": "first record of request #308 (rejected by review #327)",
+  "request": 379,
+  "replaces": "record of request #345 (review #366 found that it did not prove steps (c), (e) and the issue search)",
   "store": "restricted evaluation store of capability #268 (private repository; address withheld)",
-  "executed_at": "2026-11-07",
-  "executor": "owner-dispatched workflow .github/workflows/store-readiness.yml",
-  "workflow_sha256": "53ac0f9d73a7f68c6e150a6b7f7cf507958ae278db590df939c296f1c6ea91a7",
-  "workflow_commit": "1f32aa2129c3eb40ea203aada243e34aaef480bc",
+  "executed_at": "2026-11-08",
+  "executor": "owner-dispatched workflow .github/workflows/store-readiness.yml; dispatched by an agent session acting for the owner at the owner's instruction",
+  "workflow_sha256": "27b365ecb5cca9becc4a18a0b86fec82c83bde17d0abacaebee1a0439990546e",
+  "workflow_commit": "cbcb70c0699d2ad782181ef888ba91b209fa47ab",
   "run_ids": {
-    "initial": "42375820030",
-    "revoked": "42376072522"
+    "initial": "42480130998",
+    "revoked": "42480355765"
   },
   "notes": [
-    "An earlier initial run (42375258958) failed steps (a), (b) and (d): the secret EVAL_STORE_REPO held a wrong value, so no clone could reach the store. The owner corrected the secret; the initial run above repeats (a)-(d) with the same scorer token.",
-    "Step (e): after the initial run the owner deleted that scorer token; the repository secret was left unchanged, so the revoked run used the same token as step (b).",
-    "Steps are the steps.jsonl lines of the two run artifacts, unchanged, with the run id added. No token value, sentinel marker, store contents or store address is included."
+    "Scorer token: the owner made the token and set the secret EVAL_STORE_SCORER_TOKEN (updated 2026-11-08T12:24:33Z) before the initial run. Whether it was newly created or a regenerated earlier token is not recorded. The agent session did not see its value.",
+    "Step (e): after the initial run completed, the owner reported deleting that scorer token. The secret was left unchanged (same update time before the revoked run), so the revoked run used the same token as step (b). The deletion itself is owner-reported; the public evidence for it is the access-denied clone of step (e).",
+    "Steps are the steps.jsonl records of the two run artifacts, unchanged, with the run id added. No token value, sentinel marker, store contents or store address is included."
   ],
   "steps": [
     {
       "step": "a",
       "identity_label": "custodian",
-      "operation": "git clone; local commit; push branch readiness-probe-42375820030; delete branch",
+      "operation": "git clone; local commit; push branch readiness-probe-42480130998; delete branch",
       "expected": "clone succeeds; commit succeeds; push succeeds; branch deleted",
       "actual": "clone exit 0; commit exit 0; push exit 0; delete exit 0",
-      "run_id": "42375820030",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42375820030"
+      "run_id": "42480130998",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480130998"
     },
     {
       "step": "b",
       "identity_label": "scorer",
-      "operation": "git clone; local commit; push branch readiness-probe-42375820030-scorer",
+      "operation": "git clone; local commit; push branch readiness-probe-42480130998-scorer",
       "expected": "clone succeeds; commit succeeds; push rejected as write-denied",
       "actual": "clone exit 0; commit exit 0; push exit 128 write-denied",
-      "run_id": "42375820030",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42375820030"
+      "run_id": "42480130998",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480130998"
     },
     {
       "step": "c",
       "identity_label": "tokenless",
       "operation": "git ls-remote without credentials",
-      "expected": "fails (non-zero exit)",
-      "actual": "ls-remote exit 128",
-      "run_id": "42375820030",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42375820030"
+      "expected": "fails as access-denied",
+      "actual": "ls-remote exit 128 access-denied",
+      "run_id": "42480130998",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480130998"
     },
     {
       "step": "d",
       "identity_label": "independent-audit",
-      "operation": "grep sentinel marker: public tree, public history (-S), 323 issues and 865 comments, logs and artifacts of loop runs 42375474118 42374881764 42374861475 42375589046 42375540818; inventory: 42375474118:logs exit 0 files 60, artifacts 3 download 0 files 1018 tar-failures 0; 42374881764:logs exit 0 files 60, artifacts 3 download 0 files 1020 tar-failures 0; 42374861475:logs exit 0 files 60, artifacts 3 download 0 files 1018 tar-failures 0; 42375589046:logs exit 0 files 14, artifacts 2 download 0 files 26 tar-failures 0; 42375540818:logs exit 0 files 14, artifacts 2 download 0 files 26 tar-failures 0; positive controls tree/history/issues/logs/artifacts",
+      "operation": "grep sentinel marker: public tree, public history (-S), 396 issues and 1090 comments, logs and artifacts of loop runs 42479582471 42477848702 42476953374 42479691942 42479639910; inventory: 42479582471:logs exit 0 files 60, artifacts 3 download 0 files 1174 tar-failures 0; 42477848702:logs exit 0 files 60, artifacts 3 download 0 files 1174 tar-failures 0; 42476953374:logs exit 0 files 60, artifacts 3 download 0 files 1174 tar-failures 0; 42479691942:logs exit 0 files 14, artifacts 2 download 0 files 28 tar-failures 0; 42479639910:logs exit 0 files 14, artifacts 2 download 0 files 28 tar-failures 0; positive controls tree/history/issues/logs/artifacts",
       "expected": "acquisition complete; positive controls 1/1/1/1/1; zero hits",
       "actual": "acquisition complete; positive controls 1/1/1/1/1; tree 0; history 0; issues/comments 0; run logs 0; run artifacts 0",
-      "run_id": "42375820030",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42375820030"
+      "run_id": "42480130998",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480130998"
     },
     {
       "step": "result",
       "phase": "initial",
       "result": "pass",
-      "run_id": "42375820030",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42375820030"
+      "run_id": "42480130998",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480130998"
     },
     {
       "step": "e",
       "identity_label": "revoked-scorer",
       "operation": "git clone after scorer token revocation",
-      "expected": "clone fails (non-zero exit)",
-      "actual": "clone exit 128",
-      "run_id": "42376072522",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42376072522"
+      "expected": "clone fails as access-denied",
+      "actual": "clone exit 128 access-denied",
+      "run_id": "42480355765",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480355765"
     },
     {
       "step": "result",
       "phase": "revoked",
       "result": "pass",
-      "run_id": "42376072522",
-      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42376072522"
+      "run_id": "42480355765",
+      "run": "https://github.com/Kucze3205/ConnectWithLabview/actions/runs/42480355765"
     }
   ],
   "reviewer_session": null
