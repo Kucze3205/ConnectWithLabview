@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-411-reason-selftest-408-409",
+  "title": "Make the expected-reason comparison revert-proof in change_cases.py and precision_plan.py (reviews #408 and #409 finding 2)",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nReviews #408 and #409 both returned `verdict: revise` with one blocking finding each: disabling the expected-reason comparison leaves `--check` exiting 0. Locations: benchmark/scripts/change_cases.py:118 (sha256 cc363fde...) and benchmark/scripts/precision_plan.py:170 (sha256 81b992e6...). All other probes and spec checks passed; do not repeat them. Expected gain: both checkers detect removal of the reason comparison, so the next iteration can order one independent re-review and then pin both designs. The next Policymaker checks both `--check` commands on main, the new sha256 values in your report, and your revert-probe results.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go.\n- [ ] In each checker, add a reason self-test inside `--check`: run at least one rejecting mutation with a deliberately wrong expected reason and require the comparison to report a mismatch. If the comparison is disabled (for example, always returns equal), `--check` must exit nonzero. Use benchmark/scripts/runner_contract.py (fix #364, reviewed #369) as the pattern.\n- [ ] Revert-proof probe for each file in a temp copy outside the repository: disable the expected-reason comparison and confirm `--check` exits nonzero; restore and confirm exit 0. Report the commands and exit codes.\n- [ ] Change only benchmark/scripts/change_cases.py and benchmark/scripts/precision_plan.py. Do not edit the spec, plan or README files. Do not edit benchmark/preparation.json or preparation-status.json (these files are not pinned yet).\n- [ ] Report the new sha256 (python3 -I) of both scripts.\n- [ ] Do not run git commit or git diff checks; the parent commits.\n\n## Verification\n`python3 -I -B benchmark/scripts/precision_plan.py --check`\n\n## Context\n- Review evidence: report snapshots .github/loop/data/session-reports/408/4d6d4182....json and 409/e36176c9....json (read only the findings).\n- benchmark/scripts/runner_contract.py: reason self-test pattern.\n- change_cases.py source-sha checks need LABVIEW_ENVIRONMENT; the Verification uses precision_plan.py for this reason. Also run change_cases.py --check in-session with the environment and report the exit code.\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json. Do not read whole VI binaries.",
+  "pass": 1,
+  "issue": 412
+ }
+]
