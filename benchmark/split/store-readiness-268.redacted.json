@@ -13,7 +13,7 @@
     "revoked": "42480355765"
   },
   "notes": [
-    "Scorer token: the owner made the token and set the secret EVAL_STORE_SCORER_TOKEN (updated 2026-11-08T12:24:33Z) before the initial run. Whether it was newly created or a regenerated earlier token is not recorded. The agent session did not see its value.",
+    "Scorer token: the owner created a new token, as the owner stated, and set the secret EVAL_STORE_SCORER_TOKEN (updated 2026-11-08T12:24:33Z) before the initial run. The agent session did not see its value.",
     "Step (e): after the initial run completed, the owner reported deleting that scorer token. The secret was left unchanged (same update time before the revoked run), so the revoked run used the same token as step (b). The deletion itself is owner-reported; the public evidence for it is the access-denied clone of step (e).",
     "Steps are the steps.jsonl records of the two run artifacts, unchanged, with the run id added. No token value, sentinel marker, store contents or store address is included."
   ],
