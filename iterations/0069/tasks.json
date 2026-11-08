@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-396-review-native-job-fix-394",
+  "title": "Cross-family review of the native job draft after fix #394 (HTML upload, sixth mutation, clause map)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nTask #394 (author mainly codex gpt-6.1-sol, GPT family) fixed review #391 findings in benchmark/native/job/ and merged at 36b80ec. Review #391 was also GPT family, so capability #169 still needs one cross-family (non-GPT) review before the Owner gets install steps. Expected gain: a verdict (accept or revise, with numbered findings) that lets the next Policymaker either file the Owner install question for #169 or fix the draft by script. The next Policymaker reads the verdict and the actual `models` block of this session.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first and update it as you go. Record your actual model family.\n- [ ] Confirm on main the file hashes: README.md 350eb74f..., native_job.py b31943e2..., native_job.sh 79092212..., workflow.proposal.yml 2daecc7d.... Report any difference.\n- [ ] Check #391 finding 2 is closed: workflow.proposal.yml uploads reports/*.html from the same directory native_job.py writes; every collected HTML is listed with sha256 in output-sha256.json; VI and PNG files stay excluded; README clause map has the known-behaviour dispatch gap and the compile-only exclusion with valid file:line pointers.\n- [ ] Revert-proof the new sixth self-test mutation (HTML missing from output manifest) in a temporary copy outside the repository: disable the HTML manifest check in native_job.py and confirm --self-test then exits non-zero. Do not repeat #391's five mutation probes or its safety checks.\n- [ ] Check that no text claims readiness, native execution or quality; the `unverified` marks for PrintToSingleFileHtml, -VIPath, -HTMLFilePath and safe loading stay. Gaps from #391 finding 1 stay visible (not a blocking finding by themselves).\n- [ ] Verdict: accept (installable as a draft for the Owner to dispatch within #169 scope) or revise (numbered findings with file:line and the exact fix). Change no repository file.\n\n## Verification\n`python3 -I -B benchmark/native/job/native_job.py --self-test`\n\n## Context\n- benchmark/native/job/: README.md, native_job.py, native_job.sh, workflow.proposal.yml.\n- .github/loop/request-state/169.json: exact `readiness` clauses.\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Read only the files named in Context. Do not run git commit or git diff checks. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 397
+ }
+]
