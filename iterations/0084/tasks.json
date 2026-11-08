@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-445-split-allocator-completion-443",
+  "title": "Make split_allocate.py --check fail when its self-tests do not complete (review #443 finding 1)",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 35
+  },
+  "body": "## Goal\nReview #443 (verdict revise) found one blocking defect in benchmark/scripts/split_allocate.py (sha256 79ffbdffe60bc589be172de08a380a958ae4e220ee4d53303390f49230ae16fc): `main()` ignores the return value of `check()` (around line 288) and returns 0, so inserting `return` before `actual_reason()` (around line 222) skips the reason comparison and all seven mutation tests but still exits 0. Expected gain: a regression-sensitive allocator check that an independent re-review can accept, so the Policymaker can pin the allocator under the split milestone. The next Policymaker reads the new sha256 and the probe exit codes in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Confirm the old sha256 above with python3 -I before editing.\n- [ ] `check()` returns the count of completed controls (the reason comparison self-test plus each mutation rejection), computed after those controls run. `main()` compares it with the exact expected count and exits nonzero with a clear message if it differs. Follow the accepted pattern of benchmark/scripts/change_cases.py and precision_plan.py (fix #418, review #421).\n- [ ] Change only benchmark/scripts/split_allocate.py. Do not change benchmark/split/allocation.synthetic.json or any pinned file; allocation output must stay byte-identical.\n- [ ] In a temporary copy (never in the repository), run these probes and record exit code and message for each: (b) `return` before the reason self-test; (b2) `return` before the mutation loop; (a) disable the expected-reason comparison; (c) allow a group split across partitions. Each must exit nonzero.\n- [ ] Report the new sha256 of split_allocate.py and of allocation.synthetic.json (python3 -I).\n- [ ] Do not run git commit. Do not use git diff/status as acceptance checks.\n\n## Verification\n`python3 -I -B benchmark/scripts/split_allocate.py --check`\n\n## Context\n- Review #443 snapshot: .github/loop/data/session-reports/443/77fb4e8e622bab8f6012808c78a7c7b857a42b87ccf45911372b4364efa6f37c.json (findings 2-5 passed; do not repeat the specification review or the F3 enumeration).\n- Known accepted limit (#421 finding 4): a coordinated edit that removes both the controls and the caller count check is not detected; that is acceptable.\n- The engine reruns Verification without LABVIEW_ENVIRONMENT.\n\n## Budget\nAt most 15 tool calls and 200k input tokens. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 446
+ }
+]
