@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-417-apply-reason-controls-415",
+  "title": "Apply the Policymaker fix for the two reason-check bypasses from review #415",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 25,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #415 found that first-character reason comparisons and early returns bypass both reason self-tests. Apply execution/scripts/fix_reason_controls_415.py once. Expected gain: both checkers reject these bypasses and expose completed control counts to their callers. The next Policymaker checks the script output, new SHA256 values and your report before ordering independent review. This is fix round 2; do not expand the design.\n\n## Acceptance\n- [ ] Write a marked .session/report.md first and update it before Finish.\n- [ ] Read the landing script and run it once with python3 -I -B. Do not recreate its changes manually.\n- [ ] Run both checker --check commands. Run change_cases.py without LABVIEW_ENVIRONMENT for the environment-free check. If the prepared source mount exists, also run its source-pin check with the mount. Report skipped source verification explicitly.\n- [ ] Record both new script SHA256 values and the landing script's bypass-probe results.\n- [ ] Run the evaluator preparation-index check. Preserve its readiness and execution limits.\n- [ ] Change only benchmark/scripts/change_cases.py and benchmark/scripts/precision_plan.py. Do not edit pinned evidence or preparation files. Do not commit; the parent commits accepted changes.\n- [ ] Report quality as unmeasured. Native answers, private-store readiness and owner method acceptance remain unresolved.\n\n## Verification\n`python3 -I -B benchmark/scripts/precision_plan.py --check`\n\n## Context\n- execution/scripts/fix_reason_controls_415.py: hash-gated Policymaker fix and temporary-copy bypass probes.\n- Review #415: .session/history/sessions/415/45abdf6845707de2f731a2b2cd1d2f919034aa1edd9cb7afbf3141e24ab6575b.md.\n- Do not repeat spec/plan reviews #408/#409 or search for missing historical store records.\n\n## Budget\nAt most 10 tool calls. Read only the landing script, the changed code and necessary check output. Do not open case JSON, lineage.json or challenge results.",
+  "pass": 1,
+  "issue": 418
+ }
+]
