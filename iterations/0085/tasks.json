@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-448-rereview-split-completion-446",
+  "title": "Re-review the split_allocate.py completion guard of task #446 (review #443 finding 1 only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #443 (verdict revise) found one blocking defect in benchmark/scripts/split_allocate.py: main() ignored the result of check(), so a `return` before the reason self-test still exited 0. Task #446 (author mainly codex GPT) changed only split_allocate.py: check() now returns the count of completed controls and main() requires exactly 8. Expected gain: an independent accept or revise verdict on this fix, so the Policymaker can pin the allocator under the split milestone with a hash-gated script. The next Policymaker reads `verdict:` and the probe table in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Confirm with python3 -I: split_allocate.py sha256 55c236ada2bce447990c7185ac8654a2c8aefba32ae4010fac65ae82a15c8ecd and benchmark/split/allocation.synthetic.json sha256 70d94d28084b45938c698e6097c8afd40934f8e9ab0d70a29de36d242ab4de34.\n- [ ] Read only the check()/main() code and the self-test code. Confirm the count is computed after the controls run and that the expected value 8 equals 1 reason self-test plus 7 mutation rejections.\n- [ ] In a temporary copy (never in the repository), run at least 4 probes and record exit code and message: (1) `return` before the reason self-test; (2) `return` inside the mutation loop after its first mutation; (3) remove one mutation from the list; (4) make the reason comparison compare only the first character. Each must exit nonzero for the intended reason.\n- [ ] Record the known accepted limit (#421 finding 4): a coordinated edit that removes both the controls and the caller count check is not detected. Do not count it as blocking.\n- [ ] State the actual model family of your session from your models data.\n- [ ] Write `verdict: accept` or `verdict: revise` with numbered findings (blocking or non-blocking). Do not edit repository files.\n\n## Verification\n`python3 -I -B benchmark/scripts/split_allocate.py --check`\n\n## Context\n- Fix report #446: .github/loop/data/session-reports/446/e74db3cfee5afe017bb37aef5126832bb96463fc3946bc228731218ac76bde8c.json\n- Review #443: .github/loop/data/session-reports/443/77fb4e8e622bab8f6012808c78a7c7b857a42b87ccf45911372b4364efa6f37c.json (findings 2-5 passed; do not repeat the specification review, the F3 enumeration or the determinism check).\n- Accepted pattern: benchmark/scripts/change_cases.py and precision_plan.py (fix #418, review #421).\n- The engine reruns Verification without LABVIEW_ENVIRONMENT. Do not read .session/report.md in Verification.\n\n## Budget\nAt most 15 tool calls and 200k input tokens. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 449
+ }
+]
