@@ -1,0 +1,32 @@
+[
+ {
+  "id": "order-378-pin-runner-contract-369-retry",
+  "title": "Run the Policymaker script that pins the reviewed synthetic runner contract under baseline (retry of crashed #375)",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "body": "## Goal\nRun execution/scripts/pin_runner_369.py once from main. Task #375 crashed at zero turns before any model ran; the script and main inputs are unchanged (main preparation-status.json bcd2881b..., preparation.json 315d83a4...). Review #369 accepted the #364 reason-control fix with no blocking findings. Expected gain: the three N3 runner-contract files become pinned evidence under the baseline milestone. The next Policymaker checks main: evaluator 65 references, preparation-status.json sha256 85b0f7192bc8df794b6637649c6a657b7270fc589033c13d4c1abecd6cfeb451, preparation.json sha256 403117b52f6647ad7c1b02155542d0ed88404699414107fc5d6d6ea82070545c.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first.\n- [ ] Run `python3 -I -B execution/scripts/pin_runner_369.py` once. It is hash-gated and idempotent; it prints the new shas and runs four --check commands. Exit 0 is required.\n- [ ] Confirm that only benchmark/preparation-status.json and benchmark/preparation.json changed, and no __pycache__ exists. Do not edit any other file. Do not run git commit; the parent commits.\n- [ ] Report the printed shas and the evaluator line. Preserve design-only status, zero runs, unmeasured quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- execution/scripts/pin_runner_369.py: dry run twice by the Policymaker on a worktree of origin/main without LABVIEW_ENVIRONMENT; all checks exit 0.\n\n## Budget\nAt most 8 tool calls. Read no other files.",
+  "pass": 1,
+  "issue": 380
+ },
+ {
+  "id": "order-378-recheck-lineage-pilot-374",
+  "title": "Recheck only the two corrections of lineage pilot proposal revision 2 (review #374 findings 1-2)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 25
+  },
+  "body": "## Goal\nReview #374 gave revise with two blocking findings on policy/proposals/lineage-pilot-359.json: (1) candidate-0124 and candidate-0227 claimed same-lineage through XML item URLs that resolve to absent archive members; (2) no inventory pin. The Policymaker wrote revision 2 (sha256 57c558dfcf4f8024f0535ecd11e3851990f1fca630089ffed6ab83c26ee841e7): both overlapping decisions are now undecidable/R3 with a #374 reason, and a top-level `inventory` pins benchmark/lineage.json sha256 52f3d2eafcbbda6695e30fb73d3a8b4f6f891b13acaf129d4ea1b091ad83d077. Expected gain: an accepted pilot (5 same-lineage, 8 undecidable, 0 independent) that a landing script can write into benchmark/lineage.json. The next Policymaker reads accept/revise.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early. Report only; do not edit repository files.\n- [ ] Verify both sha256 values above. Compare revision 2 with revision 1 (sha256 3c416ffd57ac6d8c9ddf2bfa6b147649e522aec863112f1630b12a6e8009291f, in git history of the file) by script: the only changes must be the `revision` and `inventory` keys and label/rule/reason of candidate-0124 and candidate-0227; rules and the other 11 decisions byte-equal after json parse.\n- [ ] Confirm that the two R3 reasons state the missing resolution evidence and that overlapping groups are consistent.\n- [ ] Do not repeat the #374 checks of coverage, pylavi hashes, LVSR offsets or the six other R3 groups.\n- [ ] Give accept/revise with numbered blocking findings and pointers. Record the actual reviewer model family.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/lineage-pilot-359.json and its git history.\n\n## Budget\nAt most 12 tool calls. Never dump lineage.json or the proposal whole; query by key with python3 -I.",
+  "pass": 1,
+  "issue": 381
+ }
+]
