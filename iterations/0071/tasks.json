@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-402-review-method-acceptance-400",
+  "title": "Independently review the method-acceptance requirement map and owner request draft of #400 before the Policymaker files it",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nSession #400 (author GPT family, codex gpt-6.1-sol) concluded `decision: request-acceptance-now` and wrote a requirement map and an owner request draft. Its report snapshot is in the repository: .github/loop/data/session-reports/400/0473f3e7b3c710e181ac9926a5673776172725a8cca8a5025221b76f545bfe83.json (field `body`). evaluation.md:58-59 requires an independent check of the method before the owner assesses it. Expected gain: a verified, corrected owner request text that the Policymaker files in this iteration (the Policymaker wakes after you and reads your `verdict:` line and the corrected draft).\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go.\n- [ ] Check each row of the #400 requirement map against docs/perpetua/evaluation.md and benchmark/protocol.md: is the cited evidence pinned in benchmark/preparation.json, is the milestone label right in benchmark/preparation-status.json, is the state (`met-for-method`, `resource-blocked`, `owner-decision`) defensible? List each wrong or overstated row with file:line.\n- [ ] Name any evaluation.md or protocol.md requirement the map omits, or any `met-for-method` row that is actually `not-met-now-doable`. If one exists, give the smallest task that closes it.\n- [ ] Verify each fact of the draft by script: sha256 of benchmark/preparation.json (expected ccff5e0e...), that benchmark/ and docs/ are unchanged between 817dac675c8032bad8820672149874424389d3bd and current main, the numbers quoted from docs/research/0002-delivery.md (89-264 and 33-99 engineer-days, 56-165 difference, 413 of 415 RSRC files) with line numbers, and the same-family review limits against the limitation sentences in preparation-status.json.\n- [ ] Check that the draft keeps every gap visible: zero native executions, 23 unresolved native slots, no split allocation, store readiness pending #379 under #268, #169 not ready, missing typedef-impact and diagram-difference development cases, and that it claims no readiness, threshold, goal gate, product claim or fallback choice.\n- [ ] One line `verdict: accept` or `verdict: revise`. Then the full corrected draft (title, what, why, unblocks, numbered owner steps) in ASD-STE100 Simplified Technical English: sentences of at most 25 words, active voice, one idea per sentence; name current main commit sha.\n- [ ] Change no repository file. Do not run git commit or git diff acceptance checks.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- .github/loop/data/session-reports/400/0473f3e7b3c710e181ac9926a5673776172725a8cca8a5025221b76f545bfe83.json: the map and draft under review (read with python3 json, print `body` only).\n- docs/perpetua/evaluation.md, benchmark/protocol.md: requirements.\n- benchmark/preparation.json, benchmark/preparation-status.json: pins, labels, limitations (bounded python3 inspection).\n- docs/research/0002-delivery.md: lines 95-170 only.\n\n## Budget\nAt most 25 tool calls and 300k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 403
+ }
+]
