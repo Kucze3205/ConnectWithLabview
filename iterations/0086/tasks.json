@@ -1,0 +1,34 @@
+[
+ {
+  "id": "order-451-apply-split-reason-449",
+  "title": "Run the Policymaker script that fixes the split_allocate.py reason self-test (review #449 finding 1)",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 25,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #449 found one blocking defect: the reason self-test in benchmark/scripts/split_allocate.py used 'expected reason' against 'actual reason'. These differ in the first character, so a first-character-only comparison passed. The Policymaker wrote execution/scripts/fix_split_reason_449.py (hash-gated, idempotent; fix round 2). It replaces the wrong expected reason with 'actual reason [deliberately wrong suffix]' (#418 pattern). Expected gain: a regression-sensitive allocator check that can be pinned under the split milestone. The next Policymaker checks split_allocate.py sha256 3ba01f035967ce67c7e98b02581491abd170dce278adb085bb04d751c35674bd on main.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Run `python3 -I -B execution/scripts/fix_split_reason_449.py` once from the repository root. It must print `wrote: 3ba01f03...` (or `unchanged: 3ba01f03...`) and `split_allocate.py --check exit 0`.\n- [ ] Confirm with python3 -I: split_allocate.py sha256 3ba01f035967ce67c7e98b02581491abd170dce278adb085bb04d751c35674bd; benchmark/split/allocation.synthetic.json sha256 70d94d28084b45938c698e6097c8afd40934f8e9ab0d70a29de36d242ab4de34 (unchanged).\n- [ ] Run `python3 -I -B policy/evaluator/evaluate.py --check`: exit 0, errors [], missing [], 74 references.\n- [ ] Do not edit any other file. Do not run git commit, git diff or git status; the parent commits. Remove any __pycache__ directory you create.\n\n## Verification\n`python3 -I -B benchmark/scripts/split_allocate.py --check`\n\n## Context\n- Review #449: .github/loop/data/session-reports/449/a1566c0bcf7e83eb9a5c5cac490a6cc42fd65917e138a662845708d3c64a901c.json\n- The Policymaker dry-ran the script twice on a copy: idempotent, --check 0, evaluator 0 with 74 references; first-character and prefix comparison probes exit 1.\n- The engine reruns Verification without LABVIEW_ENVIRONMENT.\n\n## Budget\nAt most 8 tool calls. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 452
+ },
+ {
+  "id": "order-451-rereview-split-reason-449",
+  "title": "Re-review the split_allocate.py reason self-test fix in a temporary copy (review #449 finding 1 only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #449 (verdict revise) found that a first-character-only reason comparison in benchmark/scripts/split_allocate.py still passed --check. The Policymaker (Claude family) wrote execution/scripts/fix_split_reason_449.py; a parallel task applies it. Expected gain: an independent accept or revise verdict on the fix, so the Policymaker can pin the allocator under the split milestone. The next Policymaker reads `verdict:` and the probe table in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] Copy the benchmark/ directory to a temporary directory (never change the repository). Run `python3 -I -B execution/scripts/fix_split_reason_449.py <tempdir>` two times: first `wrote: 3ba01f03...`, then `unchanged:`; both with `--check exit 0`.\n- [ ] Read only the script and the changed self-test block. Confirm only that block changes and allocation.synthetic.json stays sha256 70d94d28084b45938c698e6097c8afd40934f8e9ab0d70a29de36d242ab4de34.\n- [ ] In the temporary copy, run at least 4 probes on the fixed split_allocate.py and record exit code and message: (1) compare only the first character in expect_reject; (2) compare only a prefix of the reason; (3) `return` before the reason self-test; (4) remove one mutation. Each must exit nonzero for the intended reason.\n- [ ] Record the accepted limit (#421 finding 4): a coordinated edit that skips controls and returns the expected count is not detected. Do not count it as blocking.\n- [ ] State the actual model family of your session from your models data.\n- [ ] Write `verdict: accept` or `verdict: revise` with numbered findings. Do not edit repository files.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- Review #449: .github/loop/data/session-reports/449/a1566c0bcf7e83eb9a5c5cac490a6cc42fd65917e138a662845708d3c64a901c.json (other probes passed; do not repeat the specification review, the F3 enumeration or the determinism check).\n- Accepted pattern: benchmark/scripts/change_cases.py:125-136 (fix #418, review #421).\n- Do not read .session/report.md in Verification.\n\n## Budget\nAt most 15 tool calls and 200k input tokens. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 453
+ }
+]
