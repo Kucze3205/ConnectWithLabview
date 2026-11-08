@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-442-review-split-allocator-440",
+  "title": "Independently review the synthetic whole-group split allocator of #440 (report only)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "body": "## Goal\nTask #440 (author codex GPT) merged benchmark/split/allocation.synthetic.json (sha256 70d94d28084b45938c698e6097c8afd40934f8e9ab0d70a29de36d242ab4de34) and benchmark/scripts/split_allocate.py (sha256 79ffbdffe60bc589be172de08a380a958ae4e220ee4d53303390f49230ae16fc). Both are unpinned until an independent review accepts them. Expected gain: an accept/revise verdict that lets the Policymaker pin the allocator under the split milestone, or exact findings for one narrow fix. The next Policymaker reads `verdict:` and the numbered findings in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish. Put `verdict: accept` or `verdict: revise` on its own line, and the actual model family of this session.\n- [ ] Confirm both sha256 values above with python3 -I.\n- [ ] Spec check against benchmark/protocol.md ## split and benchmark/split/README.md: whole connected lineage groups stay in one partition; two evaluation strata (eval-unseen-lineage, eval-held-out-family); an infeasible stratum is reported, not leaked or dropped; records use the field names of benchmark/split/allocation-manifest.template.json; synthetic data only.\n- [ ] Check that the SYN-F3 infeasibility claim is correct: show by reasoning or a small enumeration that no whole-group allocation fulfils that stratum.\n- [ ] Revert-proof probes in a temporary copy (never in the repository): (a) disable the expected-reason comparison; (b) return before the mutation self-test; (c) allow a group to be split across partitions in the allocator; (d) drop infeasible_strata from the output. Each must make --check exit nonzero for the intended reason. Record exit codes and messages.\n- [ ] Check determinism: two --check runs and one run with input groups reordered (in the temporary copy) give identical allocations.\n- [ ] Do not edit repository files. Do not use store secrets or network. Do not run git commit; do not use git diff/status as acceptance checks.\n\n## Verification\n`python3 -I -B benchmark/scripts/split_allocate.py --check`\n\n## Context\n- #440 report: 7 mutations with exact reasons, seed 440, partition counts development 2/3, eval-unseen-lineage 1/1, eval-held-out-family 2/2.\n- Accepted reason self-test pattern: benchmark/scripts/runner_contract.py (#369), and probe pattern of review #421.\n- The engine reruns Verification without LABVIEW_ENVIRONMENT.\n\n## Budget\nAt most 25 tool calls and 300k input tokens. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 443
+ }
+]
