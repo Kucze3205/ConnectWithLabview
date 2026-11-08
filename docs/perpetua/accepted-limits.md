@@ -7,10 +7,12 @@ Policymaker, ordinary roles and trusted preparation jobs.
 
 Agents choose technical solutions, organize ordinary roles, prepare verification
 and implement assigned work within granted tools and paths. The product is the
-tool enabling AI agents to read LabVIEW code, projects and all artifacts like
-ordinary code; its delivery form is open. Product implementation follows the
+tool enabling AI agents to read and write LabVIEW code, projects and all artifacts
+like ordinary code; its delivery form is open. Product implementation follows the
 independently checked, owner-accepted verification method in [evaluation.md](evaluation.md).
-Preparing the environment, examples and verification method can precede that.
+Preparing the environment, examples and verification method can precede that, and
+so can the proof of concept defined in [the goal](../../goal/goal.md), which is not
+the product.
 
 `engine.yml.limits` retains git/Python and file tools and explicitly requires
 consent for any online role, including one with no repository write paths.

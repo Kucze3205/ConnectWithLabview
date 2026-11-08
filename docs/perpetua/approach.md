@@ -12,13 +12,15 @@ właściciela. Powstał retrospektywnie z już zaakceptowanych ustaleń (nie dod
 | # | Krok | Zależy od | Potrzebne źródła, narzędzia i dostęp | Weryfikacja |
 |---|---|---|---|---|
 | 1 | Rozpoznanie: rodzaje artefaktów LabVIEW, wersje, drogi odczytu, formy dostarczenia (MCP jest tylko jedną z opcji) oraz oszacowanie nakładu „wszystkie wersje” kontra LabVIEW 2024 | — | publiczne przykłady i parsery przygotowane przez `prepare.sh`; dokumentacja NI; role bez internetu pracują na przygotowanych źródłach | wnioski w `docs/research/` ze wskazaniem źródeł; oszacowanie i ograniczenia zgodności przedstawione właścicielowi **przed** wyborem wariantu zapasowego |
-| 2 | Przygotowanie benchmarku lub innej powtarzalnej metody: protokół, zadania z życia (wyjaśnienie obliczeń VI, zależności projektu, skutki zmiany typedefu, różnica między diagramami), niezależne odpowiedzi wzorcowe, podział na przypadki rozwojowe i wstrzymane, mapa pokrycia wg rodzajów artefaktów i wersji, porównanie z pracą bez narzędzia, przypadki trudne | 1 | przykłady z kroku 1, natywne przetwarzanie w kontenerze NI 2026 Q1 (zadania zaufane, nie role), rola `benchmark` | indeks `benchmark/preparation.json` z hashami; osobno wierność odczytu i poprawność odpowiedzi z odnośnikiem do oryginału |
+| 1a | Proof of concept wg [celu](../../goal/goal.md): agent opisuje diagram nieznanego VI i zmienia jego logikę bez użycia LabVIEW; punktem wyjścia są pomiary M1 i M11 z `docs/research/0002-delivery.md` | 1 | rola `researcher`, kod w `docs/research/poc/`, przygotowane publiczne źródła | właściciel ręcznie w swoim LabVIEW wg dostarczonej instrukcji; pętla nie czeka na jego odpowiedź; nie jest to dowód jakości |
+| 2 | Przygotowanie benchmarku lub innej powtarzalnej metody, także z zadaniami zapisu (po 1a; rozszerzenie istniejących danych, nie budowa od nowa): protokół, zadania z życia (wyjaśnienie obliczeń VI, zależności projektu, skutki zmiany typedefu, różnica między diagramami), niezależne odpowiedzi wzorcowe, podział na przypadki rozwojowe i wstrzymane, mapa pokrycia wg rodzajów artefaktów i wersji, porównanie z pracą bez narzędzia, przypadki trudne | 1 | przykłady z kroku 1, natywne przetwarzanie w kontenerze NI 2026 Q1 (zadania zaufane, nie role), rola `benchmark` | indeks `benchmark/preparation.json` z hashami; osobno wierność odczytu i poprawność odpowiedzi z odnośnikiem do oryginału |
 | 3 | Niezależny przegląd metody i akceptacja przez właściciela; wtedy progi jakości i wykonywalna bramka celu (`owner_confirms: true`) | 2 | rola `reviewer` na przypiętych drzewach; weryfikator evaluatora dla zmian pomiaru | decyzja właściciela przez bramkę zmian; bez niej implementacja produktu nie rusza |
 | 4 | Implementacja narzędzia | 3 | rola `implementation` (zapis tylko do `src/`, `tests/`, `docs/product/` itd.), wynik kroku 1 o formie dostarczenia | testy narzędzia oraz pomiar wg zaakceptowanej metody; niezależny przegląd |
 | 5 | Pomiar, raport pokrycia i iteracje poprawek | 4 | evaluator i audyt zlecane przez Policymakera | raport wg rodzaju artefaktu i wersji; braki (licencja, zależność, brak diagramu) widoczne jako braki, nie zaliczone |
 
 Kroki 1 i 2 mogą się częściowo nakładać (benchmark potrzebuje przykładów z rozpoznania), ale nic z kroków 4–5 nie
-startuje przed akceptacją z kroku 3.
+startuje przed akceptacją z kroku 3. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na
+akceptację metody obejmującej zadania zapisu. Krok 1a jest jedynym wyjątkiem od tej kolejności: POC nie jest produktem.
 
 ## Pokrycie wymagań przez środowisko
 

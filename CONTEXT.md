@@ -170,7 +170,7 @@ The policymaker widens roles within them on its own; beyond them, work waits for
 owner request or for the owner to move the limits.
 _Avoid_: permissions, allowlist
 
-## LabVIEW reading
+## LabVIEW reading and writing
 
 **Reading fidelity**:
 The agreement between the tool's representation of a LabVIEW artifact and independently established facts about
@@ -185,5 +185,10 @@ The independently checked availability of a repeatable method with trustworthy e
 separation, coverage accounting and baseline comparisons. It is not evidence that the tool itself works.
 
 **Product**:
-The tool enabling AI agents to read LabVIEW code, projects and all artifacts like ordinary code.
+The tool enabling AI agents to read and write LabVIEW code, projects and all artifacts like ordinary code.
 Preparing its environment, examples and verification method precedes product implementation.
+
+**Proof of concept**:
+A delivered demonstration that the Product's concept makes sense and a finished Product can exist: an agent reads a
+LabVIEW VI it has not seen and changes its diagram logic. It is neither the Product nor evidence of its quality.
+_Avoid_: prototype, MVP
