@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-390-review-native-job-388",
+  "title": "Independent review of the native job draft for capability #169 (benchmark/native/job/, task #388)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "exports": [],
+  "body": "## Goal\nTask #388 (author mainly codex gpt-6.1-sol, GPT family) merged four draft files under benchmark/native/job/: native_job.py, native_job.sh, workflow.proposal.yml, README.md. They are meant to become the owner-installed workflow for capability #169 (native jobs), the main blocker for the 23 unresolved native oracle slots. Expected gain: a verdict (accept | revise) with numbered findings. On accept the next Policymaker files one Owner question with install steps; on revise it fixes the files by script. The next Policymaker reads your report verdict and findings.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first and update it as you go. Report only; change no repository file.\n- [ ] Spec check: README clause map against the exact `readiness` text in .github/loop/request-state/169.json. For each clause: satisfied (file:line), gap (named), or overclaimed.\n- [ ] Safety check: workflow.proposal.yml is workflow_dispatch only, permissions contents: read, persist-credentials false, uploads no VI files; native_job.py uses the same image digest and docker options (--network none, no credentials, disposable mount) as .github/loop/check_labview_runtime.py and .github/loop/labview-runtime.json. Quote the lines.\n- [ ] Probe the self-test in a temp copy (python3 -I, never edit the repo copy): for each of the 5 rejecting mutations (changed source, missing output, extra output, networking enabled, changed working copy) disable the corresponding check in native_job.py and confirm `--self-test` then exits nonzero. A mutation that still passes is a finding.\n- [ ] Assess #388 discovery: uploading only record/manifest/logs leaves HTML on the runner, so a separate comparison session cannot inspect diagram output. State whether this blocks the #169 'diagram capture with output manifest' and 'separate comparison session' clauses and propose the smallest fix (for example upload of HTML/PNG outputs only, no VI files).\n- [ ] Check that every LabVIEWCLI operation or parameter without repository evidence is marked `unverified` in README.md.\n- [ ] Record your actual model family. No readiness, execution or quality claim.\n\n## Verification\n`python3 -I -B benchmark/native/job/native_job.py --self-test`\n\n## Context\n- benchmark/native/job/: the four draft files under review.\n- .github/loop/request-state/169.json: `frozen` and `readiness` (exact clauses).\n- .github/loop/check_labview_runtime.py, .github/loop/labview_runtime.sh, .github/loop/labview-runtime.json: the working container pattern.\n- benchmark/native/readiness-case.json, benchmark/native/output-record.template.json: reviewed design inputs.\n- docs/perpetua/accepted-limits.md lines 50-65: native work only in separate trusted jobs.\n\n## Budget\nAt most 25 tool calls and 350k input tokens. Read only the files named in Context. Do not run docker. Do not run git commit or git diff checks. Do not read .session/report.md in Verification.",
+  "pass": 1,
+  "issue": 391
+ }
+]
