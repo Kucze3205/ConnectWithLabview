@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/417\niteration: 75\nrunner: Linux\nmodel: gpt-6.1-sol\neffort: high\nturns: 17\nmodels: {\"claude/claude-opus-5-5\":{\"cache_read\":89532,\"cache_write\":63534,\"in\":14,\"out\":1879},\"codex/gpt-6.1-sol\":{\"cache_read\":26880,\"cache_write\":0,\"in\":607087,\"out\":8960}}\ntokens_in: 607101\ntokens_out: 10839\ncache_read: 116412\ncache_write: 63534\nagent_s: 283\ntotal_s: 314\ncommit: fad6f08\nstatus: done\nmerged: pending-iteration\n```\nReview [#415](history/sessions/415/45abdf6845707de2f731a2b2cd1d2f919034aa1edd9cb7afbf3141e24ab6575b.md) found two bypasses in both checkers.\nShortened reason comparisons and skipped self-tests passed incorrectly.\nI saved a [fix script](../execution/scripts/fix_reason_controls_415.py) and one [order](orders.json) for fix round 2.\nThe script checks source hashes, preserves existing controls, and checks completed control counts.\nTwo runs in a temporary copy passed. All eight bypass probes failed with the expected messages.\nThe second run changed no bytes. Repository checkers remain unchanged until the ordered task applies the script.\nThe expected gain is detection of both bypasses before independent review.\nReview #415 used the author's model family. Source verification remains incomplete because its prepared source mount was absent.\nNative answers, restricted-store readiness, and Owner method acceptance remain unresolved.\nProduct quality remains unmeasured. Reader implementation remains blocked.\n\n## What next\nApply the saved script, verify the expected hashes in [working memory](../policy/working-memory.md), then independently review both fixes.\nDo not repeat specification reviews #408 and #409. Further blocking findings require a new scope after fix round 2.\n\nWaiting for the iteration to continue: then `policy/` merges and the orders start.\n",
+  "comment": 6718614679,
+  "issue": 417,
+  "snapshot": "6630a96a57f6092990042ccd42bbce2179f2295a7243e7366650a6d4c6bed77c",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/417#issuecomment-6718614679"
+ },
+ "schema_version": 1
+}
