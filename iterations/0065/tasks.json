@@ -1,0 +1,32 @@
+[
+ {
+  "id": "order-383-land-runner-lineage-380",
+  "title": "Run the Policymaker script that pins the reviewed runner contract and repairs the stale lineage.py limitation text",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "body": "## Goal\nRun execution/scripts/land_runner_lineage_380.py once from main. Task #380 ran pin_runner_369.py correctly (tag iter/0064/380 has preparation-status.json 85b0f719..., preparation.json 403117b5...) but ended blocked because its own git diff assertions saw an empty diff. The Policymaker also found that `benchmark/scripts/lineage.py --check` fails on main (stale preparation-status.json): lineage.py still generates the sentence '(not independently re-reviewed)' that pin script #300 replaced. The new script runs pin_runner_369.py, replaces that one phrase in lineage.py with the #300 wording, regenerates lineage outputs and re-pins lineage.py. Expected gain: the three N3 runner-contract files become pinned baseline evidence, and all generator checks pass again. The next Policymaker checks main: evaluator 65 references; preparation-status.json sha256 85b0f7192bc8df794b6637649c6a657b7270fc589033c13d4c1abecd6cfeb451; preparation.json sha256 ccff5e0e77e4010a0101757c03f66f08a6cd72af83baba7791204a020f345e8f; lineage.py sha256 9b080b25f0831521191c128b0a271baf11fb49a3fdf8b0dd72ea4f0c6f48d9dc.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first.\n- [ ] Run `python3 -I -B execution/scripts/land_runner_lineage_380.py` once (LABVIEW_ENVIRONMENT is required for lineage.py). Exit 0 is required. It is hash-gated and idempotent.\n- [ ] Compare the printed sha256 values with the values in Goal. Do not use git diff or git status as an acceptance check. Do not edit any file by hand. Do not run git commit; the parent commits.\n- [ ] Report the printed shas and the evaluator line. Preserve design-only status, zero runs and unmeasured quality.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- execution/scripts/land_runner_lineage_380.py: dry run twice by the Policymaker on a worktree of origin/main with LABVIEW_ENVIRONMENT; second run unchanged; only preparation-status.json, preparation.json and lineage.py change; no __pycache__.\n\n## Budget\nAt most 8 tool calls. Read no other files.",
+  "pass": 1,
+  "issue": 384
+ },
+ {
+  "id": "order-383-lineage-triage-batch-2",
+  "title": "Propose R1-R3 lineage decisions for the next 10 two-member candidate groups (report only)",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "body": "## Goal\nReview #381 accepted the lineage pilot (policy/proposals/lineage-pilot-359.json revision 2: 13 groups, 5 same-lineage, 8 undecidable, 0 independent) and its rules R1-R3. 217 of 230 candidate groups in benchmark/lineage.json `candidate_variants` stay candidate-unadjudicated. Expected gain: a second batch of proposed decisions that an independent reviewer can check, which moves the public lineage toward a usable leakage constraint for the split. The next Policymaker reads the JSON block in this report and orders its review.\n\n## Acceptance\n- [ ] Write the marked .session/report.md early and update it as you go. Report only; do not edit repository files.\n- [ ] Select by script: the first 10 entries of `candidate_variants` (in index order) that have exactly 2 members and whose `id` is not a `candidate_id` in the pilot proposal. List the 10 ids and indexes.\n- [ ] Apply rules R1-R3 exactly as written in the pilot proposal `rules`. Use the pilot decision format (candidate_id, candidate_pointer, matching_name, label, rule, reason, evidence with artifact, inventory_pointer, repository, repository_commit, path, archive, member_index, sha256 and cited save/XML fields). R2 needs positive cited provenance; when in doubt use R3 and state the missing evidence. Keep overlapping groups consistent with the pilot.\n- [ ] Put one fenced ```json block with keys `inventory` (benchmark/lineage.json sha256), `rules_source` (pilot sha256 57c558dfcf4f8024f0535ecd11e3851990f1fca630089ffed6ab83c26ee841e7) and `decisions` at the end of the report. Give counts per label. Record your actual model family.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- policy/proposals/lineage-pilot-359.json: rules and format.\n- benchmark/lineage.json: inventory (query by key; never print it whole).\n- Environment originals are under LABVIEW_ENVIRONMENT.\n\n## Budget\nAt most 25 tool calls and 400k input tokens. Never dump lineage.json, the proposal or whole artifacts; query by key and read bounded byte ranges with python3 -I.",
+  "pass": 1,
+  "issue": 385
+ }
+]
