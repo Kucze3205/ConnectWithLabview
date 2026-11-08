@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-439-split-allocator-synthetic",
+  "title": "Design an executable whole-group split allocator over synthetic lineage data (no real cases, no store access)",
+  "role": "benchmark",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nThe split milestone is design-reviewed and the restricted store has a reviewed readiness record (#431, pinned by #434), but no step turns lineage groups into partitions. protocol.md ## split and benchmark/split/README.md require whole connected lineage groups in one partition, two evaluation strata (eval-unseen-lineage, eval-held-out-family) and a reported infeasible stratum instead of leaking components. Expected gain: a deterministic, checked allocator that the custodian can later run on private cases inside the store, so split work is not blocked on design when new cases arrive. The next Policymaker checks `split_allocate.py --check` exit 0 on main, the mutation count and the infeasible-stratum output in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md in your first turns (status wip); update it before Finish.\n- [ ] New file benchmark/split/allocation.synthetic.json: synthetic families, projects and lineage groups only (ids like SYN-F1/SYN-G3), including one mixed-family group and one family whose holdout is infeasible. No real case, key, path from the prepared sources, sentinel marker or credential.\n- [ ] New stdlib script benchmark/scripts/split_allocate.py: `--check` reads the synthetic file, allocates whole groups deterministically (fixed seed, recorded), outputs partition counts per stratum and an explicit `infeasible_strata` list, and validates the result against benchmark/split/allocation-manifest.template.json field names (read only).\n- [ ] --check runs at least 5 in-memory rejecting mutations, each with its expected reason compared exactly (pattern of benchmark/scripts/runner_contract.py): group split across partitions; held-out family member in development; unknown partition; duplicate group id; infeasible stratum silently dropped. Report each mutation's reason.\n- [ ] Do not edit any pinned file (benchmark/split/README.md, templates, preparation.json, preparation-status.json, lineage files). Do not use store secrets or network. Do not run git commit; do not use git diff/status as acceptance checks.\n- [ ] Report: sha256 (python3 -I) of both new files, --check output, open decisions (e.g. stratum size minimums) as owner-decision or later-review items.\n\n## Verification\n`python3 -I -B benchmark/scripts/split_allocate.py --check`\n\n## Context\n- benchmark/protocol.md ## split: allocation rules.\n- benchmark/split/README.md and allocation-manifest.template.json: reviewed design (#273, #281).\n- benchmark/scripts/runner_contract.py: reason self-test pattern accepted in #369.\n- The engine reruns Verification without LABVIEW_ENVIRONMENT; the check must be environment-free.\n\n## Budget\nAt most 25 tool calls and 300k input tokens. Do not open benchmark/lineage.json, development case JSON files or benchmark/results/challenges.json.",
+  "pass": 1,
+  "issue": 440
+ }
+]
