@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-423-pin-change-precision-421",
+  "title": "Run the Policymaker script that pins change-cases under tasks and precision under baseline (review #421 accept)",
+  "role": "benchmark",
+  "effort": "low",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 20,
+   "max_turns": 25
+  },
+  "body": "## Goal\nReview #421 accepted the reason-control fix (8082a18) of change_cases.py and precision_plan.py. Pin the reviewed change-case specs under the tasks milestone and the precision plan under the baseline milestone. Expected gain: every preparation design that the method-acceptance draft of #403 names is pinned in benchmark/preparation.json, so the next Policymaker can file that question with the new index hash. The next Policymaker checks the printed sha256 values and the evaluator output on main.\n\n## Acceptance\n- [ ] Write a marked .session/report.md in your first turns; update it before Finish.\n- [ ] Run once: `python3 -I -B execution/scripts/pin_change_precision_421.py` from the repository root.\n- [ ] The script exits 0. Copy its printed lines (status, preparation sha256 and the check exit codes) into the report.\n- [ ] Expected printed values: status 02d5ea9b72e3b292b876b4cbee0c09141c757983b4971430f01693cbaa47987f, preparation 25cf0059164b7ec7d3be88f0bca00dbb16ccac85a82c0f8b28d5b6a7a31c1d35, all five check exit codes 0, evaluator evidence_references 72 and missing []. If a value differs, report it as a finding; do not edit any file by hand.\n- [ ] Do not run git diff, git status or git commit. The parent commits.\n\n## Verification\n`python3 -I -B policy/evaluator/evaluate.py --check`\n\n## Context\n- The script is hash-gated and idempotent. If its hash gate fails, stop and report the printed path and hash; do not fix it.\n- change_cases.py --check skips source pins without LABVIEW_ENVIRONMENT; that is expected.\n\n## Budget\nAt most 8 tool calls. Do not open case JSON, spec JSON bodies, lineage.json or challenge results.",
+  "pass": 1,
+  "issue": 424
+ }
+]
