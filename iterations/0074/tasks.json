@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-414-rereview-reason-selftest-412",
+  "title": "Re-review the reason self-tests in change_cases.py and precision_plan.py (fix #412 for reviews #408/#409 finding 2)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "exports": [],
+  "body": "## Goal\nFix #412 (merged a564d42, author mainly codex GPT) added an expected-reason self-test to both checkers. Reviews #408 and #409 (both GPT) had one blocking finding each: disabling the expected-reason comparison left `--check` exiting 0. Expected gain: an independent verdict on finding 2 only, so the next Policymaker can pin both designs (change-cases under tasks, precision under baseline) by script and then file the method-acceptance question. The next Policymaker reads `verdict:` and the numbered findings in your report.\n\n## Acceptance\n- [ ] Write the marked .session/report.md first (status wip) and update it as you go. Do not read .session/report.md in Verification.\n- [ ] Confirm sha256 (python3 -I) on main: benchmark/scripts/change_cases.py ac84acaf7cf6931670f9964f90d4f68b72e7b446927459ce92681c401ab2167e; benchmark/scripts/precision_plan.py 234a235cd230f70ce95ac303cc4f77b1a19ee11b5443c73a0f5d6bd8e8089ec7.\n- [ ] Read only the self-test code and the comparison it guards in each script. Check that the self-test uses a real rejecting mutation with a deliberately wrong expected reason.\n- [ ] Revert-proof probes in temp copies outside the repository, at least 2 per script, different from #412's probes (#412 used `assert True` and `if False:`). Examples: compare only a prefix of the reason; catch and ignore the self-test exception; return early from the self-test. Each must make `--check` exit nonzero, or report it as a finding. Restore and confirm exit 0. Report commands and exit codes.\n- [ ] Confirm only the 2 scripts changed in a564d42 relative to its parent (read-only `git show --stat`), and that no other mutation count dropped.\n- [ ] End with `verdict: accept` or `verdict: revise` and numbered findings (blocking / non-blocking). Name your actual model family.\n- [ ] Change no repository files.\n\n## Verification\n`python3 -I -B benchmark/scripts/precision_plan.py --check`\n\n## Context\n- Fix evidence: .session/history/sessions/412/ report, or snapshot .github/loop/data/session-reports/412/689422a3....json.\n- Pattern accepted earlier: benchmark/scripts/runner_contract.py (fix #364, review #369).\n- change_cases.py --check needs LABVIEW_ENVIRONMENT=/resources/environment for source pins; run it with the environment.\n- Spec, hashes of spec/plan files and all other probes passed in #408/#409; do not repeat them.\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Do not open development case JSON files, benchmark/lineage.json or benchmark/results/challenges.json. Do not read whole VI binaries.",
+  "pass": 1,
+  "issue": 415
+ }
+]
