@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-420-review-reason-controls-418",
+  "title": "Independently review the fix for the two reason-check bypasses of review #415 (change_cases.py, precision_plan.py)",
+  "role": "reviewer",
+  "effort": "medium",
+  "start_branch": null,
+  "blocked_by": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview #415 found two blocking bypasses in the reason self-tests of benchmark/scripts/change_cases.py and benchmark/scripts/precision_plan.py: (1) a first-character reason comparison still passes; (2) a return before the self-test still passes. Task #418 applied the Policymaker fix (merged 8082a18). Give an independent verdict on these two findings only. Expected gain: an accepted fix lets the next Policymaker pin change-cases under tasks and precision under baseline, then file the method-acceptance question. The next Policymaker reads `verdict:` and the numbered findings in your report.\n\n## Acceptance\n- [ ] Write a marked .session/report.md in your first turns; update it before Finish.\n- [ ] Confirm SHA256 on main: change_cases.py 657f7fec440790b2f73b9ada4a52dd7cff58da11b5559b3235aedf8dc03668d6, precision_plan.py 0bcc765aba2fbbbb76203fb07a749fe8a72fe71f3c6ef179f3f9df97201e8ec3 (python3 -I).\n- [ ] Read only the self-test and caller code of both scripts. In a temporary copy (never in the repository), apply at least these revert probes per script and record the exit code and diagnostic: (a) compare only the first character of the reason; (b) compare a prefix of the reason; (c) return before the reason self-test runs; (d) combine an early return with removal of the completed-count check at the caller, and record whether the combined bypass passes. Probes (a)-(c) must exit nonzero for the intended reason. Removing the count check alone need not fail while all controls still execute. Assess the combined bypass against #415 without adding an automatic requirement to detect every coordinated code change.\n- [ ] Run both --check commands unchanged; change_cases.py without LABVIEW_ENVIRONMENT. State that source-pin verification is skipped if the mount is absent; a missing source is not mutation detection.\n- [ ] Write `verdict: accept` or `verdict: revise`, numbered findings (blocking or not), and the model family you actually ran as (the fix author is the Policymaker, Claude family).\n- [ ] Change no repository files. Do not commit.\n\n## Verification\n`python3 -I -B benchmark/scripts/precision_plan.py --check`\n\n## Context\n- Review #415: .session/history/sessions/415/45abdf6845707de2f731a2b2cd1d2f919034aa1edd9cb7afbf3141e24ab6575b.md (if present; else the two findings above are complete).\n- execution/scripts/fix_reason_controls_415.py is deleted after landing; read the code on main instead.\n- Do not repeat spec or plan reviews #408/#409; they stay accepted.\n\n## Budget\nAt most 20 tool calls and 250k input tokens. Do not open case JSON, lineage.json, challenge results or spec JSON bodies.",
+  "pass": 1,
+  "issue": 421
+ }
+]
