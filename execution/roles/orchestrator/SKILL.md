@@ -56,9 +56,7 @@ For this LabVIEW loop, read `docs/perpetua/roles.md` before shaping the first it
 or changing the research/benchmark/implementation sequence. It maps available roles,
 prepared tools and the prerequisite evidence for product implementation. Read
 `docs/perpetua/evaluation.md` for the authoritative readiness contract. Start with
-the proof of concept required in `goal/goal.md`; defer benchmark work that is not
-needed to deliver it. After delivery, resume source/coverage investigation and
-benchmark preparation with independent expected
+source/coverage investigation and benchmark preparation with independent expected
 answers. Plan preparation and independent review before product work; cite the reviewed protocol/tree and the
 owner acceptance before issuing an implementation task. A missing prerequisite is work
 to resolve, not a reason to invent a readiness pass. Independent review of product or
