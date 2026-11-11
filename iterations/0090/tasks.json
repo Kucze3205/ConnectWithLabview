@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-464-poc-vi-diagram-feasibility",
+  "title": "POC step 1: decode one public VI block diagram without LabVIEW and locate an editable logic change",
+  "role": "researcher",
+  "effort": "high",
+  "body": "## Goal\nThe goal now requires a proof of concept (POC) before more benchmark work: an agent that never saw a VI describes its diagram and changes its logic without LabVIEW; the result opens in LabVIEW without a broken arrow, behaves as asked and keeps its save version. This task is step 1: measure whether the diagram of one small public VI can be decoded and changed from its bytes alone. Expected gain: a measured yes/no/partial with evidence, so the next session can order the edit tool or report the POC exits.\n\n## Work\n1. Pick ONE small public VI from the prepared sources under $LABVIEW_ENVIRONMENT (for example a pylavi test VI with a simple arithmetic diagram). Record path, sha256 and save version (LVSR/vers resource).\n2. Write a stdlib python3 script docs/research/poc/inspect_vi.py that lists the RSRC resources and tries to decode the block diagram heap (BDHx / compressed heap) into nodes, primitives, constants and wires. Reuse findings in docs/research/0002-delivery.md and any existing benchmark/ parsers; read them, do not edit benchmark/.\n3. Write docs/research/poc/README.md: the decoded diagram description, which parts were decoded and which were not, one concrete candidate logic change (for example Add -> Subtract, or a constant value), the bytes that must change, the checksums or sizes that must be kept consistent, and the risk that LabVIEW shows a broken arrow.\n4. End README.md with a line `poc-feasibility: yes|partial|no` and the evidence for it. Do not claim LabVIEW behaviour you did not observe: no LabVIEW is available, so opening in LabVIEW stays an owner check.\n\n## Acceptance\n- [ ] docs/research/poc/README.md exists with the selected VI, sha256, save version, decoded description and the poc-feasibility line.\n- [ ] docs/research/poc/inspect_vi.py runs with python3 -I on the selected VI.\n- [ ] Undecoded parts are listed as explicit gaps.\n\n## Verification\n`python3 -c \"import sys; sys.exit('poc-feasibility:' not in open('docs/research/poc/README.md').read())\"`\n\n## Context\n- docs/research/0002-delivery.md: earlier format and effort research.\n- benchmark/dev/ and benchmark/native/readiness-case.json: public VIs already described (empty_separate_code.vi, pylavi tests).\n- Do not run git commit; the parent commits. Do not use git diff in checks.\n\n## Budget\n- Bounded reads: never print a whole VI or a large JSON file; read at most 2,000 lines per file. Stay below 400k input tokens. Write README.md early and update it.",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 120,
+   "max_turns": 80
+  },
+  "exports": [],
+  "pass": 1,
+  "issue": 465
+ }
+]
