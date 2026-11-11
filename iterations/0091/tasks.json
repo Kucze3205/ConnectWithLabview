@@ -1,0 +1,18 @@
+[
+ {
+  "id": "order-467-poc-heap-decode-step2",
+  "title": "POC step 2: decode the BDHb heap of pylavi add.vi into a tag tree and locate one editable logic field",
+  "role": "researcher",
+  "effort": "high",
+  "body": "## Goal\nThe goal requires a proof of concept (POC) before more benchmark work: an agent that never saw a VI describes its diagram and changes its logic without LabVIEW. Step 1 (#465, saved on this branch) measured that `pylavi/tests/add.vi` (sha256 cf4b1f56...) has a zlib BDHb payload of 842 bytes, readable without LabVIEW, but did not decode it; it ended partial on input_budget (864k input in 15 turns). Expected gain: a decoded heap tag tree and one concrete candidate byte change (primitive id or constant value), so the next session can order the edit step or report POC exits. Check: README line `heap-decode: yes|partial|no`.\n\n## Work\n1. Read docs/research/poc/README.md (on this branch). Do not repeat the step 1 container measurements.\n2. Write stdlib `docs/research/poc/inspect_vi.py` (python3 -I, path as argument): parse RSRC, decompress BDHb (offset 4 inside payload), then parse the heap after its UInt32 length as a stream of entries. Hypothesis to test: each entry starts with a 16-bit header encoding entry scope (open/close/leaf), tag id and attribute count/size, as in the published LabVIEW heap format notes (pylabview `LVheap`). Report the parse as an indented tag tree; stop and record where the parse fails.\n3. Run the same parser on 2-3 other small pylavi test VIs (for example empty_separate_code.vi) and compare: tags present only in add.vi are diagram-node candidates.\n4. Update README.md: decoded tree summary (at most 60 lines), which tags are identified with evidence, explicit gaps, one candidate logic change with exact offsets inside the decompressed heap, and what must be re-encoded (zlib, Adler-32, BDHb length, RSRC offsets). End with `heap-decode: yes|partial|no` and evidence. Keep the `poc-feasibility:` line and update it.\n\n## Acceptance\n- [ ] inspect_vi.py runs with python3 -I on add.vi and prints a tag tree or a stated parse-failure offset.\n- [ ] README.md has `heap-decode:` and `poc-feasibility:` lines with evidence; undecoded parts listed as gaps.\n- [ ] No LabVIEW behaviour is claimed; opening in LabVIEW stays an owner check.\n\n## Verification\n`python3 -c \"import sys; t=open('docs/research/poc/README.md').read(); sys.exit(not ('heap-decode:' in t and 'poc-feasibility:' in t))\"`\n\n## Context\n- docs/research/poc/README.md: step 1 results and container offsets.\n- benchmark/scripts/sources.py::save_version and $LABVIEW_ENVIRONMENT/pylavi/pylavi/file.py: RSRC parsing to reuse (read, do not edit benchmark/).\n- Do not run git commit; the parent commits. Do not use git diff in checks.\n\n## Budget\n- Stay below 350k input tokens. Step 1 spent 864k: avoid large reads.\n- Never print more than 128 bytes of hex or 80 lines of output per command; write long output to a file under docs/research/poc/ and read slices.\n- Do not read docs/research/0002-delivery.md in full (grep it). Do not read whole benchmark JSON files.\n- Write README.md early (after the first parser run) and update it.",
+  "blocked_by": [],
+  "start_branch": "task/465",
+  "limits": {
+   "timeout_minutes": 120,
+   "max_turns": 60
+  },
+  "exports": [],
+  "pass": 1,
+  "issue": 468
+ }
+]
