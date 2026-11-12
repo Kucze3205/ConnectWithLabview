@@ -137,3 +137,87 @@ class AdapterTest(unittest.TestCase):
             with self.assertRaises(adapter.Failure) as error:
                 adapter.parse_action('codex', text)
             self.assertNotIn(text, str(error.exception))
+
+
+class CodexThreadTest(unittest.TestCase):
+    """Codex keys its prompt cache by thread: a session keeps one thread and sends only new blocks."""
+
+    def setUp(self):
+        adapter.CODEX_THREADS.clear()
+        self.addCleanup(adapter.CODEX_THREADS.clear)
+        self.action = {field: '' for field in FIELDS}
+        self.action.update(tool='Finish', status='done')
+        self.threads = 0
+        self.resume_error = False
+        self.turn_status = 'completed'
+
+    def send(self, layout, total):
+        rpc = FakeRPC()
+        def call(method, params):
+            rpc.calls.append((method, params))
+            if method == 'thread/start':
+                self.threads += 1
+                return {'thread': {'id': 'thread-%s' % self.threads}}
+            if method == 'thread/resume' and self.resume_error:
+                return {'rpc_error': {'code': -32600, 'message': 'no rollout found'}}
+            return {}
+        rpc.call = call
+        rpc.notifications = [
+            {'method': 'thread/tokenUsage/updated', 'params': {'tokenUsage': {'total': total}}},
+            {'method': 'item/completed', 'params': {'item': {'type': 'agentMessage', 'text': json.dumps(self.action)}}},
+            {'method': 'turn/completed', 'params': {'turn': {'status': self.turn_status}}}]
+        @contextmanager
+        def isolated(*args):
+            yield Path('.'), {}, rpc
+        metadata = {}
+        with patch.object(adapter, 'isolated', isolated):
+            adapter.request('codex', 'model', 'access-only', 'whole', metadata=metadata, layout=layout)
+        texts = [[item['text'] for item in params['input']] for method, params in rpc.calls if method == 'turn/start']
+        return [method for method, _ in rpc.calls], texts[0], metadata['usage']
+
+    def test_a_later_turn_resumes_the_thread_with_only_its_new_blocks_and_counts_only_its_own_tokens(self):
+        methods, texts, used = self.send(('system', ['b0']), {'inputTokens': 100, 'cachedInputTokens': 0})
+        self.assertEqual((methods, texts, used['in']), (['thread/start', 'turn/start'], ['system', 'b0'], 100))
+        methods, texts, used = self.send(('system', ['b0', 'b1']), {'inputTokens': 210, 'cachedInputTokens': 99})
+        self.assertEqual(methods, ['thread/resume', 'turn/start'])
+        self.assertEqual(texts, ['b1'])
+        self.assertEqual((used['in'], used['cache_read']), (110, 99))
+        self.assertEqual(self.threads, 1)
+
+    def test_a_changed_history_or_system_text_starts_a_new_thread_with_everything(self):
+        self.send(('system', ['b0']), {'inputTokens': 100})
+        methods, texts, _ = self.send(('system', ['other', 'b1']), {'inputTokens': 50})
+        self.assertEqual((methods[0], texts), ('thread/start', ['system', 'other', 'b1']))
+        methods, texts, _ = self.send(('new system', ['other', 'b1', 'b2']), {'inputTokens': 50})
+        self.assertEqual((methods[0], texts), ('thread/start', ['new system', 'other', 'b1', 'b2']))
+
+    def test_a_failed_resume_falls_back_to_a_new_thread(self):
+        self.send(('system', ['b0']), {'inputTokens': 100})
+        self.resume_error = True
+        methods, texts, used = self.send(('system', ['b0', 'b1']), {'inputTokens': 120})
+        self.assertEqual(methods, ['thread/resume', 'thread/start', 'turn/start'])
+        self.assertEqual((texts, used['in']), (['system', 'b0', 'b1'], 120))
+
+    def test_a_failed_turn_leaves_no_thread_to_resume(self):
+        self.turn_status = 'failed'
+        with self.assertRaises(adapter.Failure):
+            self.send(('system', ['b0']), {'inputTokens': 100})
+        self.assertEqual(adapter.CODEX_THREADS, {})
+        self.turn_status = 'completed'
+        methods, _, _ = self.send(('system', ['b0', 'b1']), {'inputTokens': 100})
+        self.assertEqual(methods[0], 'thread/start')
+
+    def test_without_a_layout_codex_keeps_one_ephemeral_thread_per_request(self):
+        rpc = FakeRPC()
+        rpc.call = lambda method, params: (rpc.calls.append((method, params)) or
+                                           ({'thread': {'id': 't'}} if method == 'thread/start' else {}))
+        rpc.notifications = [
+            {'method': 'item/completed', 'params': {'item': {'type': 'agentMessage', 'text': json.dumps(self.action)}}},
+            {'method': 'turn/completed', 'params': {'turn': {'status': 'completed'}}}]
+        @contextmanager
+        def isolated(*args):
+            yield Path('.'), {}, rpc
+        with patch.object(adapter, 'isolated', isolated):
+            adapter.request('codex', 'model', 'access-only', 'whole')
+        self.assertTrue(rpc.calls[0][1]['ephemeral'])
+        self.assertEqual(adapter.CODEX_THREADS, {})

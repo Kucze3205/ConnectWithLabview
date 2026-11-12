@@ -52,7 +52,8 @@ def classify_result(provider, output, returncode, now=None):
     # A generic HTTP 429 may be burst throttling, not exhausted subscription.
     elif re.search(r"hit your .{0,40}limit|usage_limit_reached|quota.exceeded|insufficient_quota|premium requests.*exhaust", text):
         status, reason = "quota", "subscription_exhausted"
-        if re.search(r"model[ _-]quota|model.{0,40}limit.{0,20}reached", text):
+        # Fable has its own weekly limit (owner note 9 Nov 2026): it blocks Fable, not Opus or Sonnet.
+        if re.search(r"model[ _-]quota|model.{0,40}limit.{0,20}reached|fable[\w\s-]{0,30}limit|limit[\w\s-]{0,30}fable", text):
             scope = "model"
     elif re.search(r"\b429\b|too many requests|rate[ _-]limit", text):
         status, reason = "throttled", "request_throttled"
@@ -64,6 +65,13 @@ def classify_result(provider, output, returncode, now=None):
     elif re.search(r"\b403\b|forbidden", text):
         reason = "access_denied_unspecified"
     report = {"status": status, "reason": reason, "scope": scope}
+    if status == "quota":
+        # Which limit ran out, from a fixed vocabulary (never the provider's text): the owner can tell a shared
+        # 5-hour window from a weekly or model limit (the 9 Nov 2026 stop could not be explained without it).
+        report["limit"] = next((kind for kind, pattern in (("fable", r"fable[\w\s-]{0,30}limit|limit[\w\s-]{0,30}fable"),
+                                                           ("weekly", r"weekly|7[ -]day"),
+                                                           ("session", r"5[ -]hour|session limit|five[ -]hour"))
+                                if re.search(pattern, text)), "unspecified")
     # Preserve only an explicit, future machine-readable reset. A retry delay
     # and a subscription reset are different facts; never infer one from the other.
     observed = now or datetime.now(timezone.utc)

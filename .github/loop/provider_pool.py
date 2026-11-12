@@ -73,9 +73,14 @@ def _error(error):
     return error
 
 
+LIMITS = {"fable", "weekly", "session", "unspecified"}   # which subscription limit a quota hit names (cloud_probe)
+
+
 def _record(owner, record):
-    if not isinstance(record, dict) or set(record) - {"status", "observed_at", "retry_after", "attempts", "error"}:
+    if not isinstance(record, dict) or set(record) - {"status", "observed_at", "retry_after", "attempts", "error", "limit"}:
         raise ValueError("invalid availability record")
+    if "limit" in record and record["limit"] not in LIMITS:
+        raise ValueError("invalid availability limit")
     if "error" in record:
         _error(record["error"])
     if not isinstance(record.get("status"), str) or record["status"] not in STATUSES:
@@ -177,7 +182,7 @@ def select_candidate(owner, policy, state, task, now):
     return {"action": "blocked", "reason": reason, "reasons": reasons}
 
 
-def record_outcome(owner, state, provider, model, status, now, retry_after=None, scope="model", error=None):
+def record_outcome(owner, state, provider, model, status, now, retry_after=None, scope="model", error=None, limit=None):
     """Return a copied state with an adapter observation and bounded retry delay.
 
     Adapters must explicitly report whether exhaustion covers a model or provider.
@@ -208,5 +213,7 @@ def record_outcome(owner, state, provider, model, status, now, retry_after=None,
         record["retry_after"] = _iso(now + timedelta(seconds=_delay(owner, attempts)))
     if error is not None:
         record["error"] = _error(error)
+    if status == "quota" and limit in LIMITS:
+        record["limit"] = limit
     target[key] = record
     return result
