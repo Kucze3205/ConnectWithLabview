@@ -19,6 +19,9 @@ from tool_broker import ACTION_SCHEMA, validate
 LOCAL_ERRORS = (OSError, ValueError, TypeError)   # our code or host, not the provider
 LOCAL_ATTEMPTS = 3                                # consecutive local errors (kept in the session state) that crash it
 LONG_COOLDOWN = 30 * 60                           # a longer wait is first checked with a probe
+# One model request. 180 s cut off Fable on a ~130k-token Policymaker prompt at high effort (session #461), and the
+# timeout then blocked the whole provider, so the session fell to Codex. A timeout is the model's, not the provider's.
+REQUEST_SECONDS = 600
 
 
 def now():
@@ -128,7 +131,7 @@ class Runtime:
             document["availability"] = pool.record_outcome(
                 self.owner, document.get("availability", {}), **candidate,
                 status=result["status"], now=observed, scope=result.get("scope", "model"),
-                retry_after=result.get("retry_after"), error=error)
+                retry_after=result.get("retry_after"), error=error, limit=result.get("limit"))
             return document
         self.store.update("pool.json", change)
 
@@ -215,7 +218,7 @@ class Runtime:
                 if not credential:
                     raise Failure({"status": "auth_failure", "scope": "provider", "reason": "missing_secret"})
                 action = validate(self.request(provider, candidate["model"], credential, prompt,
-                                               effort=self.effort, timeout=min(180, remaining), metadata=metadata,
+                                               effort=self.effort, timeout=min(REQUEST_SECONDS, remaining), metadata=metadata,
                                                layout=layout))
             except Failure as error:
                 self.usage(state, candidate, metadata, request_bytes)
@@ -226,7 +229,9 @@ class Runtime:
                 if isinstance(exc, OSError) and exc.errno:
                     error["errno"] = exc.errno
                 if not isinstance(exc, LOCAL_ERRORS):
-                    self.observe(candidate, {"status": "unknown", "scope": "provider"}, observed, error)
+                    # A slow model says nothing about its provider's other models: the next candidate may answer.
+                    scope = "model" if isinstance(exc, subprocess.TimeoutExpired) else "provider"
+                    self.observe(candidate, {"status": "unknown", "scope": scope}, observed, error)
                     continue
                 # A fault on our side says nothing about the provider: a short fixed wait, and only a few tries.
                 state["local_errors"] = state.get("local_errors", 0) + 1

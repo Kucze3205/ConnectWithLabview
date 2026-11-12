@@ -6,6 +6,7 @@ Catalogs are observations, not automatic permission to select newly added models
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from functools import lru_cache
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -60,10 +61,27 @@ def claude_directory():
     return tempfile.TemporaryDirectory(prefix="model-transport-")
 
 
+@lru_cache(maxsize=1)
+def codex_directory():
+    # Private to this process, and alive as long as it. Holds the rollouts of the threads in CODEX_THREADS,
+    # so a later request can resume one. Login tokens stay ephemeral (in memory); nothing here is a credential.
+    return tempfile.TemporaryDirectory(prefix="model-transport-")
+
+
+# One live Codex conversation per (model, stable system text) in this process. Codex keys its prompt cache by
+# thread: a new thread per request re-sends the whole history uncached (sessions #455, #458, #461: 0-2% cache
+# reads), while a resumed thread reads ~99% of its earlier turns from the cache (measured 11 Nov 2026).
+CODEX_THREADS = {}
+
+
 @contextmanager
-def scratch(provider):
+def scratch(provider, keep=False):
     """An empty directory for one request. The Claude CLI writes its working directory into the system prompt,
-    so a new path per request would miss the prompt cache from there on: Claude gets the same path each time."""
+    so a new path per request would miss the prompt cache from there on: Claude gets the same path each time.
+    `keep`: Codex with a resumable thread gets one directory per process, kept between requests."""
+    if provider == "codex" and keep:
+        yield codex_directory().name
+        return
     if provider != "claude":
         with tempfile.TemporaryDirectory(prefix="model-transport-") as directory:
             yield directory
@@ -77,8 +95,8 @@ def scratch(provider):
 
 
 @contextmanager
-def isolated(provider, credential, timeout):
-    with scratch(provider) as directory:
+def isolated(provider, credential, timeout, keep=False):
+    with scratch(provider, keep) as directory:
         root = Path(directory)
         env = {k: os.environ[k] for k in ("PATH", "LANG", "SSL_CERT_FILE", "SSL_CERT_DIR",
                                         "HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY") if k in os.environ}
@@ -209,9 +227,11 @@ def result_event(stdout):
 
 def request(provider, model, credential, prompt, effort="medium", timeout=180, metadata=None, layout=None):
     """`prompt` is the whole request as one text. `layout` is the same request as (stable system text, list of
-    blocks), which only Claude uses: the prompt cache hits on block boundaries, so each new turn is a new block."""
+    blocks): Claude's prompt cache hits on block boundaries, so each new turn is a new block; Codex sends the
+    blocks into one resumed thread, only those it has not sent yet (codex_input)."""
     metadata = metadata if metadata is not None else {}
-    with isolated(provider, credential, timeout) as (root, env, rpc):
+    conversation = None
+    with isolated(provider, credential, timeout, provider == "codex" and layout is not None) as (root, env, rpc):
         if provider == "claude":
             # The prompt goes through a file and stdin: one argv entry is limited to 128 KiB (E2BIG)
             # and the prompt can be larger.
@@ -239,11 +259,14 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             structured = output.get("structured_output")
             return validate(structured) if isinstance(structured, dict) else parse_action(provider, output.get("result", ""))
         if provider == "codex":
-            started = checked(provider, rpc.call("thread/start", {"model": model, "cwd": str(root),
-                                      "approvalPolicy": "never", "sandbox": "read-only", "ephemeral": True}))
-            thread = started["thread"]["id"]
+            if layout is None:
+                started = checked(provider, rpc.call("thread/start", {"model": model, "cwd": str(root),
+                                          "approvalPolicy": "never", "sandbox": "read-only", "ephemeral": True}))
+                thread, texts = started["thread"]["id"], [prompt]
+            else:
+                conversation, thread, texts = codex_input(provider, rpc, model, root, layout)
             checked(provider, rpc.call("turn/start", {"threadId": thread, "model": model, "effort": effort,
-                     "approvalPolicy": "never", "input": [{"type": "text", "text": prompt}],
+                     "approvalPolicy": "never", "input": [{"type": "text", "text": text} for text in texts],
                      "outputSchema": ACTION_SCHEMA}))
         else:
             params = {"availableTools": [], "tools": [],
@@ -278,8 +301,13 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             method = event.get("method")
             if provider == "codex":
                 if method == 'thread/tokenUsage/updated':
-                    metadata['usage'] = usage((params.get('tokenUsage') or {}).get('total') or {},
-                                              ('inputTokens', 'outputTokens', 'cachedInputTokens', 'cacheWriteInputTokens'))
+                    total = usage((params.get('tokenUsage') or {}).get('total') or {},
+                                  ('inputTokens', 'outputTokens', 'cachedInputTokens', 'cacheWriteInputTokens'))
+                    # The total covers the whole thread; a resumed thread already reported its earlier turns.
+                    before = (conversation or {}).get('total') or {}
+                    metadata['usage'] = {k: max(0, v - before.get(k, 0)) for k, v in total.items()}
+                    if conversation is not None:
+                        conversation['seen'] = total
                 if method == 'item/started' and params.get('item', {}).get('type') not in {
                     'userMessage', 'agentMessage', 'reasoning', 'contextCompaction'}:
                     raise Failure({'status': 'unknown', 'scope': 'model', 'reason': 'native_request_denied'})
@@ -311,4 +339,37 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
                     raise error
                 if kind == "session.idle":
                     break
-        return parse_action(provider, answer or "")
+        action = parse_action(provider, answer or "")
+        if conversation is not None:
+            # Only a turn that produced an accepted action makes the thread resumable; any failure above
+            # leaves it out of CODEX_THREADS, so the next request starts a new thread with the whole history.
+            CODEX_THREADS[conversation['key']] = {'id': conversation['id'], 'sent': conversation['sent'],
+                                                  'total': conversation.get('seen') or conversation.get('total') or {}}
+        return action
+
+
+def digest(text):
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
+def codex_input(provider, rpc, model, root, layout):
+    """The thread and input texts of one Codex request. A known thread whose sent blocks are a prefix of this
+    request's blocks is resumed with only the new blocks; anything else starts a new, resumable thread with the
+    system text and every block. The record leaves CODEX_THREADS until the turn succeeds (request)."""
+    system, blocks = layout
+    key = digest(model + "\0" + system)
+    sent = [digest(block) for block in blocks]
+    known = CODEX_THREADS.pop(key, None)
+    if known and len(sent) > len(known['sent']) and sent[:len(known['sent'])] == known['sent']:
+        try:
+            checked(provider, rpc.call("thread/resume", {"threadId": known['id'], "model": model, "cwd": str(root),
+                                                         "approvalPolicy": "never", "sandbox": "read-only",
+                                                         "excludeTurns": True}), "thread/resume")
+            conversation = {'key': key, 'id': known['id'], 'sent': sent, 'total': known['total']}
+            return conversation, known['id'], blocks[len(known['sent']):]
+        except Failure:
+            pass        # e.g. the rollout is gone: a new thread costs one uncached request, nothing else
+    started = checked(provider, rpc.call("thread/start", {"model": model, "cwd": str(root),
+                              "approvalPolicy": "never", "sandbox": "read-only", "ephemeral": False}))
+    thread = started["thread"]["id"]
+    return {'key': key, 'id': thread, 'sent': sent, 'total': {}}, thread, ([system] if system else []) + blocks

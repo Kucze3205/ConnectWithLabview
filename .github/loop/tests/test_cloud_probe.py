@@ -114,3 +114,19 @@ class ClassifyTest(unittest.TestCase):
             for secret in ("GITHUB_TOKEN", "CREDENTIAL_STORE_TOKEN", "CODEX_AUTH_JSON", "CLAUDE_CODE_OAUTH_TOKEN"):
                 self.assertNotIn(secret, env)
             self.assertTrue(credential_store.auth_file(home).exists())
+
+
+class LimitKindTest(unittest.TestCase):
+    def test_a_fable_limit_blocks_only_fable_and_names_the_limit(self):
+        result = classify_result("claude", "You've hit your Fable weekly limit · resets Mon", 1)
+        self.assertEqual((result["status"], result["scope"], result["limit"]), ("quota", "model", "fable"))
+
+    def test_a_shared_limit_still_blocks_the_provider_even_when_the_model_is_fable(self):
+        result = classify_result("claude", '{"model": "claude-fable-5-1", "text": "You\'ve hit your 5-hour limit"}', 1)
+        self.assertEqual((result["status"], result["scope"], result["limit"]), ("quota", "provider", "session"))
+        result = classify_result("claude", "You've hit your weekly limit", 1)
+        self.assertEqual((result["scope"], result["limit"]), ("provider", "weekly"))
+        self.assertEqual(classify_result("codex", "usage_limit_reached", 1)["limit"], "unspecified")
+
+    def test_only_a_quota_names_a_limit(self):
+        self.assertNotIn("limit", classify_result("claude", "HTTP 429 rate limit", 1))

@@ -25,6 +25,7 @@ import session_startup
 
 MAP = "loop:map"
 ROLLBACKS = ".github/loop/data/rollbacks.json"   # the latest rollback and how many came in a row to the same state
+OWNER_POLICY_TAG = "owner-policy"                 # the owner's newest accepted policy/ state: a rollback floor
 VERDICT_BYTES = 64 * 1024        # what the engine reads of a tokenless job's output
 STATE_MARK = "<!-- input-state -->"
 ORDERS_MARK = "<!-- policymaker-orders -->"
@@ -1000,6 +1001,11 @@ def revert_policy(why):
     if not target:
         r = c.git(".", "rev-list", "-n", "1", "setup-baseline", check=False)
         target = r.stdout.strip()
+    # The owner's own policy edits outlive a rollback once the owner tags them `owner-policy`: the engine never
+    # returns to a state older than that tag (rollbacks of 9 and 11 Nov 2026 erased the owner's routing and shaper).
+    owner = c.git(".", "rev-list", "-n", "1", OWNER_POLICY_TAG, check=False).stdout.strip()
+    if owner and (not target or c.git(".", "merge-base", "--is-ancestor", target, owner, check=False).returncode == 0):
+        target = owner
     if not target:
         c.open_outage("cannot roll back policy/", "Nothing to return to: no closed iteration and no `setup-baseline` tag. Reason: %s." % why,
                       "Restore `policy/` by hand to a state you trust.")

@@ -145,6 +145,31 @@ class ActivationTest(LayeredSessionCase):
         self.assertEqual(self.w.origin_file('src/preserved.txt'), 'product')
         self.assertEqual(self.w.origin_file('iterations/reports/latest.json'), '{}')
 
+    def test_a_rollback_never_returns_past_the_owner_policy_tag(self):
+        n = self.replacement()
+        loop.apply_policy()
+        c.sync_main()
+        good = c.head()
+        self.w.push_main({'iterations/0000.json': json.dumps({'iteration': 0, 'status': 'closed',
+                          'policy': {'commit_end': good}}),
+                          'policy/params.yml': fakes.POLICY_PARAMS.replace('orchestrator', 'owner-choice')})
+        c.sync_main()
+        fakes.sh(self.w.loop, 'git', 'tag', '-f', it.OWNER_POLICY_TAG)
+        self.w.push_main({'policy/params.yml': fakes.POLICY_PARAMS.replace('orchestrator', 'bad')})
+        c.sync_main()
+        self.assertTrue(it.revert_policy('owner floor'))
+        self.assertIn('shaper: owner-choice', self.w.origin_file('policy/params.yml'))
+        # A tag older than the last closed iteration is no floor: the last good state wins.
+        self.w.push_main({'policy/params.yml': fakes.POLICY_PARAMS.replace('orchestrator', 'closed-later')})
+        c.sync_main()
+        closed = c.head()
+        self.w.push_main({'iterations/0001.json': json.dumps({'iteration': 1, 'status': 'closed',
+                          'policy': {'commit_end': closed}}),
+                          'policy/params.yml': fakes.POLICY_PARAMS.replace('orchestrator', 'bad-again')})
+        c.sync_main()
+        self.assertTrue(it.revert_policy('last good after the tag'))
+        self.assertIn('shaper: closed-later', self.w.origin_file('policy/params.yml'))
+
 
     def test_non_boundary_merge_cannot_activate_policymaker_changes(self):
         n = self.replacement()

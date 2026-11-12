@@ -234,3 +234,23 @@ class RuntimeTest(unittest.TestCase):
         result = self.runtime(request).run(5, 30)
         self.assertEqual(result['usage']['claude/allowed']['in'], 10)
         self.assertEqual(result['usage']['codex/allowed']['out'], 2)
+
+    def test_a_timed_out_model_hands_over_to_the_next_model_of_the_same_provider(self):
+        import subprocess
+        self.owner['providers']['claude']['models'] = ['slow', 'fast']
+        self.policy = {'tasks': {'build': [{'provider': 'claude', 'model': 'slow'},
+                                           {'provider': 'claude', 'model': 'fast'},
+                                           {'provider': 'codex', 'model': 'allowed'}]}}
+        calls = []
+        def request(provider, model, credential, prompt, **kwargs):
+            calls.append((model, kwargs['timeout']))
+            if model == 'slow':
+                raise subprocess.TimeoutExpired(['claude'], kwargs['timeout'])
+            return action('Finish', status='done')
+        result = self.runtime(request).run(5, 3600)
+        self.assertEqual(result['status'], 'done')
+        self.assertEqual([model for model, _ in calls], ['slow', 'fast'])
+        self.assertGreater(calls[0][1], 180)
+        availability = self.store.read('pool.json')['availability']
+        self.assertEqual(availability['models']['claude']['slow']['status'], 'unknown')
+        self.assertNotIn('claude', availability.get('providers', {}))
