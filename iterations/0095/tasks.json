@@ -1,0 +1,26 @@
+[
+ {
+  "id": "review-writing-method",
+  "title": "Independently review the pinned writing-method extension from #481",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "body": "## Goal\nReport, do not fix. Independently review #481's writing-method extension against the writing goal, existing protocol and authoritative readiness contract. Expected gain: an evidenced pass/revise/blocked recommendation for this scoped design, with precise actionable findings and remaining native/resource gaps. This is neither overall benchmark readiness nor owner method acceptance. No session can run LabVIEW. Do not implement a writer, runner, evaluator or product, edit reviewed files, or request owner acceptance.\n## Acceptance\n- [ ] Pin and report the baseline commit 486030b461e57ca0f322a17a5b7853e83e9655e3 / tree cf75cf6892de2f9410fa09ee2589dcba47d825a4 and candidate commit 7435c05c4fd7ddbaafb6f5db9081ad5a4f5db427; resolve and report the candidate tree with git. Review exactly the six benchmark/writing files from #481, checking their hashes against its report and input-pins.json against original baseline bytes. Report missing or mismatched inputs explicitly; do not silently substitute another snapshot.\n- [ ] Give separate Standards and Spec assessments with source anchors. Trace inherited E1–E8 and new W1–W8 to the original requirements, including creation/modification, intended semantic delta, unrelated-content preservation, per-file save version, compiled-source/rebuild linkage and uncovered families/versions. Inspect WC1, WM1, WM2 and WB1; distinguish request-derived expectations from independently established native keys and identify whether eligibility correctly excludes unavailable evidence.\n- [ ] Assess separate artifact fidelity, answer correctness, source support and native outcomes; paired-arm comparability, frozen keys, lineage/isolation, planned and failed attempt accounting, fixed denominators and missing-pair treatment. Verify that public development examples, synthetic consistency and owner silence cannot become native success, withheld evidence, readiness or method acceptance.\n- [ ] Run the existing verification command and inspect verify_method.py, controls.json and verification.json rather than relying on the author's green result. Attempt at least two independently devised, bounded in-memory counterexamples targeting false acceptance or missing obligations beyond the author's named mutations; record exact inputs, expected/actual outcomes and limitations in the report or session artifacts. Do not modify candidate files. Passing synthetic controls proves only bounded design consistency.\n- [ ] Report findings by severity with exact file/requirement anchors, evidence and smallest corrective next step; state a scoped pass/revise/blocked recommendation and remaining blockers even if no defect is found. Preserve original protocol/index/status and all repository bytes. Parent commits; no git commit.\n## Verification\npython3 -I benchmark/writing/verify_method.py\n## Context\n- .session/reports/481.json (stage via exports if absent): author report, baseline identities and six output hashes; claims require independent inspection.\n- benchmark/writing/README.md: unreviewed extension and explicit native gaps; method.json, controls.json, verify_method.py, verification.json and input-pins.json are the candidate review surface.\n- docs/perpetua/evaluation.md and docs/perpetua/roles.md: readiness, independence and owner-acceptance requirements.\n- goal/goal.md: full artifact/version scope and writing obligations.\n## Budget\nRead goal/goal.md writing and agreed-success sections; docs/perpetua/evaluation.md; docs/perpetua/roles.md; the six benchmark/writing files; benchmark/protocol.md; benchmark/change-cases/README.md, typedef-impact.spec.json and diagram-difference.spec.json; benchmark/baseline/runner-contract.md; benchmark/precision/README.md; docs/research/poc/delivery.md; #481 report via .session/exports/manifest.json. Inspect pin entries and source excerpts with bounded Python output, never dump whole large JSON or inventory the repository. Allow at most six additional directly referenced source sections where necessary to resolve a concrete finding. Limit command output to concise assertions/counterexample results. Stop exploration early enough to deliver the review. Do not repeat POC reverse engineering, corpus searches or global gap maps. Engine reruns lack LABVIEW_ENVIRONMENT and session artifacts; the verification command must remain offline and read-only.\n",
+  "blocked_by": [],
+  "start_branch": "main",
+  "limits": {
+   "timeout_minutes": 120,
+   "max_turns": 65
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     481
+    ]
+   }
+  ],
+  "issue": 485
+ }
+]
