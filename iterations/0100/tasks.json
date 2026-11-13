@@ -1,0 +1,26 @@
+[
+ {
+  "id": "wm1-version-evidence",
+  "title": "Measure version declarations in the single pinned WM1 original",
+  "role": "researcher",
+  "model": "default",
+  "effort": "medium",
+  "body": "## Goal\nReport, do not fix. Execute only the ready one-original measurement specified by docs/research/0099-writing-version-effort.json /next_measurement. Expected gain: docs/research/0100-wm1-version-evidence.md and .json replace an unmeasured WM1 input-version question with reproducible raw declarations, their interpretation and remaining authority limits. This does not resolve semantic writing feasibility or support a 2024 fallback. No session can run LabVIEW.\n## Acceptance\n- [ ] Record starting commit/tree, original/parser/method input hashes and prepared-source readiness. Recheck method.json SHA256 8c3b165c33c8fb4944f10a0eaa3c384fcc90d62c3278c0c910a5f2ae8b9d4da1, original SHA256 19b5dcd98b3b2e83e2b533d9227bd07d16837f350243377292b7c0b8a935338c, and pinned pylavi revision 35d2a0318f71dcb87bb9c431dc00700ee6b9fb75 plus file.py/resource_types.py hashes from study S22/S23. On missing input or mismatch, save the exact blocker and stop; never substitute a fixture.\n- [ ] Parse only @environment/actor-framework/Core/ActorFramework/Message Dequeuer/Equals Not A Refnum.vi with the pinned Resources loader. Enumerate every vers and LVSR entry, including duplicate IDs, recording resource ID, length, raw payload/hash, version-field byte offset and raw bytes, matching pinned-class decoding and decoded tuple/value. Preserve absent, malformed or conflicting declarations explicitly. Record the exact repeatable Python invocation and parser source locators; do not infer save format from filename, project version or Header.VERSION.\n- [ ] Separate observed bytes, parser interpretation and authoritative original-save-version evidence. State agreement/disagreement and whether independent save-version confirmation remains unavailable; agreeing fields alone do not establish native compatibility or preservation. Compare the result to WM1's currently unknown original-version requirement without editing it.\n- [ ] Write only docs/research/0100-wm1-version-evidence.md, .json and, if useful, a small replay script under the same prefix. JSON has schema_version 1, status measured or blocked, inputs, entries (an array), conclusion and limitations; blocked outcomes include a nonempty blocker. Keep original, parser, prior studies, POC files and benchmark pins unchanged. Save evidence early. No corpus scan, semantic edit, native execution, benchmark run, source/build search, product/policy/evaluator change, new owner request or git commit. Stop after one record or immediately at pin/parse failure.\n- [ ] Report which exact input uncertainty narrowed and one next action warranted by the evidence, retaining any missing authority. Do not claim a writer, method readiness, fallback decision or product improvement; do not repeat closed synthetic or completion-guard reviews.\n## Verification\npython3 -c \"import json,pathlib; p=pathlib.Path('docs/research/0100-wm1-version-evidence'); d=json.loads(p.with_suffix('.json').read_text()); assert d['schema_version']==1; assert d['status'] in ('measured','blocked'); assert all(d[k] for k in ('inputs','conclusion','limitations')); assert isinstance(d['entries'],list); assert d['status']!='blocked' or d.get('blocker'); assert p.with_suffix('.md').stat().st_size>0\"\nThis checks committed output structure only. Run the actual pinned-source extraction separately while LABVIEW_ENVIRONMENT is available; engine verification has no prepared environment. A blocked record is preserved evidence, not a successful measurement.\n## Context\n- docs/research/0099-writing-version-effort.md and .json: inspected by the shaper; they distinguish decisive semantic/integrity uncertainty from this ready metadata measurement and pin the exact original/parser.\n- .session/reports/501.json via exports: actual accepted report, with output hashes and the missing live-loop-state limitation.\n- journal/working-memory.md: delivered unsuccessful POC, closed reviews and deferred prerequisites.\n- docs/perpetua/roles.md: offline role capability and separation of measurements from implementation.\n## Budget\nRead the two 0099 study outputs, benchmark/writing/method.json only its WM1 original/version requirements, .session/exports/manifest.json and exported #501 report, docs/perpetua/roles.md, and @environment/readiness.json. Inspect only the pinned original and bounded relevant excerpts of @environment/pylavi/pylavi/file.py, resource_types.py and directly required pinned parser definitions. No large JSON dumps, history search, project/corpus enumeration or downloads. Keep command output short; publish the one-record finding early. No live .session/loop-state.json is required: researcher staging previously omitted it, and this measurement uses explicit immutable pins.\n",
+  "blocked_by": [],
+  "start_branch": "main",
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     501
+    ]
+   }
+  ],
+  "issue": 505
+ }
+]
