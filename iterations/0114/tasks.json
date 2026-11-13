@@ -1,0 +1,39 @@
+[
+ {
+  "id": "preserve-wp1-integration-review",
+  "title": "Preserve the independently cleared WP1 integration review and its pinned evidence",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "inputs": [
+   {
+    "issue": 557,
+    "name": "wp1-integration-review.json"
+   },
+   {
+    "issue": 557,
+    "name": "wp1-integration-probes.json"
+   },
+   {
+    "issue": 557,
+    "name": "wp1-integration-probes.py"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     557
+    ]
+   }
+  ],
+  "body": "## Goal\nPreserve #557's exact independent review of #554's WP1 integration as durable benchmark evidence, without repeating the completed review. Expected gain: hash-identical review/probe files and a concise provenance record usable by the next cold session. This is evidence preservation only; no session can run LabVIEW, and scoped CLEAR supplies neither native validity nor method acceptance.\n## Acceptance\n- [ ] Read the staged artifact inputs and exported #557 report using .session/exports/manifest.json. Check the exact review SHA256 1d5af5e7fb6b7ecdf58877a4e30e616a8d4a588d4cf51d4fd68265ddb96bfa3c, probe JSON SHA256 084653d5eb0dbf5f2effed50f1e10132b94e5d3ac82e790b268d57172bcd796d, and probe script SHA256 3890ced11b9144dece07fafbed590188bb78dd759a005c60b910883127fe76eb before copying. Missing or mismatched evidence is a reported blocker, never reconstructed evidence.\n- [ ] Preserve their exact bytes at benchmark/writing/review-0113.json, benchmark/writing/review-0113-probes.json and benchmark/writing/review-0113-probes.py respectively. Do not execute the historical probe script or rewrite embedded historical paths.\n- [ ] Write benchmark/writing/review-0113-provenance.md recording input names, exact hashes and sizes measured from the files, reviewer issue/report identity, reviewed candidate 0e371f84162004146990cb1262b044dd4bf0dd79 / tree 557a725623d04d1df5415751c4079bca056034f3 and baseline 575d59ef8fcaf1f81a81d2eb605f52eb94053839 / tree bd09e3a07e772337a3f045f69611b9f51dd3e227. Validate identities against the actual review and Git objects, compare the seven integration paths listed in integration-0112-provenance.md with the reviewed candidate and distinguish later bookkeeping changes. Report drift without fixing or silently repinning it. Link original embedded probe references to preserved local counterparts through this addendum.\n- [ ] Accurately retain separate Standards/Spec CLEAR for integration preparation only and C1 Low/nonblocking narrative limitation. Note that independent complete keys, native validation, matched allocations/budgets/quota, actual isolation and owner method acceptance remain unresolved. Do not claim trial readiness or product improvement.\n- [ ] Change only the four named new benchmark/writing/review-0113* files. Preserve method/checker/verification/integration provenance, historical proposal/checkers/reviews, original/license and preparation.json. Run the repository verifier once and the preservation verification command; report actual results. Do not replay #557/#547/#541/#493 probes, refresh frozen hashes, request owner work or introduce product code.\n## Verification\npython3 -c \"import hashlib,json,pathlib; p=pathlib.Path('benchmark/writing'); pins={'review-0113.json':'1d5af5e7fb6b7ecdf58877a4e30e616a8d4a588d4cf51d4fd68265ddb96bfa3c','review-0113-probes.json':'084653d5eb0dbf5f2effed50f1e10132b94e5d3ac82e790b268d57172bcd796d','review-0113-probes.py':'3890ced11b9144dece07fafbed590188bb78dd759a005c60b910883127fe76eb'}; assert all(hashlib.sha256((p/n).read_bytes()).hexdigest()==h for n,h in pins.items()); json.loads((p/'review-0113.json').read_text()); json.loads((p/'review-0113-probes.json').read_text()); assert (p/'review-0113-provenance.md').read_text().strip(); print('review preservation pins match')\"\n## Context\n- #557 report, exported explicitly: scoped independent CLEAR, exact artifact identities and recommendation to preserve; report is not an owner method decision.\n- benchmark/writing/integration-0112-provenance.md: integration baseline and allowed output scope.\n- docs/perpetua/evaluation.md and roles.md: durable review supports preparation, without satisfying missing oracle/isolation/native/acceptance prerequisites.\n## Budget\nRead .session/exports/manifest.json, exported #557 report, .session/inputs/557-wp1-integration-review.json, selected identities in .session/inputs/557-wp1-integration-probes.json and script (hash/copy whole bytes, no whole large JSON output); benchmark/writing/integration-0112-provenance.md; docs/perpetua/{evaluation.md,roles.md}. Use short Git identity/diff output and selective inspection of integration provenance if necessary. No whole history records, journal survey, global gap maps or new project/source selection. Keep detailed evidence in the provenance addendum; report early if input pins fail. Parent commits accepted changes. Engine verification cannot read .session artifacts or LABVIEW_ENVIRONMENT; the verification above uses repository files only.",
+  "issue": 561
+ }
+]
