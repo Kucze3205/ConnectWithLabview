@@ -1,0 +1,26 @@
+[
+ {
+  "id": "writing-version-effort",
+  "title": "Reconcile all-version versus LabVIEW 2024 effort with writing and POC evidence",
+  "role": "researcher",
+  "model": "default",
+  "effort": "high",
+  "body": "## Goal\nReport, do not fix tool or benchmark code. Extend the existing read-only compatibility/effort study with creation, modification and source-based rebuilds, using the delivered POC limits and reviewed writing requirements. Expected gain: docs/research/0099-writing-version-effort.md and its evidence JSON tell the next shaper what the old estimate omits, which effort differences can be supported, and the smallest measurement needed to reduce the decisive uncertainty. No session can run LabVIEW. Do not choose the 2024 fallback, reduce artifact scope, implement a writer or claim readiness.\n## Acceptance\n- [ ] Record starting commit/tree and SHA256 of every source actually used. Compare docs/research/0002-delivery.md assumptions with the current goal in .session/loop-state.json, POC delivery/edit-readiness and benchmark/writing requirements. Explicitly identify the old read-only scope and unverified version range; do not silently reuse them as the current full-goal estimate.\n- [ ] Provide a bounded comparison of all versions versus 2024 for reading plus creating/modifying artifacts and rebuilding compiled outputs from sources. Cover native VI/control/type artifacts, XML project/library/class/build definitions, packages/distributions and module/target variants; unavailable evidence remains a visible gap. Separate original save version, editing format and validation runtime, including how same-save-version outputs would be checked. Existing corpus inventory is evidence, not the scope boundary.\n- [ ] Separate observed facts, inherited estimates and new engineering assumptions. For each major cost driver give evidence, units, conditional range where defensible, shared versus version-dependent work, dependencies and uncertainty. Show incremental writing costs separately from read costs and avoid double counting. If totals or a meaningful ratio cannot be justified, state that explicitly with the missing measurement rather than inventing precision. Do not equate identical resource framing with semantic or round-trip compatibility.\n- [ ] Explain the compatibility losses and unresolved costs of the 2024 fallback, including source/build-tool/runtime availability and preserving older originals. Distinguish offline editing feasibility from native compilation/execution. Account for the unsuccessful POC evidence without treating it as impossibility or repeating its corpus search.\n- [ ] End with one smallest ready follow-up measurement and its required inputs, observable result and stop condition; distinguish it from experiments requiring unavailable native capability. Record whether a fallback decision is presently evidence-supported, without selecting it or treating owner silence as acceptance. No broad gap map, new owner request, benchmark execution, product code, protected pin edits or policy/evaluator change.\n- [ ] Write text outputs only under docs/research/: the Markdown report and 0099-writing-version-effort.json containing schema_version 1, sources with paths/SHA256, explicit assumptions, comparison and next_measurement. Keep the historical study and pinned POC/benchmark files unchanged. Parent commits; do not run git commit. Save findings early if evidence is unavailable.\n## Verification\npython3 -c \"import json,pathlib; p=pathlib.Path('docs/research'); d=json.loads((p/'0099-writing-version-effort.json').read_text()); assert d['schema_version']==1; assert all(d[k] for k in ('sources','assumptions','comparison','next_measurement')); assert (p/'0099-writing-version-effort.md').stat().st_size>0\"\n## Context\n- docs/research/0002-delivery.md: its cost table estimates reading, and assumes an unverified historical version range; writing is absent.\n- journal/working-memory.md: unsuccessful bounded POC has been delivered; independent writing review #493 and allocator review #497 are closed within their synthetic scopes.\n- docs/perpetua/evaluation.md and roles.md: full artifact/version scope and separation of preparation from implementation.\n## Budget\nRead .session/loop-state.json goal only, .session/exports/manifest.json and exported #493 report, docs/research/0002-delivery.md, docs/research/poc/delivery.md, docs/research/poc/edit-readiness.md and bounded relevant JSON excerpts, docs/perpetua/evaluation.md and roles.md. List benchmark/writing/ once and read at most four directly relevant requirement/specification files; do not dump fixtures or large JSON. Start prepared-source checks with @environment/readiness.json; inspect at most six directly cited source excerpts only if needed to distinguish an estimate from an observation. No fresh corpus scan, global gap-map/history search, downloads or native execution. Keep command output short. Target a concise decision-useful report; link details through the JSON.\n",
+  "blocked_by": [],
+  "start_branch": "main",
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 55
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     493
+    ]
+   }
+  ],
+  "issue": 501
+ }
+]
