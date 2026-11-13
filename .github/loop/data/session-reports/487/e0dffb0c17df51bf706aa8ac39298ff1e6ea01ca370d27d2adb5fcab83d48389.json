@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/487\niteration: 96\nrunner: Linux\nmodel: gpt-6.1-sol\neffort: high\nturns: 25\nmodels: {\"codex/gpt-6.1-sol\":{\"cache_read\":806912,\"cache_write\":0,\"in\":859871,\"out\":5479}}\ntokens_in: 859871\ntokens_out: 5479\ncache_read: 806912\ncache_write: 0\nagent_s: 199\ntotal_s: 225\ncommit: c575fad\nmerged: true\nstatus: done\n```\nKeep the current roles and model order.\n[Review #485](https://github.com/Kucze3205/ConnectWithLabview/issues/485#issuecomment-6839451431) requires three corrections to the writing method:\n\n- Correct the baseline commit and tree in `input-pins.json`.\n- Reject changed output save versions in the synthetic check.\n- Reject missing required comparison settings, including `key_revision`.\n\nI saved these findings and evidence references in [policy memory](../policy/working-memory.md).\nI wrote empty policy orders. The shaper already directs correction and a separate review of changed files.\nThis avoids duplicate work. The next iteration record must show correction work or a specific blocker.\nIteration 0095 closed without session failure. Startup diagnostics report no budget warning.\nNative results and product quality remain unmeasured. Artifact, version and withheld-case coverage remain incomplete.\nNo owner method acceptance or accepted Goal gate exists.\n\n## What next\n\nThe next shaper reads review #485, orders the three corrections, and supplies a new pinned candidate for separate review.\nThe next Policymaker checks iteration 0096 and the journal against the saved findings.\nAvoid repeating the full review, method authoring or POC research.\n\nWaiting for the iteration to continue: then `policy/` merges and the orders start.\n",
+  "comment": 6839595785,
+  "issue": 487,
+  "snapshot": "663c95260640979aed4bae99c7864cd588498b32a0ff6120d8cc5216e77477da",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/487#issuecomment-6839595785"
+ },
+ "schema_version": 1
+}
