@@ -1,0 +1,31 @@
+[
+ {
+  "id": "preserve-pair-review",
+  "title": "Preserve the saved independent pair-tool review from #513 without repeating its probes",
+  "role": "researcher",
+  "model": "default",
+  "effort": "medium",
+  "body": "## Goal\nPreserve the independent review already completed in #513 as a committed research record; do not repeat the review or fix its minor finding. Expected gain: the next shaper can read a durable verdict and exact reviewed pins instead of rerunning eight completed probes to repair an output-path error. Review #513 reports no major finding and minor R1 (self-check rewrites its tracked output); its task was blocked solely because reviewer cannot write repository files. No session can run LabVIEW; this task establishes no native behavior, semantic edit or save-version preservation.\n## Acceptance\n- [ ] Locate staged input `iter-0102/513-review-0102.json` under `.session/inputs/`; verify its SHA256 equals `562467370d558b15eb9a7faf8cb1bc283365f99ef3c8cada9c6f54f1ead8249f`. If unavailable or mismatched, report blocked with the precise input failure; do not reconstruct or repeat probes.\n- [ ] Verify its reviewed_commit is `8f5ae4c48581459aa09b3f5e56f79db56188b86c`, its files map pins exactly the four current files `docs/research/poc/pair/pair_diff.py`, `protocol.md`, `owner-instructions.md`, `selfcheck.json`, and each current SHA256 matches the saved pin. If pins drift, report the mismatch; do not silently update the review or rerun it.\n- [ ] Copy the verified artifact byte-for-byte to `docs/research/poc/pair/review-0102.json`; confirm schema_version 1, verdict closed, no major findings, eight passed probes and nonempty limitations. Preserve the original review's claims and limitations unchanged.\n- [ ] Write `docs/research/poc/pair/review-0102-provenance.md` with issue #513, the release asset name, artifact SHA256, reviewed commit, current pin check results, and the limited meaning of closed (independent tool/protocol review only). Note minor R1 remains open; no fixture or native evidence has arrived through this task.\n- [ ] Change only these two research record files. Do not edit reviewed files, author VIs, repeat self-check/probes, scan the corpus, issue an owner request, change benchmark/product/policy/evaluator files, or commit manually.\n## Verification\npython3 -c \"import json,hashlib,pathlib; p=pathlib.Path('docs/research/poc/pair/review-0102.json'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='562467370d558b15eb9a7faf8cb1bc283365f99ef3c8cada9c6f54f1ead8249f'; d=json.loads(p.read_text()); assert d['schema_version']==1 and d['reviewed_commit']=='8f5ae4c48581459aa09b3f5e56f79db56188b86c'; assert d['verdict']=='closed' and not any(f['severity']=='major' for f in d['findings']); assert len(d['files'])==4; assert all(hashlib.sha256(pathlib.Path(k).read_bytes()).hexdigest()==v for k,v in d['files'].items()); assert len(d['probes'])==8 and all(p['status']=='passed' for p in d['probes']); assert d['limitations']; assert pathlib.Path('docs/research/poc/pair/review-0102-provenance.md').read_text().strip()\"\nThe engine needs only committed files for this verification, not prepared sources or session artifacts.\n## Context\n- `.session/reports/513.json`: read by the shaper; records closed recommendation, eight passed independent probes, minor R1 and the repository output-path rejection. Historical snapshot: `.session/history/sessions/513/6abac9b44d6b454682b610752f52017e6c245a2e36964f6273d3dc8c330958e5.md`.\n- `.session/inputs/`: exact saved evidence supplied through inputs. Review commit and artifact hash above come from the trusted #513 report.\n- Owner request #516 is already pending for eight public controlled VIs; do not duplicate it or make this task wait for it.\n## Budget\nRead only the staged review artifact, input manifest if present, #513 report/snapshot if staged, and the four reviewed pair files for hashing (content reading unnecessary). No large JSON, history search, public-source enumeration or downloads. Keep output short; report the artifact and pin checks early.\n",
+  "blocked_by": [],
+  "start_branch": "main",
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 35
+  },
+  "inputs": [
+   {
+    "issue": 513,
+    "name": "review-0102.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     513
+    ]
+   }
+  ],
+  "issue": 518
+ }
+]
