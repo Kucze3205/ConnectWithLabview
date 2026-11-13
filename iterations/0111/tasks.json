@@ -1,0 +1,23 @@
+[
+ {
+  "id": "preserve-wp1-independent-review",
+  "title": "Preserve the exact independent WP1 review and its provenance",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "inputs": [
+   {
+    "issue": 547,
+    "name": "project-text-review.json"
+   }
+  ],
+  "body": "## Goal\nPreserve completed independent review #547 as durable benchmark evidence, without repeating the review or integrating the method. Expected gain: benchmark/project-text-writing-0109/review-0110.json contains the exact reviewed artifact, and review-0110-provenance.md records its identity, scoped recommendation and later integration constraints. No session can run LabVIEW; preservation establishes no native validity, behavior, save-version authority, trial readiness or owner method acceptance.\n## Acceptance\n- [ ] Read staged .session/inputs/547-project-text-review.json; verify SHA256 2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf before copying. Preserve its exact bytes at benchmark/project-text-writing-0109/review-0110.json. Missing or mismatched input is a blocker; do not reconstruct it from report prose.\n- [ ] In benchmark/project-text-writing-0109/review-0110-provenance.md record issue #547, iteration 0110, artifact name/hash, report snapshot d6eb2085115b86ba4e78c52b2307ddf0d700826dc74a4d31043d5e6f9d7303ef, and baseline/candidate/reviewed commits and trees taken from the actual artifact. Check those pins against git and compare the five scoped reviewed file hashes to the artifact; distinguish unrelated checkout changes from scoped drift and report any drift without refreshing historical evidence.\n- [ ] Record CLEAR for proposal integration preparation only, separate Spec/Standards results, and C1's nonblocking narrative-validation boundary as documented in the artifact. Retain missing native/trial keys, allocation, isolation and budget evidence and explicit owner acceptance requirements. No trial, method changes, source edits or readiness promotion.\n- [ ] Record that later integration needs a new provenance addendum and separate review of its changed tree; historical checker/input hashes remain evidence at their pinned tree. Do not rerun #547/#541/#493 probes or edit any existing evidence/checker/method files. Only the two new preservation files may change in the repository.\n## Verification\npython3 -c \"from pathlib import Path; import hashlib,json; p=Path('benchmark/project-text-writing-0109/review-0110.json'); b=p.read_bytes(); assert hashlib.sha256(b).hexdigest()=='2dc007939a4b0637716027ef6e5a874702c9be7288daf80c3f007c07f382cdaf'; json.loads(b); q=Path('benchmark/project-text-writing-0109/review-0110-provenance.md'); assert q.is_file() and q.stat().st_size>0\"\n## Context\n- .session/history/sessions/547/d6eb2085115b86ba4e78c52b2307ddf0d700826dc74a4d31043d5e6f9d7303ef.md: shaper-read completed independent review, exact artifact identity and preservation handoff. Routine task completion is not owner method approval.\n- journal/working-memory.md: current benchmark thread and completed measurements; use only relevant WP1 entries.\n## Budget\nRead the staged #547 artifact once, the named #547 report, docs/perpetua/roles.md and evaluation.md, and the relevant WP1 entries in journal/working-memory.md. Inspect only artifact-named baseline/candidate/reviewed git pins and its five scoped repository files for identity checks; use selective JSON extraction and short scoped output, never whole large JSON dumps. Save provenance by halfway through 45 turns. No new source discovery, integration, review probes, native work, POC replay, owner requests, evaluator changes or implementation. Parent commits accepted changes. Engine verification cannot access staged inputs or session artifacts; the command checks only durable repository outputs.",
+  "issue": 551
+ }
+]
