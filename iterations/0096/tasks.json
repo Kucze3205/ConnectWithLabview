@@ -1,0 +1,27 @@
+[
+ {
+  "id": "correct-writing-review-findings",
+  "title": "Correct writing-method review #485 findings S1–S3 with rejecting controls",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "body": "## Goal\nCorrect only the three evidenced findings in independent review #485 of #481's writing-method extension. Expected gain: a newly pinned, narrowly changed design candidate with reproducible rejection of version-linkage and missing-key counterexamples, ready for separate review. No session can run LabVIEW. This remains public synthetic design preparation: do not implement an artifact writer, benchmark runner, evaluator or product, establish native keys, claim readiness or seek owner method acceptance.\n## Acceptance\n- [ ] Resolve and record the starting commit/tree and the six benchmark/writing file hashes. Compare with reviewed candidate commit 7435c05c4fd7ddbaafb6f5db9081ad5a4f5db427 / tree 555960a979f4bec474850a39bd9b284b7188496a; report differences before making changes. Pin review #485 and explain each S1–S3 correction in the report.\n- [ ] S1: correct input-pins.json baseline_commit and baseline_tree to 486030b461e57ca0f322a17a5b7853e83e9655e3 and cf75cf6892de2f9410fa09ee2589dcba47d825a4 after verifying identities and protected bytes with git. Preserve all 62 protected-input hashes and 56 unique index pins; report missing evidence instead of inventing provenance. Do not replace the historical baseline with this task's starting commit.\n- [ ] S2: require the modified synthetic output's save version to equal the preserved original's version, in addition to its frozen expectation. Demonstrate that an unchanged original at SYNTHETIC-v0 and output/frozen version at SYNTHETIC-v1 is rejected for version drift. Cover both ordinary modification and the source-rebuild modification path; creation remains governed by its requested version. Add durable rejecting controls and keep legitimate positives passing.\n- [ ] S3: require the complete mandatory pair-setting names independently of equality between arms and the frozen dictionary. Derive the names from the documented pair contract, including key_revision. Add a rejecting control deleting key_revision from frozen and both arms, plus bounded checks deleting each other mandatory setting from all three dictionaries. All must reject; preserve matching-value checks and the paired-arm invariants.\n- [ ] Reproduce the two review counterexamples before correction in memory, then show rejection after correction; record exact mutations, expected/actual outcomes and reason codes. Retain all 35 existing rejecting controls and report the new total. Refresh verification.json and any stale README counts or hashes; run an isolated repeat from a different working directory with empty environment. Store small durable evidence within benchmark/writing or the report; verification must not require session artifacts or LABVIEW_ENVIRONMENT.\n- [ ] Limit repository edits to benchmark/writing/. Preserve method requirements, native-unavailable and zero-run claims, protocol, preparation index/status and all protected inputs. Record final output hashes, actual changed paths, remaining native/owner prerequisites and a handoff requesting independent review of changed bytes. Do not mark this candidate independently approved. Parent commits; no git commit.\n## Verification\npython3 -I benchmark/writing/verify_method.py\n## Context\n- .session/reports/485.json (or exported report): independent REVISE recommendation with exact S1–S3 locations and two false-acceptance inputs; the report supplies replay mutations even if its historical artifacts are unavailable.\n- benchmark/writing/verify_method.py: check_example compares output only with frozen version; check_pair compares matching dictionary key sets without independently requiring key_revision.\n- benchmark/writing/input-pins.json: current baseline identity fields contradict the verified original baseline.\n- docs/perpetua/evaluation.md and docs/perpetua/roles.md: scoped design consistency cannot establish native results, readiness or owner method acceptance.\n## Budget\nRead #485 and #481 reports through .session/exports/manifest.json; benchmark/writing/README.md, method.json, controls.json, verify_method.py, verification.json and input-pins.json; goal/goal.md writing section; docs/perpetua/evaluation.md and roles.md; benchmark/protocol.md paired-comparison clauses and benchmark/baseline/runner-contract.md setting definitions. Inspect protected files by bounded Python hash checks, not whole-file dumps. At most three additional directly linked source excerpts to resolve a concrete contract question. Keep command output to identities, counts, mutations and verdicts. Do not repeat POC reverse engineering, source/corpus searches, global gap maps or unrelated repairs. Stop early enough to save changes and evidence.\n",
+  "blocked_by": [],
+  "start_branch": "main",
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 55
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     481,
+     485
+    ]
+   }
+  ],
+  "issue": 489
+ }
+]
