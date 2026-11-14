@@ -1,0 +1,28 @@
+[
+ {
+  "id": "project-dependency-bytes-0134",
+  "title": "Measure available bytes behind the existing AF project dependency declarations",
+  "role": "researcher",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     537,
+     541,
+     626
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Measure the original-byte availability behind every Item/@URL in the already selected Core/AF PPL Build.lvproj; distinguish declared virtual paths, available source candidates and native resolution. Expected gain: docs/research/0134-project-dependency-bytes.md and .json identify the exact byte-level gaps and the smallest next evidence step for evaluation.md sources/oracle requirements. This extends the declaration-only evidence, not the closed D1-D4 or WP1 reviews. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json for exported #537/#541/#626 reports. Read the existing project's measurement, original and source pins before searching. Pin starting commit/tree, prepared readiness, Actor Framework commit and original SHA256; report mismatches without refreshing pins. Establish whether prior #537/#541 work already answers this precise byte-availability question; reuse completed findings rather than replaying them.\n- [ ] Derive a complete inventory of Item/@URL declarations from benchmark/real-project-0107/original.lvproj, recording exact XML locators, raw/entity spelling and decoded URLs. Separately record the AF PPL source itemID link and build output paths so outputs are never treated as available inputs. Freeze the inventory before candidate lookup.\n- [ ] Within the prepared pinned Actor Framework checkout only, examine path metadata for the declared library and named dependency candidates. For each declaration record candidate paths, lookup rule, available bytes with size/SHA256 and provenance, ambiguous matches, or bounded not-found/unavailable status. Virtual vilib/resource roots and LLB members require explicit mapping evidence; basename similarity alone cannot establish identity or resolution. A source candidate may be useful without being a proven native match. Do not unpack LLBs or inspect VI diagrams; stop at unavailable container/member evidence.\n- [ ] Keep source presence, native dependency resolution, transitive closure, buildability, runtime behavior and save-version preservation separate. No native/build or coverage pass, withheld/model-unseen claim, new artifact edit or method acceptance. Report unsearched/transitive scope explicitly; do not treat absent cache bytes as global absence.\n- [ ] Write only docs/research/0134-project-dependency-bytes.md and .json. JSON contains schema_version=1, original {path,sha256}, source_pins, declarations (each with locator, url, status, evidence), build_references, limitations and next_step. Include exact search boundaries and results, candidate identity uncertainty and source links; report findings before recommendations. Choose one evidence-dependent next step; no duplicate request or wait for #618/#532, no corpus restart or repeated closed checker.\n## Verification\npython3 -c \"import hashlib,json,pathlib,xml.etree.ElementTree as E; p=pathlib.Path; d=json.loads(p('docs/research/0134-project-dependency-bytes.json').read_text()); o=d['original']; b=p('benchmark/real-project-0107/original.lvproj').read_bytes(); assert o['path']=='benchmark/real-project-0107/original.lvproj'; assert o['sha256']==hashlib.sha256(b).hexdigest(); assert d['schema_version']==1; rows=d['declarations']; assert sorted(r['url'] for r in rows)==sorted(e.attrib['URL'] for e in E.fromstring(b).iter('Item') if 'URL' in e.attrib); assert all(all(k in r for k in ('locator','url','status','evidence')) for r in rows); assert all(k in d for k in ('source_pins','build_references','limitations','next_step')); assert p('docs/research/0134-project-dependency-bytes.md').stat().st_size>0; print('declaration inventory and original identity: OK')\"\nThis repository-only structural check establishes neither candidate mapping nor native resolution; findings require source evidence.\n## Context\n- docs/perpetua/evaluation.md sources/oracle require dependency bytes and declared-versus-resolved evidence; those remain missing despite closed declaration/WP1 preparation.\n- benchmark/real-project-0107.md and original.lvproj: selected project, declared virtual dependencies and packed-library build references; the earlier measurement needed no dependency files.\n- #626 closes F1-F3 documentation only; preserve that closure rather than reopening the writing-cost audit.\n## Budget\nRead .session/exports/manifest.json and exported reports #537/#541/#626, goal/goal.md, docs/perpetua/evaluation.md, benchmark/real-project-0107.md, benchmark/real-project-0107/original.lvproj, targeted source/provenance fields of benchmark/real-project-0107.json and benchmark/sources.md, docs/research/0133-writing-estimate-handoff.md, and prepared @environment/readiness.json. Use readiness to locate only the pinned Actor Framework checkout; at most two inventory/location records needed for that lookup. Limit source content reads to matching library XML, its license/provenance and exact candidate metadata; no recursive transitive analysis, binary dumps, whole large JSON, generic source-absence searches, other projects, network, source-code execution, native/benchmark run or original checker replay. Keep command output short. Save bounded results early; if partial, name completed rows, remaining lookups and exact next step.",
+  "issue": 629
+ }
+]
