@@ -1,0 +1,640 @@
+{
+ "schema_version": 1,
+ "iteration": 136,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-14T12:20:52Z",
+ "ended": "2026-11-14T12:43:36Z",
+ "engine_version": "0.7.1",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 136,
+  "engine_version": "0.7.1",
+  "policy_rev": "layered-v1:0c1f0e7b378e7ae12e39bce4cb8c19071da89eb99754e59ede3975b07d63235d",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać oraz pisać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Pisanie\n\nPisanie obejmuje tworzenie i zmienianie artefaktów tak samo jak w zwykłym kodzie: agent czyta, zmienia, sprawdza wynik i uczciwie raportuje. Sposób zapisu wybiera pętla i uzasadnia ten wybór. Edycja nie wymaga LabVIEW; sprawdzenie (kompilacja i uruchomienie) może go wymagać, tak jak zwykły kod wymaga interpretera lub kompilatora. Artefakty skompilowane zmienia się przez źródła i przebudowę. Zmieniony plik zachowuje swoją wersję zapisu; zmiana wersji jest widocznym brakiem. Oszacowanie przed wyborem wariantu zapasowego obejmuje też pisanie.\n\nPisanie rozszerza istniejący benchmark i dane pętli, zamiast budować je od nowa. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na akceptację metody obejmującej zadania zapisu.\n\n## Proof of concept\n\nPrzed dalszym przygotowaniem benchmarku pętla dostarcza POC, który ma pokazać, że koncepcja ma sens i że gotowy produkt może powstać. Agent, który nie widział wcześniej danego VI, poprawnie opisuje jego diagram i zmienia jego logikę bez użycia LabVIEW. Wynik otwiera się w LabVIEW bez złamanej strzałki, zachowuje się zgodnie z poleceniem i zachowuje wersję zapisu. Prace nad benchmarkiem niepotrzebne do POC czekają do jego dostarczenia.\n\nPOC jest wyjątkiem od zasady „najpierw metoda, potem implementacja”. Nie jest produktem ani dowodem jakości; jego kod może trafić do produktu dopiero normalną drogą z testami i przeglądem. Pętla dostarcza pliki, raport i krótką instrukcję, według której właściciel sprawdza wynik ręcznie w swoim LabVIEW. Jeśli POC się nie uda, raport pokazuje dowody i możliwe drogi wyjścia, a pętla nie zmienia celu sama. Pętla nie czeka na odpowiedź właściciela: po dostarczeniu wraca do pracy, a brak odpowiedzi nie jest akceptacją metody, jakości ani produktu.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 3,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": [],
+   "owner_paths": [
+    "benchmark/protocol.md",
+    "benchmark/resources-proposal.md",
+    "docs/perpetua/"
+   ]
+  },
+  "owner_requests": {
+   "open": [
+    {
+     "number": 618,
+     "kind": "question",
+     "title": "Commission the human C1 check using the prepared entry point",
+     "decision": "pending",
+     "proposal_sha": "1420b8de7a97423a7669539c82284b3723d529a7f9d1738c69e9fa7ced50afb9",
+     "base_commit": "8cd9fb87e7957ad116454f2e1995af17f1a860a3",
+     "detail": null,
+     "readiness": null
+    },
+    {
+     "number": 532,
+     "kind": "question",
+     "title": "Supply one unchanged Save As control for the public constant VI",
+     "decision": "pending",
+     "proposal_sha": "43c901fd2397f545c006447a53fcbdff2642ac6c8622396349ca5b84ed2b6a61",
+     "base_commit": "74e247484dd767ec25363e7d555768ae3434329c",
+     "detail": null,
+     "readiness": null
+    }
+   ],
+   "recently_closed": [
+    {
+     "number": 525,
+     "kind": "question",
+     "title": "Decide if the Policymaker runs every 3 iterations to use less Claude quota",
+     "decision": "approved",
+     "proposal_sha": "f0596ff8be40fb1127b29a465e03ad783f84523a3b1a411cb2a1d67c78a2e812",
+     "base_commit": "5311fd78af4147246322e8e36b15b01dbf67ed2a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 516,
+     "kind": "question",
+     "title": "Author eight public LabVIEW examples for the controlled comparison",
+     "decision": "approved",
+     "proposal_sha": "f8daf9d9218c66092eb5af8ab84235178a36e5996866b64c969335b88d83260a",
+     "base_commit": "ec0df1dd4aab94dd4d5a7e822bec80ef740ba468",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 462,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "7dd2866f64efe92adb2eb413e24c8f3c255907d547ad09d10006dfac04e2cbd4",
+     "base_commit": "55d1ef62ed80beb5c30c5ede2b3a6ddc340652b2",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 456,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "eb7da9010c291d42188b0adbd014b349ba531b2a3885c0b7c7ba17d5ae0fc28b",
+     "base_commit": "2329d29eb2c5da281abfbbaf01c35fd69ab271fa",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 430,
+     "kind": "question",
+     "title": "Assess the verification method and its documented design limits",
+     "decision": "declined",
+     "proposal_sha": "7cc46d92f80fb184bb65b2ce5182c85dea3914390fb1519daf1de8a3adde2a6f",
+     "base_commit": "39f03859d114bd82b352bb388dffcc5e286c3a2f",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 379,
+     "kind": "question",
+     "title": "Install store-readiness workflow revision 4, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "032bde3f02c9928846ab187b30e307fec1a046b983e4e0bf9aaa9d8895fd57bb",
+     "base_commit": "f9cc3f5dc45ce41c52f45dab358fe86f1f712318",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 354,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #352: Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+     "decision": "approved",
+     "proposal_sha": "e622885491ac26e474be221d66ba95ec44a9278bb8f3ea3fb2e3b446154582fb",
+     "base_commit": "24198b0b14a67e80adb0c7c83796a729a2133f66",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 353,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #351: Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+     "decision": "approved",
+     "proposal_sha": "7f284ecec9fa64f399f677956e00c1311deb113ebbaafbd77ffca7d7e2ce27d9",
+     "base_commit": "24815e0872b589de49f5214c1b15b4182b66649b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 348,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #346: Run the Policymaker script that binds run records to manifest bytes (gap delta #330 N1, review #318 finding 4)",
+     "decision": "approved",
+     "proposal_sha": "eb4ed22d2ad340f0a1f76d5e54839400a5e76ec0393acdf9491dc561833e9f3f",
+     "base_commit": "38166a0b9218d499c0570e076b685df55d276331",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 345,
+     "kind": "question",
+     "title": "Install the reviewed store-readiness workflow, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "bcf37150c41b3395bd94e7d36a4c91f9fc843b758e4d77238e204b1553cd42fa",
+     "base_commit": "491e2cc48face86bf8b4ebb03e68ee94170cbbbf",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 1,
+  "policymaker_sessions": [
+   {
+    "issue": 631,
+    "status": "done"
+   },
+   {
+    "issue": 620,
+    "status": "done"
+   },
+   {
+    "issue": 609,
+    "status": "done"
+   },
+   {
+    "issue": 599,
+    "status": "done"
+   },
+   {
+    "issue": 589,
+    "status": "done"
+   }
+  ],
+  "outboxes": [],
+  "audit_report": null,
+  "audit_rev": null,
+  "startup_notices": [],
+  "rollbacks": {
+   "target": "392c1f370c2831f806256470d97179d32e5b05fc",
+   "streak": 3,
+   "reason": "two Policymaker sessions in a row failed",
+   "at": "2026-11-11T21:41:42Z"
+  }
+ },
+ "policy": {
+  "rev_start": "layered-v1:0c1f0e7b378e7ae12e39bce4cb8c19071da89eb99754e59ede3975b07d63235d",
+  "rev_end": "layered-v1:0c1f0e7b378e7ae12e39bce4cb8c19071da89eb99754e59ede3975b07d63235d",
+  "commit_end": "4178b8dcab013d8c01e1630852de64cf3fcc04de",
+  "orders_refused": null,
+  "session": null,
+  "trigger": null,
+  "passes": 0,
+  "changes": []
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "prepare-project-paired-manifest-0136",
+   "title": "Prepare a fail-closed paired-run manifest for the existing project declaration case",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 90,
+    "max_turns": 60
+   },
+   "inputs": [],
+   "exports": [
+    {
+     "source": "reports",
+     "sessions": [
+      537,
+      541,
+      633
+     ]
+    }
+   ],
+   "body": "## Goal\nPrepare the smallest concrete baseline-method increment for the existing public AF project declaration case, without executing model comparisons. First report the existing run-record evidence and missing fields; then prepare a data-only paired-run manifest and admission rehearsal. Expected gain: benchmark/project-paired-0136.md and .json identify exactly what would admit or reject one matched declaration-only development pair under protocol.md baseline. Reuse existing D1-D4 originals/keys and preserve closed reviews. No session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json for #537/#541/#633 and record input availability, starting commit/tree, relevant input hashes and actual exposure. Before designing, inspect protocol.md baseline and the existing project case metadata; perform one bounded filename/content search under benchmark for existing paired-run manifests or substantive paired results. Report what exists and reuse applicable records rather than creating a competing contract. Missing evidence is not global absence.\n- [ ] Write benchmark/project-paired-0136.md and .json. Restrict the example to the preserved original project's D1-D4 textual declarations with independently checked XML citations. Resolve exact original/key paths and pin their hashes from bytes and exported review scope. Keep proposed manifest separate from frozen case/key data. Native resolution, VI diagrams, dependency closure, writing outcomes and save-version behavior are outside the measured declaration scope and remain gaps. Do not edit the original, old keys, protocol, preparation index, existing checkers or research files.\n- [ ] Specify paired arm parity: identical question/artifact/documentation hashes and common prompt; only reader access and minimal arm instruction differ. Pin reader representation/configuration and allowed calls or leave them explicitly unavailable. Record exact provider/model snapshot or bounded-window limitation, generation/modalities/settings, fresh-session/key-access controls, total context/output/token/time budgets including tool output, tool-call budget/accounting, arm order, repetitions, stopping rule and development precision/cost rationale. Unknown resources/settings remain null with reasons and admission blocked; do not fabricate quota or select a numerical quality threshold.\n- [ ] Bind the existing reference inventory, scoring/mapping rules and fixed correctness/grounding denominators by exact file/hash/locator, without reproducing a new key. Declare reader fidelity as a separate required probe suite, unavailable until its prerequisites exist; no-tool fidelity is not applicable. Record planned/attempted/executed/scored/complete-pair accounting, omitted/extra/contradictory claims, raw transcript/request/image/tool/usage/error evidence identities, retry/cache/truncation/exhaustion handling and cost/time limitations. No absent run or synthetic record receives a semantic pass.\n- [ ] Include a deterministic data-only admission rehearsal with explicit expected versus observed decisions for an incomplete draft, a fully specified synthetic pair, mismatched common input, unequal budget, missing repetition/stopping plan, missing actual model identity, incomplete pair and missing/unverified key or isolation evidence. Synthetic placeholders must be visibly synthetic and never satisfy real admission. Exercise record consistency using only local Python/data, not a model transport, reader, evaluator, historical builder or benchmark run. Save bounded rehearsal evidence in the two new files; identify what still needs substantive independent review or trusted execution.\n- [ ] Report the concrete preparation gain and remaining admission blockers in .session/report.md; do not claim benchmark readiness, a measured gain, withheld/model-unseen status, completed comparison, native evidence or method acceptance. No new owner request, publication category, spending, product code, native experiment or evaluator change.\n## Verification\npython3 -c \"import json,pathlib,hashlib; p=pathlib.Path; d=json.loads(p('benchmark/project-paired-0136.json').read_text()); assert isinstance(d,dict) and d; assert p('benchmark/project-paired-0136.md').stat().st_size>0; assert hashlib.sha256(p('benchmark/real-project-0107/original.lvproj').read_bytes()).hexdigest()=='1d5e140df788ce1f91c89241bbdb1227c5e4cc6fdf6efbbd820974bbe6082dcf'; print('paired preparation files and original identity: OK')\"\nThis structural repository check does not certify admission logic, semantic scores, isolation, model execution or readiness; inspect the substantive rehearsal and its limitations in the report.\n## Context\n- docs/perpetua/evaluation.md baseline requires matched model/prompt/budgets, repetitions and separate fidelity; benchmark/protocol.md baseline describes those requirements but explicitly supplies no concrete paired run. This task targets that remaining gap rather than reopening closed keys.\n- #633 independently CLEARs only #629 dependency-byte measurement at 8d824c68eb6c2f9674cbc69ba5f1b451d6452224, not native resolution or method readiness. Its U03 proposal needs new permitted provenance/version/mapping evidence; do not repeat inventory or U01 hashing.\n- #537/#541 establish the original project declaration scope. Treat public case/key familiarity honestly; a draft manifest is not executed isolation.\n## Budget\nRead .session/exports/manifest.json and exported #537/#541/#633 reports; docs/perpetua/evaluation.md, accepted-limits.md and roles.md; benchmark/protocol.md baseline plus only relevant tasks/oracle/split rules; benchmark/real-project-0107.md, .json and original.lvproj; source-pin fields in benchmark/sources.md. Search benchmark filenames and paired-run/manifest references once with short output; read at most three directly relevant existing baseline/run-contract records if found. Follow at most two exact case/key/scoring references necessary to bind D1-D4; if insufficient, record unresolved identity instead of opening the wider WP1/C1 history. No whole large JSON, journal/history sweep, prepared-cache lookup, binary dump, old checker replay, source/product/native/benchmark execution or model call. Write only the two new benchmark files plus session outputs. Save findings early; if partial, name completed pins/rehearsal and the one remaining step so a continuation does not redo them.",
+   "issue": 636
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 636,
+    "role": "benchmark",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5483,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/636/167d76d174f1b3782e3dd8bfc762552036edc1c0c3eb3655d4439ac59df43929.json"
+    ],
+    "status": "done",
+    "verdict": "accepted",
+    "improved": true,
+    "merged": true,
+    "branch": "task/636",
+    "commit": "561a627",
+    "tokens": {
+     "in": 918295,
+     "out": 15622,
+     "cache_read": 853604,
+     "cache_write": 4858
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 4836,
+      "cache_write": 4858,
+      "in": 4,
+      "out": 646
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 848768,
+      "cache_write": 0,
+      "in": 918291,
+      "out": 14976
+     }
+    },
+    "turns": 19,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 511,
+    "gate_s": 0,
+    "total_s": 546,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 635,
+    "role": "orchestrator",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 15635,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/635/de290e882600c2a2487cd771ace97a5cb94e3abd195acc0bc6ede7cb4b3f0442.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/635",
+    "commit": "1b28db3",
+    "tokens": {
+     "in": 1392768,
+     "out": 6422,
+     "cache_read": 1306752,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 1306752,
+      "cache_write": 0,
+      "in": 1392768,
+      "out": 6422
+     }
+    },
+    "turns": 31,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 280,
+    "gate_s": 0,
+    "total_s": 322,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": {
+   "issue": 635,
+   "role": "orchestrator",
+   "model": "gpt-6.1-sol",
+   "effort": "medium",
+   "startup": {
+    "status": "ok",
+    "model": "claude-sonnet-5-5",
+    "tokens": 15635,
+    "limit": 100000
+   },
+   "report_snapshots": [
+    ".github/loop/data/session-reports/635/de290e882600c2a2487cd771ace97a5cb94e3abd195acc0bc6ede7cb4b3f0442.json"
+   ],
+   "status": "done",
+   "verdict": null,
+   "improved": false,
+   "merged": true,
+   "branch": "task/635",
+   "commit": "1b28db3",
+   "tokens": {
+    "in": 1392768,
+    "out": 6422,
+    "cache_read": 1306752,
+    "cache_write": 0
+   },
+   "models": {
+    "codex/gpt-6.1-sol": {
+     "cache_read": 1306752,
+     "cache_write": 0,
+     "in": 1392768,
+     "out": 6422
+    }
+   },
+   "turns": 31,
+   "peak_context": 0,
+   "attempts": 0,
+   "agent_s": 280,
+   "gate_s": 0,
+   "total_s": 322,
+   "parked_s": 0,
+   "runner": "Linux",
+   "artifacts": 0
+  },
+  "verdict": {
+   "value": "accepted",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": true
+  },
+  "tokens": {
+   "in": 2311063,
+   "out": 22044,
+   "cache_read": 2160356,
+   "cache_write": 4858,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 4,
+     "out": 646,
+     "cache_read": 4836,
+     "cache_write": 4858
+    },
+    "codex/gpt-6.1-sol": {
+     "in": 2311059,
+     "out": 21398,
+     "cache_read": 2155520,
+     "cache_write": 0
+    }
+   },
+   "cache_read_share": 0.483
+  },
+  "limit_hits": 0,
+  "wall_s": 1364,
+  "critical_path_s": 546,
+  "width": 1,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": [
+    618,
+    532
+   ]
+  }
+ },
+ "evaluator_verifications": []
+}
