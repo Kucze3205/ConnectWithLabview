@@ -1,0 +1,58 @@
+[
+ {
+  "id": "supersede-writing-handoff-0133",
+  "title": "Preserve review 622 and supersede the stale 0099 handoff without a new estimate",
+  "role": "researcher",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "inputs": [
+   {
+    "issue": 622,
+    "name": "writing-estimate-review-0132.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     501,
+     622
+    ]
+   }
+  ],
+  "body": "## Goal\nCorrect only the documentation findings F1-F3 from review #622. Preserve its exact ledger and publish a dated superseding handoff for the writing-aware 0099 study. Expected gain: the next shaper can use a current, evidence-linked handoff without repeating completed WM1, pair or WP1 work. No new estimate or measurement; no session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json and identify exported reports #501/#622 and the staged historical ledger. Verify ledger SHA256 e1459863d1c7609e910a3e4a7aa2a1f9cdc519902a187ee85c4848350873db17 before using it; preserve its exact bytes as docs/research/reviews/writing-estimate-review-0132.json. Stop and report an unavailable or mismatched ledger; do not recreate the review.\n- [ ] Create docs/research/0133-writing-estimate-handoff.md and .json with source pins, original review provenance, F1/F2/F3 dispositions and exact evidence locators. Mark 0099 and its JSON as historical; add only a dated link near the top of 0099 Markdown pointing to the superseding handoff. Leave the original 0099 JSON and substantive historical estimates unchanged.\n- [ ] Resolve F1 by dating the proposed WM1 audit and linking its completed 0100 result, while retaining the missing independent version authority. Resolve F2 by distinguishing the subsequently staged controlled pair from the unresolved 0106 encoding/type/integrity rules and pending unchanged Save As control #532. Resolve F3 by dating the 0109 proposal and identifying current narrow WP1 integration without implying semantic XML, native or timed-writing coverage.\n- [ ] Retain unknown writing costs, unsupported all-version/2024 totals and ratio, no fallback selection, and original/emitted/runtime version distinctions. Human C1 #618 and #532 stay pending; do not duplicate or await them. No readiness, acceptance or product-success claim.\n- [ ] State the smallest evidence-dependent next step and concrete unavailable inputs, rather than prescribing a repeated audit, new estimate or agent substitute for human C1. Record start commit/tree and output pins in the report. Limit repository changes to the two new handoff files, the exact preserved ledger and the dated pointer in 0099 Markdown.\n## Verification\npython3 -c \"import hashlib,json,pathlib; p=pathlib.Path; assert hashlib.sha256(p('docs/research/reviews/writing-estimate-review-0132.json').read_bytes()).hexdigest()=='e1459863d1c7609e910a3e4a7aa2a1f9cdc519902a187ee85c4848350873db17'; assert hashlib.sha256(p('docs/research/0099-writing-version-effort.json').read_bytes()).hexdigest()=='992a3b22a690e917a1f144e32adaaa7d8d52ed7afe9223105cfe45746bcb31c4'; assert isinstance(json.loads(p('docs/research/0133-writing-estimate-handoff.json').read_text()),dict); assert '0133-writing-estimate-handoff.md' in p('docs/research/0099-writing-version-effort.md').read_text(); assert p('docs/research/0133-writing-estimate-handoff.md').stat().st_size>0; print('handoff structure and preserved identities: OK')\"\n## Context\n- Exported #622 report and exact ledger: Standards CLEAR, Spec NOT-CLEAR only for stale current-handoff use; findings F1-F3 are documentation corrections.\n- docs/research/0099-writing-version-effort.md and .json: original study already includes writing; its null costs remain supported.\n- docs/research/0100-wm1-version-evidence.md and .json, docs/research/poc/pair/constant-rules-0106.md, benchmark/project-text-writing-0109.md and benchmark/writing/method.json: named later evidence to verify before correcting status.\n## Budget\nRead .session/exports/manifest.json, exported reports #501/#622, .session/inputs/622-writing-estimate-review-0132.json, goal/goal.md, docs/perpetua/evaluation.md, docs/research/0099-writing-version-effort.md and targeted JSON fields, the two 0100 files, docs/research/poc/pair/constant-rules-0106.md, benchmark/project-text-writing-0109.md and targeted current method.json coverage/version fields. Check historical input staging through its manifest if the expected flat path is absent. At most four additional linked source sections needed for F1-F3, named in the handoff. No whole large ledgers, corpus searches, checker replays, benchmark/native execution, product code or fresh estimate. Report pin problems early and preserve partial documentation if unfinished.",
+  "issue": 625
+ },
+ {
+  "id": "review-writing-handoff-0133",
+  "title": "Review only the dated supersession and preservation of writing-estimate review 622",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "supersede-writing-handoff-0133"
+  ],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 60
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     622
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Independently review the documentation-only correction of #622 F1-F3 against its preserved ledger and named later sources. Expected gain: a pinned Standards/Spec CLEAR or NOT-CLEAR verdict for the superseding handoff, closing only the corrected scope. Do not repeat the completed original cost audit or closed WM1/WP1/pair probes. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json and exported #622 report, pin starting commit/tree and all changed-scope bytes, and verify the preserved review ledger against SHA256 e1459863d1c7609e910a3e4a7aa2a1f9cdc519902a187ee85c4848350873db17.\n- [ ] Check F1-F3 individually against exact source locators: WM1 audit completed without independent authority, controlled pair staged but encoding/integrity and unchanged Save As control unresolved, and WP1 integration narrow rather than general XML-writing proof. Confirm the dated pointer clearly supersedes both historical 0099 files without rewriting their historical estimates.\n- [ ] Check no invented cost ranges, totals, ratio, fallback selection, version-preservation proof, native result, human C1 or readiness/owner acceptance. Check the next step needs new evidence and does not repeat completed audits or duplicate pending #618/#532.\n- [ ] Save findings with severity, evidence and separate Standards/Spec verdicts in .session/artifacts/writing-handoff-review-0133.json and .session/report.md. Reviewer writes no repository files. An unresolved finding stays explicit; CLEAR closes only these corrected documentation claims.\n## Verification\npython3 -c \"import hashlib,json,pathlib; p=pathlib.Path; assert hashlib.sha256(p('docs/research/reviews/writing-estimate-review-0132.json').read_bytes()).hexdigest()=='e1459863d1c7609e910a3e4a7aa2a1f9cdc519902a187ee85c4848350873db17'; assert hashlib.sha256(p('docs/research/0099-writing-version-effort.json').read_bytes()).hexdigest()=='992a3b22a690e917a1f144e32adaaa7d8d52ed7afe9223105cfe45746bcb31c4'; assert isinstance(json.loads(p('docs/research/0133-writing-estimate-handoff.json').read_text()),dict); assert '0133-writing-estimate-handoff.md' in p('docs/research/0099-writing-version-effort.md').read_text(); print('review input preservation and structure: OK')\"\nThis repository-only check verifies identities/structure; it cannot establish the semantic verdict or read session artifacts.\n## Context\n- docs/research/reviews/writing-estimate-review-0132.json and exported #622 report: exact closed original audit and the three correction findings.\n- docs/research/0133-writing-estimate-handoff.md and .json, dated pointer in 0099 Markdown: the changed review scope.\n## Budget\nRead .session/exports/manifest.json, exported #622 report, preserved review ledger, the two 0133 handoff files, docs/research/0099-writing-version-effort.md and targeted JSON fields, goal/goal.md, docs/perpetua/evaluation.md, the two 0100 files, docs/research/poc/pair/constant-rules-0106.md, benchmark/project-text-writing-0109.md and targeted method.json coverage/version fields. At most four additional linked sections to adjudicate F1-F3. No whole large ledgers, repeated original eight-driver audit, corpus search, old checker/native/benchmark execution or new owner requests. Report blocking input mismatches once; save partial findings and exact remaining checks if unfinished.",
+  "issue": 626
+ }
+]
