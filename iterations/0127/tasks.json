@@ -1,0 +1,48 @@
+[
+ {
+  "id": "finish-c1-review-0127",
+  "title": "Resume #601: compare the missing author report with saved C1 review evidence",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": "task/601",
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "inputs": [
+   {
+    "issue": 601,
+    "name": "c1-artifact-manifest-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-challenges-review-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-findings-0126.md"
+   },
+   {
+    "issue": 601,
+    "name": "c1-pins-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-checker-run-0126.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     597,
+     601
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Finish only the missing author-report comparison from partial #601, using its saved evidence and the now explicitly exported #597 report. Expected gain: a completed, exposed review addendum stating whether that report changes any pinned findings or verdicts, and exact instructions for the F1 correction that remains necessary. Resume saved task/601 (fallback tag iter/0126/601); this is not a fresh cold review. No session can run LabVIEW; claim no native behavior, validity or save-version preservation.\n## Acceptance\n- [ ] Read .session/exports/manifest.json first and locate the actual trusted #597/#601 report exports. Verify their issue/snapshot identities: #597 body snapshot aeef52f483b51fcee7732e6bfd482199a2ce35bcd4bb67c862e9fb1b10a583bb and #601 body snapshot 37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a. If an export is unavailable, report the exact manifest state once; do not search broad history or repeat the review to compensate.\n- [ ] Verify staged #601 inputs against the published pins: artifact manifest 28787 bytes SHA256 9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7; comparison 956134 bytes SHA256 cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27; findings 7179 bytes SHA256 519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41; pins 4511 bytes SHA256 916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690; checker run 2378 bytes SHA256 04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e. Investigate a mismatch without silent rebaselining. Historical inputs stage flat under .session/inputs/601-NAME.\n- [ ] Read the full #597 author report, compare its source/package pins, scope, checks, exposure and limitations with the saved review. Record each material agreement/disagreement and whether it changes #601's Standards CLEAR / Spec NOT-CLEAR finding. Preserve original judgments and attribution; do not claim a new cold derivation. Observed new HEAD/tree may differ: compare scoped bytes against admitted a80ab6e3454dcb47c15457d7c10126a8b4a6cda3 / tree 469bcfdfd331a3a07d549b5d081a342cb98be8bc.\n- [ ] Save .session/artifacts/c1-review-completion-0127.json with report identities, verified input hashes, source/candidate identity, the bounded comparison, exposure declaration and separate Standards/Spec verdicts. F1 at c1-challenges-0125-expectations.json#/cases/7/atoms/11 remains open unless the newly read evidence actually resolves it; retain the difference between inability and absence, both scenario-citation interpretations, affected dimensions and next resolver. Give exact correction/recheck instructions without editing the package or deciding a new general grading rule.\n- [ ] Write a concise marked .session/report.md linking the completion artifact with size/SHA256 and the preserved #601 findings. State that the missing-read obligation is complete even if Spec remains NOT-CLEAR. Human C1 execution, historical F4, general established-key/full-trial release and owner acceptance remain unresolved; benchmark_ready=false. No repository changes, cold-ledger regeneration, checker rerun, author reproduction, historical probes, native/trial execution or #594 review replay.\n## Verification\npython3 -c \"import hashlib,pathlib; p=pathlib.Path('benchmark/writing/c1-challenges-0125-verification.json'); assert hashlib.sha256(p.read_bytes()).hexdigest() == 'ce8642fc2c2b23e826cb24786fbc06c9a3319c978f30e4fdb1c7389a01540fbc'; print('unchanged reviewed package verification pin')\"\n## Context\n- #601 trusted report: the independent review and structural check were already performed; the session was partial because full #597 was absent, not because cold work needed repeating. The report identifies N08 F1 and publishes saved evidence pins.\n- .session/history/records/0126.json: #601 partial, unmerged, task/601 retained, twelve artifacts; resume saved work.\n- docs/perpetua/evaluation.md: integrity evidence and agent review do not establish benchmark readiness or owner acceptance.\n## Budget\nRead this task, .session/exports/manifest.json and only the exported #597/#601 reports; five named .session/inputs/601-* inputs above. Read findings/pins/checker-run in full; inspect the comparison and artifact manifest only at exact locators needed for author-report claims, never dump the large comparison. Read docs/perpetua/evaluation.md if needed for verdict boundaries. Repository package reads are limited to hashing c1-challenges-0125-verification.json and exact source pointers implicated by a newly discovered discrepancy; record why before expanding. Do not read the whole journal, key, protocol or historical reports. Keep command output short and save the addendum early. Verification uses repository bytes only; the engine cannot inspect session inputs/artifacts/exports and has no LABVIEW_ENVIRONMENT. No git commit.",
+  "issue": 604
+ }
+]
