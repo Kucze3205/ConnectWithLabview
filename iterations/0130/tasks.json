@@ -1,0 +1,32 @@
+[
+ {
+  "id": "prepare-human-c1-0130",
+  "title": "Prepare a bounded human C1 adjudication handoff from the closed F1 scope",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [
+   {
+    "issue": 612,
+    "name": "c1-f1-review-0129.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     611,
+     612
+    ]
+   }
+  ],
+  "body": "## Goal\nPrepare the next actual human C1 step using the existing public challenge package and its reviewed F1 overlay. First report the concrete remaining human-use blocker against the operative procedure; then produce a small handoff that a person can follow without reconstructing the review history. Expected gain: a pinned, usable human scoring entry point and blank response record, not another agent verdict. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json, exported #611/#612 reports and staged #612 review artifact; measure its actual SHA256 and size against the report. Check the review's package pins against repository bytes. Reuse its CLEAR verdict only for its pinned local-B F1 scope; do not redo its semantic review or completed integrity accounting. Missing evidence gets an exact partial report.\n- [ ] Read the existing C1 procedure and identify the precise human action still missing, existing forms/entry points and exposure constraints before proposing additions. Reuse usable existing materials; avoid duplicating a complete handoff. Add benchmark/writing/human-c1-0130.md and human-c1-0130.json only for the missing navigation, overlay application and response-capture contract. Record source hashes and exact locators, distinguish historical 0125 expectations from the reviewed 0129 overlay, and preserve original cases, submissions, registries and all prior judgments byte-identically.\n- [ ] Provide exact ordered human steps, the task/question to answer, which source-only materials to see before expected judgments, where and when to save initial judgments, which key/overlay materials are later comparison reads, how to record prior exposure, disagreements and unresolved results, and how to return the result. Include blank response fields without fabricated human values. Public files provide no enforced blinding or withheld evidence; familiar/exposed participants remain disclosed. Do not invent a new rubric, threshold, human count or general B rule: follow operative requirements and explicitly mark any unapproved design decision.\n- [ ] Scope the handoff to actual human C1 adjudication; distinguish it from native oracle validation, full trial/key release and method/owner acceptance. Keep benchmark_ready=false, historical F4 and remaining evaluation prerequisites open. If current materials already support the action, supply a concise pinned entry point rather than new cases or scoring machinery. Record the concrete owner action for the next shaper to request; do not send messages or submit an owner request in this worker session.\n- [ ] Add a small repository-only read-only check_human_c1_0130.py checking source pins, local paths, required blank response structure, explicit ordering/exposure boundaries and unchanged protected inputs. Save human-c1-0130-verification.json with actual file identities and changed paths. Run the new checker once; its pass establishes packaging only. Do not execute historical checkers, cold probes or trial arms. Report source finding, outputs and exact next step; claim no human, native, cold or quality result.\n## Verification\npython3 -I benchmark/writing/check_human_c1_0130.py\n## Context\n- .session/reports/612.json: Standards/Spec CLEAR closes only the pinned F1 correction; actual human C1 remains open.\n- benchmark/writing/c1-f1-0129.md: overlay application and bounded B interpretation, not broader release.\n- docs/perpetua/evaluation.md: challenge evidence, independent answers and separate correctness/grounding remain prerequisites.\n## Budget\nRead this task, export manifest and exported #611/#612 reports; .session/inputs/612-c1-f1-review-0129.json; benchmark/writing/c1-f1-0129.{md,json}, c1-f1-0129-verification.json; benchmark/writing/c1-challenges-0125.md and c1-challenges-0125-findings.md; inspect original cases/expectations only at procedure-linked example, conditions, citation/aggregation and F1 locators. Read docs/perpetua/evaluation.md and only operative method/key clauses or existing human forms explicitly linked by the C1 procedure. Hash large files without dumping them. No whole journal/history/protocol, inventory search, repeated key review, historical checker execution, new cold exercise, native/trial execution or git commit. Keep outputs short; preserve unfinished additions for a precise continuation.",
+  "issue": 615
+ }
+]
