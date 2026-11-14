@@ -1,0 +1,52 @@
+[
+ {
+  "id": "correct-c1-f1-0129",
+  "title": "Freeze and correct the C1 N08 inability and citation interpretation",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     607
+    ]
+   }
+  ],
+  "body": "## Goal\nCorrect only F1 from the preserved C1 review in a new, versioned benchmark preparation package. Expected gain: explicit inability atoms and a frozen local citation rule, with a precise affected-judgment delta that a separate reviewer can check. Adopt interpretation B for this new package: submitted grounding comes from the frozen bracket registry; scenario truth alone does not supply submitted evidence. Keep the original N08 answer and V registry unchanged, so its inability can be correct yet unsupported by V. Preserve N08 as a negative grounding challenge: this task corrects the expectation, not the submission. Explain this deliberate choice relative to the handoff's alternative of adding a scenario token or extending V; do not imply those positive-support repairs occurred. This is a proposed local rule pending independent review, not human adjudication or owner acceptance. No session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json for exported #607, then inspect the preserved handoff, findings and completion before changing anything. Confirm F1 against exact source locators in the original cases/expectations and citation registry; report any conflict before authoring. Reuse completed integrity accounting and #604 comparison; do not repeat cold review or request the large comparison just to reproduce it.\n- [ ] Add benchmark/writing/c1-f1-0129.json and c1-f1-0129.md as a narrowly scoped superseding overlay, leaving every preexisting file byte-identical. Pin original cases, expectations, procedure, preserved findings/completion and relevant method/key sources by actual SHA256. Record original and revised records/locators explicitly; retain both historical interpretations and provenance. Scope the B rule to this package and explain why bracket-token support is reproducible. Do not silently modify V or rewrite the raw answer to make it pass.\n- [ ] Preserve explicit inability assertions for edited project and original/output map separately from any non-submission/absence assertions. Distinguish stipulated truth from submitted grounding. Reassess affected N08 atom correctness/grounding, honest-limits required-ID grounding and whole-answer grounding, including any consequent omissions/aggregation changes; show evidence and before/after values rather than assuming the handoff's predicted result. Keep unaffected cases/judgments fixed; disclose any unavoidable additional change and stop expansion beyond F1.\n- [ ] Add c1-f1-0129-verification.json with a files array of path, bytes, sha256 for new semantic files, protected-source pins, start commit/tree, changed paths and scope limits; add check_c1_f1_0129.py. The read-only checker must check actual pins, raw-answer identity, explicit separate inability assertions, chosen local rule and internal delta consistency without claiming semantic authority. It must operate on repository bytes only, need no session paths/environment/native runtime, and detect mutation of protected sources. Record one passing execution; do not rerun the historical 0125 checker.\n- [ ] The package and report retain Standards CLEAR / Spec NOT-CLEAR as historical verdicts; F1 resolution is proposed pending separate review. Keep benchmark_ready=false, actual human C1 pending, historical F4 blocked, no general established-key/full-trial release, no native or product-quality claims, and no method/owner acceptance. Disclose actual model exposure/continuity; no cold independence claim. Report exact files/hashes and bounded correction scope for the dependent reviewer.\n## Verification\npython3 -I benchmark/writing/check_c1_f1_0129.py\n## Context\n- benchmark/writing/reviews-0128/handoff-0128.md: completed preservation and exact inability-versus-absence/citation fork; both branches remain historical evidence.\n- .session/reports/607.json: accepted integrity repair, not semantic closure.\n- docs/perpetua/evaluation.md: separate correctness/grounding and readiness boundaries.\n## Budget\nRead this task, .session/exports/manifest.json and exported #607 report; benchmark/writing/reviews-0128/{handoff-0128.md,c1-findings-0126.md,c1-review-completion-0127.json,integrity-0128.json}; benchmark/writing/c1-challenges-0125.md and c1-challenges-0125-findings.md; inspect c1-challenges-0125-cases.json and c1-challenges-0125-expectations.json only at N08, conditions/citations, citation_registry/V, conditions/scenarios/abstention and affected aggregation locators. Read docs/perpetua/evaluation.md and only exact operative method/key clauses linked by those sources. Hash protected inputs without dumping large JSON. No whole journal, history search, source inventory, full protocol, old checker execution, trial arms or git commit. Report the finding before proposing the concrete correction.",
+  "issue": 611
+ },
+ {
+  "id": "review-c1-f1-0129",
+  "title": "Independently review the pinned C1 F1 correction and affected judgments",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "correct-c1-f1-0129"
+  ],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     607
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix, whether the newly pinned C1 F1 correction satisfies its narrow specification and the method's separate correctness/grounding requirements. Expected gain: a separate Standards and Spec verdict for explicit inability atomization, frozen bracket-registry interpretation B and all affected N08 judgments. This is an exposed method review, not a new cold derivation or human scoring result. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json for #607 and actual new package availability. Record full observed HEAD/tree and actual file hashes; pin c1-f1-0129.json, Markdown, verification manifest and checker before judging. Verify protected original cases/raw answer, V registry and prior expectations remain unchanged, and enumerate changed paths against the producer's recorded start commit. Missing inputs cause a precise partial report, not a substitute review.\n- [ ] Review only F1's changed scope: inability versus absence for each object, evidence-pointer coverage, stipulated correctness versus submitted grounding under the explicit B rule, honest-limits required-ID and whole-answer effects, and containment of unaffected cases. Derive judgments directly from original N08/source clauses; compare the proposed delta and explain agreement or disagreement with exact JSON pointers and byte/text evidence. Assess whether the rule is coherent with the existing operative method and whether further method approval is required; do not force CLEAR. Historical A/B records must remain intact and no answer/registry change may be hidden.\n- [ ] Inspect the new checker, then run the verification command once. Separate mechanical pass from semantic findings. Do not rerun historical checkers, cold probes, completed #597/#604 comparisons, integrity accounting or unrelated key reviews. A CLEAR verdict closes only this pinned F1 correction; human C1, historical F4, general key/trial release, readiness and owner acceptance remain open.\n- [ ] Save detailed findings and pins to .session/artifacts/c1-f1-review-0129.json, and a concise marked .session/report.md with separate Standards/Spec verdicts, changed-scope findings, residual blocks and exact next action. No repository review file or repository edits. Artifacts are session evidence, not engine-readable verification inputs; no human/cold/native claim.\n## Verification\npython3 -I benchmark/writing/check_c1_f1_0129.py\n## Context\n- benchmark/writing/reviews-0128/handoff-0128.md: preserved F1 fork and exact affected source locators.\n- benchmark/writing/c1-f1-0129.json and c1-f1-0129.md: the dependent producer's proposed correction; verify actual bytes rather than relying on its report.\n- docs/perpetua/evaluation.md: semantic review and acceptance remain separate from file integrity.\n## Budget\nRead this task, export manifest/exported #607, new benchmark/writing/c1-f1-0129.{json,md}, c1-f1-0129-verification.json and check_c1_f1_0129.py; preserved reviews-0128/{handoff-0128.md,c1-findings-0126.md,c1-review-completion-0127.json}; exact original N08/conditions/citations/citation_registry/V/conditions/scenarios/abstention and affected expectations; c1-challenges-0125.md at operative atomization/citation/aggregation clauses; docs/perpetua/evaluation.md and only directly linked operative method/key clauses. No whole large JSON, full journal/protocol/history, source search, historical checker, new cold exercise or native/trial execution. Keep command output short. Do not recreate or preserve already preserved records. No git commit.",
+  "issue": 612
+ }
+]
