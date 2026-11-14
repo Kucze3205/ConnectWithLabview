@@ -1,0 +1,639 @@
+{
+ "schema_version": 1,
+ "iteration": 120,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-14T00:54:59Z",
+ "ended": "2026-11-14T01:27:08Z",
+ "engine_version": "0.7.1",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 120,
+  "engine_version": "0.7.1",
+  "policy_rev": "layered-v1:c833c2ee6d980c16fc92332b42778666269fce88c8d2ae99d2bf3360bb7f42b3",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać oraz pisać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Pisanie\n\nPisanie obejmuje tworzenie i zmienianie artefaktów tak samo jak w zwykłym kodzie: agent czyta, zmienia, sprawdza wynik i uczciwie raportuje. Sposób zapisu wybiera pętla i uzasadnia ten wybór. Edycja nie wymaga LabVIEW; sprawdzenie (kompilacja i uruchomienie) może go wymagać, tak jak zwykły kod wymaga interpretera lub kompilatora. Artefakty skompilowane zmienia się przez źródła i przebudowę. Zmieniony plik zachowuje swoją wersję zapisu; zmiana wersji jest widocznym brakiem. Oszacowanie przed wyborem wariantu zapasowego obejmuje też pisanie.\n\nPisanie rozszerza istniejący benchmark i dane pętli, zamiast budować je od nowa. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na akceptację metody obejmującej zadania zapisu.\n\n## Proof of concept\n\nPrzed dalszym przygotowaniem benchmarku pętla dostarcza POC, który ma pokazać, że koncepcja ma sens i że gotowy produkt może powstać. Agent, który nie widział wcześniej danego VI, poprawnie opisuje jego diagram i zmienia jego logikę bez użycia LabVIEW. Wynik otwiera się w LabVIEW bez złamanej strzałki, zachowuje się zgodnie z poleceniem i zachowuje wersję zapisu. Prace nad benchmarkiem niepotrzebne do POC czekają do jego dostarczenia.\n\nPOC jest wyjątkiem od zasady „najpierw metoda, potem implementacja”. Nie jest produktem ani dowodem jakości; jego kod może trafić do produktu dopiero normalną drogą z testami i przeglądem. Pętla dostarcza pliki, raport i krótką instrukcję, według której właściciel sprawdza wynik ręcznie w swoim LabVIEW. Jeśli POC się nie uda, raport pokazuje dowody i możliwe drogi wyjścia, a pętla nie zmienia celu sama. Pętla nie czeka na odpowiedź właściciela: po dostarczeniu wraca do pracy, a brak odpowiedzi nie jest akceptacją metody, jakości ani produktu.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 3,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": [],
+   "owner_paths": [
+    "benchmark/protocol.md",
+    "benchmark/resources-proposal.md",
+    "docs/perpetua/"
+   ]
+  },
+  "owner_requests": {
+   "open": [
+    {
+     "number": 532,
+     "kind": "question",
+     "title": "Supply one unchanged Save As control for the public constant VI",
+     "decision": "pending",
+     "proposal_sha": "43c901fd2397f545c006447a53fcbdff2642ac6c8622396349ca5b84ed2b6a61",
+     "base_commit": "74e247484dd767ec25363e7d555768ae3434329c",
+     "detail": null,
+     "readiness": null
+    }
+   ],
+   "recently_closed": [
+    {
+     "number": 525,
+     "kind": "question",
+     "title": "Decide if the Policymaker runs every 3 iterations to use less Claude quota",
+     "decision": "approved",
+     "proposal_sha": "f0596ff8be40fb1127b29a465e03ad783f84523a3b1a411cb2a1d67c78a2e812",
+     "base_commit": "5311fd78af4147246322e8e36b15b01dbf67ed2a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 516,
+     "kind": "question",
+     "title": "Author eight public LabVIEW examples for the controlled comparison",
+     "decision": "approved",
+     "proposal_sha": "f8daf9d9218c66092eb5af8ab84235178a36e5996866b64c969335b88d83260a",
+     "base_commit": "ec0df1dd4aab94dd4d5a7e822bec80ef740ba468",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 462,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "7dd2866f64efe92adb2eb413e24c8f3c255907d547ad09d10006dfac04e2cbd4",
+     "base_commit": "55d1ef62ed80beb5c30c5ede2b3a6ddc340652b2",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 456,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "eb7da9010c291d42188b0adbd014b349ba531b2a3885c0b7c7ba17d5ae0fc28b",
+     "base_commit": "2329d29eb2c5da281abfbbaf01c35fd69ab271fa",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 430,
+     "kind": "question",
+     "title": "Assess the verification method and its documented design limits",
+     "decision": "declined",
+     "proposal_sha": "7cc46d92f80fb184bb65b2ce5182c85dea3914390fb1519daf1de8a3adde2a6f",
+     "base_commit": "39f03859d114bd82b352bb388dffcc5e286c3a2f",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 379,
+     "kind": "question",
+     "title": "Install store-readiness workflow revision 4, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "032bde3f02c9928846ab187b30e307fec1a046b983e4e0bf9aaa9d8895fd57bb",
+     "base_commit": "f9cc3f5dc45ce41c52f45dab358fe86f1f712318",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 354,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #352: Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+     "decision": "approved",
+     "proposal_sha": "e622885491ac26e474be221d66ba95ec44a9278bb8f3ea3fb2e3b446154582fb",
+     "base_commit": "24198b0b14a67e80adb0c7c83796a729a2133f66",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 353,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #351: Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+     "decision": "approved",
+     "proposal_sha": "7f284ecec9fa64f399f677956e00c1311deb113ebbaafbd77ffca7d7e2ce27d9",
+     "base_commit": "24815e0872b589de49f5214c1b15b4182b66649b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 348,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #346: Run the Policymaker script that binds run records to manifest bytes (gap delta #330 N1, review #318 finding 4)",
+     "decision": "approved",
+     "proposal_sha": "eb4ed22d2ad340f0a1f76d5e54839400a5e76ec0393acdf9491dc561833e9f3f",
+     "base_commit": "38166a0b9218d499c0570e076b685df55d276331",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 345,
+     "kind": "question",
+     "title": "Install the reviewed store-readiness workflow, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "bcf37150c41b3395bd94e7d36a4c91f9fc843b758e4d77238e204b1553cd42fa",
+     "base_commit": "491e2cc48face86bf8b4ebb03e68ee94170cbbbf",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 0,
+  "policymaker_sessions": [
+   {
+    "issue": 579,
+    "status": "done"
+   },
+   {
+    "issue": 569,
+    "status": "done"
+   },
+   {
+    "issue": 559,
+    "status": "done"
+   },
+   {
+    "issue": 549,
+    "status": "done"
+   },
+   {
+    "issue": 539,
+    "status": "done"
+   }
+  ],
+  "outboxes": [],
+  "audit_report": null,
+  "audit_rev": null,
+  "startup_notices": [],
+  "rollbacks": {
+   "target": "392c1f370c2831f806256470d97179d32e5b05fc",
+   "streak": 3,
+   "reason": "two Policymaker sessions in a row failed",
+   "at": "2026-11-11T21:41:42Z"
+  }
+ },
+ "policy": {
+  "rev_start": "layered-v1:b47ed85ae15fd52872f1f2474f9445f71b708a31bc382d1bfda0fccb3308911c",
+  "rev_end": "layered-v1:c833c2ee6d980c16fc92332b42778666269fce88c8d2ae99d2bf3360bb7f42b3",
+  "commit_end": "cf8b6ad9b57c41cb29a3099a7bdf8aae937b77c0",
+  "orders_refused": null,
+  "session": 579,
+  "trigger": "every 3 iterations",
+  "passes": 1,
+  "changes": [
+   {
+    "id": "change-579",
+    "issue": 579,
+    "role": "policymaker",
+    "base_commit": "e9949d9aeebcf2a19f1dbe6cc3448ad50586fd7c",
+    "applied_base_commit": "9b0dac0daa084e0d14e9ea18a5e7ea1e63b9fe05",
+    "accepted_commit": "1635a3ff1786cc505630bd5bf1d5e0ed0946053f",
+    "policy_rev_before": "layered-v1:b47ed85ae15fd52872f1f2474f9445f71b708a31bc382d1bfda0fccb3308911c",
+    "policy_rev_after": "layered-v1:c833c2ee6d980c16fc92332b42778666269fce88c8d2ae99d2bf3360bb7f42b3",
+    "changed_paths": [
+     "policy/observations/0120-policy-check.md",
+     "policy/params.yml",
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-14T01:06:08Z"
+   }
+  ]
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "review-wp1-dispositions-0120",
+   "title": "Independently recheck WP1 0119 F3 corrections and F4 blocked disposition",
+   "role": "reviewer",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [],
+   "start_branch": null,
+   "limits": {
+    "timeout_minutes": 90,
+    "max_turns": 65
+   },
+   "inputs": [],
+   "exports": [],
+   "body": "## Goal\nReport, do not fix. Independently adjudicate the semantic adequacy of the wp1-key-0119 F3 corrections and F4 blocked disposition against unchanged authoritative sources, with explicit continuity to review #574. Expected gain: a pinned per-finding/per-affected-ID verdict in .session/artifacts/wp1-disposition-review-0120.json and a concise Standards/Spec report, so the next shaper can distinguish an adequately contained proposal from a usable complete key. This is a separate semantic recheck, not a new cold derivation or a complete benchmark readiness review. No session can run LabVIEW; claim no native behavior, validity or save-version preservation.\n## Acceptance\n- [ ] FIRST establish observed HEAD/tree and compare the scoped package/source bytes with Context pins and the intended checkout. Record actual and intended identities plus any scoped differences before adjudication; fail closed on a material mismatch. Review outputs are confined to .session/report.md and .session/artifacts/, with no repository edits. This exposed review is never labeled cold; #574's cold expectation remains historical session-specific evidence.\n- [ ] Read the actual preserved review findings /findings/0 and /findings/1, the pre-edit dispositions and cited authoritative method/protocol/README leaves. Independently assess every F3 changed source-to-rule mapping against its operative meaning, including whether required rules are missing, irrelevant or overstated. Record exact locators, old/new links, reasoning and agree/disagree/uncertain verdicts. Check source/predecessor continuity and untouched mappings with bounded comparisons; do not rerun completed F1/F2 semantic probes or cold derivation solely for continuity. A new defect gets its own finding rather than silent scope expansion.\n- [ ] Independently assess F4 using actual preserved raw answers, unchanged complete-map requirements, separate correctness/grounding tests, example ledgers, whole-answer aggregation and explicit evidence reservations. Decide whether blocking established-key use and both affected example map slots faithfully contains the missing evidence, and whether the proposed partial/unverified assessments follow the cited rules. Verify that no unseen sidecar, invented inventory, weakened requirement or implicit complete positive control is credited. Distinguish disposition adequacy from F4 clearance: missing preservation evidence and incomplete-key usability remain explicit even if the blocked disposition is adequate.\n- [ ] Inspect the new checker and run the Verification command once; record its identity, command, exit/output and what its focused controls can and cannot establish. Do not execute preserved wp1-review-audit-0118.py, historical checkers, old probes or agent/native arms. Verify saved verification/file pins with bounded queries. Integrity/control success supplies no independent semantic verdict.\n- [ ] Save a structured review artifact with intended/observed commit/tree, scoped hashes, source locators, per-mapping and per-affected-ID adjudications, unchanged-continuity evidence, checker observations, findings/severity, Standards and Spec verdicts, exact reviewed scope and remaining uncertainty. Report Standards and Spec separately in .session/report.md, naming any blocking findings and the smallest next step. Do not demand a committed reviewer output: this role has no repository write paths. Preserve C1 and all native, inventory, isolation/allocation, independent-method-review, owner-acceptance and readiness gaps; no proposal/index promotion or product approval.\n## Verification\npython3 -I benchmark/writing/check_wp1_key_0119.py\n## Context\nIteration 0119 record .session/history/records/0119.json reports #577 done, accepted and merged, commit f4528e8. Trusted report .session/reports/577.json snapshot 23ba3ba7e812b65fe039ee83c7ca4606535a778ad6d8b3880370fc2272a1c36a and the linked benchmark/writing/wp1-key-0119.md describe new mappings and an explicitly blocked F4 alternative, not independent clearance. Intended review checkout: 8b7cc7bedd1177a06e03ceb2c42e5030081de96f from this shaper's history manifest; record its tree using git and actual reviewer HEAD/tree. Administrative commits may differ: disclose the difference and establish scoped-byte equality rather than silently claiming an exact commit match. SHA256 pins: wp1-key-0119.json 2afdca4bfc6feaa9464348bed7709b0657ea1ccbbe5d6b0a33b549c78f41c142; wp1-key-0119.md 5f18384ed27e6b995426704f40316e69ee09a52084767304c15738f6e78980ac; check_wp1_key_0119.py 28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99; wp1-key-0119-verification.json bd6054c90b5264bb9e7909937dfabae39bd919665f869a8424d1346aaa5e6cfd. Preserved wp1-key-review-0118.json 410b0ebf7d3135521d10bd32d3b1102769caa848f5e5c7278d8e9a29eefd9a55; cold expectation 7ca817b22c430ece354287b0e42cd3deb106afaeee9a0d3d6c9d7dfd4dad141c; source interpretation b18eb04d01455a3d4b539a67042a83c4efc5d627f73ccd309ba6f1e7f48ea46b; audit script 8fc53c741b4d6628228e0abae53fbf3c64200c3f318d6ac903c8bbf73b13e833. All are now repository files under benchmark/writing/, not staged historical inputs. Source method.json 276f2881c70eae311195a4cc0a802e316ca06a206a0f1d16e7f041205fd3b0ac; protocol.md 1aeb83227dc11761160ff80d24eb03a216a2531d90c1a6d10ccb25bb85c7eb2f. Read actual source inventories before asserting counts; shaper has not independently measured package counts or semantics.\n## Budget\nRead benchmark/writing/wp1-key-0119.md, wp1-key-0119-pre-edit-findings.md and review-0118-provenance.md; query wp1-key-0119.json, wp1-key-0119-verification.json and wp1-key-review-0118.json for actual findings/dispositions, pins, mappings, raw-answer references, affected example ledgers and reservations, without dumping whole large JSON. Read check_wp1_key_0119.py; hash preserved wp1-review-audit-0118.py without executing it. Consult wp1-cold-expectation-0118.json and wp1-source-interpretation-0118.json as historical independent evidence, never as this session's blind derivation. Compare relevant sections of wp1-key-0117.json and its pinned package; older 0115/0116 material only for a concrete continuity discrepancy. Read source method.json cited common leaves and tasks/4 requirements, benchmark/protocol.md cited answer/grading/preservation clauses, benchmark/writing/README.md relevant scope, docs/perpetua/evaluation.md readiness contract, and original.lvproj/LICENSE.txt in benchmark/real-project-0107/ only for pins/locators. No global gap-map review, new fixture package, original/source regeneration, historical builders or readiness-index changes. Keep command outputs short and report pin failures early. Engine verification cannot read .session/artifacts or report; the command checks the repository package only, while the semantic verdict lives in reviewer outputs. No git commit, shell expansion, pipes or redirection.",
+   "issue": 581
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 581,
+    "role": "reviewer",
+    "model": "claude-sonnet-5-5",
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5118,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/581/24e6e8c7d9c2572f2633ba259000729e0800ba89e5254e1779ad7dc86fe95e3a.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/581",
+    "commit": "61e000d",
+    "tokens": {
+     "in": 1048509,
+     "out": 28820,
+     "cache_read": 1350149,
+     "cache_write": 173583
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 415237,
+      "cache_write": 173583,
+      "in": 24,
+      "out": 9741
+     },
+     "codex/gpt-6.1-sol": {
+      "cache_read": 934912,
+      "cache_write": 0,
+      "in": 1048485,
+      "out": 19079
+     }
+    },
+    "turns": 28,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 573,
+    "gate_s": 0,
+    "total_s": 619,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 1
+   },
+   {
+    "issue": 580,
+    "role": "orchestrator",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 14527,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/580/fd94bd4427caa7dc134021829633f4c289f0c13d796e997028a4b13a27817e11.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/580",
+    "commit": "8ac7a4a",
+    "tokens": {
+     "in": 660543,
+     "out": 7206,
+     "cache_read": 573568,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 573568,
+      "cache_write": 0,
+      "in": 660543,
+      "out": 7206
+     }
+    },
+    "turns": 19,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 220,
+    "gate_s": 0,
+    "total_s": 249,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": {
+   "issue": 580,
+   "role": "orchestrator",
+   "model": "gpt-6.1-sol",
+   "effort": "medium",
+   "startup": {
+    "status": "ok",
+    "model": "claude-sonnet-5-5",
+    "tokens": 14527,
+    "limit": 100000
+   },
+   "report_snapshots": [
+    ".github/loop/data/session-reports/580/fd94bd4427caa7dc134021829633f4c289f0c13d796e997028a4b13a27817e11.json"
+   ],
+   "status": "done",
+   "verdict": null,
+   "improved": false,
+   "merged": true,
+   "branch": "task/580",
+   "commit": "8ac7a4a",
+   "tokens": {
+    "in": 660543,
+    "out": 7206,
+    "cache_read": 573568,
+    "cache_write": 0
+   },
+   "models": {
+    "codex/gpt-6.1-sol": {
+     "cache_read": 573568,
+     "cache_write": 0,
+     "in": 660543,
+     "out": 7206
+    }
+   },
+   "turns": 19,
+   "peak_context": 0,
+   "attempts": 0,
+   "agent_s": 220,
+   "gate_s": 0,
+   "total_s": 249,
+   "parked_s": 0,
+   "runner": "Linux",
+   "artifacts": 0
+  },
+  "verdict": {
+   "value": "none",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": false
+  },
+  "tokens": {
+   "in": 1709052,
+   "out": 36026,
+   "cache_read": 1923717,
+   "cache_write": 173583,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 24,
+     "out": 9741,
+     "cache_read": 415237,
+     "cache_write": 173583
+    },
+    "codex/gpt-6.1-sol": {
+     "in": 1709028,
+     "out": 26285,
+     "cache_read": 1508480,
+     "cache_write": 0
+    }
+   },
+   "cache_read_share": 0.505
+  },
+  "limit_hits": 0,
+  "wall_s": 1930,
+  "critical_path_s": 619,
+  "width": 1,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": [
+    532
+   ]
+  }
+ },
+ "evaluator_verifications": []
+}
