@@ -1,0 +1,52 @@
+[
+ {
+  "id": "preserve-c1-review-0128",
+  "title": "Preserve C1 review evidence and complete its missing integrity accounting",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": null,
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "inputs": [
+   {
+    "issue": 604,
+    "name": "c1-review-completion-0127.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-artifact-manifest-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-challenges-review-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-findings-0126.md"
+   },
+   {
+    "issue": 601,
+    "name": "c1-pins-0126.json"
+   },
+   {
+    "issue": 601,
+    "name": "c1-checker-run-0126.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     601,
+     604
+    ]
+   }
+  ],
+  "body": "## Goal\nComplete the missing integrity accounting from partial #604 and preserve exact review evidence in permitted benchmark paths. Report, do not fix, semantic findings. Expected gain: committed, byte-verified review records and a short handoff identifying the exact next F1 correction scope. No session can run LabVIEW; claim no native behavior, validity or save-version preservation.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json and the six staged inputs before authoring. Compute actual byte lengths and SHA256 with python3, compare all five #601 inputs to the published #601/#604 pins and #604 completion to 10038 bytes / fc11233cd67752355607350a4a223395db07ee65a7933004517f85225d6cf600. Investigate mismatches without silent rebaselining.\n- [ ] Preserve the five compact input byte streams (all except c1-challenges-review-0126.json) under benchmark/writing/reviews-0128/ using their original basenames. Keep the large comparison in its original artifact release and record its measured pin and exact release reference; do not copy or regenerate it. Historical inputs are flat .session/inputs/ISSUE-NAME. Write integrity-0128.json recording issue, artifact name, expected and observed sizes/hashes, source report snapshots, destination and equality result; distinguish source-report assertions from measurements. Do not merge saved reviewer branches or repeat review probes.\n- [ ] Add handoff-0128.md linking preserved evidence and identifying F1's exact source locator, inability-versus-absence issue, both citation interpretations, affected dimensions, and the separate correction/recheck needed. Preserve Standards CLEAR / Spec NOT-CLEAR and benchmark_ready=false. No new grading rule or semantic disposition; human C1, historical F4, general established-key/full-trial release and owner acceptance remain open.\n- [ ] Add check_integrity_0128.py to verify the five committed copies against fixed published hashes and the integrity record; run the verification below. For the large comparison, engine verification checks only that the record retains its fixed published pin and an explicitly attributed session measurement; it cannot rehash an unstaged artifact. Fixed #601 pins (bytes / SHA256): manifest 28787 / 9a655f487a30539450c0abe36d4ebe570b43dc6fbddba914fae0fbd638121bc7; comparison 956134 / cf55770e01161a961b53cced969e81acb7c03223cf7bcf9ad061f38ecfc69e27; findings 7179 / 519fe802c72d1089b55425936ce31485d9d7502b2c602b72bdda92c11f4fbf41; pins 4511 / 916bd993cf979e0ff3810ac3503c9bb1008f6ed564749fd3c3962691698fd690; checker-run 2378 / 04a2146d44bfe5a1a9fb1a775bbec897df3db776c973550dc2569bb13527d49e. Verify report body snapshots #601 37d677d796c4460ccc6c613d4952529a5bf7a502bca2cd20e4e3f8465bdec04a and #604 9555aca246a03e77e03953bba86010e2c66d1acadfe84670e328ccdacd0c7d87. Missing/corrupt inputs yield a precise partial report, not regenerated substitutes. Confirm the role exposes allowlisted Python before attempting integrity work; if it does not, record the exact unavailable tool/rejection once and leave a concrete Policymaker capability handoff rather than repeating review or claiming hashes from text inspection. Do not edit preexisting files, rerun the challenge checker, regenerate cold evidence, reproduce author work or repeat the completed #597 report comparison.\n- [ ] Write the marked report with verification result and exact next correction/recheck instructions. The partial #604 comparison is reused; only integrity/output preservation is completed here.\n## Verification\npython3 -I benchmark/writing/reviews-0128/check_integrity_0128.py\n## Context\n- .session/reports/604.json: missing-read obligation completed, F1 persists; only staged-byte hashing and artifact accounting remain unfinished. Its engine-published artifact footer provides the completion pin.\n- .session/history/records/0127.json: #604 partial/unmerged, one artifact; no semantic rework required.\n- docs/perpetua/evaluation.md: review records do not establish benchmark readiness or owner acceptance.\n## Budget\nRead this task, .session/exports/manifest.json and exported #601/#604 reports. Six named .session/inputs/* inputs only: hash all; read the completion and findings fully, pins/checker-run as needed, inspect large comparison/manifest only at exact cited locators and never dump them whole. Read docs/perpetua/evaluation.md for verdict boundaries if necessary. No full journal/protocol/key/history reading, no sources search, no native/trial execution. Keep output short. Engine verification must use committed repository bytes only, not session paths or LABVIEW_ENVIRONMENT. No git commit.",
+  "issue": 607
+ }
+]
