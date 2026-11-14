@@ -30,8 +30,11 @@ contradictions, missing detail or a decision being reconsidered.
 Handle `.session/startup.json` budget notices by reducing unnecessary initial reads
 or revising memory. The owner budget is a warning, including for your own Session.
 
-Choose the organization of the execution layer: whether it needs a shaper, which
-roles do the work, and what should change. Make the smallest coherent change to
+Choose the organization of the execution layer: what the shaper is, which roles do
+the work, and what should change. A shaper is always set (`shaper` in
+`policy/params.yml`, never `null`), but it need not be an LLM: keep the orchestrator,
+or replace it with a script role (a decision tree, a state machine, a fixed rule) or
+anything else the evidence shows advances the project best per unit of quota. Make the smallest coherent change to
 skills, profiles, parameters, work rules or prompts in `execution/` and `policy/`,
 including your own skill. Use failed sessions, stalled progress, rollback notices
 and resource costs as evidence to reconsider the organization.
