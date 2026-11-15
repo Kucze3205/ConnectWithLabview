@@ -1,0 +1,1142 @@
+{
+ "schema_version": 1,
+ "iteration": 147,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-15T15:23:25Z",
+ "ended": "2026-11-15T17:32:17Z",
+ "engine_version": "0.7.1",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 147,
+  "engine_version": "0.7.1",
+  "policy_rev": "layered-v1:dbc6afcb583877fb2b098883e2606e5e658b83f5a0477ba3bb712ed5d2706f23",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać oraz pisać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Pisanie\n\nPisanie obejmuje tworzenie i zmienianie artefaktów tak samo jak w zwykłym kodzie: agent czyta, zmienia, sprawdza wynik i uczciwie raportuje. Sposób zapisu wybiera pętla i uzasadnia ten wybór. Edycja nie wymaga LabVIEW; sprawdzenie (kompilacja i uruchomienie) może go wymagać, tak jak zwykły kod wymaga interpretera lub kompilatora. Artefakty skompilowane zmienia się przez źródła i przebudowę. Zmieniony plik zachowuje swoją wersję zapisu; zmiana wersji jest widocznym brakiem. Oszacowanie przed wyborem wariantu zapasowego obejmuje też pisanie.\n\nPisanie rozszerza istniejący benchmark i dane pętli, zamiast budować je od nowa. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na akceptację metody obejmującej zadania zapisu.\n\n## Proof of concept\n\nPrzed dalszym przygotowaniem benchmarku pętla dostarcza POC, który ma pokazać, że koncepcja ma sens i że gotowy produkt może powstać. Agent, który nie widział wcześniej danego VI, poprawnie opisuje jego diagram i zmienia jego logikę bez użycia LabVIEW. Wynik otwiera się w LabVIEW bez złamanej strzałki, zachowuje się zgodnie z poleceniem i zachowuje wersję zapisu. Prace nad benchmarkiem niepotrzebne do POC czekają do jego dostarczenia.\n\nPOC jest wyjątkiem od zasady „najpierw metoda, potem implementacja”. Nie jest produktem ani dowodem jakości; jego kod może trafić do produktu dopiero normalną drogą z testami i przeglądem. Pętla dostarcza pliki, raport i krótką instrukcję, według której właściciel sprawdza wynik ręcznie w swoim LabVIEW. Jeśli POC się nie uda, raport pokazuje dowody i możliwe drogi wyjścia, a pętla nie zmienia celu sama. Pętla nie czeka na odpowiedź właściciela: po dostarczeniu wraca do pracy, a brak odpowiedzi nie jest akceptacją metody, jakości ani produktu.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 3,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-fable-5-2"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": [],
+   "owner_paths": [
+    "benchmark/protocol.md",
+    "benchmark/resources-proposal.md",
+    "docs/perpetua/"
+   ]
+  },
+  "owner_requests": {
+   "open": [],
+   "recently_closed": [
+    {
+     "number": 618,
+     "kind": "question",
+     "title": "Commission the human C1 check using the prepared entry point",
+     "decision": "declined",
+     "proposal_sha": "1420b8de7a97423a7669539c82284b3723d529a7f9d1738c69e9fa7ced50afb9",
+     "base_commit": "8cd9fb87e7957ad116454f2e1995af17f1a860a3",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 532,
+     "kind": "question",
+     "title": "Supply one unchanged Save As control for the public constant VI",
+     "decision": "approved",
+     "proposal_sha": "43c901fd2397f545c006447a53fcbdff2642ac6c8622396349ca5b84ed2b6a61",
+     "base_commit": "74e247484dd767ec25363e7d555768ae3434329c",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 525,
+     "kind": "question",
+     "title": "Decide if the Policymaker runs every 3 iterations to use less Claude quota",
+     "decision": "approved",
+     "proposal_sha": "f0596ff8be40fb1127b29a465e03ad783f84523a3b1a411cb2a1d67c78a2e812",
+     "base_commit": "5311fd78af4147246322e8e36b15b01dbf67ed2a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 516,
+     "kind": "question",
+     "title": "Author eight public LabVIEW examples for the controlled comparison",
+     "decision": "approved",
+     "proposal_sha": "f8daf9d9218c66092eb5af8ab84235178a36e5996866b64c969335b88d83260a",
+     "base_commit": "ec0df1dd4aab94dd4d5a7e822bec80ef740ba468",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 462,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "7dd2866f64efe92adb2eb413e24c8f3c255907d547ad09d10006dfac04e2cbd4",
+     "base_commit": "55d1ef62ed80beb5c30c5ede2b3a6ddc340652b2",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 456,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "eb7da9010c291d42188b0adbd014b349ba531b2a3885c0b7c7ba17d5ae0fc28b",
+     "base_commit": "2329d29eb2c5da281abfbbaf01c35fd69ab271fa",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 430,
+     "kind": "question",
+     "title": "Assess the verification method and its documented design limits",
+     "decision": "declined",
+     "proposal_sha": "7cc46d92f80fb184bb65b2ce5182c85dea3914390fb1519daf1de8a3adde2a6f",
+     "base_commit": "39f03859d114bd82b352bb388dffcc5e286c3a2f",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 379,
+     "kind": "question",
+     "title": "Install store-readiness workflow revision 4, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "032bde3f02c9928846ab187b30e307fec1a046b983e4e0bf9aaa9d8895fd57bb",
+     "base_commit": "f9cc3f5dc45ce41c52f45dab358fe86f1f712318",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 354,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #352: Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+     "decision": "approved",
+     "proposal_sha": "e622885491ac26e474be221d66ba95ec44a9278bb8f3ea3fb2e3b446154582fb",
+     "base_commit": "24198b0b14a67e80adb0c7c83796a729a2133f66",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 353,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #351: Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+     "decision": "approved",
+     "proposal_sha": "7f284ecec9fa64f399f677956e00c1311deb113ebbaafbd77ffca7d7e2ce27d9",
+     "base_commit": "24815e0872b589de49f5214c1b15b4182b66649b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 1,
+  "policymaker_sessions": [
+   {
+    "issue": 671,
+    "status": "partial"
+   },
+   {
+    "issue": 661,
+    "status": "done"
+   },
+   {
+    "issue": 651,
+    "status": "done"
+   },
+   {
+    "issue": 641,
+    "status": "done"
+   },
+   {
+    "issue": 631,
+    "status": "done"
+   }
+  ],
+  "outboxes": [],
+  "audit_report": "audit/latest.md",
+  "audit_rev": "d0cf5005c6bf38d776155d691dbcf64864b6b6bb",
+  "startup_notices": [],
+  "rollbacks": {
+   "target": "392c1f370c2831f806256470d97179d32e5b05fc",
+   "streak": 3,
+   "reason": "two Policymaker sessions in a row failed",
+   "at": "2026-11-11T21:41:42Z"
+  }
+ },
+ "policy": {
+  "rev_start": "layered-v1:3caff7ff7c558984ca3ad6025958993268374df3cc9c60954a9c55697a46f2a4",
+  "rev_end": "layered-v1:dbc6afcb583877fb2b098883e2606e5e658b83f5a0477ba3bb712ed5d2706f23",
+  "commit_end": "133d46d8964b35bfab0b0aea2342e2841e5ce72e",
+  "orders_refused": null,
+  "session": 671,
+  "trigger": "every 3 iterations",
+  "passes": 5,
+  "changes": [
+   {
+    "id": "change-671",
+    "issue": 671,
+    "role": "policymaker",
+    "base_commit": "3709db3eb849d90b7abb516d0e68c4d15b984798",
+    "applied_base_commit": "321c404107b6aaf2a96aa0f7fe7dd2b60d780851",
+    "accepted_commit": "812e6420b26ecaa4a1bdd0f67d282615caed310d",
+    "policy_rev_before": "layered-v1:3caff7ff7c558984ca3ad6025958993268374df3cc9c60954a9c55697a46f2a4",
+    "policy_rev_after": "layered-v1:70e98853debb8aa523858c5217b95695e1a69c62270bfea665809677f5b938db",
+    "changed_paths": [
+     "execution/roles/orchestrator/SKILL.md",
+     "policy/observations/0147-policy-check.md",
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-15T15:58:58Z"
+   },
+   {
+    "id": "change-671-2",
+    "issue": 671,
+    "role": "policymaker",
+    "base_commit": "2eab9a19a952c31341f1e2f92fd600639487896d",
+    "applied_base_commit": "40a3c27487093f28203f5aed074f5e5feaad716a",
+    "accepted_commit": "ab3e8ef9ddd5944ab8c851abe33e03cfe5e6effc",
+    "policy_rev_before": "layered-v1:70e98853debb8aa523858c5217b95695e1a69c62270bfea665809677f5b938db",
+    "policy_rev_after": "layered-v1:d8471ccb4e135dc0ba0cc3d746318ecf60f6d5b9e73cbf7fe1a4fefd118c727e",
+    "changed_paths": [
+     "policy/observations/0147-policy-check.md",
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-15T16:14:17Z"
+   },
+   {
+    "id": "change-671-3",
+    "issue": 671,
+    "role": "policymaker",
+    "base_commit": "e601b6f2e2736512e5c51d53209e67fe4de188ea",
+    "applied_base_commit": "7c75f91bc131042fdd88b5566830727e89f10175",
+    "accepted_commit": "b927df9190753e1d04cd422b592e4b7402dd44c6",
+    "policy_rev_before": "layered-v1:d8471ccb4e135dc0ba0cc3d746318ecf60f6d5b9e73cbf7fe1a4fefd118c727e",
+    "policy_rev_after": "layered-v1:dbc6afcb583877fb2b098883e2606e5e658b83f5a0477ba3bb712ed5d2706f23",
+    "changed_paths": [
+     "policy/observations/0147-session-outputs.json"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-15T16:36:18Z"
+   }
+  ]
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "order-671-session-recovery-audit-0147",
+   "title": "Measure recovery after completed sessions and missing output publication",
+   "role": "audit",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "exports": [
+    {
+     "source": "actions",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "streams",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "reports",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "records",
+     "iterations": [
+      138,
+      141,
+      144,
+      146
+     ]
+    }
+   ],
+   "body": "## Goal\nReport, do not fix. Explain only the observable recovery/output-publication paths for #643, #653 and #663, using #669 as a successful control. Policy observation 0147 records accepted Finish checkpoints followed by later report recreation and zero published artifacts. Expected gain: the next Policymaker reads a measured timeline and a specific supported failure point, or a precise evidence limit, before deciding whether an engine-change request is justified. This is an environment audit, not benchmark-quality review.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json and record availability for every requested source/session/iteration. Hash the staged metadata actually used. Read policy/observations/0147-policy-check.md; treat its runtime measurements as starting evidence, not a root-cause verdict. Missing/expired streams are an availability limit, not a reason to reconstruct output artifacts or hold the iteration open.\n- [ ] For each session, distinguish first final runtime checkpoint, workflow/job/step completion where available, results packing/upload/download, epilogue, later kick/resume and final artifact publication. Include timestamps, outcomes, exact source pointers and unavailable transitions. Calculate only durations supported by timestamp pairs; do not label a checkpoint gap as agent-active time. Actions metadata may describe multiple runs: retain run identity and do not silently combine them.\n- [ ] Check whether available evidence locates failure before results packaging, during upload/download, during epilogue, or during recovery. Distinguish facts from explanations consistent with missing evidence. Compare #669 without treating null outputs_asset or every zero-artifact session as proof of failure. Quantify extra model requests/tokens only where attributable to the later continuation; otherwise mark them unmeasured. No subscription-quota or monetary-cost inference from tokens.\n- [ ] Reuse the existing runtime measurements rather than repeating the broad history survey. If necessary, read selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and its named earlier checkpoints. Never print whole session records, prompts, request payloads, credentials or pool credential fields. Inspect bounded source sections only when needed to explain an observed transition. Do not replay historical commands, benchmark probes, evaluator calls or native execution.\n- [ ] Write audit/0147.md and the same report to audit/latest.md. Put supporting normalized measurements in audit/session-recovery-0147.json. Use schema_version=1 and sessions as an object keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings) and durations (objects with name, start, end, seconds; omit unsupported durations). Include a top-level method describing source selection and limitations. Keep files below 2 MB. Link exact staged evidence hashes and runtime pins. Preserve uncertainty; no invented historical state.\n- [ ] Recommend the smallest justified next action with an expected gain and a way to check it. If evidence cannot locate the failure, state exactly what remains unavailable; do not request broad private access, spending or another general audit. Change only audit outputs and any necessary measuring script. Write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert all(isinstance(v['seconds'],(int,float)) and v['seconds']>=0 and v['start'] and v['end'] and v['name'] for x in d['sessions'].values() for v in x['durations']); p=pathlib.Path('audit/0147.md'); assert p.read_bytes()==pathlib.Path('audit/latest.md').read_bytes() and p.stat().st_size>0\"\nThis repository-only check validates output structure and report equality. It does not certify the historical findings; inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: exact measured checkpoints, report sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities and export handling.\n## Budget\n- .session/exports/manifest.json; selected downloaded Actions metadata, streams, reports and records only.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- docs/perpetua/engine.md: recovery/watchdog sections only when needed.\n- .github/workflows/session.yml; .github/loop/loop.py: relevant recovery/publication sections only.\n- Named runtime session checkpoints only if staged evidence leaves a concrete question. No fresh pool or credential audit, no whole large JSON or raw-stream dump. Keep each command output short.\n",
+   "pass": 1,
+   "issue": 672
+  },
+  {
+   "id": "order-671-2-session-recovery-audit-0147",
+   "title": "Measure recovery after completed sessions and missing output publication",
+   "role": "audit",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "exports": [
+    {
+     "source": "actions",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "streams",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "reports",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "records",
+     "iterations": [
+      138,
+      141,
+      144,
+      146
+     ]
+    }
+   ],
+   "body": "## Goal\nReport, do not fix. Explain only the observable recovery/output-publication paths for #643, #653 and #663, using #669 as a successful control. Policy observation 0147 records accepted Finish checkpoints followed by later report recreation and zero published artifacts. Expected gain: the next Policymaker reads a measured timeline and a specific supported failure point, or a precise evidence limit, before deciding whether an engine-change request is justified. This is an environment audit, not benchmark-quality review.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json and record availability for every requested source/session/iteration. Hash the staged metadata actually used. Read policy/observations/0147-policy-check.md; treat its runtime measurements as starting evidence, not a root-cause verdict. Missing/expired streams are an availability limit, not a reason to reconstruct output artifacts or hold the iteration open.\n- [ ] For each session, distinguish first final runtime checkpoint, workflow/job/step completion where available, results packing/upload/download, epilogue, later kick/resume and final artifact publication. Include timestamps, outcomes, exact source pointers and unavailable transitions. Calculate only durations supported by timestamp pairs; do not label a checkpoint gap as agent-active time. Actions metadata may describe multiple runs: retain run identity and do not silently combine them.\n- [ ] Check whether available evidence locates failure before results packaging, during upload/download, during epilogue, or during recovery. Distinguish facts from explanations consistent with missing evidence. Compare #669 without treating null outputs_asset or every zero-artifact session as proof of failure. Quantify extra model requests/tokens only where attributable to the later continuation; otherwise mark them unmeasured. No subscription-quota or monetary-cost inference from tokens.\n- [ ] Reuse the existing runtime measurements rather than repeating the broad history survey. If necessary, read selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and its named earlier checkpoints. Never print whole session records, prompts, request payloads, credentials or pool credential fields. Inspect bounded source sections only when needed to explain an observed transition. Do not replay historical commands, benchmark probes, evaluator calls or native execution.\n- [ ] Write audit/0147.md and the same report to audit/latest.md. Put supporting normalized measurements in audit/session-recovery-0147.json. Use schema_version=1 and sessions as an object keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings) and durations (objects with name, start, end, seconds; omit unsupported durations). Include a top-level method describing source selection and limitations. Keep files below 2 MB. Link exact staged evidence hashes and runtime pins. Preserve uncertainty; no invented historical state.\n- [ ] Recommend the smallest justified next action with an expected gain and a way to check it. If evidence cannot locate the failure, state exactly what remains unavailable; do not request broad private access, spending or another general audit. Change only audit outputs and any necessary measuring script. Write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert all(isinstance(v['seconds'],(int,float)) and v['seconds']>=0 and v['start'] and v['end'] and v['name'] for x in d['sessions'].values() for v in x['durations']); p=pathlib.Path('audit/0147.md'); assert p.read_bytes()==pathlib.Path('audit/latest.md').read_bytes() and p.stat().st_size>0\"\nThis repository-only check validates output structure and report equality. It does not certify the historical findings; inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: exact measured checkpoints, report sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities and export handling.\n## Budget\n- .session/exports/manifest.json; selected downloaded Actions metadata, streams, reports and records only.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- docs/perpetua/engine.md: recovery/watchdog sections only when needed.\n- .github/workflows/session.yml; .github/loop/loop.py: relevant recovery/publication sections only.\n- Named runtime session checkpoints only if staged evidence leaves a concrete question. No fresh pool or credential audit, no whole large JSON or raw-stream dump. Keep each command output short.\n",
+   "pass": 2,
+   "issue": 673
+  },
+  {
+   "id": "order-671-3-session-recovery-audit-0147",
+   "title": "Measure recovery after completed sessions and missing output publication",
+   "role": "audit",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "exports": [
+    {
+     "source": "actions",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "streams",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "reports",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "records",
+     "iterations": [
+      138,
+      141,
+      144,
+      146
+     ]
+    }
+   ],
+   "body": "## Goal\nReport, do not fix. Measure recovery and output publication for sessions #643, #653 and #663, with #669 as the successful control. Expected gain: identify a supported failure point or exact evidence limit before Policymaker considers an engine-change request.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json first. Record availability and hashes for staged evidence used. Read policy/observations/0147-policy-check.md. Missing exports do not justify reconstructing historical artifacts or keeping the iteration open.\n- [ ] Build per-session timelines distinguishing first accepted Finish checkpoint, workflow/job/step outcomes, result packing/upload/download, epilogue, later recovery and published artifacts. Retain run identities, exact source pointers and unavailable transitions. Calculate durations only from supported timestamp pairs; checkpoint gaps are not agent-active time.\n- [ ] Locate the failure only where evidence supports it. Separate facts from possible explanations. Compare #669; null outputs_asset and zero artifacts alone do not establish failure. Measure continuation tokens only where attributable; otherwise report them unmeasured. Tokens do not measure subscription quota or monetary cost.\n- [ ] Reuse the saved runtime measurements. If needed, inspect selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and the earlier checkpoints named in policy evidence. Never print credentials, prompts, request payloads or whole session records. Do not replay historical commands, benchmark probes, evaluators or native execution.\n- [ ] Write audit/0147.md, an identical audit/latest.md and audit/session-recovery-0147.json. JSON has schema_version=1, method, and sessions keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings), and durations (objects with name/start/end/seconds). Omit unsupported durations. Link source hashes and runtime pins. Keep files below 2 MB.\n- [ ] Recommend the smallest supported next action, expected gain and verification. Missing evidence requires a precise limit, not another general audit. Change only audit outputs and necessary measuring scripts; write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert pathlib.Path('audit/0147.md').read_bytes()==pathlib.Path('audit/latest.md').read_bytes(); assert pathlib.Path('audit/0147.md').stat().st_size>0\"\nThis checks output structure, not historical correctness. Inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: measured checkpoints, sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities.\n## Budget\n- .session/exports/manifest.json and selected downloaded Actions metadata, streams, reports and records.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- Relevant recovery/publication sections only: docs/perpetua/engine.md, .github/workflows/session.yml, .github/loop/loop.py.\n- Named runtime checkpoints only for concrete unanswered questions. No fresh credential/pool audit or large raw dumps.\n",
+   "pass": 3,
+   "issue": 674
+  },
+  {
+   "id": "order-671-4-session-recovery-audit-0147",
+   "title": "Measure recovery after completed sessions and missing output publication",
+   "role": "audit",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "exports": [
+    {
+     "source": "actions",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "streams",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "reports",
+     "sessions": [
+      643,
+      653,
+      663,
+      669
+     ]
+    },
+    {
+     "source": "records",
+     "iterations": [
+      138,
+      141,
+      144,
+      146
+     ]
+    }
+   ],
+   "body": "## Goal\nReport, do not fix. Measure recovery and output publication for sessions #643, #653 and #663, with #669 as the successful control. Expected gain: identify a supported failure point or exact evidence limit before Policymaker considers an engine-change request.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json first. Record availability and hashes for staged evidence used. Read policy/observations/0147-policy-check.md. Missing exports do not justify reconstructing historical artifacts or keeping the iteration open.\n- [ ] Build per-session timelines distinguishing first accepted Finish checkpoint, workflow/job/step outcomes, result packing/upload/download, epilogue, later recovery and published artifacts. Retain run identities, exact source pointers and unavailable transitions. Calculate durations only from supported timestamp pairs; checkpoint gaps are not agent-active time.\n- [ ] Locate the failure only where evidence supports it. Separate facts from possible explanations. Compare #669; null outputs_asset and zero artifacts alone do not establish failure. Measure continuation tokens only where attributable; otherwise report them unmeasured. Tokens do not measure subscription quota or monetary cost.\n- [ ] Reuse the saved runtime measurements. If needed, inspect selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and the earlier checkpoints named in policy evidence. Never print credentials, prompts, request payloads or whole session records. Do not replay historical commands, benchmark probes, evaluators or native execution.\n- [ ] Write audit/0147.md, an identical audit/latest.md and audit/session-recovery-0147.json. JSON has schema_version=1, method, and sessions keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings), and durations (objects with name/start/end/seconds). Omit unsupported durations. Link source hashes and runtime pins. Keep files below 2 MB.\n- [ ] Recommend the smallest supported next action, expected gain and verification. Missing evidence requires a precise limit, not another general audit. Change only audit outputs and necessary measuring scripts; write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert pathlib.Path('audit/0147.md').read_bytes()==pathlib.Path('audit/latest.md').read_bytes(); assert pathlib.Path('audit/0147.md').stat().st_size>0\"\nThis checks output structure, not historical correctness. Inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: measured checkpoints, sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities.\n## Budget\n- .session/exports/manifest.json and selected downloaded Actions metadata, streams, reports and records.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- Relevant recovery/publication sections only: docs/perpetua/engine.md, .github/workflows/session.yml, .github/loop/loop.py.\n- Named runtime checkpoints only for concrete unanswered questions. No fresh credential/pool audit or large raw dumps.\n",
+   "pass": 4,
+   "issue": 675
+  },
+  {
+   "id": "attempt-evidence-f2-correction-0147",
+   "title": "Correct #669 F2 diagnostic crash for an unplanned inherited arm",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "limits": {
+    "timeout_minutes": 90,
+    "max_turns": 65
+   },
+   "exports": [
+    {
+     "source": "reports",
+     "sessions": [
+      669
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "issue": 669,
+     "name": "probe-diagnostic-crash-0146.py"
+    },
+    {
+     "issue": 669,
+     "name": "diagnostic-crash-0146.json"
+    }
+   ],
+   "body": "## Goal\nCorrect only #669 finding F2: an attempt and attached record agreeing on an arm absent from pinned source causes legacy_result/accounting to raise StopIteration. Expected gain: rejected evidence retains diagnostic inventory and contributes zero completed comparisons, with consistent evidence unchanged. Report the reproduced finding before fixing. This is synthetic benchmark preparation; no session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json and staged input availability. Pin starting commit/tree and checker hash; expected starting SHA256 is f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98. Save an unchanged checker as .session/artifacts/attempt-evidence-f2-start-0147.py. Verify reviewer reproducer SHA256 8c1a396eb31785ec48874fefa164d17539b8b0856c9b011a427595af41358cf7 and result SHA256 6feefb525316e4d7c0bf12ced99c347d1e1bbe4483e74be95ef40051c01f6e4d before use.\n- [ ] Read #669 and the contract, then save expected rejection, legacy attachment states, complete accounting and retained payload behavior for the F2 reproducer, mutations in each existing arm, and a consistent positive control in .session/artifacts/attempt-evidence-f2-expectations-0147.json BEFORE executing the cases. Derive inventories and expected counts from source bytes, not report counts. Reproduce the current crash and save outcomes before editing; report that observation early. This is an exposed correction, not a blind check.\n- [ ] Make the smallest justified change to benchmark/verify_attempt_evidence_0143.py so unmatched source-arm lookup returns invalid attachment status without an uncaught exception. Preserve validation rejection, diagnostic counts, raw-byte retention, completion gating, existing source joins and caller-supplied consistent semantics. Do not add blanket exception handling or broaden malformed-envelope support. Do not alter existing expected controls, JSON contracts, grouping policy, source pins or denominator/selection semantics.\n- [ ] Add standard-library repository-only benchmark/verify_attempt_evidence_f2_0147.py with saved expected outcomes for the agreed unplanned-arm mutation in each arm and a consistent positive control. Assert rejection, invalid attachment status, full diagnostic inventory and retained bytes, zero completion for each negative (including direct accounting with consistent=True), and preserved positive completion. Expectations must be fixed before observing corrected outcomes, not copied from the checker. It must also run the existing F1 regression once for compatibility, capturing rather than dumping lengthy output. No evaluator, runner, model or native execution.\n- [ ] Write benchmark/attempt-evidence-f2-0147.md with cause, narrow diff, pre/post evidence, checks and exact boundaries; preserve unchanged existing description files. Upload .session/artifacts/attempt-evidence-f2-diff-0147.patch, attempt-evidence-f2-start-0147.py, attempt-evidence-f2-expectations-0147.json and attempt-evidence-f2-results-0147.json. Results identify pre/post source hashes, changed files, fixture identities, observed outcomes, adjudications and command exits. Report hashes and actual availability for each artifact. Admissions, model/reader/native executions, scored runs, semantic passes and real comparisons remain zero; benchmark_ready=false. Parent commits.\n## Verification\npython3 -I benchmark/verify_attempt_evidence_f2_0147.py\n## Context\nThe shaper read iteration 0146 record, report #669 and the current checker. #669's scoped verdict is NOT-CLEAR solely for medium F2: legacy_result uses next without a default for the source arm, and accounting calls it on rejected attempts. Its F1 joins passed independent review probes; the saved regressions missed this rejected-fixture class. Do not repeat the 41-case review suite or reopen completed grouping work. A dependent reviewer will assess only this correction. Read docs/perpetua/evaluation.md for readiness limits; this change cannot establish whole-method readiness or authorize product implementation.\n## Budget\nRead .session/exports/manifest.json; exported report #669; staged .session/inputs/669-probe-diagnostic-crash-0146.py and .session/inputs/669-diagnostic-crash-0146.json; docs/perpetua/evaluation.md; benchmark/attempt-evidence-0143.md; benchmark/verify_attempt_evidence_0143.py; benchmark/verify_attempt_evidence_f1_0145.py; benchmark/attempt-evidence-f1-0145.md. Select only fixture/control/contract portions of benchmark/attempt-evidence-0143.json and inherited definitions in benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py needed by these probes. At most two directly linked references for an ambiguity. No whole large JSON, binary/base64 dumps, broad history or unrelated gap survey. Write repository files only at the three explicitly named correction paths; detailed evidence belongs in artifacts. Keep outputs short and report early.",
+   "issue": 677
+  },
+  {
+   "id": "attempt-evidence-f2-review-0147",
+   "title": "Independently review the F2 accounting correction, changed scope only",
+   "role": "reviewer",
+   "model": "default",
+   "effort": "high",
+   "blocked_by": [
+    "attempt-evidence-f2-correction-0147"
+   ],
+   "limits": {
+    "timeout_minutes": 90,
+    "max_turns": 65
+   },
+   "exports": [
+    {
+     "source": "reports",
+     "sessions": [
+      669
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "issue": 669,
+     "name": "probe-diagnostic-crash-0146.py"
+    },
+    {
+     "issue": 669,
+     "name": "diagnostic-crash-0146.json"
+    },
+    {
+     "from": "attempt-evidence-f2-correction-0147",
+     "name": "attempt-evidence-f2-diff-0147.patch"
+    },
+    {
+     "from": "attempt-evidence-f2-correction-0147",
+     "name": "attempt-evidence-f2-start-0147.py"
+    },
+    {
+     "from": "attempt-evidence-f2-correction-0147",
+     "name": "attempt-evidence-f2-expectations-0147.json"
+    },
+    {
+     "from": "attempt-evidence-f2-correction-0147",
+     "name": "attempt-evidence-f2-results-0147.json"
+    }
+   ],
+   "body": "## Goal\nReport, do not fix: independently review only the #669 F2 correction and effects of its changed code. Expected gain: pinned CLEAR or NOT-CLEAR deciding whether rejected unplanned-arm attachments retain diagnostics without weakening source joins or permitting completion. Do not repeat closed F1 probes or whole-method review. No session can run LabVIEW.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json for availability only and pin merged starting commit/tree and hashes of benchmark/verify_attempt_evidence_0143.py, benchmark/verify_attempt_evidence_f2_0147.py and benchmark/attempt-evidence-f2-0147.md without reading their bodies. Before reading correction code/note/patch or producer expectations/results, read the unchanged diagnostic contract and inherited fixture definitions and save .session/artifacts/attempt-evidence-f2-review-expectations-0147.json. Derive expected rejection, attachment states, diagnostic inventories and retained bytes for an agreed unplanned arm in either attempt and a consistent positive. Record chronology and any exposure/provider fallback; task disclosure means no blind claim.\n- [ ] After saving expectations, read exported #669 and staged evidence, then corrected files and producer artifacts. Verify #669 input hashes against its report and old checker hash f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98. Pin the actual producer merged commit, changed file hashes and patch identity yourself; the shaper cannot know future hashes. Derive historical flat input paths from manifest rather than assuming release directories. Missing evidence must be reported and never reconstructed as author evidence.\n- [ ] Save independent probes under .session/artifacts/ and run them against actual corrected functions. Mutate each existing attempt arm and matching record arm to an absent source arm; verify validate rejects, legacy_result returns invalid and accounting with actual consistency returns full unchanged diagnostic inventories, retained bytes and zero completions. Also test direct accounting with consistent=True stays incomplete for these attachments. Check a consistent positive and one missing-common-prompt object compatibility control with actual validation result. Do not change or reinterpret the inherited caller-supplied consistent contract. Compare predeclared expectations with outcomes, preserving failures and separating harness errors.\n- [ ] Inspect the narrow diff and new regression for meaningful fixed expectations and preservation of source joins, old controls, denominator/selection semantics and retention. Run python3 -I benchmark/verify_attempt_evidence_f2_0147.py once and report exit/output separately from independent evidence. Limit any additional probe to a concrete risk introduced by the diff; do not replay the 41 passing F1 probes or old grouping review.\n- [ ] Write scoped CLEAR or NOT-CLEAR with severity, exact source locations and reproducible evidence; give standards assessment separately. Report current commit/tree, scope hashes, artifact availability, expectation chronology, probes and limitations in .session/report.md; detailed evidence in .session/artifacts/ only. No repository writes. All actual admissions, model/reader/native executions, scored runs, semantic passes and real comparisons stay zero, benchmark_ready=false. Do not request owner action or alter evaluator/policy.\n## Verification\npython3 -I benchmark/verify_attempt_evidence_f2_0147.py\nThis engine command checks the repository regression only; it does not establish the independent review verdict or inspect session artifacts.\n## Context\n#669 found a narrow StopIteration regression in diagnostic accounting while confirming the prior F1 attachment joins. The dependent benchmark task corrects only that path, adds a regression and records evidence. Review its actual merged diff rather than assuming a particular implementation. No prior reviewer repository work needs resuming: #669 was done, unmerged and uploaded 12 artifacts. CLEAR closes this correction scope; remaining readiness gaps and owner acceptance remain under docs/perpetua/evaluation.md.\n## Budget\nBefore expectations: inspect manifest availability and hashes only; read docs/perpetua/evaluation.md, benchmark/attempt-evidence-0143.md and selected fixture/contract portions of benchmark/attempt-evidence-0143.json and benchmark/project-run-binding-0138.json. After expectations: read the three scoped changed files, exported report #669, staged #669 reproducer/result and four producer artifacts listed in inputs; inherited helper definitions in benchmark/verify_project_run_binding_0138.py and existing benchmark/verify_attempt_evidence_f1_0145.py only as needed. At most two directly linked references for a demonstrated ambiguity. No whole large JSON, binary/base64 dumps, broad history, repeated closed suites, evaluator, native execution or git commit. Keep command output short; report findings early.",
+   "issue": 678
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 678,
+    "role": "reviewer",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5137,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/678/f7526cfd2946d175a5cec4ec12b631fc00cbc4cc27c2c6893458325496f8aa16.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/678",
+    "commit": "bae7a750",
+    "tokens": {
+     "in": 2616131,
+     "out": 15164,
+     "cache_read": 2430080,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 2430080,
+      "cache_write": 0,
+      "in": 2616131,
+      "out": 15164
+     }
+    },
+    "turns": 35,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 441,
+    "gate_s": 0,
+    "total_s": 477,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 7
+   },
+   {
+    "issue": 677,
+    "role": "benchmark",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5192,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/677/9449f860783e0973d35ec3fc46c5f6ccb07edcba859cf4f7acc35b8c0af1687d.json"
+    ],
+    "status": "done",
+    "verdict": "accepted",
+    "improved": true,
+    "merged": true,
+    "branch": "task/677",
+    "commit": "e15a5033",
+    "tokens": {
+     "in": 946102,
+     "out": 14687,
+     "cache_read": 871552,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 871552,
+      "cache_write": 0,
+      "in": 946102,
+      "out": 14687
+     }
+    },
+    "turns": 22,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 387,
+    "gate_s": 0,
+    "total_s": 426,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 4
+   },
+   {
+    "issue": 676,
+    "role": "orchestrator",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 14499,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/676/2a42e19fafb1405e6a49f00058569e30df8bba37a4f3346dd3fb265ee2a1cdb5.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/676",
+    "commit": "2e19a3f1",
+    "tokens": {
+     "in": 805521,
+     "out": 7331,
+     "cache_read": 737152,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 737152,
+      "cache_write": 0,
+      "in": 805521,
+      "out": 7331
+     }
+    },
+    "turns": 21,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 215,
+    "gate_s": 0,
+    "total_s": 248,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 675,
+    "role": "audit",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 6100,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/675/37b083d385683af1d30a3255bd494a1f94f5987ed34aea391a5ad7b6137d074b.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/675",
+    "commit": "d0cf5005",
+    "tokens": {
+     "in": 1331680,
+     "out": 13273,
+     "cache_read": 1248256,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 1248256,
+      "cache_write": 0,
+      "in": 1331680,
+      "out": 13273
+     }
+    },
+    "turns": 26,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 394,
+    "gate_s": 0,
+    "total_s": 425,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 674,
+    "role": "audit",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 6100,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/674/2d3aca935f67ba2cbb65ce46619bd99bdc260a7377fa90ab183d894f39ec20fb.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/674",
+    "commit": "f6f5560",
+    "tokens": {
+     "in": 1397379,
+     "out": 9585,
+     "cache_read": 1318272,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 1318272,
+      "cache_write": 0,
+      "in": 1397379,
+      "out": 9585
+     }
+    },
+    "turns": 28,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 329,
+    "gate_s": 0,
+    "total_s": 364,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 673,
+    "role": "audit",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 6475,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/673/63dd331165ec23849f6aff388984c0c0107b8f3104b73b6a15806481fb66883b.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/673",
+    "commit": "e4ef041",
+    "tokens": {
+     "in": 1401947,
+     "out": 10515,
+     "cache_read": 1315456,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 1315456,
+      "cache_write": 0,
+      "in": 1401947,
+      "out": 10515
+     }
+    },
+    "turns": 25,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 323,
+    "gate_s": 0,
+    "total_s": 364,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 672,
+    "role": "audit",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 6474,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/672/e0d48fd029cff97c9e125d6cb0cff972fd9631ee4f456e01a9b6a2a12894bbc5.json"
+    ],
+    "status": "done",
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/672",
+    "commit": "06608d0",
+    "tokens": {
+     "in": 1052596,
+     "out": 11348,
+     "cache_read": 973440,
+     "cache_write": 0
+    },
+    "models": {
+     "codex/gpt-6.1-sol": {
+      "cache_read": 973440,
+      "cache_write": 0,
+      "in": 1052596,
+      "out": 11348
+     }
+    },
+    "turns": 25,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 330,
+    "gate_s": 0,
+    "total_s": 374,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": {
+   "issue": 676,
+   "role": "orchestrator",
+   "model": "gpt-6.1-sol",
+   "effort": "medium",
+   "startup": {
+    "status": "ok",
+    "model": "claude-sonnet-5-5",
+    "tokens": 14499,
+    "limit": 100000
+   },
+   "report_snapshots": [
+    ".github/loop/data/session-reports/676/2a42e19fafb1405e6a49f00058569e30df8bba37a4f3346dd3fb265ee2a1cdb5.json"
+   ],
+   "status": "done",
+   "verdict": null,
+   "improved": false,
+   "merged": true,
+   "branch": "task/676",
+   "commit": "2e19a3f1",
+   "tokens": {
+    "in": 805521,
+    "out": 7331,
+    "cache_read": 737152,
+    "cache_write": 0
+   },
+   "models": {
+    "codex/gpt-6.1-sol": {
+     "cache_read": 737152,
+     "cache_write": 0,
+     "in": 805521,
+     "out": 7331
+    }
+   },
+   "turns": 21,
+   "peak_context": 0,
+   "attempts": 0,
+   "agent_s": 215,
+   "gate_s": 0,
+   "total_s": 248,
+   "parked_s": 0,
+   "runner": "Linux",
+   "artifacts": 0
+  },
+  "verdict": {
+   "value": "accepted",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": true
+  },
+  "tokens": {
+   "in": 9551356,
+   "out": 81903,
+   "cache_read": 8894208,
+   "cache_write": 0,
+   "by_model": {
+    "codex/gpt-6.1-sol": {
+     "in": 9551356,
+     "out": 81903,
+     "cache_read": 8894208,
+     "cache_write": 0
+    }
+   },
+   "cache_read_share": 0.482
+  },
+  "limit_hits": 0,
+  "wall_s": 7733,
+  "critical_path_s": 903,
+  "width": 5,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
