@@ -1,0 +1,47 @@
+[
+ {
+  "id": "review-project-pair-grouping-0142",
+  "title": "Independently review #653 grouping correction against #649 F1",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [
+   {
+    "issue": 649,
+    "name": "project-run-binding-review-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "independent-probe-results-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "counterexample-case_id-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "counterexample-pair_id-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "review-binding-probe-0140.py"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     649,
+     653
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Independently review only #653's three-file correction against #649 F1. Expected gain: a pinned CLEAR or NOT-CLEAR verdict on cross-arm grouping and group-derived synthetic completion, supported by independent probes and an explicit historical-evidence limit. This is preparation review, not whole-method readiness. No session can run LabVIEW.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json for availability only. Before opening author expectations/results or the correction report, derive independent expectations from #649 F1 and normative grouping/repetition requirements; save .session/artifacts/grouping-expectations-0142.json. Read only the normative portions of the scoped Markdown and referenced contracts at this stage; defer observed/control sections and checker implementation. Record exposure; no model-unseen claim.\n- [ ] Record current commit, scoped tree and SHA256 hashes for benchmark/project-run-binding-0138.md, benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py. Resolve accepted correction commit 51e672d from record 0141 and compare these exact files with that commit; review its bounded diff against starting commit 253077a58411d1e380e79a72892e227defe994cb. HEAD equality is unnecessary; substantive scoped drift requires explicit repinning or a limited verdict, not silent substitution. Inspect both exported reports and all five staged inputs after expectations are saved. Check #649 ledger SHA256 082bec362e95bc547ed1b64b5d292bbeb663cfa14e9d8282fc59cf3c122c43a1, results cd9c42c3ca8223768dc55bde714a05642fdf4333726d5a69c6dbc261b964eacc, probe 0ccf441d7e206829ce8e1e77722761af3836fb730404a98aebd754a906d355db, case counterexample 382afde54eb4aeb294fcbf6d122d26d54b2d7e91e3a5f2077b9de1be6f933743 and pair counterexample 42b5e19a6c6fa53385722a3488dcb6fcf11657d33fb8bc7b019174d8c590a75c.\n- [ ] Review same-case/same-pair grouping, explicit arm-specific repetition mapping, unique slots/records/attempts and completion derived from valid opposite-arm groups. Independently probe coordinated case/pair splits, repetition boundaries, valid shared and arm-specific repetition maps, non-hardcoded alternative identities, and missing/duplicate/interrupted/failed arms. Check any supplied probe before executing it. Invalid groups cannot count as completed; retained failures and attempts remain visible. Separate linkage from accounting and derive counts from actual bytes. Do not reinterpret repetition IDs as retries.\n- [ ] Review the bounded diff's preservation of original records/nulls/source pins, separate correctness/grounding accounting, blocked real admission and zero actual execution/admission/semantic counts. Inspect relevant helpers before executing them; no historical builder/main/check or evaluator invocation. Run the repository-only command below, then compare independent observations with saved repository controls/results. Do not replay closed Standards review or demand general multi-group/real-run support outside this single-comparison fixture's declared scope.\n- [ ] Record that #653's report links project-pair-grouping-correction-0141.json and focused-grouping-after-0141.json, while record 0141 lists zero uploaded artifacts and the prepared checkout has no matching correction ledger. They are not required staged inputs. Do not reconstruct them or certify their historical predeclaration/before-after claims. Use the accepted commit, bounded diff, repository observations and newly executed independent probes for the technical F1 verdict; report process-evidence limitations separately. Missing or corrupt #649 required evidence must be reported precisely; continue useful current-scope probes without guessing historical contents.\n- [ ] Save .session/artifacts/project-pair-grouping-review-0142.json with exact pins, availability/hashes, independent expectations, commands/results, verdict, limitations and findings. Each finding needs severity, source pointer, reproducible counterexample, expected/actual outcomes and correction boundary. Write .session/report.md with a technical F1 verdict and separate historical-evidence assessment; reviewer writes no repository files. A CLEAR technical verdict requires independent evidence for the whole named technical scope, never an assumption from the author's report. No method acceptance, native validity, benchmark readiness or product improvement claim.\n## Verification\npython3 -I benchmark/verify_project_run_binding_0138.py\nThis repository-only check does not inspect session artifacts or establish independent review clearance.\n## Context\nRecord 0141 reports #653 done, accepted and merged at 51e672d. The shaper read its report and the package Markdown: the correction declares case/pair groups with explicit per-arm repetition mappings and group-derived completion. Reported control totals are author claims, not shaper measurements. The report-linked correction artifacts were not available to the shaper; do not make another missing-artifact-only continuation. #649 F1 remains open until changed-scope review; its Standards CLEAR remains closed. The unsuccessful POC was already delivered; benchmark preparation continues.\n## Budget\nFirst availability only, then #649's F1 requirement and normative Cross-arm grouping correction paragraphs in benchmark/project-run-binding-0138.md, docs/perpetua/evaluation.md, and exact grouping/repetition sections of benchmark/project-paired-0136.md and benchmark/baseline/runner-contract.md. Save independent expectations before author results. Later read both exported reports, five flat .session/inputs/649-* files, the three scoped files and their pinned diff. Select JSON pointers, not whole large fixture or counterexample dumps. Report-byte/snapshot identities differ; preserve both. At most two additional direct references for a demonstrated discrepancy. No broad sources, closed-review replay, evaluator, old builders, real model/reader/native execution, owner request, repository edits or index promotion. Keep output short and report early; unfinished work must preserve exact pins and remaining checks.",
+  "issue": 656
+ }
+]
