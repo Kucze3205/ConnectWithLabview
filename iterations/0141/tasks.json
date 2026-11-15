@@ -1,0 +1,46 @@
+[
+ {
+  "id": "correct-project-pair-grouping-0141",
+  "title": "Correct cross-arm grouping and synthetic completion accounting from review #649 F1",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [
+   {
+    "issue": 649,
+    "name": "project-run-binding-review-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "independent-probe-results-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "review-binding-probe-0140.py"
+   },
+   {
+    "issue": 649,
+    "name": "counterexample-case_id-0140.json"
+   },
+   {
+    "issue": 649,
+    "name": "counterexample-pair_id-0140.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     649
+    ]
+   }
+  ],
+  "body": "## Goal\nCorrect only review #649's NOT-CLEAR F1 in benchmark/project-run-binding-0138.md, benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py. Expected gain: coordinated cross-arm case/pair splits are rejected and cannot count as complete synthetic comparisons, with reproducible controls and a bounded diff ready for separate independent review. This is preparation consistency work, not trusted admission or product implementation. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json and confirm availability of exported report #649 and all five inputs. Check the review ledger SHA256 082bec362e95bc547ed1b64b5d292bbeb663cfa14e9d8282fc59cf3c122c43a1, results cd9c42c3ca8223768dc55bde714a05642fdf4333726d5a69c6dbc261b964eacc, probe 0ccf441d7e206829ce8e1e77722761af3836fb730404a98aebd754a906d355db, case counterexample 382afde54eb4aeb294fcbf6d122d26d54b2d7e91e3a5f2077b9de1be6f933743 and pair counterexample 42b5e19a6c6fa53385722a3488dcb6fcf11657d33fb8bc7b019174d8c590a75c. Record starting commit and three-file hashes; compare scoped bytes to #649's ledger before editing. Current HEAD need not equal its reviewed commit. Stop and report exact missing input or substantive scope drift rather than reconstructing evidence.\n- [ ] Inspect the saved probe before running it. Reproduce F1 against unchanged scoped bytes and save concise before-results in .session/artifacts/. The coordinated mutations keep plan/record/attempt identities and dependent hashes consistent but split the tool arm's case_id or pair_id. Record observed linkage and accounting separately; derive any counts from actual inputs. Do not repeat the entire previous review or source inventory investigation.\n- [ ] Define valid group identity using the existing case_id, pair_id and repetition_id semantics. Enforce matching cross-arm identities within each planned comparison, unique slots/records/arms and the existing synthetic scope. Derive completion from valid groups and corresponding records/attempts, rather than global record count or outcome flags alone. Missing, duplicate, mismatched, interrupted or failed arms cannot complete a group; retained attempts and failures stay visible. Do not hardcode current fixture identifiers as a substitute for grouping.\n- [ ] Before running the corrected rehearsal, save predeclared expected outcomes for coordinated case and pair splits and a repetition-identity boundary control; include a valid positive group and existing missing/duplicate/interrupted-arm controls without weakening their expectations. Where invalid plan structure prevents accounting, still require an explicit zero-completion outcome or rejection that cannot be reported as a complete pair. Reuse the existing fixture/mutation format and saved counterexamples. Preserve old synthetic envelopes, mandatory nulls, exact source pins and source-defined separate correctness/grounding denominators.\n- [ ] Update only the three named package files: grouping contract, controls, affected checker logic and saved observations/pins as required. Keep original artifacts, keys, legacy validators, paired package and preparation index unchanged. All actual execution/admission/semantic counts remain zero, unknown costs null, native fidelity unavailable, verification not performed and real admission blocked. Do not claim retries or execution beyond what this design-only fixture supports.\n- [ ] Run the repository-only command below after the final edit and rerun the focused saved F1 probes, recording before/after differences. Save .session/artifacts/project-pair-grouping-correction-0141.json with input hashes, start/final scoped hashes, changed pointers, predeclared expectations, commands/results and exact subsequent review boundary. Report the bounded correction and unresolved gaps in .session/report.md. Separate independent review is still required; do not self-award CLEAR, method acceptance, benchmark readiness or product improvement.\n## Verification\npython3 -I benchmark/verify_project_run_binding_0138.py\nThis repository-only data consistency command does not inspect session artifacts, establish independent review clearance or admit a real run.\n## Context\nReview #649 is done with Standards CLEAR and Spec NOT-CLEAR F1. It reports coordinated case_id and pair_id splits pass linkage and count one structurally complete synthetic pair. The shaper inspected the checker: linkage checks records against individual slots, while synthetic_accounting uses global counts/outcomes without verifying a common case/pair group. The unconditional real-admission block remains intact. The saved package is on main; no start_branch or recreation of #643/#646 is needed. The unsuccessful POC was delivered earlier; benchmark preparation continues without native-success claims.\n## Budget\nFirst read exports manifest, #649 report and the five .session/inputs/649-* files named above; inspect the review ledger/results selectively, not whole counterexample JSON dumps. Read the three target files, docs/perpetua/evaluation.md and roles.md, and exact identity/grouping sections of benchmark/project-paired-0136.md/.json and benchmark/baseline/runner-contract.md as needed. Read relevant legacy helper bodies only to preserve existing contracts. At most two additional direct references for a demonstrated discrepancy. No broad source searches, old builders, closed-review replay, evaluator invocation, real model/reader/native execution, owner request, index promotion or product changes. Keep command output short, report early and preserve exact remaining checks if unfinished.",
+  "issue": 653
+ }
+]
