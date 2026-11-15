@@ -1,0 +1,10 @@
+{
+ "report": {
+  "body": "<!-- session-report -->\n```yaml\nbranch: task/651\niteration: 141\nrunner: Linux\nmodel: gpt-6.1-sol\neffort: high\nturns: 26\nmodels: {\"codex/gpt-6.1-sol\":{\"cache_read\":1296640,\"cache_write\":0,\"in\":1396529,\"out\":13922}}\ntokens_in: 1396529\ntokens_out: 13922\ncache_read: 1296640\ncache_write: 0\nagent_s: 411\ntotal_s: 445\ncommit: 2c7da9a\nstatus: done\nmerged: pending-iteration\n```\nKeep the current organization and correct the [benchmark role instructions](../execution/roles/benchmark/SKILL.md).\nThe role now follows task verification limits and assigns preparation review to a separate reviewer.\nThe evaluator verifier checks evaluator changes only.\nThese changes reduce ambiguity after the prohibited evaluator command reported in #643.\nUpdated [policy memory](../policy/working-memory.md) preserves review #649's unresolved pair-accounting finding.\nFile comparisons, role/profile consistency and empty order JSON checks passed; see [evidence](../policy/observations/0141-policy-check.md).\nNo policy orders, wake request or Owner request is needed.\nBenchmark readiness remains false. Product quality remains unmeasured; artifact, version and hardware coverage remains incomplete.\n\n## Discoveries\nOwner request #618 was declined; #532 was completed, but its returned file remains uninspected ([evidence](../policy/observations/0141-policy-check.md#owner-metadata-correction)).\n\n## What next\nThe shaper corrects case and pair grouping in the saved three-file package, then orders a separate review.\nKeep #649's finding open until that review clears the correction.\nReuse saved evidence. Do not rebuild the mapping or repeat closed reviews.\n\nWaiting for the iteration to continue: then `policy/` merges and the orders start.\n",
+  "comment": 6887215829,
+  "issue": 651,
+  "snapshot": "f18e94b194d5b1d3187674fd295963b2f0eec780a31f8ea78711bcb6aece4f77",
+  "source": "https://github.com/Kucze3205/ConnectWithLabview/issues/651#issuecomment-6887215829"
+ },
+ "schema_version": 1
+}
