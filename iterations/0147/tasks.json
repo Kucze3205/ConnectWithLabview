@@ -157,5 +157,58 @@
   "body": "## Goal\nReport, do not fix. Measure recovery and output publication for sessions #643, #653 and #663, with #669 as the successful control. Expected gain: identify a supported failure point or exact evidence limit before Policymaker considers an engine-change request.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json first. Record availability and hashes for staged evidence used. Read policy/observations/0147-policy-check.md. Missing exports do not justify reconstructing historical artifacts or keeping the iteration open.\n- [ ] Build per-session timelines distinguishing first accepted Finish checkpoint, workflow/job/step outcomes, result packing/upload/download, epilogue, later recovery and published artifacts. Retain run identities, exact source pointers and unavailable transitions. Calculate durations only from supported timestamp pairs; checkpoint gaps are not agent-active time.\n- [ ] Locate the failure only where evidence supports it. Separate facts from possible explanations. Compare #669; null outputs_asset and zero artifacts alone do not establish failure. Measure continuation tokens only where attributable; otherwise report them unmeasured. Tokens do not measure subscription quota or monetary cost.\n- [ ] Reuse the saved runtime measurements. If needed, inspect selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and the earlier checkpoints named in policy evidence. Never print credentials, prompts, request payloads or whole session records. Do not replay historical commands, benchmark probes, evaluators or native execution.\n- [ ] Write audit/0147.md, an identical audit/latest.md and audit/session-recovery-0147.json. JSON has schema_version=1, method, and sessions keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings), and durations (objects with name/start/end/seconds). Omit unsupported durations. Link source hashes and runtime pins. Keep files below 2 MB.\n- [ ] Recommend the smallest supported next action, expected gain and verification. Missing evidence requires a precise limit, not another general audit. Change only audit outputs and necessary measuring scripts; write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert pathlib.Path('audit/0147.md').read_bytes()==pathlib.Path('audit/latest.md').read_bytes(); assert pathlib.Path('audit/0147.md').stat().st_size>0\"\nThis checks output structure, not historical correctness. Inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: measured checkpoints, sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities.\n## Budget\n- .session/exports/manifest.json and selected downloaded Actions metadata, streams, reports and records.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- Relevant recovery/publication sections only: docs/perpetua/engine.md, .github/workflows/session.yml, .github/loop/loop.py.\n- Named runtime checkpoints only for concrete unanswered questions. No fresh credential/pool audit or large raw dumps.\n",
   "pass": 3,
   "issue": 674
+ },
+ {
+  "id": "order-671-4-session-recovery-audit-0147",
+  "title": "Measure recovery after completed sessions and missing output publication",
+  "role": "audit",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "actions",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "streams",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "reports",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "records",
+    "iterations": [
+     138,
+     141,
+     144,
+     146
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Measure recovery and output publication for sessions #643, #653 and #663, with #669 as the successful control. Expected gain: identify a supported failure point or exact evidence limit before Policymaker considers an engine-change request.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json first. Record availability and hashes for staged evidence used. Read policy/observations/0147-policy-check.md. Missing exports do not justify reconstructing historical artifacts or keeping the iteration open.\n- [ ] Build per-session timelines distinguishing first accepted Finish checkpoint, workflow/job/step outcomes, result packing/upload/download, epilogue, later recovery and published artifacts. Retain run identities, exact source pointers and unavailable transitions. Calculate durations only from supported timestamp pairs; checkpoint gaps are not agent-active time.\n- [ ] Locate the failure only where evidence supports it. Separate facts from possible explanations. Compare #669; null outputs_asset and zero artifacts alone do not establish failure. Measure continuation tokens only where attributable; otherwise report them unmeasured. Tokens do not measure subscription quota or monetary cost.\n- [ ] Reuse the saved runtime measurements. If needed, inspect selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and the earlier checkpoints named in policy evidence. Never print credentials, prompts, request payloads or whole session records. Do not replay historical commands, benchmark probes, evaluators or native execution.\n- [ ] Write audit/0147.md, an identical audit/latest.md and audit/session-recovery-0147.json. JSON has schema_version=1, method, and sessions keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings), and durations (objects with name/start/end/seconds). Omit unsupported durations. Link source hashes and runtime pins. Keep files below 2 MB.\n- [ ] Recommend the smallest supported next action, expected gain and verification. Missing evidence requires a precise limit, not another general audit. Change only audit outputs and necessary measuring scripts; write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert pathlib.Path('audit/0147.md').read_bytes()==pathlib.Path('audit/latest.md').read_bytes(); assert pathlib.Path('audit/0147.md').stat().st_size>0\"\nThis checks output structure, not historical correctness. Inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: measured checkpoints, sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities.\n## Budget\n- .session/exports/manifest.json and selected downloaded Actions metadata, streams, reports and records.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- Relevant recovery/publication sections only: docs/perpetua/engine.md, .github/workflows/session.yml, .github/loop/loop.py.\n- Named runtime checkpoints only for concrete unanswered questions. No fresh credential/pool audit or large raw dumps.\n",
+  "pass": 4,
+  "issue": 675
  }
 ]
