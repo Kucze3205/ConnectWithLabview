@@ -210,5 +210,87 @@
   "body": "## Goal\nReport, do not fix. Measure recovery and output publication for sessions #643, #653 and #663, with #669 as the successful control. Expected gain: identify a supported failure point or exact evidence limit before Policymaker considers an engine-change request.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json first. Record availability and hashes for staged evidence used. Read policy/observations/0147-policy-check.md. Missing exports do not justify reconstructing historical artifacts or keeping the iteration open.\n- [ ] Build per-session timelines distinguishing first accepted Finish checkpoint, workflow/job/step outcomes, result packing/upload/download, epilogue, later recovery and published artifacts. Retain run identities, exact source pointers and unavailable transitions. Calculate durations only from supported timestamp pairs; checkpoint gaps are not agent-active time.\n- [ ] Locate the failure only where evidence supports it. Separate facts from possible explanations. Compare #669; null outputs_asset and zero artifacts alone do not establish failure. Measure continuation tokens only where attributable; otherwise report them unmeasured. Tokens do not measure subscription quota or monetary cost.\n- [ ] Reuse the saved runtime measurements. If needed, inspect selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and the earlier checkpoints named in policy evidence. Never print credentials, prompts, request payloads or whole session records. Do not replay historical commands, benchmark probes, evaluators or native execution.\n- [ ] Write audit/0147.md, an identical audit/latest.md and audit/session-recovery-0147.json. JSON has schema_version=1, method, and sessions keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings), and durations (objects with name/start/end/seconds). Omit unsupported durations. Link source hashes and runtime pins. Keep files below 2 MB.\n- [ ] Recommend the smallest supported next action, expected gain and verification. Missing evidence requires a precise limit, not another general audit. Change only audit outputs and necessary measuring scripts; write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert pathlib.Path('audit/0147.md').read_bytes()==pathlib.Path('audit/latest.md').read_bytes(); assert pathlib.Path('audit/0147.md').stat().st_size>0\"\nThis checks output structure, not historical correctness. Inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: measured checkpoints, sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities.\n## Budget\n- .session/exports/manifest.json and selected downloaded Actions metadata, streams, reports and records.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- Relevant recovery/publication sections only: docs/perpetua/engine.md, .github/workflows/session.yml, .github/loop/loop.py.\n- Named runtime checkpoints only for concrete unanswered questions. No fresh credential/pool audit or large raw dumps.\n",
   "pass": 4,
   "issue": 675
+ },
+ {
+  "id": "attempt-evidence-f2-correction-0147",
+  "title": "Correct #669 F2 diagnostic crash for an unplanned inherited arm",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     669
+    ]
+   }
+  ],
+  "inputs": [
+   {
+    "issue": 669,
+    "name": "probe-diagnostic-crash-0146.py"
+   },
+   {
+    "issue": 669,
+    "name": "diagnostic-crash-0146.json"
+   }
+  ],
+  "body": "## Goal\nCorrect only #669 finding F2: an attempt and attached record agreeing on an arm absent from pinned source causes legacy_result/accounting to raise StopIteration. Expected gain: rejected evidence retains diagnostic inventory and contributes zero completed comparisons, with consistent evidence unchanged. Report the reproduced finding before fixing. This is synthetic benchmark preparation; no session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json and staged input availability. Pin starting commit/tree and checker hash; expected starting SHA256 is f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98. Save an unchanged checker as .session/artifacts/attempt-evidence-f2-start-0147.py. Verify reviewer reproducer SHA256 8c1a396eb31785ec48874fefa164d17539b8b0856c9b011a427595af41358cf7 and result SHA256 6feefb525316e4d7c0bf12ced99c347d1e1bbe4483e74be95ef40051c01f6e4d before use.\n- [ ] Read #669 and the contract, then save expected rejection, legacy attachment states, complete accounting and retained payload behavior for the F2 reproducer, mutations in each existing arm, and a consistent positive control in .session/artifacts/attempt-evidence-f2-expectations-0147.json BEFORE executing the cases. Derive inventories and expected counts from source bytes, not report counts. Reproduce the current crash and save outcomes before editing; report that observation early. This is an exposed correction, not a blind check.\n- [ ] Make the smallest justified change to benchmark/verify_attempt_evidence_0143.py so unmatched source-arm lookup returns invalid attachment status without an uncaught exception. Preserve validation rejection, diagnostic counts, raw-byte retention, completion gating, existing source joins and caller-supplied consistent semantics. Do not add blanket exception handling or broaden malformed-envelope support. Do not alter existing expected controls, JSON contracts, grouping policy, source pins or denominator/selection semantics.\n- [ ] Add standard-library repository-only benchmark/verify_attempt_evidence_f2_0147.py with saved expected outcomes for the agreed unplanned-arm mutation in each arm and a consistent positive control. Assert rejection, invalid attachment status, full diagnostic inventory and retained bytes, zero completion for each negative (including direct accounting with consistent=True), and preserved positive completion. Expectations must be fixed before observing corrected outcomes, not copied from the checker. It must also run the existing F1 regression once for compatibility, capturing rather than dumping lengthy output. No evaluator, runner, model or native execution.\n- [ ] Write benchmark/attempt-evidence-f2-0147.md with cause, narrow diff, pre/post evidence, checks and exact boundaries; preserve unchanged existing description files. Upload .session/artifacts/attempt-evidence-f2-diff-0147.patch, attempt-evidence-f2-start-0147.py, attempt-evidence-f2-expectations-0147.json and attempt-evidence-f2-results-0147.json. Results identify pre/post source hashes, changed files, fixture identities, observed outcomes, adjudications and command exits. Report hashes and actual availability for each artifact. Admissions, model/reader/native executions, scored runs, semantic passes and real comparisons remain zero; benchmark_ready=false. Parent commits.\n## Verification\npython3 -I benchmark/verify_attempt_evidence_f2_0147.py\n## Context\nThe shaper read iteration 0146 record, report #669 and the current checker. #669's scoped verdict is NOT-CLEAR solely for medium F2: legacy_result uses next without a default for the source arm, and accounting calls it on rejected attempts. Its F1 joins passed independent review probes; the saved regressions missed this rejected-fixture class. Do not repeat the 41-case review suite or reopen completed grouping work. A dependent reviewer will assess only this correction. Read docs/perpetua/evaluation.md for readiness limits; this change cannot establish whole-method readiness or authorize product implementation.\n## Budget\nRead .session/exports/manifest.json; exported report #669; staged .session/inputs/669-probe-diagnostic-crash-0146.py and .session/inputs/669-diagnostic-crash-0146.json; docs/perpetua/evaluation.md; benchmark/attempt-evidence-0143.md; benchmark/verify_attempt_evidence_0143.py; benchmark/verify_attempt_evidence_f1_0145.py; benchmark/attempt-evidence-f1-0145.md. Select only fixture/control/contract portions of benchmark/attempt-evidence-0143.json and inherited definitions in benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py needed by these probes. At most two directly linked references for an ambiguity. No whole large JSON, binary/base64 dumps, broad history or unrelated gap survey. Write repository files only at the three explicitly named correction paths; detailed evidence belongs in artifacts. Keep outputs short and report early.",
+  "issue": 677
+ },
+ {
+  "id": "attempt-evidence-f2-review-0147",
+  "title": "Independently review the F2 accounting correction, changed scope only",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "attempt-evidence-f2-correction-0147"
+  ],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     669
+    ]
+   }
+  ],
+  "inputs": [
+   {
+    "issue": 669,
+    "name": "probe-diagnostic-crash-0146.py"
+   },
+   {
+    "issue": 669,
+    "name": "diagnostic-crash-0146.json"
+   },
+   {
+    "from": "attempt-evidence-f2-correction-0147",
+    "name": "attempt-evidence-f2-diff-0147.patch"
+   },
+   {
+    "from": "attempt-evidence-f2-correction-0147",
+    "name": "attempt-evidence-f2-start-0147.py"
+   },
+   {
+    "from": "attempt-evidence-f2-correction-0147",
+    "name": "attempt-evidence-f2-expectations-0147.json"
+   },
+   {
+    "from": "attempt-evidence-f2-correction-0147",
+    "name": "attempt-evidence-f2-results-0147.json"
+   }
+  ],
+  "body": "## Goal\nReport, do not fix: independently review only the #669 F2 correction and effects of its changed code. Expected gain: pinned CLEAR or NOT-CLEAR deciding whether rejected unplanned-arm attachments retain diagnostics without weakening source joins or permitting completion. Do not repeat closed F1 probes or whole-method review. No session can run LabVIEW.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json for availability only and pin merged starting commit/tree and hashes of benchmark/verify_attempt_evidence_0143.py, benchmark/verify_attempt_evidence_f2_0147.py and benchmark/attempt-evidence-f2-0147.md without reading their bodies. Before reading correction code/note/patch or producer expectations/results, read the unchanged diagnostic contract and inherited fixture definitions and save .session/artifacts/attempt-evidence-f2-review-expectations-0147.json. Derive expected rejection, attachment states, diagnostic inventories and retained bytes for an agreed unplanned arm in either attempt and a consistent positive. Record chronology and any exposure/provider fallback; task disclosure means no blind claim.\n- [ ] After saving expectations, read exported #669 and staged evidence, then corrected files and producer artifacts. Verify #669 input hashes against its report and old checker hash f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98. Pin the actual producer merged commit, changed file hashes and patch identity yourself; the shaper cannot know future hashes. Derive historical flat input paths from manifest rather than assuming release directories. Missing evidence must be reported and never reconstructed as author evidence.\n- [ ] Save independent probes under .session/artifacts/ and run them against actual corrected functions. Mutate each existing attempt arm and matching record arm to an absent source arm; verify validate rejects, legacy_result returns invalid and accounting with actual consistency returns full unchanged diagnostic inventories, retained bytes and zero completions. Also test direct accounting with consistent=True stays incomplete for these attachments. Check a consistent positive and one missing-common-prompt object compatibility control with actual validation result. Do not change or reinterpret the inherited caller-supplied consistent contract. Compare predeclared expectations with outcomes, preserving failures and separating harness errors.\n- [ ] Inspect the narrow diff and new regression for meaningful fixed expectations and preservation of source joins, old controls, denominator/selection semantics and retention. Run python3 -I benchmark/verify_attempt_evidence_f2_0147.py once and report exit/output separately from independent evidence. Limit any additional probe to a concrete risk introduced by the diff; do not replay the 41 passing F1 probes or old grouping review.\n- [ ] Write scoped CLEAR or NOT-CLEAR with severity, exact source locations and reproducible evidence; give standards assessment separately. Report current commit/tree, scope hashes, artifact availability, expectation chronology, probes and limitations in .session/report.md; detailed evidence in .session/artifacts/ only. No repository writes. All actual admissions, model/reader/native executions, scored runs, semantic passes and real comparisons stay zero, benchmark_ready=false. Do not request owner action or alter evaluator/policy.\n## Verification\npython3 -I benchmark/verify_attempt_evidence_f2_0147.py\nThis engine command checks the repository regression only; it does not establish the independent review verdict or inspect session artifacts.\n## Context\n#669 found a narrow StopIteration regression in diagnostic accounting while confirming the prior F1 attachment joins. The dependent benchmark task corrects only that path, adds a regression and records evidence. Review its actual merged diff rather than assuming a particular implementation. No prior reviewer repository work needs resuming: #669 was done, unmerged and uploaded 12 artifacts. CLEAR closes this correction scope; remaining readiness gaps and owner acceptance remain under docs/perpetua/evaluation.md.\n## Budget\nBefore expectations: inspect manifest availability and hashes only; read docs/perpetua/evaluation.md, benchmark/attempt-evidence-0143.md and selected fixture/contract portions of benchmark/attempt-evidence-0143.json and benchmark/project-run-binding-0138.json. After expectations: read the three scoped changed files, exported report #669, staged #669 reproducer/result and four producer artifacts listed in inputs; inherited helper definitions in benchmark/verify_project_run_binding_0138.py and existing benchmark/verify_attempt_evidence_f1_0145.py only as needed. At most two directly linked references for a demonstrated ambiguity. No whole large JSON, binary/base64 dumps, broad history, repeated closed suites, evaluator, native execution or git commit. Keep command output short; report findings early.",
+  "issue": 678
  }
 ]
