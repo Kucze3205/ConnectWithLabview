@@ -1,0 +1,33 @@
+[
+ {
+  "id": "review-project-run-binding-0140",
+  "title": "Independently review the saved declaration-pair run binding package",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 90,
+   "max_turns": 65
+  },
+  "inputs": [
+   {
+    "issue": 646,
+    "name": "resume-binding-0139.json"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     646,
+     643,
+     639,
+     636
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Independently review only benchmark/project-run-binding-0138.md, benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py against their pinned inputs and docs/perpetua/evaluation.md. Expected gain: a pinned Standards/Spec CLEAR or NOT-CLEAR verdict identifying whether this preparation mapping, proposed joins and data-only checker faithfully preserve the existing contracts and unsupported boundaries. This is no whole-method readiness review or product implementation. No session can run LabVIEW.\n## Acceptance\n- [ ] Inspect .session/exports/manifest.json and confirm availability of the #646/#643/#639/#636 reports and .session/inputs/646-resume-binding-0139.json. Check that artifact's SHA256 is 4de32e516c08655a629dbb187842caa4ab82ecb7e5d2ed5e00c0084bf0151b83. Record the actual starting commit and SHA256 pins of the three review files. Compare their bytes to the artifact's scoped pins and the saved #646 baseline a59d88d529a705ed62c3c8ea800bc8b39b8fd97c, reported tree 53578af3d8d3835ff3b56e6e6a69891c8dcfc4aa. The accepted merge is f7066e7; do not require current HEAD to equal the saved commit. Stop with a precise pin/input blocker if identity cannot be established.\n- [ ] Independently inspect the source inventory, templates and relevant existing validation/binding/conversion helpers before accepting the package's conclusions. Derive fragment coverage and schema compatibility from actual bytes; verify each mapping's semantic adequacy, envelope/null restrictions, synthetic-only validation, manifest byte-binding limits, and empty/malformed interrupted-response handling. Do not treat complete byte coverage or the author's checker as independent proof of semantic adequacy.\n- [ ] Review proposed attempt/plan/manifest/settings/model/input/evidence joins and set-level accounting: attempts/retries/partial failures remain visible, missing arms cannot form completed comparisons, correctness and grounding retain their source-defined denominators separately, fidelity and costs do not turn missing evidence into passes or zeros. Verify proposed sidecar linkage stays design-only and makes no trusted execution, real admission or native correctness claim. Derive any counts from pinned sources rather than reports.\n- [ ] Inspect checker code before running it. Independently compare predeclared controls and observed outcomes to the actual predicates and fixtures, including detached hashes/inputs, stale bindings, missing/duplicate identities, missing evidence kinds, fabricated verification labels and interruption boundaries. Use focused independent counterexamples if needed, saved under .session/artifacts only; distinguish a genuine control weakness from the explicitly unconditional real-admission scope block. Run the repository-only verification command below and report its result separately from the review verdict. No evaluator, historical builder, model/reader/native execution or real trial.\n- [ ] Read exported #646/#643 reports and preserve attribution of the prohibited parent evaluator invocation; it earns no verification credit. Its original scope-deviation artifact is unavailable in #646 and is not supplied here: do not reconstruct or claim to inspect it. Read #639/#636 only for exact lineage/source claims; their closed review scopes stay closed.\n- [ ] Write the review in .session/report.md and detailed machine-readable evidence in .session/artifacts/project-run-binding-review-0140.json. Include reviewed start/scoped pins, input identities, probes/results, separate Standards and Spec verdicts, and severity/path/pointer/expected-versus-observed evidence for every finding. No repository writes or fixes. Explicitly keep real admissions, model/reader/native executions and semantic passes at zero; no benchmark readiness, owner acceptance or measured product gain. If CLEAR, close this three-file scope only and name remaining substantive method gaps; if NOT-CLEAR, give the smallest corrective scope and subsequent review boundary.\n## Verification\npython3 -I benchmark/verify_project_run_binding_0138.py\nThis repository-only standard-library consistency check does not verify the review artifact or establish a CLEAR verdict. The engine cannot access session artifacts for verification.\n## Context\nIteration 0139 accepted #646, which resumed #643 unchanged and reported an empty diff, a passing local checker and a separate-review handoff. The package Markdown explicitly states old validation is synthetic-only, proposed linkage is not trusted admission, and the historical parent evaluator invocation is a scope deviation. Independent review of these new three files is outstanding. #639 closes only project-paired-0136; do not repeat that review. POC delivery was unsuccessful but complete earlier; benchmark preparation resumes without native-success claims.\n## Budget\nRead exports manifest and input availability/pins first; then the three review files, docs/perpetua/evaluation.md and roles.md. Follow exact /pins and source-pointer sections only: project-paired-0136.md/.json, baseline/run-record.template.json, baseline/run-manifest.template.json, baseline/runner-contract.md, scripts/run_record.py, scripts/score_answer.py and protocol/precision/original/key references actually cited by the mapping. Read bounded JSON sections and relevant helper bodies; no whole large ledgers. Read explicit #646/#643 reports for disposition/deviation and #639/#636 reports only for concrete lineage questions. At most two additional direct references for a demonstrated discrepancy. No source sweeps, closed-review replay, old builders, evaluator, index promotion, owner request or product changes. Report early; preserve partial evidence and exact remaining check if unfinished.",
+  "issue": 649
+ }
+]
