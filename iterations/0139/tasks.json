@@ -1,0 +1,28 @@
+[
+ {
+  "id": "resume-project-run-binding-0139",
+  "title": "Finish the saved per-run binding package without repeating completed work",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "start_branch": "task/643",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     643,
+     639,
+     636
+    ]
+   }
+  ],
+  "body": "## Goal\nResume the partial #643 work saved at iter/0138/643 on task/643; finish only missing acceptance or verification and preserve completed mapping/probes. Expected gain: an admissible three-file preparation package and a precise independent-review handoff, or an evidenced remaining blocker. Report the actual saved state before proposing any correction. This is preparation, not product implementation; no session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json for #643/#639/#636 reports. Confirm the resumed starting commit/tree and the presence of benchmark/project-run-binding-0138.md, benchmark/project-run-binding-0138.json and benchmark/verify_project_run_binding_0138.py. Compare the resumed tree to the saved #643 work before editing; do not rebuild the mapping or start from main. If saved work is unavailable, report the exact mismatch instead of recreating it.\n- [ ] Read #643's report, the three saved files and their exact pinned source references. Record which original deliverables are already complete and identify any concrete remaining acceptance failure. Treat the report's counts and checker success as attributed claims until verified from saved bytes. Preserve the original inventory, mapping and predeclared outcomes unless an actual discrepancy requires a bounded correction.\n- [ ] Finish only demonstrated omissions or failed checks within those same three files. Confirm every source inventory item is represented by an existing field or an explicit unsupported gap, design-only linkage stays separate, and consistency controls cannot admit real runs or establish semantic/native correctness. Keep existing schemas, contracts, keys and preparation index unchanged. Do not add a runner, sidecar implementation, evaluator, transport or new benchmark case.\n- [ ] Preserve the procedural deviation explicitly: #643 reports that a parent continuation ran the prohibited evaluator check. This historical action cannot be undone or counted as verification. Link the exported report; if its artifact is unavailable, say so without reconstructing it or treating it as inspected. Do not rerun policy/evaluator/evaluate.py or any historical builder. Run only the repository-only checker named below and narrowly necessary local checks of these three files.\n- [ ] Report the checker exit/result and the exact diff from saved work, with zero actual admissions, model/reader/native executions and semantic passes explicit. No changes are required if the saved package already satisfies acceptance: explain that disposition and retain the deviation disclosure. Provide starting and final scoped pins and the smallest separate-review scope over these three files, with remaining substantive method blockers. Do not claim independent review, benchmark readiness, owner acceptance or product improvement.\n## Verification\npython3 -I benchmark/verify_project_run_binding_0138.py\nThe checker must use repository files and the Python standard library only, without session exports/artifacts, prepared environment, network or product execution.\n## Context\nRecord 0138 marks #643 partial, unmerged, on task/643 at a59d88d. Its report says the three deliverables and checker are complete and identifies a prohibited evaluator invocation as a scope deviation. Resume saved work rather than replaying research or erasing that history. #639's CLEAR scope over project-paired-0136 stays closed; the binding package has not yet received its independent review. The unsuccessful POC was delivered earlier; benchmark preparation continues without a native-success claim.\n## Budget\nRead exports manifest and explicit #643 report first, then the three saved project-run-binding-0138 files; docs/perpetua/evaluation.md and roles.md; baseline/runner-contract.md and only the exact run-record template/run_record.py sections pinned by the saved mapping. Read #639/#636 reports and project-paired-0136.md/.json only for a concrete pin or mapping discrepancy; bounded JSON sections, no whole large ledger. At most two further direct references for a demonstrated failure. No history/source absence sweeps, closed-review replay, old builders, evaluator command, real trials or owner request. Write only the existing three package files plus session report/artifacts. Report early; if unfinished, name the precise missing check and saved work for the next continuation.",
+  "issue": 646
+ }
+]
