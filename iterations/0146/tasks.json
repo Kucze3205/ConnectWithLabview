@@ -1,0 +1,55 @@
+[
+ {
+  "id": "attempt-evidence-f1-review-0146",
+  "title": "Review correction #666 of inherited attempt-evidence joins, changed scope only",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 120,
+   "max_turns": 80
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     666,
+     663
+    ]
+   }
+  ],
+  "inputs": [
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-diff-0145.patch"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-start-checker-0145.py"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-expectations-0145.json"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-pre-0145.json"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-post-final-0145.json"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-adjudication-0145.json"
+   },
+   {
+    "issue": 666,
+    "name": "attempt-evidence-f1-final-0145.json"
+   }
+  ],
+  "body": "## Goal\nReport, do not fix: independently review correction #666 of review #663 finding F1, limited to the five changed files listed below and effects of those changes. Expected gain: a pinned CLEAR or NOT-CLEAR verdict deciding whether inherited attachment joins and completion now reject contradictory legacy evidence without breaking consistent evidence or diagnostic accounting. Do not repeat the closed grouping review or #663's successful probe suite. This is synthetic benchmark preparation, not whole-method readiness or product validation. No session can run LabVIEW.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json for report/input availability and record starting commit/tree and hashes of the five scoped repository files, without opening the correction note, regression source, patch, exported report bodies or author expectation/result artifacts. Read only the inherited binding definitions named in Budget, then save .session/artifacts/attempt-evidence-f1-review-expectations-0146.json with independently reasoned expected joins, rejection/completion outcomes and diagnostic invariants for a consistent control and isolated/combined model, prompt, input and tool contradictions. Save this before any correction evidence is opened or code executed. This task discloses F1: independence is procedural, not blindness or proof of model unfamiliarity; disclose inherited exposure and any provider fallback.\n- [ ] After saving expectations, read reports #663/#666, the correction note and changed source/diff. Confirm the five hashes in Verification and old-checker hash 582b5c27275d62c5fdaa1e948cc3bb7f08dfd2be8b282b86fbd2cd677480a799. Inspect only the changed scope relative to the #659 package (accepted cbe4e00) and #666 commit cfce83a. The saved patch and original checker are available for environments lacking historical git objects; verify their identities against the report before use. Distinguish source bytes actually available from report-only claims. Do not reconstruct unavailable #663 artifacts.\n- [ ] Implement independent probes only under .session/artifacts/ against the actual corrected checker: exercise each inherited join, simultaneous contradictions, complete original-input inventory identity/kind/hash (including omitted, extra and duplicate entries where representable), canonical tool binding, and completion invoked directly as well as through envelope validation. Include a consistent positive control, literal four-record duplicate-slot evidence, tool-error evidence and the missing common-prompt object diagnostic that failed during correction. Derive actual structure/counts from source bytes. Compare declared expectations with observations; preserve all failures and adjudicate harness errors separately. Existing saved controls may run once as compatibility checks; do not replay closed independent suites.\n- [ ] Inspect the new regression for meaningful assertions, independent positive/negative coverage and standard-library/repository-only execution. Run python3 -I benchmark/verify_attempt_evidence_f1_0145.py and record its exit/output, distinguishing its author-written assertions from your independent probes. Inspect the diff for preservation of retention, absent/empty distinction, unresolved attempts, D1-D4 denominators, legacy null reasons, grouping boundary, pinned source values and existing expected controls. Check that the two JSON contract-description edits and Markdown claims match code. Do not broaden into a whole-method review.\n- [ ] Write findings in .session/report.md and detailed evidence in .session/artifacts/ only; no repository writes. Report scoped verdict CLEAR or NOT-CLEAR with severity, precise file/line evidence and reproducible counterexamples for each unresolved finding; give standards assessment separately. List commit/tree, all five file hashes, staged input availability/hash checks, expectation chronology, probe results and limitations. Actual admissions, model/reader/native executions, scored runs, semantic passes and real comparisons remain zero; benchmark_ready=false. Request no owner action and change no evaluator, index, thresholds or policy.\n## Verification\npython3 -c \"import hashlib,pathlib; p={'benchmark/attempt-evidence-0143.md':'5d66520b202d01d48921cdd6bfc8146bc9692e4f7a62a0426f1b4a99d6adce79','benchmark/attempt-evidence-0143.json':'2489bf601856ddafc22315a67b0d076d316f793277e11e7e793261fba2e63651','benchmark/verify_attempt_evidence_0143.py':'f208c1f558537cb4dacaca6b2e60a4ebc5f133802c072d3697a823beb2cd7b98','benchmark/verify_attempt_evidence_f1_0145.py':'fb5f3dba19625cfcd51ee2feaf68274c21d5a0aede98f390d74d554ea50f4af9','benchmark/attempt-evidence-f1-0145.md':'b042d37a853a3c5af4ac4593ed8ce5906a5ba7c542c30630a1a3405091ed80c3'}; assert all(hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest()==h for f,h in p.items()); print('review scope pins: OK')\"\nThis engine command checks repository identity only, not the review verdict or session artifacts. Run the review probes during the session as required above.\n## Context\nIteration 0145 accepted and merged #666 (cfce83a), with 22 uploaded artifacts. The shaper read record 0145, report #666 and benchmark/attempt-evidence-f1-0145.md: the author reports reproducing four individual contradictions plus their combination, then rejecting them while retaining a positive completion. It also reports repairing a diagnostic-accounting regression before acceptance. These are claims to review, not shaper measurements. #663 returned NOT-CLEAR F1; its artifacts were not uploaded. #656's bounded grouping scope is already CLEAR. Close only this correction chain; whole-method review and owner acceptance remain prerequisites for product work under docs/perpetua/evaluation.md.\n## Budget\nBefore expectations: inspect manifest availability only; hash the five scoped files without reading contents; read docs/perpetua/evaluation.md and binding definitions in benchmark/project-run-binding-0138.md, benchmark/verify_project_run_binding_0138.py (model/prompt/input/tool linkage portions), benchmark/scripts/run_record.py and benchmark/baseline/runner-contract.md. After saved expectations: read the five scoped files benchmark/attempt-evidence-0143.md, benchmark/attempt-evidence-0143.json (selected contract/control pointers only), benchmark/verify_attempt_evidence_0143.py, benchmark/verify_attempt_evidence_f1_0145.py and benchmark/attempt-evidence-f1-0145.md; exported reports #663/#666; staged inputs .session/inputs/666-NAME listed by manifest. These author files and reports are later reads, never startup reads before expectations. At most two further directly linked references for a demonstrated ambiguity. No whole large JSON, base64 or binary dumps, broad history search, grouping replay, evaluator, frozen builders or native execution. Keep outputs short and detailed probes in artifacts; report a substantive finding early. Do not run git commit; the parent commits accepted changes.",
+  "issue": 669
+ }
+]
