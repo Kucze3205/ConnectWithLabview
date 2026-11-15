@@ -51,5 +51,58 @@
   "body": "## Goal\nReport, do not fix. Explain only the observable recovery/output-publication paths for #643, #653 and #663, using #669 as a successful control. Policy observation 0147 records accepted Finish checkpoints followed by later report recreation and zero published artifacts. Expected gain: the next Policymaker reads a measured timeline and a specific supported failure point, or a precise evidence limit, before deciding whether an engine-change request is justified. This is an environment audit, not benchmark-quality review.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json and record availability for every requested source/session/iteration. Hash the staged metadata actually used. Read policy/observations/0147-policy-check.md; treat its runtime measurements as starting evidence, not a root-cause verdict. Missing/expired streams are an availability limit, not a reason to reconstruct output artifacts or hold the iteration open.\n- [ ] For each session, distinguish first final runtime checkpoint, workflow/job/step completion where available, results packing/upload/download, epilogue, later kick/resume and final artifact publication. Include timestamps, outcomes, exact source pointers and unavailable transitions. Calculate only durations supported by timestamp pairs; do not label a checkpoint gap as agent-active time. Actions metadata may describe multiple runs: retain run identity and do not silently combine them.\n- [ ] Check whether available evidence locates failure before results packaging, during upload/download, during epilogue, or during recovery. Distinguish facts from explanations consistent with missing evidence. Compare #669 without treating null outputs_asset or every zero-artifact session as proof of failure. Quantify extra model requests/tokens only where attributable to the later continuation; otherwise mark them unmeasured. No subscription-quota or monetary-cost inference from tokens.\n- [ ] Reuse the existing runtime measurements rather than repeating the broad history survey. If necessary, read selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and its named earlier checkpoints. Never print whole session records, prompts, request payloads, credentials or pool credential fields. Inspect bounded source sections only when needed to explain an observed transition. Do not replay historical commands, benchmark probes, evaluator calls or native execution.\n- [ ] Write audit/0147.md and the same report to audit/latest.md. Put supporting normalized measurements in audit/session-recovery-0147.json. Use schema_version=1 and sessions as an object keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings) and durations (objects with name, start, end, seconds; omit unsupported durations). Include a top-level method describing source selection and limitations. Keep files below 2 MB. Link exact staged evidence hashes and runtime pins. Preserve uncertainty; no invented historical state.\n- [ ] Recommend the smallest justified next action with an expected gain and a way to check it. If evidence cannot locate the failure, state exactly what remains unavailable; do not request broad private access, spending or another general audit. Change only audit outputs and any necessary measuring script. Write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert all(isinstance(v['seconds'],(int,float)) and v['seconds']>=0 and v['start'] and v['end'] and v['name'] for x in d['sessions'].values() for v in x['durations']); p=pathlib.Path('audit/0147.md'); assert p.read_bytes()==pathlib.Path('audit/latest.md').read_bytes() and p.stat().st_size>0\"\nThis repository-only check validates output structure and report equality. It does not certify the historical findings; inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: exact measured checkpoints, report sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities and export handling.\n## Budget\n- .session/exports/manifest.json; selected downloaded Actions metadata, streams, reports and records only.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- docs/perpetua/engine.md: recovery/watchdog sections only when needed.\n- .github/workflows/session.yml; .github/loop/loop.py: relevant recovery/publication sections only.\n- Named runtime session checkpoints only if staged evidence leaves a concrete question. No fresh pool or credential audit, no whole large JSON or raw-stream dump. Keep each command output short.\n",
   "pass": 1,
   "issue": 672
+ },
+ {
+  "id": "order-671-2-session-recovery-audit-0147",
+  "title": "Measure recovery after completed sessions and missing output publication",
+  "role": "audit",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "actions",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "streams",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "reports",
+    "sessions": [
+     643,
+     653,
+     663,
+     669
+    ]
+   },
+   {
+    "source": "records",
+    "iterations": [
+     138,
+     141,
+     144,
+     146
+    ]
+   }
+  ],
+  "body": "## Goal\nReport, do not fix. Explain only the observable recovery/output-publication paths for #643, #653 and #663, using #669 as a successful control. Policy observation 0147 records accepted Finish checkpoints followed by later report recreation and zero published artifacts. Expected gain: the next Policymaker reads a measured timeline and a specific supported failure point, or a precise evidence limit, before deciding whether an engine-change request is justified. This is an environment audit, not benchmark-quality review.\n## Acceptance\n- [ ] First inspect .session/exports/manifest.json and record availability for every requested source/session/iteration. Hash the staged metadata actually used. Read policy/observations/0147-policy-check.md; treat its runtime measurements as starting evidence, not a root-cause verdict. Missing/expired streams are an availability limit, not a reason to reconstruct output artifacts or hold the iteration open.\n- [ ] For each session, distinguish first final runtime checkpoint, workflow/job/step completion where available, results packing/upload/download, epilogue, later kick/resume and final artifact publication. Include timestamps, outcomes, exact source pointers and unavailable transitions. Calculate only durations supported by timestamp pairs; do not label a checkpoint gap as agent-active time. Actions metadata may describe multiple runs: retain run identity and do not silently combine them.\n- [ ] Check whether available evidence locates failure before results packaging, during upload/download, during epilogue, or during recovery. Distinguish facts from explanations consistent with missing evidence. Compare #669 without treating null outputs_asset or every zero-artifact session as proof of failure. Quantify extra model requests/tokens only where attributable to the later continuation; otherwise mark them unmeasured. No subscription-quota or monetary-cost inference from tokens.\n- [ ] Reuse the existing runtime measurements rather than repeating the broad history survey. If necessary, read selected fields from git show 510fc5af213cbe9f66dde42a27e3467bc225afcd:sessions/N.json and its named earlier checkpoints. Never print whole session records, prompts, request payloads, credentials or pool credential fields. Inspect bounded source sections only when needed to explain an observed transition. Do not replay historical commands, benchmark probes, evaluator calls or native execution.\n- [ ] Write audit/0147.md and the same report to audit/latest.md. Put supporting normalized measurements in audit/session-recovery-0147.json. Use schema_version=1 and sessions as an object keyed by 643, 653, 663, 669. Each session has cause_status (supported or undetermined), evidence (source-pointer strings), missing (strings) and durations (objects with name, start, end, seconds; omit unsupported durations). Include a top-level method describing source selection and limitations. Keep files below 2 MB. Link exact staged evidence hashes and runtime pins. Preserve uncertainty; no invented historical state.\n- [ ] Recommend the smallest justified next action with an expected gain and a way to check it. If evidence cannot locate the failure, state exactly what remains unavailable; do not request broad private access, spending or another general audit. Change only audit outputs and any necessary measuring script. Write the required session report.\n## Verification\npython3 -I -c \"import json,pathlib; d=json.loads(pathlib.Path('audit/session-recovery-0147.json').read_text()); assert d['schema_version']==1 and d['method']; assert set(d['sessions'])=={'643','653','663','669'}; assert all(x['cause_status'] in ('supported','undetermined') and isinstance(x['evidence'],list) and isinstance(x['missing'],list) and isinstance(x['durations'],list) for x in d['sessions'].values()); assert all(isinstance(v['seconds'],(int,float)) and v['seconds']>=0 and v['start'] and v['end'] and v['name'] for x in d['sessions'].values() for v in x['durations']); p=pathlib.Path('audit/0147.md'); assert p.read_bytes()==pathlib.Path('audit/latest.md').read_bytes() and p.stat().st_size>0\"\nThis repository-only check validates output structure and report equality. It does not certify the historical findings; inspect substantive evidence in the audit session.\n## Context\n- policy/observations/0147-policy-check.md: exact measured checkpoints, report sources and limits.\n- policy/roles/audit/SKILL.md: audit responsibilities and export handling.\n## Budget\n- .session/exports/manifest.json; selected downloaded Actions metadata, streams, reports and records only.\n- policy/observations/0147-policy-check.md; docs/perpetua/operating-parameters.md.\n- docs/perpetua/engine.md: recovery/watchdog sections only when needed.\n- .github/workflows/session.yml; .github/loop/loop.py: relevant recovery/publication sections only.\n- Named runtime session checkpoints only if staged evidence leaves a concrete question. No fresh pool or credential audit, no whole large JSON or raw-stream dump. Keep each command output short.\n",
+  "pass": 2,
+  "issue": 673
  }
 ]
