@@ -9,6 +9,7 @@ import yaml
 
 import fakes
 from fakes import ENGINE, common as c, iteration as it
+import artifact_pin
 import owner_requests as requests
 
 BASH = None
@@ -117,13 +118,13 @@ class WorkflowTest(unittest.TestCase):
             if f not in ("watchdog.yml", "tokenless-job.yml"):          # the reusable job is only called from tokenless.yml
                 self.assertIn("vars.AUTOPILOT == 'on'", text, f)               # the first condition of every loop workflow
         if not IN_LOOP_REPO:
-            self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "owner-request.yml", "tokenless.yml", "tokenless-job.yml"})
+            self.assertEqual(seen, {"session.yml", "resume.yml", "watchdog.yml", "tokenless.yml", "tokenless-job.yml", "iteration-start.yml"})
 
     def test_run_names_keep_their_hash(self):
         """An unquoted ' #' in a YAML value is a comment: run-name became 'session' and no run matched its session (#84)."""
         for f, text, doc in self.workflows():
             name = doc.get("run-name")
-            if name is None:
+            if name is None or f in ("watchdog.yml", "tokenless.yml"):      # these two carry no issue number
                 continue
             self.assertIn("#", name, f)
             rendered = re.sub(r"\$\{\{ (inputs\.issue|github\.event\.issue\.number) \}\}", "12", name)
@@ -158,6 +159,46 @@ class WorkflowTest(unittest.TestCase):
         self.assertTrue(used)
         self.assertEqual(used - known, set())
 
+    def test_the_engine_has_exactly_these_commands(self):
+        with open(os.path.join(ENGINE, ".github", "loop", "loop.py"), encoding="utf-8") as fh:
+            src = fh.read()
+        self.assertEqual(set(re.findall(r'cmd == "([a-z-]+)"', src)),
+                         {"check-autopilot", "check-credentials", "session-settings", "stage-inputs", "run-policy-scripts",
+                          "prepare-checks", "run-checks", "take-results", "start-iteration", "watch", "resume-after-limit"})
+
+    def test_the_owner_sees_names_not_commands(self):
+        """Every workflow, job and step has a name of its own: an unnamed step shows as `Run <its first command>`
+        (the `resolve` step used to read `Run pip install -q pyyaml`). Names say what the thing does, in plain words."""
+        shown = {"session.yml": "Session", "resume.yml": "Resume after limit",
+                 "watchdog.yml": "Watchdog", "tokenless.yml": "Tokenless run", "tokenless-job.yml": "Tokenless job",
+                 "iteration-start.yml": "Iteration start"}
+        for f, text, doc in self.workflows():
+            self.assertEqual(doc["name"], shown[f], f)
+            for job_id, job in doc["jobs"].items():
+                if f != "tokenless-job.yml":
+                    self.assertTrue(job.get("name"), (f, job_id))
+                for step in job.get("steps", []):
+                    self.assertTrue(step.get("name"), (f, job_id, step))
+                    self.assertNotRegex(step["name"], r"^(Run )?(pip|python3?|npm|bash|tar|mkdir)( |$)", (f, job_id))
+
+    def test_the_session_prepares_in_one_job_and_installs_the_agent_only_for_agents(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh)
+        self.assertEqual(list(doc["jobs"]), ["prep", "policy", "session", "checks_prep", "checks", "epilogue", "start"])
+        self.assertEqual([j["name"] for j in doc["jobs"].values()],
+                         ["Prepare the session", "Prepare the session inputs (policy scripts)", "Run the session", "Prepare the checks",
+                          "Check the results", "Take in results", "Iteration start"])
+        install = next(s for s in doc["jobs"]["session"]["steps"] if s["name"].startswith("Install "))
+        self.assertEqual(install["if"], "needs.prep.outputs.kind == 'agent'")
+        self.assertNotIn("Claude Code", install["name"])               # the tool comes from the engine's output, not from the file
+        self.assertEqual(sum("actions/checkout" in s.get("uses", "") for s in doc["jobs"]["prep"]["steps"]), 2)
+
+    def test_the_tokenless_run_name_is_the_one_the_engine_looks_for(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "tokenless.yml"), encoding="utf-8") as fh:
+            name = yaml.safe_load(fh)["run-name"]
+        rendered = name.replace("${{ inputs.purpose || 'command' }}", "change gate for #12").replace("${{ inputs.key }}", "abc123")
+        self.assertEqual(rendered, c.tokenless_title("change gate for #12", "abc123"))
+
     def test_engine_files_the_workflows_and_scripts_name_exist(self):
         for f, text, doc in self.workflows():
             for m in re.findall(r"\.github/loop/([A-Za-z_.-]+)", text):
@@ -167,7 +208,7 @@ class WorkflowTest(unittest.TestCase):
         with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
             text = fh.read()
         workflow = yaml.safe_load(text)
-        step = str(next(step for step in workflow["jobs"]["session"]["steps"] if step.get("name") == "Session"))
+        step = str(next(step for step in workflow["jobs"]["session"]["steps"] if "agent.sh" in step.get("run", "")))
         self.assertNotIn("github.token", step)
         self.assertNotIn("GH_TOKEN", step)
         self.assertNotIn("ANTHROPIC_API_KEY", step)
@@ -201,9 +242,128 @@ class WorkflowTest(unittest.TestCase):
         text = re.sub(r"contains\(needs\.prep\.outputs\.secrets, '\|\w+\|'\) && secrets\.\w+ \|\| ''", "", text)    # consented names
         self.assertEqual(set(re.findall(r"secrets\.([A-Za-z0-9_]+)", text)), {"CLAUDE_CODE_OAUTH_TOKEN"})
         # the token jobs sit on both sides of it and are other machines
-        self.assertEqual(job["needs"], ["prep", "stage"])
-        self.assertEqual(jobs["epilogue"]["needs"], ["prep", "stage", "session"])
+        self.assertEqual(job["needs"], ["prep", "policy"])
+        self.assertEqual(jobs["epilogue"]["needs"], ["prep", "policy", "session", "checks_prep", "checks"])
         self.assertIn("github.token", str(jobs["epilogue"]))
+
+    def test_the_policy_scripts_run_in_a_job_without_the_token_that_the_session_waits_for(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            jobs = yaml.safe_load(fh)["jobs"]
+        job = jobs["policy"]
+        self.assertEqual((job["needs"], job["permissions"]), ("prep", {}))
+        text = str(job)
+        for forbidden in ("github.token", "GH_TOKEN", "GITHUB_TOKEN", "secrets.", "actions/checkout", "loop.py stage-inputs", "pip install"):
+            self.assertNotIn(forbidden, text)
+        self.assertEqual(sum("run-policy-scripts" in step.get("run", "") for step in job["steps"]), 1)
+        # the session starts only on an `ok` result, and every artifact a job downloads is checked against a digest from the job that made it
+        self.assertIn("needs.policy.outputs.ok == 'true'", jobs["session"]["if"])
+        for job_id, digests in (("policy", ("needs.prep.outputs.staged", "needs.prep.outputs.bundle")),
+                                ("session", ("needs.prep.outputs.staged", "needs.policy.outputs.digest"))):
+            check = next(step for step in jobs[job_id]["steps"] if step["name"].startswith("Check the downloads"))
+            self.assertEqual(sorted(re.findall(r"\$\{\{ (needs\.\w+\.outputs\.\w+) \}\}", str(check["env"]))), sorted(digests))
+            self.assertEqual(sum(step["name"].startswith("Download") for step in jobs[job_id]["steps"][:len(digests) + 1]), len(digests))
+
+    def test_the_checks_run_in_a_job_without_the_token_whose_outputs_alone_carry_the_results(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            jobs = yaml.safe_load(fh)["jobs"]
+        job = jobs["checks"]
+        self.assertEqual((job["needs"], job["permissions"]), (["prep", "checks_prep"], {}))
+        text = str(job)
+        for forbidden in ("github.token", "GH_TOKEN", "GITHUB_TOKEN", "secrets.", "actions/checkout", "pip install"):
+            self.assertNotIn(forbidden, text)
+        self.assertIn("needs.checks_prep.outputs.count != '0'", job["if"])
+        check = next(step for step in job["steps"] if step["name"].startswith("Check the download"))
+        self.assertEqual(re.findall(r"\$\{\{ (needs\.\w+\.outputs\.\w+) \}\}", str(check["env"])), ["needs.checks_prep.outputs.digest"])
+        self.assertEqual(sum("run-checks" in step.get("run", "") for step in job["steps"]), 1)
+        # "Prepare the checks" holds the token and runs only the engine; "Take in results" reads the results from the job outputs
+        self.assertIn("prepare-checks", str(jobs["checks_prep"]))
+        take = next(step for step in jobs["epilogue"]["steps"] if "take-results" in step.get("run", ""))
+        self.assertEqual(take["env"]["CHECKS_RESULTS"], "${{ needs.checks.outputs.results }}")
+        self.assertNotIn("checks", [s["with"]["name"] for s in jobs["epilogue"]["steps"] if "download-artifact" in s.get("uses", "")])
+
+    def test_the_iteration_start_decides_without_the_token_and_starts_only_from_the_job_outputs(self):
+        with open(os.path.join(ENGINE, ".github", "workflows", "iteration-start.yml"), encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh)
+        self.assertIn("workflow_call", doc[True])                       # PyYAML reads `on:` as True
+        decide, begin = doc["jobs"]["decide"], doc["jobs"]["start"]
+        self.assertEqual([j["name"] for j in (decide, begin)], ["Decide whether the Policymaker runs", "Start the iteration"])
+        self.assertEqual(decide["permissions"], {})
+        for forbidden in ("github.token", "GH_TOKEN", "GITHUB_TOKEN", "secrets.", "actions/checkout", "pip install"):
+            self.assertNotIn(forbidden, str(decide))
+        check = next(step for step in decide["steps"] if step["name"].startswith("Check the download"))
+        self.assertEqual(re.findall(r"\$\{\{ (inputs\.\w+) \}\}", str(check["env"])), ["inputs.digest"])
+        self.assertEqual(sum("run-checks" in step.get("run", "") for step in decide["steps"]), 1)
+        # the start reads the decision from the job outputs only, never from an artifact, and runs even when the decision job did not
+        self.assertEqual(begin["needs"], "decide")
+        self.assertTrue(begin["if"].startswith("always()"))
+        step = next(step for step in begin["steps"] if "start-iteration" in step.get("run", ""))
+        self.assertEqual(step["env"], {"DECIDE_RESULTS": "${{ needs.decide.outputs.results }}"})
+        self.assertFalse(any("download-artifact" in s.get("uses", "") for s in begin["steps"]))
+        # both runs that can find a start due call it with the digest of the facts they pinned
+        for name, job_id, command in (("session.yml", "epilogue", "take-results"), ("watchdog.yml", "watch", "watch")):
+            with open(os.path.join(ENGINE, ".github", "workflows", name), encoding="utf-8") as fh:
+                jobs = yaml.safe_load(fh)["jobs"]
+            call = jobs["start"]
+            self.assertEqual((call["name"], call["uses"], call["needs"]), ("Iteration start", "./.github/workflows/iteration-start.yml", job_id))
+            self.assertEqual(call["with"], {k: "${{ needs.%s.outputs.%s }}" % (job_id, k) for k in ("count", "minutes", "digest")})
+            run = next(s for s in jobs[job_id]["steps"] if "loop.py %s" % command in s.get("run", ""))
+            self.assertEqual(run["env"]["START_PLAN"], "${{ runner.temp }}/start-facts")
+            upload = next(s for s in jobs[job_id]["steps"] if s["name"] == "Upload the facts for the iteration start")
+            self.assertEqual(upload["with"]["name"], "start-facts")
+
+    @unittest.skipUnless(BASH, "no bash")
+    def test_the_shell_check_of_the_facts_refuses_a_planted_file(self):
+        import tempfile
+        with open(os.path.join(ENGINE, ".github", "workflows", "iteration-start.yml"), encoding="utf-8") as fh:
+            check = next(s for s in yaml.safe_load(fh)["jobs"]["decide"]["steps"] if s["name"].startswith("Check the download"))
+        with tempfile.TemporaryDirectory() as tmp:
+            facts = os.path.join(tmp, "start-facts")
+            os.makedirs(facts)
+            with open(os.path.join(facts, "checks.tar.gz"), "w", encoding="utf-8") as fh:
+                fh.write("a")
+            digest = artifact_pin.digest(facts)
+
+            def check_runs():
+                env = dict(os.environ, RUNNER_TEMP=tmp, FACTS=digest)
+                return subprocess.run([BASH, "-e", "-c", check["run"]], env=env, capture_output=True, text=True).returncode
+            self.assertEqual(check_runs(), 0)
+            with open(os.path.join(facts, "results.json"), "w", encoding="utf-8") as fh:
+                fh.write("planted")
+            self.assertNotEqual(check_runs(), 0)
+
+    @unittest.skipUnless(BASH, "no bash")
+    def test_the_shell_check_of_a_download_refuses_a_swapped_artifact(self):
+        """The `Check the downloads` step of the session job, run as it is: the digest `artifact_pin` computes passes, a swapped,
+        added or missing file does not."""
+        import tempfile
+        with open(os.path.join(ENGINE, ".github", "workflows", "session.yml"), encoding="utf-8") as fh:
+            check = next(step for step in yaml.safe_load(fh)["jobs"]["session"]["steps"] if step["name"].startswith("Check the downloads"))
+        with tempfile.TemporaryDirectory() as tmp:
+            ship, results = os.path.join(tmp, "ship"), os.path.join(tmp, "policy-results")
+            for directory, files in ((ship, {"trusted.tar.gz": "a", "work.tar.gz": "b"}), (results, {"session.tar.gz": "c", "prompt.md": "d"})):
+                os.makedirs(directory)
+                for name, text in files.items():
+                    with open(os.path.join(directory, name), "w", encoding="utf-8") as fh:
+                        fh.write(text)
+            hidden = os.path.join(results, ".x")
+
+            def check_runs(digest_of_results=None):
+                env = dict(os.environ, RUNNER_TEMP=tmp, STAGED=artifact_pin.digest(ship), RESULTS=digest_of_results or artifact_pin.digest(results))
+                return subprocess.run([BASH, "-e", "-c", check["run"]], env=env, capture_output=True, text=True).returncode
+            self.assertEqual(check_runs(), 0)
+            digest = artifact_pin.digest(results)
+            with open(os.path.join(results, "prompt.md"), "w", encoding="utf-8") as fh:
+                fh.write("swapped")
+            self.assertNotEqual(check_runs(digest), 0)
+            with open(os.path.join(results, "prompt.md"), "w", encoding="utf-8") as fh:
+                fh.write("d")
+            self.assertEqual(check_runs(digest), 0)
+            with open(hidden, "w", encoding="utf-8") as fh:
+                fh.write("added")
+            self.assertNotEqual(check_runs(digest), 0)
+            os.remove(hidden)
+            os.remove(os.path.join(results, "prompt.md"))
+            self.assertNotEqual(check_runs(digest), 0)
 
     def test_every_checkout_leaves_no_credentials_behind(self):
         for f, text, doc in self.workflows():
@@ -276,6 +436,39 @@ class ProtectionTest(unittest.TestCase):
         for role, p in profs.items():
             for g in p.get("write") or []:
                 self.assertFalse(c.path_match(g.replace("**", "x"), c.DEFAULTS["protected"]), (role, g))
+
+
+# A module that outgrows MODULE_LINES is hard for a session to read whole; new behavior goes into a module of its own.
+# These two are already bigger: their size is frozen, may only shrink, and the entry is deleted once the file fits.
+MODULE_LINES = 800
+FROZEN_LINES = {"iteration.py": 863}
+
+
+class ModuleSizeTest(unittest.TestCase):
+    def test_no_engine_module_outgrows_its_limit(self):
+        loop_dir = os.path.join(ENGINE, ".github", "loop")
+        bad = []
+        for name in sorted(f for f in os.listdir(loop_dir) if f.endswith(".py")):
+            with open(os.path.join(loop_dir, name), encoding="utf-8") as fh:
+                lines = len(fh.readlines())
+            frozen = FROZEN_LINES.get(name)
+            if frozen is None and lines > MODULE_LINES:
+                bad.append("%s has %d lines, the limit is %d" % (name, lines, MODULE_LINES))
+            elif frozen is not None and lines > frozen:
+                bad.append("%s has %d lines, its frozen limit is %d" % (name, lines, frozen))
+            elif frozen is not None and lines < frozen:
+                bad.append("%s shrank to %d lines: lower its FROZEN_LINES entry to %d%s" % (
+                    name, lines, lines, "" if lines > MODULE_LINES else " (delete it, it is under %d now)" % MODULE_LINES))
+        self.assertEqual(bad, [], "Do not make a module bigger to fit new behavior: extract it into a module of its own.")
+
+
+class CodeMapTest(unittest.TestCase):
+    def test_every_engine_module_is_in_the_code_map(self):
+        with open(os.path.join(ENGINE, "docs", "perpetua", "code-map.md"), encoding="utf-8") as fh:
+            text = fh.read()
+        missing = [f for f in sorted(os.listdir(os.path.join(ENGINE, ".github", "loop")))
+                   if f.endswith(".py") and not re.search(r"(?<![\w-])" + re.escape(f), text)]
+        self.assertEqual(missing, [], "modules missing from docs/perpetua/code-map.md: add a row for each")
 
 
 if __name__ == "__main__":

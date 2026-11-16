@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fakes import loop
+import fakes
 import session_security as security
 from session_fixtures import SessionCase, read
 
@@ -37,13 +37,9 @@ class CompositionTest(SessionCase):
                 target = tempfile.mkdtemp(dir=self.w.tmp)
                 link = os.path.join(work, *name.split("/"))
                 os.makedirs(os.path.dirname(link), exist_ok=True)
-                if os.name == "nt":
-                    import _winapi
-                    _winapi.CreateJunction(target, link)
-                else:
-                    os.symlink(target, link, target_is_directory=True)
+                os.symlink(target, link, target_is_directory=True)
                 with self.assertRaisesRegex(SystemExit, "session.*redirect|redirect.*session"):
-                    loop.stage(n, work, os.path.join(self.w.tmp, "redirected-trusted"))
+                    fakes.stage_session(n, work, os.path.join(self.w.tmp, "redirected-trusted"))
                 self.assertEqual(os.listdir(target), [])
 
     def test_next_stage_uses_accepted_policy_rules_but_keeps_engine_contract(self):
@@ -61,7 +57,7 @@ class CompositionTest(SessionCase):
                     self.w.write(work, layer + "/protocol.md", "Unaccepted rules")
                     self.w.write(work, layer + "/prompts/%s.md" % prompt_name, "Unaccepted prompt")
                     trusted = os.path.join(self.w.tmp, role + "-" + revision)
-                    loop.stage(n, work, trusted)
+                    fakes.stage_session(n, work, trusted)
                     self.assertFalse(os.path.exists(os.path.join(work, ".session", "protocol.md")))
                     contract = read(os.path.join(trusted, "contract.md"))
                     prompt = read(os.path.join(trusted, "prompt.md"))

@@ -9,7 +9,6 @@ import hashlib
 import json
 import os
 import re
-import shlex
 import shutil
 import subprocess
 import sys
@@ -21,6 +20,7 @@ import urllib.request
 import uuid
 from datetime import datetime, timedelta, timezone
 
+import git_identity
 import managed_resources as resources
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
@@ -31,7 +31,7 @@ ITER = "loop:iteration "                 # label `loop:iteration N`: the loop's 
 ROLE = "role:"
 AGENT_STATUSES = {"done", "partial", "blocked", "rejected"}
 # Report fields written only by the engine. An agent's value for them is dropped when its report is published.
-OWNED = ("attempts", "idle_resumes", "head", "resume_after", "kicks", "kicked", "conflicts", "fixes", "cause", "verification", "verdict", "improved",
+OWNED = ("attempts", "idle_resumes", "head", "resume_after", "kicks", "kicked", "conflicts", "fixes", "cause", "verification", "check", "verdict", "improved",
          "merged", "detail", "model", "effort", "turns", "peak_context", "tokens_in", "tokens_out", "cache_read", "cache_write",
          "models", "agent_s", "gate_s", "total_s", "parked_s", "paused_at", "runner", "branch", "iteration", "artifacts",
          "verifier_issue", "verified_commit", "verifier_passed", "owner_accepted", "owner_accepted_commit", "pass", "ordered")
@@ -263,6 +263,17 @@ def edit_labels(n, add=(), remove=()):
         gh(*args, check=False)
 
 
+def edit_issue_body(n, body):
+    api("repos/%s/issues/%s" % (REPO, n), "body=@-", method="PATCH", inp=body)
+
+
+def pin_issue(n):
+    """Pins issue n (GraphQL only; at most three per repo). False when the token may not."""
+    q = "mutation($id: ID!) { pinIssue(input: {issueId: $id}) { issue { number } } }"
+    r = subprocess.run(["gh", "api", "graphql", "-f", "query=" + q, "-f", "id=" + issue(n)["node_id"]], capture_output=True, text=True)
+    return r.returncode == 0
+
+
 def close_issue(n, reason="completed"):
     gh("issue", "close", str(n), "--reason", reason, check=False)
 
@@ -328,7 +339,10 @@ def is_unblocked(n):
 
 
 def workflow_run(workflow, **inputs):
-    """True when GitHub accepted the dispatch (a token without `actions: write` is refused)."""
+    """True when GitHub accepted the dispatch (a token without `actions: write` is refused). With AUTOPILOT off nothing
+    is dispatched: every loop workflow would start and end Skipped."""
+    if not autopilot_on():
+        return False
     args = ["workflow", "run", workflow]
     for k, v in inputs.items():
         args += ["-f", "%s=%s" % (k, v)]
@@ -338,34 +352,41 @@ def workflow_run(workflow, **inputs):
     return r.returncode == 0
 
 
-def run_tokenless(bundle, timeout_minutes, poll=15):
+def run_tokenless(bundle, timeout_minutes, purpose="command", poll=15):
     """Run `bundle/run.sh` in the tokenless job (tokenless.yml, `permissions: {}`) and return the directory of its
     outputs (`stdout.txt`, `stderr.txt`, `exit-code`), or None when the job left none. The bundle is a directory the
-    caller staged; it travels as one tarball on a throwaway branch (data for the job; a tarball holds no workflow
-    file the token would be refused to push), and the branch is deleted afterwards."""
+    caller staged; it travels as one tarball on a throwaway ref outside the branches (`refs/tokenless/<key>`: data for
+    the job, in no branch list and in no history; a tarball holds no workflow file the token would be refused to push),
+    and the ref is deleted afterwards. `purpose` only names the run for the owner."""
     key = uuid.uuid4().hex[:12]
-    branch = "tokenless/%s" % key
+    ref = "refs/tokenless/%s" % key
     shipment = tempfile.mkdtemp(prefix="shipment-")
     shutil.make_archive(os.path.join(shipment, "bundle"), "gztar", bundle)
     git(shipment, "init", "-q", "-b", "bundle")
     git(shipment, "add", "-A")
-    git(shipment, "commit", "-q", "-m", "bundle")
+    git(shipment, "commit", "-q", "-m", "tokenless bundle %s" % key)
     url = "https://github.com/%s.git" % REPO
-    git(shipment, "push", "-q", url, "HEAD:refs/heads/%s" % branch, remote=True)
+    git(shipment, "push", "-q", url, "HEAD:%s" % ref, remote=True)
     out = os.path.join(shipment, "out")
     try:
-        if not workflow_run("tokenless.yml", key=key, timeout_minutes=timeout_minutes):
+        if not workflow_run("tokenless.yml", key=key, timeout_minutes=timeout_minutes, purpose=purpose):
             return None                 # no run will appear: do not wait out the deadline for it
+        title = tokenless_title(purpose, key)
         deadline = time.time() + (timeout_minutes + 15) * 60
         while time.time() < deadline:
             time.sleep(poll)
-            run = next((r for r in run_list("tokenless.yml") if r["displayTitle"] == "tokenless #%s" % key), None)
+            run = next((r for r in run_list("tokenless.yml") if r["displayTitle"] == title), None)
             if run and run["status"] == "completed":
                 gh("run", "download", str(run["databaseId"]), "-n", "result-%s" % key, "-D", out, check=False)
                 return out if os.path.isdir(out) else None
         return None
     finally:
-        git(shipment, "push", "-q", url, "--delete", branch, check=False, remote=True)
+        git(shipment, "push", "-q", url, "--delete", ref, check=False, remote=True)
+
+
+def tokenless_title(purpose, key):
+    """The run name `tokenless.yml` gives a run (its `run-name` must match): the key is how the engine finds its own run."""
+    return "Tokenless: %s [%s]" % (purpose, key)
 
 
 def run_list(workflow):
@@ -667,9 +688,9 @@ def auth_args():
     return ["-c", "http.https://github.com/.extraheader=AUTHORIZATION: basic %s" % b64]
 
 
-def git(cwd, *args, check=True, remote=False, inp=None):
+def git(cwd, *args, check=True, remote=False, inp=None, env=None):
     cmd = ["git"] + (auth_args() if remote else []) + list(args)
-    env = dict(os.environ, GIT_TERMINAL_PROMPT="0")
+    env = {**git_identity.env(args, lambda: cfg()["author"]), **os.environ, **(env or {}), "GIT_TERMINAL_PROMPT": "0"}
     r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, input=inp, env=env)
     if check and r.returncode:
         raise SystemExit("git %s: %s" % (" ".join(args), (r.stderr or r.stdout).strip()))
@@ -741,29 +762,3 @@ def clean_env(extra=()):
         if k in os.environ:
             env[k] = os.environ[k]
     return env
-
-
-def run_command(cmd, tree, timeout_minutes=60):
-    """A shell command from the repo (check, verification, goal gate) run on a copy of `tree` in the tokenless job, never
-    on a machine with the token. Returns a CompletedProcess; a job that left no output counts as a failed command."""
-    bundle = tempfile.mkdtemp(prefix="bundle-")
-    try:
-        shutil.copytree(tree, os.path.join(bundle, "tree"), symlinks=True, ignore=shutil.ignore_patterns(".git"))
-        with open(os.path.join(bundle, "run.sh"), "w", encoding="utf-8", newline="\n") as fh:
-            fh.write('cd "$(dirname "$0")/tree"\nbash -c %s\n' % shlex.quote(cmd))
-        out = run_tokenless(bundle, timeout_minutes)
-    finally:
-        shutil.rmtree(bundle, ignore_errors=True)
-
-    def read(name):
-        try:
-            with open(os.path.join(out, name), encoding="utf-8", errors="replace") as fh:
-                return fh.read()
-        except (OSError, TypeError):
-            return None
-    stdout, stderr, code = read("stdout.txt"), read("stderr.txt"), read("exit-code")
-    if out:
-        shutil.rmtree(out, ignore_errors=True)
-    if stdout is None or code is None or not code.strip().isdigit():
-        return subprocess.CompletedProcess(cmd, 1, "", "the tokenless job returned no result for the command")
-    return subprocess.CompletedProcess(cmd, int(code.strip()), stdout, stderr or "")

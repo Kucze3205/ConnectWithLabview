@@ -1,27 +1,120 @@
 """Test world: an in-memory GitHub (the thin functions of `common`) and real git repositories (a bare origin, the
 engine's checkout of the default branch, agent working copies). Nothing here talks to the network."""
-import hashlib
+import contextlib
 import json
 import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 from datetime import datetime, timedelta, timezone
+from unittest import mock
+
+# Every test module imports this one, so this is the one place that stops the suite on Windows: git and bash through
+# MSYS cost ~46 ms a process (an hour for the suite), and the sandbox, symlink and POSIX-shell cases cannot run there.
+if sys.platform == "win32":
+    sys.stderr.write("The engine tests run only on Linux: run them in WSL (Ubuntu-24.04).\n")
+    sys.stderr.flush()
+    os._exit(1)      # not sys.exit: `unittest discover` catches SystemExit raised by an import and goes on to the next module
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOOP_DIR = os.path.dirname(HERE)
 ENGINE = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, LOOP_DIR)
 
+import artifact_pin  # noqa: E402
+import candidate_checks  # noqa: E402
+import check_results  # noqa: E402
 import common  # noqa: E402
 import iteration  # noqa: E402
+import iteration_start  # noqa: E402
 import loop  # noqa: E402
+import policy_inputs  # noqa: E402
 import session_artifact  # noqa: E402
+import session_finalize  # noqa: E402
+import session_start  # noqa: E402
 
 PATCHED = ["variable", "issue", "list_issues", "create_issue", "edit_labels", "close_issue", "ensure_label", "comments",
            "post_comment", "patch_comment", "blockers", "blocking", "add_blocker", "workflow_run", "run_list",
-           "list_artifacts", "delete_artifact", "cancel_run", "recent_closed", "gh", "pr_for_branch", "open_pr", "run_tokenless", "probe_limit"]
+           "list_artifacts", "delete_artifact", "cancel_run", "recent_closed", "gh", "pr_for_branch", "open_pr", "run_tokenless", "probe_limit",
+           "edit_issue_body", "pin_issue"]
+GH_HANDLED = {("run", "download"), ("release", "create"), ("release", "upload"), ("release", "download")}
+
+
+class Staged:
+    """What the policy scripts' job left for one staged session: its outputs (`ok`, `error`, `digest`) and its artifact."""
+    def __init__(self, ok, error, digest, results):
+        self.ok, self.error, self.digest, self.results = ok, error, digest, results
+
+    def env(self):
+        return {"POLICY_OK": self.ok, "POLICY_ERROR": self.error, "POLICY_DIGEST": self.digest}
+
+
+def policy_job(bundle, work, root):
+    """The job "Prepare the session inputs (policy scripts)" on a machine of its own: the bundle's code only, on a copy of the tree
+    without its git history, standard library only, no checkout of the repository. Returns Staged."""
+    jobwork = os.path.join(root, "work")
+    shutil.copytree(work, jobwork, symlinks=True, ignore=shutil.ignore_patterns(".git"))
+    results, outputs = os.path.join(root, "results"), os.path.join(root, "outputs")
+    env = {"PATH": os.environ["PATH"], "HOME": root, "GITHUB_OUTPUT": outputs}
+    r = subprocess.run([sys.executable, "-S", os.path.join(bundle, "engine", "loop.py"), "run-policy-scripts", bundle, jobwork, results],
+                       cwd=root, env=env, capture_output=True, text=True)
+    if r.returncode:
+        raise AssertionError("the policy scripts' job failed:\n" + r.stderr)
+    with open(outputs, encoding="utf-8") as fh:
+        got = dict(line.rstrip("\n").split("=", 1) for line in fh)
+    return Staged(got["ok"], got.get("error", ""), got.get("digest", ""), results)
+
+
+def outputs_of(path):
+    """The job outputs a step wrote to `GITHUB_OUTPUT`."""
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return dict(line.rstrip("\n").split("=", 1) for line in fh if "=" in line)
+
+
+def check_job(bundle, digest, root):
+    """The job "Check the results" on a machine of its own: the download checked against the digest, unpacked, and the bundles
+    run by the bundle's own engine code with `python3 -S` (standard library only, no checkout, no token). Returns its outputs."""
+    artifact_pin.verify(bundle, digest)
+    os.makedirs(root)
+    with tarfile.open(os.path.join(bundle, "checks.tar.gz")) as tar:
+        tar.extractall(root, filter="tar")
+    outputs = os.path.join(root, "outputs")
+    env = {"PATH": os.environ["PATH"], "HOME": root, "GITHUB_OUTPUT": outputs}
+    checks = os.path.join(root, "checks")
+    r = subprocess.run([sys.executable, "-S", os.path.join(checks, "engine", "loop.py"), "run-checks", os.path.join(checks, "bundles")],
+                       cwd=root, env=env, capture_output=True, text=True)
+    if r.returncode:
+        raise AssertionError("the job that runs the checks failed:\n" + r.stderr)
+    with open(os.path.join(checks, "bundles", "plan.json"), encoding="utf-8") as fh:
+        planned = json.load(fh)
+    return outputs_of(outputs), planned
+
+
+def stage_session(n, work, trusted, through_epilogue=False):
+    """A session's inputs the way the workflow makes them: "Prepare the session" stages and bundles, the policy scripts' job runs
+    the scripts, the session job checks the results against the digest and unpacks them over the staging. The head of
+    "Take in results" follows (refuses bad results, notes the startup budget) unless the epilogue itself is played later.
+    Returns Staged."""
+    root = tempfile.mkdtemp(prefix="policy-job-")
+    bundle = os.path.join(root, "bundle")
+    session_start.stage(n, work, trusted, bundle)
+    staged = policy_job(bundle, work, os.path.join(root, "job"))
+    if staged.ok == "true":
+        artifact_pin.verify(staged.results, staged.digest)
+        with tarfile.open(os.path.join(staged.results, "session.tar.gz")) as tar:
+            tar.extractall(os.path.join(work, ".session"), filter="data")
+        if os.path.exists(os.path.join(staged.results, "prompt.md")):
+            shutil.copy(os.path.join(staged.results, "prompt.md"), os.path.join(trusted, "prompt.md"))
+    if not through_epilogue:
+        why = policy_inputs.refusal(staged.ok, staged.error, staged.results, staged.digest)
+        if why:
+            session_finalize.refuse_policy_results(n, why)
+        session_finalize.note_startup_budget(n, staged.results)
+    return staged
 
 
 class FakeHub:
@@ -38,7 +131,10 @@ class FakeHub:
         self.prs = {}                       # head branch -> {"number", "url", "state", "merged", "title", "body"}
         self.next_n = 1
         self.tokenless = []                 # (bundle files) of every command sent to the tokenless job
+        self.tokenless_purposes = []        # how each of them was named for the owner
         self.tokenless_fault = None         # "no-artifact" | "failed": what the next tokenless job does wrong instead
+        self.checked = []                   # the purposes of the bundles "Check the results" ran (and left a result of), in order
+        self.decided = []                   # the same for "Decide whether the Policymaker runs"
         self.limit = (True, None)           # the engine's own probe of a usage limit: (limited, reset)
 
     def ts(self):
@@ -71,6 +167,13 @@ class FakeHub:
         self.issues[n] = {"number": n, "id": 1000 + n, "title": title, "body": body, "state": "open", "state_reason": None,
                           "_labels": set(labels), "assignees": list(assignees), "created_at": self.ts(), "closed_at": None}
         return n
+
+    def edit_issue_body(self, n, body):
+        self.issues[int(n)]["body"] = body
+
+    def pin_issue(self, n):
+        self.pinned = int(n)
+        return True
 
     def edit_labels(self, n, add=(), remove=()):
         x = self.issues[int(n)]
@@ -139,14 +242,15 @@ class FakeHub:
         self.prs[branch] = {"number": n, "url": "https://github.com/o/r/pull/%s" % n, "state": "open", "merged": False,
                             "title": title, "body": body}
 
-    def run_tokenless(self, bundle, timeout_minutes, poll=15):
+    def run_tokenless(self, bundle, timeout_minutes, purpose="command", poll=15):
         """The tokenless job: runs the bundle's `run.sh` in a clean environment and returns the output directory."""
         self.tokenless.append(sorted(os.listdir(bundle)))
+        self.tokenless_purposes.append(purpose)
         fault, self.tokenless_fault = self.tokenless_fault, None
         if fault == "no-artifact":
             return None
         out = tempfile.mkdtemp(prefix="tokenless-out-")
-        r = subprocess.run([os.environ.get("LOOP_BASH", "bash"), os.path.join(bundle, "run.sh")], env=common.clean_env(),
+        r = subprocess.run(["bash", os.path.join(bundle, "run.sh")], env=common.clean_env(),
                            capture_output=True, text=True, timeout=timeout_minutes * 60)
         for name, text in (("stdout.txt", r.stdout), ("stderr.txt", r.stderr), ("exit-code", "%d\n" % (1 if fault == "failed" else r.returncode))):
             with open(os.path.join(out, name), "w", encoding="utf-8", newline="\n") as fh:
@@ -157,6 +261,10 @@ class FakeHub:
         return self.limit
 
     def gh(self, *args, inp=None, check=True):
+        """The `gh` calls the tests rely on (only recorded). Any other call, `api` ones included, fails: a helper built on
+        it would otherwise pass against an empty answer and nothing would show its effect missing."""
+        if args[:2] not in GH_HANDLED:
+            raise AssertionError("FakeHub.gh does not handle this call: gh %s (inp=%r, check=%r)" % (" ".join(args), inp, check))
         self.gh_calls.append(args)
         return ""
 
@@ -216,20 +324,17 @@ class World:
         home = os.path.join(self.tmp, "fixture-home")
         os.mkdir(home)
         os.environ["HOME"] = home
-        if os.name == "nt":
-            os.environ["USERPROFILE"] = home
         for k, v in dict(GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@t", GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t",
                          DEFAULT_BRANCH="main", GITHUB_REPOSITORY="o/r", GITHUB_REPOSITORY_OWNER="ow").items():
             os.environ[k] = v
-        if os.name == "nt":      # `bash` on PATH may be WSL's, which cannot run engine commands: put Git's first
-            for cand in ("C:/Program Files/Git/bin/bash.exe", "C:/Program Files (x86)/Git/bin/bash.exe"):
-                if os.path.exists(cand):
-                    os.environ["LOOP_BASH"] = cand
-                    os.environ["PATH"] = os.path.dirname(cand) + os.pathsep + os.environ["PATH"]
-                    break
         os.environ.pop("GH_TOKEN", None)
         self.n_work = 0
         self.before_finalize = None         # a callable: something happens on origin while the agent works
+        self.after_checks = None            # a callable: something happens on origin after "Check the results"
+        self.checks = None                  # (outputs of "Prepare the checks", of "Check the results") of the last epilogue
+        self.check_jobs = True              # False: a run without the two check jobs (every check goes to a Tokenless run)
+        self.start_jobs = "run"             # "lost": the jobs of "Iteration start" never run; None: a run without them (it starts at once)
+        self.started = None                 # (outputs of the job before, of "Decide whether the Policymaker runs") of the last start
         self.origin = os.path.join(self.tmp, "origin.git")
         self.loop = os.path.join(self.tmp, "loop")
         sh(self.tmp, "git", "init", "-q", "--bare", "-b", "main", self.origin)
@@ -329,7 +434,7 @@ class World:
         os.environ["RUNNER_TEMP"] = rt
         # Model the real staging/admission handshake (the baseline) even when the session's
         # output itself is supplied by the test rather than executed.
-        loop.stage(n, work, os.path.join(rt, "trusted"))
+        staged = self.staged = stage_session(n, work, os.path.join(rt, "trusted"), through_epilogue=True)
         for p, t in (files or {}).items():
             self.write(work, p, t)
         for p in delete:
@@ -358,22 +463,117 @@ class World:
         common.LAUNCHED.clear()            # every epilogue is a fresh process
         if self.before_finalize:
             self.before_finalize()
-        self.epilogue(n, work, rt)
+        self.epilogue(n, work, rt, staged)
         return work
 
-    def epilogue(self, n, work, rt):
-        """The session job packs its results; the epilogue job, on a fresh runner, takes the artifact and the baseline
-        (a channel of its own) in."""
+    def epilogue(self, n, work, rt, staged):
+        """The session job packs its results; "Prepare the checks" and "Check the results" check them; the epilogue job, on a
+        fresh runner, takes the artifact, the baseline (a channel of its own) and the outputs of "Check the results" in."""
         artifact, baseline = os.path.join(rt, "artifact"), os.path.join(rt, "baseline")
         session_artifact.pack(work, rt, artifact)
         os.makedirs(baseline)
         shutil.move(os.path.join(rt, "trusted", "executor-baseline.json"), baseline)
-        with open(os.path.join(baseline, "executor-baseline.json"), "rb") as fh:
-            digest = hashlib.sha256(fh.read()).hexdigest()
+        results = self.check(n, artifact, baseline, rt)
+        if self.after_checks:
+            self.after_checks()
         fresh = os.path.join(rt, "epilogue")
         os.makedirs(fresh)
         os.environ["RUNNER_TEMP"] = fresh
-        loop.epilogue(n, artifact, baseline, digest)
+        os.environ.update(staged.env(), CHECKS_RESULTS=results)
+        with self.iteration_start(fresh):
+            try:
+                session_finalize.epilogue(n, artifact, baseline, artifact_pin.digest(baseline), staged.results)
+            finally:
+                check_results.RESULTS.clear()           # the next epilogue is another process
+
+    def watch(self):
+        """A watchdog run: "Check the loop", then the jobs of "Iteration start" when it found a start due."""
+        rt = tempfile.mkdtemp(prefix="watch-", dir=self.tmp)
+        saved = os.environ.get("RUNNER_TEMP")
+        os.environ["RUNNER_TEMP"] = rt
+        try:
+            with self.iteration_start(rt), mock.patch.object(common, "probe", return_value=200):      # a live credential
+                return loop.watch()
+        finally:
+            os.environ.pop("RUNNER_TEMP")
+            if saved is not None:
+                os.environ["RUNNER_TEMP"] = saved
+
+    @contextlib.contextmanager
+    def iteration_start(self, rt):
+        """The command of a job the jobs of "Iteration start" follow (`START_PLAN`), then those jobs: "Decide whether the
+        Policymaker runs" from the pinned facts (its own engine code, `python3 -S`, no token), and "Start the iteration" with
+        only that job's output. A job that raised still leaves its outputs, and the jobs after it run (`always()`)."""
+        if not self.start_jobs:
+            yield
+            return
+        facts, outputs = os.path.join(rt, "start-facts"), os.path.join(rt, "start-outputs")
+        saved = os.environ.get("GITHUB_OUTPUT")
+        os.environ["START_PLAN"] = facts
+        try:
+            yield
+        finally:
+            os.environ["GITHUB_OUTPUT"] = outputs
+            try:
+                iteration_start.prepare()
+            finally:
+                os.environ.pop("START_PLAN")
+                os.environ.pop("GITHUB_OUTPUT")
+                if saved is not None:
+                    os.environ["GITHUB_OUTPUT"] = saved
+            self.start(rt, outputs_of(outputs), facts)
+
+    def start(self, rt, planned, facts):
+        """The jobs of "Iteration start" on the outputs `planned` of the job before and its artifact `facts`. A tokenless fault
+        that is armed fails the decision job, so the fallback meets the fault."""
+        self.started = (planned, {})
+        if planned.get("start") != "true":
+            return
+        results = ""
+        if planned.get("count", "0") != "0" and not self.hub.tokenless_fault:
+            try:
+                got, plan = check_job(facts, planned["digest"], os.path.join(rt, "decide-job"))
+            except ValueError:                      # the download is not the artifact the job before pinned: the job fails
+                got, plan = {}, []
+            self.started = (planned, got)
+            ran = json.loads(got.get("results") or "{}")
+            self.hub.decided.extend(x["purpose"] for x in plan if x["digest"] in ran)
+            results = got.get("results", "")
+        if self.start_jobs == "lost":
+            return
+        os.environ["DECIDE_RESULTS"] = results
+        common.LAUNCHED.clear()                     # "Start the iteration" is a process of its own
+        try:
+            iteration_start.act()
+        finally:
+            check_results.RESULTS.clear()
+            os.environ.pop("DECIDE_RESULTS")
+
+    def check(self, n, artifact, baseline, rt):
+        """"Prepare the checks" (with the token, on a runner of its own) and "Check the results". Returns the job output
+        `results` "Take in results" gets: none when no bundle was planned, or when a tokenless fault is armed (the job failed,
+        so the fallback meets the fault)."""
+        if not self.check_jobs:
+            return ""
+        prep, outputs = os.path.join(rt, "checks-prep"), os.path.join(rt, "checks-prep-outputs")
+        os.makedirs(prep)
+        saved = os.environ.get("GITHUB_OUTPUT")
+        os.environ.update(RUNNER_TEMP=prep, GITHUB_OUTPUT=outputs)
+        try:
+            candidate_checks.prepare(n, artifact, baseline, artifact_pin.digest(baseline), os.path.join(rt, "checks-bundle"))
+        finally:
+            os.environ.pop("GITHUB_OUTPUT")
+            if saved is not None:
+                os.environ["GITHUB_OUTPUT"] = saved
+        planned = outputs_of(outputs)
+        self.checks = (planned, {})
+        if planned.get("count", "0") == "0" or self.hub.tokenless_fault:
+            return ""
+        got, plan = check_job(os.path.join(rt, "checks-bundle"), planned["digest"], os.path.join(rt, "checks-job"))
+        self.checks = (planned, got)
+        ran = json.loads(got.get("results") or "{}")
+        self.hub.checked.extend(x["purpose"] for x in plan if x["digest"] in ran)
+        return got.get("results", "")
 
     def branch(self, n, files, base="origin/main", delete=()):
         """What the epilogue finds on origin after fetching an agent's work: `task/N` with one commit."""

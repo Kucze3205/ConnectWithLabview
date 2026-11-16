@@ -8,7 +8,8 @@ import time
 import unittest
 
 import fakes
-from fakes import LOOP_DIR, loop
+from fakes import LOOP_DIR
+import agent_result
 
 
 def run_filter(events):
@@ -39,12 +40,29 @@ class StreamFilterTest(unittest.TestCase):
             self.assertEqual(len(fh.readlines()), 4)                         # the raw stream is kept whole
         self.assertIn("Bash ls", r.stdout)
 
-    def test_the_public_log_has_no_tool_results_and_no_thinking(self):
-        events = [{"type": "user", "message": {"content": [{"type": "tool_result", "content": "SECRET OUTPUT"}]}},
-                  {"type": "assistant", "message": {"content": [{"type": "thinking", "thinking": "PRIVATE"}]}}, {"type": "result"}]
-        r, _, _ = run_filter(events)
-        self.assertNotIn("SECRET OUTPUT", r.stdout)
-        self.assertNotIn("PRIVATE", r.stdout)
+    def test_the_live_log_is_the_session_timeline(self):
+        call = {"type": "tool_use", "id": "t1", "name": "Write", "input": {"file_path": "/w/notes.md", "content": "NEW TEXT"}}
+        events = [{"type": "system", "subtype": "init", "cwd": "/w"},
+                  {"type": "system", "subtype": "thinking_tokens", "estimated_tokens": 120},
+                  {"type": "assistant", "message": {"content": [{"type": "thinking", "thinking": "WHY I WRITE"}]}},
+                  {"type": "assistant", "message": {"content": [{"type": "text", "text": "line one\nline two " + "x" * 400}]}},
+                  {"type": "assistant", "message": {"content": [call]}},
+                  {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "t1", "content": "TOOL OUTPUT"}]}},
+                  {"type": "result"}]
+        out = run_filter(events)[0].stdout
+        self.assertIn("🧠 thinking · ~120 tokens", out)
+        self.assertIn("WHY I WRITE", out)
+        self.assertIn("line two " + "x" * 400, out)                          # what the agent says is shown whole
+        group = out[out.index("::group::✏️ Write notes.md"):]
+        self.assertLess(group.index("NEW TEXT"), group.index("TOOL OUTPUT"))
+        self.assertLess(group.index("TOOL OUTPUT"), group.index("::endgroup::"))  # the result sits inside its call's group
+
+    def test_a_result_after_the_next_call_gets_its_own_group(self):
+        use = lambda i: {"type": "assistant", "message": {"content": [{"type": "tool_use", "id": i, "name": "Bash", "input": {"command": "echo " + i}}]}}
+        res = lambda i: {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": i, "content": "out " + i}]}}
+        out = run_filter([use("a"), use("b"), res("a"), res("b"), {"type": "result"}])[0].stdout
+        self.assertEqual(out.count("::group::"), out.count("::endgroup::"))  # GitHub groups are flat: never nested
+        self.assertIn("::group::↩ ▶️ Bash echo a", out)
 
     def test_garbage_lines_do_not_stop_it(self):
         r, _, result = run_filter(["not json", assistant(1), "{broken", {"type": "result", "num_turns": 1}])
@@ -57,7 +75,7 @@ class StreamFilterTest(unittest.TestCase):
         ev = {"type": "rate_limit_event", "rate_limit_info": {"status": "rejected", "rateLimitType": "five_hour", "resetsAt": 1790000000}}
         r, out, result = run_filter([ev])
         self.assertEqual(result["terminal_reason"], "rate_limit")
-        cause, limited, reset = loop.machine_cause(os.path.join(out, "claude-execution-output.json"), "143")
+        cause, limited, reset = agent_result.machine_cause(os.path.join(out, "claude-execution-output.json"), "143")
         self.assertTrue(limited)
         self.assertEqual(int(reset.timestamp()), 1790000000)
 
@@ -68,7 +86,7 @@ class StreamFilterTest(unittest.TestCase):
 
     def test_the_peak_reaches_the_report_fields(self):
         r, out, result = run_filter([assistant(500), {"type": "result", "num_turns": 1}])
-        self.assertEqual(loop.usage_fields(os.path.join(out, "claude-execution-output.json"))["peak_context"], 515)
+        self.assertEqual(agent_result.usage_fields(os.path.join(out, "claude-execution-output.json"))["peak_context"], 515)
 
 
 class RemainingHookTest(unittest.TestCase):

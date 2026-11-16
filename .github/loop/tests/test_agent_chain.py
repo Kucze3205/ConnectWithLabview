@@ -9,7 +9,8 @@ import subprocess
 import unittest
 from unittest.mock import patch
 
-from fakes import common as c, loop
+import fakes
+from fakes import common as c
 import session_fixtures as sessions
 
 BIG = 200 * 1024                      # over the 128 KiB limit of one argv string on Linux
@@ -33,7 +34,7 @@ class AgentChainCase(sessions.SessionCase):
         output = os.path.join(self.w.tmp, "run")
         trusted = os.path.join(output, "trusted")
         os.environ["RUNNER_TEMP"] = output
-        loop.stage(n, work, trusted)
+        fakes.stage_session(n, work, trusted)
         if patch_trusted:
             patch_trusted(trusted)
         env = dict(os.environ, WORK=work, KIND="agent", ISSUE=str(n), AGENT_TIMEOUT="1", MODEL="m1", EFFORT="high",
@@ -43,7 +44,6 @@ class AgentChainCase(sessions.SessionCase):
         return work, output, trusted
 
 
-@unittest.skipIf(os.name == "nt", "requires a POSIX shell: bash on Windows may be WSL")
 class PlainPromptTest(AgentChainCase):
     def test_a_prompt_over_the_argv_limit_reaches_the_cli_whole(self):
         n = self.issue("audit")
