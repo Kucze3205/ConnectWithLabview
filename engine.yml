@@ -65,7 +65,7 @@ policymaker:
   tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
   write: ["execution/", "policy/"]
 policymaker_session_ceilings:          # effort/time/turn caps apply to every provider; models is the legacy alias bound
-  models: [claude-opus-5-5, claude-sonnet-5-5]
+  models: [claude-fable-5-2, claude-opus-5-5, claude-sonnet-5-5]
   efforts: [low, medium, high]
   max_turns: 150
   timeout_minutes: 90
