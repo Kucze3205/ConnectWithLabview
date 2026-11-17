@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "iteration": 152,
+ "status": "failed",
+ "failure": "stalled; policy/ rolled back",
+ "started": "2026-11-16T10:00:50Z",
+ "ended": "2026-11-17T17:08:51Z",
+ "engine_version": "0.8.0",
+ "input_state": {},
+ "policy": {
+  "rev_start": "layered-v1:2aebe63e09fd216a3daffada5f123fbaf52e1b0b159436b72216405e0348cf6f",
+  "rev_end": "layered-v1:2aebe63e09fd216a3daffada5f123fbaf52e1b0b159436b72216405e0348cf6f",
+  "commit_end": "89f5bc289ead4e65debe54fcf197bc6cf01c6c60",
+  "orders_refused": null,
+  "session": 694,
+  "trigger": "3 iterations without progress",
+  "passes": 1,
+  "changes": []
+ },
+ "decided_by": null,
+ "tasks": [],
+ "outcome": {
+  "sessions": [],
+  "shaper": null,
+  "verdict": {
+   "value": "none",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": false
+  },
+  "tokens": {
+   "in": 0,
+   "out": 0,
+   "cache_read": 0,
+   "cache_write": 0,
+   "by_model": {},
+   "cache_read_share": null
+  },
+  "limit_hits": 0,
+  "wall_s": 112082,
+  "critical_path_s": 0,
+  "width": 0,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
