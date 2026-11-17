@@ -1,0 +1,26 @@
+[
+ {
+  "id": "recheck-m09-parity-0159",
+  "title": "Rerun the narrow re-check of matched comparison 0155 M09 parity after the F-N1 fix (#717)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     714,
+     717
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nReturn CLEAR or NOT-CLEAR on finding F-N1 of review #714 only: md M09 and json /validation_rules/M09 of benchmark/baseline/matched-comparison-0155 carry the same meaning, and nothing else in either file changed since HEAD 07dc83f0. This reruns #718, which was blocked because Read, Grep and Bash returned 'No such tool available'; no check was done there, so nothing is reused from it. Report, do not fix: you have no repository write paths; findings go in .session/report.md, evidence in .session/artifacts/. Do not redo the #710 or #714 checks. Design scope only; no model, reader, evaluator or native run. No session can run LabVIEW. Expected gain: a verdict that closes the matched comparison thread (design part of the evaluation.md `baseline` row) or names the remaining finding.\n## Acceptance\n- [ ] First turn: confirm that Read and Bash(git, python3) work. If any returns 'No such tool available', stop at once and report status blocked with the exact tool error. Do not give a verdict.\n- [ ] Pin the HEAD commit you review and the SHA256 of both contract files in the report.\n- [ ] md M09 and json /validation_rules/M09 both separate an arm unavailable before dispatch (unstarted slot, no answer_class) from a dispatched attempt with answer_class unsupported, and both keep `unsupported -> finished_incomplete` as the plan-end derivation only.\n- [ ] git diff 07dc83f0 for both files shows only the json M09 string change, and the md file is unchanged.\n- [ ] Read-only side check: report whether benchmark/preparation.json (if it exists) contains the old json SHA256 04543bdacb7e356bb1ea46c4256659716b0e023066cab5bf29800d769f6e193b. Report the result only (path and pointer if found). Do not fix it.\n- [ ] Verdict CLEAR or NOT-CLEAR with findings (file, line or JSON pointer, severity).\n## Verification\npython3 -c \"import json,hashlib; d=json.load(open('benchmark/baseline/matched-comparison-0155.json')); assert 'dispatch' in json.dumps(d['validation_rules']); assert hashlib.sha256(open('benchmark/baseline/matched-comparison-0155.md','rb').read()).hexdigest()=='15d6be1eec07f74d93b982d9909e08b6fd3085214906adec6a9401b719a60933'; print('OK')\"\n## Context\n- Review #714 found F-N1 and confirmed the rest of the 0157 correction. Fix #717 (merged, commit 37a2a815) edited /validation_rules/M09; the json has no `rules` key. #717 reports json SHA256 82016b83e1b6126b6bd895ffc7600617a692ed73ee24c63692e676fcbc15ec85. Confirm this hash yourself; do not take it from the report. Both reports are exported, so check .session/exports/manifest.json.\n- Do not commit, and write nothing in the repository.\n## Budget\n- Reads: the #714 and #717 reports; git diff 07dc83f0 -- benchmark/baseline/matched-comparison-0155.md benchmark/baseline/matched-comparison-0155.json; md M09 via Grep; json /validation_rules/M09 via a short python3 extraction; one Grep of benchmark/preparation.json for the old hash.\n- No other sources. Keep command output short. Report by about turn 14.\n",
+  "issue": 722
+ }
+]
