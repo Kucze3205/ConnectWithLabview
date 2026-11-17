@@ -22,7 +22,6 @@ routing:
     # for 4 index points less (model-selection.md) and produced turns in sessions #48-#50; Sonnet is the
     # Claude fallback. Opus stays only where its edge is claimed (policymaker, evaluator).
     orchestrator:
-      - {provider: claude, model: claude-fable-5-2}
       - {provider: claude, model: claude-opus-5-5}
       - {provider: codex, model: gpt-6.1-sol}
     researcher: &planning
@@ -33,10 +32,8 @@ routing:
     # status partial, output unmerged. Claude counts cache reads as free, so a growing history costs far less
     # of the budget. Benchmark work goes Claude-first until measured otherwise; review stays on codex (other family).
     benchmark: *implementation
-    # Owner decision 2026-11-09: Anthropic added a separate weekly Fable limit, so Fable goes first and spends that
-    # limit before the shared one; Opus is the fallback when Fable is exhausted. Keep this order.
+    # Owner decision 2026-11-17: Fable removed (out of credits until 2026-12-01; its rejection blocked Opus too).
     policymaker:
-      - {provider: claude, model: claude-fable-5-2}
       - {provider: claude, model: claude-opus-5-5}
       - {provider: codex, model: gpt-6.1-sol}
     evaluator:
@@ -61,7 +58,7 @@ routing:
       - {provider: codex, model: gpt-6.1-sol}
       - {provider: copilot, model: gpt-5.6-luna}
 policymaker_session:                 # model id (not an alias); bounded by engine.yml policymaker_session_ceilings
-  model: claude-fable-5-2
+  model: claude-opus-5-5
   effort: high
   max_turns: 60                  # every turn resends the prompt; a Policymaker needing more than 60 is investigating too broadly
   timeout_minutes: 90

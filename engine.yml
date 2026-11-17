@@ -10,7 +10,7 @@ provider_pool:
   # Catalog and execution evidence: docs/perpetua/cloud-authentication.md.
   providers:
     claude:
-      models: [claude-sonnet-5-5, claude-opus-5-5, claude-fable-5-2, claude-haiku-5-5]
+      models: [claude-sonnet-5-5, claude-opus-5-5, claude-haiku-5-5]
 
     codex:
       models: [gpt-6.1-sol, gpt-6-astra, gpt-6-sol, gpt-6-luna, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna]
@@ -65,7 +65,7 @@ policymaker:
   tools: [Read, Grep, Glob, Write, Edit, Skill, "Bash(git:*)", "Bash(python3:*)"]
   write: ["execution/", "policy/"]
 policymaker_session_ceilings:          # effort/time/turn caps apply to every provider; models is the legacy alias bound
-  models: [claude-fable-5-2, claude-opus-5-5, claude-sonnet-5-5]
+  models: [claude-opus-5-5, claude-sonnet-5-5]
   efforts: [low, medium, high]
   max_turns: 150
   timeout_minutes: 90
