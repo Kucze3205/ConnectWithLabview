@@ -1,0 +1,18 @@
+[
+ {
+  "id": "challenges-gap-0160",
+  "title": "Measure what the existing challenge evidence covers against the evaluation.md challenges row",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "inputs": [],
+  "body": "## Goal\nMeasure, do not fix: map the four challenge kinds that the `challenges` row of docs/perpetua/evaluation.md requires (deliberately wrong answers, wrong source citations, constant or empty export, unsupported case; plus the rule that zero executed tests, missing runtime or missing key earn no credit) to the challenge evidence already in the tree. For each kind give status covered / partial / missing, the evidence path (file and line or JSON pointer) and one sentence on what is absent. Do not write new challenges, edit existing files or run any script. Design scope only; no model, reader, evaluator or native run. No session can run LabVIEW. Expected gain: one file, benchmark/challenges/gap-0160.md, that names the concrete missing piece of the challenges row so the next shaper can order exactly that work instead of re-surveying.\n## Acceptance\n- [ ] benchmark/challenges/gap-0160.md exists with one section per kind, headed exactly `## wrong-answer`, `## wrong-source`, `## constant-or-empty-export`, `## unsupported-case`, `## no-credit-for-zero-execution`.\n- [ ] Each section states status (covered, partial or missing), at least one evidence path with line or JSON pointer for covered/partial, and what is absent.\n- [ ] A `## Pins` section lists the HEAD commit and the SHA256 of every file cited as evidence, measured by you.\n- [ ] A `## Not counted` section names evidence you excluded and why (for example the invalidated #544 / 0125 C1 checker, synthetic-only data).\n- [ ] No other file in the repository changes.\n## Verification\npython3 -c \"t=open('benchmark/challenges/gap-0160.md').read(); assert all(h in t.splitlines() for h in ('## wrong-answer','## wrong-source','## constant-or-empty-export','## unsupported-case','## no-credit-for-zero-execution','## Pins','## Not counted')); print('OK')\"\n## Context\n- docs/perpetua/evaluation.md is Polish; the challenges row is the last row of the table under `## Co musi powstać przed implementacją`.\n- benchmark/preparation.json /milestones/challenges lists the current challenge evidence paths; start from that list.\n- The #544 frozen checker benchmark/writing/check_c1_challenges_0125.py is invalidated: never run or refresh it; you may cite it only under `## Not counted` or as historical design.\n- Do not commit; the parent commits. Do not use shell expansion.\n## Budget\n- Reads: the challenges row of docs/perpetua/evaluation.md; /milestones/challenges of benchmark/preparation.json via a short python3 extraction; benchmark/challenges/README.md; benchmark/challenges/*.json and benchmark/results/challenges.json via short python3 key/size extraction only (no whole-file dumps); benchmark/scripts/challenges.py via Grep for function names; benchmark/writing/c1-challenges-0125.md headings via Grep.\n- No other sources. Keep command output short. Write the file by about turn 25, then pins and report.\n",
+  "issue": 725
+ }
+]
