@@ -1,0 +1,25 @@
+[
+ {
+  "id": "matched-comparison-0155",
+  "title": "Design the matched with/without-tool comparison contract (settings, budgets, repetitions, stopping)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     703
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nClose the next named method gap from docs/perpetua/evaluation.md row `baseline`: a design contract for the matched comparison of the same tasks without and with the tool (same model, prompt and budget, pinned versions, repetitions, stopping, cost and time). Write it as benchmark/baseline/matched-comparison-0155.md and benchmark/baseline/matched-comparison-0155.json. Design scope only, over synthetic data: no model, reader, evaluator or native run, no admissions, no scored results. No session can run LabVIEW. Expected gain: one reviewable contract file pair that a later independent reviewer can return CLEAR or NOT-CLEAR on; the next shaper reads its V-rules and open-decision list.\n## Acceptance\n- [ ] Check .session/exports/manifest.json for the #703 report (CLEAR of attempt-ledger-0150); if missing, say so and continue from the repository files.\n- [ ] The JSON parses and defines: arm identity (without-tool, with-tool, optional with-images) bound to the existing runner SHA256 arm order; matched fields that must be identical across arms (provider, model id, effort/settings, prompt template hash, tool-free context, token/time/call budget, environment pins); repetitions per arm reusing the 0138 per-arm repetition maps; stopping rules (budget exhaustion, interruption, unsupported) mapped onto attempt-ledger-0150 phases and answer_class values; cost and time recording reusing usage_reconciled from the ledger.\n- [ ] Numbered validation rules (M01...) each stated in both files with the same meaning; at least one rule rejects any mismatch of a matched field between arms and one rejects selection among multiple attempts after the fact.\n- [ ] Uncertainty and nondeterminism handling is stated before comparison (what is fixed, what is reported as an interval), with no quality threshold set: thresholds remain an owner decision.\n- [ ] Open items listed explicitly: real-envelope authority, F-A1/F-A2 from the ledger, provider-independence limits; none resolved silently.\n- [ ] The only repository changes are the two new files; no edit to attempt-policy-0148, attempt-ledger-0150 or runner-contract.md. The report gives SHA256 of both files.\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/matched-comparison-0155.json')); assert os.path.getsize('benchmark/baseline/matched-comparison-0155.md')>2000; print('OK')\"\n## Context\n- Ledger review #703 CLEAR at HEAD 48f2715e05b9c212eaeb62b64e41b3846d846d90: ledger md 8b2b30e63fd095dcdbc1aeb52ad14886d99035107a84fcd5183fb43119a35436, json 74c9a47ab4966f79aec887f7bd72b1dd418cd8f0d9e9af13e6240baaf9690e6f. Policy benchmark/baseline/attempt-policy-0148 CLEAR by #685.\n- Do not commit; the parent commits. Do not run evaluator, old builders or the frozen #544 checker.\n## Budget\n- Read: docs/perpetua/evaluation.md section `## Co musi powstać przed implementacją` (table row `baseline`; the file is Polish, Grep for `baseline`); benchmark/baseline/runner-contract.md and benchmark/baseline/README.md via Grep for arm order, repetition and budget lines; attempt-ledger-0150.json via short python3 extraction of /answer_class_values, /plan_states and usage_reconciled only; attempt-policy-0148.md via Grep for stopping and budget lines.\n- No other sources, no whole large JSON files, short command output. Write both files by about turn 22, then hash and report. If unfinished, write ## What next naming the missing pieces.\n",
+  "issue": 706
+ }
+]
