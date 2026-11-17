@@ -1,0 +1,55 @@
+[
+ {
+  "id": "attempt-ledger-fix-0154",
+  "title": "Correct the five #699 findings in the attempt-ledger contract files",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     699
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nNarrowly correct benchmark/baseline/attempt-ledger-0150.md and .json (merged by #698) for the five numbered findings of review #699 (NOT-CLEAR). This is a targeted edit, not a rewrite: use Edit on the named sections only. Expected gain: the files are corrected so that a changed-scope review in this iteration can return CLEAR. Do not reopen the CLEAR attempt policy (#685) and do not supply real-envelope authority. No session can run LabVIEW.\n## Acceptance\n- [ ] Check .session/exports/manifest.json for the #699 report and read its Findings section; if it is missing, report that and stop.\n- [ ] Finding 1: remove verification_receipt_ref from /freeze_receipt/fields so the receipt contains no hash of itself; the verification receipt is cited only from ledger events (binding step 8); fix the Markdown binding paragraph to match.\n- [ ] Finding 2: remove or mark withdrawn the unverifiable author-application counts (35 traces, 631 events, 28 negative controls) in the Markdown section Author application findings, and remove the handoff pointer to the uninspectable .session/artifacts/attempt-ledger-expectations-0150.json.\n- [ ] Finding 3: usage_reconciled records actual tokens, time_s and calls, the reserved-versus-actual delta and the remaining ceiling; add a V-rule for overrun.\n- [ ] Finding 4: add V-rules that freeze_utc precedes the first event_utc and every dispatch_recorded, that preflight_result is seq 1, and that state UTC ordering within recovery segments.\n- [ ] Finding 5: enumerate the answer_class values needed for policy cases I03 and I04 (interrupted, unsupported, absent, empty, invalid UTF-8, malformed, legacy-invalid) and give an explicit mapping between policy plan states ready/running and ledger phases pre/open/stopped/blocked/terminal.\n- [ ] Minor items F-A1 (V20 redundant with V17) and F-A2 (slot-level NONE) stay explicitly open for an owner decision; do not resolve them silently. Markdown and JSON stay consistent; new V-rules are numbered after V28 and referenced in both files.\n- [ ] The only repository changes are those two files. The report lists, per finding, the JSON pointer and Markdown section changed, and the SHA256 of both final files.\n## Verification\npython3 -c \"import json,hashlib,os; json.load(open('benchmark/baseline/attempt-ledger-0150.json')); assert os.path.getsize('benchmark/baseline/attempt-ledger-0150.md')>2000; assert hashlib.sha256(open('benchmark/baseline/attempt-ledger-0150.json','rb').read()).hexdigest()!='f4fcafb8fe7dfdc50000d11ee08c68363271f8d2d28c6db4f22931a55efe1fa1'; assert hashlib.sha256(open('benchmark/baseline/attempt-ledger-0150.md','rb').read()).hexdigest()!='a805b8ec0c9a01ebccd96054620ed016590297f0ab87d803423502e46869fec2'; print('OK')\"\n## Context\n- Review #699 reviewed HEAD 210e445fed0bd9f9ddc932d3bf98bc18a4acdd29: ledger md a805b8ec0c9a01ebccd96054620ed016590297f0ab87d803423502e46869fec2, json f4fcafb8fe7dfdc50000d11ee08c68363271f8d2d28c6db4f22931a55efe1fa1.\n- Policy: benchmark/baseline/attempt-policy-0148.md/.json, CLEAR by #685.\n- Do not commit; the parent commits. Do not run evaluator, builders or frozen checkers.\n## Budget\n- Read: the #699 report (staged export); the two attempt-ledger-0150 files (JSON via short python3 extraction of the named pointers, Markdown by Grep line ranges of the named sections); Grep of attempt-policy-0148.md only for I03/I04 and plan-state lines.\n- No other sources. Short command output. Finish edits by about turn 20, then hash and report. If unfinished, write ## What next naming the open findings.\n",
+  "issue": 702
+ },
+ {
+  "id": "attempt-ledger-rereview-0154",
+  "title": "Changed-scope review of the attempt-ledger correction against #699 findings",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "attempt-ledger-fix-0154"
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     699
+    ]
+   }
+  ],
+  "inputs": [
+   {
+    "issue": 699,
+    "name": "attempt-ledger-review-expectations-0153.json"
+   }
+  ],
+  "body": "## Goal\nReview, as merged on main, the changes to benchmark/baseline/attempt-ledger-0150.md and .json made for the five findings of review #699. Report, do not fix. Expected gain: CLEAR or NOT-CLEAR in .session/report.md per finding; CLEAR closes the integration-seam design scope. No session can run LabVIEW.\n## Acceptance\n- [ ] Pin the reviewed commit, tree and SHA256 of both attempt-ledger-0150 files yourself from main; state the diff against the #699 pins (md a805b8ec0c9a01ebccd96054620ed016590297f0ab87d803423502e46869fec2, json f4fcafb8fe7dfdc50000d11ee08c68363271f8d2d28c6db4f22931a55efe1fa1) using git log/diff on these two paths only.\n- [ ] For each #699 finding 1-5: resolved or not, with JSON pointer or Markdown section reference. Check that the receipt contains no self-hash, that new V-rules are consistent between Markdown and JSON, and that no unverifiable counts remain claimed.\n- [ ] Check the correction introduced no new contradiction in the changed sections and kept F-A1/F-A2 explicitly open; do not re-review unchanged sections or the CLEAR policy.\n- [ ] Verdict CLEAR or NOT-CLEAR in .session/report.md with numbered findings; detailed evidence in .session/artifacts/. Write no repository file.\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/attempt-ledger-0150.json')); assert os.path.getsize('benchmark/baseline/attempt-ledger-0150.md')>2000; print('OK')\"\n## Context\n- Check .session/exports/manifest.json for the #699 report and .session/inputs/699-attempt-ledger-review-expectations-0153.json; a missing input is a limitation, not clearance.\n- Policy review #685 CLEAR; ledger review #699 NOT-CLEAR at 210e445fed0bd9f9ddc932d3bf98bc18a4acdd29.\n## Budget\n- Read: the #699 report; the staged #699 expectations input; git diff of the two ledger files since 210e445f; changed sections of both files via Grep ranges or short python3 extraction. Grep attempt-policy-0148.md only for I03/I04 and plan states.\n- No other sources. Short command output; write the report by about turn 25.\n",
+  "issue": 703
+ }
+]
