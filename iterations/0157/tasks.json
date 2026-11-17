@@ -1,0 +1,51 @@
+[
+ {
+  "id": "correct-matched-comparison-0157",
+  "title": "Narrow correction of matched comparison contract 0155 for review #710 findings F-M1, F-M2, F-M3",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 35
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     710,
+     706
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nCorrect only the three findings of review #710 (NOT-CLEAR) in benchmark/baseline/matched-comparison-0155.md and benchmark/baseline/matched-comparison-0155.json, with targeted Edit changes. Do not redraft the contract and do not touch any other rule. Design scope only: no model, reader, evaluator or native run. No session can run LabVIEW. Expected gain: a corrected contract whose stopping table and M04/M09 text a changed-scope reviewer can pass, closing the design part of the evaluation.md `baseline` row.\n## Acceptance\n- [ ] F-M1: the external-interruption row (json /stopping/mapping[2] and md stopping table) states the selector: `interrupted` alone never stops a plan (ledger R08); the terminal is stopped_hard_failure only when a separate stop_recorded hard_evidence_failure exists, otherwise derived by the ledger order (hard_evidence_failure > settings_drift > budget, else finished_incomplete).\n- [ ] F-M2: json /stopping/mapping[3], /arms/with_images_rule and md M09 separate (a) an arm unavailable before dispatch (unstarted slot, no delivery_interpreted) from (b) a dispatched attempt classed answer_class unsupported; `unsupported -> finished_incomplete` is kept only as the plan-end derivation.\n- [ ] F-M3: json /repetitions and md M04 say 0138 supplies the per-arm repetition mechanism only (one synthetic comparison, independent_repetitions_per_case_arm null, no with-images slot); O06 text records this and stays open until the images-arm mapping is decided. Do not invent a real repetition count.\n- [ ] md and json keep the same meaning for every changed rule; O01-O06 stay open; no quality threshold is added; every other rule is byte-unchanged in meaning.\n- [ ] Report: changed json pointers and md headings, new SHA256 of both files, and a statement that unchanged rules were not edited.\n## Verification\npython3 -c \"import json,os; d=json.load(open('benchmark/baseline/matched-comparison-0155.json')); assert isinstance(d['stopping']['mapping'],list) and len(d['stopping']['mapping'])>=4; assert 'repetitions' in d and 'arms' in d; assert os.path.getsize('benchmark/baseline/matched-comparison-0155.md')>2000; print('OK')\"\n## Context\n- Review #710 report (exported; check .session/exports/manifest.json) names F-M1, F-M2, F-M3 with pointers; F-S1/F-S2 need no contract change. Pre-correction hashes: md bacdb800a12a593af96a3843377aa926e3507ace710a0f088823c98641a7a021, json 888671cc5e067ecddc503272f2647decc86b6a1eca7ccd8af050c881f235c598.\n- The 0138 file is benchmark/project-run-binding-0138.json (not under benchmark/baseline/).\n- Do not commit; the parent commits. Do not run evaluator, old builders or the frozen #544 checker.\n## Budget\n- Reads: the #710 report; benchmark/baseline/matched-comparison-0155.json via short python3 extraction of /stopping/mapping, /arms, /repetitions, /open_items; the matching sections of benchmark/baseline/matched-comparison-0155.md; benchmark/baseline/attempt-ledger-0150.json via short python3 extraction of the decision table only if needed.\n- No other sources, no whole large JSON printed, short command output. First Edit by about turn 12, report by about turn 28.\n",
+  "issue": 713
+ },
+ {
+  "id": "review-matched-comparison-fix-0157",
+  "title": "Changed-scope review of the matched comparison 0155 correction (F-M1, F-M2, F-M3)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "correct-matched-comparison-0157"
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     710
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nReturn CLEAR or NOT-CLEAR on the corrected benchmark/baseline/matched-comparison-0155.md and .json, for the changed scope only: the stopping table (external interruption, unsupported/unavailable rows), M04/json /repetitions, M09/json /arms/with_images_rule and O06. Report, do not fix: you have no repository write paths; findings in .session/report.md, evidence in .session/artifacts/. Design scope only; no model, reader, evaluator or native run. No session can run LabVIEW. Expected gain: a verdict that closes the matched comparison thread or names a remaining finding.\n## Acceptance\n- [ ] Pin the HEAD commit you review and the SHA256 of both contract files in the report.\n- [ ] F-M1 resolved: interruption row has a selector consistent with ledger R08 and the stop-cause order in benchmark/baseline/attempt-ledger-0150.json.\n- [ ] F-M2 resolved: unavailable-before-dispatch arm separated from dispatched answer_class unsupported, consistent with the ledger.\n- [ ] F-M3 resolved: M04/repetitions state mechanism-only reuse of benchmark/project-run-binding-0138.json; no invented real count; O06 open.\n- [ ] Changed rules have the same meaning in md and json; O01-O06 open; no quality threshold; no unrelated rule changed (compare with git diff against the pre-correction commit 27dc789b for both files).\n- [ ] Verdict CLEAR or NOT-CLEAR with findings (file, line or JSON pointer, severity).\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/matched-comparison-0155.json')); assert os.path.getsize('benchmark/baseline/matched-comparison-0155.md')>2000; print('OK')\"\n## Context\n- Review #710 (exported) found F-M1, F-M2, F-M3; its hash, M01-M16 parity and repetition checks are done; do not redo them outside the changed scope.\n- Read the correction session's report through the merged diff; do not commit; write nothing in the repository.\n## Budget\n- Reads: the #710 report; git diff 27dc789b -- benchmark/baseline/matched-comparison-0155.md benchmark/baseline/matched-comparison-0155.json; short python3 extractions of the changed json pointers; benchmark/baseline/attempt-ledger-0150.json decision table via short python3 extraction; benchmark/project-run-binding-0138.json repetition fields via short python3 extraction.\n- No other sources, short command output. Report by about turn 22.\n",
+  "issue": 714
+ }
+]
