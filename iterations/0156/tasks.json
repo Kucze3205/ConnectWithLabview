@@ -1,0 +1,26 @@
+[
+ {
+  "id": "review-matched-comparison-0156",
+  "title": "Independently review the matched with/without-tool comparison contract 0155 (M01-M16, O01-O06)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     706,
+     703
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nReturn CLEAR or NOT-CLEAR on the pinned contract pair benchmark/baseline/matched-comparison-0155.md and .json (written by #706, merged at commit 27dc789b), which closes the design part of the `baseline` row of docs/perpetua/evaluation.md. Report, do not fix: you have no repository write paths. Findings go in .session/report.md, detailed evidence in .session/artifacts/. Design scope only: no model, reader, evaluator or native run. No session can run LabVIEW. Expected gain: a verdict with numbered findings (F-M1...) that the next shaper reads to order a narrow correction or close the thread.\n## Acceptance\n- [ ] First, before opening either contract file or the #706 report: write .session/artifacts/expectations.md with your own derived expectations for a matched comparison contract (matched fields, arm order binding, repetitions, stopping mapped to ledger phases/answer_class, cost/time source, post-hoc selection ban, uncertainty stated in advance, no thresholds), from evaluation.md row `baseline`, the ledger and the 0138 file only. State in the report that it was saved before the key reads.\n- [ ] Compute SHA256 of both contract files and compare with md bacdb800a12a593af96a3843377aa926e3507ace710a0f088823c98641a7a021 and json 888671cc5e067ecddc503272f2647decc86b6a1eca7ccd8af050c881f235c598; report match or mismatch.\n- [ ] Check every rule M01-M16 has the same meaning in md and json; list any divergence.\n- [ ] Check the two loose stopping mappings named by #706 (interruption terminal; unsupported -> finished_incomplete) against the attempt-ledger-0150 decision table, and the 0138 repetition-map reuse (author's O06) against benchmark/baseline/project-run-binding-0138.json directly.\n- [ ] Check O01-O06 are open and none is resolved silently; check no quality threshold is set.\n- [ ] Report verdict CLEAR or NOT-CLEAR, each finding with file and line/JSON pointer and severity; artifacts listed with names.\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/matched-comparison-0155.json')); assert os.path.getsize('benchmark/baseline/matched-comparison-0155.md')>2000; print('OK')\"\n## Context\n- Ledger review #703 CLEAR at HEAD 48f2715e05b9c212eaeb62b64e41b3846d846d90: ledger md 8b2b30e63fd095dcdbc1aeb52ad14886d99035107a84fcd5183fb43119a35436, json 74c9a47ab4966f79aec887f7bd72b1dd418cd8f0d9e9af13e6240baaf9690e6f. Attempt policy benchmark/baseline/attempt-policy-0148 CLEAR by #685.\n- Check .session/exports/manifest.json for #706 and #703 reports; read #706 only after expectations.md is saved.\n- Do not commit; write nothing in the repository. Do not run evaluator, old builders or the frozen #544 checker.\n## Budget\n- Early reads (before expectations.md): docs/perpetua/evaluation.md via Grep for `baseline` (file is Polish); benchmark/baseline/attempt-ledger-0150.json via short python3 extraction of the decision table, /answer_class_values, /plan_states and usage_reconciled; benchmark/baseline/project-run-binding-0138.json via short python3 extraction of repetition maps.\n- Later reads: benchmark/baseline/matched-comparison-0155.md and .json, then the #706 report.\n- No other sources, no whole large JSON files, short command output. Save expectations by about turn 10, write the report by about turn 30.\n",
+  "issue": 710
+ }
+]
