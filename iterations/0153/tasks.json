@@ -1,0 +1,49 @@
+[
+ {
+  "id": "attempt-ledger-files-0153",
+  "title": "Finish only the two attempt-ledger contract files from saved branch task/692",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "start_branch": "task/692",
+  "limits": {
+   "timeout_minutes": 75,
+   "max_turns": 40
+  },
+  "exports": [],
+  "inputs": [],
+  "body": "## Goal\nFinish the design-only integration contract benchmark/baseline/attempt-ledger-0150.md and .json, starting from saved branch task/692 (commit fd52cac4). #689 (0150) and #692 (0151) both ended partial with cause input_budget, no artifacts and no description of what was written. This task is deliberately narrower: only the two repository files, no session artifacts, no independent expectations, no review. Expected gain: both files exist, parse and cover the contract items below; the next shaper orders an independent reviewer on the merged bytes. Do not reopen the CLEAR attempt policy (#685) or supply real-envelope authority. No session can run LabVIEW.\n## Acceptance\n- [ ] Inventory first, in at most three tool calls: whether both files exist on the branch, their sizes, whether the JSON parses and which section headings the Markdown has. Put this inventory at the top of the report. Keep saved content that is correct; complete only what is missing.\n- [ ] Confirm by SHA256 that benchmark/baseline/attempt-policy-0148.md is 22c837604524677c06e0eaad9410018c1230ce86d0e6cfd767b8f3fcaaa79e39 and attempt-policy-0148.json is 15ccbdf618ad86cf477dc2f6a680ad8fdd146cf1ced060de6cd96f77eb9797df; a mismatch is reported as a limitation, not cleared.\n- [ ] The only repository changes are benchmark/baseline/attempt-ledger-0150.md and .json. Together they specify: receipt/event fields; immutable slot/comparison/attempt/delivery identities; byte hashes and evidence references; producer/trust provenance; ordering and UTC; reservation/usage reconciliation; an acyclic policy-manifest-plan-settings-freeze binding; gate inputs, event preconditions, legal transitions and deterministic handoff outputs for preflight, one-at-a-time dispatch, response retention before parsing, rejection and terminal states; and legacy multiple-attempt handoff (no retrospective selection).\n- [ ] The files distinguish declared data, independently verified authority and unavailable evidence, state that a local hash or append-only claim does not establish trusted provenance, and list the checks that need unavailable external authority and therefore fail closed.\n- [ ] The report lists SHA256 of both final files and says which parts were reused from the branch and which were written now.\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/attempt-ledger-0150.json')); assert os.path.getsize('benchmark/baseline/attempt-ledger-0150.md')>2000; print('OK')\"\n## Context\n- Policy under integration: benchmark/baseline/attempt-policy-0148.md and .json, CLEAR by #685 at cf0c84e5b16e8e719ae83af35da7a0c80bed7160.\n- Gap addressed: baseline evidence integration in docs/perpetua/evaluation.md.\n- Do not commit; the parent commits. Do not run evaluator, builders or frozen checkers.\n## Budget\n- Read: the two saved files on the branch; from attempt-policy-0148.json only the integration_seam, identity and accounting keys, extracted with a short python3 command; Grep line ranges of attempt-policy-0148.md, never the whole file.\n- Do not read docs/perpetua/evaluation.md whole; Grep for the baseline/evidence-integration lines only. No other sources.\n- Keep command output short. Write both files by about turn 20; then hash them and write the report. If unfinished, write `## What next` naming the missing acceptance item.\n",
+  "issue": 698
+ },
+ {
+  "id": "attempt-ledger-review-0153",
+  "title": "Independent changed-scope review of the attempt-ledger contract files",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "attempt-ledger-files-0153"
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     685
+    ]
+   }
+  ],
+  "inputs": [
+   {
+    "issue": 685,
+    "name": "attempt-policy-independent-expectations-0149.json"
+   }
+  ],
+  "body": "## Goal\nIndependently review benchmark/baseline/attempt-ledger-0150.md and .json as merged on main against the CLEAR attempt policy benchmark/baseline/attempt-policy-0148.md/.json. Report, do not fix. Expected gain: a CLEAR or NOT-CLEAR verdict with numbered findings in .session/report.md, which the next shaper reads to close the integration-seam scope or order a narrow correction. No session can run LabVIEW.\n## Acceptance\n- [ ] Pin the reviewed commit, tree and SHA256 of both attempt-ledger files yourself from main, and the SHA256 of both attempt-policy-0148 files (expected 22c837604524677c06e0eaad9410018c1230ce86d0e6cfd767b8f3fcaaa79e39 and 15ccbdf618ad86cf477dc2f6a680ad8fdd146cf1ced060de6cd96f77eb9797df).\n- [ ] Before opening the attempt-ledger files, save to .session/artifacts/attempt-ledger-review-expectations-0153.json your own list of what the integration seam must define, derived from the policy files and the staged #685 input only.\n- [ ] Check each item: receipt/event fields, immutable identities, hashes and evidence references, provenance and trust, ordering/UTC, reservation reconciliation, acyclic freeze binding, transitions and handoff outputs, fail-closed external-authority checks, no retrospective legacy selection, consistency between Markdown and JSON.\n- [ ] Verdict CLEAR or NOT-CLEAR in .session/report.md with numbered findings and file/line references; detailed evidence in .session/artifacts/. Write no repository file.\n## Verification\npython3 -c \"import json,os; json.load(open('benchmark/baseline/attempt-ledger-0150.json')); assert os.path.getsize('benchmark/baseline/attempt-ledger-0150.md')>2000; print('OK')\"\n## Context\n- Policy review #685 CLEAR at cf0c84e5b16e8e719ae83af35da7a0c80bed7160; do not re-review the policy itself.\n- Check .session/exports/manifest.json for the #685 report; missing input is a limitation, not clearance.\n## Budget\n- Read: benchmark/baseline/attempt-policy-0148.json keys via short python3 extraction; Grep ranges of attempt-policy-0148.md; the staged input .session/inputs/685-attempt-policy-independent-expectations-0149.json; then (later read, after saving expectations) both attempt-ledger-0150 files.\n- No other sources. Short command output; write the report by about turn 30.\n",
+  "issue": 699
+ }
+]
