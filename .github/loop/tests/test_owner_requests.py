@@ -4,7 +4,10 @@ import unittest
 from unittest.mock import patch
 
 import fakes
-from fakes import common as c, iteration as it, loop
+from fakes import common as c, iteration as it
+import iteration_start as start
+import request_continuation
+import watchdog
 import owner_requests as req
 
 
@@ -16,7 +19,7 @@ class OwnerRequestsTest(unittest.TestCase):
     def setUp(self):
         self.w = fakes.World(engine_yml=self.CONFIG)
         self.h = self.w.hub
-        self.tail = patch.object(loop, "reconcile")
+        self.tail = patch.object(watchdog, "reconcile")
         self.advance = patch.object(it, "advance")
         self.tail.start()
         self.advance.start()
@@ -33,7 +36,7 @@ class OwnerRequestsTest(unittest.TestCase):
     def answer(self, n, yes=True, owner="ow"):
         self.h.answer(n, yes)
         self.h.issues[n]["closed_by"] = {"login": owner}
-        loop.on_request_closed(n)
+        request_continuation.on_request_closed(n)
 
     def confirm(self, n, marker, login="ow"):
         self.h.post_comment(n, "<!-- %s: %s -->" % (marker, req.read(n)["proposal_sha"]))
@@ -50,7 +53,7 @@ class OwnerRequestsTest(unittest.TestCase):
         self.assertEqual(req.read(n)["status"], "approved")
         commit = c.head()
         comments = len(self.h.comments(n))
-        loop.on_request_closed(n)
+        request_continuation.on_request_closed(n)
         self.assertEqual(c.head(), commit)
         self.assertEqual(len(self.h.comments(n)), comments)
 
@@ -105,7 +108,7 @@ class OwnerRequestsTest(unittest.TestCase):
         self.h.issues[n]["closed_by"] = {"login": "ow"}
         self.assertEqual(req.settle(n, c.issue(n)), "approved")
         commit = c.head()
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(c.head(), commit)
         self.assertIn(req.APPROVED, c.label_names(c.issue(n)))
 
@@ -120,13 +123,13 @@ class OwnerRequestsTest(unittest.TestCase):
         self.h.edit_labels(n, add=[req.APPROVED], remove=["owner-request:capability"])
         self.assertFalse(c.is_unblocked(worker))
         count = len(self.h.comments(n))
-        loop.on_request_closed(n)
+        request_continuation.on_request_closed(n)
         self.assertEqual(len(self.h.comments(n)), count)
         self.confirm(n, "capability-ready", login="github-actions[bot]")
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertFalse(c.is_unblocked(worker))
         self.confirm(n, "capability-ready")
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(req.read(n)["status"], "approved")
         self.assertTrue(c.is_unblocked(worker))
         self.assertIn(worker, c.LAUNCHED)
@@ -168,7 +171,7 @@ class OwnerRequestsTest(unittest.TestCase):
         self.assertFalse(c.is_unblocked(worker))
         self.w.push_main({self.SCRIPT: "a = 2\n"})
         pr["state"], pr["merged"] = "closed", True
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(req.read(n)["status"], "approved")
         self.assertTrue(c.is_unblocked(worker))
         self.assertIn(req.APPROVED, c.label_names(c.issue(n)))
@@ -235,8 +238,8 @@ class OwnerRequestsTest(unittest.TestCase):
     def test_same_proposal_has_one_pr(self):
         n = self.engine_change()
         self.answer(n)
-        loop.sweep_requests()
-        loop.on_request_closed(n)
+        request_continuation.sweep_requests()
+        request_continuation.on_request_closed(n)
         self.assertEqual(len(self.h.prs), 1)
         m = req.open_request("engine-change", "fix again", "x", "y", "z", frozen=self.PATCH)
         self.answer(m)
@@ -248,7 +251,7 @@ class OwnerRequestsTest(unittest.TestCase):
         n = self.engine_change(blocks=[worker])
         self.answer(n)
         self.h.prs[self.branch(n)]["state"] = "closed"
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(req.read(n)["status"], "declined")
         self.assertFalse(c.is_unblocked(worker))
 
@@ -256,7 +259,7 @@ class OwnerRequestsTest(unittest.TestCase):
         n = self.engine_change(self.WORKFLOW)
         self.answer(n)
         self.confirm(n, "engine-applied")
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(req.read(n)["status"], "approved")
 
     def test_retrying_a_denied_proposal_does_not_open_it_again(self):
@@ -286,9 +289,9 @@ class OwnerRequestsTest(unittest.TestCase):
     def test_nonowner_cannot_suppress_goal_confirmation_by_declining(self):
         n = req.open_request("result-confirmation", "Confirm result", "what", "why", "unblocks", ref="result-tree")
         self.answer(n, False, owner="collaborator")
-        self.assertFalse(it.confirmation_declined("result-tree"))
+        self.assertFalse(start.confirmation_declined("result-tree"))
         self.answer(n, False)
-        self.assertTrue(it.confirmation_declined("result-tree"))
+        self.assertTrue(start.confirmation_declined("result-tree"))
 
 
 class LimitsTest(unittest.TestCase):

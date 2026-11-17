@@ -18,7 +18,10 @@ import yaml
 
 import fakes
 from fakes import common as c, loop
+import merge
+import session_finalize
 import session_inputs
+import session_start
 import test_session as sessions
 from tool_broker import FIELDS
 
@@ -114,7 +117,7 @@ class RoutedChainTest(sessions.SessionCase):
         work, output = self.work(), os.path.join(self.w.tmp, "run")
         trusted, state = os.path.join(output, "trusted"), os.path.join(self.w.tmp, "state")
         os.environ["RUNNER_TEMP"] = output
-        loop.stage(n, work, trusted)
+        session_start.stage(n, work, trusted, os.path.join(output, "policy"))
         report = c.MARK + "\n```yaml\nstatus: done\n```\nDid the work.\n"
         script = [action("Read", path=".session/issue.md"),
                   action("Write", path="src/product.txt", text="agent product"),
@@ -149,10 +152,10 @@ class RoutedChainTest(sessions.SessionCase):
         self.assertEqual(session["result"]["status"], "done")
         self.assertEqual(subprocess.run(["git", "show", "task/%s:src/product.txt" % n], cwd=work, capture_output=True,
                                         text=True).stdout, "agent product")
-        original = loop.merge_branch
-        with patch.object(loop, "merge_branch", wraps=original) as merge:
-            merge.side_effect = lambda *a, **kw: original(*a, **dict(kw, override={"verdict": "accepted"}))
-            loop.finalize(n, work)
+        original = merge.merge_branch
+        with patch.object(merge, "merge_branch", wraps=original) as merged:
+            merged.side_effect = lambda *a, **kw: original(*a, **dict(kw, override={"verdict": "accepted"}))
+            session_finalize.finalize(n, work)
         frozen = self.hub.report(n)
         self.assertEqual((frozen["status"], frozen["turns"], frozen["merged"]), ("done", str(len(script)), "true"))
         self.assertEqual(fakes.sh(self.w.origin, "git", "show", "main:src/product.txt"), "agent product")

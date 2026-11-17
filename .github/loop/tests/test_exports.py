@@ -6,7 +6,8 @@ import unittest
 from unittest.mock import patch
 
 import fakes
-from fakes import common as c, iteration as it, loop
+from fakes import common as c, iteration as it
+import session_start
 import task_graph as graph
 import owner_requests as requests
 import policymaker_session
@@ -36,6 +37,11 @@ class ExportsTest(unittest.TestCase):
         self.assertEqual([(r["status"], r.get("issue"), r.get("iteration")) for r in results], [("downloaded", 10, 2)])
         self.assertEqual(self.hub.gh_calls[0][:5], ("run", "download", "101", "--name", "stream-0002-10"))
         self.assertTrue(os.path.isfile(os.path.join(self.tmp.name, "exports", "manifest.json")))
+
+    def test_a_gh_call_the_fake_does_not_know_fails_with_its_arguments(self):
+        with self.assertRaisesRegex(AssertionError, "gh api repos/o/r/actions/runs/7 -X GET"):
+            c.api("repos/o/r/actions/runs/7")
+        self.assertEqual(self.hub.gh_calls, [])
 
     def test_expired_deleted_and_unknown_are_distinct(self):
         self.hub.artifacts = [self.artifact(1, 10, expired=True)]
@@ -136,7 +142,7 @@ class PolicymakerSessionTest(unittest.TestCase):
 
 class ExportPipelineTest(SessionCase):
     def execution_environment(self, n):
-        loop.resolve(n)
+        session_start.resolve(n)
         with open(self.out, encoding="utf-8") as fh:
             return {key.upper(): value for key, value in (line.strip().split("=", 1) for line in fh if "=" in line)
                     if key not in ("start", "consented")}
@@ -148,7 +154,7 @@ class ExportPipelineTest(SessionCase):
         c.sync_main()
         with patch.dict(os.environ, environment):
             with self.assertRaisesRegex(SystemExit, "configuration changed after prep"):
-                loop.stage(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
+                fakes.stage_session(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
 
     def test_stage_blocks_tool_change_after_prep(self):
         n = self.issue()
@@ -158,7 +164,7 @@ class ExportPipelineTest(SessionCase):
         # Even when a consent is otherwise valid, the frozen prep profile must match.
         with patch.dict(os.environ, environment), patch.object(c, "profiles", return_value=profiles), patch.object(requests, "consent_status", return_value=(True, None)):
             with self.assertRaisesRegex(SystemExit, "configuration changed after prep: TOOLS"):
-                loop.stage(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
+                fakes.stage_session(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
 
     def test_stage_rechecks_current_owner_consent(self):
         n = self.issue()
@@ -166,7 +172,7 @@ class ExportPipelineTest(SessionCase):
         profiles["worker"]["tools"] = profiles["worker"]["tools"] + ["WebFetch"]
         with patch.object(c, "profiles", return_value=profiles):
             with self.assertRaisesRegex(SystemExit, "consent is no longer valid"):
-                loop.stage(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
+                fakes.stage_session(n, os.path.join(self.w.tmp, "work"), os.path.join(self.w.tmp, "trusted"))
 
     def test_task_graph_declaration_reaches_role_staging(self):
         declaration = [{"source": "records", "iterations": [0]}]
@@ -176,14 +182,14 @@ class ExportPipelineTest(SessionCase):
         self.assertEqual(json.loads(c.marker(self.hub.issue(n)["body"], "exports")), declaration)
         work = os.path.join(self.w.tmp, "selected-work")
         fakes.sh(self.w.tmp, "git", "clone", "-q", "--no-hardlinks", "-c", "core.autocrlf=false", self.w.origin, work)
-        loop.stage(n, work, os.path.join(self.w.tmp, "trusted"))
+        fakes.stage_session(n, work, os.path.join(self.w.tmp, "trusted"))
         with open(os.path.join(work, ".session", "exports", "manifest.json"), encoding="utf-8") as fh:
             result = json.load(fh)["results"][0]
         self.assertEqual((result["source"], result["status"]), ("records", "unavailable"))
 
     def test_policymaker_labels_do_not_escape_owner_ceilings(self):
         n = self.issue("policymaker", labels=["model:unapproved", "effort:unapproved"])
-        loop.resolve(n)
+        session_start.resolve(n)
         with open(self.out, encoding="utf-8") as fh:
             output = dict(line.strip().split("=", 1) for line in fh if "=" in line)
         self.assertEqual((output["model"], output["effort"]), ("claude-opus-5-5", "high"))
@@ -193,7 +199,7 @@ class ExportPipelineTest(SessionCase):
                           "policy/params.yml": fakes.POLICY_PARAMS + "\npolicymaker_session:\n  model: claude-sonnet-5-5\n  effort: low\n  max_turns: 9999\n  timeout_minutes: 9999\n"}, "owner ceiling and policy tuning")
         c.sync_main()
         n = self.issue("policymaker", body='<!-- limits: {"max_turns": 9999, "timeout_minutes": 9999} -->')
-        loop.resolve(n)
+        session_start.resolve(n)
         with open(self.out, encoding="utf-8") as fh:
             output = dict(line.strip().split("=", 1) for line in fh if "=" in line)
         self.assertEqual((output["model"], output["effort"], output["max_turns"], output["agent_timeout"]),

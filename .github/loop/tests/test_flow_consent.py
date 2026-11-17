@@ -5,9 +5,13 @@ import unittest
 from unittest import mock
 
 import fakes
-from fakes import common as c, iteration as it, loop, task
+from fakes import common as c, iteration as it, task
+import request_continuation
+import session_finalize
+import session_start
 import owner_requests as requests
 from flow_fixtures import Flow
+import iteration_start as start
 
 
 POOL_YML = """jobs:
@@ -25,7 +29,7 @@ POOL_YML = """jobs:
 
 class OptionalAccessTest(Flow):
     def test_private_access_request_survives_iteration_and_next_work_starts(self):
-        it.start_iteration()
+        start.start_iteration()
         n = requests.process_proposals(json.dumps([{
             "kind": "capability", "title": "Optional private LabVIEW corpus",
             "what": "Grant specified corpus access only after agreeing disclosure scope",
@@ -48,7 +52,7 @@ class ConsentTest(Flow):
         self.w.push_main({"src/.keep": ""}, "x")
 
     def start(self):
-        it.start_iteration()
+        start.start_iteration()
         self.play_shaper(task("n", role="net", consent={"what": "Search the web once", "why": "need a fact"}), task("w"))
         return self.task_issue("n")
 
@@ -66,11 +70,11 @@ class ConsentTest(Flow):
         n = self.start()
         (req,) = self.hub.by_label("owner-request:consent")
         self.hub.answer(req["number"], True)
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertIn(n, {int(i["issue"]) for _, i in self.hub.dispatched})
         out = os.path.join(self.w.tmp, "out")
         os.environ["GITHUB_OUTPUT"] = out
-        loop.resolve(n)
+        session_start.resolve(n)
         with open(out) as fh:
             text = fh.read()
         self.assertIn("consented=true", text)
@@ -79,7 +83,7 @@ class ConsentTest(Flow):
     def test_resolve_refuses_without_the_consent(self):
         n = self.start()
         with self.assertRaises(SystemExit) as e:
-            loop.resolve(n)
+            session_start.resolve(n)
         self.assertIn("beyond the accepted limits", str(e.exception))
         self.assertEqual(self.hub.report(n)["status"], "blocked")
 
@@ -88,10 +92,10 @@ class ConsentTest(Flow):
         (req,) = self.hub.by_label("owner-request:consent")
         self.hub.answer(req["number"], True)
         self.hub.issues[req["number"]]["closed_by"] = {"login": "collaborator"}
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertNotIn(requests.HANDLED, c.label_names(c.issue(req["number"])))
         with self.assertRaises(SystemExit):
-            loop.resolve(n)
+            session_start.resolve(n)
 
     def test_consent_cannot_be_reused_for_changed_profile_or_another_task(self):
         n = self.start()
@@ -109,13 +113,13 @@ class ConsentTest(Flow):
         self.hub.issues[req["number"]]["body"] += "\nExpanded authority"
         self.hub.answer(req["number"], True)
         with self.assertRaises(SystemExit):
-            loop.resolve(n)
+            session_start.resolve(n)
 
     def test_consent_declined_closes_the_task_as_blocked(self):
         n = self.start()
         (req,) = self.hub.by_label("owner-request:consent")
         self.hub.answer(req["number"], False)
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertEqual(self.hub.issues[n]["state"], "closed")
         self.assertEqual(self.hub.report(n)["status"], "blocked")
 
@@ -125,7 +129,7 @@ class ConsentSecretsTest(Flow):
         super().setUp()
         self.w.push_main({"src/.keep": "", ".github/workflows/session.yml": POOL_YML % "STRIPE_KEY: x\n          SMTP_PASS: y"}, "x")
         c.sync_main()
-        it.start_iteration()
+        start.start_iteration()
         self.play_shaper(task("a", consent={"secrets": ["STRIPE_KEY"]}), task("b", consent={"secrets": ["SMTP_PASS"]}), task("c"))
 
     def request_of(self, tid):
@@ -135,13 +139,13 @@ class ConsentSecretsTest(Flow):
     def resolved(self, tid):
         out = os.path.join(self.w.tmp, "out-" + tid)
         os.environ["GITHUB_OUTPUT"] = out
-        loop.resolve(self.task_issue(tid))
+        session_start.resolve(self.task_issue(tid))
         with open(out) as fh:
             return dict(l.rstrip("\n").split("=", 1) for l in fh)
 
     def grant(self, tid):
         self.hub.answer(self.request_of(tid), True)
-        loop.on_request_closed(self.request_of(tid))
+        request_continuation.on_request_closed(self.request_of(tid))
 
     def test_names_enter_the_frozen_text_and_a_later_edit_is_not_applied(self):
         n = self.request_of("a")
@@ -169,7 +173,7 @@ class ConsentSecretsTest(Flow):
         fakes.sh(self.w.tmp, "git", "clone", "-q", "--no-hardlinks", self.w.origin, work)
         trusted = os.path.join(self.w.tmp, "trusted-" + tid)
         os.environ["RUNNER_TEMP"] = os.path.join(self.w.tmp, "run-" + tid)
-        loop.stage(self.task_issue(tid), work, trusted)
+        fakes.stage_session(self.task_issue(tid), work, trusted)
         return work, trusted
 
     def test_stage_writes_the_approved_names_for_agent_sh(self):
@@ -181,7 +185,6 @@ class ConsentSecretsTest(Flow):
         with open(os.path.join(trusted, "secrets")) as fh:
             self.assertEqual(fh.read(), "")
 
-    @unittest.skipIf(os.name == "nt", "requires a POSIX shell: bash on Windows may be WSL")
     def test_an_empty_approved_secret_stops_a_really_staged_start(self):
         import subprocess
         self.grant("a")
@@ -196,7 +199,7 @@ class ConsentSecretsTest(Flow):
             self.assertEqual(fh.read().strip(), "STRIPE_KEY")
 
     def test_the_pool_is_the_env_of_the_session_step(self):
-        self.assertEqual(loop.secret_pool(), ["SMTP_PASS", "STRIPE_KEY"])
+        self.assertEqual(session_start.secret_pool(), ["SMTP_PASS", "STRIPE_KEY"])
 
     def test_a_name_outside_the_pool_blocks_the_task_and_asks_for_the_capability(self):
         self.w.push_main({".github/workflows/session.yml": POOL_YML % "SMTP_PASS: y"}, "drop STRIPE_KEY from the pool")
@@ -217,7 +220,7 @@ class ConsentSecretsTest(Flow):
         self.assertEqual(self.resolved("a")["secrets"], "|STRIPE_KEY|")
         self.assertEqual(self.resolved("a")["secrets"], "|STRIPE_KEY|")      # a session after a crash: the same frozen consent
         self.hub.answer(self.request_of("b"), False)
-        loop.on_request_closed(self.request_of("b"))
+        request_continuation.on_request_closed(self.request_of("b"))
         self.assertEqual(self.hub.report(self.task_issue("b"))["cause"], "consent-declined")
         with self.assertRaises(SystemExit):
             self.resolved("b")
@@ -230,7 +233,7 @@ class ConsentSecretsTest(Flow):
         with open(os.path.join(tmp, "secret-missing"), "w") as fh:
             fh.write("STRIPE_KEY\n")
         os.environ["RUNNER_TEMP"] = tmp
-        loop.finalize(n, os.path.join(self.w.tmp, "nowork"))
+        session_finalize.finalize(n, os.path.join(self.w.tmp, "nowork"))
         self.assertEqual(self.hub.report(n)["cause"], "secret-missing:STRIPE_KEY")
         self.assertEqual(len(self.hub.by_label("owner-request:capability")), 1)
 
@@ -242,14 +245,14 @@ class ConsentSecretsTest(Flow):
             fh.write("STRIPE_KEY\n")
         os.environ["RUNNER_TEMP"] = tmp
         try:
-            loop.finalize(n, os.path.join(self.w.tmp, "nowork"))
+            session_finalize.finalize(n, os.path.join(self.w.tmp, "nowork"))
         except Exception:
             pass
         self.assertEqual(self.hub.by_label("owner-request:capability"), [])
 
     def test_declined_consent_gives_no_secrets(self):
         self.hub.answer(self.request_of("a"), False)
-        loop.on_request_closed(self.request_of("a"))
+        request_continuation.on_request_closed(self.request_of("a"))
         labels = self.hub.issues[self.task_issue("a")]["_labels"]
         self.assertEqual(requests.consent_status(c.profiles()["worker"], labels), (False, None))
         self.assertEqual(requests.secrets_of_consent(labels), [])

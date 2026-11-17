@@ -9,7 +9,11 @@ from datetime import timedelta
 from unittest.mock import patch
 
 import fakes
-from fakes import common as c, loop
+from fakes import common as c
+import agent_result
+import release_assets
+import session_start
+import watchdog
 import session_reports as reports
 from session_fixtures import SessionCase
 
@@ -33,14 +37,14 @@ class EpilogueTest(SessionCase):
         self.w.session(n, report=False, exit_code="1", result=self.limit_result())
         c.update_report(n, {"resume_after": c.iso(c.now() + timedelta(seconds=90))})
         slept = []
-        saved = loop.time
-        loop.time = types.SimpleNamespace(sleep=slept.append, time=saved.time)
+        saved = watchdog.time
+        watchdog.time = types.SimpleNamespace(sleep=slept.append, time=saved.time)
         self.hub.finish_runs()
         c.LAUNCHED.clear()
         try:
-            loop.resume(n)
+            watchdog.resume(n)
         finally:
-            loop.time = saved
+            watchdog.time = saved
         self.assertEqual(len(slept), 1)
         self.assertTrue(0 < slept[0] <= 90)
         self.assertEqual(self.hub.dispatched[-1], ("session.yml", {"issue": n, "role": "worker"}))
@@ -51,12 +55,12 @@ class EpilogueTest(SessionCase):
         c.update_report(n, {"resume_after": "2020-01-01T00:00:00Z"})
         self.hub.finish_runs()
         c.LAUNCHED.clear()
-        loop.watch_parked()
+        watchdog.watch_parked()
         self.assertEqual(self.hub.dispatched[-1][1]["issue"], n)
 
     def test_a_failed_stage_is_parked_and_its_clock_started(self):
         n = self.issue()
-        loop.stage_failed(n)
+        watchdog.stage_failed(n)
         f = self.hub.report(n)
         self.assertEqual((f["status"], f["cause"], f["stage_failures"]), ("paused", "stage-failed", "1"))
         self.assertGreater(c.parse_time(f["resume_after"]), c.now())
@@ -65,17 +69,17 @@ class EpilogueTest(SessionCase):
 
     def test_a_stage_that_keeps_failing_is_an_outage_and_not_relaunched(self):
         n = self.issue()
-        for _ in loop.STAGE_RETRY_MIN:
-            loop.stage_failed(n)
+        for _ in watchdog.STAGE_RETRY_MIN:
+            watchdog.stage_failed(n)
         before = list(self.hub.dispatched)
-        loop.stage_failed(n)
+        watchdog.stage_failed(n)
         self.assertEqual(len(self.hub.by_label("outage")), 1)
         self.assertEqual(self.hub.dispatched, before)
         self.assertNotIn("stage_failures", self.hub.report(n))          # a fresh count once the owner closes the outage
 
     def test_a_session_that_ran_clears_the_stage_failures(self):
         n = self.issue()
-        loop.stage_failed(n)
+        watchdog.stage_failed(n)
         self.w.session(n, report=False, exit_code="1", result=self.limit_result())
         self.assertNotIn("stage_failures", self.hub.report(n))
 
@@ -83,7 +87,7 @@ class EpilogueTest(SessionCase):
         n = self.issue()
         self.hub.issues[n]["state"] = "closed"
         before = list(self.hub.dispatched)
-        loop.stage_failed(n)
+        watchdog.stage_failed(n)
         self.assertEqual(self.hub.dispatched, before)
         self.assertNotIn("blocked:rate-limit", self.hub.issues[n]["_labels"])
 
@@ -104,7 +108,7 @@ class EpilogueTest(SessionCase):
 
     def test_k_resumes_that_use_the_agent_without_progress_open_an_outage(self):
         n = self.issue()
-        loop.resolve(n)
+        session_start.resolve(n)
         for _ in range(3):                  # the original run, then two resumes
             self.assertEqual(self.park_again(n)["status"], "paused")
         self.assertEqual(self.outages(), [])
@@ -114,8 +118,8 @@ class EpilogueTest(SessionCase):
 
     def test_waiting_for_a_reset_without_using_the_agent_does_not_trip_the_breaker(self):
         n = self.issue()
-        loop.resolve(n)
-        with patch.object(loop, "read_int", lambda path: None):
+        session_start.resolve(n)
+        with patch.object(agent_result, "read_int", lambda path: None):
             for _ in range(5):
                 f = self.park_again(n, resume_after="2020-01-01T00:00:00Z")
         self.assertEqual((f["status"], f["attempts"], f["idle_resumes"]), ("paused", "5", "0"))
@@ -123,13 +127,13 @@ class EpilogueTest(SessionCase):
 
     def test_the_original_run_parking_is_not_a_resume(self):
         n = self.issue()
-        loop.resolve(n)
+        session_start.resolve(n)
         self.assertEqual(self.park_again(n)["idle_resumes"], "0")
         self.assertEqual(self.park_again(n)["idle_resumes"], "1")
 
     def test_turns_are_progress(self):
         n = self.issue()
-        loop.resolve(n)
+        session_start.resolve(n)
         self.park_again(n)
         result = dict(self.limit_result(), num_turns=3)
         c.update_report(n, {"idle_resumes": 2})
@@ -138,14 +142,14 @@ class EpilogueTest(SessionCase):
 
     def test_progress_between_resumes_resets_the_breaker(self):
         n = self.issue()
-        loop.resolve(n)
+        session_start.resolve(n)
         self.park_again(n)
         f = self.park_again(n, idle_resumes=2, head="0" * 40)      # the branch head moved since the last park
         self.assertEqual((f["status"], f["idle_resumes"]), ("paused", "0"))
 
     def test_parking_commits_nothing_and_the_final_state_is_frozen_once(self):
         n = self.issue()
-        loop.resolve(n)
+        session_start.resolve(n)
         count = lambda: subprocess.run(["git", "rev-list", "--count", "main"], cwd=self.w.origin,
                                        capture_output=True, text=True).stdout
         before = count()
@@ -204,7 +208,7 @@ class EpilogueTest(SessionCase):
         n = self.issue(body="## Goal\nx\n## Verification\n`test -f src/a.txt`\n")
         self.w.session(n, files={"src/a.txt": "A"})
         self.assertEqual(self.hub.report(n)["status"], "done")
-        self.assertTrue(self.hub.tokenless)
+        self.assertIn("verification for #%s" % n, self.hub.checked)          # without the token, in "Check the results"
 
     def test_a_refused_merge_ends_blocked(self):
         n = self.issue()
@@ -237,7 +241,7 @@ class EpilogueTest(SessionCase):
         after = self.issue("worker", title="After")
         self.hub.add_blocker(after, n)
         self.w.session(n, status="partial", files={"src/a.txt": "half"}, report_extra="## What next\n- go on\n\n## Successor\ntitle: Part two\nbody: finish it\n")
-        succ = max(self.hub.issues)
+        succ = max(x for x in self.hub.issues if "generation:1" in self.hub.issues[x]["_labels"])     # the iteration start comes after it
         s = self.hub.issues[succ]
         self.assertEqual(s["title"], "Part two")
         self.assertIn("generation:1", s["_labels"])
@@ -246,7 +250,7 @@ class EpilogueTest(SessionCase):
         self.assertIn((after, succ), self.hub.deps)                                  # what waited for the parent waits for the successor
         self.assertEqual(self.hub.issues[after]["state"], "open")
         self.assertEqual(self.hub.issues[n]["state"], "closed")
-        self.assertEqual(self.hub.dispatched[-1][1]["issue"], succ)
+        self.assertIn(succ, [int(i["issue"]) for w, i in self.hub.dispatched if w == "session.yml"])
 
     def test_the_third_generation_does_not_delegate(self):
         n = self.issue(labels=["generation:3"])
@@ -283,7 +287,7 @@ class EpilogueTest(SessionCase):
         self.w.session(n, files={"src/a.txt": "A"}, session_files={"artifacts/weights.bin": "binary"})
         m = self.issue(body='## Goal\nx\n<!-- inputs: %s -->\n' % json.dumps([{"issue": n, "name": "weights.bin"}]))
         d = os.path.join(self.w.tmp, "inputs")
-        loop.fetch_inputs(self.hub.issues[m]["body"], d)
+        release_assets.fetch_inputs(self.hub.issues[m]["body"], d)
         self.assertTrue(any(a[:2] == ("release", "download") and a[2] == "iter-0001" and "%s-weights.bin" % n in a for a in self.hub.gh_calls))
 
     def test_the_branch_of_work_that_did_not_merge_is_tagged(self):

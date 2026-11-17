@@ -6,7 +6,10 @@ import yaml
 
 import fakes
 from fakes import common as c, loop
+import merge
+import session_start
 import test_session
+import watchdog
 from test_session import SessionCase, read
 
 
@@ -34,11 +37,11 @@ class RoutedSessionTest(SessionCase):
     def test_role_and_policymaker_route_and_freeze_model_policy_in_trusted_stage(self):
         for role, labels, task in (('worker', ['route:review'], 'review'), ('policymaker', [], 'policymaker')):
             n = self.issue(role, labels=labels)
-            loop.resolve(n)
+            session_start.resolve(n)
             options = self.outputs()
             self.assertEqual((options['execution'], options['routing_task']), ('routed', task))
             work, trusted = self.work(), os.path.join(self.w.tmp, 'trusted-' + str(n))
-            loop.stage(n, work, trusted)
+            session_start.stage(n, work, trusted, os.path.join(self.w.tmp, 'policy-' + str(n)))
             staged = json.loads(read(os.path.join(trusted, 'runtime.json')))
             self.assertEqual(staged['fingerprint'], options['profile_digest'])
             self.assertEqual(staged['task'], task)
@@ -47,27 +50,27 @@ class RoutedSessionTest(SessionCase):
     def test_invalid_route_is_refused_before_execution(self):
         n = self.issue(labels=['route:nonexistent'])
         with self.assertRaisesRegex(SystemExit, 'no explicit routing'):
-            loop.resolve(n)
+            session_start.resolve(n)
         self.assertEqual(self.hub.report(n)['status'], 'blocked')
 
     def test_watchdog_does_not_make_claude_auth_a_global_dependency(self):
         with patch.object(c, 'probe', side_effect=AssertionError('Claude probe must not run')), \
-             patch.object(loop, 'drive', return_value=0) as drive:
+             patch.object(watchdog, 'drive', return_value=0) as drive:
             self.assertEqual(loop.watch(), 0)
         drive.assert_called_once()
-        self.assertEqual(loop.main(['loop.py', 'probe']), 0)
+        self.assertEqual(loop.main(['loop.py', 'check-credentials']), 0)
 
     def test_durable_wait_does_not_exhaust_the_legacy_three_attempts(self):
         n = self.issue()
         self.hub.issues[n]['created_at'] = '2020-01-01T00:00:00Z'
-        self.assertIsNone(loop.park(n, c.issue(n), {'attempts': '100'}, {}, 'waiting', None, None, durable=True))
+        self.assertIsNone(watchdog.park(n, c.issue(n), {'attempts': '100'}, {}, 'waiting', None, None, durable=True))
         self.assertEqual(self.hub.report(n)['status'], 'paused')
         self.assertEqual(self.hub.issues[n]['state'], 'open')
 
     def routed_park(self, n, turns, tokens_out, head="a" * 40):
         """One parked report of a routed session: turns and tokens are totals for the session's whole life."""
         upd = {"turns": turns, "tokens_in": 100, "tokens_out": tokens_out}
-        return loop.park(n, c.issue(n), c.report_fields(n), upd, "waiting", None, head, durable=True)
+        return watchdog.park(n, c.issue(n), c.report_fields(n), upd, "waiting", None, head, durable=True)
 
     def outages(self):
         return [x for x in self.hub.issues.values() if x.get("title", "").startswith("OUTAGE:")]
@@ -107,7 +110,7 @@ class RoutedSessionTest(SessionCase):
         params['routing']['tasks']['policymaker'][0]['model'] = 'outside-owner-catalog'
         self.w.branch(n, {'policy/params.yml': yaml.safe_dump(params)})
         before = c.head()
-        result = loop.merge_branch(n, 'policymaker', c.issue(n))
+        result = merge.merge_branch(n, 'policymaker', c.issue(n))
         self.assertEqual(result['result'], 'invalid-policy')
         self.assertEqual(c.head(), before)
 

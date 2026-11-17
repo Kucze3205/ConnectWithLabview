@@ -90,7 +90,8 @@ against the recorded base. Engine-change requires manual application, checking
 and the printed `engine-applied` confirmation. Refusal supplies no access; a
 materially revised proposal is a new request rather than repeatedly reopening it.
 
-Closing triggers `owner-request.yml`; the watchdog recovers missed close events
-and readiness confirmations posted after closure. Work resumes only while
+Since engine 0.8.0 there is no `owner-request.yml`: the watchdog's sweep of closed
+requests (`request_continuation.sweep_requests`, every check of the watchdog) takes in
+every close event, and readiness confirmations posted after closure. Work resumes only while
 AUTOPILOT is on. Access decisions do not turn it on. Ordinary merge acceptance
 and the benchmark-before-product prerequisites remain as previously accepted.

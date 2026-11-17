@@ -25,7 +25,7 @@ class AdmissionAuthorTest(unittest.TestCase):
         executor_boundary.record(str(work), str(trusted))
         meta = json.loads((trusted / "executor-baseline.json").read_text(encoding="utf-8"))
         (work / "a.txt").write_text("changed")
-        sha = executor_boundary.import_candidate(str(work), meta, str(trusted), "refs/heads/task/1", author=author)
+        sha = executor_boundary.import_candidate(str(work), meta, str(trusted), "refs/heads/task/1", "worker #1: session output", author=author)
         return executor_boundary.git(str(trusted), "log", "-1", "--format=%an <%ae>|%cn", sha).decode().strip()
 
     def test_configured_author(self):

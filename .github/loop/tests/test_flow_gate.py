@@ -2,16 +2,20 @@
 import unittest
 from unittest import mock
 
-from fakes import common as c, iteration as it, loop, task, tasks_json
+from fakes import common as c, iteration as it, task, tasks_json
+import request_continuation
+import session_start
+import watchdog
 from gate_fixtures import GATE_SH
 from flow_fixtures import Flow
+import iteration_start as start
 
 
 class OwnerGateTest(Flow):
     YML = ""
 
     def start_with_one_task(self):
-        it.start_iteration()
+        start.start_iteration()
         self.play_shaper(task("a"))
         return self.task_issue("a")
 
@@ -29,11 +33,11 @@ class OwnerGateTest(Flow):
             closes(n, reason)
 
         with mock.patch.object(c, "close_issue", refused), self.assertRaises(SystemExit):
-            loop.on_request_closed(req["number"])
+            request_continuation.on_request_closed(req["number"])
         self.assertEqual(self.w.origin_file("src/a.txt"), "A")
         self.assertEqual(self.hub.issues[t]["state"], "open")
         self.assertNotIn("request:handled", self.hub.issues[req["number"]]["_labels"])
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(self.hub.issues[t]["state"], "closed")
         self.assertEqual(self.hub.report(t)["merged"], "true")
         self.assertEqual(self.record(0)["status"], "closed")
@@ -50,7 +54,7 @@ class OwnerGateTest(Flow):
         self.assertTrue(self.w.origin_has_ref("refs/heads/task/%s" % t))           # the session can still come back
         self.assertIsNone(self.record(0))                                          # the iteration waits
         self.hub.answer(req["number"], True)
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertEqual(self.w.origin_file("src/a.txt"), "A")
         self.assertEqual(self.hub.issues[t]["state"], "closed")
         self.assertFalse(self.w.origin_has_ref("refs/heads/task/%s" % t))
@@ -63,7 +67,7 @@ class OwnerGateTest(Flow):
         self.w.session(t, files={"src/a.txt": "A"})
         (req,) = self.hub.by_label("owner-request:merge-acceptance")
         self.hub.answer(req["number"], False)
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertIsNone(self.w.origin_file("src/a.txt"))
         self.assertEqual(self.hub.report(t)["status"], "rejected")
         self.assertTrue(self.w.origin_has_ref("refs/tags/iter/0000/%s" % t))
@@ -75,8 +79,8 @@ class OwnerGateTest(Flow):
         self.w.session(t, files={"src/a.txt": "A"})
         (req,) = self.hub.by_label("owner-request:merge-acceptance")
         self.hub.answer(req["number"], True)
-        loop.on_request_closed(req["number"])
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertIn("request:handled", self.hub.issues[req["number"]]["_labels"])
 
     def test_the_watchdog_sweeps_an_answer_whose_event_was_lost(self):
@@ -84,7 +88,7 @@ class OwnerGateTest(Flow):
         self.w.session(t, files={"src/a.txt": "A"})
         (req,) = self.hub.by_label("owner-request:merge-acceptance")
         self.hub.answer(req["number"], True)
-        loop.sweep_requests()
+        request_continuation.sweep_requests()
         self.assertEqual(self.w.origin_file("src/a.txt"), "A")
 
     def test_waiting_for_the_owner_is_not_a_jam(self):
@@ -93,9 +97,9 @@ class OwnerGateTest(Flow):
         before = len(self.hub.dispatched)
         self.hub.runs.clear()
         common_launched = c.LAUNCHED.copy()
-        self.assertEqual(loop.drive(), 0)
+        self.assertEqual(watchdog.drive(), 0)
         self.assertEqual(len(self.hub.dispatched), before)
-        self.assertTrue(loop.commitments())
+        self.assertTrue(watchdog.commitments())
         self.assertEqual(common_launched, c.LAUNCHED)
 
 
@@ -104,7 +108,7 @@ class OwnerFocusGateTest(Flow):
     YML = 'gate:\n  kind: owner\n  owner_paths: ["src/method.md", "src/key/"]\n'
 
     def start_with_one_task(self):
-        it.start_iteration()
+        start.start_iteration()
         self.play_shaper(task("a"))
         return self.task_issue("a")
 
@@ -123,7 +127,7 @@ class OwnerFocusGateTest(Flow):
         self.assertIsNone(self.w.origin_file("src/a.txt"))
         self.assertEqual(self.hub.report(t)["merged"], "pending-owner")
         self.hub.answer(req["number"], True)
-        loop.on_request_closed(req["number"])
+        request_continuation.on_request_closed(req["number"])
         self.assertEqual(self.w.origin_file("src/key/answers.json"), "{}")
 
 
@@ -141,7 +145,7 @@ class EvaluatorChangeTest(Flow):
         self.assertEqual(c.roles_of(c.label_names(self.hub.issue(e))), ["evaluator"])
 
     def test_the_shaper_cannot_order_it(self):
-        it.start_iteration()
+        start.start_iteration()
         s = self.session_issue("orchestrator")
         self.w.session(s, session_files={"tasks.json": tasks_json(task("e", role="evaluator"))})
         self.assertIn("ordered only by the Policymaker", self.hub.prose(s))
@@ -175,7 +179,7 @@ class EvaluatorChangeTest(Flow):
         self.w.push_main({"policy/profiles.yml": profs}, "verifier beyond the limits")
         c.sync_main()
         with self.assertRaises(SystemExit):
-            loop.resolve(self.session_issue("evaluator-verifier"))
+            session_start.resolve(self.session_issue("evaluator-verifier"))
         self.assertEqual(self.hub.report(e)["status"], "rejected")              # not left waiting for a verifier forever
         self.assertNotIn("awaiting:verifier", self.hub.issues[e]["_labels"])
         self.assertEqual(self.w.origin_file("policy/evaluator/gate.sh"), GATE_SH)

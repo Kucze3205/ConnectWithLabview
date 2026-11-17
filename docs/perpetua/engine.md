@@ -50,12 +50,12 @@ review/reconfiguration by repeating setup is not implemented.
 `cadence` in `policy/params.yml` can only be stricter than the owner's in `engine.yml`: for each bound the engine takes the
 stricter value (the longer interval, the smaller daily count), so a looser policy value has no effect.
 
-Machine preparation is `policy/prepare.sh`: the engine stages the accepted copy and the tokenless session job runs it
+Machine preparation is `policy/prepare.sh`: the engine stages the accepted copy and the session job runs it
 before the role (none: nothing is prepared).
 
 ## One iteration
 
-When a session is staged, `policy/session-state.py` builds its `loop-state.json` and history from the engine's facts
+When a session is staged, the policy scripts run in a job without the token (*Prepare the session inputs (policy scripts)*): `policy/session-state.py` builds its `loop-state.json` and history from the engine's facts
 (see `session-context.md`). `policy/session-startup.py` decides its startup reads, bootstrap prompt and budget
 warning; the estimate is local, so no step of the engine needs the Anthropic API key.
 
@@ -63,10 +63,19 @@ Iterations run sequentially. Each is an issue labelled `loop:map` and
 `loop:iteration N`; its sessions carry `loop:iteration N` and `role:<name>`.
 
 1. **Start.** The watchdog or previous close starts an iteration if cadence allows.
-   The trigger rule is `policy/policymaker-trigger.py`: the engine writes facts, the script runs in the tokenless job and
+   The trigger rule is `policy/policymaker-trigger.py`: the engine writes facts, the script runs without the token and
    prints `{"reason": "..."}` or `{"reason": null}` (at most 4 KB). Invalid output fails the iteration and rolls `execution/` and
    `policy/` back. Whatever the script returns, the engine keeps one open Policymaker at a time, calls one at every iteration
    until a session ended `done`, and calls one at the iteration after a failed one (the trigger names the failure).
+   The iteration's report says why it runs (`policy_trigger`) or why it is not needed (`policy_not_needed`, shown in Loop
+   status as *Policymaker: not needed — <reason>*); no Policymaker issue is opened when it is not needed.
+   The start runs in jobs of the run that found it due (`iteration_start.py`, `iteration-start.yml`): the token job before
+   (*Take in results*, or the watchdog's *Check the loop*) bundles the trigger and the goal gate on its facts, pinned by a
+   digest; *Decide whether the Policymaker runs* (`permissions: {}`) runs them and returns what they printed only in its
+   job outputs; *Start the iteration* (GitHub token) uses those outputs for the same facts and opens the Policymaker or
+   begins the execution phase. Anything else (main moved, a decision job that failed) runs in a Tokenless run. A start
+   whose run was lost is picked up by the watchdog: no open iteration, or one still `starting` without a decision after
+   45 minutes, is started or decided again; a goal check that was due stays on the closed iteration (`goal_check: due`).
 2. **Policy phase.** When due, the Policymaker session opens the iteration and writes proposed
    definitions and orders. `apply_policy` admits the completed candidate when the session ends
    (or, if it says `"merge": "later"` and waits for its orders, at the end of the phase); completion alone does not activate it.
@@ -92,8 +101,7 @@ Iterations run sequentially. Each is an issue labelled `loop:map` and
    task releases its consumers; a producer that did not deliver blocks them.
    [Session isolation](session-boundary.md) defines how outputs are admitted.
 5. **Close.** Once no session remains open, the engine writes the immutable iteration
-   record, closes the issue, prunes streams, checks progress and the goal gate,
-   then starts the next iteration.
+   record, closes the issue, prunes streams and checks progress; the goal gate and the next iteration's start follow (step 1).
 
 ## Organizing an iteration
 
@@ -122,7 +130,9 @@ role folders supply the capabilities; they do not change the owner gate or accep
 
 Work enters the default branch after a verdict "not worse than what is accepted". After a task ends `done` the
 epilogue, in a throwaway worktree: checks the paths (protected, role `write`, file size), rebases on the default branch,
-runs `## Verification` and `check` (each in the tokenless job, on a copy of the candidate tree), then asks the gate. Managed definitions and paths in `direct_paths` (`execution/`, `policy/`, `audit/`, `journal/`) are not
+runs `## Verification` and `check` (each without the token, on a copy of the candidate tree), then asks the gate. These
+checks run in the session's own run, in *Check the results* (see [Session boundary](session-boundary.md#session-lifecycle-and-outputs));
+one whose trees changed since (main moved) runs again in a Tokenless run. Managed definitions and paths in `direct_paths` (`execution/`, `policy/`, `audit/`, `journal/`) are not
 work and skip the check and the gate. A rejected push is retried from the new tip, up to three times.
 A failed `## Verification` or `check` is an error the agent can fix: the epilogue runs the same issue again, its
 report carrying the error, up to two times (`fixes`). A gate verdict is not retried: `rejected` and `inconclusive` go to the Policymaker.
@@ -131,8 +141,9 @@ report carrying the error, up to two times (`fixes`). A gate verdict is not retr
 
 - `owner`: the engine opens a `merge-acceptance` request and the task waits (`awaiting:owner`). Completed merges, not
   planned discards (the branch is kept and tagged `iter/NNNN/<issue>`). This is the default until the setup decides.
-- `script`: `gate.command` runs in the **tokenless job** (`tokenless.yml`: `permissions: {}`, no GitHub secret, one
-  command on a staged bundle, outputs back as an artifact; [ADR-0006](../../../docs/adr/0006-machine-boundary-instead-of-session-sandbox.md))
+- `script`: `gate.command` runs on a machine without the token (*Check the results*, or the **tokenless job** when main
+  moved: `permissions: {}`, no GitHub secret, one command on a staged bundle;
+  [ADR-0006](../../../docs/adr/0006-machine-boundary-instead-of-session-sandbox.md))
   from the **accepted tree**, never from the candidate, with `CANDIDATE_DIR`, `BASELINE_DIR`, `CANDIDATE_SHA`,
   `BASELINE_SHA`, `CHANGED_FILES_FILE`, `TASK`, `ITERATION`, and no secrets (`gate.env_passthrough` does not reach it).
   The epilogue runs no gate command itself; it reads the verdict back. It prints a JSON object as its last line:
@@ -157,7 +168,8 @@ may change that reviewer contract; evaluator ownership and pinned independent ve
 
 `goal/goal.md` (the accepted goal text) and `goal/gate.yml` (`command`, `owner_confirms`) exist only when the owner has
 accepted them, in the setup or later through an owner request. After every closed iteration, if a gate command exists
-and prints `{"reached": true, ...}` (the command runs in the tokenless job; a job that returns nothing is "not reached"): with `owner_confirms` the engine asks the owner to confirm (a `result-confirmation`
+and prints `{"reached": true, ...}` (the command runs without the token, on the committed tree of the default branch, in
+*Decide whether the Policymaker runs* or a Tokenless run; a job that returns nothing is "not reached"): with `owner_confirms` the engine asks the owner to confirm (a `result-confirmation`
 request; completed writes `GOAL_REACHED`, not planned lets the loop continue and is not asked again for the same state);
 without it the engine writes `GOAL_REACHED` itself. **Without an accepted gate the loop never ends by itself**; only
 switching `AUTOPILOT` off stops it.
@@ -204,9 +216,9 @@ notices). A diff touching `.github/workflows/**`, one that does not apply cleanl
 the request says why: the owner applies it manually and posts `engine-applied`. These requests
 keep trusted snapshots and durable decisions so repeated events cannot reapply a proposal.
 
-Closing a request wakes the loop (`owner-request.yml`); the watchdog sweeps requests whose event was lost.
+The watchdog notices a closed request on its next run (up to 30 minutes). There is no workflow on `issues: closed`: GitHub starts a run for every closed issue, and one that is not a request would end Skipped.
 
-**Consent.** A task whose role's profile is beyond the accepted limits (`limits` in `engine.yml`: tools outside the list) gets a `consent` request that blocks it with a native edge. `resolve`
+**Consent.** A task whose role's profile is beyond the accepted limits (`limits` in `engine.yml`: tools outside the list) gets a `consent` request that blocks it with a native edge. `session-settings`
 starts the session only when that request is closed as completed, and then only that one session runs with the profile.
 The task can also carry `consent.secrets` (names only); the frozen text of its granted consent decides which pool
 secrets of the `Session` step of `session.yml` that one session gets, and a missing one blocks the task with
@@ -217,7 +229,8 @@ to reach an agent; `gate.env_passthrough` is the owner's separate list for the g
 
 A plain script (`watchdog.yml`, every 30 minutes and on demand), never an agent:
 
-- starts the first iteration after arming, and the next one when a run's end event was lost;
+- starts the first iteration after arming, the next one when the cadence held it back or a run's start was lost (through
+  the jobs of *Iteration start*, as at the end of a session);
 - guards: `AUTOPILOT`, `GOAL_REACHED`, an open `outage` issue (the only quiet state without runs);
 - probes the Claude credential: dead or revoked is an outage and a red run (the e-mail to the author of the workflow file is
   the free push channel);
@@ -307,3 +320,17 @@ artifact is uploaded loses the source of that session; its last published
 continuation still parks the issue for recovery.
 
 Cloud evidence and remaining checks are in [cloud-authentication.md](cloud-authentication.md).
+
+## Loop status
+
+One issue labelled `loop:status`, pinned, that the engine overwrites (`loop_status.py`) at three moments: the end of
+every session's epilogue, every owner answer and every watchdog check. It shows the open iteration, or the last recorded
+one: a header (iteration, state, goal reached or not, start, duration, engine version), **Working on** (the goal on one
+line, then the tasks by status), **Active roles** (one row per session: model, effort, tokens, cache), the **task graph**
+(Mermaid), this iteration's **policy changes** and a link to each session's run Summary.
+
+It only shows. It is rendered from the facts the iteration record is built from (`iteration.build_record`), nothing is
+stored for it, and nothing in the loop reads it: it has no iteration label and no role. A failure to write it is said in
+the log and never fails the command. The issue appears with the first iteration; unchanged facts do not edit it. The
+engine pins it when it creates it; when the token may not pin, the log says so and the owner pins it once by hand. An
+owner who closes it gets a new one at the next moment.

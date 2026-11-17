@@ -6,6 +6,7 @@ import unittest
 from unittest import mock
 
 import fakes  # noqa: F401  (puts the engine on the path)
+import check_results
 import common as c
 
 
@@ -59,7 +60,8 @@ class IssueWritesTest(unittest.TestCase):
 
     def test_a_dispatch_survives_a_passing_failure(self):
         """Iteration 14: one HTTP 500 on a dispatch cost the iteration and the policy of the session before it."""
-        with mock.patch.object(c.subprocess, "run", side_effect=[done(1, "HTTP 500"), done()]) as run:
+        with mock.patch.object(c, "autopilot_on", return_value=True), \
+                mock.patch.object(c.subprocess, "run", side_effect=[done(1, "HTTP 500"), done()]) as run:
             self.assertTrue(c.workflow_run("tokenless.yml", key="k"))
         self.assertEqual(run.call_count, 2)
         self.assertEqual(run.call_args.args[0], ["gh", "workflow", "run", "tokenless.yml", "-f", "key=k"])
@@ -80,11 +82,11 @@ class IssueWritesTest(unittest.TestCase):
 
     def test_a_command_whose_job_left_nothing_is_told_from_a_failed_command(self):
         with mock.patch.object(c, "run_tokenless", return_value=None):
-            r = c.run_command("true", tempfile.mkdtemp())
-        self.assertEqual(r.returncode, c.NO_RESULT)
+            r = check_results.run_command("true", tempfile.mkdtemp())
+        self.assertEqual(r.returncode, check_results.NO_RESULT)
 
     def tokenless(self, *download):
-        run = [{"displayTitle": "tokenless #abc", "status": "completed", "databaseId": 7}]
+        run = [{"displayTitle": "Tokenless: command [abc]", "status": "completed", "databaseId": 7}]
         with mock.patch.object(c, "git"), mock.patch.object(c, "workflow_run", return_value=True),                 mock.patch.object(c, "run_list", return_value=run), mock.patch.object(c.uuid, "uuid4", return_value=mock.Mock(hex="abc")),                 mock.patch.object(c.shutil, "make_archive"), mock.patch.object(c.subprocess, "run", side_effect=download) as gh:
             return c.run_tokenless(tempfile.mkdtemp(), 1), gh
 

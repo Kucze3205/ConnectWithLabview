@@ -3,6 +3,7 @@
 Admission reconstructs a child of the session's baseline using regular file
 bytes; no worker Git program/config/hook is run.
 """
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -71,9 +72,9 @@ def record(work, trusted):
         "paths": [n.decode("utf-8") for n in names if n], "work": os.path.abspath(work)}), encoding="utf-8")
 
 
-def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: False, author=None):
+def import_candidate(work, metadata, trusted, ref, message, skip=lambda rel, tracked: False, author=None):
     """Write objects/index in the engine repo, without consulting worker .git: one commit on the baseline from the file
-    bytes the session left, whether or not it committed. Environment debris never reaches any check: `skip(rel, tracked)`
+    bytes the session left, whether or not it committed; `message` comes from trusted data, never from the session. Environment debris never reaches any check: `skip(rel, tracked)`
     by path, before the file is inspected or read. `author` ({name, email}, from engine.yml) authors and commits it;
     without both fields it stays `executor`."""
     if os.path.abspath(work) != metadata["work"]:
@@ -84,14 +85,24 @@ def import_candidate(work, metadata, trusted, ref, skip=lambda rel, tracked: Fal
         index = os.path.join(tmp, "index")
         env = {"GIT_INDEX_FILE": index}
         git(trusted, "read-tree", metadata["baseline"], env=env)
-        for rel in tracked - set(current):
-            git(trusted, "update-index", "--force-remove", "--", rel, env=env)
+        # Only what differs from the baseline is written: a file's blob id is the hash of its bytes, so unchanged files cost no process.
+        base = {}
+        for entry in git(trusted, "ls-tree", "-rz", "--full-tree", metadata["baseline"]).split(b"\0"):
+            if entry:
+                head, path = entry.split(b"\t", 1)
+                mode, _, oid = head.decode().split(" ")
+                base[path.decode("utf-8")] = (mode, oid)
+        # Removals first, so a file replaced by a directory (or the reverse) never conflicts in the index.
+        changes = ["0 %s\t%s\0" % ("0" * 40, rel) for rel in sorted(tracked - set(current))]
         for rel, (data, mode) in current.items():
-            # Hidden additions must reach protected/write checks, not be discarded.
-            oid = git(trusted, "hash-object", "-w", "--stdin", data=data).decode().strip()
-            git(trusted, "update-index", "--add", "--cacheinfo", mode, oid, rel, env=env)
+            if base.get(rel) != (mode, hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()):
+                # Hidden additions must reach protected/write checks, not be discarded.
+                oid = git(trusted, "hash-object", "-w", "--stdin", data=data).decode().strip()
+                changes.append("%s %s\t%s\0" % (mode, oid, rel))
+        if changes:
+            git(trusted, "update-index", "--add", "-z", "--index-info", data="".join(changes).encode("utf-8"), env=env)
         tree = git(trusted, "write-tree", env=env).decode().strip()
-        commit = git(trusted, "commit-tree", tree, "-p", metadata["baseline"], data=b"Session output admitted as data\n",
+        commit = git(trusted, "commit-tree", tree, "-p", metadata["baseline"], data=message.encode("utf-8") + b"\n",
                      # fixed dates: the same output is the same commit, so "the head did not move" is observable
                      env=dict(identity(author), GIT_AUTHOR_DATE="@0 +0000", GIT_COMMITTER_DATE="@0 +0000")).decode().strip()
     git(trusted, "update-ref", ref, commit)

@@ -76,23 +76,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python3 .github/loop/loop.py git-identity
-          # tokenless.yml runs only with AUTOPILOT=on, which this proof must not set: the policy scripts of the accepted
-          # tree run here instead, with the same bundle contract (run.sh in, stdout.txt/stderr.txt/exit-code out).
+          # Staging runs no policy script (the job "Prepare the session inputs" does, on the bundle this step leaves in
+          # `policy`): the proof stages for the session job only.
           python3 - <<'EOF'
-          import os, subprocess, sys, tempfile
+          import os, sys
           sys.path.insert(0, ".github/loop")
-          import common as c, loop
-
-          def local(bundle, timeout_minutes, poll=15):
-              out = tempfile.mkdtemp(prefix="out-")
-              with open(os.path.join(out, "stdout.txt"), "w") as so, open(os.path.join(out, "stderr.txt"), "w") as se:
-                  r = subprocess.run(["bash", os.path.join(bundle, "run.sh")], cwd=bundle, stdout=so, stderr=se, timeout=timeout_minutes * 60)
-              open(os.path.join(out, "exit-code"), "w").write(str(r.returncode) + "\n")
-              return out
-
-          c.run_tokenless = local
-          loop.main(["loop.py", "stage", os.environ["ISSUE"], os.environ["WORK"], os.path.join(os.environ["RUNNER_TEMP"], "trusted")])
+          import session_start
+          tmp = os.environ["RUNNER_TEMP"]
+          session_start.stage(int(os.environ["ISSUE"]), os.environ["WORK"], os.path.join(tmp, "trusted"), os.path.join(tmp, "policy"))
           EOF
       - run: |
           mkdir "$RUNNER_TEMP/ship"
@@ -169,16 +160,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           pip install -q pyyaml
-          python3 .github/loop/loop.py git-identity
           python3 - <<'EOF'
           import json, os, sys, tempfile
           sys.path.insert(0, ".github/loop")
-          import common as c, loop, session_artifact
+          import common as c, session_artifact, session_finalize
           from runtime_store import GitHubBackend, Store
           n, tmp, art = os.environ["ISSUE"], os.environ["RUNNER_TEMP"], os.path.join(os.environ["RUNNER_TEMP"], "results")
           session_artifact.receive_status(art, tmp)
           commits = session_artifact.receive_commits(art, ".", n)
-          loop.publish_runtime_state(int(n), tmp)
+          session_finalize.publish_runtime_state(int(n), tmp)
           store = Store(GitHubBackend(c.REPO, base=c.default_branch()))
           pool, session = store.read("pool.json"), store.read("sessions/%s.json" % n)
           try:
