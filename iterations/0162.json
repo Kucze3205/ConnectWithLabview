@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "iteration": 162,
+ "status": "failed",
+ "failure": "invalid policy script output: policy/session-state.py printed more than 8388608 bytes",
+ "started": "2026-11-17T22:42:30Z",
+ "ended": "2026-11-17T22:44:01Z",
+ "engine_version": "0.8.0",
+ "input_state": {},
+ "policy": {
+  "rev_start": "layered-v1:60ba9953eed1319b83fd3cf4ca8a06d276909a5b747c0dba304778f6a5b3fc5c",
+  "rev_end": "layered-v1:60ba9953eed1319b83fd3cf4ca8a06d276909a5b747c0dba304778f6a5b3fc5c",
+  "commit_end": "8d8be8ead1d1b5f7e0e689d322bc8557bfa52ef2",
+  "orders_refused": null,
+  "session": 729,
+  "trigger": "iteration 0161 failed: invalid policy script output: policy/session-state.py printed more than 8388608 bytes",
+  "passes": 1,
+  "changes": []
+ },
+ "decided_by": null,
+ "tasks": [],
+ "outcome": {
+  "sessions": [],
+  "shaper": null,
+  "verdict": {
+   "value": "none",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": false
+  },
+  "tokens": {
+   "in": 0,
+   "out": 0,
+   "cache_read": 0,
+   "cache_write": 0,
+   "by_model": {},
+   "cache_read_share": null
+  },
+  "limit_hits": 0,
+  "wall_s": 92,
+  "critical_path_s": 0,
+  "width": 0,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
