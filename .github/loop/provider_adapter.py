@@ -236,8 +236,13 @@ def request(provider, model, credential, prompt, effort="medium", timeout=180, m
             # The prompt goes through a file and stdin: one argv entry is limited to 128 KiB (E2BIG)
             # and the prompt can be larger.
             system, blocks = layout or ("", [prompt])
+            # Three turns, not one: Sonnet often first calls a nonexistent native tool named after the action
+            # (`Read`, `Bash`), copying the history's format. With one turn the CLI then ends in error_max_turns,
+            # which reads as an unclassified provider failure and cools down all of Claude (session #698,
+            # 17 Nov 2026: 5 of 8 replays). The extra turns let it see "no such tool" and answer via
+            # StructuredOutput (8 of 8 replays). There are no tools, so the extra turns cannot act.
             command = ["claude", "-p", "--model", model, "--effort", effort,
-                       "--tools", "", "--max-turns", "1", "--no-session-persistence",
+                       "--tools", "", "--max-turns", "3", "--no-session-persistence",
                        "--input-format", "stream-json", "--output-format", "stream-json", "--verbose",
                        "--setting-sources", "", "--strict-mcp-config", "--mcp-config", str(root / "mcp.json"),
                        "--json-schema", json.dumps(ACTION_SCHEMA)]
