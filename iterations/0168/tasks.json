@@ -1,0 +1,25 @@
+[
+ {
+  "id": "scorer-stall-0168",
+  "title": "Measure why importing or running benchmark/scripts/score.py stalls the runner (#743, #747): bounded faulthandler probes, report only",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     747
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nMeasure, do not fix. Two finish attempts of the #739 zero-execution fix (#743, #747) stalled: in #747 `python3 -I -c print(1)` and a bare-print script worked, but a script that only loaded benchmark/scripts/score.py (task/739 version) through importlib and printed FIXTURES never returned. Find where it stalls and whether the main version stalls too. Expected gain: benchmark/challenges/scorer-stall-0168.md names the stalling frame (or shows no stall) for both versions, so the next shaper can order the finish with a working method or one narrow fix. No session can run LabVIEW; claim no native behaviour.\nSteps: (0) first turn run `python3 -I -c print(1)`; on a tool error write .session/report.md as blocked with the exact error and stop. (1) Write a helper .session/artifacts/export_0168.py that uses subprocess to run `git show task/739:benchmark/scripts/score.py` and `git show HEAD:benchmark/scripts/score.py` and saves them as .session/artifacts/score_739_0168.py.txt and score_main_0168.py.txt; run it with `python3 -I`. (2) Static scan of both copies with Grep for module-level code that can block: `input(`, `stdin`, `subprocess`, `socket`, `urllib`, `sleep`, `while True`, `os.walk`, `rglob`, `glob(`, top-level calls outside an `if __name__` guard. (3) Write .session/artifacts/stall_probe_0168.py: first line calls faulthandler.dump_traceback_later(20, exit=True); reopen sys.stdin on os.devnull; read the source file named in argv[1]; create a module with importlib.util.module_from_spec or types.ModuleType, set its `__file__` to the absolute path of benchmark/scripts/score.py, exec(compile(source, that path, 'exec'), module.__dict__) and print `imported`; if argv[2] is `gen`, call generate() and print the number of records. Run it once per version for import, then once per version with `gen` (use a 60 s guard for gen). Never call main().\n## Acceptance\n- [ ] benchmark/challenges/scorer-stall-0168.md has a section headed exactly `## Static scan` listing, per version, line numbers of candidate blocking constructs or `none found`.\n- [ ] It has a section headed exactly `## Probe results` with, for each run (version x import/gen), the exact command, exit status, last output line and, on timeout, the top frames of the faulthandler traceback.\n- [ ] It has a section headed exactly `## Cause` stating the measured cause or `not found`, and the method the finish task should use; no fix applied.\n- [ ] The only repository change is that new file; score.py, fixtures, benchmark/results/challenges.json and benchmark/preparation.json are unchanged; helpers stay in .session/artifacts/.\n## Verification\npython3 -I -c \"t=open('benchmark/challenges/scorer-stall-0168.md').read().splitlines(); assert all(h in t for h in ('## Static scan','## Probe results','## Cause')); print('OK')\"\n## Context\n- Previous attempt: report of #747 (staged; check .session/exports/manifest.json). Its what-next proposed the faulthandler probe.\n- The saved fix lives on branch task/739 (commit 5db2610e); this task starts from main so the unpinned score.py change is not merged.\n- benchmark/writing/check_c1_challenges_0125.py is invalidated (#544): never run it. No evaluator, network, model, reader or native calls. Do not commit; the parent commits. Commands are argv strings without shell expansion; no long inline -c one-liners, write small helper scripts with Write and run them with `python3 -I`.\n## Budget\n- Reads: the #747 report; Grep output over the two exported copies; only the score.py lines around candidates found (at most 60 lines each). No whole fixture or results JSON.\n- Do not rerun a stalled run unchanged; one run per probe. Static scan by turn 8, probes by turn 18, note and report by turn 25.\n",
+  "issue": 751
+ }
+]
