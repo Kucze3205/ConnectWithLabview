@@ -1,0 +1,32 @@
+[
+ {
+  "id": "step4-patch-plan-0198",
+  "title": "Read-only patch plan for step 4 (A0001/A0002 mutation controls) and F4 answer, saved as artifacts so a later apply session needs few turns",
+  "role": "researcher",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [
+   {
+    "issue": 828,
+    "name": "pins.txt"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     828,
+     831,
+     848
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 4. Three benchmark sessions (#834, #838, #848) were blocked when Read/Grep became \"disabled for this session\" after a few turns; nothing was saved. This task splits the work: you change no repository file. Report, do not fix. You save, as early as possible, an exact patch plan to `.session/artifacts/step4-patch.md` that a later short session can apply with a few Edit calls. Expected gain: the next shaper orders a short apply task (at most 15 turns) from this artifact, and F4 is answered with exact inventory lines.\n\nAlready settled, do not repeat: #828 F1 confirmed literals A0001 `20008000` at `/Library/@LVVersion` and A0002 `NI.LV.All.SourceOnly` at `/Library/Property[4]/@Name`. F3 closed: `benchmark/challenges/library-specialty.json` sets `source.inventory_path` to `benchmark/cases/dev/library-specialty.json`. #831: `compute()` checks the literal by exact equality and the locator via `citation_support()`; `regression_self_test` mutations target A0005 only. #848 saw Grep return empty matches on `benchmark/scripts/score.py` although the file exists: if Grep returns nothing, Read the file in ranges instead.\n\nNo session can run LabVIEW; make no claim about how LabVIEW interprets any value.\n\n## Acceptance\n- [ ] First lines of `.session/report.md`: tool probe result (one Read, one Grep) and, if a tool fails, the exact error text; then stop.\n- [ ] `.session/exports/manifest.json` checked for the #828, #831, #848 reports; `.session/inputs/828-pins.txt` read.\n- [ ] `.session/artifacts/step4-patch.md` gives, for `benchmark/scripts/score.py`, the exact old text (copied from the file with its line numbers) and new text adding wrong-literal (one changed digit of A0001) and wrong-locator (A0002 at `Property[3]`) mutation controls next to the existing A0005 mutations, in the same style.\n- [ ] The artifact answers F4: the exact inventory lines of the A0001/A0002 citation dicts in `benchmark/cases/dev/library-specialty.json`, and whether the scheme name (`xpath-positional` vs `xml-positional-path`) is part of the dict `compute()`/`citation_support()` compares, with the score.py lines that show it.\n- [ ] The artifact lists every file that will change (score.py, possibly inventory, `benchmark/results/challenges.json`, the fixture `source.inventory_sha256`) and every pin location of each (Grep or Read evidence), plus the exact commands to regenerate results with `python3 -B`.\n- [ ] `git status --porcelain` is empty at the end (no `__pycache__`, no repository edits).\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0001']['value']=='20008000' and c['A0002']['value']=='NI.LV.All.SourceOnly'; f=json.load(open('benchmark/challenges/library-specialty.json')); assert f['source']['inventory_path']=='benchmark/cases/dev/library-specialty.json'; print('key and inventory path unchanged: OK')\"\n\n## Context\n- #848 report: tools were disabled at about the third turn; write the report and the artifact early, then refine them.\n- Bytecode trap (#785): if you import or run score.py, use `python3 -B` and `sys.dont_write_bytecode = True`. Long inline python one-liners stall (#743): put helpers under `.session/artifacts/`.\n\n## Budget\nRead: the #828, #831, #848 reports; `.session/inputs/828-pins.txt`; in `benchmark/scripts/score.py` only `regression_self_test`, `compute`, `citation_support`, `generate`; the A0001/A0002 entries of `benchmark/cases/dev/library-specialty.json`; the `source` block of `benchmark/challenges/library-specialty.json`; `benchmark/challenges/positive-control-key-0191.json`. Do not read `benchmark/results/**` or `journal/**` whole. Short command output only.",
+  "issue": 852
+ }
+]
