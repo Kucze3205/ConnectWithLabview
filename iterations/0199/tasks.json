@@ -1,0 +1,48 @@
+[
+ {
+  "id": "step4-apply-0199",
+  "title": "Apply step 4: add A0001 wrong-literal and A0002 wrong-locator mutation controls to score.py and regenerate results",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     852
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 4. Add two mutation controls to `regression_self_test` in `benchmark/scripts/score.py`, next to the existing A0005 mutations and in the same style: `wrong-literal-a0001` (A0001 value `20008001` instead of `20008000`) and `wrong-locator-a0002` (A0002 locator `/Library/Property[3]/@Name` instead of `Property[4]`). Each must make the self-test detect the mutation. Then regenerate the results that depend on score.py and update every pin of every changed file. Expected gain: score.py contains both controls, the self-test passes, and the next shaper orders no further step-4 work except the review below.\n\nTOOLS, read first: your tools are JSON actions run by the parent broker. If you see \"No such tool available: Read. Read is disabled for this session\", that is the model CLI refusing a NATIVE tool call; it does not mean the broker tools are disabled. Propose the same operation again as a JSON action and continue. Never stop or report blocked for this message (#834, #838, #848, #852 all stopped on it while broker tools still worked). Grep matches one literal substring only (no `(`, `|`, `\\b`); if it returns nothing on a file that exists, Read the file in line ranges.\n\nAlready settled, do not repeat: #828 F1 literals; F3 inventory path; #831 compare logic. #852 (report staged under `.session/exports/reports/`) located the edit points: score.py lines 311-319, 337, 344-345, 352-353; `citation_support` at score.py:74 compares the whole citation dict; the literal is compared by exact equality at score.py:207; inventory A0001 at lines 323 and 330-331, A0002 at 357 and 364-365, scheme `xml-positional-path`. Its draft artifact may not be staged: re-read only those score.py ranges before editing.\n\nNo session can run LabVIEW; make no claim about how LabVIEW interprets any value.\n\n## Acceptance\n- [ ] `.session/exports/manifest.json` checked and the #852 report read.\n- [ ] score.py lines around 300-430 read (including the rest of `generate()` and its CLI flags not read by #852) before the first Edit.\n- [ ] `benchmark/scripts/score.py` contains `wrong-literal-a0001` and `wrong-locator-a0002` mutation controls in the existing style; the self-test reports both as detected.\n- [ ] Results regenerated with `python3 -B` using the command from the script's own flags; every pin (sha256) of score.py and of each regenerated file updated in the same task (#739/#766); pin locations listed in the report.\n- [ ] `benchmark/challenges/positive-control-key-0191.json` unchanged.\n- [ ] `.session/artifacts/step4-diff.txt` holds `git diff` of the change and the self-test output; `git status --porcelain` shows no `__pycache__`.\n\n## Verification\npython3 -B -c \"import json; s=open('benchmark/scripts/score.py').read(); assert 'wrong-literal-a0001' in s and 'wrong-locator-a0002' in s; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0001']['value']=='20008000' and c['A0002']['value']=='NI.LV.All.SourceOnly'; print('step 4 controls present, key unchanged: OK')\"\n\n## Context\n- Bytecode trap (#785): run score.py only with `python3 -B` and `sys.dont_write_bytecode = True`; check `git status --porcelain`.\n- Long inline python one-liners stall (#743): put helpers under `.session/artifacts/`.\n- Do not commit; the parent commits.\n\n## Budget\nRead: the #852 report; `benchmark/scripts/score.py` only `regression_self_test`, `compute` (around line 207), `citation_support` (around line 74), `generate` and the CLI flags; the A0001/A0002 entries of `benchmark/cases/dev/library-specialty.json`; the `source` block and the A0001/A0002 claims of `benchmark/challenges/library-specialty.json`. Do not read `benchmark/results/**` or `journal/**` whole; use Grep for pin hashes. Short command output only. Write the report early and refine it.",
+  "issue": 856
+ },
+ {
+  "id": "step4-review-0199",
+  "title": "Changed-scope review of the step 4 mutation controls in score.py",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "step4-apply-0199"
+  ],
+  "inputs": [
+   {
+    "from": "step4-apply-0199",
+    "name": "step4-diff.txt"
+   }
+  ],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nIndependently review only the change made by the step-4 apply task: two mutation controls (`wrong-literal-a0001`, `wrong-locator-a0002`) in `regression_self_test` of `benchmark/scripts/score.py`, the regenerated results and their pins. Report, do not fix. Expected gain: a CLEAR or NOT-CLEAR verdict with numbered findings in `.session/report.md`, which closes or reopens step 4 of the positive-control thread (#763 f4).\n\nTOOLS: your tools are JSON actions run by the parent broker. The message \"No such tool available: Read. Read is disabled for this session\" refers to a native tool call only; propose the same operation again as a JSON action. Never stop or report blocked for it. Grep matches one literal substring only.\n\nNo session can run LabVIEW; make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] Report pins the reviewed main commit and sha256 of `benchmark/scripts/score.py` and of each regenerated file named in `.session/inputs/` diff.\n- [ ] Each control mutates exactly the intended field (A0001 value, A0002 locator `Property[3]`) and is detected by the self-test when run with `python3 -B`; a control that would pass silently is a finding.\n- [ ] Every pin of every changed file matches its current sha256 (Grep the old and new hashes).\n- [ ] `benchmark/challenges/positive-control-key-0191.json` and the A0005 mutations are unchanged in behaviour.\n- [ ] Verdict CLEAR / NOT-CLEAR with findings in `.session/report.md`; detailed evidence in `.session/artifacts/review.md`. No repository writes; `git status --porcelain` clean of `__pycache__`.\n\n## Verification\npython3 -B -c \"s=open('benchmark/scripts/score.py').read(); assert 'wrong-literal-a0001' in s and 'wrong-locator-a0002' in s; print('reviewed scope present: OK')\"\n\n## Context\n- Input: `.session/inputs/` holds the producer's `step4-diff.txt` (staged flat with its issue prefix; Glob for it).\n- Bytecode trap (#785): `python3 -B`, `sys.dont_write_bytecode = True`.\n- Closed scopes stay closed: #828 F1 literals, F3 path, #831 compare logic. Carried known limit: citations are not checked against the XML artifact (#831); do not re-raise it as new.\n\n## Budget\nRead: the staged diff; in `benchmark/scripts/score.py` only `regression_self_test`, `compute`, `citation_support`; the pin lines found by Grep. Do not read `benchmark/results/**` or `journal/**` whole. Short command output only.",
+  "issue": 857
+ }
+]
