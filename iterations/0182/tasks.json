@@ -1,0 +1,27 @@
+[
+ {
+  "id": "constant-export-finish-0182",
+  "title": "Finish #791: check the saved constant-export design file and merge it (no new probe)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "start_branch": "task/791",
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "inputs": [
+   {
+    "issue": 791,
+    "name": "constant-probe-output.txt"
+   },
+   {
+    "issue": 791,
+    "name": "constant_probe.py"
+   }
+  ],
+  "body": "## Goal\nFinish saved work, do not redo it. Session #791 (iteration 0180, status partial, commit 74250162 on branch task/791) already probed benchmark/scripts/score.py and wrote benchmark/challenges/constant-export-design.md: empty export DETECTED (score.py:203-204), non-keyed constant export DETECTED (score.py:207-208), vi-actor-core-native-gap NOT-APPLICABLE (score.py:199-200). It lost Bash before running its checks. This task only runs the missing checks, makes targeted Edit fixes if a check fails, and reports. Expected gain: the design file merged to main with its verdicts, so the next shaper can order the keyed-literal constant control and its review. Report, do not fix the scorer. No session can run LabVIEW; claim no LabVIEW behaviour. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] confirm benchmark/challenges/constant-export-design.md exists on this branch; if it is missing, stop and report that (do not re-probe)\n- [ ] do not rewrite the design file; only targeted Edit fixes when the verification below fails (headings `## Measured`, `## Design`, `## Limits`; a verdict word; no PENDING)\n- [ ] run `git status --porcelain` and confirm no `__pycache__` and no change to any existing file other than the design file; remove any stray `benchmark/scripts/__pycache__` by reporting it (do not run score.py)\n- [ ] run the verification command below and quote its output in the report\n- [ ] report in `.session/report.md` with the three verdicts, the score.py lines and the unmeasured case (constant equal to a keyed literal)\n\n## Verification\npython3 -B -c \"import os;t=open('benchmark/challenges/constant-export-design.md',encoding='utf-8').read();L=t.splitlines();assert all(h in L for h in ('## Measured','## Design','## Limits')),L[:20];assert 'DETECTED' in t or 'NOT-APPLICABLE' in t;assert 'PENDING' not in t;assert not os.path.exists('benchmark/scripts/__pycache__');print('design OK')\"\n\n## Context\n#791 report snapshot: .session/history/sessions/791/2fef3b45acd0676a212c82841ff729300d3644ceee7909965da40842e4419728.md. Its artifacts are staged as .session/inputs/791-constant-probe-output.txt and .session/inputs/791-constant_probe.py (read only if a verdict line needs a source). #794 (iteration 0181) never started (0 turns). Bytecode trap: #785 was refused at merge for a .pyc file.\n\n## Budget\nRead benchmark/challenges/constant-export-design.md whole, the #791 report snapshot above, and at most the two staged inputs. Do not read score.py beyond the three cited line ranges; do not read results/challenges.json or whole JSON fixtures. Do not run the probe again. Short command output; write the report early.",
+  "issue": 797
+ }
+]
