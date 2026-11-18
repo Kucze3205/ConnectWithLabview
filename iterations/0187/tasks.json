@@ -1,0 +1,41 @@
+[
+ {
+  "id": "challenges-regen-0187",
+  "title": "Regenerate results/challenges.json after the keyed-literal control change (#808) and update its pins",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "body": "## Goal\nReview #809 (CLEAR, finding 6) found that results/challenges.json still embeds the fixture hashes from before #808 (commit 14cbd047) changed benchmark fixtures library-icon-tests.json and library-specialty.json and score.py, so the committed result is stale. Regenerate it once by calling score.py `main()` in a guarded script, then update every pin of results/challenges.json (Grep the path across benchmark/**/*.json and results/**/*.json) in the same task. Do not change score.py, the fixtures or any scoring logic; if regeneration changes any outcome other than adding the `constant-keyed-literal-export` control results and the new hashes, stop and report the difference instead of fixing it. Expected gain: results/challenges.json carries the current fixture hashes, and benchmark/challenges/challenges-regen-0187.md with `## Diff`, `## Pins`, `## Checks`, `## Limits` explains the change. The result stays a self-comparison (quality_measured false). No session can run LabVIEW; claim no LabVIEW behaviour. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] `.session/artifacts/challenges_regen.py` runs `main()` exactly once with `python3 -B` and `sys.dont_write_bytecode = True`; its short output is saved to `.session/artifacts/challenges-regen-output.txt`\n- [ ] `## Diff` in benchmark/challenges/challenges-regen-0187.md summarises the key-level differences between the old and new results/challenges.json (changed hashes, added control results, any other change) with counts taken from the files\n- [ ] every pin of results/challenges.json is updated and listed in `## Pins` with old and new sha256\n- [ ] the sha256 of the current library-icon-tests.json and library-specialty.json appears in results/challenges.json (the verification checks this)\n- [ ] `git status --porcelain` shows only intended files; no `__pycache__`\n- [ ] the verification command passes; quote its output in `.session/report.md`\n\n## Verification\npython3 -B -c \"import glob,hashlib,json,os;r=open('results/challenges.json',encoding='utf-8').read();json.loads(r);f=[p for n in ('library-icon-tests.json','library-specialty.json') for p in glob.glob('benchmark/**/'+n,recursive=True)];assert len(f)>=2,f;assert all(hashlib.sha256(open(p,'rb').read()).hexdigest() in r for p in f),f;t=open('benchmark/challenges/challenges-regen-0187.md',encoding='utf-8').read().splitlines();assert all(h in t for h in ('## Diff','## Pins','## Checks','## Limits'));assert not os.path.exists('benchmark/scripts/__pycache__');print('regen OK',len(f))\"\n\n## Context\n#808 added the control and updated the fixture and score.py pins; #809 reviewed it CLEAR and pinned the merged commit 14cbd047. Bytecode trap: #785 was refused at merge for a .pyc file. #739/#766: a change to a pinned file must update all its pins in the same task. Long inline python one-liners stalled (#743): use script files. Tools can be lost mid-session: write the md file early and update it. Old hashes in benchmark/challenges/scorer-positive-0172.md are a historical record: do not edit it, mention it under `## Limits`.\n\n## Budget\nIn benchmark/scripts/score.py read `main()` and its output path only. Do not read whole fixture JSON or print whole results/challenges.json; compare old and new with a script and print only counts and changed key paths. Grep `results/challenges.json` across benchmark/**/*.json and results/**/*.json for pins. Keep command output short; write the md file early.",
+  "issue": 812
+ },
+ {
+  "id": "challenges-regen-review-0187",
+  "title": "Review the regenerated results/challenges.json and its pins (changed scope only)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "challenges-regen-0187"
+  ],
+  "inputs": [
+   {
+    "from": "challenges-regen-0187",
+    "name": "challenges-regen-output.txt"
+   }
+  ],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nIndependently check the change of task challenges-regen-0187 (changed scope only). Pin the merged commit and the sha256 of each changed file yourself. Check that results/challenges.json differs from its previous version only by the current fixture and score.py hashes and the results of the `constant-keyed-literal-export` control, that those results are `incorrect` for correctness and grounding as asserted at score.py:297-309, that no other outcome changed, and that every pin of results/challenges.json matches its bytes. Check that score.py and the fixtures are unchanged in the commit. Report, do not fix. Verdict CLEAR or NOT-CLEAR with numbered findings. Write findings to `.session/report.md` and detailed evidence to `.session/artifacts/challenges-regen-review.md`; you have no repository write paths. No session can run LabVIEW. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] report names the reviewed commit and the sha256 of each changed file, computed by you\n- [ ] the old/new results/challenges.json comparison is computed by you with a script, and its counts are in the artifact\n- [ ] each changed pin is checked against file bytes, with the result per pin in the artifact\n- [ ] any script runs with `python3 -B` and `sys.dont_write_bytecode = True`, without `main()`, and `git status --porcelain` is clean afterwards\n- [ ] verdict CLEAR or NOT-CLEAR, with numbered findings and file:line evidence\n\n## Verification\npython3 -B -c \"import os;assert os.path.exists('benchmark/challenges/challenges-regen-0187.md');assert not os.path.exists('benchmark/scripts/__pycache__');print('review scope present')\"\n\n## Context\nThe author's output is staged as an input from challenges-regen-0187. #808/#809 (keyed-literal control, CLEAR) and #779/#785/#797 stay closed; do not re-review score.py logic or the control itself. Bytecode trap: #785.\n\n## Budget\nRead benchmark/challenges/challenges-regen-0187.md whole. Use `git show --stat` and `git diff --stat` of the merged commit; compare old and new results/challenges.json with a script that prints only counts and changed key paths. Do not print whole JSON files. Keep output short.",
+  "issue": 813
+ }
+]
