@@ -1,0 +1,16 @@
+[
+ {
+  "id": "constant-export-probe-0179",
+  "title": "Measure whether the challenge scorer detects a constant or empty export, and write the detection design",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nReport, do not fix the scorer. The `challenges` row of docs/perpetua/evaluation.md requires method trials on a constant/empty export (\"stałym/pustym eksporcie\"); working memory lists constant-export detection as an open gap. Measure whether benchmark/scripts/score.py today rejects (a) an empty export and (b) a constant export (the same answer for every case) on the existing synthetic challenge fixtures, then write a design for a detection control. Expected gain: the file benchmark/challenges/constant-export-design.md with a measured verdict per probe (DETECTED / NOT-DETECTED / NOT-APPLICABLE) that the next shaper reads to order either a fixture+scorer change or a review. No session can run LabVIEW; claim no LabVIEW behaviour. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] run Bash commands first: write a helper script to `.session/artifacts/constant_probe.py` that loads benchmark/scripts/score.py by guarded exec or import (never runs score.py main(), never rewrites results/challenges.json) and feeds in memory an empty export and a constant export to the scoring path the challenge fixtures use\n- [ ] record its output in `.session/artifacts/constant-probe-output.txt` with the commit tested (git rev-parse HEAD)\n- [ ] write benchmark/challenges/constant-export-design.md with headings `## Measured`, `## Design`, `## Limits`: per probe the verdict and the score.py line that decides it; a proposed fixture shape and expected scorer outcome written before any code change; what stays unproven\n- [ ] modify no existing file (score.py, fixtures, results/, pins unchanged)\n- [ ] report in `.session/report.md` with the verdicts and the next step\n\n## Verification\npython3 -c \"t=open('benchmark/challenges/constant-export-design.md',encoding='utf-8').read();L=t.splitlines();assert all(h in L for h in ('## Measured','## Design','## Limits')),L[:20];assert 'DETECTED' in t;print('design headings OK')\"\n\n## Context\nZero-execution scorer scope: #763 finding 5 corrected by #778 (merged 582b0afe), review #779 CLEAR except an unexecuted mutation check; its re-orders #782 and #785 never started, so that check is accepted as a documented limit, not repeated here. Lessons #743/#747: long inline python one-liners stall; use a file-based helper; guarded exec works. #739/#766: changing a pinned file requires updating its pins; this task changes none.\n\n## Budget\nRead docs/perpetua/evaluation.md (the `challenges` row only, around line 69), benchmark/scripts/score.py (functions on the scoring path; read by line ranges after Grep for `def `), and Grep context of benchmark/challenges/library-specialty.json and benchmark/challenges/library-icon-tests.json. No whole large JSON files; do not read results/challenges.json whole. Short command output. Bash loss late in session recurs (#718/#722/#754/#779): run the probe early and report early.\n",
+  "issue": 788
+ }
+]
