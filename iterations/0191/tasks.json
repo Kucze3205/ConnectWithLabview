@@ -1,0 +1,18 @@
+[
+ {
+  "id": "positive-control-cold-key-0191",
+  "title": "Derive a cold key for two library literals from artifact bytes (positive-control step 2, #763 f4)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nDerive, cold, the expected answer for two claims about one public LabVIEW library file, using only the artifact bytes and `docs/perpetua/evaluation.md`. This is step 2 of the positive-control thread (#763 finding 4, plan by #820): a later reviewer compares your key with existing material you must not see. Report, do not fix: do not edit any fixture, scorer, result or control. No session can run LabVIEW; state literal-at-location XML facts only, never what LabVIEW resolves or displays. Expected gain: the file `benchmark/challenges/positive-control-key-0191.json` that the next shaper hands to a reviewer.\n\nClaims:\n- A0001: What is the value of the `LVVersion` attribute of the root `<Library>` element, and what is its location in the original file?\n- A0002: What is the `Name` attribute of the fourth `<Property>` child (document order) of the root `<Library>` element, and what is its location?\n\n## Acceptance\n- [ ] First action after reading evaluation.md and the artifact: write `benchmark/challenges/positive-control-key-0191.json` with keys `artifact_path`, `artifact_sha256` (64 hex chars, computed from the bytes), `claims` holding `A0001` and `A0002`, each with `value`, `locator` (XPath-like positional path), `scheme` and `derivation` (how you got it, one or two sentences).\n- [ ] The key file is written before any other repository file is opened.\n- [ ] The report lists every file you read, in order, and states that none of the forbidden files below was read.\n- [ ] No other repository file is changed; no `__pycache__` is created (`git status --porcelain` shows only the key file).\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert all(k in c and all(f in c[k] for f in ('value','locator','scheme','derivation')) for k in ('A0001','A0002')); assert len(d['artifact_sha256'])==64 and d['artifact_path']; print('key file: OK')\"\n\n## Context\n- Artifact (read-only): `@environment/actor-framework/Core/ActorFramework/AF Specialty Messages.lvlib`; in commands `$LABVIEW_ENVIRONMENT/actor-framework/Core/ActorFramework/AF Specialty Messages.lvlib` (`/resources/environment/...`). Pass the path as an argument; run Python with `python3 -B -I`.\n- evaluation.md is Polish: read it whole; it requires an answer plus a source location in the original and says an exporter's own output is not a reference.\n- Independence: the author of the plan saw candidate values; you must not. Forbidden reads: `benchmark/challenges/positive-control-plan-0189.md`, `benchmark/challenges/library-*.json`, `benchmark/cases/dev/**`, `benchmark/results/**`, `benchmark/scripts/**`, `journal/**`, any report of #820 or earlier sessions.\n\n## Budget\n- Read: `docs/perpetua/evaluation.md` (whole), the artifact (whole; it is small).\n- Nothing else. Write the key file early, then the report. Short command output only.\n- Do not run `git commit`; the parent commits.\n",
+  "issue": 825
+ }
+]
