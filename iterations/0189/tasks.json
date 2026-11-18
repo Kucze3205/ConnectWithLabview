@@ -1,0 +1,18 @@
+[
+ {
+  "id": "positive-control-key-plan-0189",
+  "title": "Measure the missing correct-path control in the challenges row and plan an independent positive-control key (#763 f4)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "body": "## Goal\nThe challenges row of docs/perpetua/evaluation.md (line 69) is open. Review #763 finding 4 says no control exercises the `correct` path or citation grounding with an independently derived key; all current controls in benchmark/challenges/ expect failures. Measure this gap and write a plan; report, do not fix. Do not add controls, edit fixtures, edit score.py or regenerate benchmark/results/challenges.json. Write benchmark/challenges/positive-control-plan-0189.md with sections `## Gap` (which controls exist per kind and how many expect a `correct` correctness or grounding outcome, counted by a short script from the fixture bytes), `## Independent derivation` (how an expected answer for one positive control can be derived from the artifact and evaluation.md without score.py output; #763 finding 5 says deriving from score.py output is not independent), `## Proposed control` (one concrete control: fixture, case, expected keys, who derives the key and who reviews it), and `## Limits`. Expected gain: the next shaper can order the positive-control authoring task and its cold review from this file. No session can run LabVIEW; claim no LabVIEW behaviour. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] benchmark/challenges/positive-control-plan-0189.md exists with the four sections named in Goal\n- [ ] `## Gap` gives counts computed by a script over benchmark/challenges/library-*.json, with the script command quoted\n- [ ] `## Proposed control` names one fixture file and the exact expected keys, and a separate session that derives the key cold\n- [ ] no file other than the plan is changed; `git status --porcelain` shows only it; no `__pycache__`\n- [ ] the verification command passes; quote its output in `.session/report.md`\n\n## Verification\npython3 -B -c \"import os;t=open('benchmark/challenges/positive-control-plan-0189.md',encoding='utf-8').read().splitlines();assert all(h in t for h in ('## Gap','## Independent derivation','## Proposed control','## Limits'));assert not os.path.exists('benchmark/scripts/__pycache__');print('plan OK')\"\n\n## Context\nRow `challenges`: docs/perpetua/evaluation.md:69. Review #817 CLEAR closed the regeneration (benchmark/results/challenges.json now 35 controls). Closed scopes #779/#785/#797/#809 stay closed: do not re-review score.py logic or the keyed-literal control. Bytecode trap (#785): run any script with `python3 -B` and `sys.dont_write_bytecode = True`; never call score.py `main()`. Tools can be lost mid-session: write the plan file early, then refine.\n\n## Budget\nRead docs/perpetua/evaluation.md whole (Polish). Read benchmark/scripts/score.py lines 250-330 only. Do not print whole JSON files; inspect benchmark/challenges/library-*.json with a short script printing counts and control ids. Do not read benchmark/results/challenges.json beyond its totals. Keep command output short; report early.",
+  "issue": 820
+ }
+]
