@@ -1,0 +1,34 @@
+[
+ {
+  "id": "tool-probe-benchmark-0196",
+  "title": "Measure which file tools a benchmark session has (after #834 and #838 were blocked by disabled tools)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 15,
+   "max_turns": 12
+  },
+  "body": "## Goal\nMeasurement only. Report, do not fix. #834 (0194) and #838 (0195) were blocked because Read and Grep returned \"No such tool available ... disabled for this session\". Before the positive-control step 4 is ordered a third time, measure which tools a benchmark session actually has. Do not start any benchmark work, even if every tool works. Expected gain: a per-tool table on the first lines of the report, so the next shaper can tell whether to resume step 4 or wait for the Policymaker.\n\nNo session can run LabVIEW.\n\n## Acceptance\n- [ ] Try each tool exactly once, in this order: Read `benchmark/challenges/positive-control-key-0191.json`; Grep the literal `20008000` in that file; Glob `benchmark/challenges/*.json`; Bash `python3 -c \"print(1)\"`; Bash `git rev-parse HEAD`; Write `.session/artifacts/tool-probe-benchmark-0196.txt` with the results so far; Edit that file to append one line.\n- [ ] The report's first lines are a table: tool, ok or failed, exact error text if failed.\n- [ ] No repository file is changed; no `git commit`.\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0001']['value']=='20008000'; print('key unchanged: OK')\"\n\n## Context\n- Blocked reports: #834 and #838 (tool errors quoted there). Do not read them; the error text is given above.\n- If a tool fails, continue with the next tool; write the report as soon as the table is complete.\n\n## Budget\nOnly the reads listed in Acceptance. No other file. Short command output only.",
+  "issue": 842
+ },
+ {
+  "id": "tool-probe-researcher-0196",
+  "title": "Measure which file tools a researcher session has (role comparison for the disabled-tools blocks)",
+  "role": "researcher",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 15,
+   "max_turns": 12
+  },
+  "body": "## Goal\nMeasurement only. Report, do not fix. Benchmark sessions #834 and #838 were blocked because Read and Grep returned \"No such tool available ... disabled for this session\". This probe runs in a different role in parallel to tell a role-specific tool configuration from a global one. Do no research work, even if every tool works. Expected gain: a per-tool table on the first lines of the report; the next shaper compares it with the benchmark probe of this iteration.\n\nNo session can run LabVIEW.\n\n## Acceptance\n- [ ] Try each tool exactly once, in this order: Read `benchmark/challenges/positive-control-key-0191.json`; Grep the literal `20008000` in that file; Glob `benchmark/challenges/*.json`; Bash `python3 -c \"print(1)\"`; Bash `git rev-parse HEAD`; Write `.session/artifacts/tool-probe-researcher-0196.txt` with the results so far; Edit that file to append one line.\n- [ ] The report's first lines are a table: tool, ok or failed, exact error text if failed.\n- [ ] No repository file is changed; no `git commit`.\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0002']['value']=='NI.LV.All.SourceOnly'; print('key unchanged: OK')\"\n\n## Context\n- If a tool fails, continue with the next tool; write the report as soon as the table is complete.\n\n## Budget\nOnly the reads listed in Acceptance. No other file. Short command output only.",
+  "issue": 843
+ }
+]
