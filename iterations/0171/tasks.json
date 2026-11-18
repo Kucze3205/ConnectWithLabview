@@ -1,0 +1,44 @@
+[
+ {
+  "id": "scorer-finish-check-0171",
+  "title": "Finish #758 on its saved branch: run the checks only and report",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "start_branch": "task/758",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     758
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nFinish #758 (partial, saved at task/758 commit 7e1d0cab). Bash was lost at the end of that session, so it never ran its Verification. Everything else is already done: score.py was restored from d46236b6 (SHA256 296e2354...); a native_run-null self-test case was added; the baseline compare in regression_self_test was dropped (new score.py SHA256 c2d20475...); 26 controls in library-icon-tests.json and 2 in library-specialty.json were changed to `unverified`; pins were updated in four benchmark JSON files; main() rewrote benchmark/results/challenges.json; benchmark/challenges/scorer-finish-0170.md was written. Do not rewrite any saved file. Do not rerun main() or the update scripts. Report, do not fix. A targeted Edit is allowed only if a check below fails on a plain mismatch (a wrong pin hash or a missing heading); record that Edit in the note's `## Checks`. Expected gain: status done, with check outputs recorded in `## Checks`. No session can run LabVIEW.\nSteps: (0) First turn run `python3 -I -c print(1)`. If a tool errors, write .session/report.md as blocked with the exact error and stop. (1) Run the Verification command below. (2) With Write, create a helper script in .session/artifacts/ that computes SHA256 of benchmark/scripts/score.py and checks that each pin of score.py in benchmark/**/*.json equals that hash. Print at most 20 lines. (3) Create a guarded helper (faulthandler.dump_traceback_later(60, exit=True), stdin reopened on os.devnull, run with `python3 -I`, following benchmark/challenges/scorer-stall-0168.md). It runs the score.py regression self-test and generate() only, never main(), and prints pass/fail plus the match/mismatch totals. (4) Append the outputs to `## Checks` in the note and write the report.\n## Acceptance\n- [ ] The Verification command exits 0 on the branch.\n- [ ] Every score.py pin in benchmark/**/*.json equals the file's SHA256 (the helper output is quoted in `## Checks`).\n- [ ] The guarded self-test passes and the generate() totals are recorded in `## Checks`. main() is not called.\n- [ ] No saved file is rewritten, apart from targeted Edits listed in `## Checks`. No evaluator, network, model, reader or native call. No commit (the parent commits).\n## Verification\npython3 -I -c \"import json; d=json.load(open('benchmark/results/challenges.json')); assert d.get('quality_measured') is False; t=open('benchmark/challenges/scorer-finish-0170.md').read().splitlines(); assert all(h in t for h in ('## Source','## Restored','## Pins','## Expectations','## Checks')); print('OK')\"\n## Context\n- The #758 report is staged. Check .session/exports/manifest.json first.\n- benchmark/challenges/scorer-stall-0168.md describes the guarded probe method. An importlib load-and-print helper stalled in #747. Write helpers with Write; no long inline -c one-liners.\n- Never run benchmark/writing/check_c1_challenges_0125.py (invalidated, #544).\n## Budget\n- Reads: the #758 report; benchmark/challenges/scorer-finish-0170.md; scorer-stall-0168.md. Grep for pins only. Do not read whole fixture or results JSON.\n- Checks done by turn 12, report by turn 17.\n",
+  "issue": 762
+ },
+ {
+  "id": "scorer-finish-review-0171",
+  "title": "Review the zero-execution scorer finish (changed scope only)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "scorer-finish-check-0171"
+  ],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "exports": [],
+  "inputs": [],
+  "body": "## Goal\nReview, do not fix. Check that the finish of the #739 zero-execution change, merged from #758 and the 0171 check, is correct and consistent. score.py must return `unverified` for executed<=0, scored<=0, or native_run present and null. Pins in benchmark/**/*.json must match the file hashes. Each changed fixture expectation must follow from the change and nothing else. Also judge one specific edit: #758 dropped the baseline `compare` against the control's `expected` in regression_self_test. State whether that removes a regression guard and what should replace it, if anything. Expected gain: a CLEAR or NOT-CLEAR verdict with numbered findings in .session/report.md, which the next shaper uses to close or correct this scope. No session can run LabVIEW.\n## Acceptance\n- [ ] First turn: run a tool probe (`python3 -I -c print(1)`). On failure, report blocked with the exact error.\n- [ ] The report pins the reviewed commit (`git rev-parse HEAD`) and the SHA256 of benchmark/scripts/score.py, benchmark/preparation.json and benchmark/results/challenges.json, all computed by the reviewer.\n- [ ] Each changed fixture expectation listed in benchmark/challenges/scorer-finish-0170.md is checked against the score.py logic, with a verdict per item.\n- [ ] The dropped baseline compare in regression_self_test gets its own numbered verdict.\n- [ ] The verdict is CLEAR or NOT-CLEAR, with numbered findings in .session/report.md and detailed evidence in .session/artifacts/. No repository file is written.\n## Verification\npython3 -I -c \"t=open('benchmark/challenges/scorer-finish-0170.md').read().splitlines(); assert '## Checks' in t; print('OK')\"\n## Context\n- benchmark/challenges/scorer-finish-0170.md is the producer's note. benchmark/challenges/scorer-stall-0168.md describes the probe method: faulthandler guard, stdin on devnull, python3 -I.\n- The restore source was d46236b6 (tag iter/0165/739). Diff score.py against that commit's version and against the pre-change version. 810a5457... is a file SHA256, not a commit: find the commit whose score.py has that hash with `git log -n 4 -- benchmark/scripts/score.py` and a hash helper.\n- Never call score.py main(). Use generate() only, through a guarded helper in .session/artifacts/. Never run benchmark/writing/check_c1_challenges_0125.py. No evaluator, network, model or native calls.\n## Budget\n- Reads: the two notes; `git log -n 4 -- benchmark/scripts/score.py` and the score.py diffs, at most 200 lines; Grep for pins in benchmark/**/*.json; only the fixture entries named in the note. Do not read the whole results JSON.\n- Verdict draft by turn 20, report by turn 26.\n",
+  "issue": 763
+ }
+]
