@@ -1,0 +1,16 @@
+[
+ {
+  "id": "scorer-positive-mutation-0177",
+  "title": "Close review #779: run the in-memory mutation check of the positive guard and the literal pin check",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 15
+  },
+  "body": "## Goal\nReport, do not fix. Review #779 found the #763 finding 5 correction CLEAR on expected values and pins, but conditional on one item it could not execute (Bash was disabled): the in-memory mutation check. Run only that item and the literal Verification command. Expected gain: an unconditional CLEAR or a NOT-CLEAR in `.session/report.md`, which closes or reopens the zero-execution scorer scope for the next shaper. Do NOT re-derive the expectation, do NOT re-review findings 1-6, do NOT re-check pins beyond the Verification command. No session can run LabVIEW; claim no LabVIEW behaviour.\n\n## Acceptance\n- [ ] run the Verification command first, as written, and record its exact output\n- [ ] write a small helper script to `.session/artifacts/mutation_check.py` (no repository writes) that loads benchmark/scripts/score.py by guarded exec or import, loads each of the two fixtures in memory, changes one `expected_positive` per_id correctness value of `positive-control` (benchmark/challenges/library-specialty.json) and of `extra-true-answer` (benchmark/challenges/library-icon-tests.json), and calls the self-test (`regression_self_test`, score.py around lines 283-349)\n- [ ] record per control: unmutated self-test passes; mutated self-test raises (exception type and message, short)\n- [ ] record the commit tested (git rev-parse HEAD) and the sha256 of both fixtures\n- [ ] verdict CLEAR or NOT-CLEAR in `.session/report.md`; script output in `.session/artifacts/mutation-output.txt`; no repository writes, do not run score.py main()\n\n## Verification\npython3 -c \"import hashlib,glob;F=['benchmark/challenges/library-icon-tests.json','benchmark/challenges/library-specialty.json'];B={f:open(f,'rb').read() for f in F};assert all(b'expected_positive' in B[f] for f in F);H={f:(hashlib.sha256(B[f]).hexdigest(),hashlib.sha1(b'blob %d'%len(B[f])+bytes(1)+B[f]).hexdigest()) for f in F};T={p:open(p).read() for p in glob.glob('benchmark/**/*.json',recursive=True) if p not in F};bad=[(p,f) for p in T for f in F if f in T[p] and not any(h in T[p] for h in H[f])];assert not bad,bad;print('fixture pins OK')\"\n\n## Context\nReview #763 finding 5; correction #766 finished by #778 (merged 582b0afe); review #779 partial (report says CLEAR except the unexecuted mutation check). Lesson #743/#747: long inline python one-liners stall; use a file-based helper; guarded exec worked.\n\n## Budget\nRead only benchmark/scripts/score.py lines 250-360 and the `positive-control` / `extra-true-answer` entries of the two fixtures via Grep context. No whole large JSON files. Run Bash commands early (Bash loss late in session recurs: #718/#722/#754/#779). Short command output; report early.\n",
+  "issue": 782
+ }
+]
