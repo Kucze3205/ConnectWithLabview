@@ -1,0 +1,52 @@
+[
+ {
+  "id": "scorer-positive-fix-0172",
+  "title": "Correct review #763 finding 5: restore an authored positive-execution guard in regression_self_test",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     758,
+     762,
+     763
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nCorrect only finding 5 of review #763 (NOT-CLEAR). Findings 1-3 are CLEAR and need no change; do not touch the zero-execution branch at score.py:213-216. The problem: #758 dropped the baseline `compare` against the control's `expected` in `regression_self_test` of benchmark/scripts/score.py. As a result (A) the mutation check `mismatches = compare(computed, control['expected'])` / `if not changed or not mismatches` (about score.py:345-347) is vacuous, and (B) the positive-execution comparison (about score.py:314) compares `score(...)` with itself, so it is a tautology. Fix: give each control that regression_self_test uses as a positive-execution baseline an authored `expected_positive` field. Take it byte-for-byte from that control's `expected` value at commit 27e7495d (the parent of 8cb25137, before the zero-execution change). Do not derive it by running or rewriting score.py output; the reviewer rejects that as not independent. Then compare the baseline against `expected_positive`, compare each mutation against `expected_positive` (so `not mismatches` is meaningful again), and remove the tautology. Expected gain: a self-test that fails when positive-execution scoring regresses, recorded in a new note benchmark/challenges/scorer-positive-0172.md, ready for the changed-scope review. No session can run LabVIEW.\nSteps: (0) First turn run `python3 -I -c print(1)`. If a tool errors, write .session/report.md as blocked with the exact error and stop. (1) Read regression_self_test in score.py and list the control ids it uses as baseline. (2) Get each control's pre-change `expected` with `git show 27e7495d:<fixture path>` (find the fixture paths with Glob `benchmark/**/library-*.json`); extract with a helper script written by Write in .session/artifacts/. (3) Add `expected_positive` with targeted Edits, then edit score.py. (4) Update every pin of score.py and of the changed fixtures in benchmark/**/*.json (the #763 report lists preparation.json, writing/input-pins.json, writing/c1-challenges-0125-pins.json, writing/reviews-0128/c1-artifact-manifest-0126.json). (5) Run the guarded self-test and generate() (method in benchmark/challenges/scorer-stall-0168.md: faulthandler.dump_traceback_later(60, exit=True), stdin on os.devnull, `python3 -I`). Then call main() once, guarded, to refresh benchmark/results/challenges.json, and re-pin that file if it is pinned. (6) Run a mutation sanity check: temporarily mutate one `expected_positive` value in memory (not on disk) and show the self-test fails; record its output.\n## Acceptance\n- [ ] benchmark/challenges/scorer-positive-0172.md exists with the headings `## Source`, `## Controls`, `## Change`, `## Pins`, `## Checks`.\n- [ ] `## Controls` lists each control given `expected_positive` with its fixture path, and states it equals the 27e7495d `expected` (helper output quoted).\n- [ ] score.py compares the baseline and each mutation against `expected_positive`; the self-comparison at about line 314 is removed. The zero-execution branch is unchanged.\n- [ ] Every pin of score.py, the changed fixtures and results/challenges.json in benchmark/**/*.json equals the file's SHA256 (helper output quoted in `## Checks`).\n- [ ] The guarded self-test passes, generate() totals are recorded, and the in-memory mutation check fails as expected, all quoted in `## Checks`.\n- [ ] No evaluator, network, model, reader or native call. Never run benchmark/writing/check_c1_challenges_0125.py. No commit (the parent commits).\n## Verification\npython3 -I -c \"import json; d=json.load(open('benchmark/results/challenges.json')); assert d.get('quality_measured') is False; s=open('benchmark/scripts/score.py').read(); assert 'expected_positive' in s; t=open('benchmark/challenges/scorer-positive-0172.md').read().splitlines(); assert all(h in t for h in ('## Source','## Controls','## Change','## Pins','## Checks')); print('OK')\"\n## Context\n- Reports #758, #762, #763 are staged; check .session/exports/manifest.json first. #763 finding 5 is the specification of this fix.\n- benchmark/challenges/scorer-finish-0170.md is the previous producer note; append nothing to it.\n- Long inline python3 -c one-liners stalled the runner (#743); write helpers with Write. Tools were lost late in #718/#754/#758: run checks early.\n## Budget\n- Reads: the #763 report; regression_self_test and compare in score.py (at most 150 lines); `git show 27e7495d:` only for the named controls via a helper; scorer-stall-0168.md. Do not read whole fixture or results JSON.\n- Edits done by turn 20, checks by turn 30, report by turn 36.\n",
+  "issue": 766
+ },
+ {
+  "id": "scorer-positive-review-0172",
+  "title": "Review the positive-execution guard correction (changed scope only)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "scorer-positive-fix-0172"
+  ],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     763
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nReview, do not fix. Check that the correction of #763 finding 5 is right. Scope: the changed regression_self_test in benchmark/scripts/score.py, the new `expected_positive` fields, their pins, and benchmark/challenges/scorer-positive-0172.md. #763 findings 1-3 are closed; do not re-review them except to confirm score.py:213-216 (zero-execution branch) is unchanged. Expected gain: CLEAR or NOT-CLEAR with numbered findings in .session/report.md; the next shaper closes the zero-execution scope on CLEAR. No session can run LabVIEW.\n## Acceptance\n- [ ] First turn: run a tool probe (`python3 -I -c print(1)`). On failure, report blocked with the exact error.\n- [ ] The report pins `git rev-parse HEAD` and the SHA256 of benchmark/scripts/score.py, benchmark/preparation.json and benchmark/results/challenges.json, computed by the reviewer.\n- [ ] For each control with `expected_positive`, the reviewer's own helper shows whether it equals that control's `expected` at commit 27e7495d; verdict per control.\n- [ ] Numbered verdicts on: the baseline compared to `expected_positive`; mutations compared to `expected_positive` (not vacuous); the former tautology removed; pins equal file hashes.\n- [ ] The reviewer runs its own guarded check that a changed `expected_positive` value (in memory only) makes the self-test fail.\n- [ ] Verdict CLEAR or NOT-CLEAR in .session/report.md, evidence in .session/artifacts/. No repository file is written.\n## Verification\npython3 -I -c \"t=open('benchmark/challenges/scorer-positive-0172.md').read().splitlines(); assert '## Checks' in t; print('OK')\"\n## Context\n- The #763 report is staged (check .session/exports/manifest.json); its finding 5 is the specification.\n- Guarded probe method: benchmark/challenges/scorer-stall-0168.md (faulthandler guard, stdin on devnull, python3 -I). Write helpers with Write. Never call main(). Never run benchmark/writing/check_c1_challenges_0125.py. No evaluator, network, model or native calls.\n## Budget\n- Reads: the #763 report; scorer-positive-0172.md; `git diff` of score.py against its previous commit (at most 200 lines); only the named fixture entries; Grep for pins.\n- Verdict draft by turn 20, report by turn 26.\n",
+  "issue": 767
+ }
+]
