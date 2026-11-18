@@ -46,9 +46,10 @@ read until its turn cap and wrote no graph.
 - Read the startup documents, then at most a few sources the State or the handoff points to.
 - By about your 12th tool call, write a valid `.session/tasks.json`, even if it holds one task. Refine it afterwards.
 - Then update `journal/working-memory.md`, then write the report. After the final graph edit, read `.session/tasks.json` back and run this direct command:
-  `python3 -c "import json; d=json.load(open('.session/tasks.json')); assert isinstance(d,dict) and isinstance(d.get('tasks'),list) and d['tasks']; required=('## Goal','## Acceptance','## Verification','## Context','## Budget'); assert all(isinstance(t,dict) and isinstance(t.get('body'),str) and all(h in t['body'].splitlines() for h in required) for t in d['tasks']); print('task JSON and headings: OK')"`
+  `python3 -c "import json; d=json.load(open('.session/tasks.json')); assert isinstance(d,dict) and isinstance(d.get('tasks'),list) and d['tasks']; required=('## Goal','## Acceptance','## Verification','## Context','## Budget'); F={'id','title','role','body','model','effort','blocked_by','inputs','exports','start_branch','limits','consent'}; assert all(isinstance(t,dict) and set(t)<=F and isinstance(t.get('limits',{}),dict) for t in d['tasks']), 'unknown task field: max_turns and timeout_minutes belong inside limits'; assert all(isinstance(t.get('body'),str) and all(h in t['body'].splitlines() for h in required) for t in d['tasks']); print('task JSON, fields and headings: OK')"`
+  Session limits are only ever `"limits": {"timeout_minutes": N, "max_turns": N}`. A top-level `max_turns` or `timeout_minutes` is an unknown field: the engine refuses the whole graph and the iteration fails (iterations 0173-0175).
   Fix failures and rerun after every later edit. A read-back alone is not JSON validation (#617 wrote invalid quotes and read them back before Finish).
-- There are two string layers: the action JSON and the graph JSON inside `text`. Escape quotes in verification commands for both layers. After graph parsing, task bodies must contain actual newlines, not literal backslash-n text. Prefer `json.dumps` when serializing a graph. The command above checks JSON syntax and heading lines only; the engine still checks task admission.
+- There are two string layers: the action JSON and the graph JSON inside `text`. Escape quotes in verification commands for both layers. After graph parsing, task bodies must contain actual newlines, not literal backslash-n text. Prefer `json.dumps` when serializing a graph. The command above checks JSON syntax, task field names and heading lines only; the engine still checks task admission.
 - One well-cut task is a complete iteration. An empty graph is not: if no useful work is ready, order one task that
   measures the concrete blocker.
 
@@ -147,7 +148,7 @@ Each task is one session's work and a section set the protocol defines. Rules:
 - **`input_budget` means the session wrote too much, not that the task is wrong.** The engine stops a session at about
   800k unique input; Claude `cache_write` is the measure (#689: 803,586; #692: 815,101; both partial). Before you resume,
   inspect the saved branch yourself with `git show <commit>:<path>` (size, headings, JSON parse). If the outputs look
-  complete, order a finishing task only: `start_branch`, at most 20 turns, no rewrite of a saved file, targeted `Edit`
+  complete, order a finishing task only: `start_branch`, `limits.max_turns` at most 20, no rewrite of a saved file, targeted `Edit`
   fixes only, then the checks and the report. Otherwise split by file. Never resume the same full task a third time.
 - **Models and effort.** The labels (`model`, `effort` in a task) are yours to set; a session never sets them for itself.
   Use the strongest model only where the task needs it. Allowed values: `task_options` in the loop state.
