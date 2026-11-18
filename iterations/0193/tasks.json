@@ -1,0 +1,30 @@
+[
+ {
+  "id": "positive-control-review-finish-0193",
+  "title": "Finish review #828: which inventory copy score.py reads and whether a wrong literal or locator would fail (findings F2, F3)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [
+   {
+    "issue": 828,
+    "name": "pins.txt"
+   }
+  ],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     828
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 3, finishing the partial review #828. #828 already confirmed (do not repeat): artifact hash matches key and inventory; A0001 `20008000` at `/Library/@LVVersion` line 2 and A0002 `NI.LV.All.SourceOnly` at `/Library/Property[4]/@Name` line 6 match plan and inventory (F1). Its pins are staged as `.session/inputs/828-pins.txt`. Do not re-hash files or re-derive literals.\n\nOpen items to close: F2 (would a control fail on a wrong literal or a wrong locator?) and F3 (which inventory copy `benchmark/scripts/score.py` reads). Report, do not fix: write no repository file. Expected gain: a final CLEAR or NOT-CLEAR verdict for starting step 4 on the first lines of `.session/report.md`, with the exact file score.py reads and the function and line that compares value and locator.\n\nNo session can run LabVIEW; make no claim about how LabVIEW interprets any value.\n\n## Acceptance\n- [ ] Check `.session/exports/manifest.json` and confirm the #828 report and `.session/inputs/828-pins.txt` are available; record the main commit you review in `.session/artifacts/pins-0193.txt` with the SHA-256 of `benchmark/scripts/score.py`.\n- [ ] F3: name the exact inventory path score.py reads for the library specialty case (file and line in score.py), and whether `benchmark/cases/dev/library-specialty.json` is that file or a copy.\n- [ ] F2: from the code, state with line references whether the scorer compares the literal, the locator, or both; optionally confirm with a mutation run on a temporary copy outside the repository (`python3 -B`), never by editing a repository file.\n- [ ] F4: state whether the locator scheme names differ in a way the scorer checks.\n- [ ] Write detailed evidence to `.session/artifacts/review-0193.md`; findings with severity in `.session/report.md`; verdict on the first lines.\n- [ ] Run `git status --porcelain` at the end and report that it is clean.\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0001']['value']=='20008000' and c['A0002']['value']=='NI.LV.All.SourceOnly'; print('key unchanged: OK')\"\n\n## Context\n- #828 report (staged via exports) lists F1-F4 and what next; its session lost Grep/Bash mid-session, so save artifacts early.\n- Bytecode trap: importing anything under `benchmark/scripts/` needs `python3 -B` and `sys.dont_write_bytecode = True` (#785).\n- score.py writes `benchmark/results/challenges.json`; do not run it in the repository tree in a way that rewrites that file.\n\n## Budget\nRead: the #828 report, `.session/inputs/828-pins.txt`, `benchmark/scripts/score.py` (Grep for `reference_inventory`, `library-specialty`, `locator` first, then read only the matching functions), `benchmark/challenges/positive-control-key-0191.json`, and the inventory file score.py reads. Do not read `benchmark/results/**` whole or `journal/**`. Short command output only. Write the report early and refine it.",
+  "issue": 831
+ }
+]
