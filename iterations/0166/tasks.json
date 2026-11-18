@@ -1,0 +1,44 @@
+[
+ {
+  "id": "scorer-finish-0166",
+  "title": "Finish the saved score.py zero-execution fix of #739: stale challenge expectations, regenerated results and preparation.json pins",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "start_branch": "task/739",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     739
+    ]
+   }
+  ],
+  "inputs": [],
+  "body": "## Goal\nFinish #739, do not redo it. Already done on branch task/739 (commit 5db2610e): the score.py change (zero executed/scored or null native_run gives `unverified`, not `correct`), regression cases, and benchmark/challenges/scorer-fix-0165.md. Do not rewrite these; targeted `Edit` fixes only. #739 failed the engine check after rebase: `empty evidence or hash mismatch: benchmark/scripts/score.py` (benchmark/preparation.json pins score.py at 810a5457... and benchmark/results/challenges.json at a5b97984...). #739 also reports that all 33 fixture controls declare zero execution, so generate() now gives 5 matches and 28 mismatches against the frozen `expected` blocks.\nDo: (1) update only the `expected` outcomes in the challenge fixtures that changed because of the zero-execution rule; any mismatch not explained by that rule is reported, not changed; (2) add one self-test case that isolates the `native_run`-null branch (positive executed and scored, native_run null) as #739 Discoveries asked; (3) regenerate benchmark/results/challenges.json with score.py main() once; (4) update the benchmark/preparation.json sha256 pins of every file you changed. Do not change scorer logic further. These expectations are author-written synthetic outcomes, not an independent key: say so in the note.\nExpected gain: the challenges milestone passes the hash check on main with the zero-execution fix merged; the next shaper reads the note section `## Expectation update`. No session can run LabVIEW; claim no native behaviour.\n## Acceptance\n- [ ] benchmark/challenges/scorer-fix-0165.md gains a section headed exactly `## Expectation update` listing each changed fixture path, control pointer, id, old and new outcome, and the reason (zero-execution rule) per entry.\n- [ ] score.py regression_self_test has a case with positive declared execution and null native_run that gives no `correct`; the self-test runs once without error (command and short output in the note, full output in .session/artifacts/).\n- [ ] generate() output matches every fixture `expected` block after the update (state the count you measured).\n- [ ] benchmark/results/challenges.json is regenerated and every pin in benchmark/preparation.json matches the file bytes (Verification command passes).\n- [ ] Only score.py, scorer-fix-0165.md, the challenge fixture JSON files, benchmark/results/challenges.json and benchmark/preparation.json change. Historical pin records (benchmark/writing/**) stay unchanged.\n## Verification\npython3 -I -c \"import hashlib,json; p=json.load(open('benchmark/preparation.json')); bad=[e['path'] for m in p['milestones'].values() for e in m if hashlib.sha256(open(e['path'],'rb').read()).hexdigest()!=e['sha256']]; assert not bad, bad; t=open('benchmark/challenges/scorer-fix-0165.md').read(); assert '## Expectation update' in t.splitlines(); print('OK')\"\n## Context\n- Saved work and failure: report of #739 (staged; check .session/exports/manifest.json), sections Discoveries and the failed check output.\n- Fixtures pinned in the challenges milestone of benchmark/preparation.json: library-icon-tests.json, library-specialty.json, vi-actor-core-native-gap.json under benchmark/challenges/.\n- benchmark/writing/check_c1_challenges_0125.py is invalidated (#544): never run it. No evaluator, network, model, reader or native calls. Do not commit; the parent commits. Commands are argv strings without shell expansion.\n## Budget\n- Reads: #739 report; `git diff 2f91dff5 task/739 -- benchmark/scripts/score.py` style diff of score.py only; benchmark/challenges/scorer-fix-0165.md whole; fixture `expected` blocks via short python3 extraction only, never whole fixtures.\n- Compute the mismatch list with one python3 command saved to .session/artifacts/; short console output. Fixtures updated by about turn 20, pins and report by turn 32.\n",
+  "issue": 743
+ },
+ {
+  "id": "scorer-finish-review-0166",
+  "title": "Independently review the score.py zero-execution fix and the expectation update (#739 plus scorer-finish-0166)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "scorer-finish-0166"
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "exports": [],
+  "inputs": [],
+  "body": "## Goal\nReview, do not fix. Scope: the benchmark/scripts/score.py change since sha256 810a5457c3c32ff8c856ae3d960ea06a495860b1efa5c78a8a895610eb649aac and the fixture `expected` updates. A key-matching answer whose declared execution shows zero executed or scored work or a null native_run must not get `correct`; records with positive execution keep their previous outcome; every changed fixture expectation must be explained by that rule alone. Before reading the note, write your own expectation of a correct change in .session/artifacts/review-0166-expectation.md. Expected gain: CLEAR closes the zero-execution finding of scorer-probe-0164; NOT-CLEAR gives numbered findings for one narrow correction. No session can run LabVIEW; claim no native behaviour.\n## Acceptance\n- [ ] First turn: a trivial Read probe of benchmark/scripts/score.py confirms tools work; if a tool is unavailable, report that and stop.\n- [ ] .session/artifacts/review-0166-expectation.md is written before benchmark/challenges/scorer-fix-0165.md is opened.\n- [ ] You pin HEAD and the SHA256 of score.py, scorer-fix-0165.md and benchmark/results/challenges.json yourself, and diff score.py and the challenge fixtures against the last commit where score.py had sha256 810a5457... .\n- [ ] You run the score.py self-test and `score.generate()` once in memory through importlib with `python3 -I` (no `main()`), save output in .session/artifacts/, and check each changed expectation against the zero-execution rule.\n- [ ] `.session/report.md` gives CLEAR or NOT-CLEAR and numbered findings with line references; details in .session/artifacts/. You change no repository file.\n## Verification\npython3 -I -c \"t=open('benchmark/challenges/scorer-fix-0165.md').read(); assert '## Expectation update' in t.splitlines(); print('OK')\"\n## Context\n- Finding source: benchmark/challenges/scorer-probe-0164.md (#736) section `## no-credit-for-zero-execution`.\n- benchmark/writing/check_c1_challenges_0125.py is invalidated (#544): never run it. Do not rewrite benchmark/results/challenges.json; do not call main().\n- No network, model, reader, evaluator or native calls. Commands are argv strings without shell expansion.\n## Budget\n- Reads: git log/diff of score.py and the three benchmark/challenges/*.json fixtures (expected blocks via short python3 extraction); scorer-probe-0164.md the named section; later, after the expectation file, benchmark/challenges/scorer-fix-0165.md whole.\n- No whole fixture dumps; short command output. Write the verdict by about turn 25.\n",
+  "issue": 744
+ }
+]
