@@ -1,0 +1,18 @@
+[
+ {
+  "id": "scorer-probe-0164",
+  "title": "Measure whether benchmark/scripts/score.py denies credit to each challenge-control kind (gap-0160 cross-cutting gap)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "exports": [],
+  "inputs": [],
+  "body": "## Goal\nMeasure, do not fix. benchmark/challenges/gap-0160.md marks all five challenge kinds `partial` and names the cross-cutting gap: no scorer is shown to give no credit to wrong answers, wrong sources, constant or empty exports, unsupported cases and zero-execution records. Find out what the existing benchmark/scripts/score.py actually does with each of those control kinds. First read it and write down, per kind, the score you expect it to give from the code alone. Then, if score.py can be run on the committed synthetic fixtures in benchmark/challenges/ without network, model, reader, evaluator or native calls, run it once per fixture with output only to .session/artifacts/ and compare. Do not edit score.py, the fixtures or any other existing file. No session can run LabVIEW; claim no native behaviour. Expected gain: one file, benchmark/challenges/scorer-probe-0164.md, that says per kind whether score.py denies credit (yes / no / not handled / not runnable) with a code line reference, so the next shaper orders exactly the scorer correction or its independent review.\n## Acceptance\n- [ ] benchmark/challenges/scorer-probe-0164.md exists with sections headed exactly `## wrong-answer`, `## wrong-source`, `## constant-or-empty-export`, `## unsupported-case`, `## no-credit-for-zero-execution`, `## Pins`, `## Not counted`.\n- [ ] Each kind section states: the expectation from reading the code (with score.py line numbers), whether it was run, the observed result if run (artifact name in .session/artifacts/), and a verdict of denies-credit, gives-credit, not-handled or not-runnable.\n- [ ] `## Pins` lists the HEAD commit and the SHA256 of score.py and of every fixture used, measured by you.\n- [ ] `## Not counted` names anything excluded (for example the invalidated #544 / 0125 checker, benchmark/results/challenges.json self-comparison totals) and why.\n- [ ] No other repository file changes.\n## Verification\npython3 -c \"t=open('benchmark/challenges/scorer-probe-0164.md').read(); assert all(h in t.splitlines() for h in ('## wrong-answer','## wrong-source','## constant-or-empty-export','## unsupported-case','## no-credit-for-zero-execution','## Pins','## Not counted')); print('OK')\"\n## Context\n- benchmark/challenges/gap-0160.md (from #725, merged a6fd4304) lists the control pointers per kind, e.g. library-icon-tests.json /controls/1, /controls/2, /controls/3, /controls/18-/controls/26, library-specialty.json /controls/1, vi-actor-core-native-gap.json /controls/0-/controls/3. It notes score.py was not inspected.\n- benchmark/writing/check_c1_challenges_0125.py is invalidated (#544): never run or refresh it.\n- Do not commit; the parent commits. Commands are argv strings without shell expansion.\n## Budget\n- Reads: benchmark/challenges/gap-0160.md whole; benchmark/scripts/score.py (Grep for def/argparse first, then read the relevant ranges); benchmark/challenges/README.md lines 1-30; the named control pointers via short python3 extraction only (no whole-file dumps).\n- No other sources. Keep command output short (head the scorer output, save full output to .session/artifacts/). Write the file by about turn 25, then pins and report.\n",
+  "issue": 736
+ }
+]
