@@ -20,7 +20,7 @@ import sys
 
 facts = json.load(open(sys.argv[1], encoding="utf-8"))
 full = bool(facts.get("full"))
-files, tasks, snapshots = {}, {}, {}
+files, tasks, snapshots, age = {}, {}, {}, {}
 
 
 def field(body, key):
@@ -30,13 +30,25 @@ def field(body, key):
     return ""
 
 
+# The engine refuses an answer over 8 MiB (characters), and the whole history grows with every iteration; so the answer is
+# kept compact and bounded. Records older than KEEP_INPUT_STATE iterations lose `input_state` (the goal, parameters and
+# request lists repeated in every record; ~half of all record bytes, still in iterations/<n>.json of the checkout), and,
+# if the answer still exceeds BUDGET, the oldest history files are left out and counted in the manifest.
+KEEP_INPUT_STATE = 20
+BUDGET = 6 * 1024 * 1024
+
+
 def dump(value):
-    return json.dumps(value, ensure_ascii=False, indent=1)
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
+newest = max([r["iteration"] for r in facts.get("records", [])] or [0])
 for record in facts.get("records", []):
     n = record["iteration"]
+    if n <= newest - KEEP_INPUT_STATE and "input_state" in record:
+        record = dict(record, input_state="omitted from older records; read iterations/%04d.json" % n)
     files["history/records/%04d.json" % n] = dump(record) + "\n"
+    age["history/records/%04d.json" % n] = n
     for task in record.get("tasks", []):
         if type(task.get("issue")) is int:
             tasks[task["issue"]] = dict(task, iteration=n)
@@ -55,12 +67,14 @@ for (issue, snapshot), report in snapshots.items():
                field(body, "status") or task.get("status", ""), field(body, "verdict") or task.get("verdict", ""),
                report["source"], snapshot))
     files["history/sessions/%s/%s.md" % (issue, snapshot)] = header + body
+    age["history/sessions/%s/%s.md" % (issue, snapshot)] = task.get("iteration") or 0
 latest = {issue: {"issue": issue, "source": r["source"], "snapshot": snapshot}
           for (issue, snapshot), r in snapshots.items()}
 for issue, task in tasks.items():
     detail = {key: value for key, value in task.items() if key != "body"}
     files["history/sessions/%s/task.md" % issue] = ("# Session #%s task and result\n\n```json\n%s\n```\n\n%s\n" %
                                                     (issue, dump(detail), task.get("body", "")))
+    age["history/sessions/%s/task.md" % issue] = task.get("iteration") or 0
 
 def suggestions():
     try:
@@ -92,14 +106,23 @@ def suggestions():
     return pending, diagnostics
 
 
+# Leave out the oldest history files until the answer fits the budget (the engine's own limit is 8 MiB).
+omitted = 0
+size = sum(len(path) + len(text) for path, text in files.items())
+for path in sorted(files, key=lambda p: (age.get(p, 0), p)):
+    if size <= BUDGET:
+        break
+    size -= len(path) + len(files.pop(path))
+    omitted += 1
+
 scope = "all permitted history in the prepared checkout" if full else "task-selected inputs"
 manifest = {"scope": scope, "checkout": facts.get("checkout"), "records": len(facts.get("records", [])),
-            "report_snapshots": len(snapshots),
+            "report_snapshots": len(snapshots), "omitted_oldest_files": omitted,
             "paths": {"records": "records/<iteration>.json", "sessions": "sessions/<issue>/"},
             "search": "Search Session titles, roles, outcomes and report text; read selected files. "
                       "No match does not establish that work was never attempted. "
                       "Current report references and pinned evidence are distinguished in ../reports/index.json."}
-files["history/manifest.json"] = dump(manifest) + "\n"
+files["history/manifest.json"] = json.dumps(manifest, ensure_ascii=False, indent=1) + "\n"
 
 loop_state = None
 if isinstance(facts.get("state"), dict):
@@ -110,4 +133,5 @@ if isinstance(facts.get("state"), dict):
                                "report_snapshots": len(snapshots), "scope": scope})
     if facts.get("role") == "policymaker":      # execution roles are not shown them
         loop_state["suggestions"], loop_state["suggestion_diagnostics"] = suggestions()
-print(json.dumps({"loop_state": loop_state, "files": files}))
+# Characters are what the engine counts; write UTF-8 bytes directly so the locale cannot break a Polish text.
+sys.stdout.buffer.write(json.dumps({"loop_state": loop_state, "files": files}, ensure_ascii=False).encode("utf-8"))
