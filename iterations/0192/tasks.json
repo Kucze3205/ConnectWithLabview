@@ -1,0 +1,18 @@
+[
+ {
+  "id": "positive-control-key-review-0192",
+  "title": "Review cold key 0191 against plan 0189 and the library-specialty inventory (positive-control step 3)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 30
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 3. Independently compare the cold key `benchmark/challenges/positive-control-key-0191.json` (derived without the plan) with the candidates in `benchmark/challenges/positive-control-plan-0189.md` and with the development inventory for the library specialty case, and with the artifact bytes themselves. Report, do not fix: write no repository file. Expected gain: a CLEAR or NOT-CLEAR verdict in `.session/report.md` that the next shaper reads to decide whether step 4 (authoring the control in the inventory, regenerating results and updating pins) may start.\n\nNo session can run LabVIEW; make no claim about how LabVIEW interprets any value.\n\n## Acceptance\n- [ ] Record first, in `.session/artifacts/pins.txt`: the main commit you reviewed and the SHA-256 of the key file, the plan file, the inventory file and the artifact `@environment/actor-framework/Core/ActorFramework/AF Specialty Messages.lvlib`.\n- [ ] Check the key's `artifact_sha256` against the artifact bytes you hashed.\n- [ ] For each claim A0001 and A0002: confirm from the artifact bytes that the value sits at the stated locator (line and XPath position); state whether the key value equals the plan candidate; state whether the inventory already records that literal and citation.\n- [ ] For each claim, state concretely whether a control built on it would fail if the literal or the citation were wrong (e.g. a changed digit, a different Property index).\n- [ ] List any finding with severity and evidence path in `.session/report.md`; put detailed evidence in `.session/artifacts/review-0192.md`. Verdict CLEAR or NOT-CLEAR on the first lines of the report.\n- [ ] No repository file changed (report says so).\n\n## Verification\npython3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0191.json')); c=d['claims']; assert c['A0001']['value']=='20008000' and c['A0002']['value']=='NI.LV.All.SourceOnly'; print('key unchanged: OK')\"\n\n## Context\n- The key was derived cold in iteration 0191 from the artifact bytes and `docs/perpetua/evaluation.md` only; the plan author (#820) saw candidate values, so the plan is not independent.\n- The inventory for this case is expected at `benchmark/cases/dev/library-specialty.json`; Glob it before reading. `benchmark/cases/dev/` holds copies of the library files; `benchmark/scripts/score.py` reads others. If you identify which copy score.py actually reads, report it; do not run score.py.\n- If you import or run anything under `benchmark/scripts/`, use `python3 -B` and check `git status --porcelain` stays clean.\n\n## Budget\nRead: `benchmark/challenges/positive-control-key-0191.json`, `benchmark/challenges/positive-control-plan-0189.md`, the inventory file above, the first 20 lines of the artifact, and the challenges row of `docs/perpetua/evaluation.md` (around line 69) only if needed. Do not read `benchmark/results/**` whole or `journal/**`. Short command output only. Write the report early and refine it.",
+  "issue": 828
+ }
+]
