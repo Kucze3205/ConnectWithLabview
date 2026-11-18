@@ -1,0 +1,41 @@
+[
+ {
+  "id": "keyed-literal-control-0186",
+  "title": "Add the keyed-literal constant-export control to the two claim-bearing fixtures (or record that it is already covered)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nbenchmark/challenges/keyed-literal-probe-0183.md measured the keyed-literal constant submission (every required claim answers with one real claim's key and citations) as SAFE on library-icon-tests and library-specialty, but no fixture control records it, and the probe did not read the existing `constant-export` controls. First read the existing `constant-export` control in each of the two fixtures and decide whether it already is a keyed-literal case. If it is, add nothing and write ALREADY-COVERED with the evidence. If it is not, add a control named `constant-keyed-literal-export` to each fixture (literal and citations from claim A0001, as in the probe), with its expected outcome `incorrect` for correctness and grounding, add a matching assertion to `regression_self_test` (score.py:283), and update every pin of every changed file (Grep the path across benchmark/**/*.json). Do not change score.py scoring logic; if the new control does not score as the probe says, stop and report the difference instead of fixing it. Expected gain: benchmark/challenges/keyed-literal-control-0186.md with `## Overlap`, `## Change`, `## Checks`, `## Limits`, which the review in this graph checks. No session can run LabVIEW; claim no LabVIEW behaviour. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] `## Overlap` in benchmark/challenges/keyed-literal-control-0186.md quotes the existing `constant-export` control's mutation per fixture (file and key path) and states ADDED or ALREADY-COVERED\n- [ ] if ADDED: control `constant-keyed-literal-export` exists in both claim-bearing fixtures and `regression_self_test` asserts its outcome; every pin of every changed file is updated and listed in `## Change` with old and new hash\n- [ ] `regression_self_test` is run in a guarded script `.session/artifacts/keyed_literal_control_check.py` with `python3 -B` and `sys.dont_write_bytecode = True`; its short output is saved to `.session/artifacts/keyed-literal-control-output.txt` and quoted in `## Checks`; `main()` is not called and results/challenges.json is unchanged\n- [ ] `git status --porcelain` shows only intended files; no `__pycache__`\n- [ ] the verification command passes; quote its output in `.session/report.md`\n\n## Verification\npython3 -B -c \"import glob,os;n=[p for p in glob.glob('benchmark/**/*.json',recursive=True) if 'constant-keyed-literal-export' in open(p,encoding='utf-8',errors='replace').read()];t=open('benchmark/challenges/keyed-literal-control-0186.md',encoding='utf-8').read();L=t.splitlines();assert all(h in L for h in ('## Overlap','## Change','## Checks','## Limits')),L[:20];assert n or 'ALREADY-COVERED' in t;assert not os.path.exists('benchmark/scripts/__pycache__');print('control OK',len(n))\"\n\n## Context\nThe probe result benchmark/challenges/keyed-literal-probe-0183.md is on main (SAFE for both claim-bearing fixtures; vi-actor-core-native-gap NOT-APPLICABLE). Design: benchmark/challenges/constant-export-design.md. Do not repeat the probe. #785 was refused at merge for a .pyc file. #739/#766: a change to a pinned file must update all its pins in the same task. Long inline python one-liners stalled (#743): use script files. Tools can be lost mid-session: save the md file early and update it.\n\n## Budget\nRead benchmark/challenges/keyed-literal-probe-0183.md whole. In benchmark/scripts/score.py read `compute` (line 125), lines 195-220 and `regression_self_test` (line 283) only. In the two fixtures, Grep for `constant-export` and read only that control and the A0001 claim; do not read whole fixture JSON or results/challenges.json. Keep command output short; write the md file early.",
+  "exports": [],
+  "issue": 808
+ },
+ {
+  "id": "keyed-literal-control-review-0186",
+  "title": "Review the keyed-literal control change against the probe (changed scope only)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "keyed-literal-control-0186"
+  ],
+  "inputs": [
+   {
+    "from": "keyed-literal-control-0186",
+    "name": "keyed-literal-control-output.txt"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nIndependently check the change of task keyed-literal-control-0186 (changed scope only): pin the merged commit and the hash of each changed file yourself; check that `## Overlap` in benchmark/challenges/keyed-literal-control-0186.md matches the actual `constant-export` controls; if ADDED, check that the new control mutates only the answer channel as in benchmark/challenges/keyed-literal-probe-0183.md, that the regression assertion expects `incorrect`, that every pin of each changed file matches its bytes, and that results/challenges.json is unchanged. Report, do not fix. Verdict CLEAR or NOT-CLEAR with numbered findings. Write findings to `.session/report.md` and detailed evidence to `.session/artifacts/keyed-literal-control-review.md`; you have no repository write paths. No session can run LabVIEW. Benchmark readiness stays false.\n\n## Acceptance\n- [ ] report names the reviewed commit and the sha256 of each changed file, computed by you\n- [ ] each changed pin is checked against file bytes, with the result per pin in the artifact\n- [ ] if `regression_self_test` is run, it is run with `python3 -B` and `sys.dont_write_bytecode = True`, without `main()`, and `git status --porcelain` is clean afterwards\n- [ ] verdict CLEAR or NOT-CLEAR, with numbered findings and file:line evidence\n\n## Verification\npython3 -B -c \"import os;assert os.path.exists('benchmark/challenges/keyed-literal-control-0186.md');assert not os.path.exists('benchmark/scripts/__pycache__');print('review scope present')\"\n\n## Context\nThe author's output is staged as an input from keyed-literal-control-0186. Earlier closed scopes (#779, #785, #797) stay closed; do not re-review score.py logic outside the changed lines. Bytecode trap: #785.\n\n## Budget\nRead benchmark/challenges/keyed-literal-control-0186.md and benchmark/challenges/keyed-literal-probe-0183.md whole. Use `git show --stat` and `git diff` of the merged commit for the changed files only. In fixtures read only the `constant-export` and `constant-keyed-literal-export` controls; no whole JSON files. Keep output short.",
+  "exports": [],
+  "issue": 809
+ }
+]
