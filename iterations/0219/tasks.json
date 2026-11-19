@@ -1,0 +1,42 @@
+[
+ {
+  "id": "verifier-repin-0219",
+  "title": "Repair verify_method.py historical-pin-drift by a revision that pins current inputs (frozen checkers unchanged)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 50
+  },
+  "body": "## Goal\nCorrection, narrow scope. `benchmark/writing/verify_method.py` (the method's single verifier) exits 1 with `historical-pin-drift:benchmark/writing/input-pins.json`, raised at verify_method.py:338/341 (`EXTRA_HISTORICAL` loop and the `historical` loop). Cause measured in `benchmark/writing/pin-drift-0218.md` (Drift table): `input-pins.json` and `benchmark/preparation.json` were re-pinned by later benchmark work, first change 8cb25137 (#758), last 4eef3934 (#905); the changed values are re-pins of challenge fixtures and `scripts/score.py`, not writing files.\nWrite a new revision of `benchmark/writing/verify_method.py` that pins the CURRENT bytes of the drifted live inputs, records for each re-pinned path the old hash, the new hash and the commit/issue chain that changed it (from the Drift table), and keeps every other check as it is. Then run it. If it fails further on, classify each new failure: pin-drift traced to a named commit that changed only non-writing pins -> re-pin the same way; content-drift or untraceable -> report, do not fix, stop and report it.\nChanged files expected: `benchmark/writing/verify_method.py`, plus any live pin map that lists its hash (find them yourself by literal Grep for `verify_method.py` under `benchmark/`). Expected gain: verify_method.py exits 0 on the current tree, with re-pins documented, so the whole-method review can rely on it. The next shaper reads your report and the changed-scope review.\n\n## Acceptance\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0 on the current tree; its full output is saved in `.session/artifacts/verify_method-after.out` and the failing pre-change output in `.session/artifacts/verify_method-before.out`.\n- [ ] Every re-pinned path in verify_method.py carries old sha256, new sha256 and the changing commit/issue ids (in code comments or a constant), and no check was removed or weakened (state in the report each `need(...)` you touched, with line numbers before/after).\n- [ ] The frozen checkers are byte-unchanged; their sha256 at start: check_c1_challenges_0125.py 8c9ede44f732f811dc67109926e7502fc7f41f879989f5b09c5ad9973fd40f9b, check_c1_f1_0129.py e12f11b2ff1ce2860e59c4f4821ac61f6784dc47c8d78245e89c2d18d9467c8c, check_human_c1_0130.py e90388398e3b97834146a3c501699d37de5fc2f4a47073c162aef6326a3e73a4, check_wp1_examples_0121.py 2050ffc23448503f96ea1b5a5769f47260cb67ca478c38f2967e9276d3cf46c1, check_wp1_key_0115.py e7d22309e7ccd1b8e33628b9c0c9c77b59c3b3602b15d06e1179d26478ebeeeb, check_wp1_key_0117.py f23b829059ace8a5e77b017779c60902020057809c10663b2892ea210c31925d, check_wp1_key_0119.py 28ee70435c6a4fea7a79d942e7d90e9e3174ec31d64d741f93447000bc093d99, check_wp1_key_0123.py 306480ec500e70a4d5f868578bf0f3b29565a223401f164aeba6b3c05baaa4b2, reviews-0128/check_integrity_0128.py 7316460d8cae9b4f581257ad7acbf4815a4d511337cb1880260e281a8d38d4b2 (all under benchmark/writing/). Report their hashes at end.\n- [ ] Every live pin map that lists a changed file is recomputed entry by entry against disk with 0 mismatches (report the map names and entry counts); historical snapshots stay frozen.\n- [ ] No `__pycache__` under `benchmark/` (`python3 -c \"import pathlib; assert not list(pathlib.Path('benchmark').rglob('__pycache__'))\"`).\n- [ ] The report lists any failure you did not fix with its class and evidence.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- `benchmark/writing/pin-drift-0218.md` (Drift table, Recommendation route a).\n- `benchmark/writing/README.md:60,66`: dated checkers are frozen by design; do not edit or re-pin them, and do not run them on the current tree.\n- No session can run LabVIEW; claim no LabVIEW behaviour. benchmark_ready stays false.\n- Check outputs by reading or hashing files, never with `git status` (the worker dir is not a git repository; the parent commits). Do not run `git commit`.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (role skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call.\n\n## Budget\nRead: `benchmark/writing/verify_method.py` (614 lines; read in ranges), `benchmark/writing/pin-drift-0218.md`, `benchmark/writing/input-pins.json`, `benchmark/writing/README.md` lines 50-75. Use `git log`/`git show` only for the paths in the Drift table. Do not read whole large JSON files beyond these; print short command output. Write the report early and refine it.\n",
+  "issue": 934
+ },
+ {
+  "id": "verifier-review-0219",
+  "title": "Changed-scope review of the verify_method.py re-pin revision",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "verifier-repin-0219"
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 40
+  },
+  "inputs": [
+   {
+    "from": "verifier-repin-0219",
+    "name": "verify_method-before.out"
+   },
+   {
+    "from": "verifier-repin-0219",
+    "name": "verify_method-after.out"
+   }
+  ],
+  "body": "## Goal\nIndependent changed-scope review of the correction made by task verifier-repin-0219 to `benchmark/writing/verify_method.py` (and any live pin map it changed). Report, do not fix. Verdict CLEAR or NOT-CLEAR with numbered findings. Expected gain: the next shaper can rely on verify_method.py in the whole-method review (CLEAR) or order a correction of named findings (NOT-CLEAR).\nYou pin the merged state yourself: record the commit you review and the sha256 of every changed file.\n\n## Acceptance\n- [ ] Report records the reviewed commit and sha256 of `benchmark/writing/verify_method.py` and of each other changed file.\n- [ ] Each re-pinned path in the new revision is checked: the old hash matches the blob named in `benchmark/writing/pin-drift-0218.md` Drift table, the new hash matches disk, and the named commits changed only non-writing pins (check with `git show`/`git diff` of those paths).\n- [ ] Diff of verify_method.py against its previous blob: confirm no `need(...)` check was removed or weakened; list every changed check.\n- [ ] Frozen checkers byte-unchanged: recompute sha256 of the nine dated checkers listed in the producer task (check_*_01NN.py and reviews-0128/check_integrity_0128.py under benchmark/writing/) against the producer's start hashes in its task body.\n- [ ] Every live pin map listing a changed file recomputed entry by entry against disk; mismatches listed.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` rerun by you; exit code and output tail compared with the staged `verify_method-after.out`.\n- [ ] Findings in `.session/report.md`, detailed evidence in `.session/artifacts/`; no repository writes.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Correction cause: `benchmark/writing/pin-drift-0218.md`; frozen-checker rule: `benchmark/writing/README.md:60,66`.\n- Staged inputs appear flat under `.session/inputs/`; check `.session/inputs/` first.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Do not use `git status` to detect changes; hash files.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", propose the same operation as a broker JSON action (Policymaker #854). Never stop on it.\n\n## Budget\nRead: `benchmark/writing/verify_method.py` (in ranges and its git diff), `benchmark/writing/pin-drift-0218.md`, staged inputs, the producer report if staged. No whole large JSON files; short command output. Do not run the frozen dated checkers on the current tree.\n",
+  "issue": 935
+ }
+]
