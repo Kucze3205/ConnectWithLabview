@@ -1,0 +1,25 @@
+[
+ {
+  "id": "next-gap-0202",
+  "title": "Measure the remaining method gaps after the positive-control thread closed and scope the XML key confirmation",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     866
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 35
+  },
+  "body": "## Goal\nThe positive-control thread (#763 f4) is closed: review #866 was CLEAR on the last pin correction (#865). Now measure what is left. Report, do not fix. Write `benchmark/challenges/next-gap-0202.md`. Change no other repository file.\n\nPart 1, gaps: for each remaining readiness gap in `docs/perpetua/evaluation.md`, give its status (OPEN / PARTIAL / CLOSED) and cite the evaluation.md line plus at least one repository file:line as evidence. Cover at least the challenges row (evaluation.md near line 69), dependency/native keys, restricted split/allocation/isolation, reader/probes/scorer integration, and independent whole-method review with owner acceptance.\n\nPart 2, XML key confirmation: find out whether `benchmark/challenges/positive-control-key-0191.json` already has an independent confirmation of its XML literals against the fixture XML. The cold derivation was 0191 and the literal/locator/hash check was #828 F1. If it does, say so with evidence. If it does not, write the exact missing check: inputs, who must not have seen the key, and the expected output.\n\nPart 3, recommendation: name one next task. It must not need LabVIEW, owner material or product code. Give its expected gain and a verification command that can be written.\n\nExpected gain: the next shaper reads `## Recommendation` and orders it without surveying again.\n\nTOOLS, read first: your tools are JSON actions that the parent broker runs. You may see \"No such tool available: Read. Read is disabled for this session\". That is the model CLI refusing a NATIVE tool call; the broker tools still work. Propose the same operation again as a JSON action. Never stop or report blocked because of it. Grep matches one literal substring only: no `(`, `|` or `\\b`.\n\nNo session can run LabVIEW. Make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] `.session/exports/manifest.json` checked; the #866 report verdict is noted.\n- [ ] `benchmark/challenges/next-gap-0202.md` has the headings `## Gaps`, `## XML key confirmation` and `## Recommendation`.\n- [ ] Every gap row in `## Gaps` has a status and an evaluation.md line reference.\n- [ ] `## XML key confirmation` states either covered (with evidence) or the exact missing check.\n- [ ] `## Recommendation` names one task with its expected gain and a verification command.\n- [ ] `git status --porcelain` lists only the new file and no `__pycache__`. Do not commit.\n\n## Verification\npython3 -B -c \"t=open('benchmark/challenges/next-gap-0202.md').read(); assert all(h in t.splitlines() for h in ('## Gaps','## XML key confirmation','## Recommendation')); print('next-gap-0202 headings: OK')\"\n\n## Context\n- Closed, do not redo: #820 gap measurement, 0191 cold key, #828 F1/F3, #831 F2, #856/#857 controls, #860/#861/#865/#866 pins. gap-0160 and scorer-probe-0164: do not survey again; cite them.\n- Carried limits: #831 (the scorer never checks citations against the XML artifact); #809 f2 and f4; #763 f6; plan-0189 does not count vi-actor-core-native-gap.json.\n- If you import benchmark/scripts/*.py, use `python3 -B` and check `git status --porcelain` (#785).\n\n## Budget\nRead: `docs/perpetua/evaluation.md` whole (it is in Polish); `benchmark/challenges/positive-control-plan-0189.md`; `benchmark/challenges/README.md`; the #866 report. For `benchmark/challenges/positive-control-key-0191.json` and `benchmark/challenges/library-specialty.json`, read their top-level keys and the ranges you cite only. Do not read `benchmark/results/**`, `journal/**` or history records. Short command output only. Write the file early and refine it.",
+  "issue": 869
+ }
+]
