@@ -1,0 +1,36 @@
+[
+ {
+  "id": "citation-contract-0209",
+  "title": "Pin the submitted citation shape in answer_record_contract to the dict form used by fixtures and key (design Limit 4)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 35
+  },
+  "body": "## Goal\nThe citation-resolution check (#889, finished #893) is merged and reviewed CLEAR (#894). One named design limit remains: `benchmark/challenges/citation-gap-0206.md` line 19 (Limit 4) and line 90 step 3. `answer_record_contract` in `benchmark/cases/dev/library-specialty.json` describes `citations` as strings, while the fixtures, the key and `citation_resolves` in `benchmark/scripts/score.py` use dicts. Decide and apply one shape: rewrite the contract text so the submitted citation shape is the dict form that `citation_resolves` reads (name its exact fields as score.py reads them), unless you find evidence that strings are required; then record the reason in the report.\nChanged files are expected to be `benchmark/cases/dev/library-specialty.json` plus every pin map that lists it (design table line 62: `benchmark/preparation.json` milestones.oracle and milestones.tasks; also `benchmark/writing/input-pins.json` and any `inventory_sha256`/fixture hash that hashes that file, e.g. in `benchmark/challenges/library-specialty.json`). Expected gain: one pinned citation shape, all live pin maps matching disk, `--check` still 35/35. The next shaper reads the decision and pin counts in your report.\nNo session can run LabVIEW: claim nothing about native behaviour.\n\n## Acceptance\n- [ ] `answer_record_contract` in `benchmark/cases/dev/library-specialty.json` states the dict citation shape with the field names that `citation_resolves` in `score.py` reads; nothing else in that fixture changes (report the diff, one hunk expected).\n- [ ] Every file that stores the sha256 of `benchmark/cases/dev/library-specialty.json` is found by a file-based helper script in `.session/artifacts/` that searches `benchmark/` for its OLD sha256 (from `git show HEAD:<path>`), and each hit is updated to the new disk hash with `Edit`; report the hit list.\n- [ ] Every entry of `protected_inputs_sha256` in `benchmark/writing/input-pins.json` and every path/sha256 entry in `benchmark/preparation.json` matches disk; counts from the files.\n- [ ] `python3 -B -I benchmark/scripts/score.py --check` passes with `LABVIEW_ENVIRONMENT` set (regenerate `benchmark/results/challenges.json` only if `--check` requires it, then re-pin it too); `git status --porcelain` shows no `__pycache__` and no unintended file.\n- [ ] `benchmark/challenges/check_xml_keys.py` unchanged (sha256 starts `63f01c0e`).\n\n## Verification\npython3 -c \"import json,hashlib; p=json.load(open('benchmark/writing/input-pins.json'))['protected_inputs_sha256']; bad=[k for k,v in p.items() if hashlib.sha256(open(k,'rb').read()).hexdigest()!=v]; assert not bad, bad; assert 'answer_record_contract' in open('benchmark/cases/dev/library-specialty.json').read(); print('pins and contract: OK')\"\n\n## Context\n- Design: `benchmark/challenges/citation-gap-0206.md` lines 19, 62, 90 (#885). Review CLEAR #894 (pins at that time: library-specialty dev fixture `1f1bc985...f897`, 62 input pins, 80 preparation entries).\n- The scorer needs `LABVIEW_ENVIRONMENT` (commands see it at `/resources/environment`); the engine verification above deliberately does not run it.\n- Pin rule: a changed pinned file means recomputing the WHOLE live map, not one hash (#857 f4, #861 f1).\n- Bytecode trap: `python3 -B -I`, then `git status --porcelain` (#785). Long inline one-liners stall (#743): use helper files in `.session/artifacts/`.\n- Do not run `git commit`; the parent commits.\n- Tools: if the CLI says \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal, not a broker failure; propose the same operation again as a JSON action and never stop on it (#854). Grep is literal substring only.\n\n## Budget\nRead: `benchmark/challenges/citation-gap-0206.md` lines 1-95; `benchmark/cases/dev/library-specialty.json` around `answer_record_contract` only (Grep then a range); in `score.py` only `def citation_resolves` and about 40 lines after it. No whole large JSON reads; short command output. Report by turn 30.",
+  "issue": 897
+ },
+ {
+  "id": "citation-contract-review-0209",
+  "title": "Review the answer_record_contract citation-shape change and its re-pins",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "citation-contract-0209"
+  ],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nIndependently review the changed scope of task citation-contract-0209. Report, do not fix. Pin at the start the merged commit and the sha256 of `benchmark/cases/dev/library-specialty.json`, `benchmark/writing/input-pins.json`, `benchmark/preparation.json`, `benchmark/results/challenges.json`. Expected gain: a CLEAR or NOT-CLEAR verdict with numbered findings that the next shaper reads in your report.\nNo session can run LabVIEW: assess only text and hashes, not native behaviour.\n\n## Acceptance\n- [ ] The diff of `benchmark/cases/dev/library-specialty.json` against the parent of the producer commit touches only `answer_record_contract`, and the stated citation fields match what `citation_resolves` in `benchmark/scripts/score.py` reads.\n- [ ] A file-based script in `.session/artifacts/` searches `benchmark/` for the OLD sha256 of that fixture and finds no remaining hit.\n- [ ] Every entry of `protected_inputs_sha256` in `benchmark/writing/input-pins.json` and every path/sha256 entry in `benchmark/preparation.json` matches disk; counts from the files.\n- [ ] `python3 -B -I benchmark/scripts/score.py --check` with `LABVIEW_ENVIRONMENT` set exits 0; `git status --porcelain` clean afterwards.\n- [ ] Findings and verdict in `.session/report.md`, details in `.session/artifacts/`; no repository writes.\n\n## Verification\npython3 -c \"import json; json.load(open('benchmark/cases/dev/library-specialty.json')); s=open('benchmark/scripts/score.py').read(); assert 'def citation_resolves' in s; print('fixture parses, scorer present: OK')\"\n\n## Context\n- Design limit: `benchmark/challenges/citation-gap-0206.md` lines 19 and 90. Prior CLEAR review of the check itself: #894 (do not re-review score.py logic).\n- Diff against the parent of the producer commit, not HEAD (HEAD may be an epilogue commit, #882). Report `commit:` fields may name an empty commit; verify by hash (#754).\n- Tools: if the CLI says \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal, not a broker failure; propose the same operation again as a JSON action and never stop on it (#854). Grep is literal substring only.\n\n## Budget\nRead: the diff of the producer commit; `score.py` from `def citation_resolves` about 40 lines; design lines 15-25 and 85-95. Use a file-based recomputation script. No whole large JSON reads; short command output. Report by turn 25.",
+  "issue": 898
+ }
+]
