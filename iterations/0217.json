@@ -1,0 +1,600 @@
+{
+ "schema_version": 1,
+ "iteration": 217,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-19T10:24:08Z",
+ "ended": "2026-11-19T10:36:00Z",
+ "engine_version": "0.8.0",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 217,
+  "engine_version": "0.8.0",
+  "policy_rev": "layered-v1:7d0bb3de6e32798a85141374e21a885df7cf133ee0d55541cafdd6ce3d674fc2",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać oraz pisać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Pisanie\n\nPisanie obejmuje tworzenie i zmienianie artefaktów tak samo jak w zwykłym kodzie: agent czyta, zmienia, sprawdza wynik i uczciwie raportuje. Sposób zapisu wybiera pętla i uzasadnia ten wybór. Edycja nie wymaga LabVIEW; sprawdzenie (kompilacja i uruchomienie) może go wymagać, tak jak zwykły kod wymaga interpretera lub kompilatora. Artefakty skompilowane zmienia się przez źródła i przebudowę. Zmieniony plik zachowuje swoją wersję zapisu; zmiana wersji jest widocznym brakiem. Oszacowanie przed wyborem wariantu zapasowego obejmuje też pisanie.\n\nPisanie rozszerza istniejący benchmark i dane pętli, zamiast budować je od nowa. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na akceptację metody obejmującej zadania zapisu.\n\n## Proof of concept\n\nPrzed dalszym przygotowaniem benchmarku pętla dostarcza POC, który ma pokazać, że koncepcja ma sens i że gotowy produkt może powstać. Agent, który nie widział wcześniej danego VI, poprawnie opisuje jego diagram i zmienia jego logikę bez użycia LabVIEW. Wynik otwiera się w LabVIEW bez złamanej strzałki, zachowuje się zgodnie z poleceniem i zachowuje wersję zapisu. Prace nad benchmarkiem niepotrzebne do POC czekają do jego dostarczenia.\n\nPOC jest wyjątkiem od zasady „najpierw metoda, potem implementacja”. Nie jest produktem ani dowodem jakości; jego kod może trafić do produktu dopiero normalną drogą z testami i przeglądem. Pętla dostarcza pliki, raport i krótką instrukcję, według której właściciel sprawdza wynik ręcznie w swoim LabVIEW. Jeśli POC się nie uda, raport pokazuje dowody i możliwe drogi wyjścia, a pętla nie zmienia celu sama. Pętla nie czeka na odpowiedź właściciela: po dostarczeniu wraca do pracy, a brak odpowiedzi nie jest akceptacją metody, jakości ani produktu.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 3,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": [],
+   "owner_paths": [
+    "benchmark/protocol.md",
+    "benchmark/resources-proposal.md",
+    "docs/perpetua/"
+   ]
+  },
+  "owner_requests": {
+   "open": [],
+   "recently_closed": [
+    {
+     "number": 618,
+     "kind": "question",
+     "title": "Commission the human C1 check using the prepared entry point",
+     "decision": "declined",
+     "proposal_sha": "1420b8de7a97423a7669539c82284b3723d529a7f9d1738c69e9fa7ced50afb9",
+     "base_commit": "8cd9fb87e7957ad116454f2e1995af17f1a860a3",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 532,
+     "kind": "question",
+     "title": "Supply one unchanged Save As control for the public constant VI",
+     "decision": "approved",
+     "proposal_sha": "43c901fd2397f545c006447a53fcbdff2642ac6c8622396349ca5b84ed2b6a61",
+     "base_commit": "74e247484dd767ec25363e7d555768ae3434329c",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 525,
+     "kind": "question",
+     "title": "Decide if the Policymaker runs every 3 iterations to use less Claude quota",
+     "decision": "approved",
+     "proposal_sha": "f0596ff8be40fb1127b29a465e03ad783f84523a3b1a411cb2a1d67c78a2e812",
+     "base_commit": "5311fd78af4147246322e8e36b15b01dbf67ed2a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 516,
+     "kind": "question",
+     "title": "Author eight public LabVIEW examples for the controlled comparison",
+     "decision": "approved",
+     "proposal_sha": "f8daf9d9218c66092eb5af8ab84235178a36e5996866b64c969335b88d83260a",
+     "base_commit": "ec0df1dd4aab94dd4d5a7e822bec80ef740ba468",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 462,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "7dd2866f64efe92adb2eb413e24c8f3c255907d547ad09d10006dfac04e2cbd4",
+     "base_commit": "55d1ef62ed80beb5c30c5ede2b3a6ddc340652b2",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 456,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "eb7da9010c291d42188b0adbd014b349ba531b2a3885c0b7c7ba17d5ae0fc28b",
+     "base_commit": "2329d29eb2c5da281abfbbaf01c35fd69ab271fa",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 430,
+     "kind": "question",
+     "title": "Assess the verification method and its documented design limits",
+     "decision": "declined",
+     "proposal_sha": "7cc46d92f80fb184bb65b2ce5182c85dea3914390fb1519daf1de8a3adde2a6f",
+     "base_commit": "39f03859d114bd82b352bb388dffcc5e286c3a2f",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 379,
+     "kind": "question",
+     "title": "Install store-readiness workflow revision 4, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "032bde3f02c9928846ab187b30e307fec1a046b983e4e0bf9aaa9d8895fd57bb",
+     "base_commit": "f9cc3f5dc45ce41c52f45dab358fe86f1f712318",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 354,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #352: Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+     "decision": "approved",
+     "proposal_sha": "e622885491ac26e474be221d66ba95ec44a9278bb8f3ea3fb2e3b446154582fb",
+     "base_commit": "24198b0b14a67e80adb0c7c83796a729a2133f66",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 353,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #351: Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+     "decision": "approved",
+     "proposal_sha": "7f284ecec9fa64f399f677956e00c1311deb113ebbaafbd77ffca7d7e2ce27d9",
+     "base_commit": "24815e0872b589de49f5214c1b15b4182b66649b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 0,
+  "policymaker_sessions": [
+   {
+    "issue": 922,
+    "status": "done"
+   },
+   {
+    "issue": 911,
+    "status": "done"
+   },
+   {
+    "issue": 900,
+    "status": "done"
+   },
+   {
+    "issue": 887,
+    "status": "done"
+   },
+   {
+    "issue": 875,
+    "status": "done"
+   }
+  ],
+  "outboxes": [
+   787,
+   837,
+   851
+  ],
+  "audit_report": "audit/latest.md",
+  "audit_rev": "d0cf5005c6bf38d776155d691dbcf64864b6b6bb",
+  "startup_notices": [],
+  "rollbacks": {
+   "target": "182372ebad454949e14ce4257704fd121c67ffbf",
+   "streak": 1,
+   "reason": "the iteration did not close within the quiet time",
+   "at": "2026-11-17T17:08:45Z"
+  }
+ },
+ "policy": {
+  "rev_start": "layered-v1:7d0bb3de6e32798a85141374e21a885df7cf133ee0d55541cafdd6ce3d674fc2",
+  "rev_end": "layered-v1:7d0bb3de6e32798a85141374e21a885df7cf133ee0d55541cafdd6ce3d674fc2",
+  "commit_end": "6c59bd13da588755c1f6ab8ed79a9300177a29e1",
+  "orders_refused": null,
+  "session": null,
+  "trigger": null,
+  "passes": 0,
+  "changes": []
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "write-coverage-map-0217",
+   "title": "Run the existing writing checkers and map protocol sections to write-task coverage",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "medium",
+   "limits": {
+    "timeout_minutes": 60,
+    "max_turns": 40
+   },
+   "body": "## Goal\nMeasure, report, do not fix. Follow the recommendation in `benchmark/challenges/rows-0216.md` (section `## Recommendation`). Write one new file, `benchmark/writing/protocol-link-0217.md`. Change no other repository file. If a checker fails, record the failure and its output tail; do not repair the checker or its inputs.\n\nExpected gain: the next shaper and the later whole-method review see whether the write extension passes its own checks and where `benchmark/protocol.md` has no write coverage. The goal requires a method covering write tasks before any write implementation. The next shaper reads `## Recommendation` in the new file.\n\nNo session can run LabVIEW. Claim no LabVIEW behaviour, native result or benchmark readiness (readiness stays false).\n\nIf the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal, not a broker failure: propose the same operation again as a JSON action and continue (Policymaker #854). Grep matches one literal substring only.\n\n## Acceptance\n- [ ] `benchmark/writing/protocol-link-0217.md` exists with the headings `## Checker runs`, `## Protocol map`, `## Write contracts`, `## Recommendation`.\n- [ ] `## Checker runs`: one table row each for `benchmark/writing/verify_method.py` and each `benchmark/writing/check_*.py` and `benchmark/writing/reviews-0128/check_integrity_0128.py`, run as `python3 -I -B <file>` (run them from the repository root), with exit code and a short output tail (at most 3 lines). If a run needs `LABVIEW_ENVIRONMENT` or another unavailable input, record that as `not runnable: <reason>`, not as a pass.\n- [ ] `## Protocol map`: one table row for each of the protocol sections tasks, oracle, split, baseline, challenges. Each row names the writing artifact (file:line) that extends it or says `absent`.\n- [ ] `## Write contracts`: for each of WC1, WM1, WM2, WB1 (`benchmark/writing/README.md:15-18`) and the WP1 text case, state whether an independent key exists (file name) and what blocks it (native capability, owner material, or nothing), citing file:line.\n- [ ] `## Recommendation`: one next task needing no LabVIEW, owner material or product code, with its expected gain and a verification command; or a concrete statement that the remaining write gaps all need native capability or the owner.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\npython3 -c \"import pathlib; t=pathlib.Path('benchmark/writing/protocol-link-0217.md').read_text(); L=t.splitlines(); assert all(h in L for h in ('## Checker runs','## Protocol map','## Write contracts','## Recommendation')); assert all(s in t for s in ('verify_method.py','tasks','oracle','split','baseline','challenges','WC1','WM1','WM2','WB1','WP1')); assert not list(pathlib.Path('benchmark').rglob('__pycache__')); print('OK')\"\n\n## Context\n- `benchmark/challenges/rows-0216.md` (#924 iteration 0216): all EV:63-68 rows PARTIAL; write tasks exist only as unexecuted design. Its recommendation is this task.\n- `benchmark/writing/README.md:37` documents `verify_method.py`.\n- Do not check changes with `git status` (the worker directory is not a git repository). Check outputs by reading the file. Do not run `git commit`; the parent commits.\n- Do not re-survey: `benchmark/challenges/next-gap-0202.md`, `reader-integration-0212.md`, the scorer-intake thread.\n\n## Budget\nRead: `benchmark/challenges/rows-0216.md` (whole); `benchmark/writing/README.md` (whole); `benchmark/protocol.md` (headings plus the lines you cite; Read in ranges); `benchmark/project-text-writing-0109.md` (lines you cite). Glob `benchmark/writing/` for names. Do not read whole key/review JSON files; open only the head or the fields you cite. Keep command output short (tails only). Report early: write the new file by about turn 25, then refine.\n",
+   "issue": 927
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 927,
+    "role": "benchmark",
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5032,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/927/ff297f98ce3d350cfb005341e7b66245bfe4fae6060c343a15b1303f244449fb.json"
+    ],
+    "status": "done",
+    "verification": null,
+    "check": "pass",
+    "verdict": "accepted",
+    "improved": true,
+    "merged": true,
+    "branch": "task/927",
+    "commit": "10dff5d6",
+    "tokens": {
+     "in": 42,
+     "out": 23703,
+     "cache_read": 500155,
+     "cache_write": 55801
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 500155,
+      "cache_write": 55801,
+      "in": 42,
+      "out": 23703
+     }
+    },
+    "turns": 17,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 179,
+    "gate_s": 0,
+    "total_s": 247,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 926,
+    "role": "orchestrator",
+    "model": "claude-opus-5-5",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 14171,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/926/559d5fa6d0f9b327b5a96fd709524fcfc8e6cb305ebdcd55935a4b16cb7756ce.json"
+    ],
+    "status": "done",
+    "verification": null,
+    "check": null,
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/926",
+    "commit": "cbc889ff",
+    "tokens": {
+     "in": 28,
+     "out": 9403,
+     "cache_read": 271444,
+     "cache_write": 35998
+    },
+    "models": {
+     "claude/claude-opus-5-5": {
+      "cache_read": 271444,
+      "cache_write": 35998,
+      "in": 28,
+      "out": 9403
+     }
+    },
+    "turns": 14,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 109,
+    "gate_s": 0,
+    "total_s": 177,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": {
+   "issue": 926,
+   "role": "orchestrator",
+   "model": "claude-opus-5-5",
+   "effort": "medium",
+   "startup": {
+    "status": "ok",
+    "model": "claude-sonnet-5-5",
+    "tokens": 14171,
+    "limit": 100000
+   },
+   "report_snapshots": [
+    ".github/loop/data/session-reports/926/559d5fa6d0f9b327b5a96fd709524fcfc8e6cb305ebdcd55935a4b16cb7756ce.json"
+   ],
+   "status": "done",
+   "verification": null,
+   "check": null,
+   "verdict": null,
+   "improved": false,
+   "merged": true,
+   "branch": "task/926",
+   "commit": "cbc889ff",
+   "tokens": {
+    "in": 28,
+    "out": 9403,
+    "cache_read": 271444,
+    "cache_write": 35998
+   },
+   "models": {
+    "claude/claude-opus-5-5": {
+     "cache_read": 271444,
+     "cache_write": 35998,
+     "in": 28,
+     "out": 9403
+    }
+   },
+   "turns": 14,
+   "peak_context": 0,
+   "attempts": 0,
+   "agent_s": 109,
+   "gate_s": 0,
+   "total_s": 177,
+   "parked_s": 0,
+   "runner": "Linux",
+   "artifacts": 0
+  },
+  "verdict": {
+   "value": "accepted",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": true
+  },
+  "tokens": {
+   "in": 70,
+   "out": 33106,
+   "cache_read": 771599,
+   "cache_write": 91799,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 42,
+     "out": 23703,
+     "cache_read": 500155,
+     "cache_write": 55801
+    },
+    "claude/claude-opus-5-5": {
+     "in": 28,
+     "out": 9403,
+     "cache_read": 271444,
+     "cache_write": 35998
+    }
+   },
+   "cache_read_share": 0.894
+  },
+  "limit_hits": 0,
+  "wall_s": 713,
+  "critical_path_s": 247,
+  "width": 1,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
