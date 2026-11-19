@@ -1,0 +1,41 @@
+[
+ {
+  "id": "fix-score-record-0215",
+  "title": "Correct #916 finding 1: cap credit for unvalidated records in benchmark/scripts/score_record.py",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nCorrect only finding 1 (medium) of review #916 in `benchmark/scripts/score_record.py` (written by #913, commit 39b006f0). Today the only credit gate is the record's self-reported `outcome=='complete'` and `truncated==False`; `score_answer` passes no `evidence_record`, so score.py:259-260 and 326-327 treat `native_run`/`independent_key` as absent-and-fine. A real (non-synthetic) record with hand-set fields can therefore reach correctness `correct`, bypassing the limit in `benchmark/challenges/README.md:8` (native slots keep correctness `unverified`).\n\nRequired change: a record whose provenance is not accepted by `run_record.validate` (synthetic only) must not reach `correct`; pass an `evidence_record` with `native_run: None` and `independent_key: None` to the scoring path, or cap the reported correctness at `unverified`. State in the script output and docstring that `executed` is self-reported by the record. Keep the existing `--check` mutation assertion real (synthetic baseline `correct`, mutated `incorrect`). Add one `--check` stage: a non-synthetic record carrying the keyed literal yields correctness other than `correct`, and `--check` fails if it does not.\n\nDo not address findings 2-4 (low; carried). Do not change score.py, run_record.py or runner_contract.py. No session can run LabVIEW; claim no LabVIEW behaviour, no quality and no `benchmark_executed`. Expected gain: the credit gate closed, checked by the new `--check` stage; the next shaper reads review-score-record-fix-0215's verdict.\n\n## Acceptance\n- [ ] `benchmark/scripts/score_record.py` is the only repository file changed, plus any live pin map entry that lists it (search `benchmark/` for the literal `score_record.py`; re-pin every entry of such a map against disk)\n- [ ] `python3 -B -I benchmark/scripts/score_record.py --check` exits 0 and its output shows the new non-synthetic stage with correctness not `correct`\n- [ ] the mutation stage still asserts synthetic baseline `correct` and mutated `incorrect`\n- [ ] the `--check` output is saved as `.session/artifacts/score-record-check.txt`\n- [ ] the report gives the new sha256 of `benchmark/scripts/score_record.py` (python3 hashlib) and names the lines changed\n- [ ] no `__pycache__` under `benchmark/`\n\n## Verification\npython3 -B -I benchmark/scripts/score_record.py --check\n\n## Context\n- Review #916 (verdict NOT-CLEAR, finding 1), summarised by the shaper above; pinned as read: score_record.py 38f48f2b7be9979d5fc55e042a4a5cc5555ca6db7d6a1f57b2d248564b0bc2e5, score.py 101cf13fbe43eaaa6bde59136eec76a63bc0f30f3a7aba79223ceae13a5d42e3, run_record.py b39c3060ca8c014a910c0b72e772467b61f2b3a58a92a1f467136da1650d7abf.\n- Tool note: if the CLI says `No such tool available: Read. Read is disabled for this session`, that is the native-tool refusal, not a broker failure; propose the same operation again as a JSON action (Policymaker #854). Grep is one literal substring, no regex.\n- Do not check changes with `git status`; the worker directory is not a git repository and the parent commits. Check bytecode with `python3 -c \"import pathlib; assert not list(pathlib.Path('benchmark').rglob('__pycache__'))\"`.\n\n## Budget\n- Read whole: `benchmark/scripts/score_record.py`.\n- Read in ranges only: `benchmark/scripts/score.py` lines 234-367; `benchmark/scripts/run_record.py` lines 1-140 (`validate`, `score_answer`); `benchmark/challenges/README.md` lines 1-20.\n- Do not read whole large JSON files; keep command output short; write the report by turn 30.\n",
+  "issue": 919
+ },
+ {
+  "id": "review-score-record-fix-0215",
+  "title": "Changed-scope review of the #916 finding 1 correction in score_record.py",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "fix-score-record-0215"
+  ],
+  "inputs": [
+   {
+    "from": "fix-score-record-0215",
+    "name": "score-record-check.txt"
+   }
+  ],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nReview only the changed scope of `benchmark/scripts/score_record.py` made by task fix-score-record-0215 to correct finding 1 of review #916. Report, do not fix: you have no repository write paths. Expected gain: one line `verdict: CLEAR` or `verdict: NOT-CLEAR` in `.session/report.md` with numbered findings (file:line, severity), so the next shaper closes the scorer-intake scope or orders one more narrow correction.\n\nQuestions:\n1. Can a record whose provenance `run_record.validate` does not accept still reach correctness `correct` through `score_record.py`? Trace the path.\n2. Does the new `--check` stage fail if the cap is removed (is it real, not tautological)?\n3. Is the mutation assertion (synthetic baseline `correct`, mutated `incorrect`) still present and real?\n4. Is `executed` documented as self-reported, with no quality, LabVIEW-behaviour or `benchmark_executed` claim?\n5. Were score.py, run_record.py and runner_contract.py left unchanged? Compare against the #916 pins below.\n\nFindings 2-4 of #916 are low and carried; do not re-raise them. No session can run LabVIEW.\n\n## Acceptance\n- [ ] the report pins the sha256 of `benchmark/scripts/score_record.py`, `benchmark/scripts/score.py` and `benchmark/scripts/run_record.py` as read (python3 hashlib), and the merged commit you reviewed\n- [ ] the report answers questions 1-5 with file:line evidence\n- [ ] the report gives one verdict line `verdict: CLEAR` or `verdict: NOT-CLEAR` with numbered findings and severity\n- [ ] your own `python3 -B -I benchmark/scripts/score_record.py --check` output (exit code, last lines) is saved in `.session/artifacts/score-record-fix-check.txt` and compared with the staged producer artifact\n- [ ] no repository file is written or changed\n\n## Verification\npython3 -B -I benchmark/scripts/score_record.py --check\n\n## Context\n- #916 pins (before the correction): score_record.py 38f48f2b7be9979d5fc55e042a4a5cc5555ca6db7d6a1f57b2d248564b0bc2e5, score.py 101cf13fbe43eaaa6bde59136eec76a63bc0f30f3a7aba79223ceae13a5d42e3, run_record.py b39c3060ca8c014a910c0b72e772467b61f2b3a58a92a1f467136da1650d7abf.\n- Finding 1 of #916: the only credit gate was the record's self-reported `outcome`/`truncated`; no `evidence_record` was passed, so score.py:259-260 and 326-327 treated `native_run`/`independent_key` as absent-and-fine; limit in `benchmark/challenges/README.md:8`.\n- Producer artifact staged as an input: `score-record-check.txt` (check `.session/inputs/`).\n- Tool note: if the CLI says `No such tool available: Read. Read is disabled for this session`, that is the native-tool refusal, not a broker failure; propose the same operation again as a JSON action (Policymaker #854). Grep is one literal substring, no regex.\n- Do not check changes with `git status`. Check bytecode with `python3 -c \"import pathlib; assert not list(pathlib.Path('benchmark').rglob('__pycache__'))\"`.\n\n## Budget\n- Read whole: `benchmark/scripts/score_record.py`.\n- Read in ranges only: `benchmark/scripts/score.py` lines 234-367; `benchmark/scripts/run_record.py` lines 1-140; `benchmark/challenges/README.md` lines 1-20.\n- Do not read whole large JSON files; keep command output short; write the report by turn 22.\n",
+  "issue": 920
+ }
+]
