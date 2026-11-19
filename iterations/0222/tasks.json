@@ -1,0 +1,78 @@
+[
+ {
+  "id": "ufb-saveversion-0222",
+  "title": "UF-B: record WM1/WM2 save version as an unverified header declaration and re-pin",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   },
+   {
+    "issue": 942,
+    "name": "uf0-review-0221.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "body": "## Goal\nCorrect finding UF-B (row R1b) of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`). `benchmark/writing/method.json` records `save_version: \"unavailable\"` for WM1 and WM2 (about lines 295 and 368; find by text), while `benchmark/sources.json` holds a header value 20008000 for those sources. Record it the way WP1 already does: as an unverified header declaration (value, source file and field, and the explicit statement that no LabVIEW session confirmed it). Do not claim a verified save version. Then re-pin `method.json` in `benchmark/writing/current-pins.json` (the one current pin file introduced by #941 and reviewed CLEAR by #942; staged `.session/inputs/942-uf0-review-0221.md`). Do not start UF-A or other UF rows.\nChanged files to name in your report: `benchmark/writing/method.json`, `benchmark/writing/current-pins.json`, and any other live pin map that lists either (check `benchmark/writing/input-pins.json` and `benchmark/preparation.json`): recompute every entry of each such map against disk.\nExpected gain: R1b moves to MET (design) in the next review; the verifier stays green.\n\n## Acceptance\n- [ ] WM1 and WM2 entries in `method.json` carry the header value with its source path/field and an explicit unverified marker, in the same shape as WP1 (cite the WP1 line you copied the shape from).\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last output line.\n- [ ] Every entry of every live pin map that lists a changed file matches disk; list the maps checked.\n- [ ] Frozen historical files unchanged (`integration-0112-provenance.json`, dated `check_*_01NN.py`, `reviews-0128/check_integrity_0128.py`): report sha256 before and after.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- #942 CLEAR on UF-0: one pin file `current-pins.json`; a correction re-pins by editing it.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status` (the worker dir is not a git repository). Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (UF-B/R1b rows only), `.session/inputs/942-uf0-review-0221.md`, `benchmark/writing/method.json` in ranges around WM1, WM2, WP1, `benchmark/sources.json` only via Grep for the WM1/WM2 entries, `benchmark/writing/current-pins.json`. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 946
+ },
+ {
+  "id": "ufa-controls-0222",
+  "title": "UF-A: add verifier controls for omitted required ID, duplicate assertion and contradiction",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufb-saveversion-0222"
+  ],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   },
+   {
+    "issue": 942,
+    "name": "uf0-review-0221.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "body": "## Goal\nCorrect finding UF-A (row R7b) of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`): the method verifier has no rejecting controls for (1) an omitted required assertion ID, (2) a duplicate assertion, (3) contradictory assertions, as required by the scoring rules the review cites (`benchmark/protocol.md` about lines 92-110). Add these three controls to `benchmark/writing/verify_method.py` next to its existing rejecting controls (the review cites lines 16-65 and 259-296 of the older revision; the #941 revision moved them, find them by name), each run on a mutated in-memory or scratch copy and each required to fail with a named reason. Then re-pin `verify_method.py` (and any other changed file) in `benchmark/writing/current-pins.json`. `benchmark/protocol.md` is an owner path: do not edit it. Do not change scoring semantics; if a control reveals the current code accepts a bad record, report it and add the minimal rejection only if the protocol text states the rule (quote it). Do not start other UF rows.\nChanged files to name: `benchmark/writing/verify_method.py`, `benchmark/writing/current-pins.json`, any other file you touch, and every live pin map listing them (check `benchmark/writing/input-pins.json`, `benchmark/preparation.json`): recompute every entry against disk.\nExpected gain: R7b moves to MET (design); `rejected_count` rises by the new controls (report old and new value).\n\n## Acceptance\n- [ ] Three new named controls exist (state file:line of each) and each fails with a distinct named reason; the command and output are saved to `.session/artifacts/ufa-controls-0222.txt`.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last output line, old and new `rejected_count`, and the new verify_method.py sha256.\n- [ ] The protocol sentence each control enforces is quoted with its `benchmark/protocol.md` line.\n- [ ] Every entry of every live pin map that lists a changed file matches disk; list the maps checked.\n- [ ] Frozen historical files unchanged (report sha256 before and after); `benchmark/protocol.md` unchanged.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Runs after ufb-saveversion-0222, which edits `method.json` and `current-pins.json`; start from the merged tree and keep its entries.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status`. Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (UF-A/R7b rows only), `.session/inputs/942-uf0-review-0221.md`, `benchmark/writing/verify_method.py` (whole; it is the file you change), `benchmark/protocol.md` lines 80-120, `benchmark/writing/current-pins.json`. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 947
+ },
+ {
+  "id": "ufab-review-0222",
+  "title": "Changed-scope review of the UF-B and UF-A corrections",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufa-controls-0222"
+  ],
+  "inputs": [
+   {
+    "from": "ufa-controls-0222",
+    "name": "ufa-controls-0222.txt"
+   },
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 35
+  },
+  "body": "## Goal\nIndependent changed-scope review of tasks ufb-saveversion-0222 (UF-B, row R1b: WM1/WM2 save version as unverified header declaration in `benchmark/writing/method.json`) and ufa-controls-0222 (UF-A, row R7b: three new rejecting controls in `benchmark/writing/verify_method.py`). Findings are in `.session/inputs/938-method-review-0220.md`. Report, do not fix. Verdict CLEAR or NOT-CLEAR per row with numbered findings. Expected gain: CLEAR lets the next shaper order UF-C/D/E; NOT-CLEAR names the exact defect.\n\n## Acceptance\n- [ ] Report pins the reviewed tree by sha256 of `verify_method.py`, `method.json`, `current-pins.json`, `input-pins.json` (you compute them).\n- [ ] Record the printed `inputs_sha256` value for `current-pins.json` from the verifier output (closes the #942 finding 1 practice).\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` rerun by you; exit code and last output line recorded.\n- [ ] Each of the three new controls reproduced by you on a scratch copy: it fails with its named reason; compare with the staged ufa-controls-0222.txt (check `.session/exports/manifest.json` / inputs for its staged name).\n- [ ] WM1/WM2 entries checked against `benchmark/sources.json` header value and against the WP1 shape; no verified-save-version claim.\n- [ ] Every entry of every live pin map that lists a changed file recomputed; mismatches reported. `benchmark/protocol.md` and frozen historical files unchanged by content.\n- [ ] Findings in `.session/report.md`, detail in `.session/artifacts/ufab-review-0222.md`; no repository writes.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Frozen dated checkers fail on the current tree by expected pin drift (README.md:60,66); do not run, re-pin or survey them.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Check files by reading or hashing them, never with `git status`. Do not run `git commit`. Run python with `-I -B`; afterwards no `__pycache__` under `benchmark/`.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call.\n\n## Budget\nRead: staged ufa-controls-0222.txt, `.session/inputs/938-method-review-0220.md` (R1b, R7b rows only), `benchmark/writing/verify_method.py` (whole), `benchmark/writing/current-pins.json`, `benchmark/writing/method.json` in ranges around WM1, WM2, WP1, `benchmark/protocol.md` lines 80-120, `benchmark/sources.json` via Grep only. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 948
+ }
+]
