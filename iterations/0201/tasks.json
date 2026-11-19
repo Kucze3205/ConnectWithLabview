@@ -1,0 +1,48 @@
+[
+ {
+  "id": "step4-prep-pin-0201",
+  "title": "Correct #861 finding 1: re-pin benchmark/preparation.json in input-pins.json",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     861
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 4, last open finding. Review #861 was NOT-CLEAR on one finding only: in `benchmark/writing/input-pins.json`, map `protected_inputs_sha256`, the entry for `benchmark/preparation.json` still holds 99069d8d5ccf1e8fe1ed2b0c5d63bbc81a79263fb47743991536ab5c34012fad; the file on disk hashes to e304aff09d543e07967999662da19002abf0adf40a9400a5ad98288d1fa3063d (changed by #856, 83a4c7a8). Changed file in this task: `benchmark/writing/input-pins.json` only. Update that entry to the current hash with a targeted `Edit`. Then Grep the repository for the old prefix `99069d8d` and for the old prefix `5b06e263` (pre-edit hash of input-pins.json itself, per #861); classify every hit LIVE/HISTORICAL in `.session/artifacts/pin-classification-0201.md` and update LIVE hits only. Expected gain: every entry of `protected_inputs_sha256` equals its file on disk, so the review below can close step 4.\n\nTOOLS, read first: your tools are JSON actions run by the parent broker. If you see \"No such tool available: Read. Read is disabled for this session\", that is the model CLI refusing a NATIVE tool call; broker tools still work. Propose the same operation again as a JSON action. Never stop or report blocked for it. Grep matches one literal substring only (no `(`, `|`, `\\b`).\n\nNo session can run LabVIEW; make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] `.session/exports/manifest.json` checked; #861 report finding 1 read.\n- [ ] Current sha256 of `benchmark/preparation.json` measured with `python3 -B`; a value other than e304aff0... is reported, not fixed by editing preparation.json.\n- [ ] The `benchmark/preparation.json` entry in `protected_inputs_sha256` replaced by the full current hash with a targeted `Edit`; the file still parses.\n- [ ] Every entry of `protected_inputs_sha256` recomputed against disk; zero mismatches (listed in the report if not).\n- [ ] Grep hits for `99069d8d` and `5b06e263` listed path:line with LIVE/HISTORICAL and a one-line reason in `.session/artifacts/pin-classification-0201.md`.\n- [ ] `git status --porcelain` lists only edited pin files; no `__pycache__`. Do not commit.\n\n## Verification\npython3 -B -c \"import hashlib,json; m=json.load(open('benchmark/writing/input-pins.json'))['protected_inputs_sha256']; bad=[p for p,v in m.items() if hashlib.sha256(open(p,'rb').read()).hexdigest()!=v]; assert not bad, bad; assert m['benchmark/preparation.json']=='e304aff09d543e07967999662da19002abf0adf40a9400a5ad98288d1fa3063d'; print('protected_inputs_sha256 all match disk: OK')\"\n\n## Context\n- #861 settled the score.py / challenges.json classification (#860): do not redo it. The 0125/0128 snapshots are self-pinned by their checkers; leave them.\n- Do not touch score.py, challenges.json, preparation.json or `benchmark/challenges/positive-control-key-0191.json`.\n\n## Budget\nRead: the #861 report; the `protected_inputs_sha256` block of input-pins.json in ranges (it starts at line 8); Grep results for the two prefixes with at most 30 lines around each hit. Do not read `benchmark/results/**`, `journal/**` or other pin files whole. Short command output only. Write the report early.",
+  "issue": 865
+ },
+ {
+  "id": "step4-prep-pin-review-0201",
+  "title": "Changed-scope review of the preparation.json re-pin",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [
+   "step4-prep-pin-0201"
+  ],
+  "inputs": [
+   {
+    "from": "step4-prep-pin-0201",
+    "name": "pin-classification-0201.md"
+   }
+  ],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "body": "## Goal\nReview only the correction of #861 finding 1 (re-pin of `benchmark/preparation.json` in `benchmark/writing/input-pins.json`). Report, do not fix. Expected gain: CLEAR closes step 4 of the positive-control thread (#763 f4); NOT-CLEAR names each remaining stale live pin or wrong classification.\n\nTOOLS: your tools are JSON actions run by the parent broker. The message \"No such tool available: Read. Read is disabled for this session\" refers to a native tool call only; propose the same operation again as a JSON action. Never stop for it. Grep matches one literal substring only.\n\nNo session can run LabVIEW; make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] Report pins the reviewed main commit and the sha256 of `benchmark/preparation.json` and `benchmark/writing/input-pins.json`, measured with `python3 -B`.\n- [ ] Every entry of `protected_inputs_sha256` recomputed against disk; any mismatch is a finding.\n- [ ] Grep for `99069d8d` and `5b06e263`: every remaining hit appears in the staged classification as HISTORICAL with a reason you agree with; disagreement is a finding.\n- [ ] `git show --stat` of the correction merge shows only pin files changed.\n- [ ] Verdict CLEAR / NOT-CLEAR in `.session/report.md`; evidence in `.session/artifacts/review.md`. No repository writes.\n\n## Verification\npython3 -B -c \"import hashlib,json; m=json.load(open('benchmark/writing/input-pins.json'))['protected_inputs_sha256']; bad=[p for p,v in m.items() if hashlib.sha256(open(p,'rb').read()).hexdigest()!=v]; assert not bad, bad; print('reviewed scope present: OK')\"\n\n## Context\n- Input: `.session/inputs/` holds the producer's `pin-classification-0201.md` (staged flat with an issue prefix; Glob for it).\n- Closed: #857 findings 1-4 classification, #860 score.py/challenges.json pins, #828 F1/F3, #831 compare logic. Carried limit #831 (citations vs XML) is not new.\n\n## Budget\nRead: the staged classification; the `protected_inputs_sha256` block of input-pins.json in ranges (starts at line 8); Grep hits for the two prefixes with at most 30 lines around each. Do not read `benchmark/results/**` or `journal/**`. Short command output only.",
+  "issue": 866
+ }
+]
