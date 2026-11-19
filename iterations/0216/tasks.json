@@ -1,0 +1,18 @@
+[
+ {
+  "id": "measure-rows-0216",
+  "title": "Re-measure the sources/tasks/oracle/coverage/baseline rows and write-task coverage of the method (report, do not fix)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nMeasurement only. Report, do not fix. The scorer-intake scope is closed (review #920 CLEAR on score_record.py sha256 2597f67b...). `benchmark/challenges/next-gap-0202.md` marks the rows sources / tasks / oracle(XML) / coverage / baseline (`docs/perpetua/evaluation.md` lines 63-68) as NOT RE-MEASURED, and the goal requires the method to cover write tasks before write implementation. Measure the current status of each of these rows, and whether the benchmark has any write (change-artifact) tasks, from repository evidence.\n\nWrite one new file `benchmark/challenges/rows-0216.md` with: `## Rows` (a table: row, status CLOSED/PARTIAL/OPEN, EV line, repository evidence as file:line), `## Write tasks` (what exists for write/change tasks in `benchmark/`, with file:line, or the statement that none exists), and `## Recommendation` (one next task that needs no LabVIEW, no owner material and no product code, with its expected gain and a verification command). Expected gain: the next shaper picks the next gap from this file without re-surveying.\n\nNo session can run LabVIEW; claim no LabVIEW behaviour, no quality and no benchmark readiness. Do not change any other file. Do not re-survey the rows already measured in next-gap-0202.md (challenges, dependency/native keys, restricted split, reader/scorer integration, whole-method review); cite them.\n\n## Acceptance\n- [ ] `benchmark/challenges/rows-0216.md` exists with the headings `## Rows`, `## Write tasks`, `## Recommendation`\n- [ ] every row status cites at least one file:line that the session read itself\n- [ ] no other repository file is changed\n- [ ] no `__pycache__` under `benchmark/`\n\n## Verification\npython3 -c \"import pathlib; t=pathlib.Path('benchmark/challenges/rows-0216.md').read_text(encoding='utf-8'); assert all(h in t.splitlines() for h in ('## Rows','## Write tasks','## Recommendation')); assert not list(pathlib.Path('benchmark').rglob('__pycache__')); print('rows-0216: OK')\"\n\n## Context\n- `benchmark/challenges/next-gap-0202.md`: the gap table this task completes.\n- Tool note: if the CLI says `No such tool available: Read. Read is disabled for this session`, that is the native-tool refusal, not a broker failure; propose the same operation again as a JSON action (Policymaker #854). Grep is one literal substring, no regex; one literal pattern per call.\n- Do not check changes with `git status`; the worker directory is not a git repository and the parent commits.\n\n## Budget\n- Read whole: `docs/perpetua/evaluation.md` (Polish), `benchmark/challenges/next-gap-0202.md`, `benchmark/challenges/README.md`.\n- Read in ranges only: `benchmark/protocol.md` (find sections by Grep first).\n- Grep `benchmark/` for literal `write`, `changed VI`, `save version`; Glob `benchmark/cases/**` for names only.\n- Do not read whole large JSON files; keep command output short; write the file and the report by turn 30.\n",
+  "issue": 924
+ }
+]
