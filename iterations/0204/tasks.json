@@ -1,0 +1,36 @@
+[
+ {
+  "id": "xml-key-cold-0204",
+  "title": "Cold derivation of XML keys A0001-A0010 for library-icon-tests",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 25
+  },
+  "body": "## Goal\nDerive, cold, the literal XML values at ten given locators of one public artifact and save them as a key file. This extends the library-specialty confirmation (#873: 10/10) to the second inventory `library-icon-tests`, which has no independent key yet. Report, do not fix: you compare nothing and edit no other file.\nExpected gain: a cold key that a later run of `benchmark/challenges/check_xml_keys.py` compares against the fixture. The next shaper reads `benchmark/challenges/positive-control-key-0204-icon-tests.json`.\nNo session can run LabVIEW. Claim XML text facts only, never LabVIEW behaviour, resolution or meaning.\n\n## Acceptance\n- [ ] `benchmark/challenges/positive-control-key-0204-icon-tests.json` exists and parses as JSON, with keys `artifact_path` (the path below), `artifact_sha256` (lowercase sha256 of the bytes you read) and `claims`.\n- [ ] `claims` is a list holding exactly the IDs A0001 to A0010, each an object with `claim_id`, `locator` (the expression given below, unchanged), `value` (exact ElementTree-parsed string, no stripping or normalisation), `line` (1-based line of the element in the file) and `derivation` (one sentence: how you got the value).\n- [ ] You did not open any forbidden file listed in `## Budget`; the report states this explicitly and lists every file you read.\n- [ ] `git status --porcelain` shows only the new key file (no `__pycache__`, no other change).\n\n## Verification\n`python3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0204-icon-tests.json')); assert d['artifact_sha256']=='5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130', d['artifact_sha256']; ids=sorted(c['claim_id'] for c in d['claims']); assert ids==['A00%02d' % i for i in range(1,11)], ids; assert all({'claim_id','locator','value','line','derivation'} <= set(c) for c in d['claims']); print('key 0204: OK')\"`\n\n## Context\n- Artifact: `$LABVIEW_ENVIRONMENT/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib` (in Read/Grep: `@environment/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib`). Read-only; run any python3 that reads it with `-I -B`, scripts outside the environment directory. Use the value of `$LABVIEW_ENVIRONMENT` as the root, not a guessed path (#873 found it differs from `/resources/environment`).\n- Locators (XPath-positional, 1-based index among same-name children of the parent; `text()` means the element's ElementTree `.text`):\n  - A0001 `/Library/@LVVersion`\n  - A0002 `/Library/Property[3]/@Name`\n  - A0003 `/Library/Property[3]/@Type`\n  - A0004 `/Library/Property[3]/text()`\n  - A0005 `/Library/Item[1]/@Name`\n  - A0006 `/Library/Item[1]/@Type`\n  - A0007 `/Library/Item[1]/@URL`\n  - A0008 `/Library/Item[2]/@Name`\n  - A0009 `/Library/Item[2]/@Type`\n  - A0010 `/Library/Item[2]/@URL`\n- If a locator does not resolve, set `value` to null and say why in `derivation`; do not guess.\n- Role tools: a message \"No such tool available: Read. Read is disabled for this session\" is the CLI refusing a native tool; propose the same operation as a broker JSON action. It is not a block.\n- Do not run `git commit`; the parent commits.\n\n## Budget\n- Read only: the artifact above and this task. Write only the key file.\n- Forbidden (they hold the expected values): `benchmark/cases/dev/*.json`, `benchmark/challenges/positive-control-key-*.json` (other keys), `benchmark/challenges/next-gap-0202.md`, `benchmark/challenges/plan-0189*`, `benchmark/challenges/README.md`, `benchmark/challenges/check_xml_keys.py`, `benchmark/scripts/**`, `benchmark/results/**`, `journal/**`, any history or report file.\n- Short command output; report within 25 turns.\n",
+  "issue": 877
+ },
+ {
+  "id": "xml-key-check-0204",
+  "title": "Run check_xml_keys.py on the library-icon-tests cold key",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "low",
+  "blocked_by": [
+   "xml-key-cold-0204"
+  ],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 30,
+   "max_turns": 20
+  },
+  "body": "## Goal\nRun the existing `benchmark/challenges/check_xml_keys.py` (#873) on `benchmark/challenges/positive-control-key-0204-icon-tests.json` against the artifact and against `benchmark/cases/dev/library-icon-tests.json`. Report, do not fix: any disagreement is reported with ID, both values and locator; never edit the key, the fixture or the script to reconcile.\nExpected gain: XML key confirmation for `library-icon-tests` goes from 0 of 10 to 10 of 10, or named mismatches. The next shaper reads the report's `xml keys: N/N OK` lines.\nNo session can run LabVIEW; this checks XML text only and does not close the #831 citation-check gap.\n\n## Acceptance\n- [ ] The report quotes the output and exit code of `--inventory benchmark/cases/dev/library-icon-tests.json` on the 0204 key.\n- [ ] The report quotes the output and exit code of `--artifact \"$LABVIEW_ENVIRONMENT/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib\"` on the 0204 key (resolve the variable's actual value first).\n- [ ] If either mode reports a mismatch, the report lists each ID with key value, inventory/artifact value and locator; no file was edited.\n- [ ] `git status --porcelain` prints nothing (no new or changed file, no `__pycache__`).\n\n## Verification\n`python3 -B -I benchmark/challenges/check_xml_keys.py --inventory benchmark/cases/dev/library-icon-tests.json benchmark/challenges/positive-control-key-0204-icon-tests.json`\n\n## Context\n- Artifact sha256 per fixture: `5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130`. Engine verification has no environment, so it runs `--inventory` only; run `--artifact` yourself.\n- Always `python3 -B -I` (#785). Do not run `git commit`; the parent commits.\n- Role tools: a message \"No such tool available: Read. Read is disabled for this session\" is the CLI refusing a native tool; propose the same operation as a broker JSON action. It is not a block.\n\n## Budget\n- Read: `benchmark/challenges/check_xml_keys.py` (usage only if needed) and the 0204 key. Do not read the fixture whole, `score.py`, `benchmark/results/**`, history or journal. Short outputs; report early.\n",
+  "issue": 878
+ }
+]
