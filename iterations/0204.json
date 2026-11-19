@@ -1,0 +1,683 @@
+{
+ "schema_version": 1,
+ "iteration": 204,
+ "status": "closed",
+ "failure": null,
+ "started": "2026-11-19T03:50:00Z",
+ "ended": "2026-11-19T04:07:30Z",
+ "engine_version": "0.8.0",
+ "input_state": {
+  "schema_version": 1,
+  "iteration": 204,
+  "engine_version": "0.8.0",
+  "policy_rev": "layered-v1:5f32c8702663a7512a882b69999aa538e4598118c02bfd4c2608da9660c74f62",
+  "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+  "goal": {
+   "text": "# Cel projektu\n\nStworzyć narzędzie, które pozwoli agentom AI czytać oraz pisać kod, projekty i wszystkie artefakty LabVIEW tak samo jak zwykły kod.\n\nPriorytetem jest obsługa wszystkich wersji LabVIEW. Jeżeli rozpoznanie wykaże, że wymaga to znacznie większego nakładu czasu niż obsługa jednej wersji, dopuszczonym wariantem zapasowym jest LabVIEW 2024. Przed wyborem wariantu przedstawić oszacowanie różnicy nakładu i ograniczenia zgodności; nie ustalono liczbowego progu „znacznie większego”. Wariant zapasowy dotyczy wersji LabVIEW, a nie ograniczenia rodzajów artefaktów.\n\nPrzed implementacją narzędzia opracować wiarygodny benchmark lub inną powtarzalną metodę weryfikacji, która pozwoli sprawdzić, czy narzędzie działa.\n\n## Pisanie\n\nPisanie obejmuje tworzenie i zmienianie artefaktów tak samo jak w zwykłym kodzie: agent czyta, zmienia, sprawdza wynik i uczciwie raportuje. Sposób zapisu wybiera pętla i uzasadnia ten wybór. Edycja nie wymaga LabVIEW; sprawdzenie (kompilacja i uruchomienie) może go wymagać, tak jak zwykły kod wymaga interpretera lub kompilatora. Artefakty skompilowane zmienia się przez źródła i przebudowę. Zmieniony plik zachowuje swoją wersję zapisu; zmiana wersji jest widocznym brakiem. Oszacowanie przed wyborem wariantu zapasowego obejmuje też pisanie.\n\nPisanie rozszerza istniejący benchmark i dane pętli, zamiast budować je od nowa. Implementacja odczytu może ruszyć przed pisaniem; implementacja pisania czeka na akceptację metody obejmującej zadania zapisu.\n\n## Proof of concept\n\nPrzed dalszym przygotowaniem benchmarku pętla dostarcza POC, który ma pokazać, że koncepcja ma sens i że gotowy produkt może powstać. Agent, który nie widział wcześniej danego VI, poprawnie opisuje jego diagram i zmienia jego logikę bez użycia LabVIEW. Wynik otwiera się w LabVIEW bez złamanej strzałki, zachowuje się zgodnie z poleceniem i zachowuje wersję zapisu. Prace nad benchmarkiem niepotrzebne do POC czekają do jego dostarczenia.\n\nPOC jest wyjątkiem od zasady „najpierw metoda, potem implementacja”. Nie jest produktem ani dowodem jakości; jego kod może trafić do produktu dopiero normalną drogą z testami i przeglądem. Pętla dostarcza pliki, raport i krótką instrukcję, według której właściciel sprawdza wynik ręcznie w swoim LabVIEW. Jeśli POC się nie uda, raport pokazuje dowody i możliwe drogi wyjścia, a pętla nie zmienia celu sama. Pętla nie czeka na odpowiedź właściciela: po dostarczeniu wraca do pracy, a brak odpowiedzi nie jest akceptacją metody, jakości ani produktu.\n\n## Uzgodnione zasady sukcesu — 18.10.2026\n\nWłaściciel zaakceptował następujące zasady:\n\n- Osobno sprawdzać wierność odczytu artefaktów oraz poprawność odpowiedzi agenta i ich poparcie wskazaniem źródła w oryginalnym artefakcie.\n- Stosować niezależnie ustalone odpowiedzi wzorcowe, przypadki niewykorzystywane przy budowie rozwiązania oraz powtarzalne porównanie z pracą bez narzędzia. Szczegóły metody określa `docs/perpetua/evaluation.md`.\n- Sprawdzać rzeczywiste zadania, np. wyjaśnienie obliczeń VI i zależności wykonania, znalezienie zależności projektu i skutków zmiany typedefu oraz wyjaśnienie znaczenia różnicy między diagramami. Przykłady nie ograniczają zakresu celu.\n- Raportować pokrycie według rodzajów artefaktów i wersji. Brak obsługi, zależności, licencji, środowiska lub dostępnego diagramu pozostaje widocznym brakiem; nie jest zaliczeniem pełnego odczytu ani zgodą na wyłączenie przypadku z zakresu.\n\nPełny cel pozostaje w mocy. Konkretne progi jakości i wykonywalna bramka zakończenia wymagają osobnej akceptacji właściciela po przygotowaniu wiarygodnego benchmarku. Uzgodnienie tych zasad nie potwierdza gotowości benchmarku ani skuteczności produktu i nie zastępuje akceptacji metody przed implementacją.\n\nPrzyszła bramka ma wymagać końcowego potwierdzenia właściciela (`owner_confirms: true`). Na tym etapie nie przyjęto komendy bramki i nie tworzy się `goal/gate.yml`; bez zaakceptowanej bramki pętla nie może samodzielnie ogłosić osiągnięcia celu.\n",
+   "gate_accepted": false,
+   "gate": null
+  },
+  "policy_params": {
+   "shaper": "orchestrator",
+   "criterion": "best quality of accepted results per unit of subscription quota consumed; wall-clock time only breaks ties",
+   "models": {
+    "default": "claude-sonnet-5-5",
+    "opus": "claude-opus-5-5"
+   },
+   "efforts": [
+    "low",
+    "medium",
+    "high"
+   ],
+   "ceilings": {
+    "job_minutes": 240,
+    "iteration_minutes": null,
+    "max_turns": 150
+   },
+   "policymaker_triggers": {
+    "every_iterations": 3,
+    "no_progress": 3
+   },
+   "limits": {
+    "fix_rounds": 2,
+    "successor_generations": 3,
+    "merge_conflict_retries": 3,
+    "backoff_hours": [
+     1,
+     5,
+     24
+    ]
+   },
+   "cadence": {
+    "min_interval_minutes": null,
+    "daily_iterations": null
+   },
+   "policymaker_only_roles": [
+    "evaluator",
+    "audit"
+   ],
+   "audit_exports_window": 3,
+   "stream_retention_iterations": null,
+   "startup_token_warning": 100000,
+   "context": {
+    "input_tokens": 800000,
+    "history_bytes": 40000,
+    "recent_turns": 5
+   },
+   "routing": {
+    "tasks": {
+     "default": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "implementation": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "orchestrator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "researcher": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "benchmark": [
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "policymaker": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "evaluator": [
+      {
+       "provider": "claude",
+       "model": "claude-opus-5-5"
+      },
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      }
+     ],
+     "audit": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      }
+     ],
+     "evaluator-verifier": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "review": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ],
+     "reviewer": [
+      {
+       "provider": "codex",
+       "model": "gpt-6.1-sol"
+      },
+      {
+       "provider": "claude",
+       "model": "claude-sonnet-5-5"
+      },
+      {
+       "provider": "copilot",
+       "model": "gpt-5.6-luna"
+      }
+     ]
+    }
+   },
+   "policymaker_session": {
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "max_turns": 60,
+    "timeout_minutes": 90
+   }
+  },
+  "engine_params": {
+   "no_progress_iterations": 10,
+   "quiet_minutes": 1440,
+   "owner_wait_counts": false
+  },
+  "limits": {
+   "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Write",
+    "Edit",
+    "Skill",
+    "Bash(git:*)",
+    "Bash(python3:*)",
+    "Bash(echo:*)",
+    "Bash(printf:*)",
+    "Bash(mkdir:*)"
+   ]
+  },
+  "gate": {
+   "kind": "owner",
+   "command": "",
+   "timeout_minutes": 120,
+   "env_passthrough": [],
+   "owner_paths": [
+    "benchmark/protocol.md",
+    "benchmark/resources-proposal.md",
+    "docs/perpetua/"
+   ]
+  },
+  "owner_requests": {
+   "open": [],
+   "recently_closed": [
+    {
+     "number": 618,
+     "kind": "question",
+     "title": "Commission the human C1 check using the prepared entry point",
+     "decision": "declined",
+     "proposal_sha": "1420b8de7a97423a7669539c82284b3723d529a7f9d1738c69e9fa7ced50afb9",
+     "base_commit": "8cd9fb87e7957ad116454f2e1995af17f1a860a3",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 532,
+     "kind": "question",
+     "title": "Supply one unchanged Save As control for the public constant VI",
+     "decision": "approved",
+     "proposal_sha": "43c901fd2397f545c006447a53fcbdff2642ac6c8622396349ca5b84ed2b6a61",
+     "base_commit": "74e247484dd767ec25363e7d555768ae3434329c",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 525,
+     "kind": "question",
+     "title": "Decide if the Policymaker runs every 3 iterations to use less Claude quota",
+     "decision": "approved",
+     "proposal_sha": "f0596ff8be40fb1127b29a465e03ad783f84523a3b1a411cb2a1d67c78a2e812",
+     "base_commit": "5311fd78af4147246322e8e36b15b01dbf67ed2a",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 516,
+     "kind": "question",
+     "title": "Author eight public LabVIEW examples for the controlled comparison",
+     "decision": "approved",
+     "proposal_sha": "f8daf9d9218c66092eb5af8ab84235178a36e5996866b64c969335b88d83260a",
+     "base_commit": "ec0df1dd4aab94dd4d5a7e822bec80ef740ba468",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 462,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "7dd2866f64efe92adb2eb413e24c8f3c255907d547ad09d10006dfac04e2cbd4",
+     "base_commit": "55d1ef62ed80beb5c30c5ede2b3a6ddc340652b2",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 456,
+     "kind": "notice",
+     "title": "policy/ rolled back",
+     "decision": "approved",
+     "proposal_sha": "eb7da9010c291d42188b0adbd014b349ba531b2a3885c0b7c7ba17d5ae0fc28b",
+     "base_commit": "2329d29eb2c5da281abfbbaf01c35fd69ab271fa",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 430,
+     "kind": "question",
+     "title": "Assess the verification method and its documented design limits",
+     "decision": "declined",
+     "proposal_sha": "7cc46d92f80fb184bb65b2ce5182c85dea3914390fb1519daf1de8a3adde2a6f",
+     "base_commit": "39f03859d114bd82b352bb388dffcc5e286c3a2f",
+     "detail": "The owner declined; configuration was not changed.",
+     "readiness": null,
+     "answer": "not_planned"
+    },
+    {
+     "number": 379,
+     "kind": "question",
+     "title": "Install store-readiness workflow revision 4, run it two times and commit the new redacted record",
+     "decision": "approved",
+     "proposal_sha": "032bde3f02c9928846ab187b30e307fec1a046b983e4e0bf9aaa9d8895fd57bb",
+     "base_commit": "f9cc3f5dc45ce41c52f45dab358fe86f1f712318",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 354,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #352: Design the populated-manifest and runner contract over synthetic data (gap delta #330 N3)",
+     "decision": "approved",
+     "proposal_sha": "e622885491ac26e474be221d66ba95ec44a9278bb8f3ea3fb2e3b446154582fb",
+     "base_commit": "24198b0b14a67e80adb0c7c83796a729a2133f66",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    },
+    {
+     "number": 353,
+     "kind": "merge-acceptance",
+     "title": "Accept the change of task #351: Run the Policymaker script that records review #347 of manifest binding and adds its two controls",
+     "decision": "approved",
+     "proposal_sha": "7f284ecec9fa64f399f677956e00c1311deb113ebbaafbd77ffca7d7e2ce27d9",
+     "base_commit": "24815e0872b589de49f5214c1b15b4182b66649b",
+     "detail": "The owner accepted the frozen request.",
+     "readiness": null,
+     "answer": "completed"
+    }
+   ]
+  },
+  "no_progress": 0,
+  "policymaker_sessions": [
+   {
+    "issue": 875,
+    "status": "done"
+   },
+   {
+    "issue": 863,
+    "status": "done"
+   },
+   {
+    "issue": 854,
+    "status": "done"
+   },
+   {
+    "issue": 729,
+    "status": "done"
+   },
+   {
+    "issue": 720,
+    "status": "done"
+   }
+  ],
+  "outboxes": [
+   787,
+   837,
+   851
+  ],
+  "audit_report": "audit/latest.md",
+  "audit_rev": "d0cf5005c6bf38d776155d691dbcf64864b6b6bb",
+  "startup_notices": [],
+  "rollbacks": {
+   "target": "182372ebad454949e14ce4257704fd121c67ffbf",
+   "streak": 1,
+   "reason": "the iteration did not close within the quiet time",
+   "at": "2026-11-17T17:08:45Z"
+  }
+ },
+ "policy": {
+  "rev_start": "layered-v1:f676b19a9226c13693a8d3a7f26f92105bdc8ba2612f09093df8fc101ec4a299",
+  "rev_end": "layered-v1:5f32c8702663a7512a882b69999aa538e4598118c02bfd4c2608da9660c74f62",
+  "commit_end": "402d0e8ad7f3037a023e8bf6d70fa919ee913b1c",
+  "orders_refused": null,
+  "session": 875,
+  "trigger": "every 3 iterations",
+  "passes": 1,
+  "changes": [
+   {
+    "id": "change-875",
+    "issue": 875,
+    "role": "policymaker",
+    "base_commit": "c69bd53046105cfa1df25fa503384819b7f9a2ab",
+    "applied_base_commit": "af9cbb67bdc123da5bc85db0680ab249d4664340",
+    "accepted_commit": "a06ce03b3d03001e1c2f1b080a8d584438549917",
+    "policy_rev_before": "layered-v1:f676b19a9226c13693a8d3a7f26f92105bdc8ba2612f09093df8fc101ec4a299",
+    "policy_rev_after": "layered-v1:5f32c8702663a7512a882b69999aa538e4598118c02bfd4c2608da9660c74f62",
+    "changed_paths": [
+     "policy/working-memory.md"
+    ],
+    "verifier_issue": null,
+    "applied_at": "2026-11-19T03:55:45Z"
+   }
+  ]
+ },
+ "decided_by": "orchestrator",
+ "tasks": [
+  {
+   "id": "xml-key-cold-0204",
+   "title": "Cold derivation of XML keys A0001-A0010 for library-icon-tests",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "medium",
+   "blocked_by": [],
+   "inputs": [],
+   "exports": [],
+   "limits": {
+    "timeout_minutes": 45,
+    "max_turns": 25
+   },
+   "body": "## Goal\nDerive, cold, the literal XML values at ten given locators of one public artifact and save them as a key file. This extends the library-specialty confirmation (#873: 10/10) to the second inventory `library-icon-tests`, which has no independent key yet. Report, do not fix: you compare nothing and edit no other file.\nExpected gain: a cold key that a later run of `benchmark/challenges/check_xml_keys.py` compares against the fixture. The next shaper reads `benchmark/challenges/positive-control-key-0204-icon-tests.json`.\nNo session can run LabVIEW. Claim XML text facts only, never LabVIEW behaviour, resolution or meaning.\n\n## Acceptance\n- [ ] `benchmark/challenges/positive-control-key-0204-icon-tests.json` exists and parses as JSON, with keys `artifact_path` (the path below), `artifact_sha256` (lowercase sha256 of the bytes you read) and `claims`.\n- [ ] `claims` is a list holding exactly the IDs A0001 to A0010, each an object with `claim_id`, `locator` (the expression given below, unchanged), `value` (exact ElementTree-parsed string, no stripping or normalisation), `line` (1-based line of the element in the file) and `derivation` (one sentence: how you got the value).\n- [ ] You did not open any forbidden file listed in `## Budget`; the report states this explicitly and lists every file you read.\n- [ ] `git status --porcelain` shows only the new key file (no `__pycache__`, no other change).\n\n## Verification\n`python3 -c \"import json; d=json.load(open('benchmark/challenges/positive-control-key-0204-icon-tests.json')); assert d['artifact_sha256']=='5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130', d['artifact_sha256']; ids=sorted(c['claim_id'] for c in d['claims']); assert ids==['A00%02d' % i for i in range(1,11)], ids; assert all({'claim_id','locator','value','line','derivation'} <= set(c) for c in d['claims']); print('key 0204: OK')\"`\n\n## Context\n- Artifact: `$LABVIEW_ENVIRONMENT/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib` (in Read/Grep: `@environment/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib`). Read-only; run any python3 that reads it with `-I -B`, scripts outside the environment directory. Use the value of `$LABVIEW_ENVIRONMENT` as the root, not a guessed path (#873 found it differs from `/resources/environment`).\n- Locators (XPath-positional, 1-based index among same-name children of the parent; `text()` means the element's ElementTree `.text`):\n  - A0001 `/Library/@LVVersion`\n  - A0002 `/Library/Property[3]/@Name`\n  - A0003 `/Library/Property[3]/@Type`\n  - A0004 `/Library/Property[3]/text()`\n  - A0005 `/Library/Item[1]/@Name`\n  - A0006 `/Library/Item[1]/@Type`\n  - A0007 `/Library/Item[1]/@URL`\n  - A0008 `/Library/Item[2]/@Name`\n  - A0009 `/Library/Item[2]/@Type`\n  - A0010 `/Library/Item[2]/@URL`\n- If a locator does not resolve, set `value` to null and say why in `derivation`; do not guess.\n- Role tools: a message \"No such tool available: Read. Read is disabled for this session\" is the CLI refusing a native tool; propose the same operation as a broker JSON action. It is not a block.\n- Do not run `git commit`; the parent commits.\n\n## Budget\n- Read only: the artifact above and this task. Write only the key file.\n- Forbidden (they hold the expected values): `benchmark/cases/dev/*.json`, `benchmark/challenges/positive-control-key-*.json` (other keys), `benchmark/challenges/next-gap-0202.md`, `benchmark/challenges/plan-0189*`, `benchmark/challenges/README.md`, `benchmark/challenges/check_xml_keys.py`, `benchmark/scripts/**`, `benchmark/results/**`, `journal/**`, any history or report file.\n- Short command output; report within 25 turns.\n",
+   "issue": 877
+  },
+  {
+   "id": "xml-key-check-0204",
+   "title": "Run check_xml_keys.py on the library-icon-tests cold key",
+   "role": "benchmark",
+   "model": "default",
+   "effort": "low",
+   "blocked_by": [
+    "xml-key-cold-0204"
+   ],
+   "inputs": [],
+   "exports": [],
+   "limits": {
+    "timeout_minutes": 30,
+    "max_turns": 20
+   },
+   "body": "## Goal\nRun the existing `benchmark/challenges/check_xml_keys.py` (#873) on `benchmark/challenges/positive-control-key-0204-icon-tests.json` against the artifact and against `benchmark/cases/dev/library-icon-tests.json`. Report, do not fix: any disagreement is reported with ID, both values and locator; never edit the key, the fixture or the script to reconcile.\nExpected gain: XML key confirmation for `library-icon-tests` goes from 0 of 10 to 10 of 10, or named mismatches. The next shaper reads the report's `xml keys: N/N OK` lines.\nNo session can run LabVIEW; this checks XML text only and does not close the #831 citation-check gap.\n\n## Acceptance\n- [ ] The report quotes the output and exit code of `--inventory benchmark/cases/dev/library-icon-tests.json` on the 0204 key.\n- [ ] The report quotes the output and exit code of `--artifact \"$LABVIEW_ENVIRONMENT/actor-framework/Tooling/Unit tests/Text-Based VI Icon/Text-Based VI Icon Unit Tests.lvlib\"` on the 0204 key (resolve the variable's actual value first).\n- [ ] If either mode reports a mismatch, the report lists each ID with key value, inventory/artifact value and locator; no file was edited.\n- [ ] `git status --porcelain` prints nothing (no new or changed file, no `__pycache__`).\n\n## Verification\n`python3 -B -I benchmark/challenges/check_xml_keys.py --inventory benchmark/cases/dev/library-icon-tests.json benchmark/challenges/positive-control-key-0204-icon-tests.json`\n\n## Context\n- Artifact sha256 per fixture: `5f30ea515ef3f530430ba87e4a987dc4019dc7ad4fbf216d9ec93b9be3883130`. Engine verification has no environment, so it runs `--inventory` only; run `--artifact` yourself.\n- Always `python3 -B -I` (#785). Do not run `git commit`; the parent commits.\n- Role tools: a message \"No such tool available: Read. Read is disabled for this session\" is the CLI refusing a native tool; propose the same operation as a broker JSON action. It is not a block.\n\n## Budget\n- Read: `benchmark/challenges/check_xml_keys.py` (usage only if needed) and the 0204 key. Do not read the fixture whole, `score.py`, `benchmark/results/**`, history or journal. Short outputs; report early.\n",
+   "issue": 878
+  }
+ ],
+ "outcome": {
+  "sessions": [
+   {
+    "issue": 878,
+    "role": "benchmark",
+    "model": "claude-sonnet-5-5",
+    "effort": "low",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 4612,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/878/2fa32a335d24d1d059a21a974d5407668a02d0ace5883d001884fcb9abcbaf5d.json"
+    ],
+    "status": "done",
+    "verification": "pass",
+    "check": null,
+    "verdict": null,
+    "improved": false,
+    "merged": false,
+    "branch": "task/878",
+    "commit": "81ee7af0",
+    "tokens": {
+     "in": 20,
+     "out": 4590,
+     "cache_read": 62844,
+     "cache_write": 11240
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 62844,
+      "cache_write": 11240,
+      "in": 20,
+      "out": 4590
+     }
+    },
+    "turns": 9,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 43,
+    "gate_s": 0,
+    "total_s": 105,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 877,
+    "role": "benchmark",
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 5007,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/877/a847bb099b32b7b0fb2dcfa5c5eb19d4beeeb9ba9d10d90df57918dc992563e8.json"
+    ],
+    "status": "done",
+    "verification": "pass",
+    "check": "pass",
+    "verdict": "accepted",
+    "improved": true,
+    "merged": true,
+    "branch": "task/877",
+    "commit": "491c1386",
+    "tokens": {
+     "in": 22,
+     "out": 7278,
+     "cache_read": 227969,
+     "cache_write": 36588
+    },
+    "models": {
+     "claude/claude-sonnet-5-5": {
+      "cache_read": 227969,
+      "cache_write": 36588,
+      "in": 22,
+      "out": 7278
+     }
+    },
+    "turns": 8,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 60,
+    "gate_s": 0,
+    "total_s": 127,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   },
+   {
+    "issue": 876,
+    "role": "orchestrator",
+    "model": "claude-opus-5-5",
+    "effort": "medium",
+    "startup": {
+     "status": "ok",
+     "model": "claude-sonnet-5-5",
+     "tokens": 13886,
+     "limit": 100000
+    },
+    "report_snapshots": [
+     ".github/loop/data/session-reports/876/24f6d54c1a5dc6d0ef963b2ad97ff48d31d6523621e01b0df6eb70507b5ce85b.json"
+    ],
+    "status": "done",
+    "verification": null,
+    "check": null,
+    "verdict": null,
+    "improved": false,
+    "merged": true,
+    "branch": "task/876",
+    "commit": "436ddf59",
+    "tokens": {
+     "in": 32,
+     "out": 11290,
+     "cache_read": 509084,
+     "cache_write": 64934
+    },
+    "models": {
+     "claude/claude-opus-5-5": {
+      "cache_read": 509084,
+      "cache_write": 64934,
+      "in": 32,
+      "out": 11290
+     }
+    },
+    "turns": 16,
+    "peak_context": 0,
+    "attempts": 0,
+    "agent_s": 155,
+    "gate_s": 0,
+    "total_s": 219,
+    "parked_s": 0,
+    "runner": "Linux",
+    "artifacts": 0
+   }
+  ],
+  "shaper": {
+   "issue": 876,
+   "role": "orchestrator",
+   "model": "claude-opus-5-5",
+   "effort": "medium",
+   "startup": {
+    "status": "ok",
+    "model": "claude-sonnet-5-5",
+    "tokens": 13886,
+    "limit": 100000
+   },
+   "report_snapshots": [
+    ".github/loop/data/session-reports/876/24f6d54c1a5dc6d0ef963b2ad97ff48d31d6523621e01b0df6eb70507b5ce85b.json"
+   ],
+   "status": "done",
+   "verification": null,
+   "check": null,
+   "verdict": null,
+   "improved": false,
+   "merged": true,
+   "branch": "task/876",
+   "commit": "436ddf59",
+   "tokens": {
+    "in": 32,
+    "out": 11290,
+    "cache_read": 509084,
+    "cache_write": 64934
+   },
+   "models": {
+    "claude/claude-opus-5-5": {
+     "cache_read": 509084,
+     "cache_write": 64934,
+     "in": 32,
+     "out": 11290
+    }
+   },
+   "turns": 16,
+   "peak_context": 0,
+   "attempts": 0,
+   "agent_s": 155,
+   "gate_s": 0,
+   "total_s": 219,
+   "parked_s": 0,
+   "runner": "Linux",
+   "artifacts": 0
+  },
+  "verdict": {
+   "value": "accepted",
+   "issuer": "owner",
+   "evaluator_rev": "7b259468f34a90a8bb9d2007ab17a6000a1397da",
+   "improved": true
+  },
+  "tokens": {
+   "in": 74,
+   "out": 23158,
+   "cache_read": 799897,
+   "cache_write": 112762,
+   "by_model": {
+    "claude/claude-sonnet-5-5": {
+     "in": 42,
+     "out": 11868,
+     "cache_read": 290813,
+     "cache_write": 47828
+    },
+    "claude/claude-opus-5-5": {
+     "in": 32,
+     "out": 11290,
+     "cache_read": 509084,
+     "cache_write": 64934
+    }
+   },
+   "cache_read_share": 0.876
+  },
+  "limit_hits": 0,
+  "wall_s": 1050,
+  "critical_path_s": 232,
+  "width": 1,
+  "owner_requests": {
+   "opened": [],
+   "open_at_close": []
+  }
+ },
+ "evaluator_verifications": []
+}
