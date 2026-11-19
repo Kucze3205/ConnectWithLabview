@@ -1,0 +1,18 @@
+[
+ {
+  "id": "citation-extend-measure-0210",
+  "title": "Measure what extending the citation check to library-icon-tests and vi-actor-core-native-gap needs (report, do not fix)",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nDesign Limit 4 is closed: #897 pinned the dict citation shape in `answer_record_contract` of `benchmark/cases/dev/library-specialty.json`, reviewed CLEAR by #898 (62 input pins, 80 preparation entries, `--check` 35/35). `benchmark/challenges/citation-gap-0206.md` line 67 says the same change applies to `library-icon-tests` and `vi-actor-core-native-gap` \"when they are scored\". Measure, for each of these two fixtures, whether it is scored today and what a citation extension would need. Report, do not fix: the only file you write is the new measurement file below; change no existing file.\nExpected gain: a short measurement file `benchmark/challenges/citation-extend-0210.md` the next shaper reads to decide between ordering the extension (with an exact file and pin-map list) or moving to another method gap.\nNo session can run LabVIEW: claim nothing about native behaviour.\n\n## Acceptance\n- [ ] `benchmark/challenges/citation-extend-0210.md` exists with a `## Fixtures` section holding one row per fixture (`library-icon-tests`, `vi-actor-core-native-gap`) giving: fixture and `benchmark/cases/dev` paths found, whether `score.py` scores it (with file:line evidence), whether its answer records or key carry citations (count from the file), and whether an XML key exists for it.\n- [ ] A `## Extension needs` section lists, per fixture, the files that would change and every live pin map that lists them (`benchmark/writing/input-pins.json`, `benchmark/preparation.json`, others found by a file-based search script in `.session/artifacts/`).\n- [ ] A `## Verdict` section states one of: ready to extend, blocked (name the blocker with evidence), or not applicable; one line each.\n- [ ] `git status --porcelain` shows only `benchmark/challenges/citation-extend-0210.md` (no `__pycache__`; run python as `python3 -B -I`).\n\n## Verification\npython3 -c \"t=open('benchmark/challenges/citation-extend-0210.md').read(); assert all(h in t for h in ('## Fixtures','## Extension needs','## Verdict','library-icon-tests','vi-actor-core-native-gap')); print('measurement file: OK')\"\n\n## Context\n- Design: `benchmark/challenges/citation-gap-0206.md` (#885), especially lines 60-70. Citation check: `citation_resolves` in `benchmark/scripts/score.py` (#889/#893, CLEAR #894); do not re-review its logic.\n- Earlier note: `vi-actor-core-native-gap.json` was not counted in plan-0189 (carried limit); N0001/N0002 are native-unverified.\n- Do not run `git commit`; the parent commits. Long inline one-liners stall (#743): use helper files in `.session/artifacts/`.\n- Tools: if the CLI says \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal, not a broker failure; propose the same operation again as a JSON action and never stop on it (#854). Grep is literal substring only; one literal pattern per call.\n\n## Budget\nRead: `benchmark/challenges/citation-gap-0206.md` lines 55-95; Grep `score.py` for `icon-tests` and for `native-gap`, then read short ranges; Glob `benchmark/**/*icon-tests*` and `benchmark/**/*native-gap*`. No whole large JSON reads; count with a helper script. Short command output. Report by turn 25.",
+  "issue": 902
+ }
+]
