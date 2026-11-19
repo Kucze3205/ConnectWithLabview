@@ -1,0 +1,96 @@
+[
+ {
+  "id": "ufc-lineage-0223",
+  "title": "UF-C: add the writing lineage map (row R4a) and re-pin",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   },
+   {
+    "issue": 948,
+    "name": "ufab-review-0222.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "body": "## Goal\nCorrect finding UF-C (row R4a) of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`): the writing method lacks the lineage map that row R4a names. Read the R4a row first and do exactly what it requires, in `benchmark/writing/method.json` (or the file the row names). Record missing lineage material (only Actor Framework is available; R4b owner material is BLOCKED) as a visible gap, never as coverage. Then re-pin every changed file in `benchmark/writing/current-pins.json` (the single current pin file, reviewed CLEAR by #942 and #948). Do not start UF-D, UF-E or other rows. Report, do not fix, anything outside R4a.\nChanged files to name in your report: every file you edit plus `benchmark/writing/current-pins.json`; recompute every entry of each live pin map listing them (check `benchmark/writing/input-pins.json`, `benchmark/preparation.json`).\nExpected gain: R4a moves to MET (design) in the changed-scope review; the verifier stays green.\n\n## Acceptance\n- [ ] The R4a requirement is quoted from the #938 artifact with its line, and the added map is cited by file:line.\n- [ ] Unavailable lineages are marked as gaps with their blocking row (R4b), not as covered.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last output line and `rejected_count` (47 before).\n- [ ] Every entry of every live pin map that lists a changed file matches disk; list the maps checked.\n- [ ] `benchmark/protocol.md` and frozen historical files (`integration-0112-provenance.json`, dated `check_*_01NN.py`, `reviews-0128/check_integrity_0128.py`) unchanged: sha256 before and after.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- #948 CLEAR on UF-A/UF-B; a correction re-pins by editing `current-pins.json`.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status` (the worker dir is not a git repository). Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (R4a/R4b rows only), `.session/inputs/948-ufab-review-0222.md`, `benchmark/writing/method.json` in ranges found by Grep, `benchmark/writing/current-pins.json`. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 951
+ },
+ {
+  "id": "ufd-coverage-0223",
+  "title": "UF-D: add the writing coverage matrix rows (row R5a) and re-pin",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufc-lineage-0223"
+  ],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "body": "## Goal\nCorrect finding UF-D (row R5a) of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`): the coverage matrix lacks the writing rows that R5a requires (coverage rule near `benchmark/writing/method.json:775`; find by text, line may have moved). Add rows by artifact kind and version; every unsupported kind, version, dependency, licence, environment or missing diagram stays a visible gap, never a pass. Re-pin every changed file in `benchmark/writing/current-pins.json`. Do not start UF-E or other rows; keep the ufc-lineage-0223 entries.\nChanged files to name: every file you edit plus `current-pins.json`; recompute every entry of each live pin map listing them (`benchmark/writing/input-pins.json`, `benchmark/preparation.json`).\nExpected gain: R5a moves to MET (design); verifier stays green.\n\n## Acceptance\n- [ ] The R5a requirement and the coverage rule are quoted with their lines; the new rows are cited by file:line.\n- [ ] Each row states covered or gap with a reason; no gap is counted as coverage.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last output line and `rejected_count`.\n- [ ] Every entry of every live pin map that lists a changed file matches disk; list the maps checked.\n- [ ] `benchmark/protocol.md` and frozen historical files unchanged: sha256 before and after.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Runs after ufc-lineage-0223, which edits `method.json` and `current-pins.json`; start from the merged tree.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status`. Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (R5a row only), `benchmark/writing/method.json` in ranges found by Grep, `benchmark/writing/current-pins.json`. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 952
+ },
+ {
+  "id": "ufe-baseline-0223",
+  "title": "UF-E: add the hashed baseline addendum (row R6b), fix README count, re-pin",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufd-coverage-0223"
+  ],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   },
+   {
+    "issue": 948,
+    "name": "ufab-review-0222.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 45
+  },
+  "body": "## Goal\nCorrect finding UF-E (row R6b) of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`): add the hashed baseline addendum that R6b requires (the no-tool baseline for write tasks, with content hashes). Also correct #948 finding 1 (staged `.session/inputs/948-ufab-review-0222.md`): `benchmark/writing/README.md:42` says \"Forty-four\" mutations; update it to the live `rejected_count` and mention the ledger controls and `header_declaration`. Re-pin every changed file in `benchmark/writing/current-pins.json`. Do not start UF-F/UF-G; keep earlier entries.\nChanged files to name: every file you edit plus `current-pins.json`; recompute every entry of each live pin map listing them (`benchmark/writing/input-pins.json`, `benchmark/preparation.json`).\nExpected gain: R6b moves to MET (design); README matches the verifier.\n\n## Acceptance\n- [ ] The R6b requirement is quoted with its line; the addendum is cited by file:line and its hashes recompute against disk.\n- [ ] README states the same rejected count the verifier prints.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last output line and `rejected_count`.\n- [ ] Every entry of every live pin map that lists a changed file matches disk; list the maps checked.\n- [ ] `benchmark/protocol.md` and frozen historical files unchanged: sha256 before and after.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Runs after ufd-coverage-0223; start from the merged tree.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status`. Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (R6b row only), `.session/inputs/948-ufab-review-0222.md` (finding 1), `benchmark/writing/README.md`, `benchmark/writing/method.json` in ranges found by Grep, `benchmark/writing/current-pins.json`. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 953
+ },
+ {
+  "id": "ufcde-review-0223",
+  "title": "Changed-scope review of the UF-C, UF-D and UF-E corrections",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufe-baseline-0223"
+  ],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 40
+  },
+  "body": "## Goal\nIndependent changed-scope review of ufc-lineage-0223 (R4a lineage map), ufd-coverage-0223 (R5a writing coverage rows) and ufe-baseline-0223 (R6b hashed baseline addendum, README count) against the rows in `.session/inputs/938-method-review-0220.md`. Report, do not fix. Verdict CLEAR or NOT-CLEAR per row with numbered findings. Expected gain: CLEAR lets the next shaper order UF-F, then UF-G; NOT-CLEAR names the exact defect.\n\n## Acceptance\n- [ ] Report pins the reviewed tree by sha256 of `verify_method.py`, `method.json`, `current-pins.json`, `input-pins.json`, `README.md` and every other file the three tasks changed (you compute them).\n- [ ] Record the printed `inputs_sha256` for `current-pins.json` from the verifier output.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` rerun by you; exit code and last output line recorded.\n- [ ] Per row R4a, R5a, R6b: requirement quoted, added content cited by file:line, gaps not counted as coverage, addendum hashes recomputed.\n- [ ] Every entry of every live pin map that lists a changed file recomputed; mismatches reported. `benchmark/protocol.md` and frozen historical files unchanged by content.\n- [ ] Findings in `.session/report.md`, detail in `.session/artifacts/ufcde-review-0223.md`; no repository writes.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Find changed files by comparing hashes of `current-pins.json` entries and by Grep for the R4a/R5a/R6b content; the authors' reports are not staged.\n- Frozen dated checkers fail on the current tree by expected pin drift (README.md:60,66); do not run, re-pin or survey them.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Check files by reading or hashing, never with `git status`. Do not run `git commit`. Run python with `-I -B`; afterwards no `__pycache__` under `benchmark/`.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call.\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (R4a, R5a, R6b rows only), `benchmark/writing/current-pins.json`, `benchmark/writing/README.md`, `benchmark/writing/method.json` in ranges found by Grep, `benchmark/writing/verify_method.py` only where needed. No other whole large JSON files; short command output. Write the report early.\n",
+  "issue": 954
+ }
+]
