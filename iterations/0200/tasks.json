@@ -1,0 +1,49 @@
+[
+ {
+  "id": "step4-pins-0200",
+  "title": "Correct #857 finding 4: classify and update stale score.py / challenges.json pins after step 4",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [],
+  "inputs": [],
+  "exports": [
+   {
+    "source": "reports",
+    "sessions": [
+     856,
+     857
+    ]
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 45,
+   "max_turns": 30
+  },
+  "body": "## Goal\nPositive-control thread (#763 f4), step 4 correction. Review #857 was NOT-CLEAR on one finding only (finding 4): the step-4 change (83a4c7a8) updated `preparation.json`, but old sha256 values of `benchmark/scripts/score.py` (978982...a644) and `benchmark/results/challenges.json` (453815...a15e) remain in `benchmark/writing/input-pins.json:57`, `c1-challenges-0125-pins.json:341`, `reviews-0128/c1-artifact-manifest-0126.json:451` and three notes under `benchmark/challenges/` (0172, 0186, 0187). For each location decide: LIVE pin (describes the current file, update to the current hash) or HISTORICAL snapshot (frozen record of an earlier state, leave unchanged and say why, citing the file's own wording or its date/issue). Change nothing else. Do not touch score.py, challenges.json or the 0191 key. Expected gain: every old-hash occurrence is classified in `.session/artifacts/pin-classification.md`, live pins carry the current hash, and the changed-scope review below can close step 4.\n\nTOOLS, read first: your tools are JSON actions run by the parent broker. If you see \"No such tool available: Read. Read is disabled for this session\", that is the model CLI refusing a NATIVE tool call; broker tools still work. Propose the same operation again as a JSON action. Never stop or report blocked for it. Grep matches one literal substring only (no `(`, `|`, `\\b`); use a hash prefix such as `978982` or `453815` as the pattern.\n\nNo session can run LabVIEW; make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] `.session/exports/manifest.json` checked; #857 report finding 4 read.\n- [ ] Current sha256 of score.py and challenges.json computed with `python3 -B` (expected per #857: 21329d0d... and a3466ad8...); a mismatch is reported, not fixed.\n- [ ] Grep of the repository for both old hash prefixes; every occurrence listed with path:line and classification LIVE/HISTORICAL plus one-line reason in `.session/artifacts/pin-classification.md`.\n- [ ] Every LIVE occurrence replaced by the full current hash with targeted `Edit` only; edited JSON files still parse.\n- [ ] `benchmark/writing/input-pins.json` carries the current score.py hash (or the report explains with evidence why it is historical; then the verification below fails and that is the reported result).\n- [ ] `git status --porcelain` lists only the edited pin files; no `__pycache__`.\n\n## Verification\npython3 -B -c \"import hashlib,json; h=lambda p: hashlib.sha256(open(p,'rb').read()).hexdigest(); s=h('benchmark/scripts/score.py'); assert s=='21329d0d74be916c740dbe7d9701834b49837c92fec713eb299c6443d9a294fd'; t=open('benchmark/writing/input-pins.json').read(); json.loads(t); assert s in t; assert h('benchmark/challenges/positive-control-key-0191.json')=='f9f5e1c4e55d956d4bd4cf9f008f739a09eb76023def57fa225d6553ad66d888'; print('live pin updated, key unchanged: OK')\"\n\n## Context\n- #857 findings 1-3 are OK (controls correct, A0005 unchanged, --check 35/35): do not re-review them.\n- #739/#766: a change to a pinned file updates all its live pins. #785 bytecode trap: `python3 -B`.\n- Do not commit; the parent commits.\n\n## Budget\nRead: the #857 report; Grep results for the two hash prefixes; around each hit, at most 30 lines of the containing file (enough to decide live vs historical). Do not read `benchmark/results/**`, `journal/**` or any pin file whole. Short command output only. Write the report early and refine it.",
+  "issue": 860
+ },
+ {
+  "id": "step4-pins-review-0200",
+  "title": "Changed-scope review of the step 4 pin correction",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "medium",
+  "blocked_by": [
+   "step4-pins-0200"
+  ],
+  "inputs": [
+   {
+    "from": "step4-pins-0200",
+    "name": "pin-classification.md"
+   }
+  ],
+  "exports": [],
+  "limits": {
+   "timeout_minutes": 40,
+   "max_turns": 25
+  },
+  "body": "## Goal\nReview only the pin correction of #857 finding 4: the producer's classification of old score.py / challenges.json hashes as LIVE or HISTORICAL and its edits. Report, do not fix. Expected gain: CLEAR closes step 4 of the positive-control thread (#763 f4); NOT-CLEAR names each wrong classification or stale live pin.\n\nTOOLS: your tools are JSON actions run by the parent broker. The message \"No such tool available: Read. Read is disabled for this session\" refers to a native tool call only; propose the same operation again as a JSON action. Never stop for it. Grep matches one literal substring only.\n\nNo session can run LabVIEW; make no claim about LabVIEW behaviour.\n\n## Acceptance\n- [ ] Report pins the reviewed main commit and sha256 of score.py, challenges.json and every edited pin file.\n- [ ] Grep for old prefixes `978982` and `453815`: every remaining occurrence appears in the staged classification as HISTORICAL with a reason you agree with; disagreement is a finding.\n- [ ] Every LIVE pin equals the current sha256 of its file (measured with `python3 -B`).\n- [ ] No file other than pin files changed by the correction (check `git show --stat` of the merge).\n- [ ] Verdict CLEAR / NOT-CLEAR in `.session/report.md`; evidence in `.session/artifacts/review.md`. No repository writes.\n\n## Verification\npython3 -B -c \"import hashlib; s=hashlib.sha256(open('benchmark/scripts/score.py','rb').read()).hexdigest(); assert s in open('benchmark/writing/input-pins.json').read(); print('reviewed scope present: OK')\"\n\n## Context\n- Input: `.session/inputs/` holds the producer's `pin-classification.md` (staged flat with issue prefix; Glob for it).\n- Closed: #857 findings 1-3, #828 F1, F3, #831 compare logic; carried limit #831 citations vs XML is not new.\n\n## Budget\nRead: the staged classification; Grep hits for the two old prefixes and the two current hashes; at most 30 lines around each hit. Do not read pin files, `benchmark/results/**` or `journal/**` whole. Short command output only.",
+  "issue": 861
+ }
+]
