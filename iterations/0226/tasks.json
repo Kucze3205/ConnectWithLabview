@@ -1,0 +1,70 @@
+[
+ {
+  "id": "lineage-complete-0226",
+  "title": "Correct review #964 findings 1-3: consumer candidate completeness, variant members and lineage-map mutations in verify_method.py",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [],
+  "inputs": [
+   {
+    "issue": 964,
+    "name": "uff-review-0225.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 60,
+   "max_turns": 40
+  },
+  "body": "## Goal\nCorrect the three non-blocking findings of review #964 (staged `.session/inputs/964-uff-review-0225.md`, Findings section):\n1. Consumer candidates are not checked for completeness (`benchmark/writing/verify_method.py` near line 789 uses `complete=False`); consumer artifact-0087 in `benchmark/writing/method.json` (about lines 955-960) omits candidate-0043, which `benchmark/lineage.json` lists. Add candidate-0043 (read lineage.json yourself to confirm), switch to complete checking, add a rejected mutation.\n2. `variant_member_artifacts` and the `source` line anchor (method.json about :943) are not enforced. Enforce both from the files, one rejected mutation each.\n3. Add mutations for `lineage-map-group` and `lineage-map-tasks`.\nThen update the README rejected count to the verifier's new `rejected_count` (above 64) and re-pin every changed file in `benchmark/writing/current-pins.json`. Expected changed files: verify_method.py, method.json, README.md, current-pins.json. Expected gain: #964 f1-f3 closed; the next review reads the new lines.\nDo not edit `benchmark/writing/verification.json` (UF-G is the next task), `benchmark/protocol.md`, frozen dated checkers or historical pin maps. Report, do not fix, anything else.\n\n## Acceptance\n- [ ] Each new or changed check is cited by `verify_method.py` line and names the method.json key it reads.\n- [ ] method.json consumer artifact-0087 lists candidate-0043, with the lineage.json line that shows it.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last line, the new `rejected_count` and the names of the new mutations.\n- [ ] README states the same rejected count the verifier prints.\n- [ ] `python3 -I -B benchmark/writing/build_addendum.py --check` exits 0.\n- [ ] Every entry of every live pin map listing a changed file matches disk (`benchmark/writing/current-pins.json`, `benchmark/writing/input-pins.json` protected_inputs_sha256, `benchmark/preparation.json`); list the maps checked and the mismatch count.\n- [ ] sha256 of `benchmark/protocol.md` and `benchmark/writing/verification.json` recorded unchanged.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Review #964 was CLEAR for R13a, #954 f2/f4 and the new verifier checks; these findings are its residuals. Tree it reviewed: verify_method.py 67b934d6..., method.json 195697bf..., current-pins.json 63cfe6da....\n- Historical maps and dated checkers drift by design (README.md:60,66); do not run, re-pin or survey them.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status` (the worker dir is not a git repository). Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (orchestrator skill, Role tools section, Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/964-uff-review-0225.md` (Findings only); `benchmark/writing/verify_method.py` by Grep ranges around the lineage_map code (do not read it whole); `benchmark/writing/method.json` lines 930-970; `benchmark/lineage.json` only by Grep for candidate-0043 and artifact-0087; `benchmark/writing/README.md` line 44 area; `benchmark/writing/current-pins.json`. Short command output; report early if past 30 turns.",
+  "issue": 967
+ },
+ {
+  "id": "ufg-0226",
+  "title": "UF-G (R13b): refresh benchmark/writing/verification.json to the current verifier and carried low findings",
+  "role": "benchmark",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "lineage-complete-0226"
+  ],
+  "inputs": [
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 35
+  },
+  "body": "## Goal\nClose row R13b of whole-method review #938 (staged `.session/inputs/938-method-review-0220.md`; find R13b by Grep). `benchmark/writing/verification.json` still records an old checker (sha256 prefix da9f45e2) and stdout (ae27dd58). Update it so it records the current `benchmark/writing/verify_method.py` sha256, its command, exit code and stdout sha256 from a real run in this session, as R13b requires. Re-pin `verification.json` wherever a live pin map lists it (`benchmark/writing/current-pins.json`, `benchmark/preparation.json`, `benchmark/writing/input-pins.json`). If the verifier's own pins include verification.json, run it again after re-pinning and record the final run.\nFirst quote the R13b row text in the report, then edit. Expected changed files: verification.json and the pin maps that list it. Expected gain: R13b closed; whole-method re-review can follow.\nDo not edit verify_method.py, method.json, `benchmark/protocol.md` or frozen dated checkers. Report, do not fix, anything else.\n\n## Acceptance\n- [ ] Report quotes R13b with its line in the staged #938 review.\n- [ ] verification.json's recorded verifier sha256 equals the sha256 of `benchmark/writing/verify_method.py` on disk; its stdout hash equals the sha256 of the stdout of the run you report.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exits 0; report its last line.\n- [ ] Every entry of every live pin map listing a changed file matches disk; list the maps and mismatch count.\n- [ ] sha256 of `benchmark/protocol.md` and verify_method.py recorded unchanged during this session.\n- [ ] No `__pycache__` under `benchmark/`.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- The previous task (lineage-complete-0226) changed verify_method.py, method.json, README.md and current-pins.json; you start from its merged tree.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`. Check files by reading or hashing, never with `git status`. Do not run `git commit`; the parent commits.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call. Put long python helpers in files under `.session/` (#743).\n\n## Budget\nRead: `.session/inputs/938-method-review-0220.md` (R13b row and its summary line only, by Grep); `benchmark/writing/verification.json` whole; pin maps by Grep for `verification.json`. Do not read verify_method.py whole. Short command output; report early if past 25 turns.",
+  "issue": 968
+ },
+ {
+  "id": "ufg-review-0226",
+  "title": "Changed-scope review of #964 f1-f3 correction and UF-G (R13b)",
+  "role": "reviewer",
+  "model": "default",
+  "effort": "high",
+  "blocked_by": [
+   "ufg-0226"
+  ],
+  "inputs": [
+   {
+    "issue": 964,
+    "name": "uff-review-0225.md"
+   },
+   {
+    "issue": 938,
+    "name": "method-review-0220.md"
+   }
+  ],
+  "limits": {
+   "timeout_minutes": 50,
+   "max_turns": 40
+  },
+  "body": "## Goal\nIndependently review the changed scope of tasks lineage-complete-0226 and ufg-0226 on the merged tree: do review #964 findings 1-3 and row R13b of review #938 hold as closed? Pin the tree yourself (sha256 of verify_method.py, method.json, README.md, current-pins.json, verification.json, preparation.json, input-pins.json). Report, do not fix. Write findings in `.session/report.md` and detail in `.session/artifacts/ufg-review-0226.md`; no repository writes. Expected gain: a verdict per item (CLEAR / NOT-CLEAR) that lets the next shaper order the whole-method re-review of #938 rows.\n\n## Acceptance\n- [ ] Verdict for each of #964 f1, f2, f3 and R13b, each citing file and line.\n- [ ] At least one in-memory mutation per new check, run by you, with its outcome (rejected or accepted).\n- [ ] verification.json's recorded verifier sha256 and stdout hash recomputed by you and compared.\n- [ ] `python3 -I -B benchmark/writing/verify_method.py` exit code and last line reported; README count compared.\n- [ ] Every live pin map entry recomputed against disk; mismatch count reported.\n- [ ] `.session/artifacts/ufg-review-0226.md` exists.\n\n## Verification\n`python3 -I -B benchmark/writing/verify_method.py`\n\n## Context\n- Prior review #964 tree: verify_method.py 67b934d6..., method.json 195697bf..., current-pins.json 63cfe6da...; rejected_count 64.\n- Frozen dated checkers and historical maps drift by design; do not run or survey them.\n- No session can run LabVIEW; claim no LabVIEW behaviour.\n- Run python with `-I -B`; put mutation helpers under `.session/artifacts/`. Never `git status`; no `git commit`.\n- If the CLI answers \"No such tool available: Read. Read is disabled for this session\", that is a native-tool refusal; propose the same operation as a broker JSON action (Policymaker #854). Never stop on it.\n- Grep is literal-substring only; one pattern per call.\n\n## Budget\nRead: `.session/inputs/964-uff-review-0225.md` (Findings), `.session/inputs/938-method-review-0220.md` (R13b by Grep), `benchmark/writing/verification.json`, method.json lines 930-975, verify_method.py by Grep ranges around lineage and verification code, README rejected-count line, pin maps by Grep. No whole large JSON files; short output.",
+  "issue": 969
+ }
+]
